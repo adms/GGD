@@ -2,7 +2,7 @@
 
 > 由 `build_inventory.py` 生成；請不要只手改本檔。
 
-- J-Stars owner archive：`blocked-owner-archive-not-found`
+- J-Stars owner archive：`owner-archive-found`
 - J-Stars 已轉換人物：0 / 3
 - 已驗證可複用模型：3 / 3
 - JUMP FORCE 已解碼但待聽審音訊：494 檔
@@ -15,8 +15,8 @@
 
 ## 精確缺口
 
-1. `J-Stars Victory Vs+.7z` 未出現在本機標準接收位置，銀時與小傑沒有已觀察的 J-Stars 原生容器。
-2. 奇犽 `018` 已有 J-Stars SRD/SRDI/SRDV 實檔，但 `$CH0` 與 PS3 SRD 幾何／貼圖／蒙皮轉換尚未驗證。
+1. 六名 partial STPK 身分探測已將本表三名確證為銀時 `028`、小傑 `017`、奇犍 `018`。
+2. 三名已從 owner 原盤逐檔雜湊模型、動作、VFX、SFX 與語音容器候選；`$CH0` 完整解碼與 PS3 SRD 幾何／貼圖／蒙皮轉換尚未驗證。
 3. 小傑／奇犽 JUMP FORCE 音訊已解碼與逐檔雜湊，但未逐段聽審，不得直接綁定技能事件。
 4. 現有 300／社群候選可供遊戲使用或後續整合，但不是 J-Stars 轉換成果。
 

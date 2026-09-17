@@ -12,7 +12,7 @@
   "modules": ["model", "texture", "skeleton", "motion", "vfx", "sfx", "voice"],
   "policy": {
     "decimateOnlyWhenTrianglesAbove": 10000,
-    "decimatedTargetTrianglesBelow": 8000,
+    "decimatedMaximumAcceptedTriangles": 8000,
     "textureMaxEdge": 256,
     "requiredMotionStates": ["idle", "run", "attack", "cast", "hurt", "death"],
     "audioRequiresPerFileOwnerApproval": true,

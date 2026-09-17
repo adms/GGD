@@ -24,8 +24,8 @@
     },
     {
       "path": "materials/hero-model-library/source-module-catalog-v1/kof-jstars.json",
-      "bytes": 166529,
-      "sha256": "1b138f56fa2a081740f01026507190d773663b43b9f70d5b2d0892bced23bd24",
+      "bytes": 187223,
+      "sha256": "8a151185bbfb25303542ce772606660f534b7775e7b2c09e47a4d9e782b19c57",
       "sourceGroups": 5,
       "candidates": 62
     }
@@ -320,11 +320,11 @@
     {
       "sourceId": "owner-jstars-victory-vs-plus-20260917",
       "title": "J-Stars Victory VS+",
-      "platform": "PS3 archive; verify contents before assigning platform/version",
-      "version": null,
+      "platform": "PS3",
+      "version": "PS3 BLUS31519 APP_VER 01.00",
       "status": "blocked-upstream-extraction",
       "candidateCount": 52,
-      "summary": "名單含 39 名可操作角色與 13 名支援角色；owner archive 狀態為 blocked-archive-not-found。owner 指定六名已排入 model/motion/vfx/sfx/voice 優先轉換與預設來源計畫；第一優先來源查核確認原生 ID 1 名、runtime-ready 模組 0；獨立選項註冊 0、已套用預設 0、正式部署 0。",
+      "summary": "名單含 39 名可操作角色與 13 名支援角色；owner archive 狀態為 inventoried-read-only。owner 指定六名已排入 model/motion/vfx/sfx/voice 優先轉換與預設來源計畫；第一優先來源查核確認原生 ID 6 名、runtime-ready 模組 0；獨立選項註冊 0、已套用預設 0、正式部署 0。",
       "fragment": "materials/hero-model-library/source-module-catalog-v1/kof-jstars.json",
       "evidencePaths": [
         "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",

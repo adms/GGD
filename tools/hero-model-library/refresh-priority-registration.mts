@@ -54,6 +54,51 @@ const selectionEvidence: Record<string, SelectionEvidence> = {
       }
     },
   },
+  'b2-bojji': {
+    gitPath: 'materials/hero-model-library/source-inventories/bojji-crown-v1/registration-receipt.json',
+    expected: {
+      modelKey: 'version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673',
+      modelSelectionMode: 'automatic',
+    },
+    validate(value: any) {
+      if (value?.schema !== 'ggd.bojji-crown-registration-receipt@1') {
+        throw new Error('Bojji crown selection evidence schema changed');
+      }
+      if (value.heroId !== 'b2-bojji' ||
+          value.registeredVersion?.modelKey !== this.expected.modelKey ||
+          value.selection?.mode !== this.expected.modelSelectionMode ||
+          value.selection?.activeModelKey !== this.expected.modelKey ||
+          value.selection?.crownCandidateSelected !== true ||
+          value.status?.registered !== true || value.status?.runtimeSelectable !== true ||
+          value.status?.currentAutomaticSelected !== true ||
+          value.status?.productionDeployed !== false) {
+        throw new Error('Bojji crown receipt does not authorize the current selection');
+      }
+    },
+  },
+  'community-review-32-20260907': {
+    gitPath: 'materials/hero-model-library/priority-evidence/approved-derivative-azazel-wings-v1/inventory.json',
+    expected: {
+      modelKey: 'version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439',
+      modelSelectionMode: 'automatic',
+    },
+    validate(value: any) {
+      if (value?.schema !== 'ggd.approved-azazel-wings-inventory@1') {
+        throw new Error('Azazel wings selection evidence schema changed');
+      }
+      if (value.scope?.heroId !== 'community-review-32-20260907' ||
+          value.scope?.approvedDerivativeId !== 'derivative:azazel' ||
+          value.registration?.versionModelKey !== this.expected.modelKey ||
+          value.registration?.selectionMode !== this.expected.modelSelectionMode ||
+          value.registration?.activeModelKey !== this.expected.modelKey ||
+          value.registration?.allPreviousVersionsRetained !== true ||
+          value.status?.dropdownRegistered !== true || value.status?.selectable !== true ||
+          value.status?.automaticSelected !== true ||
+          value.status?.productionDeployed !== false) {
+        throw new Error('Azazel wings inventory does not authorize the current selection');
+      }
+    },
+  },
 };
 
 function selected(state: any): Selection {
@@ -68,6 +113,17 @@ function selected(state: any): Selection {
 
 function equalSelection(left: Selection, right: Selection): boolean {
   return left.modelKey === right.modelKey && left.modelSelectionMode === right.modelSelectionMode;
+}
+
+function sameRegisteredVersion(prior: any, current: any): boolean {
+  // ModelVersions recomputes modelSha256 when a version document receives a
+  // reviewed metadata-only repair (for example Hisoka's yawOffsetDeg).  That
+  // must refresh the readback, while the frozen GLB and registration identity
+  // remain immutable.
+  return prior.modelKey === current.modelKey &&
+    prior.binarySha256 === current.binarySha256 &&
+    prior.sourceModelKey === current.sourceModelKey &&
+    prior.registeredAt === current.registeredAt;
 }
 
 function approvedSelectionChange(heroId: string, prior: any, current: any) {
@@ -94,7 +150,7 @@ const heroes = previous.heroes.map((row: any) => {
   const after = service.state(row.runtimeHeroId);
   for (const version of after.versions) service.verify(version);
   for (const version of row.after.versions) {
-    if (!after.versions.some(v => JSON.stringify(v) === JSON.stringify(version))) {
+    if (!after.versions.some(v => sameRegisteredVersion(version, v))) {
       throw new Error(`Prior version changed or disappeared: ${row.heroId}/${version.modelKey}`);
     }
   }

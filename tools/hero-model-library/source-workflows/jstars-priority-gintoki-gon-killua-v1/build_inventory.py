@@ -24,6 +24,7 @@ OUTPUT = REPO / "materials/hero-model-library/source-inventories/jstars-priority
 REFERENCE = HERE / "source-reference.json"
 VALIDATION = OUTPUT / "model-validation.json"
 OWNER_RECEIPT = REPO / "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json"
+CPK_INVENTORY = REPO / "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
 JSTARS_ANALYSIS = REPO / "materials/hero-model-library/source-inventories/jstars-stpk-research-v1/analysis.json"
 JUMP_IDENTITY = REPO / "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/identity-map.json"
 
@@ -69,6 +70,7 @@ def exact_archive_candidates(reference: dict[str, Any]) -> list[dict[str, Any]]:
         ASSET_ROOT / "intake/owner-jstars-victory-vs-plus-20260917" / name,
         Path.home() / "Downloads" / name,
         Path.home() / "Desktop" / name,
+        Path.home() / name,
     ]
     return [file_record(path) for path in candidates if path.is_file()]
 
@@ -82,6 +84,8 @@ def jstars_killua_source() -> dict[str, Any]:
     for row in files:
         suffix = Path(row["path"]).suffix.casefold() or "no-extension"
         by_suffix[suffix] = by_suffix.get(suffix, 0) + 1
+    owner_cpk = read_json(CPK_INVENTORY)
+    owner_row = next(row for row in owner_cpk["priorityCharacters"] if row.get("slug") == "killua")
     return {
         "sourceId": analysis["sourceId"],
         "nativeCharacterId": "018",
@@ -89,6 +93,13 @@ def jstars_killua_source() -> dict[str, Any]:
         "conversionRoot": str(root.resolve()),
         "files": files,
         "fileTypeCounts": dict(sorted(by_suffix.items())),
+        "ownerDiscCpkEvidence": {
+            "receipt": str(CPK_INVENTORY.relative_to(REPO)),
+            "members": owner_row["members"],
+            "memberCount": len(owner_row["members"]),
+            "moduleCounts": owner_row["moduleCounts"],
+            "fullMemberManifest": owner_cpk["fullMemberManifest"],
+        },
         "stage": {
             "sourceObserved": True,
             "extracted": True,
@@ -100,8 +111,25 @@ def jstars_killua_source() -> dict[str, Any]:
         "blockers": [
             "$CH0 decoding is not validated for the compressed PAK source",
             "PS3 SRD/SRDI/SRDV geometry, texture and skin conversion is not validated",
-            "the sample contains no proven native motion, SFX or voice bank",
+            "owner-disc motion/VFX/SFX/voice containers are hashed but not decoded, event-mapped or owner-reviewed",
         ],
+    }
+
+
+def owner_disc_priority_sources(slugs: set[str]) -> dict[str, Any]:
+    owner_cpk = read_json(CPK_INVENTORY)
+    return {
+        str(row["slug"]): {
+            "nativeId": row["nativeId"],
+            "identityStatus": row["identityStatus"],
+            "memberCount": len(row["members"]),
+            "moduleCounts": row["moduleCounts"],
+            "members": row["members"],
+            "runtimeReady": False,
+            "conversionStatus": row["conversionStatus"],
+        }
+        for row in owner_cpk["priorityCharacters"]
+        if row.get("slug") in slugs
     }
 
 
@@ -208,8 +236,8 @@ def markdown(inventory: dict[str, Any]) -> str:
         "",
         "## 精確缺口",
         "",
-        "1. `J-Stars Victory Vs+.7z` 未出現在本機標準接收位置，銀時與小傑沒有已觀察的 J-Stars 原生容器。",
-        "2. 奇犽 `018` 已有 J-Stars SRD/SRDI/SRDV 實檔，但 `$CH0` 與 PS3 SRD 幾何／貼圖／蒙皮轉換尚未驗證。",
+        "1. 六名 partial STPK 身分探測已將本表三名確證為銀時 `028`、小傑 `017`、奇犍 `018`。",
+        "2. 三名已從 owner 原盤逐檔雜湊模型、動作、VFX、SFX 與語音容器候選；`$CH0` 完整解碼與 PS3 SRD 幾何／貼圖／蒙皮轉換尚未驗證。",
         "3. 小傑／奇犽 JUMP FORCE 音訊已解碼與逐檔雜湊，但未逐段聽審，不得直接綁定技能事件。",
         "4. 現有 300／社群候選可供遊戲使用或後續整合，但不是 J-Stars 轉換成果。",
         "",
@@ -254,6 +282,7 @@ def build() -> dict[str, Any]:
             "ownerArchiveStatus": owner_status,
             "exactOwnerArchiveCandidates": exact,
             "previousReceiptStatus": owner.get("status"),
+            "ownerDiscPriorityCharacters": owner_disc_priority_sources({"gintoki", "gon", "killua"}),
             "jstarsKillua018": jstars_killua_source(),
         },
         "characters": characters,

@@ -13,6 +13,10 @@ SOURCE_ID = "owner-jstars-victory-vs-plus-20260917"
 ARCHIVE_NAME = "J-Stars Victory Vs+.7z"
 SOURCE_URL = "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today"
 ROSTER_REFERENCE_URL = "https://en.wikipedia.org/wiki/J-Stars_Victory_VS"
+EXTRACT_RECEIPT = Path("materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json")
+CPK_RECEIPT = Path("materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json")
+IDENTITY_RECEIPT = Path("materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/identity-probe.json")
+PRIORITY_SOURCE_RECEIPT = Path("materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json")
 SOURCE_REFERENCES = [
     {
         "label": "VIZ J-Stars VICTORY VS+ overview",
@@ -236,6 +240,7 @@ def workspace_root(repo: Path) -> Path:
 
 def archive_candidates(workspace: Path) -> list[Path]:
     return [
+        Path.home() / ARCHIVE_NAME,
         workspace / "GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917" / ARCHIVE_NAME,
         Path.home() / "Downloads" / ARCHIVE_NAME,
         Path.home() / "Desktop" / ARCHIVE_NAME,
@@ -263,13 +268,30 @@ def build() -> dict:
     validate_authority(repo)
     workspace = workspace_root(repo)
     found_archive = next((p for p in archive_candidates(workspace) if p.is_file()), None)
+    tracked = {}
+    for key, rel in (("extract", EXTRACT_RECEIPT), ("cpk", CPK_RECEIPT),
+                     ("identity", IDENTITY_RECEIPT), ("priority", PRIORITY_SOURCE_RECEIPT)):
+        path = repo / rel
+        if path.is_file(): tracked[key] = json.loads(path.read_text())
+    inventoried = (
+        tracked.get("extract", {}).get("status") == "inventoried-read-only"
+        and tracked.get("cpk", {}).get("summary", {}).get("membersHashed") == 19471
+        and tracked.get("identity", {}).get("summary", {}).get("tokensWithInternalIdentity") == 56
+        and tracked.get("priority", {}).get("summary", {}).get("nativeIdsConfirmed") == 6
+    )
+    priority_native_ids = {
+        row["nameEnglish"]: row["nativeId"]
+        for row in tracked.get("priority", {}).get("characters", [])
+    }
     rows = []
     for roster_order, (work, zh, en, role) in enumerate(ROSTER, start=1):
         hero_ids = list(GGD_MATCHES.get(en, []))
-        native_id = KNOWN_NATIVE_IDS.get(en)
+        native_id = priority_native_ids.get(en, KNOWN_NATIVE_IDS.get(en))
         priority_rank = DEFAULT_SOURCE_PRIORITY.get(en)
         if native_id:
             status = "已有原生 PAK/STPK 對照樣本，等待 $CH0 解碼與標準化轉換"
+        elif inventoried:
+            status = "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照"
         elif found_archive:
             status = "完整 owner archive 已到位，等待逐檔 inventory 與原生 ID 對照"
         else:
@@ -278,6 +300,8 @@ def build() -> dict:
         if priority_rank:
             if native_id:
                 blocker = "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
+            elif inventoried:
+                blocker = "owner archive 與 CPK 已盤點，但此角色 native ID 對照、$CH0/PS3 SRD 轉換與逐模組驗收尚未完成"
             elif found_archive:
                 blocker = "owner archive 已到位，但尚未完成逐檔 inventory、角色對照、轉換與逐模組驗收"
             else:
@@ -343,7 +367,7 @@ def build() -> dict:
             "contractSummary": receipts["contract"]["summary"],
             "firstLaneSummary": receipts["gintokiGonKillua"]["summary"],
             "secondLaneSummary": receipts["nubeLuckymanHiei"]["summary"],
-            "nativeIdEvidence": {"Killua Zoldyck": "018"},
+            "nativeIdEvidence": priority_native_ids,
             "fallbackEvidence": {
                 "validatedModels": receipts["gintokiGonKillua"]["summary"]["validatedFallbackModels"],
                 "jumpForceAudioFiles": receipts["gintokiGonKillua"]["summary"]["jumpForceAudioFiles"],
@@ -353,23 +377,38 @@ def build() -> dict:
             "jstarsRegistered": 0,
             "jstarsDeployed": 0,
             "blockingConverter": "PS3 SRD/SRDI/SRDV and $CH0 to skinned GLB is not yet validated",
-            "ownerArchiveStatus": "blocked-archive-not-found",
+            "ownerArchiveStatus": ("archive-iso-seven-cpk-inventoried-conversion-blocked" if inventoried
+                                   else "archive-present-inventory-pending" if found_archive
+                                   else "blocked-archive-not-found"),
         }
+    archive_source = tracked.get("extract", {}).get("source", {})
+    cpk_summary = tracked.get("cpk", {}).get("summary", {})
+    identity_summary = tracked.get("identity", {}).get("summary", {})
     return {
         "schema": "ggd.jstars-owner-archive-plan@1",
         "sourceId": SOURCE_ID,
         "sourceGame": "J-Stars Victory VS+",
-        "platformRequested": "PS3 archive; verify contents before assigning platform/version",
+        "platformRequested": tracked.get("extract", {}).get("identification", {}).get("platform", "PS3 archive; platform verification pending"),
+        "platformVersion": tracked.get("extract", {}).get("identification", {}).get("platformVersion"),
         "archiveFileName": ARCHIVE_NAME,
         "preferredIntakePath": str(archive_candidates(workspace)[0]),
-        "archiveFound": bool(found_archive),
-        "archivePath": str(found_archive) if found_archive else None,
+        "archiveFound": bool(found_archive or inventoried),
+        "archivePath": str(found_archive) if found_archive else archive_source.get("absolutePath"),
+        "archiveInventory": {
+            "status": tracked.get("extract", {}).get("status", "missing"),
+            "bytes": archive_source.get("bytes"), "sha256": archive_source.get("sha256"),
+            "platformVersion": tracked.get("extract", {}).get("identification", {}).get("platformVersion"),
+            "cpkContainers": cpk_summary.get("containersInventoried", 0),
+            "membersHashed": cpk_summary.get("membersHashed", 0),
+            "characterTokensWithInternalIdentity": identity_summary.get("tokensWithInternalIdentity", 0),
+            "priorityNativeIdsConfirmed": tracked.get("priority", {}).get("summary", {}).get("nativeIdsConfirmed", 0),
+        },
         "sourceReferences": SOURCE_REFERENCES,
         "rosterCounts": {"total": len(rows), "playable": sum(r["role"] == "playable" for r in rows), "support": sum(r["role"] == "support" for r in rows)},
         "policy": {
             "modelOrder": "同角色且皆合格時，一般候選以較新的 JUMP FORCE 原作模型預選；六名 owner 指定優先角例外，驗收與註冊完成後改以 J-Stars 為預設來源",
             "defaultActivation": "intendedDefaultSource 是上架意圖，不是現況；只有 converted、registered 與逐模組驗收均有收據後，才可將 default 改為 true",
-            "triangleRule": "超過 10000 面啟動減面，成品目標低於 8000 面",
+            "triangleRule": "超過 10000 面啟動減面，成品上限為 8000 面（含）",
             "audioReview": "未核實編號音效與語音不得直接綁技能；先產生逐項播放審查清單",
             "supportRule": "支援角色不因擁有模型或支援技就宣稱完整英雄",
         },
@@ -457,7 +496,7 @@ def markdown(plan: dict) -> str:
         "",
         "## 轉換與上架建議",
         "",
-        "1. 模型：同角色同級候選都合格時，依既定規則以較新的 JUMP FORCE 原作模型預選，J-Stars 仍保留為獨立下拉選項。超過 10,000 面才啟動減面，目標壓到 8,000 面以下。",
+        "1. 模型：同角色同級候選都合格時，依既定規則以較新的 JUMP FORCE 原作模型預選，J-Stars 仍保留為獨立下拉選項。超過 10,000 面才啟動減面，成品上限為 8,000 面（含）。",
         "2. 動作：可操作角先取原生六狀態；支援角不假設有完整動作。缺 death 時可用已核准的 hurt＋半透明升天淡出，並在來源欄標示 fallback。",
         "3. 特效／音效：先依原生事件與容器拆分；只有編號而無事件證據的檔案要進播放審查頁，不能自動綁 Q/W/E/R。",
         "4. 語音：保留原容器和解碼母檔，優先日語。說話者、語言或事件未核實的檔案標待確認，不把劇情語音冒充戰鬥喊聲。",
@@ -474,13 +513,16 @@ def master_section(plan: dict) -> str:
     priorities = sorted((r for r in plan["characters"] if r["newHeroPriority"]), key=lambda r: r["newHeroPriority"])
     gon = plan["gonCommunityFallback"]
     execution = plan.get("priorityExecution")
+    archive = plan.get("archiveInventory", {})
     lines = [
         "<!-- generated:jstars-owner-archive-v1:start -->",
         "### J-Stars Victory VS+ owner archive 與新英雄候選",
         "",
         f"J-Stars 名單重新核對為 **{plan['rosterCounts']['playable']} 名可操作角色＋{plan['rosterCounts']['support']} 名支援角色，共 {plan['rosterCounts']['total']} 名**。現有 GGD 可直接增加獨立 J-Stars 模型選項者為 {len(existing_playable)} 名可操作角；另有 {len(existing_support)} 名支援角已有英雄定義，但支援角不能因有模型或單一支援技就算完整英雄。",
         "",
-        f"owner archive `{plan['archiveFileName']}` 目前為 **{'已在本機找到，待 inventory' if plan['archiveFound'] else '尚未在已知本機路徑找到'}**；因此本批新增取得／轉換／註冊／部署均為 0。已由原生 PAK/STPK 對照樣本證明的 ID 只有 " + "、".join(f"{r['nameZhTW']}=`{r['nativeId']}`" for r in known_ids) + "，其餘不得用推測 ID 填入。",
+        f"owner archive `{plan['archiveFileName']}` 已盤點：{archive.get('bytes', 0):,} bytes，SHA-256 `{str(archive.get('sha256') or '')[:16]}…`，平台 `{archive.get('platformVersion')}`。已建立 {archive.get('cpkContainers', 0)} 個 CPK、{archive.get('membersHashed', 0):,} 筆成員雜湊，{archive.get('characterTokensWithInternalIdentity', 0)} 組角色 token 內部名索引。取得與解包已完成；轉換／註冊／部署仍為 0。",
+        "",
+        f"優先六名已由 partial STPK 內部成員名唯一確認：" + "、".join(f"{r['nameZhTW']}=`{r['nativeId']}`" for r in known_ids if r.get('priorityRank')) + "。其餘 token 保留內部名與待對照狀態，不以名單順序猜 ID。",
         "",
         "名單來源已交叉核對 VIZ 的 39＋13 統計、PlayStation 的發售／平台資訊與 52 名完整角色表；原生 ID 與素材可用性仍只採本機收據。",
         "",
@@ -499,7 +541,7 @@ def master_section(plan: dict) -> str:
     if execution:
         fallback = execution["fallbackEvidence"]
         lines += [
-            "本輪已將六名分成三條腳本工作流實際執行。J-Stars 原生成果仍是 **已轉換 0／已註冊 0／已部署 0**；奇犎 `018` 已有 14 個 SRD／SRDI／SRDV 相關成員的逐檔收據，但 `$CH0` 與 PS3 SRD 幾何／貼圖／蒙皮轉換尚未驗證。銀時、小傑、神眉、幸運超人、飛影沒有可驗證的 J-Stars 原生容器，沒有猜 ID。",
+            "本輪已將六名分成三條腳本工作流實際執行。J-Stars 原生成果仍是 **已轉換 0／已註冊 0／已部署 0**；銀時、神眉、小傑、奇犎、幸運超人、飛影均已取得並雜湊模型／骨架／貼圖、動作、VFX、SFX 與日語語音容器候選。現在的共同阻擋是 `$CH0` 完整解碼與 PS3 SRD／SRDI／SRDV 轉換，不冒稱已有 GLB 或可播成品。",
             "",
             f"現有替代資源另行保留：銀時 300 本尊與奇犎 300 本尊已註冊，小傑社群靜態候選未註冊；三個模型 Khronos {fallback['validatedModels']}/{fallback['validatedModels']} 零錯誤。小傑／奇犎 JUMP FORCE 解碼音訊共 {fallback['jumpForceAudioFiles']} 檔，飛影替代 JUMP FORCE 音訊 {fallback['hieiAlternateDecodedAudioFiles']} 檔，全部仍待 owner 逐檔聽審與事件綁定，不寫成 J-Stars 已上架。",
             "",

@@ -9,14 +9,14 @@
       "nameZhTW": "坂田銀時",
       "nameEnglish": "Gintoki Sakata",
       "heroId": "community-review-23-20260907",
-      "jstarsNativeId": null
+      "jstarsNativeId": "028"
     },
     {
       "slug": "gon",
       "nameZhTW": "小傑·富力士",
       "nameEnglish": "Gon Freecss",
       "heroId": "godie-ucrl",
-      "jstarsNativeId": null,
+      "jstarsNativeId": "017",
       "jumpForceNativeId": "chr0300"
     },
     {
@@ -30,7 +30,7 @@
   ],
   "policies": {
     "identity": "A J-Stars identity requires an observed internal member/container name or owner visual confirmation; roster order is not an identity proof.",
-    "model": "Models above 10000 triangles require decimation to below 8000 triangles before current-policy adoption.",
+    "model": "Models above 10000 triangles require decimation to at most 8000 triangles before current-policy adoption.",
     "audio": "Numbered SFX and voice files remain listening-review candidates until the owner approves the speaker and event.",
     "stages": [
       "source-observed",

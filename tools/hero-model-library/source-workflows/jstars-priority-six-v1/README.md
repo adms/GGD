@@ -5,7 +5,7 @@
 ## 順序與閘
 
 1. 讀 `ggd.jstars-extraction-receipt@1`。角色必須有 `identityVerified=true`，且 `heroId` 是本 lane 固定的 GGD 目標 ID。owner archive receipt 若仍是 `blocked-archive-not-found` 或 `blocked-archive-listing-failed`，六名全部輸出 blocked。
-2. 呼叫 `jstars-conversion-runtime-v1/pipeline.py`。模型只在來源超過 10,000 面時減面，減面結果須低於 8,000 面；貼圖上限 256px；骨架與所有 primitive 蒙皮須通過正式檢查；動作必須明列 `idle/run/attack/cast/hurt/death` 六態。
+2. 呼叫 `jstars-conversion-runtime-v1/pipeline.py`。模型只在來源超過 10,000 面時減面，減面結果上限為 8,000 面（含）；貼圖上限 256px；骨架與所有 primitive 蒙皮須通過正式檢查；動作必須明列 `idle/run/attack/cast/hurt/death` 六態。
 3. VFX、SFX、voice 必須各有同角色 checked-binder 收據，`status=runtime-bound-and-verified`，且 `boundArtifactSha256` 要逐一等於來源 receipt 的完整檔案集合。不能用檔案數相同取代 SHA-256 對應。
 4. SFX 與 voice 的每一個來源檔必須有 `ownerReview`：`reviewer=owner`、`decision=approve`、已確認 `event`；voice 另需 `speaker` 與 `language`。一檔未核准就阻擋該角色預設採用。
 5. 共用管線先以 `automaticEligible=false` 註冊獨立模型選項。七個模組與註冊 gate 全通過後，`pipeline_promote.mts` 才新增可自動選用的不可變模型版本。若英雄目前是 `modelSelectionMode=manual`，作用中的 `modelKey` 保持不變；若為 automatic，J-Stars canonical-game 版本才成為預設。

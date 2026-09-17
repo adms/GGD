@@ -28,10 +28,14 @@ class JStarsPriorityThreeInventoryTest(unittest.TestCase):
         self.assertEqual(self.data["summary"]["productionDeploymentsVerified"], 0)
         by_slug = {row["slug"]: row for row in self.data["characters"]}
         self.assertEqual(set(by_slug), {"gintoki", "gon", "killua"})
-        self.assertIsNone(by_slug["gintoki"]["jstarsNativeId"])
-        self.assertIsNone(by_slug["gon"]["jstarsNativeId"])
+        self.assertEqual(by_slug["gintoki"]["jstarsNativeId"], "028")
+        self.assertEqual(by_slug["gon"]["jstarsNativeId"], "017")
         self.assertEqual(by_slug["killua"]["jstarsNativeId"], "018")
         self.assertFalse(any(row["jstarsRuntimeRegistered"] for row in by_slug.values()))
+        owner_rows = self.data["source"]["ownerDiscPriorityCharacters"]
+        self.assertEqual({slug: row["nativeId"] for slug, row in owner_rows.items()}, {
+            "gintoki": "028", "gon": "017", "killua": "018",
+        })
 
     def test_models_and_audio_are_real_local_files(self):
         self.assertEqual(self.data["summary"]["validatedFallbackModels"], 3)

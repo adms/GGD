@@ -2,16 +2,16 @@
 
 本表由 `build_inventory.py` 產生。它只記錄可由本機實檔重現的證據；不同遊戲的素材會明列為替代來源，不會冒充 J-Stars 原生素材。
 
-- Owner archive：`本機未找到`
-- J-Stars 已證明原生 ID：0
+- Owner archive：`已找到`
+- J-Stars 已證明原生 ID：3
 - J-Stars 已轉換模型／動作／特效：0／0／0
 - 已註冊／已部署：0／0
 
 | 角色 | GGD ID | J-Stars 原生 ID | 模型 | 骨架 | 動作 | 特效 | 音效 | 語音 | 精確狀態 |
 |---|---|---|---|---|---|---|---|---|---|
-| 鵺野鳴介／神眉 | `b2-nube` | 未證明 | not-observed | not-observed | not-observed | not-observed | not-observed | not-observed | blocked-archive-not-found |
-| 幸運超人 | `b2-luckyman` | 未證明 | not-observed | not-observed | not-observed | not-observed | not-observed | not-observed | blocked-archive-not-found |
-| 飛影 | `godie-u010`, `godie-uvng` | 未證明 | not-observed | not-observed | not-observed | not-observed | not-observed | not-observed | blocked-archive-not-found |
+| 鵺野鳴介／神眉 | `b2-nube` | 041 | owner-disc-member-hashed | owner-disc-member-hashed | owner-disc-member-hashed | owner-disc-member-hashed | owner-disc-member-hashed | owner-disc-member-hashed | native-containers-hashed-conversion-blocked |
+| 幸運超人 | `b2-luckyman` | 037 | owner-disc-member-hashed | owner-disc-member-hashed | owner-disc-member-hashed | owner-disc-member-hashed | owner-disc-member-hashed | owner-disc-member-hashed | native-containers-hashed-conversion-blocked |
+| 飛影 | `godie-u010`, `godie-uvng` | 012 | owner-disc-member-hashed | owner-disc-member-hashed | owner-disc-member-hashed | owner-disc-member-hashed | owner-disc-member-hashed | owner-disc-member-hashed | native-containers-hashed-conversion-blocked |
 
 ## 可立即使用的替代來源證據
 

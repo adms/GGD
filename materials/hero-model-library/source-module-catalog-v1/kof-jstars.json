@@ -606,8 +606,8 @@
     {
       "sourceId": "owner-jstars-victory-vs-plus-20260917",
       "title": "J-Stars Victory VS+",
-      "platform": "PS3 archive; verify contents before assigning platform/version",
-      "version": null,
+      "platform": "PS3",
+      "version": "PS3 BLUS31519 APP_VER 01.00",
       "status": "blocked-upstream-extraction",
       "evidencePaths": [
         "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
@@ -616,46 +616,46 @@
         "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
         "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json"
       ],
-      "summary": "名單含 39 名可操作角色與 13 名支援角色；owner archive 狀態為 blocked-archive-not-found。owner 指定六名已排入 model/motion/vfx/sfx/voice 優先轉換與預設來源計畫；第一優先來源查核確認原生 ID 1 名、runtime-ready 模組 0；獨立選項註冊 0、已套用預設 0、正式部署 0。",
+      "summary": "名單含 39 名可操作角色與 13 名支援角色；owner archive 狀態為 inventoried-read-only。owner 指定六名已排入 model/motion/vfx/sfx/voice 優先轉換與預設來源計畫；第一優先來源查核確認原生 ID 6 名、runtime-ready 模組 0；獨立選項註冊 0、已套用預設 0、正式部署 0。",
       "candidates": [
         {
           "character": "殺老師",
           "id": null,
           "work": "暗殺教室",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -678,39 +678,39 @@
           "id": null,
           "work": "惡魔奶爸",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -733,39 +733,39 @@
           "id": null,
           "work": "BLEACH 死神",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -788,39 +788,39 @@
           "id": null,
           "work": "BLEACH 死神",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -843,39 +843,39 @@
           "id": null,
           "work": "鼻毛真拳",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -898,39 +898,39 @@
           "id": null,
           "work": "珍遊記",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -953,39 +953,39 @@
           "id": null,
           "work": "怪博士與機器娃娃",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -1008,39 +1008,39 @@
           "id": null,
           "work": "七龍珠",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -1063,39 +1063,39 @@
           "id": null,
           "work": "七龍珠",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -1118,39 +1118,39 @@
           "id": null,
           "work": "七龍珠",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -1173,39 +1173,39 @@
           "id": null,
           "work": "北斗神拳",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -1228,39 +1228,39 @@
           "id": null,
           "work": "北斗神拳",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -1280,42 +1280,42 @@
         },
         {
           "character": "坂田銀時",
-          "id": null,
+          "id": "028",
           "work": "銀魂",
           "model": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "native-container-sample-indexed",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "native-container-sample-indexed",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "vfx": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "sfx": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "voice": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "registration": {
             "stage": "not-registered",
@@ -1352,47 +1352,47 @@
             "converted": false,
             "registered": false,
             "default": false,
-            "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
+            "blocker": "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
           }
         },
         {
           "character": "鵺野鳴介",
-          "id": null,
+          "id": "041",
           "work": "靈異教師神眉",
           "model": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "native-container-sample-indexed",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "native-container-sample-indexed",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "vfx": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "sfx": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "voice": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "registration": {
             "stage": "not-registered",
@@ -1429,47 +1429,47 @@
             "converted": false,
             "registered": false,
             "default": false,
-            "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
+            "blocker": "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
           }
         },
         {
           "character": "小傑·富力士",
-          "id": null,
+          "id": "017",
           "work": "HUNTER×HUNTER",
           "model": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "native-container-sample-indexed",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "native-container-sample-indexed",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "vfx": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "sfx": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "voice": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "registration": {
             "stage": "not-registered",
@@ -1506,7 +1506,7 @@
             "converted": false,
             "registered": false,
             "default": false,
-            "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
+            "blocker": "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
           }
         },
         {
@@ -1514,9 +1514,9 @@
           "id": "018",
           "work": "HUNTER×HUNTER",
           "model": {
-            "stage": "native-model-containers-present-split-not-converted",
+            "stage": "native-containers-present-hashed-conversion-blocked",
             "count": 1,
-            "note": "i/m/v PAK+STPK model groups and split SRD-family members are preserved; $CH0 decoding, PS3 geometry/texture conversion and visual validation remain blocked"
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "texture": {
             "stage": "native-container-sample-indexed",
@@ -1529,24 +1529,24 @@
             "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "the public sample contains character_model i/m/v groups only; no native motion container was observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "vfx": {
-            "stage": "embedded-color-effect-member-observed-unverified",
+            "stage": "native-containers-present-hashed-conversion-blocked",
             "count": 1,
-            "note": "color_effect_018_killua_m.pak is a split member of the model sample; its payload and runtime event mapping have not been decoded or verified"
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "sfx": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "the public sample contains character_model i/m/v groups only; no native SFX container was observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "voice": {
-            "stage": "lip-sync-or-reference-member-observed-not-voice-confirmed",
-            "count": 0,
-            "note": "018_killua_stream_jp_lps_PS3.pak is preserved, but the public receipt does not establish that it contains decodable voice audio"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "registration": {
             "stage": "not-registered",
@@ -1591,39 +1591,39 @@
           "id": null,
           "work": "JoJo 的奇妙冒險",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -1646,39 +1646,39 @@
           "id": null,
           "work": "JoJo 的奇妙冒險",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -1701,39 +1701,39 @@
           "id": null,
           "work": "烏龍派出所",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -1756,39 +1756,39 @@
           "id": null,
           "work": "最強學生會長",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -1811,39 +1811,39 @@
           "id": null,
           "work": "火影忍者",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -1866,39 +1866,39 @@
           "id": null,
           "work": "火影忍者",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -1921,39 +1921,39 @@
           "id": null,
           "work": "火影忍者",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -2031,39 +2031,39 @@
           "id": null,
           "work": "ONE PIECE",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -2086,39 +2086,39 @@
           "id": null,
           "work": "ONE PIECE",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -2141,39 +2141,39 @@
           "id": null,
           "work": "ONE PIECE",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -2196,39 +2196,39 @@
           "id": null,
           "work": "家庭教師HITMAN REBORN!",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -2251,39 +2251,39 @@
           "id": null,
           "work": "神劍闖江湖",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -2306,39 +2306,39 @@
           "id": null,
           "work": "神劍闖江湖",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -2361,39 +2361,39 @@
           "id": null,
           "work": "聖鬥士星矢",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -2416,39 +2416,39 @@
           "id": null,
           "work": "魁!!男塾",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -2471,39 +2471,39 @@
           "id": null,
           "work": "齊木楠雄的災難",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -2523,42 +2523,42 @@
         },
         {
           "character": "幸運超人",
-          "id": null,
+          "id": "037",
           "work": "幸運超人",
           "model": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "native-container-sample-indexed",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "native-container-sample-indexed",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "vfx": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "sfx": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "voice": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "registration": {
             "stage": "not-registered",
@@ -2595,7 +2595,7 @@
             "converted": false,
             "registered": false,
             "default": false,
-            "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
+            "blocker": "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
           }
         },
         {
@@ -2713,39 +2713,39 @@
           "id": null,
           "work": "幽遊白書",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -2765,42 +2765,42 @@
         },
         {
           "character": "飛影",
-          "id": null,
+          "id": "012",
           "work": "幽遊白書",
           "model": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "native-container-sample-indexed",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "native-container-sample-indexed",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "vfx": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "sfx": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "voice": {
-            "stage": "blocked-source-container-not-observed",
-            "count": 0,
-            "note": "owner archive not found; no character container observed"
+            "stage": "native-containers-present-hashed-conversion-blocked",
+            "count": 1,
+            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "registration": {
             "stage": "not-registered",
@@ -2838,7 +2838,7 @@
             "converted": false,
             "registered": false,
             "default": false,
-            "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
+            "blocker": "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
           }
         },
         {
@@ -2846,39 +2846,39 @@
           "id": null,
           "work": "幽遊白書",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "可操作角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -2901,39 +2901,39 @@
           "id": null,
           "work": "BLEACH 死神",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "支援角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -2956,39 +2956,39 @@
           "id": null,
           "work": "D.Gray-man",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "支援角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -3011,39 +3011,39 @@
           "id": null,
           "work": "銀魂",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "支援角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -3066,39 +3066,39 @@
           "id": null,
           "work": "排球少年!!",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "支援角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -3121,39 +3121,39 @@
           "id": null,
           "work": "HUNTER×HUNTER",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "支援角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -3176,39 +3176,39 @@
           "id": null,
           "work": "影子籃球員",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "支援角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -3231,39 +3231,39 @@
           "id": null,
           "work": "最強學生會長",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "支援角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -3286,39 +3286,39 @@
           "id": null,
           "work": "魔人偵探腦嚙涅羅",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "支援角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -3341,39 +3341,39 @@
           "id": null,
           "work": "偽戀",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "支援角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -3396,39 +3396,39 @@
           "id": null,
           "work": "搞怪吹笛手",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "支援角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -3451,39 +3451,39 @@
           "id": null,
           "work": "魁!!男塾",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "支援角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -3506,39 +3506,39 @@
           "id": null,
           "work": "SKET DANCE",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "支援角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",
@@ -3561,39 +3561,39 @@
           "id": null,
           "work": "出包王女",
           "model": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 模型、貼圖、骨架皆未準備成 runtime candidate。"
           },
           "texture": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已轉換並完成材質映射的貼圖候選數。"
           },
           "skeleton": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
           },
           "motion": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+            "note": "支援角色候選；owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已映射六態動作。"
           },
           "vfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有已審核技能事件綁定。"
           },
           "sfx": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段播放審查或 runtime 綁定。"
           },
           "voice": {
-            "stage": "planned-source-missing",
+            "stage": "owner-cpk-inventoried-native-id-unmapped",
             "count": null,
-            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+            "note": "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。 沒有逐段說話者、語言與事件審核。"
           },
           "registration": {
             "stage": "not-registered",

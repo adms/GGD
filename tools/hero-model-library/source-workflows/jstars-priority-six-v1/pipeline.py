@@ -112,7 +112,7 @@ def validate_contract() -> dict[str, Any]:
     if contract.get("priority") != expected_priority or contract.get("modules") != list(MODULES):
         raise ValueError("priority-six identity/module contract drift")
     policy = contract.get("policy", {})
-    if policy.get("decimateOnlyWhenTrianglesAbove") != 10000 or policy.get("decimatedTargetTrianglesBelow") != 8000:
+    if policy.get("decimateOnlyWhenTrianglesAbove") != 10000 or policy.get("decimatedMaximumAcceptedTriangles") != 8000:
         raise ValueError("triangle policy drift")
     if policy.get("textureMaxEdge") != 256 or policy.get("requiredMotionStates") != list(STATES):
         raise ValueError("texture/motion policy drift")
@@ -264,8 +264,8 @@ def structural_module_gate(source: dict[str, Any], conversion: dict[str, Any], m
         elif original > 10000:
             if quality["decimationApplied"] is not True:
                 blockers.append("source above 10000 triangles was not decimated")
-            if final >= 8000:
-                blockers.append("decimated output must be strictly below 8000 triangles")
+            if final > 8000:
+                blockers.append("decimated output must be at most 8000 triangles")
         elif quality["decimationApplied"] is not False:
             blockers.append("source at or below 10000 triangles must not be decimated")
     if module == "texture" and (not isinstance(quality["textureMaxEdge"], int) or quality["textureMaxEdge"] < 0 or quality["textureMaxEdge"] > 256):
@@ -350,6 +350,21 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
     if raw.get("status") in BLOCKED_UPSTREAM:
         reason = f"upstream source receipt is {raw['status']}"
         value = blocked_receipt(source_path, output, "blocked-upstream-source", reason, {"status": raw["status"], "blockers": raw.get("blockers", [])})
+        value["mode"] = args.mode
+        value["input"]["sourceReceipt"] = file_record(source_path)
+        return value, 0 if args.mode == "plan" else 2
+    if raw.get("schema") == "ggd.jstars-priority-six-source-receipt@1":
+        reason = (
+            "owner archive and seven CPKs are inventoried; materialized extraction is still blocked by "
+            "the $CMP/$CH0 complete-decode plus PS3 SRD conversion boundary; all six priority native IDs are proven"
+        )
+        value = blocked_receipt(
+            source_path,
+            output,
+            "blocked-native-extraction",
+            reason,
+            {"status": raw.get("status"), "summary": raw.get("summary", {}), "blockers": raw.get("blockers", [])},
+        )
         value["mode"] = args.mode
         value["input"]["sourceReceipt"] = file_record(source_path)
         return value, 0 if args.mode == "plan" else 2

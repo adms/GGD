@@ -1,4 +1,5 @@
 import importlib.util
+import struct
 import tempfile
 import unittest
 from pathlib import Path
@@ -62,6 +63,21 @@ Folder = +
     def test_explicit_archive_must_be_absolute(self):
         with self.assertRaisesRegex(ValueError, "absolute path"):
             MODULE.discover_archive(Path("relative.7z"), [], 2)
+
+    def test_bundled_seven_zip_is_considered_when_path_has_none(self):
+        tools = MODULE.discover_tools()
+        if Path("/Applications/Parallels Desktop.app/Contents/MacOS/7z").is_file():
+            self.assertEqual(tools["sevenZip"], "/Applications/Parallels Desktop.app/Contents/MacOS/7z")
+
+    def test_parse_param_sfo_reads_string_identity(self):
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "PARAM.SFO"
+            keys = b"TITLE_ID\0"
+            value = b"BLUS31519\0"
+            header = b"\0PSF" + struct.pack("<IIII", 0x101, 36, 48, 1)
+            entry = struct.pack("<HHIII", 0, 0x0204, len(value), len(value), 0)
+            path.write_bytes(header + entry + keys + b"\0" * 3 + value)
+            self.assertEqual(MODULE.parse_param_sfo(path)["values"]["TITLE_ID"], "BLUS31519")
 
 
 if __name__ == "__main__":

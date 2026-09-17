@@ -74,7 +74,7 @@ class PrioritySixPipelineTest(unittest.TestCase):
         self.assertEqual([row["key"] for row in PIPELINE.PRIORITY], ["gintoki", "nube", "gon", "killua", "luckyman", "hiei"])
         policy = PIPELINE.policy_record()
         self.assertEqual(policy["decimateOnlyWhenTrianglesAbove"], 10000)
-        self.assertEqual(policy["decimatedTargetTrianglesBelow"], 8000)
+        self.assertEqual(policy["decimatedMaximumAcceptedTriangles"], 8000)
         self.assertEqual(policy["textureMaxEdge"], 256)
         self.assertEqual(tuple(policy["requiredMotionStates"]), PIPELINE.STATES)
         self.assertTrue(policy["manualSelectionMustBePreserved"])
@@ -89,7 +89,7 @@ class PrioritySixPipelineTest(unittest.TestCase):
         self.assertTrue(all(not row["automaticDefaultApplied"] for row in result["characters"]))
         self.assertFalse(result["productionDeploymentVerified"])
 
-    def test_current_upstream_blocker_propagates_to_all_six(self) -> None:
+    def test_raw_owner_archive_receipt_is_not_a_conversion_source_receipt(self) -> None:
         candidates = [
             PIPELINE.DEFAULT_REPO / "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
             PIPELINE.DEFAULT_REPO / "materials/hero-model-library/priority-evidence/jstars-owner-archive-extract-v1/receipt.json",
@@ -100,9 +100,23 @@ class PrioritySixPipelineTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             result, code = PIPELINE.build(self.args(Path(folder), source))
         self.assertEqual(code, 0)
-        self.assertEqual(result["status"], "blocked-upstream-source")
-        self.assertEqual(result["input"]["upstream"]["status"], "blocked-archive-not-found")
+        self.assertEqual(result["status"], "blocked-unsupported-source-receipt")
         self.assertTrue(all(all(stage["status"] == "blocked" for stage in row["stages"]) for row in result["characters"]))
+
+    def test_priority_source_inventory_preserves_precise_native_blocker(self) -> None:
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            source = root / "source.json"
+            source.write_text(json.dumps({
+                "schema": "ggd.jstars-priority-six-source-receipt@1",
+                "status": "owner-archive-inventoried-native-conversion-blocked",
+                "summary": {"nativeIdsConfirmed": 1, "nativeIdsUnproven": 5},
+                "blockers": [],
+            }))
+            result, code = PIPELINE.build(self.args(root, source))
+        self.assertEqual(code, 0)
+        self.assertEqual(result["status"], "blocked-native-extraction")
+        self.assertEqual(result["input"]["upstream"]["summary"]["nativeIdsConfirmed"], 1)
 
     def test_all_seven_modules_and_registration_unlock_default(self) -> None:
         with tempfile.TemporaryDirectory() as folder:
@@ -151,7 +165,7 @@ class PrioritySixPipelineTest(unittest.TestCase):
         self.assertEqual(motion["status"], "blocked")
         self.assertFalse(result["allGatesPassed"])
 
-    def test_over_ten_thousand_requires_strictly_below_eight_thousand(self) -> None:
+    def test_over_ten_thousand_accepts_exactly_eight_thousand(self) -> None:
         target = PIPELINE.PRIORITY[3]
         source = source_character(target)
         conversion = conversion_character(source)
@@ -160,8 +174,19 @@ class PrioritySixPipelineTest(unittest.TestCase):
         }
         result = PIPELINE.evaluate_character(target, source, conversion)
         model = next(stage for stage in result["stages"] if stage["id"] == "model")
+        self.assertEqual(model["status"], "passed")
+
+    def test_over_ten_thousand_rejects_eight_thousand_and_one(self) -> None:
+        target = PIPELINE.PRIORITY[3]
+        source = source_character(target)
+        conversion = conversion_character(source)
+        conversion["modelResult"]["qualityEvidence"] = {
+            "originalTriangles": 10001, "outputTriangles": 8001, "textureMaxEdge": 256, "decimationApplied": True,
+        }
+        result = PIPELINE.evaluate_character(target, source, conversion)
+        model = next(stage for stage in result["stages"] if stage["id"] == "model")
         self.assertEqual(model["status"], "blocked")
-        self.assertIn("strictly below 8000", " ".join(model["blockers"]))
+        self.assertIn("at most 8000", " ".join(model["blockers"]))
 
     def test_identity_must_use_exact_ggd_id_and_be_verified(self) -> None:
         rows = [source_character(PIPELINE.PRIORITY[0]), source_character(PIPELINE.PRIORITY[1])]

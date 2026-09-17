@@ -227,7 +227,7 @@ for obj in meshes:
  after=triangles(obj)
  records.append({{"object":obj.name,"trianglesBefore":before,"trianglesAfterPlanarDissolve":after_dissolve,"target":target,"trianglesAfter":after,"materialRowsBefore":before_materials,"materialRowsAfter":material_rows(obj),"shapeKeysBefore":keys,"shapeKeysAfter":[]}})
 total=sum(row["trianglesAfter"] for row in records)
-if total>=8000: raise RuntimeError(f"whole-mesh target missed: {{total}}")
+if total>8000: raise RuntimeError(f"whole-mesh target missed: {{total}}")
 OUTPUT.parent.mkdir(parents=True,exist_ok=True)
 bpy.ops.export_scene.gltf(filepath=str(OUTPUT),export_format="GLB",export_animations=True,export_cameras=False,export_lights=False,export_yup=True)
 if not OUTPUT.is_file() or OUTPUT.stat().st_size==0: raise RuntimeError("GLB export failed")

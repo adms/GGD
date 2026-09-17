@@ -9,6 +9,7 @@ import json
 import os
 import re
 import shutil
+import struct
 import subprocess
 import sys
 from collections import defaultdict
@@ -65,8 +66,45 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def parse_param_sfo(path: Path) -> dict:
+    data = path.read_bytes()
+    if len(data) < 20 or data[:4] != b"\0PSF":
+        raise ValueError(f"not a PARAM.SFO file: {path}")
+    _, key_offset, data_offset, count = struct.unpack_from("<IIII", data, 4)
+    values = {}
+    for index in range(count):
+        cursor = 20 + index * 16
+        key_relative, format_id, length, maximum, value_relative = struct.unpack_from("<HHIII", data, cursor)
+        key_begin = key_offset + key_relative
+        key_end = data.find(b"\0", key_begin)
+        if key_end < key_begin:
+            raise ValueError(f"invalid PARAM.SFO key offset: {path}")
+        key = data[key_begin:key_end].decode("ascii")
+        raw = data[data_offset + value_relative : data_offset + value_relative + length]
+        if format_id == 0x0404 and length == 4:
+            value: str | int = int.from_bytes(raw, "little")
+        elif format_id == 0x0204:
+            value = raw.rstrip(b"\0").decode("utf-8", errors="replace")
+        else:
+            value = raw.hex()
+        values[key] = value
+    return {
+        "absolutePath": str(path.resolve()),
+        "bytes": len(data),
+        "sha256": sha256_file(path),
+        "values": values,
+    }
+
+
 def discover_tools() -> dict[str, str | None]:
-    seven_zip = shutil.which("7zz") or shutil.which("7z")
+    bundled_seven_zip = (
+        Path("/Applications/Parallels Desktop.app/Contents/MacOS/7z"),
+        Path("/Applications/Keka.app/Contents/MacOS/keka7zz"),
+    )
+    seven_zip = shutil.which("7zz") or shutil.which("7z") or next(
+        (str(path) for path in bundled_seven_zip if path.is_file()),
+        None,
+    )
     return {"sevenZip": seven_zip, "bsdtar": shutil.which("bsdtar")}
 
 
@@ -302,7 +340,14 @@ def blocked_receipt(attempted: list[str], output: Path, tools: dict[str, str | N
     }
 
 
-def build_receipt(archive: Path, output: Path, tools: dict[str, str | None], inspect_nested: bool) -> dict:
+def build_receipt(
+    archive: Path,
+    output: Path,
+    tools: dict[str, str | None],
+    inspect_nested: bool,
+    materialized_iso: Path | None = None,
+    param_sfo: Path | None = None,
+) -> dict:
     source = {
         "absolutePath": str(archive),
         "fileName": archive.name,
@@ -337,7 +382,34 @@ def build_receipt(archive: Path, output: Path, tools: dict[str, str | None], ins
 
     iso_members = [row["path"] for row in archive_listing["entries"] if not row["folder"] and row["path"].casefold().endswith(".iso")]
     iso_listings = []
-    if archive.suffix.casefold() == ".iso":
+    materialized_iso_record = None
+    if materialized_iso is not None:
+        if not materialized_iso.is_file():
+            blockers.append({
+                "action": "list materialized ISO",
+                "resource": str(materialized_iso),
+                "reason": "--materialized-iso does not point to a file",
+            })
+        else:
+            materialized_iso_record = {
+                "absolutePath": str(materialized_iso.resolve()),
+                "bytes": materialized_iso.stat().st_size,
+                "sha256": sha256_file(materialized_iso),
+                "sourceArchiveMember": iso_members[0] if len(iso_members) == 1 else None,
+            }
+            try:
+                iso_listings.append({
+                    "member": materialized_iso.name,
+                    "mode": "materialized-local-iso",
+                    **list_file(materialized_iso, tools),
+                })
+            except ListingError as exc:
+                blockers.append({
+                    "action": "list materialized ISO",
+                    "resource": str(materialized_iso),
+                    "reason": str(exc),
+                })
+    elif archive.suffix.casefold() == ".iso":
         iso_listings.append({"member": archive.name, **archive_listing})
     elif inspect_nested:
         for member in iso_members:
@@ -357,6 +429,25 @@ def build_receipt(archive: Path, output: Path, tools: dict[str, str | None], ins
         all_paths.extend(row["path"] for row in listing["entries"])
     tokens = character_tokens(all_paths)
     identity = detect_identity(all_paths, archive.name)
+    param_sfo_record = None
+    if param_sfo is not None:
+        if not param_sfo.is_file():
+            blockers.append({"action": "parse PARAM.SFO", "resource": str(param_sfo), "reason": "file is missing"})
+        else:
+            try:
+                param_sfo_record = parse_param_sfo(param_sfo)
+                values = param_sfo_record["values"]
+                identity.update({
+                    "title": values.get("TITLE", identity["title"]),
+                    "titleId": values.get("TITLE_ID"),
+                    "appVersion": values.get("APP_VER"),
+                    "discVersion": values.get("VERSION"),
+                    "requiredSystemVersion": values.get("PS3_SYSTEM_VER"),
+                    "platformVersion": f"PS3 {values.get('TITLE_ID', 'unknown')} APP_VER {values.get('APP_VER', 'unknown')}",
+                })
+                identity["evidence"].append("PARAM.SFO parsed from separately retained ISO member")
+            except (OSError, ValueError, struct.error) as exc:
+                blockers.append({"action": "parse PARAM.SFO", "resource": str(param_sfo), "reason": str(exc)})
     status = "inventoried-read-only" if not blockers else "partial-inventory-with-blockers"
     return {
         "schema": SCHEMA,
@@ -366,6 +457,8 @@ def build_receipt(archive: Path, output: Path, tools: dict[str, str | None], ins
         "source": source,
         "toolAvailability": tools,
         "archiveListing": archive_listing,
+        "materializedIso": materialized_iso_record,
+        "paramSfo": param_sfo_record,
         "isoListings": iso_listings,
         "identification": identity,
         "characterContainerTokens": tokens,
@@ -378,9 +471,9 @@ def build_receipt(archive: Path, output: Path, tools: dict[str, str | None], ins
         },
         "safety": {
             "sourceModified": False,
-            "largePayloadCopied": False,
-            "fullArchiveExtracted": False,
-            "nestedIsoInspectionMode": "stream-only",
+            "largePayloadCopied": materialized_iso_record is not None,
+            "fullArchiveExtracted": materialized_iso_record is not None,
+            "nestedIsoInspectionMode": "materialized-local-read" if materialized_iso_record else "stream-only",
         },
         "blockers": blockers,
         "rerunCommand": rerun_command(output),
@@ -397,6 +490,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--search-root", type=Path, action="append", default=[], help="optional bounded discovery root")
     parser.add_argument("--max-search-depth", type=int, default=4)
     parser.add_argument("--output", type=Path, default=default_output())
+    parser.add_argument("--materialized-iso", type=Path, help="optional separately extracted ISO; source archive remains read-only")
+    parser.add_argument("--param-sfo", type=Path, help="optional PARAM.SFO extracted from the same retained ISO")
     parser.add_argument("--skip-nested-iso", action="store_true", help="list only the outer archive")
     parser.add_argument("--check", action="store_true", help="verify the deterministic receipt without writing")
     args = parser.parse_args(argv)
@@ -404,7 +499,14 @@ def main(argv: list[str] | None = None) -> int:
     archive, attempted = discover_archive(args.archive, args.search_root, args.max_search_depth)
     tools = discover_tools()
     receipt = (
-        build_receipt(archive.resolve(), args.output, tools, not args.skip_nested_iso)
+        build_receipt(
+            archive.resolve(),
+            args.output,
+            tools,
+            not args.skip_nested_iso,
+            args.materialized_iso.resolve() if args.materialized_iso else None,
+            args.param_sfo.resolve() if args.param_sfo else None,
+        )
         if archive
         else blocked_receipt(attempted, args.output, tools)
     )

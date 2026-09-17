@@ -83,6 +83,7 @@ def file_receipt(path: Path) -> dict[str, Any]:
 
 
 def archive_candidates(repo: Path) -> list[Path]:
+    direct_owner_archive = Path.home() / ARCHIVE_NAME
     roots = [
         asset_root(repo) / "intake",
         Path.home() / "Downloads",
@@ -90,6 +91,8 @@ def archive_candidates(repo: Path) -> list[Path]:
         repo.parent,
     ]
     matches: dict[str, Path] = {}
+    if direct_owner_archive.is_file():
+        matches[str(direct_owner_archive.resolve())] = direct_owner_archive.resolve()
     for root in roots:
         if not root.is_dir():
             continue
@@ -151,6 +154,16 @@ def build(repo: Path) -> dict[str, Any]:
         "jstars-owner-archive-extract-v1/receipt.json"
     )
     upstream = load_json(upstream_receipt_path)
+    cpk_inventory_path = repo / (
+        "materials/hero-model-library/source-inventories/"
+        "jstars-owner-archive-extract-v1/cpk-inventory.json"
+    )
+    cpk_inventory = load_json(cpk_inventory_path)
+    cpk_by_slug = {
+        str(row["slug"]): row
+        for row in (cpk_inventory or {}).get("priorityCharacters", [])
+        if isinstance(row, dict) and row.get("slug")
+    }
     owner_archives = archive_candidates(repo)
     owner_archive_receipts = [file_receipt(path) for path in owner_archives]
     owner_archive_found = bool(owner_archives)
@@ -159,6 +172,7 @@ def build(repo: Path) -> dict[str, Any]:
     rows = []
     for definition in CHARACTERS:
         modules = {kind: missing_module(kind) for kind in MODULES}
+        cpk_character = cpk_by_slug.get(definition["slug"])
         alternate_sources = []
         if definition["slug"] == "hiei" and jumpforce_hiei["archive"]["existsLocal"]:
             alternate_sources.append(jumpforce_hiei)
@@ -167,7 +181,34 @@ def build(repo: Path) -> dict[str, Any]:
                 modules[kind]["alternateSourceId"] = jumpforce_hiei["sourceId"]
                 modules[kind]["alternateSourceStatus"] = "decoded-reserve-pending-owner-listening-review"
 
-        if owner_archive_found:
+        if cpk_character and cpk_character.get("nativeId"):
+            identity_status = str(cpk_character["identityStatus"])
+            blocker = "$CMP/$CH0 complete decode and validated PS3 SRD conversion remain unavailable"
+            source_status = "native-containers-hashed-conversion-blocked"
+            for kind in MODULES:
+                hints = "model" if kind == "skeleton" else kind
+                evidence = [
+                    {
+                        "container": member["container"],
+                        "path": member["path"],
+                        "bytes": member["bytes"],
+                        "sha256": member["sha256"],
+                    }
+                    for member in cpk_character["members"]
+                    if hints in member.get("moduleHints", [])
+                ]
+                if evidence:
+                    modules[kind] = {
+                        "kind": kind,
+                        "acquisition": "owner-disc-member-hashed",
+                        "extraction": "numeric-token-member-split",
+                        "conversion": "blocked-cmp-ch0-and-ps3-srd",
+                        "validation": "not-started",
+                        "registration": "not-started",
+                        "deployment": "not-started",
+                        "evidence": evidence,
+                    }
+        elif owner_archive_found:
             identity_status = "owner-archive-found-native-id-and-containers-not-yet-proven"
             blocker = "archive must be inventoried before any native ID or module can be assigned"
             source_status = "archive-observed-inventory-pending"
@@ -181,7 +222,7 @@ def build(repo: Path) -> dict[str, Any]:
                 **definition,
                 "sourceId": "owner-jstars-victory-vs-plus-20260917",
                 "sourceStatus": source_status,
-                "nativeId": None,
+                "nativeId": cpk_character.get("nativeId") if cpk_character else None,
                 "identityStatus": identity_status,
                 "modules": modules,
                 "alternateSources": alternate_sources,
@@ -203,13 +244,19 @@ def build(repo: Path) -> dict[str, Any]:
             "candidates": owner_archive_receipts,
             "upstreamReceiptPath": str(upstream_receipt_path),
             "upstreamReceiptStatus": upstream.get("status") if upstream else "missing",
+            "cpkInventoryPath": str(cpk_inventory_path),
+            "cpkInventoryStatus": cpk_inventory.get("status") if cpk_inventory else "missing",
+            "cpkSummary": cpk_inventory.get("summary", {}) if cpk_inventory else {},
         },
         "characters": rows,
         "summary": {
             "characters": len(rows),
             "ownerArchivesFound": len(owner_archive_receipts),
-            "jstarsNativeIdsProven": 0,
-            "jstarsSourceContainersProven": 0,
+            "jstarsNativeIdsProven": sum(row["nativeId"] is not None for row in rows),
+            "jstarsSourceContainersProven": sum(
+                module["acquisition"] == "owner-disc-member-hashed"
+                for row in rows for module in row["modules"].values()
+            ),
             "convertedModels": 0,
             "convertedMotions": 0,
             "convertedVfx": 0,

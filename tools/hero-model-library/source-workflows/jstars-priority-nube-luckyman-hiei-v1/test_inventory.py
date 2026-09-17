@@ -18,13 +18,16 @@ def main() -> int:
     assert len(payload["characters"]) == 3
     assert payload["summary"]["runtimeRegistrations"] == 0
     assert payload["summary"]["deployments"] == 0
+    expected_ids = {"nube": "041", "luckyman": "037", "hiei": "012"}
+    assert payload["summary"]["jstarsNativeIdsProven"] == 3
     for row in payload["characters"]:
-        assert row["nativeId"] is None
+        assert row["nativeId"] == expected_ids[row["slug"]]
         assert row["runtimeReady"] is False
         assert row["backendOptionRegistered"] is False
         assert row["defaultApplied"] is False
         assert row["deployed"] is False
         assert set(row["modules"]) == {"model", "skeleton", "motion", "vfx", "sfx", "voice"}
+        assert row["modules"]["model"]["acquisition"] == "owner-disc-member-hashed"
     hiei = next(row for row in payload["characters"] if row["slug"] == "hiei")
     reserve = hiei["alternateSources"][0]
     assert reserve["sourceGame"] == "JUMP FORCE"

@@ -2,11 +2,22 @@
   "schema": "ggd.jstars-owner-archive-plan@1",
   "sourceId": "owner-jstars-victory-vs-plus-20260917",
   "sourceGame": "J-Stars Victory VS+",
-  "platformRequested": "PS3 archive; verify contents before assigning platform/version",
+  "platformRequested": "PS3",
+  "platformVersion": "PS3 disc build; APP_VER/VERSION pending PARAM.SFO read",
   "archiveFileName": "J-Stars Victory Vs+.7z",
-  "preferredIntakePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/J-Stars Victory Vs+.7z",
-  "archiveFound": false,
-  "archivePath": null,
+  "preferredIntakePath": "/Users/Takuro/J-Stars Victory Vs+.7z",
+  "archiveFound": true,
+  "archivePath": "/Users/Takuro/J-Stars Victory Vs+.7z",
+  "archiveInventory": {
+    "status": "inventoried-read-only",
+    "bytes": 2979984140,
+    "sha256": "72f18422f88f84d007b4e51d8fa18d8cc83a7480e0969adb82cdf23862ca9636",
+    "platformVersion": "PS3 disc build; APP_VER/VERSION pending PARAM.SFO read",
+    "cpkContainers": 7,
+    "membersHashed": 19471,
+    "characterTokensWithInternalIdentity": 56,
+    "priorityNativeIdsConfirmed": 6
+  },
   "sourceReferences": [
     {
       "label": "VIZ J-Stars VICTORY VS+ overview",
@@ -32,7 +43,7 @@
   "policy": {
     "modelOrder": "同角色且皆合格時，一般候選以較新的 JUMP FORCE 原作模型預選；六名 owner 指定優先角例外，驗收與註冊完成後改以 J-Stars 為預設來源",
     "defaultActivation": "intendedDefaultSource 是上架意圖，不是現況；只有 converted、registered 與逐模組驗收均有收據後，才可將 default 改為 true",
-    "triangleRule": "超過 10000 面啟動減面，成品目標低於 8000 面",
+    "triangleRule": "超過 10000 面啟動減面，成品上限為 8000 面（含）",
     "audioReview": "未核實編號音效與語音不得直接綁技能；先產生逐項播放審查清單",
     "supportRule": "支援角色不因擁有模型或支援技就宣稱完整英雄"
   },
@@ -80,13 +91,18 @@
       "convertedMotions": 0,
       "convertedVfx": 0,
       "deployments": 0,
-      "jstarsNativeIdsProven": 0,
-      "jstarsSourceContainersProven": 0,
-      "ownerArchivesFound": 0,
+      "jstarsNativeIdsProven": 3,
+      "jstarsSourceContainersProven": 18,
+      "ownerArchivesFound": 1,
       "runtimeRegistrations": 0
     },
     "nativeIdEvidence": {
-      "Killua Zoldyck": "018"
+      "Gintoki Sakata": "028",
+      "Meisuke Nueno": "041",
+      "Gon Freecss": "017",
+      "Killua Zoldyck": "018",
+      "Luckyman": "037",
+      "Hiei": "012"
     },
     "fallbackEvidence": {
       "validatedModels": 3,
@@ -97,7 +113,7 @@
     "jstarsRegistered": 0,
     "jstarsDeployed": 0,
     "blockingConverter": "PS3 SRD/SRDI/SRDV and $CH0 to skinned GLB is not yet validated",
-    "ownerArchiveStatus": "blocked-archive-not-found"
+    "ownerArchiveStatus": "archive-iso-seven-cpk-inventoried-conversion-blocked"
   },
   "characters": [
     {
@@ -115,7 +131,7 @@
       ],
       "alreadyInGgd": true,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -136,7 +152,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -160,7 +176,7 @@
       ],
       "alreadyInGgd": true,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -181,7 +197,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": 6,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -202,7 +218,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -223,7 +239,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -244,7 +260,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -268,7 +284,7 @@
       ],
       "alreadyInGgd": true,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -289,7 +305,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": 7,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -310,7 +326,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": 8,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -334,7 +350,7 @@
       ],
       "alreadyInGgd": true,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -355,7 +371,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -372,13 +388,13 @@
       "sourceId": "owner-jstars-victory-vs-plus-20260917",
       "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
       "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
-      "nativeId": null,
+      "nativeId": "028",
       "ggdHeroIds": [
         "community-review-23-20260907"
       ],
       "alreadyInGgd": true,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "已有原生 PAK/STPK 對照樣本，等待 $CH0 解碼與標準化轉換",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -400,7 +416,7 @@
         "converted": false,
         "registered": false,
         "default": false,
-        "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
+        "blocker": "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
       }
     },
     {
@@ -412,13 +428,13 @@
       "sourceId": "owner-jstars-victory-vs-plus-20260917",
       "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
       "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
-      "nativeId": null,
+      "nativeId": "041",
       "ggdHeroIds": [
         "b2-nube"
       ],
       "alreadyInGgd": true,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "已有原生 PAK/STPK 對照樣本，等待 $CH0 解碼與標準化轉換",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -440,7 +456,7 @@
         "converted": false,
         "registered": false,
         "default": false,
-        "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
+        "blocker": "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
       }
     },
     {
@@ -452,13 +468,13 @@
       "sourceId": "owner-jstars-victory-vs-plus-20260917",
       "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
       "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
-      "nativeId": null,
+      "nativeId": "017",
       "ggdHeroIds": [
         "godie-ucrl"
       ],
       "alreadyInGgd": true,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "已有原生 PAK/STPK 對照樣本，等待 $CH0 解碼與標準化轉換",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -480,7 +496,7 @@
         "converted": false,
         "registered": false,
         "default": false,
-        "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
+        "blocker": "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
       }
     },
     {
@@ -536,7 +552,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -557,7 +573,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -578,7 +594,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -599,7 +615,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": 12,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -620,7 +636,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": 3,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -643,7 +659,7 @@
       ],
       "alreadyInGgd": true,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -664,7 +680,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -709,7 +725,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -730,7 +746,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -751,7 +767,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -772,7 +788,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -793,7 +809,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": 9,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -814,7 +830,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": 10,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -835,7 +851,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": 11,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -856,7 +872,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -877,7 +893,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -894,13 +910,13 @@
       "sourceId": "owner-jstars-victory-vs-plus-20260917",
       "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
       "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
-      "nativeId": null,
+      "nativeId": "037",
       "ggdHeroIds": [
         "b2-luckyman"
       ],
       "alreadyInGgd": true,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "已有原生 PAK/STPK 對照樣本，等待 $CH0 解碼與標準化轉換",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -922,7 +938,7 @@
         "converted": false,
         "registered": false,
         "default": false,
-        "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
+        "blocker": "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
       }
     },
     {
@@ -980,7 +996,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": 4,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -997,14 +1013,14 @@
       "sourceId": "owner-jstars-victory-vs-plus-20260917",
       "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
       "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
-      "nativeId": null,
+      "nativeId": "012",
       "ggdHeroIds": [
         "godie-u010",
         "godie-uvng"
       ],
       "alreadyInGgd": true,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "已有原生 PAK/STPK 對照樣本，等待 $CH0 解碼與標準化轉換",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -1026,7 +1042,7 @@
         "converted": false,
         "registered": false,
         "default": false,
-        "blocker": "owner archive 尚未在本機可見，無法開始可驗證的擷取與轉換"
+        "blocker": "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
       }
     },
     {
@@ -1042,7 +1058,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": 5,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
         "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
@@ -1063,7 +1079,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
         "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
@@ -1084,7 +1100,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
         "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
@@ -1105,7 +1121,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
         "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
@@ -1126,7 +1142,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
         "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
@@ -1149,7 +1165,7 @@
       ],
       "alreadyInGgd": true,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
         "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
@@ -1170,7 +1186,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
         "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
@@ -1191,7 +1207,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
         "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
@@ -1212,7 +1228,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
         "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
@@ -1233,7 +1249,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
         "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
@@ -1254,7 +1270,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
         "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
@@ -1275,7 +1291,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
         "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
@@ -1296,7 +1312,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
         "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
@@ -1317,7 +1333,7 @@
       "ggdHeroIds": [],
       "alreadyInGgd": false,
       "newHeroPriority": null,
-      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "status": "owner archive 與 7 個 CPK 已盤點；本名單角色尚未建立可審查的 native ID 對照",
       "recommendation": {
         "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
         "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",

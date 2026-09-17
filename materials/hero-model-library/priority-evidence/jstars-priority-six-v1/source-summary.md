@@ -1,29 +1,29 @@
 # J-Stars 第一優先六名來源與擷取準備
 
-- 狀態：`blocked-owner-archive-not-found`
+- 狀態：`owner-archive-inventoried-native-conversion-blocked`
 - owner archive 精確檔名命中：0
-- 原生 ID 已證明：1 / 6
+- 原生 ID 已證明：6 / 6
 - 可直接上架預設：0 / 6
 
-archive 未出現時，未知 ID 與未觀察容器一律維持 blocked；公開樣本只能支撐奇犽 `018` 的模型容器及兩個尚未解碼的相關成員。
+owner archive 與 7 個 CPK 已盤點；六名原生 ID 均已由 partial STPK 內部成員名唯一對應，並可對應模型、動作、VFX、SFX 與語音容器候選。
 
 | 順位 | 角色 | 原生 ID | 模型 | 動作 | VFX | SFX | 語音 | 預設使用 |
 |---:|---|---|---|---|---|---|---|---|
-| 1 | 坂田銀時 | 未證明 | 未見容器 | 未見容器 | 未見容器 | 未見容器 | 未見容器 | blocked |
-| 2 | 鵺野鳴介／神眉 | 未證明 | 未見容器 | 未見容器 | 未見容器 | 未見容器 | 未見容器 | blocked |
-| 3 | 小傑·富力士 | 未證明 | 未見容器 | 未見容器 | 未見容器 | 未見容器 | 未見容器 | blocked |
-| 4 | 奇犽·揍敵客 | 018 | 容器有／未轉換 | 未見容器 | 內嵌成員有／未驗證 | 未見容器 | 只見 LPS 成員／非語音證據 | blocked |
-| 5 | 幸運超人 | 未證明 | 未見容器 | 未見容器 | 未見容器 | 未見容器 | 未見容器 | blocked |
-| 6 | 飛影 | 未證明 | 未見容器 | 未見容器 | 未見容器 | 未見容器 | 未見容器 | blocked |
+| 1 | 坂田銀時 | 028 | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | blocked |
+| 2 | 鵺野鳴介／神眉 | 041 | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | blocked |
+| 3 | 小傑·富力士 | 017 | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | blocked |
+| 4 | 奇犽·揍敵客 | 018 | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | blocked |
+| 5 | 幸運超人 | 037 | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | blocked |
+| 6 | 飛影 | 012 | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | native-containers-present-hashed-conversion-blocked | blocked |
 
 ## 精確 blocker
 
-1. `J-Stars Victory Vs+.7z` 未在 standard intake、Downloads、Desktop 或 ABxVFX_EDIT 找到；無法建立五名未知 ID 的原生對照。
-2. 奇犽公開樣本只含 `character_model_018_{i,m,v}` PAK/STPK；不含已證明的動作、SFX 或 voice 容器。
-3. 模型樣本尚受 `$CH0` 解碼與 PS3 SRD/SRDI/SRDV 轉換器驗證所擋，所以不能標示已轉換、已上架或可預設。
+1. 六名原生 ID 已確證：銀時 `028`、神眉 `041`、小傑 `017`、奇犍 `018`、幸運超人 `037`、飛影 `012`。
+2. 六名的模型、動作、VFX、SFX 與語音容器候選已逐檔雜湊；它們仍是原生容器，不是 runtime 成品。
+3. 原生資料尚受 `$CMP/$CH0` 完整解碼與 PS3 SRD/SRDI/SRDV 轉換器驗證所擋，所以不能標示已轉換、已上架或可預設。
 
 ## 來源完整性
 
 - 公開原樣本 S3 receipt：`receipt-and-local-readback-present`
 - 公開轉換分拆 S3 receipt：`receipt-and-local-readback-present`
-- S3 receipt 只證明已保存的四角色樣本與分拆產物，不證明 owner archive 存在。
+- 原盤的 19,471 個 CPK 成員已有本機 deterministic JSONL.gz manifest；S3 receipt 仍只覆蓋先前的四角色公開樣本。

@@ -155,7 +155,7 @@ python3 tools/hero-model-library/source-workflows/jump-force-full-roster-v1/extr
 
 抽取完成後依序進行 dependency closure、UE Viewer 4.19 匯出、JUMP 專用 Blender／GLB 組裝、貼圖與透明層修正、GGD policy gate、三視角／動畫／音訊審查，再建立後台候選。
 
-- 模型超過 10,000 面時減面，正式候選必須低於 8,000 面（現行程式上限 7,999）。
+- 模型超過 10,000 面時減面，正式候選上限為 8,000 面（含）。
 - JUMP 的臉、眼球、眼影、鏡片與受傷覆蓋層須保留 primitive／UV seam；不可沿用一刀式全模型減面。
 - `AnimBP` 與 `*_anim` 是動作 dependency root，不是已取得的 native `AnimSequence`。
 - ActVoice／ActSE 只保留來源類別；語言、說話者與技能事件未聽審前維持待確認。

@@ -1,0 +1,207 @@
+{
+  "schema": "ggd.hero-model-source-inventory@1",
+  "sourceId": "derivative:bojji-crown-v1",
+  "hero": {
+    "heroId": "b2-bojji",
+    "nameZh": "波吉",
+    "workZh": "國王排名"
+  },
+  "source": {
+    "sourceId": "derivative:bojji",
+    "description": "使用者核准的小桐人寵物獨立完整副本（藍色上身、白色下身）",
+    "gitPath": "content/assets/models/community/versions/745fe9a31c9ed44098f7d92984de88e81f5ddf6605c7327f327ddcd82ee96581.glb",
+    "sha256": "745fe9a31c9ed44098f7d92984de88e81f5ddf6605c7327f327ddcd82ee96581",
+    "retainedUnchanged": true
+  },
+  "candidate": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bojji-crown-v1/candidate.glb",
+    "bytes": 832496,
+    "sha256": "16ffc917be1fc86a9710c1e35bd181659292f17d7c54f3285026e204cd7f0e28",
+    "gitPath": "content/assets/models/community/16ffc917be1fc86a9710c1e35bd181659292f17d7c54f3285026e204cd7f0e28.glb",
+    "sourceModelKey": "community.body.46cab3416f3f164ca9fa27dbb1ad88e9f2c1b2ce5163e23c",
+    "registeredVersionModelKey": "version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673",
+    "candidateId": "bojji-crown-head-weighted-v1",
+    "selectionClass": "owner-manual-derivative-candidate",
+    "changes": [
+      "新增小型金黃色四尖王冠",
+      "每個王冠頂點 100% 綁到 Bip001 Head",
+      "保留原版完整 GLB 作為另一選項"
+    ],
+    "metrics": {
+      "triangles": 7229,
+      "sourceTriangles": 7165,
+      "crownTriangles": 64,
+      "drawPrimitives": 3,
+      "maxTextureEdge": 256,
+      "skinCount": 1,
+      "jointCount": 54,
+      "sourceNativeClipCount": 5,
+      "maxChannelsPerClip": 66
+    },
+    "motion": {
+      "origin": "source-native-to-proxy; borrowed-for-target-hero",
+      "nativeToBojji": false,
+      "sourceNativeClipsPreserved": 5,
+      "generatedClips": 0,
+      "maxChannelsPerClip": 66
+    },
+    "attachment": {
+      "nodeName": "GGD Bojji Crown",
+      "weightedJointName": "Bip001 Head",
+      "headJointSlot": 1,
+      "followsHeadAnimations": true,
+      "fullySkinned": true,
+      "allVerticesWeightOneToHead": true,
+      "vertexCount": 32,
+      "drawPrimitives": 1,
+      "triangles": 64
+    },
+    "policy": {
+      "ownerMaximumTriangles": 8000,
+      "trianglesPass": true,
+      "drawPrimitivesMaximum": 6,
+      "drawPrimitivesPass": true,
+      "maxTextureEdge": 256,
+      "texturePass": true,
+      "maxChannelsPerClip": 300,
+      "channelsPass": true,
+      "ggdBudgetErrors": [],
+      "khronosErrors": 0,
+      "khronosWarnings": 0
+    }
+  },
+  "evidence": {
+    "buildReceipt": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bojji-crown-v1/build-receipt.json",
+      "bytes": 1257,
+      "sha256": "ba3e481c98c70d03fd9375adf351957472c5a55964baf03ca2e140dcb949a6b3"
+    },
+    "validation": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bojji-crown-v1/validation.json",
+      "bytes": 2589,
+      "sha256": "7b40982ca0e392e08eb23fff24f11f2a7c668b40cacb43e16f8f88cc99abb74f"
+    },
+    "visualEvidence": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bojji-crown-v1/visual-evidence.json",
+      "bytes": 4580,
+      "sha256": "993eb36bb5d182832f0a35d0ef9b76ecdd8834a30dfae5124b769673b739bd0b"
+    },
+    "registrationReceipt": {
+      "gitPath": "materials/hero-model-library/source-inventories/bojji-crown-v1/registration-receipt.json",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/source-inventories/bojji-crown-v1/registration-receipt.json",
+      "bytes": 4430,
+      "sha256": "ac99eca5fa67b6a5a33e2be6a2f2d9eed00b3dbf52843fcaf5f89becd6ffa4a6"
+    },
+    "localContactSheet": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bojji-crown-v1/bojji-crown-ab.png",
+      "bytes": 353840,
+      "sha256": "4f98a966d7f9295a40d3e6e19248356aaec63c5ba7c079f3643bb2848f208c3b"
+    },
+    "gitContactSheet": "materials/hero-model-library/source-inventories/bojji-crown-v1/bojji-crown-ab.png",
+    "views": [
+      {
+        "view": "front",
+        "source": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/bojji-current/front.png",
+          "bytes": 298245,
+          "sha256": "e9190c861540bf01e0f4284b4d62ca0ccfc8bf0378463e435bd3d9d1e7a845f0"
+        },
+        "candidate": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bojji-crown-v1/webgl-review-v1/front.png",
+          "bytes": 271898,
+          "sha256": "1b46f553361b8bc1d32bb0dd035265c26017d7137e037da73092493564067ef5"
+        },
+        "pixelDifference": {
+          "size": [
+            800,
+            800
+          ],
+          "meanAbsoluteRgb": 14.438385416666666,
+          "changedPixelPctAbove16": 17.15046875,
+          "maxChannelDelta": 220,
+          "changedBoundingBox": [
+            215,
+            61,
+            586,
+            738
+          ]
+        }
+      },
+      {
+        "view": "back",
+        "source": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/bojji-current/back.png",
+          "bytes": 249451,
+          "sha256": "4658e8661b15eeaaeddfe85474b3c42ff71c303e475081b1fcbc7a3e579e739c"
+        },
+        "candidate": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bojji-crown-v1/webgl-review-v1/back.png",
+          "bytes": 228417,
+          "sha256": "8f43ae2906f9ce7a1ba36e38a48fcc53e6765c23c3e5497a93bd47ca1320c17f"
+        },
+        "pixelDifference": {
+          "size": [
+            800,
+            800
+          ],
+          "meanAbsoluteRgb": 10.651005729166666,
+          "changedPixelPctAbove16": 11.250625,
+          "maxChannelDelta": 220,
+          "changedBoundingBox": [
+            213,
+            61,
+            586,
+            738
+          ]
+        }
+      },
+      {
+        "view": "isometric",
+        "source": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/bojji-current/isometric.png",
+          "bytes": 254855,
+          "sha256": "1fc9d71372366d2f6f2276e869786bb0f595b4eae5f0c6e4d4f7ca08e51054d5"
+        },
+        "candidate": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bojji-crown-v1/webgl-review-v1/isometric.png",
+          "bytes": 227782,
+          "sha256": "15166ccda8021d587ad3451b211ecab9c21ae7ca23c2c38f43fe5011f00f38cf"
+        },
+        "pixelDifference": {
+          "size": [
+            800,
+            800
+          ],
+          "meanAbsoluteRgb": 11.258272916666666,
+          "changedPixelPctAbove16": 12.98796875,
+          "maxChannelDelta": 222,
+          "changedBoundingBox": [
+            240,
+            73,
+            575,
+            741
+          ]
+        }
+      }
+    ]
+  },
+  "status": {
+    "sourcePreserved": true,
+    "converted": true,
+    "validated": true,
+    "threeViewRendered": true,
+    "ownerRequirementApplied": true,
+    "ownerVisualReviewPending": true,
+    "centralIndexesModified": false,
+    "promotedToGit": true,
+    "runtimeRegistered": true,
+    "runtimeSelectable": true,
+    "automaticEligible": true,
+    "currentAutomaticSelected": true,
+    "productionDeployed": false
+  },
+  "missing": [
+    "使用者對本次 A/B 的最終視覺核准",
+    "正式站部署驗證"
+  ]
+}

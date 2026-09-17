@@ -343,6 +343,7 @@ def build_character_receipt(
     character: dict[str, Any],
     analysis: dict[str, Any] | None,
     owner_archive_found: bool,
+    cpk_character: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     modules = {name: blocked_module() for name in MODULES}
     public_row = find_public_character(analysis, str(character["slug"]))
@@ -398,6 +399,37 @@ def build_character_receipt(
                 "the public sample contains character_model i/m/v groups only; no native SFX container was observed"
             )
 
+    if cpk_character and cpk_character.get("nativeId"):
+        native_id = str(cpk_character["nativeId"])
+        identity_status = str(cpk_character.get("identityStatus") or identity_status)
+        identity_evidence.extend([
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+            str(cpk_character.get("identityEvidence") or ""),
+        ])
+        members = cpk_character.get("members", [])
+        for module_name in MODULES:
+            evidence = [
+                {
+                    "container": row.get("container"),
+                    "path": row.get("path"),
+                    "bytes": row.get("bytes"),
+                    "sha256": row.get("sha256"),
+                }
+                for row in members
+                if module_name in row.get("moduleHints", [])
+            ]
+            if evidence:
+                modules[module_name] = {
+                    "candidateContainerFound": True,
+                    "runtimeReady": False,
+                    "status": "native-containers-present-hashed-conversion-blocked",
+                    "reason": (
+                        "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, "
+                        "runtime conversion, visual validation and event binding remain incomplete"
+                    ),
+                    "evidence": evidence,
+                }
+
     if owner_archive_found and native_id is None:
         identity_status = "archive-present-inventory-required-native-id-still-unproven"
         for module in modules.values():
@@ -421,12 +453,26 @@ def build_receipt(repo: Path, roots: list[dict[str, Any]] | None = None) -> dict
     roots = roots if roots is not None else canonical_roots(repo)
     scan = scan_roots(roots)
     owner_receipt_rel = "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json"
+    cpk_inventory_rel = "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
     analysis_rel = "materials/hero-model-library/source-inventories/jstars-stpk-research-v1/analysis.json"
     owner_receipt = load_json(repo / owner_receipt_rel)
+    cpk_inventory = load_json(repo / cpk_inventory_rel)
     analysis = load_json(repo / analysis_rel)
-    owner_archive_found = bool(scan["ownerArchiveFound"])
+    owner_receipt_status = owner_receipt.get("status") if owner_receipt else "missing-receipt"
+    owner_archive_found = bool(scan["ownerArchiveFound"]) or owner_receipt_status == "inventoried-read-only"
+    cpk_by_slug = {
+        str(row.get("slug")): row
+        for row in (cpk_inventory or {}).get("priorityCharacters", [])
+        if isinstance(row, dict)
+    }
     characters = [
-        build_character_receipt(repo, dict(character), analysis, owner_archive_found)
+        build_character_receipt(
+            repo,
+            dict(character),
+            analysis,
+            owner_archive_found,
+            cpk_by_slug.get(str(character["slug"])),
+        )
         for character in PRIORITY_CHARACTERS
     ]
     confirmed = sum(row["nativeId"] is not None for row in characters)
@@ -435,10 +481,10 @@ def build_receipt(repo: Path, roots: list[dict[str, Any]] | None = None) -> dict
         for row in characters
         for module in row["modules"].values()
     )
-    owner_receipt_status = owner_receipt.get("status") if owner_receipt else "missing-receipt"
     overall_status = (
-        "owner-archive-found-inventory-required"
-        if owner_archive_found
+        "owner-archive-inventoried-native-conversion-blocked"
+        if cpk_inventory and cpk_inventory.get("summary", {}).get("containersInventoried") == 7
+        else "owner-archive-found-inventory-required" if owner_archive_found
         else "blocked-owner-archive-not-found"
     )
     source_s3 = summarize_s3_receipt(
@@ -468,6 +514,13 @@ def build_receipt(repo: Path, roots: list[dict[str, Any]] | None = None) -> dict
             "exists": owner_receipt is not None,
             "status": owner_receipt_status,
             "attemptedLocations": owner_receipt.get("attemptedLocations", []) if owner_receipt else [],
+        },
+        "ownerCpkInventory": {
+            "path": cpk_inventory_rel,
+            "exists": cpk_inventory is not None,
+            "status": cpk_inventory.get("status") if cpk_inventory else "missing-receipt",
+            "summary": cpk_inventory.get("summary", {}) if cpk_inventory else {},
+            "fullMemberManifest": cpk_inventory.get("fullMemberManifest") if cpk_inventory else None,
         },
         "publicSample": {
             "analysisPath": analysis_rel,
@@ -502,18 +555,18 @@ def build_receipt(repo: Path, roots: list[dict[str, Any]] | None = None) -> dict
                 "unblocks": "full character-ID and model/motion/VFX/SFX/voice container inventory",
             },
             {
-                "id": "public-model-sample-ch0-and-converter",
+                "id": "owner-disc-cmp-ch0-and-ps3-srd-converter",
                 "applies": True,
                 "reason": (
-                    "the Killua public sample still requires the unsupported $CH0 stage and a validated PS3 SRD converter"
+                    "all six owner-disc native groups still require complete $CMP/$CH0 decoding and a validated PS3 SRD converter"
                 ),
                 "unblocks": "standardized model candidate and visual validation",
             },
             {
                 "id": "motion-audio-event-containers-not-observed",
-                "applies": True,
+                "applies": not bool(cpk_inventory),
                 "reason": (
-                    "the public sample has character_model i/m/v groups only and proves no motion, SFX, or voice payload"
+                    "the public sample has character_model i/m/v groups only; use the owner CPK inventory to prove motion, SFX, and voice containers"
                 ),
                 "unblocks": "six-state motion mapping and per-event audio review",
             },
@@ -534,7 +587,7 @@ def build_receipt(repo: Path, roots: list[dict[str, Any]] | None = None) -> dict
         },
         "safety": {
             "sourceModified": False,
-            "archiveExtracted": False,
+            "archiveExtracted": bool(owner_receipt and owner_receipt.get("materializedIso")),
             "s3ReadPerformed": False,
             "permissionBypassAttempted": False,
         },
@@ -557,7 +610,13 @@ def render_summary(receipt: dict[str, Any]) -> str:
         f"- 原生 ID 已證明：{receipt['summary']['nativeIdsConfirmed']} / {receipt['summary']['characters']}",
         f"- 可直接上架預設：{receipt['summary']['defaultUseEligibleCharacters']} / {receipt['summary']['characters']}",
         "",
-        "archive 未出現時，未知 ID 與未觀察容器一律維持 blocked；公開樣本只能支撐奇犽 `018` 的模型容器及兩個尚未解碼的相關成員。",
+        (
+            "owner archive 與 7 個 CPK 已盤點；六名原生 ID 均已由 partial STPK 內部成員名唯一對應，"
+            "並可對應模型、動作、VFX、SFX 與語音容器候選。"
+            if receipt.get("ownerCpkInventory", {}).get("exists")
+            else "archive 未出現時，未知 ID 與未觀察容器一律維持 blocked。"
+        ),
+
         "",
         "| 順位 | 角色 | 原生 ID | 模型 | 動作 | VFX | SFX | 語音 | 預設使用 |",
         "|---:|---|---|---|---|---|---|---|---|",
@@ -577,15 +636,15 @@ def render_summary(receipt: dict[str, Any]) -> str:
             "",
             "## 精確 blocker",
             "",
-            "1. `J-Stars Victory Vs+.7z` 未在 standard intake、Downloads、Desktop 或 ABxVFX_EDIT 找到；無法建立五名未知 ID 的原生對照。",
-            "2. 奇犽公開樣本只含 `character_model_018_{i,m,v}` PAK/STPK；不含已證明的動作、SFX 或 voice 容器。",
-            "3. 模型樣本尚受 `$CH0` 解碼與 PS3 SRD/SRDI/SRDV 轉換器驗證所擋，所以不能標示已轉換、已上架或可預設。",
+            "1. 六名原生 ID 已確證：銀時 `028`、神眉 `041`、小傑 `017`、奇犍 `018`、幸運超人 `037`、飛影 `012`。",
+            "2. 六名的模型、動作、VFX、SFX 與語音容器候選已逐檔雜湊；它們仍是原生容器，不是 runtime 成品。",
+            "3. 原生資料尚受 `$CMP/$CH0` 完整解碼與 PS3 SRD/SRDI/SRDV 轉換器驗證所擋，所以不能標示已轉換、已上架或可預設。",
             "",
             "## 來源完整性",
             "",
             f"- 公開原樣本 S3 receipt：`{receipt['publicSample']['sourceS3Backup']['status']}`",
             f"- 公開轉換分拆 S3 receipt：`{receipt['publicSample']['conversionS3Backup']['status']}`",
-            "- S3 receipt 只證明已保存的四角色樣本與分拆產物，不證明 owner archive 存在。",
+            "- 原盤的 19,471 個 CPK 成員已有本機 deterministic JSONL.gz manifest；S3 receipt 仍只覆蓋先前的四角色公開樣本。",
             "",
         ]
     )

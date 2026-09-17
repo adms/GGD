@@ -6,7 +6,7 @@
   "attackType": "melee",
   "archetype": "mage",
   "origin": "法鬥",
-  "modelKey": "version.body.7909a9f766a9335b4b8ddd5e4b3d0903e7d405ecededc802",
+  "modelKey": "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.97,
@@ -386,6 +386,26 @@
       "source": {
         "kind": "style-proxy",
         "character": "阿薩謝爾（獨立副本／喜羊羊）",
+        "work": "喜羊羊與灰太狼",
+        "library": "300heroes",
+        "reference": "derivative:azazel",
+        "tier": "300heroes",
+        "selectionClass": "manual",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439",
+      "label": "阿薩謝爾（獨立副本／喜羊羊，小型蝙蝠翼）",
+      "sourceModelKey": "community.body.ba1abbbdb25444e61533ab7354ebd85125ffa860763b86ee",
+      "modelSha256": "69c3464435c20325ab6cad3a106c7a4e3abe438c14d7a88e61a8a0e0b6f74c6c",
+      "binarySha256": "acbc5a0cd8880ef835cfc0bb59011f59fbca3c053f7e0902c5d7df5cae5e166a",
+      "registeredAt": "2026-09-17T09:58:05.222Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "阿薩謝爾（獨立副本／喜羊羊，小型蝙蝠翼）",
         "work": "喜羊羊與灰太狼",
         "library": "300heroes",
         "reference": "derivative:azazel",

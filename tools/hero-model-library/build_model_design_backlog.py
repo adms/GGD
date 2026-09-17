@@ -9,6 +9,7 @@ from design_backlog_labels import labels_for, hero_check_label
 from design_backlog_resources import resource_view, resource_cell, source_overview, audio_reserve_section
 from fateubw_backlog_overlay import apply_fateubw_overlay
 from mba_pilot_backlog_overlay import apply_mba_pilot_overlay
+from jstars_owner_backlog_overlay import apply_jstars_owner_overlay
 
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'materials/hero-model-library'
@@ -19,6 +20,54 @@ def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def norm(value):return re.sub(r'[^\w]','',unicodedata.normalize('NFKC',str(value)).lower())
 def text(value):return str(value).replace('|','／').replace('\n',' ')
 def encoded(value):return (json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode()
+
+def apply_infinity_strash_current_overlay(data):
+    """Replace the frozen pre-extraction summary with tracked current results."""
+    result=dict(data);result['resourceCoverage']=dict(result.get('resourceCoverage',{}))
+    families=[dict(row) for row in result['resourceCoverage'].get('sourceFamilies',[])]
+    index=next((i for i,row in enumerate(families) if '無限神速斬' in str(row.get('nameZh',''))),None)
+    if index is None:raise ValueError('中央待設計索引缺少無限神速斬來源列')
+    champion_docs=[];model_versions=[]
+    for path in sorted((ROOT/'content/champions').glob('*.json')):
+        if path.name.startswith('_'):continue
+        row=read(path)
+        matched=[version for version in row.get('modelVersions',[])
+                 if '無限神速斬' in str(version.get('source',{}))
+                 or 'Infinity Strash' in str(version.get('source',{}))]
+        if matched:champion_docs.append(path);model_versions.extend(matched)
+    if len(model_versions)!=11:raise ValueError(f'無限神速斬 Git 模型選項應為 11，實際 {len(model_versions)}')
+    links=[
+        ('小呆／巴恩音訊與特效索引','materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/summary.json'),
+        ('小呆特效元件收據','materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/receipt.json'),
+        ('何布特效／音訊整合收據','materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/receipt.json'),
+        ('巴恩前後形態稽核','materials/hero-model-library/priority-evidence/infinity-strash-vearn-form-audit-v1/report.json'),
+    ]
+    for _,rel in links:
+        path=ROOT/rel
+        if not path.is_file():raise ValueError('無限神速斬證據缺檔：'+rel)
+    families[index]={
+        **families[index],
+        'nameZh':'無限神速斬 勇者鬥惡龍 達伊的大冒險（Steam Windows 2024-03-28）',
+        'model':('Git 已登記 11 個原作模型版本：小呆／達伊 4 個（PN010/02、PN010/05 及新舊版），'
+                 '何布／波普 5 個（含 PN020 三種武器），老年變身前巴恩 EN801 2 個。'
+                 '年輕／變身後巴恩完整身體仍為 0；MystVearn 與巴蘭分開。'),
+        'motion':('11 個 Git 模型版本均已建立 GGD 六狀態對應；達伊、何布與老巴恩保留原生動作。'
+                  '部分 hurt/death 共用 down／death，獨立死亡動作缺口仍保留。'),
+        'vfx':('小呆 26 個符合政策的支援元件與 6 個合成候選已通過 owner 視覺審查，技能綁定仍待完成；'
+               '何布 12 個重建特效已審查，7 個 Q/W/R 關係已寫入分支執行設定，5 個保留候選。'),
+        'sfx':('小呆 PN010 與老巴恩 EN801 共 485 個精確身分解碼音訊候選；'
+               '何布 311 個已建檔音訊、36 筆關係已審查並轉為 35 個遊戲 MP3，正式技能事件綁定仍有關卡。'),
+        'voice':'日文與英文語音候選已解碼並依 PN010／PN020／EN801 分開；未逐段通過聽審者仍保留待確認。',
+        'links':[[label,rel] for label,rel in links],
+    }
+    result['resourceCoverage']['sourceFamilies']=families
+    seen={row.get('path') for row in result.setdefault('inputs',[])}
+    for path in champion_docs:
+        rel=path.relative_to(ROOT).as_posix()
+        if rel not in seen:result['inputs'].append({'path':rel,'sha256':sha(path)});seen.add(rel)
+    for _,rel in links:
+        if rel not in seen:result['inputs'].append({'path':rel,'sha256':sha(ROOT/rel)});seen.add(rel)
+    return result
 
 def candidate_role(candidate):
     role=str(candidate.get('resourceRole',''))
@@ -195,7 +244,21 @@ def build(*, refresh_local_audits=False):
         base=read(portable)
         if base.get('schema')!='ggd-acquired-model-design-backlog@1':
             raise ValueError('Portable backlog base schema drifted; refresh it with reviewed local audits.')
-    return apply_mba_pilot_overlay(apply_fateubw_overlay(base, ROOT), ROOT)
+    result=apply_infinity_strash_current_overlay(apply_jstars_owner_overlay(
+        apply_mba_pilot_overlay(apply_fateubw_overlay(base, ROOT), ROOT), ROOT)
+    )
+    family_names=[str(row.get('nameZh','')) for row in result.get('resourceCoverage',{}).get('sourceFamilies',[])]
+    required={
+        '300英雄':lambda value:'300英雄' in value,
+        'KOF／拳皇3D':lambda value:'KOF' in value or '拳皇' in value,
+        '任天堂大亂鬥':lambda value:'大亂鬥' in value,
+        '無限神速斬':lambda value:'無限神速斬' in value,
+        'JUMP FORCE':lambda value:'JUMP FORCE' in value,
+        'J-STARS':lambda value:'J-STARS' in value,
+    }
+    missing=[label for label,matches in required.items() if not any(matches(value) for value in family_names)]
+    if missing:raise ValueError('中央待設計索引缺少已取得來源：'+ '、'.join(missing))
+    return result
 
 def friendly_stage(value):
     value=str(value or 'unknown')

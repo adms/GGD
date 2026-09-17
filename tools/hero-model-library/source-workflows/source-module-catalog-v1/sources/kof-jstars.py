@@ -354,13 +354,18 @@ def jstars_group(repo: Path) -> dict[str, Any]:
     priority_source = load(repo, JSTARS_PRIORITY_SOURCE)
     priority_pipeline = load(repo, JSTARS_PRIORITY_PIPELINE)
     priority_by_rank = {row["priority"]: row for row in priority_source["characters"]}
+    archive_inventoried = extract.get("status") == "inventoried-read-only"
     candidates = []
     for row in plan["characters"]:
         has_sample = row["nativeId"] is not None
-        sample_stage = "native-container-sample-indexed" if has_sample else "planned-source-missing"
+        sample_stage = ("native-container-sample-indexed" if has_sample else
+                        "owner-cpk-inventoried-native-id-unmapped" if archive_inventoried else
+                        "planned-source-missing")
         sample_note = (
             "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。"
             if has_sample
+            else "owner archive 與 CPK 已盤點，但該角色 native ID 尚未建立可審查對照；不以名單順序猜測。"
+            if archive_inventoried
             else "owner archive 尚未在本機可見；沒有可驗證的角色模組數。"
         )
         role = "可操作" if row["role"] == "playable" else "支援"
@@ -412,7 +417,7 @@ def jstars_group(repo: Path) -> dict[str, Any]:
         "sourceId": plan["sourceId"],
         "title": plan["sourceGame"],
         "platform": plan["platformRequested"],
-        "version": None,
+        "version": plan.get("platformVersion"),
         "status": pipeline["status"],
         "evidencePaths": [
             str(JSTARS_PLAN), str(JSTARS_EXTRACT), str(JSTARS_PIPELINE),
