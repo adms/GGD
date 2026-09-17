@@ -101,23 +101,23 @@ describe("mini-deploy.sh 的名單覆蓋 —— 映像宣告 ↔ 這台機器啟
     expect(out).not.toMatch(/✓\s*白名單涵蓋/);
   });
 
-  it("⭐ GH#1227 126 名文件逐群 ↔ /hero-works/published：缺發布的要指名批次與人，全發布要是綠的", () => {
+  // ⭐ 預設比**白名單**（owner 2026-09-16「全部英雄上架是預設的 不需要我審查通過」）；
+  //   `GGD_ROSTER_GROUP_SOURCE=published` 那條回頭路不測（第〇·六守則：測試只做預設那一邊）。
+  it("⭐ GH#1227 126 名文件逐群 ↔ 白名單：選不到的要指名批次與人，全在要是綠的；⛔ 預設不再比投稿發布", () => {
     const batches = [...parseBatchDoc(readFileSync(DOC, "utf8"))];
     const all = batches.flatMap(([, ids]) => ids);
     const [name, ids] = batches[batches.length - 1]!;
-    const short = run(OLD_49, OLD_49, all.filter((id) => id !== ids[0]));
-    expect(short).toContain(`${name}：發布 ${ids.length - 1}/${ids.length}`);
+    const short = run(OLD_49, [...OLD_49, ...all.filter((id) => id !== ids[0])]);
+    expect(short).toContain(`${name}：白名單 ${ids.length - 1}/${ids.length}`);
     expect(short).toContain(ids[0]!);
-    const full = run(OLD_49, OLD_49, all);
-    for (const [n] of batches) expect(full).toMatch(new RegExp(`✓ ${n}：`));
-    expect(full).not.toContain("服務沒有發布");
-    expect(run(OLD_49, OLD_49, null)).toContain("逐群發布**沒有驗到**");
-    // ⭐ 形狀：`{items:[…]}` 照樣讀得到；不是陣列的物件 ⇒ 「沒有驗到」，⛔ 不是五批全部假紅
-    const items = run(OLD_49, OLD_49, JSON.stringify({ items: all.map((workId) => ({ workId })) }));
-    for (const [n] of batches) expect(items).toMatch(new RegExp(`✓ ${n}：`));
-    const odd = run(OLD_49, OLD_49, JSON.stringify({ workId: all[0] }));
-    expect(odd).toContain("逐群發布**沒有驗到**");
-    expect(odd).not.toContain("服務沒有發布");
+    const full = run(OLD_49, [...OLD_49, ...all], []);
+    for (const [n] of batches) expect(full).toMatch(new RegExp(`✓ ${n}：[^\\n]*都在白名單`));
+    expect(full).not.toMatch(/這台選不到|服務沒有發布/);
+    expect(run(OLD_49, null)).toContain("逐群上架（白名單）**沒有驗到**");
+    // ⭐ 形狀：白名單是空的 ⇒ 「沒有驗到」，⛔ 不是五批全部假紅
+    const empty = run(OLD_49, []);
+    expect(empty).toContain("逐群上架（白名單）**沒有驗到**");
+    expect(empty).not.toContain("這台選不到");
   });
 
   it("⭐ 數量相等而**內容不同** ⇒ 要抓得到（⛔ 比數字的實作會在這裡放行）", () => {

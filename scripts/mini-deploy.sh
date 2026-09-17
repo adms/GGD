@@ -246,12 +246,26 @@ roster_publication_check
 #   ⇒ 126 名裡「git 上有、服務上沒有發布版本」的人，在此之前**沒有任何一段說得出名字**。
 # ⭐ 文件讀的是 **mini 上已 checkout 的那一版**（＝這次部署的 commit），⛔ 不是這台 Mac 的工作區。
 # ⚠️ 刻意只 warn（同上一段）：發布是營運動作，⛔ 部署腳本不替它決定。
+#
+# ⭐⭐ 2026-09-17 改比白名單（⛔ 預設不再比 `/hero-works/published`）—— owner 2026-09-16 推翻了上面那份文件的「發布版本」：
+#   > 「我要的是 126名英雄全部都是預設上架狀況 這麼單純 你怎麼搞那麼久? 不要搞成重新投稿 loop」
+#   > 「全部英雄上架是預設的 不需要我審查通過」
+#   ⇒ 「上架」＝ **這台服務的白名單選得到**，⛔ 不是投稿→核准→發布那一條。
+#   ⚠️ 在此之前 v0.46.1 部署印了五批全部「⛔ 發布 0/N」—— 白名單其實 118/126 選得到，⛔ 那是一整頁指錯方向的警告。
+#   🔙 GGD_ROSTER_GROUP_SOURCE=published ⇒ 回到逐群 ↔ `/hero-works/published` 的比法。
 roster_publication_check() {
-local dj pj line rc name n_pub n_all missing
+local dj pj line rc name n_pub n_all missing src label
+src=${GGD_ROSTER_GROUP_SOURCE:-whitelist}
 dj=$(r "cat $REMOTE_REPO/docs/editor-contract/社群英雄126名上架狀態.md" 2>/dev/null || true)
-pj=$(r 'curl -fsS -m 10 http://127.0.0.1:8088/api/v1/hero-works/published' 2>/dev/null || true)
+if [ "$src" = "published" ]; then
+  label="發布"
+  pj=$(r 'curl -fsS -m 10 http://127.0.0.1:8088/api/v1/hero-works/published' 2>/dev/null || true)
+else
+  label="上架（白名單）"
+  pj=$(r 'curl -fsS -m 10 http://127.0.0.1:8088/api/v1/curation/whitelist' 2>/dev/null || true)
+fi
 if [ -z "$dj" ] || [ -z "$pj" ]; then
-  warn "126 名文件或 /hero-works/published 讀不到 —— ⛔ 逐群發布**沒有驗到**（⛔ 不是通過）"
+  warn "126 名文件或${label}清單讀不到 —— ⛔ 逐群${label}**沒有驗到**（⛔ 不是通過）"
   return 0
 fi
 # ⚠️ 解析形狀與 packages/shared/testkit/rosterDeclaration.ts 的 parseBatchDoc 相同：`## 批次（N）` 底下的 `| # | \`id\` |` 列
@@ -259,21 +273,30 @@ fi
 #   ⛔ 在此之前沒檢查 ⇒ 回的是物件時迭代只拿到鍵、published 變空集合 ⇒ 五批全部「發布 0/N」的**假紅**，
 #   而不是「沒有驗到」。形狀不對 ⇒ python 印原因並 exit 3 ⇒ 下面說「沒有驗到」。
 rc=0
-line=$(python3 - "$dj" "$pj" <<'PY'
+line=$(python3 - "$dj" "$pj" "$src" <<'PY'
 import json, re, sys
 try:
     data = json.loads(sys.argv[2])
 except ValueError:
-    print("發布清單不是 JSON")
+    print("清單不是 JSON")
     sys.exit(3)
-rows = data.get("items") if isinstance(data, dict) else data
-if not isinstance(rows, list):
-    print("發布清單不是陣列，也不是 {items:[…]}")
-    sys.exit(3)
-published = {row.get("workId") for row in rows if isinstance(row, dict)} - {None}
-if rows and not published:
-    print("發布清單有 %d 列而沒有一列帶 workId" % len(rows))
-    sys.exit(3)
+if sys.argv[3] == "published":
+    rows = data.get("items") if isinstance(data, dict) else data
+    if not isinstance(rows, list):
+        print("發布清單不是陣列，也不是 {items:[…]}")
+        sys.exit(3)
+    published = {row.get("workId") for row in rows if isinstance(row, dict)} - {None}
+    if rows and not published:
+        print("發布清單有 %d 列而沒有一列帶 workId" % len(rows))
+        sys.exit(3)
+else:
+    # 形狀同 roster_coverage_check：`{champions:[…]}` 或 `{whitelist:{champions:[…]}}`
+    body = (data.get("whitelist") or data) if isinstance(data, dict) else None
+    champions = body.get("champions") if isinstance(body, dict) else None
+    if not isinstance(champions, list) or not champions:
+        print("白名單沒有 champions 陣列（或是空的）")
+        sys.exit(3)
+    published = set(champions)
 batches, section = {}, None
 for text in sys.argv[1].split("\n"):
     if text.startswith("## "):
@@ -293,11 +316,15 @@ for name, ids in batches.items():
 PY
 ) || rc=$?
 if [ "$rc" -ne 0 ] || [ -z "$line" ]; then
-  warn "${line:-解析失敗（exit ${rc}）} —— ⛔ 逐群發布**沒有驗到**（⛔ 不是通過，也⛔ 不是缺發布）"
+  warn "${line:-解析失敗（exit ${rc}）} —— ⛔ 逐群${label}**沒有驗到**（⛔ 不是通過，也⛔ 不是缺${label}）"
   return 0
 fi
 while IFS=$'\t' read -r name n_pub n_all missing; do
-  if [ "$n_pub" = "$n_all" ]; then
+  if [ "$src" != "published" ] && [ "$n_pub" = "$n_all" ]; then
+    ok "${name}：${n_all}/${n_all} 都在白名單（選得到）"
+  elif [ "$src" != "published" ]; then
+    warn "⛔ ${name}：白名單 ${n_pub}/${n_all} —— git 有、這台選不到：${missing}"
+  elif [ "$n_pub" = "$n_all" ]; then
     ok "${name}：${n_all}/${n_all} 都有發布版本"
   else
     warn "⛔ ${name}：發布 ${n_pub}/${n_all} —— git 有、服務沒有發布：${missing}"
