@@ -182,7 +182,7 @@ interface MatchRun {
  * 「冠軍本人也曾經把團隊生命打光」的那一場（GH#264 的重現）。OFF／ON 兩條必須跑**同一場**
  * 才比得出「打開的代價」⇒ 一個住處。換 seed 的紀錄與掃描結果寫在第一條 `it` 裡。
  */
-const ELIM_SEED = 4201;
+const ELIM_SEED = 4200;
 
 /** 跑完一整場，把中途廣播與「誰的血曾經歸零」一起收下來。 */
 function runFullMatch(matchId: string, seed: number, doc: Record<string, unknown>): MatchRun {
@@ -310,6 +310,12 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
     //    **4201 / 4209 / 4211 / 4212 / 4213 / 4219 / 4228 / 4232**，取最小的。
     //    ⭐ 判準不變：如果哪天掃 200 個 seed 一個都不重現，那就不是換 seed 的
     //    問題，是**淘汰這條路整個死了**。
+    // ⚠️ ⭐ **2026-09-17 第十二次：4201 → 4200**（GH#1273）。
+    //    BOT 抽英雄改成同隊不重複（owner 2026-09-15「BOT 不要三人同隊選一樣的角色」）⇒
+    //    骨架只有 sela／thorne 兩位，一隊三個 BOT 的抽籤結果與亂數消耗跟著變 ⇒ 整場軌跡改變，
+    //    4201 那一場冠軍不再被打光過（關掉新抽法，本檔兩條又全綠 ⇒ 是前提消失，⛔ 不是回歸）。
+    //    ⛔ 這不是把測試調鬆 —— 從 4200 往上掃，前八個「冠軍本人也歸零過**而且兩個模式的斷言全部成立**」的是
+    //    **4200 / 4204 / 4210 / 4211 / 4212 / 4215 / 4216 / 4217**（掃到 4217 共 18 個 seed，18 個都有隊伍歸零），取最小的。
     const run = runFullMatch("elim1", ELIM_SEED, matchDocWithCard(false));
     // 這一條測的是 OFF 那一側 —— 而且是**經由內容文件**到達控制器的。
     expect(run.ctl.settlementCardOnHealthSpent).toBe(false);

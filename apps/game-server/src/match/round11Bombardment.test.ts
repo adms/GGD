@@ -20,6 +20,12 @@ const allBots = (): SeatSpec[] =>
   Array.from({ length: 12 }, (_, i) => ({ seatId: i, teamId: Math.floor(i / 3), isBot: true }));
 
 const TELEGRAPH = 4;
+/**
+ * ⚠️ 落地要**剛好有人站在 12 格圈裡**，⇒ 這幾條吃種子（誰上場、走到哪）。
+ * 2026-09-17 7 → 1（GH#1273：BOT 抽英雄改成同隊不重複，種子 7 那一場落地時圈裡沒人；關掉新抽法又全綠 ⇒ 前提消失，⛔ 不是回歸）。
+ * ⛔ 不是把測試調鬆 —— 掃 1–9：本檔五條斷言在 **1 / 3 / 4 / 6 / 8 / 9** 全部成立，取最小的。
+ */
+const SEED = 1;
 const rules = (over: Partial<ArenaRules["round11"]["bombardment"]> = {}): ArenaRules => ({
   ...DEFAULT_ARENA_RULES,
   mobWaves: { ...DEFAULT_MOB_WAVES_CONFIG, fromRound: 1 },
@@ -79,7 +85,7 @@ function trace(ctl: MatchController, secs: number): Beat[] {
 
 describe("大轟炸真的在跑（GH#1151 F）", () => {
   it("⭐⭐ 預警先出現，⛔ 而**倒數期間一發傷害都沒有**", () => {
-    const ctl = new MatchController("bomb-on", 7, allBots(), FAST, undefined, rules());
+    const ctl = new MatchController("bomb-on", SEED, allBots(), FAST, undefined, rules());
     toRound11(ctl);
     const beats = trace(ctl, TELEGRAPH + 3);
     const firstTele = beats.find((b) => b.telegraphs > 0);
@@ -92,7 +98,7 @@ describe("大轟炸真的在跑（GH#1151 F）", () => {
   });
 
   it("⭐⭐ 一發轟炸**只結算一次** —— ⛔ 不是每 tick 都打", () => {
-    const ctl = new MatchController("bomb-once", 7, allBots(), FAST, undefined, rules());
+    const ctl = new MatchController("bomb-once", SEED, allBots(), FAST, undefined, rules());
     toRound11(ctl);
     const beats = trace(ctl, TELEGRAPH + 6);
     const hitTicks = beats.filter((b) => b.hits > 0).map((b) => b.tick);
@@ -100,7 +106,7 @@ describe("大轟炸真的在跑（GH#1151 F）", () => {
   });
 
   it("⭐ 傷害 ＝ **最大生命的一半**（⛔ 不吃護甲：它走真傷）", () => {
-    const ctl = new MatchController("bomb-amt", 7, allBots(), FAST, undefined, rules());
+    const ctl = new MatchController("bomb-amt", SEED, allBots(), FAST, undefined, rules());
     toRound11(ctl);
     let seen: { amount: number; target: number }[] = [];
     for (let i = 0; i < Math.round((TELEGRAPH + 6) * TICK_HZ) && seen.length === 0; i++) {
@@ -119,13 +125,13 @@ describe("大轟炸真的在跑（GH#1151 F）", () => {
   });
 
   it("⛔ 開關關掉 ⇒ **一個預警、一發傷害都沒有**（⭐ 一鍵 rollback）", () => {
-    const ctl = new MatchController("bomb-off", 7, allBots(), FAST, undefined, rules({ enabled: false }));
+    const ctl = new MatchController("bomb-off", SEED, allBots(), FAST, undefined, rules({ enabled: false }));
     toRound11(ctl);
     expect(trace(ctl, TELEGRAPH + 3), "⛔ 整段完全安靜").toEqual([]);
   });
 
   it("⛔ 半徑 0 ⇒ 有預警**而沒有人被打到**（⭐ 證明命中真的吃那一格）", () => {
-    const ctl = new MatchController("bomb-r0", 7, allBots(), FAST, undefined, rules({ radius: 0 }));
+    const ctl = new MatchController("bomb-r0", SEED, allBots(), FAST, undefined, rules({ radius: 0 }));
     toRound11(ctl);
     const beats = trace(ctl, TELEGRAPH + 3);
     // ⚠️ 半徑 0 ⇒ `pickBombardmentTarget` 仍然挑得到人(權重全 1),⭐ 但沒有人在圈內。
