@@ -25,6 +25,10 @@ A("77-00", "77-00 浮雲-旋一閃", "self", [30], [0], 0,
 A("77-01", "77-01 百烈櫻華斬", "self", [40, 40, 40, 40], [75, 110, 145, 180], 0,
   "[主動][範圍][擊退][AD加成]\n{{cd}}秒冷卻\n消耗MP{{mp}}\n有效半徑：{{radius}}\n\n「我的劍，成為了守護之風」\n用劍捲起一陣由內往外的旋風，給予[周圍]敵人200/300/400/500+50% [AD]點傷害，並[擊退]一段距離。",
   radiusTier="中",
+  # ⭐ GH#1260 B1-A（2026-09-15，Claude 的判斷，rollback＝revert 該 commit）：
+  #    線上 v0.44.1 本體 0.667 秒 ⇒ 最近一格「大」0.5；變身態 `godie-e00x.q` 線上 0.8 跟著本體。
+  #    ⛔ 在此之前是「極大」＝ da508309c 的「同編號取最高」。
+  castTimeTier="大",
   # ⭐ GH#691/#698 —— 變身態 `godie-e00x.q` 已綁 MonsoonBoltTarget,本體要**一起動**
   #    （abilityCodeParityForms:同編號＝同一支技能;只動一邊 ⇒ 玩家變身之後用舊的那份）。
   #    ⛔ 手寫進出貨 JSON 會被下一次 skillremake:json 打回來 ⇒ 走表格出口。
@@ -38,7 +42,7 @@ A("77-01", "77-01 百烈櫻華斬", "self", [40, 40, 40, 40], [75, 110, 145, 180
   # ⭐ GH#1146 —— 綁 `tpl-area-strike`（含**第二個頂層節點**的視覺槽）。
   #   ⚠️ params 由 `templatize.py::m_area_strike()` 從出貨文件算出來,⛔ 不是手打;
   #   等價由 `templatizeEquivalence.test.ts` 逐位元判。
-  template={'ref': 'tpl-area-strike', 'params': {'castType': 'self', 'damageType': 'physical', 'damage': {'damageTierPerRank': ['極小', '極小', '小', '小'], 'ratios': [{'stat': 'ad', 'coeff': 0.5}]}, 'radius': 6.0, 'radiusTier': '中', 'includeOrigin': True, 'onHitTargets': [{'kind': 'knockback', 'distance': 3.0, 'speed': 15.0, 'from': 'caster'}], 'modelFx': {'shape': 'single', 'preset': 'tpl-locust-orb', 'modelKey': 'imported.earthtornado2', 'soundKey': 'wc3.blademasterwhirlwind'}, 'castTimeSec': 0.667}})
+  template={'ref': 'tpl-area-strike', 'params': {'castType': 'self', 'damageType': 'physical', 'damage': {'damageTierPerRank': ['極小', '極小', '小', '小'], 'ratios': [{'stat': 'ad', 'coeff': 0.5}]}, 'radius': 6.0, 'radiusTier': '中', 'includeOrigin': True, 'onHitTargets': [{'kind': 'knockback', 'distance': 3.0, 'speed': 15.0, 'from': 'caster'}], 'modelFx': {'shape': 'single', 'preset': 'tpl-locust-orb', 'modelKey': 'imported.earthtornado2', 'soundKey': 'wc3.blademasterwhirlwind'}, 'castTimeSec': 1.0}})
 
 A("77-02", "77-02 雷鳴劍", "self", [0], [0], 0,
   "[被動][普攻時][機率][暴擊][範圍][AP加成]\n\n「雷鳴。會心」\n[攻擊時]有10%的[機率]可以使出[會心一擊]造成1.5倍的[暴擊]傷害，並且附加落雷，造成[範圍內]敵方{{ap}}% [AP]傷害。",
@@ -77,7 +81,16 @@ A("77-04", "77-04 真-雷光劍", "ground", [70, 70, 70], [150, 225, 300], 11,
   # ⭐ GH#1146 —— 綁 `tpl-area-strike`（含**第二個頂層節點**的視覺槽）。
   #   ⚠️ params 由 `templatize.py::m_area_strike()` 從出貨文件算出來,⛔ 不是手打;
   #   等價由 `templatizeEquivalence.test.ts` 逐位元判。
-  template={'ref': 'tpl-area-strike', 'params': {'castType': 'ground', 'damageType': 'physical', 'damage': {'damageTierPerRank': ['小', '中', '中'], 'ratios': [{'stat': 'ad', 'coeff': 0.6}]}, 'radius': 3.0, 'radiusTier': '極小', 'includeOrigin': True, 'modelFx': {'shape': 'single', 'preset': 'tpl-locust-strike', 'modelKey': 'w3x.stock.monsoonbolttarget'}, 'castTimeSec': 2}})
+  template={'ref': 'tpl-area-strike', 'params': {'castType': 'ground', 'damageType': 'physical', 'damage': {'damageTierPerRank': ['小', '中', '中'], 'ratios': [{'stat': 'ad', 'coeff': 0.6}]}, 'radius': 3.0, 'radiusTier': '極小', 'includeOrigin': True, 'modelFx': {'shape': 'single', 'preset': 'tpl-locust-strike', 'modelKey': 'w3x.stock.monsoonbolttarget'}, 'castTimeSec': 1.0}})
+
+# ⭐ rollback 作者開關（GH#1239 修正輪，2026-09-15）—— 77-002 御雷劍那條 40% 落雷 hook：
+#    False（預設）＝ 移除（下面 2026-08-13 的逐層診斷 ＋ 規格第 1 層「其雷鳴劍發動[機率]上升至50%」）。
+#    True        ＝ 產生器輸出 334a6d88a 之前的 passive（onBasicAttack 40% 落雷；場上約 70%、兩發可同時落）。
+#    轉法：改這一格 → `bash scripts/genrun.sh skillremake:json`（它自己跑 content:build）→ commit 產物。
+#    ⚠️ 轉成 True 之後 `declaredFieldMatchesShape.test.ts` 的「onBasicAttack 上卡」閘會紅 —— 那條紅是誠實的
+#       （卡面沒寫「攻擊時」的 40%）：要嘛同一個 commit 補卡面，要嘛把紅燈原樣回報，⛔ 不要放寬閘。
+#    ⛔ 不做成後台一格：那等於為一支技能寫 if（第〇·五守則）；這是產生器來源的作者開關。
+KEEP_LEGACY_40PCT_BOLT_HOOK = False
 
 A("77-002", "77-002 御雷劍", "self", [0], [0], 0,
   "[被動][機率]\n\n「御雷劍。飛行」\n使用從者道具「御雷劍」的剎那，其雷鳴劍發動[機率]上升至50%，[GLADIARIA ALAT] 持續時間增加至30秒。",
@@ -106,15 +119,19 @@ A("77-002", "77-002 御雷劍", "self", [0], [0], 0,
   # ⛔ 而且它**與 augment 重複計數**：77-02 雷鳴劍的落雷已經被 `procChance set 0.5`
   #    抬到 50%，這一條再獨立抽 40% ⇒ 實際約 70% 會落雷、而且兩發可以同時落。
   #    規格寫的是「上升**至** 50%」，不是「50% 再加一份 40%」。
-  # ⛔ 但**這一輪不刪**，因為刪掉會讓產生器當場非零離開，而不是靜默出錯：
-  #    `tag_gate.audit()` 對 `[被動]` 問的是 `doc.get("passive") is not None or marks`，
-  #    對 `[機率]` 問的是 `{"chance": ANY}` 那一組形狀 —— 兩個今天**都只由這段
-  #    passive 滿足**，`augment` 的 `{"op":"procChance"}` 兩張表都不認得。
-  #    ⇒ 正解是**同時**在 tag_gate.py 讓一支「純 augment 的被動 EX」也算數
-  #      （`[被動]` 接受 `doc.get("augment")`、`[機率]` 接受 `{"op":"procChance"}`，
-  #      形狀抄 70-002 的 `{"op":"damageCoeffAp"}` 那一列），那是兩個檔的改動。
+  # ⭐⭐ 2026-09-15（GH#1239）**刪了** —— 上面這段 2026-08-13 的診斷一字不改地成立，
+  #    ⭐ 而它當時「這一輪不刪」的唯一理由（`tag_gate` 的 `[機率]` 只認 `{"chance": ANY}`）
+  #    這一次一起關掉了：`tag_gate.py` 的 `機率` 列加上 `{"op": "procChance"}`（形狀同 70-002 的
+  #    `{"op": "damageCoeffAp"}` 那一列）。
+  #    ⇒ 這支 EX 卡面上的兩句話各自只有一個住處（augment 兩條 op），落雷機率回到規格的「至 50%」。
+  #    ⚠️ GH#1239 是從另一個方向撞到它的：普查說「掛 `onBasicAttack` 而卡面沒寫攻擊時」——
+  #    ⛔ 修法**不是**把「攻擊時」寫上卡（那會替一個五層都沒有的 40% 背書），是拿掉這個 hook。
+  # ⚠️ `passive` 留一格**空的 rank**：`isPassiveOnly()` 要 `def.passive !== undefined` 才把它當成
+  #    「不可施放的被動」；整段拿掉會讓 EX 變成一顆按下去什麼都不做的主動鍵。
+  #    `[被動]` 標籤閘也照舊由它滿足（`doc.get("passive") is not None`）。
   # ⭐ 順帶：gap 報告說「augment.targets 少了 condition」的那一條**已經被上面
   #    owner 2026-08-13 的裁決取代**（御雷劍就是這支 EX 自己），⛔ 不要再補回去。
-  passive={"name": "77-002 御雷劍", "ranks": [{"hooks": [
-      {"on": "onBasicAttack", "chance": 0.4, "target": "event",
-       "effects": [area("magic", tier="極小", ap=0.1)]}]}]})
+  passive={"name": "77-002 御雷劍", "ranks": [
+      {"hooks": [{"on": "onBasicAttack", "chance": 0.4, "target": "event",
+                  "effects": [area("magic", tier="極小", ap=0.1)]}]}
+      if KEEP_LEGACY_40PCT_BOLT_HOOK else {"modifiers": [], "hooks": []}]})

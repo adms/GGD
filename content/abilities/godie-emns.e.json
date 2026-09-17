@@ -14,10 +14,10 @@
     30.0
   ],
   "manaCost": [
-    112.0,
-    112.0,
-    112.0,
-    112.0
+    150.0,
+    150.0,
+    150.0,
+    150.0
   ],
   "range": 12.0,
   "radiusTier": "中",
@@ -77,14 +77,15 @@
         "subject": "target",
         "statusId": "curse"
       },
-      "castTimeSec": 0.833
+      "castTimeSec": 1
     }
   },
   "icon": "assets/icons/abilities/godie-emns.e.webp",
   "vfxKey": "fx.prim.physical.shockwave",
   "sfxKey": "wc3.rokhanwhat2",
   "cooldownTier": "極小",
-  "manaCostTier": "小",
+  "castTimeTier": "極大",
   "rangeTier": "極大",
-  "castTimeSec": 0.833
+  "manaCostTier": "小",
+  "castTimeSec": 1
 }

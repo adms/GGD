@@ -18,6 +18,7 @@
     0.0
   ],
   "range": 0.0,
+  "castTimeTier": "極大",
   "targetsEnemies": false,
   "effects": [
     {
@@ -116,5 +117,5 @@
     "camKick": 0.466
   },
   "cooldownTier": "中",
-  "castTimeSec": 0.667
+  "castTimeSec": 1
 }

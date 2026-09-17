@@ -1,0 +1,49 @@
+{
+  "schema": "ggd.source-handoff@1",
+  "frozen": true,
+  "frozenAt": "2026-09-10T13:50:18.347045+00:00",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7",
+  "sourceManifest": "source-manifest.json",
+  "fileManifest": "files.sha256.json",
+  "newCompleteArchives": 2,
+  "sourceArchiveBytes": 1703484,
+  "newStandardModelCandidates": 3,
+  "nativeFucPspPackages": 0,
+  "platform": "unknown original PSP/PS2; MOD targets explicitly identified",
+  "models": [
+    {
+      "sourceId": "gamebanana-fuc-kotomine-kirei-291438",
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/kotomine-kirei",
+      "candidateManifest": "candidate-manifest.json"
+    },
+    {
+      "sourceId": "gamebanana-fuc-dark-sakura-492607",
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/dark-sakura",
+      "candidateManifest": "candidate-manifest.json"
+    }
+  ],
+  "audio": {
+    "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/dark-sakura",
+    "audioFileIndex": "audioFileIndex-frozen-v1.json",
+    "files": 15,
+    "seconds": 16.209468962585035
+  },
+  "motion": {
+    "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/fate-unlimited-codes-mod-models-batch7/kotomine-kirei",
+    "index": "motion-index.json",
+    "sourceSequences": 191,
+    "sourceMovingSequences": 182,
+    "blendEntries": 349,
+    "movingBlendEntries": 336,
+    "singleFramePoseEntries": 9,
+    "staticMultiFramePoseEntries": 4,
+    "origin": "Sven Co-op/GoldSrc MOD, not Fate native",
+    "cpuSampledFrames": 1745
+  },
+  "validation": "All 3 distinct GLBs: Khronos 0 errors / 0 warnings, maxIssues=0, truncated=false. All original packages and converted audio fully verified.",
+  "runtimeReady": false,
+  "centralWrites": false,
+  "gitWrites": false,
+  "s3Writes": false,
+  "previousBatchWrites": false
+}

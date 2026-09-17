@@ -1,0 +1,14 @@
+{
+  "id": "acquired-mario.cape",
+  "schema": "status-effect@1",
+  "name": "披風請讓路",
+  "description": "Mario「披風請讓路」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-mario.cape",
+    "disarm",
+    "attack-denied",
+    "cc",
+    "debuff"
+  ]
+}

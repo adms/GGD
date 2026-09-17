@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "〔兄貴的氣勢〕",
   "provenance": "editor-json",
-  "description": "成功抓取或保護友軍累積氣勢，上限三層。",
+  "description": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 {{cd}} 秒。\n【目標設計】成功抓取或保護友軍累積氣勢，上限三層。\n【待補機制】需抓取成功／有效保護事件的氣勢資源。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,
@@ -49,5 +49,6 @@
       "vfxKey": "fx.prim.physical.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/community-review-15-20260907.passive.webp"
+  "icon": "assets/icons/abilities/community-review-15-20260907.passive.webp",
+  "castTimeTier": "極小"
 }

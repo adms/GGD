@@ -1,0 +1,71 @@
+{
+  "id": "version.body.73aa5fc78ce78b9d886522a53d07ed7e4ffdc1d59d4d7984",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/versions/fef752496517e9eb4f58573a99bba38bbac367872445be38409ebf3b77b310c2.glb",
+  "scale": 1,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "stand",
+    "run": "Walk",
+    "attack": "Attack - 1",
+    "cast": "Attack - 1",
+    "hurt": "stand",
+    "death": "death"
+  },
+  "bodyVersion": {
+    "sourceModelKey": "imported.heroichigo-bankai",
+    "legacyAppearance": false
+  },
+  "attachPoints": {
+    "Origin": {
+      "x": -0.039,
+      "y": 0.0302,
+      "z": -0.0058
+    },
+    "OverHead": {
+      "x": -0.0259,
+      "y": 2.0236,
+      "z": -0.0064
+    },
+    "Foot Right": {
+      "x": 0.0598,
+      "y": 0.0554,
+      "z": 0.2103
+    },
+    "Foot Left": {
+      "x": 0.0371,
+      "y": 0.0602,
+      "z": -0.2014
+    },
+    "Hand Right": {
+      "x": -0.0999,
+      "y": 1.2858,
+      "z": 0.6956
+    },
+    "Weapon": {
+      "x": 1.0127,
+      "y": 1.356,
+      "z": 0.6666
+    },
+    "Head": {
+      "x": -0.0564,
+      "y": 1.8429,
+      "z": -0.0065
+    },
+    "Hand Left": {
+      "x": -0.0912,
+      "y": 1.284,
+      "z": -0.7264
+    },
+    "Chest": {
+      "x": -0.1267,
+      "y": 1.5075,
+      "z": 0.0084
+    }
+  },
+  "yawOffsetDeg": 90,
+  "hiddenPrimitives": [
+    1,
+    3
+  ]
+}

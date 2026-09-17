@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/infinity-strash-texture-backdrop-repair-v1/e0efd6072b551af1ba827cdc3d38a7ca62d5cd5398db8a80561798338b2c0114.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/infinity-strash-texture-backdrop-repair-v1/e0efd6072b551af1ba827cdc3d38a7ca62d5cd5398db8a80561798338b2c0114.files.json",
+  "archiveSha256": "e0efd6072b551af1ba827cdc3d38a7ca62d5cd5398db8a80561798338b2c0114",
+  "archiveBytes": 25317705,
+  "fileCount": 66,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-texture-backdrop-repair-v1",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-texture-backdrop-repair-v1/d89e3fd27cbfe00e1c75ce0dec32e63957b2e360e75df7d729902955d554b3fb/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-texture-backdrop-repair-v1/d89e3fd27cbfe00e1c75ce0dec32e63957b2e360e75df7d729902955d554b3fb/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-texture-backdrop-repair-v1/d89e3fd27cbfe00e1c75ce0dec32e63957b2e360e75df7d729902955d554b3fb/manifest.json"
+}

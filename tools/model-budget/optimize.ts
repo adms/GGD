@@ -61,6 +61,7 @@ import {
 } from "./glb";
 import { CONTENT, ROOT, ROLE_NAMES, contentUrl, gateFor, roleFromReport, type Role } from "./roles";
 import { checkRig, type RigCheck } from "./rig";
+import { HERO_MODEL_ADOPTION_POLICY } from "../../packages/shared/src/content/modelUpload/budget";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const VENDOR = path.join(HERE, ".optvendor");
@@ -81,6 +82,7 @@ interface Args {
   atlasQuality: number;
   texEdge: number | null;
   trisTarget: number | null;
+  lockBlend: boolean;
   force: boolean;
   json: boolean;
   babylonVerify: boolean;
@@ -105,6 +107,7 @@ function parseArgs(argv: string[]): Args {
     force: false,
     json: false,
     babylonVerify: false,
+    lockBlend: false,
   };
   for (let i = 0; i < argv.length; i++) {
     const t = argv[i]!;
@@ -115,6 +118,7 @@ function parseArgs(argv: string[]): Args {
     } else if (t === "--out") a.out = path.resolve(argv[++i] ?? fail("--out needs a dir"));
     else if (t === "--apply") a.apply = true;
     else if (t === "--geometry") a.geometry = true;
+    else if (t === "--lock-blend") a.lockBlend = true;
     else if (t === "--atlas") a.atlas = true;
     else if (t === "--atlas-quality") a.atlasQuality = Number(argv[++i]);
     else if (t === "--tex-edge") a.texEdge = Number(argv[++i]);
@@ -125,7 +129,7 @@ function parseArgs(argv: string[]): Args {
     else if (t === "--help" || t === "-h") {
       process.stdout.write(
         "usage: tsx tools/model-budget/optimize.ts <glb-or-dir>... [--role R] [--apply]\n" +
-          "  [--geometry] [--atlas] [--atlas-quality Q] [--out DIR] [--tex-edge N] [--tris-target N] [--force] [--json] [--babylon-verify]\n" +
+          "  [--geometry] [--lock-blend] [--atlas] [--atlas-quality Q] [--out DIR] [--tex-edge N] [--tris-target N] [--force] [--json] [--babylon-verify]\n" +
           `roles: ${ROLE_NAMES.join(", ")}\n` +
           "default is a DRY RUN; nothing is written without --apply, and never in place.\n",
       );
@@ -157,6 +161,8 @@ interface GeoAction {
   fromTris: number;
   targetTris: number;
   ratio: number;
+  /** GH#1186：半透明（BLEND）的特效薄片不減面，削減量由其餘網格承擔（`--lock-blend`）。 */
+  lockBlend?: true;
 }
 
 /**
@@ -232,12 +238,22 @@ function planFile(file: string, args: Args): Plan {
     }
   }
 
-  // geometry target: only when asked; --tris-target, else the role's warn tris
+  // geometry target: only when asked. Hero adoption has its own owner-set
+  // trigger (>10k) and target (<=8k), independent of the wider runtime budget.
   let geo: GeoAction | null = null;
   if (args.geometry) {
-    const trisTarget = args.trisTarget ?? (gate ? gate.tris.warn : 0);
-    if (trisTarget > 0 && metrics.triangles > trisTarget && metrics.skins >= 0) {
-      geo = { fromTris: metrics.triangles, targetTris: trisTarget, ratio: trisTarget / metrics.triangles };
+    const heroAdoption = role === "champion" && args.trisTarget === null;
+    const trisTarget = args.trisTarget ?? (heroAdoption
+      ? HERO_MODEL_ADOPTION_POLICY.decimatedTargetTrianglesMax
+      : (gate ? gate.tris.warn : 0));
+    const trigger = heroAdoption
+      ? HERO_MODEL_ADOPTION_POLICY.decimateWhenTrianglesAbove
+      : trisTarget;
+    if (trisTarget > 0 && metrics.triangles > trigger && metrics.skins >= 0) {
+      geo = {
+        fromTris: metrics.triangles, targetTris: trisTarget, ratio: trisTarget / metrics.triangles,
+        ...(args.lockBlend ? { lockBlend: true as const } : {}),
+      };
     }
   }
 
@@ -280,13 +296,14 @@ function planKey(file: string, plan: Plan): string {
   const shape = {
     src,
     tex: plan.tex.map((t) => ({ i: t.imageIndex, to: t.to })),
-    geo: plan.geo ? { t: plan.geo.targetTris } : null,
+    geo: plan.geo ? { t: plan.geo.targetTris, ...(plan.geo.lockBlend ? { lb: 1 } : {}) } : null,
     atlas: plan.atlas ? { d: plan.atlas.targetDraws, e: plan.atlas.edge, q: plan.atlas.quality } : null,
     tool: TOOL_VERSION,
   };
   return sha256(Buffer.from(JSON.stringify(shape)));
 }
-const TOOL_VERSION = "model-budget/optimize@1";
+// @3（GH#1198）：圖集 stage 會烘 tile／整格平移、同圖 emissive 一起搬 ⇒ 同一份來源的產物變了，舊側車不可以再算「up-to-date」。
+const TOOL_VERSION = "model-budget/optimize@3";
 
 // ---- texture resize (ffmpeg) ------------------------------------------------
 
@@ -419,11 +436,11 @@ function applyPlan(plan: Plan, args: Args, geomOK: boolean): Applied {
       const geoOut = path.join(tmp, "geo.glb");
       const raw = execFileSync(
         process.execPath,
-        [DECIMATE_WORKER, workingFile, geoOut, String(plan.geo.targetTris)],
+        [DECIMATE_WORKER, workingFile, geoOut, String(plan.geo.targetTris), ...(plan.geo.lockBlend ? ["--lock-blend"] : [])],
         { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
       );
       void raw;
-      res.rig = checkRig(plan.file, geoOut);
+      res.rig = checkRig(plan.file, geoOut, "fewer");
       if (!res.rig.ok) {
         res.rejected = `geometry decimation broke the rig (${res.rig.reasons.join("; ")}) — candidate rejected, not written`;
         return res;
@@ -485,7 +502,9 @@ function applyPlan(plan: Plan, args: Args, geomOK: boolean): Applied {
           role: plan.role,
           generatedAt: new Date().toISOString(),
           textures: plan.tex.map((t) => ({ image: t.imageIndex, from: t.from, to: t.to })),
-          geometry: plan.geo ? { fromTris: plan.geo.fromTris, targetTris: plan.geo.targetTris } : null,
+          geometry: plan.geo
+            ? { fromTris: plan.geo.fromTris, targetTris: plan.geo.targetTris, ...(plan.geo.lockBlend ? { lockBlend: true } : {}) }
+            : null,
           atlas: plan.atlas ? { ...plan.atlas, atlases: res.atlas?.atlases, quality: res.atlas?.quality } : null,
           before: { vramBytes: plan.vramBefore, fileBytes: plan.fileBytesBefore, triangles: plan.metrics.triangles, drawCalls: plan.metrics.meshes },
           after: { vramBytes: finalMetrics.vramBytes, fileBytes: finalMetrics.fileBytes, triangles: finalMetrics.triangles, drawCalls: finalMetrics.meshes },
@@ -560,7 +579,7 @@ function main(): void {
       }
       if (p.geo && geomOK)
         process.stdout.write(
-          `    geometry: ${p.geo.fromTris} → ≤${p.geo.targetTris} tris (ratio ${p.geo.ratio.toFixed(2)}, skin-aware; rig verified before accept)\n`,
+          `    geometry: ${p.geo.fromTris} → ≤${p.geo.targetTris} tris (ratio ${p.geo.ratio.toFixed(2)}, skin-aware${p.geo.lockBlend ? ", BLEND 薄片鎖定" : ""}; rig verified before accept)\n`,
         );
       else if (p.geo && !geomOK)
         process.stdout.write(`    geometry: ${p.geo.fromTris} → ≤${p.geo.targetTris} tris  [SKIPPED — deps not installed]\n`);
@@ -650,7 +669,7 @@ function main(): void {
     process.stdout.write("\nrunning the repo's Babylon loader on the output (validate_glb.mts)…\n");
     try {
       const w3x = path.dirname(VALIDATE_GLB);
-      execFileSync("npx", ["tsx", VALIDATE_GLB, args.out], { cwd: w3x, stdio: "inherit" });
+      execFileSync(process.execPath, ["--import", "tsx", VALIDATE_GLB, args.out], { cwd: w3x, stdio: "inherit" });
     } catch {
       process.stderr.write("optimize: Babylon validation reported a failure — inspect the output above.\n");
       process.exit(1);

@@ -1,0 +1,216 @@
+{
+  "id": "lol-sett.passive",
+  "name": "恆毅之泉",
+  "provenance": "editor-json",
+  "description": "普通攻擊左右拳交替，右拳追加傷害；低血量時週期回血；承傷累積最多三層供 W 使用。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "consumeStatus",
+                "shape": "single",
+                "statusId": "lol-sett.right",
+                "count": 1,
+                "subject": "self",
+                "appliedBy": "self",
+                "onConsumed": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "damageTier": "極小"
+                    }
+                  },
+                  {
+                    "kind": "spawnVfx",
+                    "vfxId": "fx.prim.physical.pulse-sm",
+                    "at": "target"
+                  }
+                ],
+                "onMissing": [
+                  {
+                    "kind": "applyStatus",
+                    "sourceScope": "caster",
+                    "statusId": "lol-sett.right",
+                    "duration": 4,
+                    "applyTo": "self"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "on": "onInterval",
+            "effects": [
+              {
+                "kind": "heal",
+                "amount": {
+                  "flat": 20,
+                  "ratios": []
+                },
+                "applyTo": "self"
+              },
+              {
+                "kind": "spawnVfx",
+                "vfxId": "fx.prim.nature.pulse-sm",
+                "at": "self"
+              }
+            ],
+            "internalCooldown": 2,
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<",
+              "value": 0.5
+            },
+            "target": "self"
+          },
+          {
+            "on": "onDamageTaken",
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "sourceScope": "caster",
+                "statusId": "lol-sett.grit",
+                "stacks": 1,
+                "duration": 4,
+                "applyTo": "self"
+              }
+            ],
+            "internalCooldown": 0.5,
+            "condition": {
+              "not": {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "lol-sett.grit",
+                "appliedBy": "self",
+                "minStacks": 3
+              }
+            },
+            "target": "self",
+            "victim": "enemy"
+          }
+        ]
+      }
+    ]
+  },
+  "castTimeTier": "極小",
+  "template": {
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+    "params": {
+      "hooks": [
+        {
+          "on": "onBasicAttack",
+          "effects": [
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "subject": "self",
+              "statusId": "lol-sett.right",
+              "appliedBy": "self",
+              "count": 1,
+              "onConsumed": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "極小"
+                  }
+                },
+                {
+                  "kind": "spawnVfx",
+                  "vfxId": "fx.prim.physical.pulse-sm",
+                  "at": "target"
+                }
+              ],
+              "onMissing": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-sett.right",
+                  "duration": 4,
+                  "sourceScope": "caster",
+                  "applyTo": "self"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "on": "onInterval",
+          "effects": [
+            {
+              "kind": "heal",
+              "amount": {
+                "flat": 20,
+                "ratios": []
+              },
+              "applyTo": "self"
+            },
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.nature.pulse-sm",
+              "at": "self"
+            }
+          ],
+          "target": "self",
+          "internalCooldown": 2,
+          "condition": {
+            "kind": "stat",
+            "subject": "self",
+            "stat": "hp",
+            "mode": "percent",
+            "op": "<",
+            "value": 0.5
+          }
+        },
+        {
+          "on": "onDamageTaken",
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "lol-sett.grit",
+              "duration": 4,
+              "sourceScope": "caster",
+              "applyTo": "self",
+              "stacks": 1
+            }
+          ],
+          "target": "self",
+          "victim": "enemy",
+          "internalCooldown": 0.5,
+          "condition": {
+            "not": {
+              "kind": "status",
+              "subject": "self",
+              "statusId": "lol-sett.grit",
+              "appliedBy": "self",
+              "minStacks": 3
+            }
+          }
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-sett.passive.webp"
+}

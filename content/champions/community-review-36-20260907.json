@@ -1,16 +1,16 @@
 {
   "id": "community-review-36-20260907",
   "name": "鬼畜王蘭斯",
-  "description": "鬼畜王蘭斯 社群英雄功能驗收稿。作品：《鬼畜王蘭斯／Rance》  \n角色實體：蘭斯；與鬼眼狂刀 KYO 無關。  \n定位：近戰爆發、有限成長、隊伍衝鋒。\n\n視覺方向：綠色勇猛光、厚重白斬、漫畫喊招；不導入成人情節或其他人的招式。\n以 GGD 狂戰 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "description": "作品：《鬼畜王蘭斯／Rance》  \n角色實體：蘭斯；與鬼眼狂刀 KYO 無關。  \n定位：近戰爆發、有限成長、隊伍衝鋒。\n\n視覺方向：綠色勇猛光、厚重白斬、漫畫喊招；不導入成人情節或其他人的招式。",
   "role": "fighter",
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "狂戰",
-  "modelKey": "version.body.3139ca177291a0bdad27850cbc7aaa17b65f07f2f6775272",
+  "modelKey": "version.body.970eff7fdab175a901b429a6a93f70f8d9d851b2c7fddbdd",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 38.2761224489796,
+    "maxHealth": 60,
     "healthRegen": 0.10039591836734693,
-    "maxMana": 17.385714285714286,
+    "maxMana": 20,
     "manaRegen": 0,
     "ad": 3.9845714285714284,
     "as": 0,
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -100,7 +100,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-36-20260907.q.webp",
       "template": {
@@ -114,7 +114,7 @@
             "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 0.267
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -166,7 +166,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-36-20260907.w.webp",
       "template": {
@@ -174,7 +174,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -201,10 +201,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -240,7 +240,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-36-20260907.e.webp",
       "template": {
@@ -259,7 +259,7 @@
           "pushSpeed": 872,
           "pushFrom": "facing",
           "pushLaunchHeight": 0,
-          "castTimeSec": 1.033
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -285,9 +285,9 @@
         90.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        600.0,
+        600.0,
+        600.0
       ],
       "manaCostTier": "大",
       "range": 6,
@@ -322,7 +322,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.833,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-36-20260907.r.webp",
       "template": {
@@ -336,7 +336,7 @@
             "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 0.833
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },
@@ -382,7 +382,7 @@
       "modelKey": "version.body.3139ca177291a0bdad27850cbc7aaa17b65f07f2f6775272",
       "label": "ou99 「篮球小男孩」（相似造型）",
       "sourceModelKey": "ou99.493578",
-      "modelSha256": "d2136011a00bbaf235dca674ba054176d7892e6e8fd5a6ef57100b456ad640ca",
+      "modelSha256": "6214ba6b5fd2a7ceee15a7d58060db081ea030678dd27442387b5fc5e7a88e41",
       "binarySha256": "f70116b571774a32bc2c92fc5d9e273228de6ec2277b31ff8554b5201d64ac8d",
       "registeredAt": "2026-09-10T11:45:25.579Z",
       "source": {
@@ -392,6 +392,136 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-493578-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.d52431a966e687856f7333a254356b015ab2dd88e61fe768",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.493578",
+      "modelSha256": "44c0c3498f1976d7891b507fba2849bd29baa73dbfe5c899eee596738a628d88",
+      "binarySha256": "1dc7ca7986bf5614e95983d24f3b32659253e24cd409a6947d83385ca0d3be51",
+      "registeredAt": "2026-09-10T14:45:34.390Z",
+      "source": {
+        "kind": "previous",
+        "character": "鬼畜王蘭斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.493578.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.127a3bc9de614071940358cbee2e4e907b3658184d0c1f1c",
+      "label": "佐罗",
+      "sourceModelKey": "community.body.e69a0c8e9b49032709aa22dbf1ab17597d1cb145e849a8c4",
+      "modelSha256": "a60c3edf2da865a339986080cc911bfdd3d39ca8125d2f67810012696c0112b1",
+      "binarySha256": "8a75273321c3f0d0ca544b555329749b0848d4451ed0881ac24cb781687876c5",
+      "registeredAt": "2026-09-10T14:45:34.399Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "佐罗",
+        "work": "ONE PIECE 航海王",
+        "library": "300heroes",
+        "reference": "300heroes:5666df594cba229f74ce4ed9",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.80175f0a47cc6df8eb2625e80dff5e8ab0b83b7daab72bd7",
+      "label": "篮球小男孩（論壇相似模型）",
+      "sourceModelKey": "ou99.493578-standard-v2",
+      "modelSha256": "75943f0a3feada66a4f0f959d974f77d2aa56ec9c5d29a7952793aacaa36aab7",
+      "binarySha256": "a7a46c6a4328d65b8b547478d65b790540cb8fbe858edfe4c21d2bd7922e0894",
+      "registeredAt": "2026-09-10T14:48:50.492Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "篮球小男孩",
+        "work": "來源作品待核；論壇標題：篮球小男孩",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-493578-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.77aa08f7b5debb706f1d44556974924d1cb04d4efff10468",
+      "label": "篮球小男孩（論壇相似模型）",
+      "sourceModelKey": "ou99.493578-standard-v2",
+      "modelSha256": "8cfb8c0d6145ccee494004cf65666f5293644a18c6c08661f9055892d0ea5140",
+      "binarySha256": "69ee9104640e87d008606b8b74644bebe8ce34a10610e6c5cc898016d8ba2da8",
+      "registeredAt": "2026-09-12T23:02:36.969Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "篮球小男孩",
+        "work": "來源作品待核；論壇標題：篮球小男孩",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-493578-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.9b545a0ff890ef77c626ce682339493288669ae2fd848a32",
+      "label": "佐罗",
+      "sourceModelKey": "community.body.e69a0c8e9b49032709aa22dbf1ab17597d1cb145e849a8c4",
+      "modelSha256": "b5b244ba525e36d8291f681e69af5f78897c1f17eb52934a6c2f22dfed6ddd1b",
+      "binarySha256": "98b43eaad4af1554e7b000e7672f3dc2dcec42380bbe1e711c3320cd80b454fd",
+      "registeredAt": "2026-09-12T23:02:37.141Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "佐罗",
+        "work": "ONE PIECE 航海王",
+        "library": "300heroes",
+        "reference": "300heroes:5666df594cba229f74ce4ed9",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.970eff7fdab175a901b429a6a93f70f8d9d851b2c7fddbdd",
+      "label": "篮球小男孩（論壇相似模型）",
+      "sourceModelKey": "ou99.493578-standard-v2",
+      "modelSha256": "3e44ca2a0a51b107f75958f46d8e704eade351f28ab0f34c7c2920148082625b",
+      "binarySha256": "69ee9104640e87d008606b8b74644bebe8ce34a10610e6c5cc898016d8ba2da8",
+      "registeredAt": "2026-09-13T00:08:52.778Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "篮球小男孩",
+        "work": "來源作品待核；論壇標題：篮球小男孩",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-493578-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.fbca128c845b5c438b833713193b95d469cdcca31abba0d4",
+      "label": "佐罗",
+      "sourceModelKey": "community.body.e69a0c8e9b49032709aa22dbf1ab17597d1cb145e849a8c4",
+      "modelSha256": "63f9495686ba8234b8cc01631a14231ea454a15508ca37f8e091647a64180bf2",
+      "binarySha256": "98b43eaad4af1554e7b000e7672f3dc2dcec42380bbe1e711c3320cd80b454fd",
+      "registeredAt": "2026-09-13T00:08:52.951Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "佐罗",
+        "work": "ONE PIECE 航海王",
+        "library": "300heroes",
+        "reference": "300heroes:5666df594cba229f74ce4ed9",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

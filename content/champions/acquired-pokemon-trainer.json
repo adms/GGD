@@ -1,0 +1,487 @@
+{
+  "id": "acquired-pokemon-trainer",
+  "name": "Pokémon Trainer",
+  "description": "把水、草、火三種指令編成連動的戰術手；先施放三種小招，再把徽記換成 R 的不同追加效果。包裡什麼都有，唯獨沒有換人冷卻。\n\n概念來源：Pokémon／任天堂明星大亂鬥 Pokémon Trainer／寶可夢訓練家\nhttps://www.smashbros.com/en_US/fighter/index.html\n\n本遊戲改編：\n• 以傑尼龜、妙蛙草與噴火龍的招式意象改編；三種指令由同一英雄結算，沒有三隻獨立召喚物或三套血條。\n• 各指令各留一枚 6 秒徽記；R 分別消耗水、草、火追加減速、鎖足及傷害，不冒稱原作換人系統。\n\n採用所選 GGD 模型與特效。 目前使用已核准 GGD 替代模型 imported.heropikachu；來源本尊缺六動作，之後以獨立模型版本替換，不覆寫此版。",
+  "role": "mage",
+  "attackType": "ranged",
+  "archetype": "mage",
+  "origin": "法師",
+  "modelKey": "imported.heropikachu",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 8.2,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 45.833673469387755,
+    "healthRegen": 0.10673469387755102,
+    "maxMana": 0.9581632653061187,
+    "manaRegen": 0,
+    "ad": 2.5489795918367353,
+    "as": 0,
+    "mr": 2.1118367346938776,
+    "armor": 0.45735714285714285,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 13,
+    "agi": 18,
+    "int": 29,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "INT",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "acquired-pokemon-trainer.q",
+      "name": "傑尼龜・水槍",
+      "provenance": "editor-json",
+      "description": "以 GGD 奧術彈呈現水槍，命中造成小級魔法傷害並減速 20% 持續 1 秒。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "radius": 3,
+      "rangeTier": "大",
+      "cooldownTier": "極小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.bolt.arcane",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "acquired-pokemon-trainer.splash",
+              "duration": 1,
+              "applyTo": "target",
+              "moveSpeedMult": 0.8
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "spawnProjectile",
+              "projectileId": "imported.bolt.arcane",
+              "onHit": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "acquired-pokemon-trainer.splash",
+                  "duration": 1,
+                  "sourceScope": "caster",
+                  "applyTo": "target",
+                  "moveSpeedMult": 0.8
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/acquired-pokemon-trainer.q.webp"
+    },
+    "W": {
+      "id": "acquired-pokemon-trainer.w",
+      "name": "妙蛙草・藤鞭",
+      "provenance": "editor-json",
+      "description": "直線草刃造成小級魔法傷害，命中者鎖足 0.5 秒。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 0.0,
+      "radius": 3,
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小"
+          },
+          "length": 6,
+          "width": 1,
+          "aim": "facing",
+          "fromCaster": true,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "acquired-pokemon-trainer.vine",
+              "duration": 0.5,
+              "applyTo": "target",
+              "root": true
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damageLine",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              },
+              "length": 6,
+              "width": 1,
+              "aim": "facing",
+              "fromCaster": true,
+              "includeOrigin": true,
+              "onHitTargets": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "acquired-pokemon-trainer.vine",
+                  "duration": 0.5,
+                  "sourceScope": "caster",
+                  "applyTo": "target",
+                  "root": true
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/acquired-pokemon-trainer.w.webp"
+    },
+    "E": {
+      "id": "acquired-pokemon-trainer.e",
+      "name": "噴火龍・熱身",
+      "provenance": "editor-json",
+      "description": "朝指定方向固定衝刺 3 單位，結束後對近處造成極小級魔法傷害；不切換模型或飛行。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "radius": 3,
+      "rangeTier": "小",
+      "cooldownTier": "中",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "toPoint",
+          "speed": 12,
+          "maxDistance": 5.5,
+          "onEnd": [
+            {
+              "kind": "damageArea",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "極小"
+              },
+              "radius": 3,
+              "includeOrigin": true,
+              "radiusTier": "極小"
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "ground",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "dash",
+              "mode": "toPoint",
+              "speed": 12,
+              "maxDistance": 3,
+              "onEnd": [
+                {
+                  "kind": "damageArea",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "極小"
+                  },
+                  "radius": 1.5,
+                  "includeOrigin": true
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/acquired-pokemon-trainer.e.webp"
+    },
+    "R": {
+      "id": "acquired-pokemon-trainer.r",
+      "name": "三重指令結帳",
+      "provenance": "editor-json",
+      "description": "先對指定敵人造成中級魔法傷害，再分別消耗水徽記減速、草徽記鎖足、火徽記追加小級傷害。缺哪一枚就少哪一項。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        600.0,
+        600.0,
+        600.0
+      ],
+      "manaCostTier": "大",
+      "range": 8,
+      "radius": 3,
+      "rangeTier": "大",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "中"
+          }
+        },
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "acquired-pokemon-trainer.water",
+          "count": 1,
+          "subject": "self",
+          "appliedBy": "self",
+          "onConsumed": [
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "acquired-pokemon-trainer.triple-water",
+              "duration": 1.5,
+              "applyTo": "target",
+              "moveSpeedMult": 0.6
+            }
+          ]
+        },
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "acquired-pokemon-trainer.grass",
+          "count": 1,
+          "subject": "self",
+          "appliedBy": "self",
+          "onConsumed": [
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "acquired-pokemon-trainer.triple-grass",
+              "duration": 0.7,
+              "applyTo": "target",
+              "root": true
+            }
+          ]
+        },
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "statusId": "acquired-pokemon-trainer.fire",
+          "count": 1,
+          "subject": "self",
+          "appliedBy": "self",
+          "onConsumed": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "targeted",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "中"
+              }
+            },
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "subject": "self",
+              "statusId": "acquired-pokemon-trainer.water",
+              "appliedBy": "self",
+              "count": 1,
+              "onConsumed": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "acquired-pokemon-trainer.triple-water",
+                  "duration": 1.5,
+                  "sourceScope": "caster",
+                  "applyTo": "target",
+                  "moveSpeedMult": 0.6
+                }
+              ]
+            },
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "subject": "self",
+              "statusId": "acquired-pokemon-trainer.grass",
+              "appliedBy": "self",
+              "count": 1,
+              "onConsumed": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "acquired-pokemon-trainer.triple-grass",
+                  "duration": 0.7,
+                  "sourceScope": "caster",
+                  "applyTo": "target",
+                  "root": true
+                }
+              ]
+            },
+            {
+              "kind": "consumeStatus",
+              "shape": "single",
+              "subject": "self",
+              "statusId": "acquired-pokemon-trainer.fire",
+              "appliedBy": "self",
+              "count": 1,
+              "onConsumed": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/acquired-pokemon-trainer.r.webp"
+    }
+  },
+  "exAbility": "acquired-pokemon-trainer.ex",
+  "passiveAbility": "acquired-pokemon-trainer.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "thrown"
+  ],
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/acquired-pokemon-trainer.webp"
+}

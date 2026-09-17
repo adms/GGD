@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 2.433,
+  "castTimeSec": 1,
   "castType": "ground",
   "cooldown": [
     90.0,
@@ -38,9 +38,9 @@
   ],
   "id": "b2-guts.r",
   "manaCost": [
-    112.0,
-    112.0,
-    112.0
+    150.0,
+    150.0,
+    150.0
   ],
   "manaCostTier": "小",
   "maxRank": 3,
@@ -54,7 +54,7 @@
   "template": {
     "contentSha256": "sha256:3f80978b955a7744a0e86651ddce738ec5f483e55ecfaa7213a23d6d735803e2",
     "params": {
-      "castTimeSec": 2.433,
+      "castTimeSec": 1,
       "damage": {
         "damageTier": "中"
       },
@@ -73,5 +73,6 @@
       "vfxKey": "fx.prim.arcane.dash"
     }
   ],
-  "icon": "assets/icons/abilities/b2-guts.r.webp"
+  "icon": "assets/icons/abilities/b2-guts.r.webp",
+  "castTimeTier": "極大"
 }

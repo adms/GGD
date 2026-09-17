@@ -1,0 +1,17 @@
+{
+  "id": "lol-ahri.charm",
+  "schema": "status-effect@1",
+  "name": "傾城",
+  "description": "阿璃「傾城」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-ahri.charm",
+    "charmed",
+    "cc",
+    "move-denied",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "debuff"
+  ]
+}

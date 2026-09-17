@@ -1,0 +1,4845 @@
+{
+ "schema": "ggd-audio-intake-report@1",
+ "generatedBy": "python3 tools/audio-intake/audio_intake.py --all --report <這個檔>",
+ "owner": "2026-09-15「實際遊戲會使用的語音跟音效是 128bit 44khz mp3 而不是更高音質的聲音檔 (若原本音質就更低就不用轉換浪費空間了) 然後全部檢查轉換所有上架角色語音，轉換上架的檔案會上 git，原始素材或半成品等上 S3，還沒用到/上架的語音檔保持原始沒關係」",
+ "policy": {
+  "bitrateKbpsMax": 128,
+  "sampleRateHzMax": 44100,
+  "voiceMinSeconds": 0.15,
+  "silencePeakDb": -60.0,
+  "sfxMinSeconds": 0.02,
+  "voiceChannels": 1,
+  "codec": "libmp3lame",
+  "sources": {
+   "bitrateKbpsMax／sampleRateHzMax": "packages/shared/src/content/audioAssetPolicy.ts（GENERATED_COMBAT_FX_AUDIO_POLICY；audioAssets.test.ts 檔頭：整個音訊庫同一個 #158 天花板）",
+   "voiceMinSeconds／silencePeakDb": "tools/voice-gen/src/combatLinesLib.mjs（MIN_SECONDS／MIN_MAX_VOLUME_DB）",
+   "sfxMinSeconds": "tools/audio-intake/audio_intake.py SFX_MIN_SECONDS（理由見該行）",
+   "voiceChannels": "tools/audio-intake/audio_intake.py VOICE_CHANNELS"
+  }
+ },
+ "rulerSelfProof": [
+  "超標檔（48000 Hz／160k）讀成超標",
+  "合格檔（44100 Hz／128k）讀成合格",
+  "數位靜音讀成靜音"
+ ],
+ "readers": [
+  {
+   "doc": "config/audio-map.json",
+   "reader": "apps/client/src/audio/AudioSystem.ts:92",
+   "what": "BGM／音效表（bgm · mapBgm · sfx）",
+   "refs": 271,
+   "files": 265
+  },
+  {
+   "doc": "config/victory-taunts.json",
+   "reader": "apps/client/src/audio/victoryTaunt.ts:39",
+   "what": "勝利嘲諷語音",
+   "refs": 379,
+   "files": 379
+  },
+  {
+   "doc": "config/champion-voices.json",
+   "reader": "apps/client/src/audio/championVoice.ts:55",
+   "what": "英雄選取語音",
+   "refs": 19,
+   "files": 13
+  },
+  {
+   "doc": "assets/audio/voices/champions/MANIFEST.json",
+   "reader": "apps/client/src/audio/selectVoiceLadder.ts:94",
+   "what": "英雄語音包（選取＋戰鬥情境；combat:build 從 status.json 產生）",
+   "refs": 4476,
+   "files": 4066
+  },
+  {
+   "doc": "assets/audio/voices/names/MANIFEST.json",
+   "reader": "apps/client/src/audio/nameVoice.ts:50",
+   "what": "選角喊名",
+   "refs": 375,
+   "files": 375
+  },
+  {
+   "doc": "assets/audio/voices/quotes/quotes.json",
+   "reader": "apps/client/src/audio/nameVoice.ts:62",
+   "what": "選角名言",
+   "refs": 138,
+   "files": 138
+  },
+  {
+   "doc": "apps/client/src/audio/bgmVariants.ts",
+   "reader": "apps/client/src/audio/bgmVariants.ts",
+   "what": "Samantha 輪播 BGM",
+   "refs": 11,
+   "files": 11
+  }
+ ],
+ "notRuntime": {
+  "bundle.json": "content:build 的產物：內嵌 content/config/*.json ⇒ 引用與來源文件相同（過期由 committedBundleMatchesSources 守）",
+  "assets-manifest.json": "assets:manifest 的產物：被引用資產的 bytes／sha256 清單（記錄引用，⛔ 不播放）",
+  "assets/audio/wc3/PROVENANCE.json": "出處帳本：credits 頁讀它顯示來源（blizzardVfxCredits.ts），播放綁定走 config/audio-map.json"
+ },
+ "totals": {
+  "files": 5492,
+  "bytes": 182028456,
+  "referenced": 5207,
+  "ok": 5073,
+  "toConvert": 2,
+  "nonMp3": 132,
+  "silent": 0,
+  "short": 0,
+  "broken": 0,
+  "unreferenced": 248,
+  "unrefOver": 0,
+  "toConvertSavedBytes": 22779,
+  "nonMp3SavedBytesIfConverted": 7789729
+ },
+ "groups": {
+  "announcer": {
+   "files": 13,
+   "referenced": 13,
+   "ok": 13,
+   "toConvert": 0,
+   "nonMp3": 0,
+   "silent": 0,
+   "short": 0,
+   "broken": 0,
+   "unreferenced": 0,
+   "unrefOver": 0,
+   "kind": "voice",
+   "bytes": 275272
+  },
+  "announcer/retired-ja-kyoko": {
+   "files": 13,
+   "referenced": 0,
+   "ok": 0,
+   "toConvert": 0,
+   "nonMp3": 0,
+   "silent": 0,
+   "short": 0,
+   "broken": 0,
+   "unreferenced": 13,
+   "unrefOver": 0,
+   "kind": "voice",
+   "bytes": 108011
+  },
+  "announcer/retired-jank-novelty": {
+   "files": 13,
+   "referenced": 0,
+   "ok": 0,
+   "toConvert": 0,
+   "nonMp3": 0,
+   "silent": 0,
+   "short": 0,
+   "broken": 0,
+   "unreferenced": 13,
+   "unrefOver": 0,
+   "kind": "voice",
+   "bytes": 132686
+  },
+  "announcer/retired-zh": {
+   "files": 12,
+   "referenced": 0,
+   "ok": 0,
+   "toConvert": 0,
+   "nonMp3": 0,
+   "silent": 0,
+   "short": 0,
+   "broken": 0,
+   "unreferenced": 12,
+   "unrefOver": 0,
+   "kind": "voice",
+   "bytes": 105801
+  },
+  "bgm": {
+   "files": 37,
+   "referenced": 36,
+   "ok": 36,
+   "toConvert": 0,
+   "nonMp3": 0,
+   "silent": 0,
+   "short": 0,
+   "broken": 0,
+   "unreferenced": 1,
+   "unrefOver": 0,
+   "kind": "bgm",
+   "bytes": 34707684
+  },
+  "sfx": {
+   "files": 27,
+   "referenced": 27,
+   "ok": 27,
+   "toConvert": 0,
+   "nonMp3": 0,
+   "silent": 0,
+   "short": 0,
+   "broken": 0,
+   "unreferenced": 0,
+   "unrefOver": 0,
+   "kind": "sfx",
+   "bytes": 423199
+  },
+  "sfx/fx": {
+   "files": 32,
+   "referenced": 32,
+   "ok": 32,
+   "toConvert": 0,
+   "nonMp3": 0,
+   "silent": 0,
+   "short": 0,
+   "broken": 0,
+   "unreferenced": 0,
+   "unrefOver": 0,
+   "kind": "sfx",
+   "bytes": 418516
+  },
+  "sfx/lab": {
+   "files": 49,
+   "referenced": 45,
+   "ok": 43,
+   "toConvert": 2,
+   "nonMp3": 0,
+   "silent": 0,
+   "short": 0,
+   "broken": 0,
+   "unreferenced": 4,
+   "unrefOver": 0,
+   "kind": "sfx",
+   "bytes": 4050903
+  },
+  "sfx/retired": {
+   "files": 2,
+   "referenced": 0,
+   "ok": 0,
+   "toConvert": 0,
+   "nonMp3": 0,
+   "silent": 0,
+   "short": 0,
+   "broken": 0,
+   "unreferenced": 2,
+   "unrefOver": 0,
+   "kind": "sfx",
+   "bytes": 98726
+  },
+  "voice-jp": {
+   "files": 6,
+   "referenced": 0,
+   "ok": 0,
+   "toConvert": 0,
+   "nonMp3": 0,
+   "silent": 0,
+   "short": 0,
+   "broken": 0,
+   "unreferenced": 6,
+   "unrefOver": 0,
+   "kind": "voice",
+   "bytes": 151145
+  },
+  "voice-jp/candidates": {
+   "files": 2,
+   "referenced": 0,
+   "ok": 0,
+   "toConvert": 0,
+   "nonMp3": 0,
+   "silent": 0,
+   "short": 0,
+   "broken": 0,
+   "unreferenced": 2,
+   "unrefOver": 0,
+   "kind": "voice",
+   "bytes": 25164
+  },
+  "voice-taunt/chicken": {
+   "files": 28,
+   "referenced": 28,
+   "ok": 28,
+   "toConvert": 0,
+   "nonMp3": 0,
+   "silent": 0,
+   "short": 0,
+   "broken": 0,
+   "unreferenced": 0,
+   "unrefOver": 0,
+   "kind": "voice",
+   "bytes": 432792
+  },
+  "voice-taunt/round": {
+   "files": 351,
+   "referenced": 351,
+   "ok": 351,
+   "toConvert": 0,
+   "nonMp3": 0,
+   "silent": 0,
+   "short": 0,
+   "broken": 0,
+   "unreferenced": 0,
+   "unrefOver": 0,
+   "kind": "voice",
+   "bytes": 5278716
+  },
+  "voices/lines": {
+   "files": 4123,
+   "referenced": 4066,
+   "ok": 4066,
+   "toConvert": 0,
+   "nonMp3": 0,
+   "silent": 0,
+   "short": 0,
+   "broken": 0,
+   "unreferenced": 57,
+   "unrefOver": 0,
+   "kind": "voice",
+   "bytes": 116467984
+  },
+  "voices/names": {
+   "files": 513,
+   "referenced": 375,
+   "ok": 375,
+   "toConvert": 0,
+   "nonMp3": 0,
+   "silent": 0,
+   "short": 0,
+   "broken": 0,
+   "unreferenced": 138,
+   "unrefOver": 0,
+   "kind": "voice",
+   "bytes": 4686214
+  },
+  "voices/quotes": {
+   "files": 139,
+   "referenced": 138,
+   "ok": 138,
+   "toConvert": 0,
+   "nonMp3": 0,
+   "silent": 0,
+   "short": 0,
+   "broken": 0,
+   "unreferenced": 1,
+   "unrefOver": 0,
+   "kind": "voice",
+   "bytes": 2238115
+  },
+  "wc3": {
+   "files": 132,
+   "referenced": 132,
+   "ok": 0,
+   "toConvert": 0,
+   "nonMp3": 132,
+   "silent": 0,
+   "short": 0,
+   "broken": 0,
+   "unreferenced": 0,
+   "unrefOver": 0,
+   "kind": "sfx",
+   "bytes": 12427528
+  }
+ },
+ "toConvert": [
+  {
+   "path": "content/assets/audio/sfx/lab/zombie-bite.mp3",
+   "kind": "sfx",
+   "codec": "mp3",
+   "container": "mp3",
+   "bitrateKbps": 192.0,
+   "sampleRateHz": 44100,
+   "channels": 1,
+   "seconds": 1.196,
+   "bytes": 30137,
+   "problems": [
+    "位元率 192 kbps > 128 kbps"
+   ],
+   "trialBytes": 20106,
+   "savedBytes": 10031,
+   "trialArgs": [
+    "-c:a",
+    "libmp3lame",
+    "-b:a",
+    "128k",
+    "-ar",
+    "44100",
+    "-ac",
+    "1"
+   ],
+   "referencedBy": [
+    {
+     "doc": "config/audio-map.json",
+     "pointer": "/sfx/zombieBite/files/0",
+     "reader": "apps/client/src/audio/AudioSystem.ts:92"
+    }
+   ]
+  },
+  {
+   "path": "content/assets/audio/sfx/lab/zombie-roar.mp3",
+   "kind": "sfx",
+   "codec": "mp3",
+   "container": "mp3",
+   "bitrateKbps": 192.0,
+   "sampleRateHz": 44100,
+   "channels": 1,
+   "seconds": 1.5216,
+   "bytes": 38287,
+   "problems": [
+    "位元率 192 kbps > 128 kbps"
+   ],
+   "trialBytes": 25539,
+   "savedBytes": 12748,
+   "trialArgs": [
+    "-c:a",
+    "libmp3lame",
+    "-b:a",
+    "128k",
+    "-ar",
+    "44100",
+    "-ac",
+    "1"
+   ],
+   "referencedBy": [
+    {
+     "doc": "config/audio-map.json",
+     "pointer": "/sfx/zombieRoar/files/0",
+     "reader": "apps/client/src/audio/AudioSystem.ts:92"
+    }
+   ]
+  }
+ ],
+ "keptBecauseReencodeDoesNotShrink": [
+  {
+   "path": "content/assets/audio/sfx/ui-type.mp3",
+   "note": "位元率 133.015 kbps 超過，但試轉 1,348 → 1,715 B 不會變小 ⇒ 保留原檔（算合格）"
+  }
+ ],
+ "nonMp3": {
+  "count": 132,
+  "byDirectory": {
+   "assets/audio/wc3/": {
+    "files": 132,
+    "bytes": 12427528,
+    "trialMp3Bytes": 4637799,
+    "docsReferencing": [
+     "config/audio-map.json"
+    ],
+    "alsoRecordedIn": [
+     "assets-manifest.json",
+     "assets/audio/wc3/PROVENANCE.json",
+     "bundle.json"
+    ],
+    "toolsMentioningThisDir": [
+     "tools/sfx-bind/build_bindings.py:267",
+     "tools/sfx-bind/suggest_keys.py:295",
+     "tools/w3x-import/build_vfx_sound_bindings.py:23,87,645"
+    ],
+    "playbook": [
+     "寫入端是 tools/w3x-import/build_vfx_sound_bindings.py（CLIP_URL = \"assets/audio/wc3/\"、out_name = … + \".wav\"；它同時寫 config/audio-map.json 的 wc3.* files 與 wc3/PROVENANCE.json／.md）⇒ ⛔ 不要手改 audio-map.json 的副檔名（下一次重跑就被打回來）。",
+     "① 改寫入端：抽出 WAV 之後用 audio_intake.encode_args(policy, 'sfx', sample_rate=min(原取樣率, 天花板)) 轉 mp3，out_name 改 .mp3；PROVENANCE 的 file／bytes／sha256 改記 mp3，另加 sourceSha256 記 MPQ 抽出的 WAV（出處仍逐位元組可驗）。",
+     "② 原 WAV 放 outbox 的 audio-intake/<時間戳>/assets/audio/wc3/，`audio_intake.py --upload` 上 S3 並抓回比 SHA-256；git 刪掉 WAV。",
+     "③ 重跑寫入端 → `pnpm assets:manifest` → `content:build`；client 的 blizzardVfxCredits.ts 直接 import PROVENANCE.json（顯示出處）要一起看。",
+     "④ `audio_intake.py --all --check`、wc3SoundClips.test.ts（key → 檔案存在）、audioAssets.test.ts（引用的檔存在）綠；intake-ratchet.txt 的 sfx= 降 132。"
+    ]
+   }
+  },
+  "files": [
+   {
+    "path": "content/assets/audio/wc3/akamapissed8.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 3.4713,
+    "bytes": 153222,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 56938,
+    "savedBytes": 96284,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.akamapissed8/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/altarofelderswhat1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 3.4963,
+    "bytes": 154296,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 57369,
+    "savedBytes": 96927,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.altarofelderswhat1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/ancestralspirit.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 3.0615,
+    "bytes": 135346,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 50908,
+    "savedBytes": 84438,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.ancestralspirit/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/archerdeath1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 3.599,
+    "bytes": 160584,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 58976,
+    "savedBytes": 101608,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.archerdeath1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/axemissilelaunch1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.6171,
+    "bytes": 27258,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 11328,
+    "savedBytes": 15930,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.axemissilelaunch1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/banditdeath1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.7763,
+    "bytes": 78454,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 29769,
+    "savedBytes": 48685,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.banditdeath1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/blademasterwhirlwind.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.846,
+    "bytes": 37432,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 15142,
+    "savedBytes": 22290,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.blademasterwhirlwind/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/blinkbirth1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.4556,
+    "bytes": 20216,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 8873,
+    "savedBytes": 11343,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.blinkbirth1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/bloodelfsorcerordeath.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 3.3033,
+    "bytes": 145718,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 54378,
+    "savedBytes": 91340,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.bloodelfsorcerordeath/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/bloodlusttarget.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.5832,
+    "bytes": 114042,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 42727,
+    "savedBytes": 71315,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.bloodlusttarget/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/brewmasterdeath1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.7,
+    "bytes": 119112,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 44765,
+    "savedBytes": 74347,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.brewmasterdeath1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/buildingdeathlargehuman.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 3.4598,
+    "bytes": 152620,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 56886,
+    "savedBytes": 95734,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.buildingdeathlargehuman/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/catapultmissile1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.2858,
+    "bytes": 56748,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 22195,
+    "savedBytes": 34553,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.catapultmissile1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/catapultmissile2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.2539,
+    "bytes": 55340,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 21359,
+    "savedBytes": 33981,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.catapultmissile2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/catapultmissile3.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.2133,
+    "bytes": 53550,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 20942,
+    "savedBytes": 32608,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.catapultmissile3/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/catapultmissile4.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.2162,
+    "bytes": 53678,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 20942,
+    "savedBytes": 32736,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.catapultmissile4/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/chickenwhat1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.8939,
+    "bytes": 39544,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 15978,
+    "savedBytes": 23566,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.chickenwhat1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/coldarrow1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.8837,
+    "bytes": 83194,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 31861,
+    "savedBytes": 51333,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.coldarrow1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/coldarrow2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.48,
+    "bytes": 65390,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 25174,
+    "savedBytes": 40216,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.coldarrow2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/coldarrow3.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.7299,
+    "bytes": 76412,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 29354,
+    "savedBytes": 47058,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.coldarrow3/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/criticalstrike.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.962,
+    "bytes": 86646,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 33112,
+    "savedBytes": 53534,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.criticalstrike/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/crushingwavecaster1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.9911,
+    "bytes": 87942,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 33529,
+    "savedBytes": 54413,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.crushingwavecaster1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/darksummoninglaunch1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.6239,
+    "bytes": 115756,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 43511,
+    "savedBytes": 72245,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.darksummoninglaunch1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/deathcoilmissilelaunch1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.6153,
+    "bytes": 27180,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 11328,
+    "savedBytes": 15852,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.deathcoilmissilelaunch1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/defendcaster.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.1668,
+    "bytes": 51594,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 20156,
+    "savedBytes": 31438,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.defendcaster/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/demonhuntermissilehit3.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.86,
+    "bytes": 37972,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 15090,
+    "savedBytes": 22882,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.demonhuntermissilehit3/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/dispelmagictarget.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.9504,
+    "bytes": 86202,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 32762,
+    "savedBytes": 53440,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.dispelmagictarget/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/dragonroostwhat1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 3.0883,
+    "bytes": 136326,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 51084,
+    "savedBytes": 85242,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.dragonroostwhat1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/dragonyes2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.5267,
+    "bytes": 67372,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 25957,
+    "savedBytes": 41415,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.dragonyes2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/druidofthetalonmissilelaunch2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.8824,
+    "bytes": 39036,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 15561,
+    "savedBytes": 23475,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.druidofthetalonmissilelaunch2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/eggsackdeath1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.0988,
+    "bytes": 92602,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 35152,
+    "savedBytes": 57450,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.eggsackdeath1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/fanofknives.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.351,
+    "bytes": 103800,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 38966,
+    "savedBytes": 64834,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.fanofknives/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/farmwhat1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 3.4249,
+    "bytes": 151084,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 56468,
+    "savedBytes": 94616,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.farmwhat1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/farseermissile.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.1377,
+    "bytes": 50296,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 19740,
+    "savedBytes": 30556,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.farseermissile/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/feralspirittarget1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.4358,
+    "bytes": 107462,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 40586,
+    "savedBytes": 66876,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.feralspirittarget1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/fireballmissilelaunch1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.6516,
+    "bytes": 28780,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 11746,
+    "savedBytes": 17034,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.fireballmissilelaunch1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/fireballmissilelaunch2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.6052,
+    "bytes": 26734,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 11328,
+    "savedBytes": 15406,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.fireballmissilelaunch2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/fireballmissilelaunch3.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.7962,
+    "bytes": 35156,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 14254,
+    "savedBytes": 20902,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.fireballmissilelaunch3/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/flamestrikebirth1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 5.2128,
+    "bytes": 229930,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 84889,
+    "savedBytes": 145041,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.flamestrikebirth1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/flaretarget1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 3.5816,
+    "bytes": 158180,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 59181,
+    "savedBytes": 98999,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.flaretarget1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/flaretarget2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.3439,
+    "bytes": 59386,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 23110,
+    "savedBytes": 36276,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.flaretarget2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/flaretarget3.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.9462,
+    "bytes": 41904,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 16904,
+    "savedBytes": 25000,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.flaretarget3/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/flashback1second.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 705.6,
+    "sampleRateHz": 22050,
+    "channels": 2,
+    "seconds": 2.1781,
+    "bytes": 192156,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 2ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 36406,
+    "savedBytes": 155750,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "2"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.flashback1second/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/footmandeath.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.2451,
+    "bytes": 54954,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 21359,
+    "savedBytes": 33595,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.footmandeath/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/fountainoflifewhat1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.9721,
+    "bytes": 131190,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 48995,
+    "savedBytes": 82195,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.fountainoflifewhat1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/furbolgdeath1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.798,
+    "bytes": 123436,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 46437,
+    "savedBytes": 76999,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.furbolgdeath1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/gluescreenmeteorhit1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.5,
+    "bytes": 66194,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 25539,
+    "savedBytes": 40655,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.gluescreenmeteorhit1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/gluescreenmeteorhit2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.5,
+    "bytes": 66326,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 25681,
+    "savedBytes": 40645,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.gluescreenmeteorhit2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/gruntpissed3.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.3659,
+    "bytes": 104382,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 39332,
+    "savedBytes": 65050,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.gruntpissed3/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/gruntwhat2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.4008,
+    "bytes": 17718,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 7985,
+    "savedBytes": 9733,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.gruntwhat2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/gruntyesattack1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.2508,
+    "bytes": 55206,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 21359,
+    "savedBytes": 33847,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.gruntyesattack1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/gruntyesattack3.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.682,
+    "bytes": 74218,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 28465,
+    "savedBytes": 45753,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.gruntyesattack3/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/hcancelbuilding.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.8185,
+    "bytes": 124502,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 46477,
+    "savedBytes": 78025,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.hcancelbuilding/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/headhunteryes4.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.2755,
+    "bytes": 100394,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 38078,
+    "savedBytes": 62316,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.headhunteryes4/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/healtarget.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.399,
+    "bytes": 61738,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 23867,
+    "savedBytes": 37871,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.healtarget/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/heroblademasterattack1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.2,
+    "bytes": 53038,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 20574,
+    "savedBytes": 32464,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.heroblademasterattack1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/heroblademasterattack2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.9346,
+    "bytes": 41334,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 16394,
+    "savedBytes": 24940,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.heroblademasterattack2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/heroblademasterdeath.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.3489,
+    "bytes": 103738,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 39029,
+    "savedBytes": 64709,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.heroblademasterdeath/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/herodeathknightattack1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.4106,
+    "bytes": 62326,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 23917,
+    "savedBytes": 38409,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.herodeathknightattack1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/herodeathknightdeath.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.322,
+    "bytes": 102518,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 38546,
+    "savedBytes": 63972,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.herodeathknightdeath/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/herodemonhunterdeath1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 4.1333,
+    "bytes": 182398,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 67803,
+    "savedBytes": 114595,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.herodemonhunterdeath1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/heropaladindeath.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.6718,
+    "bytes": 73846,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 28097,
+    "savedBytes": 45749,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.heropaladindeath/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/holybolt.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.5905,
+    "bytes": 70264,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 26845,
+    "savedBytes": 43419,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.holybolt/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/humandissipate1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.2698,
+    "bytes": 100140,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 37660,
+    "savedBytes": 62480,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.humandissipate1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/infernalbirth1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.5,
+    "bytes": 110294,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 41422,
+    "savedBytes": 68872,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.infernalbirth1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/invisibilitytarget.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 705.6,
+    "sampleRateHz": 44100,
+    "channels": 1,
+    "seconds": 2.0434,
+    "bytes": 180346,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 44100 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 33950,
+    "savedBytes": 146396,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "44100",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.invisibilitytarget/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/irongolemattack1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.1678,
+    "bytes": 95646,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 35988,
+    "savedBytes": 59658,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.irongolemattack1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/irongolemdeath1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 3.9925,
+    "bytes": 176112,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 65245,
+    "savedBytes": 110867,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.irongolemdeath1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/jainaonfootdeath1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 3.1463,
+    "bytes": 138870,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 51921,
+    "savedBytes": 86949,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.jainaonfootdeath1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/kaelyesattack3.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.6341,
+    "bytes": 72198,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 27681,
+    "savedBytes": 44517,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.kaelyesattack3/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/keeperofthegrovemissilehit1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.8008,
+    "bytes": 35358,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 14254,
+    "savedBytes": 21104,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.keeperofthegrovemissilehit1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/keeperofthegrovemissilehit2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.8008,
+    "bytes": 35448,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 14303,
+    "savedBytes": 21145,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.keeperofthegrovemissilehit2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/keeperofthegrovemissilehit3.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.8008,
+    "bytes": 35448,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 14303,
+    "savedBytes": 21145,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.keeperofthegrovemissilehit3/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/keeperofthegrovemissilelaunch1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.8956,
+    "bytes": 39542,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 15926,
+    "savedBytes": 23616,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.keeperofthegrovemissilelaunch1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/keeperofthegrovemissilelaunch2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.8956,
+    "bytes": 39632,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 15975,
+    "savedBytes": 23657,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.keeperofthegrovemissilelaunch2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/keeperofthegrovemissilelaunch3.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.8826,
+    "bytes": 38966,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 15508,
+    "savedBytes": 23458,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.keeperofthegrovemissilelaunch3/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/knightnoriderdeath1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.8572,
+    "bytes": 126048,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 47273,
+    "savedBytes": 78775,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.knightnoriderdeath1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/markofchaos.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 4.0,
+    "bytes": 176698,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 65911,
+    "savedBytes": 110787,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.markofchaos/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/meatwagonmissilehit1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.4976,
+    "bytes": 66168,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 25591,
+    "savedBytes": 40577,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.meatwagonmissilehit1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/mercenarywhat1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 3.6049,
+    "bytes": 159096,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 59028,
+    "savedBytes": 100068,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.mercenarywhat1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/mortarimpact.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.887,
+    "bytes": 83338,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 31860,
+    "savedBytes": 51478,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.mortarimpact/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/mortarteampissed9.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.9141,
+    "bytes": 128630,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 48159,
+    "savedBytes": 80471,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.mortarteampissed9/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/nagabuildingcancel.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.0724,
+    "bytes": 91526,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 34783,
+    "savedBytes": 56743,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.nagabuildingcancel/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/nazgrelyes2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.6211,
+    "bytes": 27528,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 11381,
+    "savedBytes": 16147,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.nazgrelyes2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/necropolisupgrade2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 5.8236,
+    "bytes": 257988,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 94668,
+    "savedBytes": 163320,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.necropolisupgrade2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/nightelfdissipate1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.2698,
+    "bytes": 100140,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 37660,
+    "savedBytes": 62480,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.nightelfdissipate1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/orcdissipate1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.2698,
+    "bytes": 100140,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 37660,
+    "savedBytes": 62480,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.orcdissipate1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/pandarenbrewmasterpissed8.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.6515,
+    "bytes": 72974,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 28106,
+    "savedBytes": 44868,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.pandarenbrewmasterpissed8/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/pandarenbrewmasterwarcry1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.5483,
+    "bytes": 112526,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 42316,
+    "savedBytes": 70210,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.pandarenbrewmasterwarcry1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/pandarenbrewmasteryes1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.6021,
+    "bytes": 70798,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 27270,
+    "savedBytes": 43528,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.pandarenbrewmasteryes1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/parasite.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.9911,
+    "bytes": 87930,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 33532,
+    "savedBytes": 54398,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.parasite/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/peasantdeath.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 3.6455,
+    "bytes": 160886,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 59862,
+    "savedBytes": 101024,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.peasantdeath/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/peasantpissed3.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.6006,
+    "bytes": 114806,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 43143,
+    "savedBytes": 71663,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.peasantpissed3/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/peondeath.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.846,
+    "bytes": 81530,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 31025,
+    "savedBytes": 50505,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.peondeath/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/peonwhat2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.5151,
+    "bytes": 22762,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 9657,
+    "savedBytes": 13105,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.peonwhat2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/priestdeath.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.1478,
+    "bytes": 95052,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 36277,
+    "savedBytes": 58775,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.priestdeath/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/reincarnation.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.7283,
+    "bytes": 120362,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 45183,
+    "savedBytes": 75179,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.reincarnation/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/rokhanwhat2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.171,
+    "bytes": 95880,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 36459,
+    "savedBytes": 59421,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.rokhanwhat2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/sealwhat2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.8044,
+    "bytes": 79696,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 30607,
+    "savedBytes": 49089,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.sealwhat2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/shadowhunterready1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.9917,
+    "bytes": 132052,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 49413,
+    "savedBytes": 82639,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.shadowhunterready1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/shamanready1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 5.2767,
+    "bytes": 232822,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 85775,
+    "savedBytes": 147047,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.shamanready1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/shimmeringportaldeath.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 4.7833,
+    "bytes": 210988,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 78202,
+    "savedBytes": 132786,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.shimmeringportaldeath/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/shockwave.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.8469,
+    "bytes": 125700,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 46904,
+    "savedBytes": 78796,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.shockwave/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/snapdragonmissilelaunch1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.1958,
+    "bytes": 52856,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 20576,
+    "savedBytes": 32280,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.snapdragonmissilelaunch1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/soulgem.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 4.4735,
+    "bytes": 197660,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 73528,
+    "savedBytes": 124132,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.soulgem/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/soulpreservation.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 3.6126,
+    "bytes": 159360,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 59394,
+    "savedBytes": 99966,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.soulpreservation/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/spellbreakerpissed4.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.4903,
+    "bytes": 109966,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 41481,
+    "savedBytes": 68485,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.spellbreakerpissed4/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/spiritofvengeanceyes3.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.618,
+    "bytes": 115576,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 43561,
+    "savedBytes": 72015,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.spiritofvengeanceyes3/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/stampedecaster1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.6702,
+    "bytes": 117802,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 44347,
+    "savedBytes": 73455,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.stampedecaster1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/stasistotem.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.8576,
+    "bytes": 82148,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 31561,
+    "savedBytes": 50587,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.stasistotem/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/step1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.0091,
+    "bytes": 44624,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 17650,
+    "savedBytes": 26974,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.step1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/step2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.9936,
+    "bytes": 43862,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 17598,
+    "savedBytes": 26264,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.step2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/step3.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.9666,
+    "bytes": 42750,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 17232,
+    "savedBytes": 25518,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.step3/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/step4.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.9554,
+    "bytes": 42256,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 16814,
+    "savedBytes": 25442,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.step4/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/succubusdeath1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.8351,
+    "bytes": 80974,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 30973,
+    "savedBytes": 50001,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.succubusdeath1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/taunt.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.8154,
+    "bytes": 124282,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 46489,
+    "savedBytes": 77793,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.taunt/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/thunderboltmissiledeath.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.2356,
+    "bytes": 98632,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 37242,
+    "savedBytes": 61390,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.thunderboltmissiledeath/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/thunderclapcaster.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 3.4509,
+    "bytes": 152306,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 56938,
+    "savedBytes": 95368,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.thunderclapcaster/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/treantready1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.448,
+    "bytes": 108002,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 40586,
+    "savedBytes": 67416,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.treantready1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/trollbatriderpissed2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 3.1405,
+    "bytes": 138638,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 51930,
+    "savedBytes": 86708,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.trollbatriderpissed2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/trollwoodworkswhat1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 3.003,
+    "bytes": 132476,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 49363,
+    "savedBytes": 83113,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.trollwoodworkswhat1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/tuskarrdeath1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.2528,
+    "bytes": 99392,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 37660,
+    "savedBytes": 61732,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.tuskarrdeath1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/undeaddissipate2.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 3.6126,
+    "bytes": 159450,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 59443,
+    "savedBytes": 100007,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.undeaddissipate2/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/villagerchilddeath1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.3293,
+    "bytes": 58742,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 22663,
+    "savedBytes": 36079,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.villagerchilddeath1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/villagermaledeath1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.5905,
+    "bytes": 70262,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 26843,
+    "savedBytes": 43419,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.villagermaledeath1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/wandofneutralization.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 0.9607,
+    "bytes": 42598,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 16930,
+    "savedBytes": 25668,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.wandofneutralization/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/wardenattackeffort1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.3584,
+    "bytes": 60026,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 23083,
+    "savedBytes": 36943,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.wardenattackeffort1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/wardendeath1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.3844,
+    "bytes": 61098,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 23449,
+    "savedBytes": 37649,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.wardendeath1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/warstomp.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.1635,
+    "bytes": 95598,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 36106,
+    "savedBytes": 59492,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.warstomp/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/waterelementalmissile3.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.5093,
+    "bytes": 66686,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 25592,
+    "savedBytes": 41094,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.waterelementalmissile3/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/waygatewhat1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 2.5285,
+    "bytes": 111642,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 41889,
+    "savedBytes": 69753,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.waygatewhat1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   },
+   {
+    "path": "content/assets/audio/wc3/witchdoctorcastattack1.wav",
+    "kind": "sfx",
+    "codec": "pcm_s16le",
+    "container": "wav",
+    "bitrateKbps": 352.8,
+    "sampleRateHz": 22050,
+    "channels": 1,
+    "seconds": 1.3666,
+    "bytes": 60428,
+    "problems": [
+     "不是 mp3（wav／pcm_s16le 22050 Hz 1ch）⇒ 轉成 mp3 會改路徑"
+    ],
+    "trialBytes": 23574,
+    "savedBytes": 36854,
+    "trialArgs": [
+     "-c:a",
+     "libmp3lame",
+     "-b:a",
+     "128k",
+     "-ar",
+     "22050",
+     "-ac",
+     "1"
+    ],
+    "referencedBy": [
+     {
+      "doc": "config/audio-map.json",
+      "pointer": "/sfx/wc3.witchdoctorcastattack1/files/0",
+      "reader": "apps/client/src/audio/AudioSystem.ts:92"
+     }
+    ]
+   }
+  ]
+ },
+ "unreferencedOverSpecKeptOriginal": [],
+ "infoShortSfx": [
+  {
+   "path": "content/assets/audio/sfx/fx/block-hit.mp3",
+   "seconds": 0.1
+  },
+  {
+   "path": "content/assets/audio/sfx/fx/footstep.mp3",
+   "seconds": 0.07
+  },
+  {
+   "path": "content/assets/audio/sfx/fx/guard.mp3",
+   "seconds": 0.12
+  },
+  {
+   "path": "content/assets/audio/sfx/fx/hit-light.mp3",
+   "seconds": 0.14
+  },
+  {
+   "path": "content/assets/audio/sfx/fx/impact.mp3",
+   "seconds": 0.14
+  },
+  {
+   "path": "content/assets/audio/sfx/fx/launch.mp3",
+   "seconds": 0.14
+  },
+  {
+   "path": "content/assets/audio/sfx/fx/tick.mp3",
+   "seconds": 0.04
+  },
+  {
+   "path": "content/assets/audio/sfx/fx/windup.mp3",
+   "seconds": 0.09
+  },
+  {
+   "path": "content/assets/audio/sfx/lab/ui-cancel.mp3",
+   "seconds": 0.1284
+  },
+  {
+   "path": "content/assets/audio/sfx/ui-click.mp3",
+   "seconds": 0.103
+  },
+  {
+   "path": "content/assets/audio/sfx/ui-type.mp3",
+   "seconds": 0.045
+  }
+ ]
+}

@@ -1,0 +1,94 @@
+{
+  "id": "fx.strash.popp.nps-merami-landing-2",
+  "schema": "vfx@1",
+  "presentation": "billboard",
+  "emitter": {
+    "shape": "ring",
+    "radius": 0.28,
+    "thickness": 0.08,
+    "spread": 0.12
+  },
+  "mode": "burst",
+  "burstCount": 48,
+  "lifetimeSec": {
+    "min": 0.18,
+    "max": 0.72
+  },
+  "size": {
+    "start": 0.26,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      1.0,
+      0.88,
+      0.42,
+      1.0
+    ],
+    "end": [
+      0.68,
+      0.08,
+      0.015,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1.0,
+        0.88,
+        0.42,
+        1.0
+      ]
+    ],
+    [
+      0.22,
+      [
+        1.0,
+        0.88,
+        0.42,
+        0.95
+      ]
+    ],
+    [
+      0.68,
+      [
+        0.68,
+        0.08,
+        0.015,
+        0.38
+      ]
+    ],
+    [
+      1,
+      [
+        0.68,
+        0.08,
+        0.015,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.26
+    ],
+    [
+      0.18,
+      0.65
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0.8,
+  "speed": {
+    "min": 1.0,
+    "max": 3.8
+  },
+  "texture": "assets/textures/particles/strash/popp/74f8ffb643443d366e1d2a90fd0046c2166b047cf641375f3dc99b5b37c5e900.png"
+}

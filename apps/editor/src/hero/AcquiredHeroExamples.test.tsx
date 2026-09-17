@@ -17,11 +17,20 @@ beforeEach(() => vi.clearAllMocks());
 it("creates an independent selected model version and waits for durable save before opening", async () => {
   let finish!: () => void;
   vi.mocked(autosave.flush).mockImplementationOnce(() => new Promise<void>((resolve) => { finish = resolve; }));
-  const onOpen = vi.fn(); const view = mount(createElement(AcquiredHeroExamples, { onOpen }));
+  // 🔭 owner 2026-09-15「下拉式選單 要能即時載入御覽」—— 3D 換成樁（無 DOM 跑不了 Babylon／lazy）。
+  // MUTATION：onChange 裡的 `setPreviewing(hero.id)` 拿掉 ⇒ 「選了就畫」那一條紅。
+  const preview = (key: string) => createElement("i", { "data-previewed": key });
+  const onOpen = vi.fn(); const view = mount(createElement(AcquiredHeroExamples, { onOpen, preview }));
+  const previewed = () => view.hosts().flatMap((node) => node.props["data-previewed"] ? [node.props["data-previewed"]] : []);
   expect(view.hosts().filter((node) => node.type === "h3")).toHaveLength(34);
+  expect(previewed(), "還沒選之前一張都不畫（30 幾張卡同時開 WebGL 會互相擠掉）").toEqual([]);
   const hero = COMMUNITY_ACQUIRED_HEROES.find((row) => row.id === "godie-hlgr")!;
   const select = view.hosts().find((node) => node.props["aria-label"] === `${hero.name}模型版本`)!;
   view.enter(select, "ou99.493659");
+  expect(previewed(), "下拉選了就畫那一顆").toEqual(["ou99.493659"]);
+  view.click(`預覽${COMMUNITY_ACQUIRED_HEROES.find((row) => row.id === "godie-eevi")!.name}模型`);
+  expect(previewed(), "一次只畫一張卡；⛔ 預覽不建立作品").toEqual(["ou99.470351"]);
+  expect(saveHeroLocalCopy).not.toHaveBeenCalled();
   view.click(`建立${hero.name}作品`);
   expect(onOpen).not.toHaveBeenCalled();
   finish(); await view.flush();

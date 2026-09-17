@@ -1,0 +1,34 @@
+{
+  "schema": "ggd.jump-force-dai-v5-freeze@1",
+  "candidateId": "jump-force-native-dai-chr0430-material-faithful-six-draw-v5",
+  "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+  "nativeCharacterId": "chr0430",
+  "heroIds": [
+    "godie-nbbc",
+    "godie-n01c"
+  ],
+  "gitModel": {
+    "gitPath": "content/assets/models/community/53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482.glb",
+    "bytes": 3010392,
+    "sha256": "53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482"
+  },
+  "conversionStage": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v5b",
+  "deterministicRebuild": true,
+  "metrics": {
+    "triangles": 7930,
+    "drawPrimitives": 6,
+    "maxTextureEdge": 256,
+    "skins": 1,
+    "joints": 159,
+    "animations": 0
+  },
+  "acceptedFor": "Git catalogued source model component only",
+  "notAcceptedFor": [
+    "hero option registration",
+    "backend selection",
+    "runtime switching",
+    "production deployment"
+  ],
+  "reason": "No native or owner-reviewed borrowed motion set is bound to this JUMP FORCE model.",
+  "evidence": []
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "ggd.ssbu-ryu-procedural-six-state-visual-review@1",
+  "componentId": "ssbu-ryu-c00-procedural-six-state-v1",
+  "modelSha256": "97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf",
+  "accepted": true,
+  "acceptedAt": "2026-09-13",
+  "scope": "independent-skinned-model-motion-component",
+  "reviewedSamples": {
+    "count": 60,
+    "states": [
+      "idle",
+      "run",
+      "attack",
+      "cast",
+      "hurt",
+      "death"
+    ],
+    "fractions": [
+      0,
+      0.25,
+      0.5,
+      0.75,
+      1
+    ],
+    "views": [
+      "front",
+      "side"
+    ]
+  },
+  "findings": [
+    "All six clips were rendered through Babylon WebGL at five times from front and side.",
+    "The body remains complete without detached limbs, collapsed skinning, missing materials or non-finite bounds.",
+    "Quarter samples expose alternating run strides; start/middle/end alone would have missed the cyclic extrema.",
+    "The death clip falls forward and ends within 4.96 mm of the ground plane.",
+    "Acceptance is limited to a generated independent fallback component and does not establish native motion, gameplay timing or backend readiness."
+  ],
+  "contactSheets": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/contact-front.jpg",
+      "bytes": 298481,
+      "sha256": "f820a173bf62068bbca13dbc5cdadca65fc3aeffbe43a787eb38e2987004e9d3"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-procedural/7f1d1df3732045ea0f856c8f51e908a8d23e3b0ba98249e0a3c23c466e07650e/contact-side.jpg",
+      "bytes": 224497,
+      "sha256": "462b1958af690da789cc7763c6358f66adc58b5aa66e6c3e131cd6a35a8d7e64"
+    }
+  ],
+  "rawSampleDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-procedural-six-state-visual-v1",
+  "rawSampleCount": 60,
+  "rawSamplesPreservedLocally": true,
+  "rawSamplesGitPublished": false,
+  "rawSamplesS3Backup": "pending",
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

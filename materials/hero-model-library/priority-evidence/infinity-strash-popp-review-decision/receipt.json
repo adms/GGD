@@ -1,0 +1,70 @@
+{
+  "schema": "ggd.popp-integration-review-decision-receipt@1",
+  "heroId": "b2-popp",
+  "ownerDecision": {
+    "sourceFingerprint": "c9e0b6f989092a3e40906670b6783913fe2c29076d3d9579036ea08163d37c49",
+    "weaponCandidateId": "infinity-strash-popp-pn020-02-kagayaki-native-v1",
+    "deathCandidateId": "popp-native-down-rise-fade-v1",
+    "note": ""
+  },
+  "selectionBefore": {
+    "modelKey": "version.body.b51cdf8a1520963b9a2ad1ca52d81a82167b8ea9f25bc055",
+    "modelSelectionMode": "automatic"
+  },
+  "selectionAfter": {
+    "modelKey": "version.body.cb97bff0d821ef730fb1a9cb068c49960e45b8afd43c35ec",
+    "sourceModelKey": "community.body.a6b90f165d9f40e019b02cc8172717a06a5e1201feb5ab14",
+    "label": "何布／波普｜Infinity Strash 原作 PN020/02＋Kagayaki 法杖（原生動作）",
+    "modelSelectionMode": "manual",
+    "binarySha256": "bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27"
+  },
+  "deathPresentation": {
+    "candidateId": "popp-native-down-rise-fade-v1",
+    "motion": "GGD_native_down",
+    "motionProvenance": "native PN020 down loop",
+    "presentation": "existing global ChampionView corpse dissolve: lie 3 seconds, rise 3.2 world units while fading for 1.4 seconds, then hide",
+    "runtimeAlreadyImplemented": true,
+    "runtimeEvidence": [
+      {
+        "gitPath": "apps/client/src/render/deathDissolve.ts",
+        "bytes": 5004,
+        "sha256": "897afc9fabb9f6146e1bf9ec4a26d1b1e912c37ebf86af68f71ff337b1e69cf9"
+      },
+      {
+        "gitPath": "apps/client/src/render/deathDissolve.test.ts",
+        "bytes": 2695,
+        "sha256": "05025be4c6638ed9fb9187852f1af5a43e2ccbc7f5deb1f96e1b8caee103e82f"
+      },
+      {
+        "gitPath": "apps/client/src/render/views/ChampionView.ts",
+        "bytes": 106196,
+        "sha256": "425dd935d14f73a070c469f4f56e21545128dbdffc6403feb08fa9c8a1a6ffd5"
+      },
+      {
+        "gitPath": "apps/client/src/render/views/ChampionView.test.ts",
+        "bytes": 31965,
+        "sha256": "c347a6933b7e5c32ba0d76ef90e57c02c7593044d9666fe4458118c74bf07c7e"
+      }
+    ],
+    "poppBinding": "selected model maps hurt/death to GGD_native_down; global death-event renderer supplies the approved rise/fade presentation"
+  },
+  "decisionEvidence": {
+    "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-review-decision/popp-integration-review-decision.json",
+    "bytes": 315,
+    "sha256": "c4cd7a948928198c91dfed744ac187c42f22ede33bdb47e22e5b69fd267c1a5b"
+  },
+  "reviewContractAtDecision": {
+    "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-review-decision/contract-at-decision.json",
+    "bytes": 19316,
+    "sha256": "466f94430398aa7cc9bd97a8e2e9123deb45583724a666cf5bd11b7adc92ffb1",
+    "sourceFingerprint": "c9e0b6f989092a3e40906670b6783913fe2c29076d3d9579036ea08163d37c49"
+  },
+  "featureBranchSelectable": true,
+  "productionDeploymentVerified": false,
+  "remainingOpenIntegrationGapIds": [
+    "source-toon-and-hair-colour-parity",
+    "original-vfx-conversion",
+    "animation-events-and-sfx-binding",
+    "skill-timing-and-full-combat-binding"
+  ]
+}

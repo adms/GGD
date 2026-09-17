@@ -15,9 +15,9 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    56.0,
-    56.0,
-    56.0
+    75.0,
+    75.0,
+    75.0
   ],
   "manaCostTier": "極小",
   "range": 0,
@@ -32,14 +32,14 @@
       "soundKey": "wc3.parasite",
       "path": "orbit",
       "count": 9,
-      "distance": 3.0,
-      "scale": 2.0,
+      "distance": 3,
+      "scale": 2,
       "tint": [
         0.1176,
-        0.0,
-        0.0
+        0,
+        0
       ],
-      "lifeSec": 8.0
+      "lifeSec": 8
     }
   ],
   "template": {
@@ -57,13 +57,14 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 1.5,
+      "castTimeSec": 1,
       "statusId": "slow40",
       "statusDurationSec": 1.5
     }
   },
   "vfxKey": "fx.prim.void.nova-lg",
   "targetsEnemies": true,
-  "castTimeSec": 1.5,
-  "radiusTier": "小"
+  "castTimeSec": 1,
+  "radiusTier": "小",
+  "castTimeTier": "極大"
 }

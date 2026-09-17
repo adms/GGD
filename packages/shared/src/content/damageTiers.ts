@@ -78,7 +78,8 @@
  *
  * ⛔⛔ 這兩個空間**刻意不相等**，差距就是 HP 系統倍率本身：
  *    · `castsToKillBase()` → **設計承諾**（「20 發以內殺得死」是在這個空間成立的）
- *    · `castsToKill()`     → **玩家實際**要打幾發（含倍率，那是玩家真的會經歷的數字）
+ *    · `castsToKill()`     → **照血條算**要幾發（含 HP 倍率，⛔ 沒算 AP 加成 ⇒ ⛔ 不是「玩家實際」）
+ *      只給後台試算顯示 —— owner 2026-09-15（逐字）：「我們已經固定 不需要再乘 頂多是後台試算後顯示 但不干涉也不警示」
  *    ⚠️ 拿後者去對 `KILL_CASTS_REF` 是**兩個空間混算** —— 2026-08-22 抓到：
  *      產生的平衡文件因此把三個錨點**全部印 ❌**，而 `anchors:check` 一路是綠的。
  *
@@ -313,7 +314,10 @@ export function pickAnchor(): BalanceAnchorLevel {
 export const SHIPPED_ANCHOR_LEVEL: BalanceAnchorLevel = HARD_ANCHOR_LEVEL;
 
 /**
- * 用出貨表打死某一個錨點的中位英雄要**幾發極小**——**玩家實際會經歷的**那個數字。
+ * 用出貨表打死某一個錨點的中位英雄要**幾發極小**——**照血條算**的那個數字
+ * （含 HP 系統倍率，⛔ **沒算 AP 加成**、⛔ 沒算魔抗 ⇒ ⛔ 不是「玩家實際」）。
+ * ⭐ 只給後台**試算顯示**，⛔ 不進任何閘、不評判 —— owner 2026-09-15（逐字）：
+ *    「我們已經固定 不需要再乘 頂多是後台試算後顯示 但不干涉也不警示」（GH#1260 C5）。
  * ⛔ **這一支不是達成率表的算式**（`castsToKillBase()` 才是）。這一行在 2026-08-22
  *    之前寫著「達成率表的唯一算式」,而它與下面那支的註解**直接矛盾** ——
  *    `tools/balance-anchors/gen.ts` 照著這一行做,於是文件把三個錨點全印成 ❌,
@@ -335,8 +339,8 @@ export function castsToKill(level: BalanceAnchorLevel, smallest: number): number
  * >  但是**系統倍率不能放在裡面**」
  *
  * ⇒ 級距是從**純基礎**血量反推的，所以「幾發殺死」這個**設計承諾**也活在純基礎空間。
- * ⚠️ 上面那支 `castsToKill()` 回答的是**另一個問題**——「遊戲裡實際要打幾發」，
- * 它含倍率是對的（那是玩家真的會經歷的數字），⛔ 但它不可以拿來驗設計承諾：
+ * ⚠️ 上面那支 `castsToKill()` 回答的是**另一個問題**——「照血條算要打幾發」
+ * （含 HP 倍率、⛔ 沒算 AP，只是試算顯示），⛔ 它不可以拿來驗設計承諾：
  * 兩者現在**刻意**不相等，差距就是 HP 系統倍率本身，而那正是 owner 要的旋鈕。
  */
 export function castsToKillBase(level: BalanceAnchorLevel, smallest: number): number {

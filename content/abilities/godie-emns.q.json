@@ -20,6 +20,7 @@
     0.0
   ],
   "range": 12.0,
+  "castTimeTier": "極大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -39,5 +40,5 @@
   "sfxKey": "wc3.gruntyesattack1",
   "cooldownTier": "中",
   "rangeTier": "極大",
-  "castTimeSec": 0.267
+  "castTimeSec": 1
 }

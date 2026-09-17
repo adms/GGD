@@ -19,9 +19,9 @@
     "truePeakDb": -1.5
   },
   "coverage": {
-    "rosterShipping": 153,
+    "rosterShipping": 190,
     "shippingWithQuote": 93,
-    "unsourced": 60,
+    "unsourced": 97,
     "retiredRows": 45,
     "derivedForms": 2,
     "names": 115,
@@ -35,6 +35,162 @@
     }
   },
   "unsourced": [
+    {
+      "id": "acquired-alice",
+      "name": "愛麗絲·滋貝魯庫（Alice Zuberg）",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-astralym",
+      "name": "枯星龍",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-asuna",
+      "name": "亞絲娜／結城明日奈",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-beatrice",
+      "name": "碧翠絲",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-cattiva",
+      "name": "搗蛋貓",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-dio",
+      "name": "DIO",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-emilia",
+      "name": "愛蜜莉雅",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-inuyasha",
+      "name": "犬夜叉",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-jetragon",
+      "name": "空渦龍",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-kita-kita",
+      "name": "吉他吉他老伯（阿德巴古·艾魯多魯）",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-kuroyukihime",
+      "name": "黑雪姬",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-leafa",
+      "name": "莉法",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-lord-nightmares",
+      "name": "金色魔王／惡夢之王",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-mario",
+      "name": "Mario",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-mewtwo",
+      "name": "Mewtwo",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-minecraft",
+      "name": "Steve／Alex",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-morgiana",
+      "name": "摩尔迦娜",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-naruto",
+      "name": "漩渦鳴人",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-pokemon-trainer",
+      "name": "Pokémon Trainer",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-ram",
+      "name": "拉姆",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-rim",
+      "name": "莉姆（Rim；粉紅魔龍）",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-ryu",
+      "name": "Ryu",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-saya",
+      "name": "沙耶",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-wargreymon",
+      "name": "戰鬥暴龍獸",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-xiaodangjia",
+      "name": "小當家",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "acquired-zero",
+      "name": "Zero",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
     {
       "id": "b2-aladdin",
       "name": "阿拉丁",
@@ -354,6 +510,42 @@
       "why": "hero-project（`materials/asset-library/source/GGD社群英雄上傳內容_37名/projects/NN.hero-project.json`）的 `brief.moveNames` 這一支 **Q 與 R 兩格都在〔〕裡** ⇒ 兩格都是 GGD 自己接的佔位機制名,⛔ 不是原作招式名 ⇒ 沒有可引用的出處。"
     },
     {
+      "id": "lol-ahri",
+      "name": "阿璃",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "lol-ashe",
+      "name": "艾希",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "lol-blitzcrank",
+      "name": "布里姿",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "lol-chogath",
+      "name": "科加斯",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "lol-fiddlesticks",
+      "name": "稻草人",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "lol-garen",
+      "name": "蓋倫",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
       "id": "lol-karthus",
       "name": "卡爾瑟斯",
       "reasonKey": "lolNoVoiceLines",
@@ -372,10 +564,40 @@
       "why": "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。"
     },
     {
+      "id": "lol-malphite",
+      "name": "墨菲特",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
       "id": "lol-missfortune",
       "name": "好運姐",
       "reasonKey": "lolNoVoiceLines",
       "why": "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。"
+    },
+    {
+      "id": "lol-ornn",
+      "name": "鄂爾",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "lol-sett",
+      "name": "賽特",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "lol-thresh",
+      "name": "瑟雷西",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
+    },
+    {
+      "id": "lol-velkoz",
+      "name": "威寇茲",
+      "reasonKey": "batch4NotAuthored",
+      "why": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。"
     },
     {
       "id": "lol-warwick",

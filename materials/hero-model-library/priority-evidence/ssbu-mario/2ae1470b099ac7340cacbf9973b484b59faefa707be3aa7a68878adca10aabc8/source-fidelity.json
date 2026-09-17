@@ -1,0 +1,257 @@
+{
+  "schema": "ggd.ssbu-mario-source-fidelity@1",
+  "sourceId": "gitlab-ssbu-models",
+  "componentId": "ssbu-mario-c00-static-skinned-v1",
+  "sourceSha256": "8af85d9accb3f13b2bc920553da2a9545cbdb980182bba15d59f23274a03c44d",
+  "blenderExportSha256": "c6375f099d5958e500a692e1512966f253773a1b7022e5ea12c102d2df7cb355",
+  "outputSha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881",
+  "sourceBytesUnchanged": true,
+  "visibleMeshCount": 9,
+  "sourceVisiblePolygonCount": 7189,
+  "blenderPrimitiveCount": 9,
+  "outputPrimitiveCount": 6,
+  "outputTriangleCount": 7189,
+  "sourceBoneCount": 98,
+  "outputJointCount": 98,
+  "sourceActionCount": 0,
+  "outputClipCount": 0,
+  "usedSourceImageCount": 6,
+  "embeddedOutputImageCount": 5,
+  "compatibilityAdjustments": {
+    "material": [
+      {
+        "material": "alp_mario_001",
+        "node": "Principled BSDF",
+        "property": "Principled BSDF IOR",
+        "sourceValue": 1.4500000476837158,
+        "exportValue": 1.5,
+        "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+      },
+      {
+        "material": "skin_mario_001",
+        "node": "Principled BSDF",
+        "property": "Principled BSDF IOR",
+        "sourceValue": 1.4500000476837158,
+        "exportValue": 1.5,
+        "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+      },
+      {
+        "material": "EyeR",
+        "node": "Principled BSDF",
+        "property": "Principled BSDF IOR",
+        "sourceValue": 1.4500000476837158,
+        "exportValue": 1.5,
+        "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+      },
+      {
+        "material": "alp_mario_002",
+        "node": "Principled BSDF",
+        "property": "Principled BSDF IOR",
+        "sourceValue": 1.4500000476837158,
+        "exportValue": 1.5,
+        "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+      },
+      {
+        "material": "EyeL",
+        "node": "Principled BSDF",
+        "property": "Principled BSDF IOR",
+        "sourceValue": 1.4500000476837158,
+        "exportValue": 1.5,
+        "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+      },
+      {
+        "material": "phong0_sfx_0x9a011063_____VTC___TANGENT___BINORMAL_101",
+        "node": "Principled BSDF",
+        "property": "Principled BSDF IOR",
+        "sourceValue": 1.4500000476837158,
+        "exportValue": 1.5,
+        "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+      }
+    ],
+    "texture": [
+      {
+        "sourceImage": "alp_mario_001_col.png",
+        "sourceDimensions": [
+          512,
+          512
+        ],
+        "exportDimensions": [
+          256,
+          256
+        ],
+        "method": "Blender Image.scale preserving aspect ratio",
+        "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/derived-textures/alp_mario_001_col.png.ggd-256.png",
+        "derivedBytes": 52861,
+        "derivedSha256": "42e1d7ecf7c85836f4c2ddb6b91e5ad950c0bfedf146694b0bf713021636d02e",
+        "reason": "GGD hero model texture edge limit is 256 pixels."
+      },
+      {
+        "sourceImage": "def_mario_001_col.png",
+        "sourceDimensions": [
+          1024,
+          512
+        ],
+        "exportDimensions": [
+          256,
+          128
+        ],
+        "method": "Blender Image.scale preserving aspect ratio",
+        "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/derived-textures/def_mario_001_col.png.ggd-256.png",
+        "derivedBytes": 54479,
+        "derivedSha256": "309b7883590e7dd566e355a2475d80a91d6ebc0329e96a8d65105d2891b69023",
+        "reason": "GGD hero model texture edge limit is 256 pixels."
+      },
+      {
+        "sourceImage": "skin_mario_001_col.png",
+        "sourceDimensions": [
+          1024,
+          1024
+        ],
+        "exportDimensions": [
+          256,
+          256
+        ],
+        "method": "Blender Image.scale preserving aspect ratio",
+        "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/derived-textures/skin_mario_001_col.png.ggd-256.png",
+        "derivedBytes": 43735,
+        "derivedSha256": "bd07efe7e054b52dfdc10f23605d0243c2ec15262b13c133d1082ee86f0c8db7",
+        "reason": "GGD hero model texture edge limit is 256 pixels."
+      }
+    ],
+    "hierarchy": [
+      {
+        "nodeIndex": 98,
+        "nodeName": "c00bodyShape",
+        "previousParentIndex": 107,
+        "previousParentName": "model-armature",
+        "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+      },
+      {
+        "nodeIndex": 99,
+        "nodeName": "c00bodyShape.001",
+        "previousParentIndex": 107,
+        "previousParentName": "model-armature",
+        "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+      },
+      {
+        "nodeIndex": 100,
+        "nodeName": "Mario_Eye_VIS_O_OBJShape",
+        "previousParentIndex": 107,
+        "previousParentName": "model-armature",
+        "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+      },
+      {
+        "nodeIndex": 101,
+        "nodeName": "Mario_Eye_VIS_O_OBJShape.001",
+        "previousParentIndex": 107,
+        "previousParentName": "model-armature",
+        "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+      },
+      {
+        "nodeIndex": 102,
+        "nodeName": "Mario_FaceN_VIS_O_OBJShape",
+        "previousParentIndex": 107,
+        "previousParentName": "model-armature",
+        "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+      },
+      {
+        "nodeIndex": 103,
+        "nodeName": "Mario_FaceN_VIS_O_OBJShape.001",
+        "previousParentIndex": 107,
+        "previousParentName": "model-armature",
+        "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+      },
+      {
+        "nodeIndex": 104,
+        "nodeName": "Mario_FaceNMClose_VIS_O_OBJShape",
+        "previousParentIndex": 107,
+        "previousParentName": "model-armature",
+        "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+      },
+      {
+        "nodeIndex": 105,
+        "nodeName": "Mario_Hair_VIS_O_OBJShape",
+        "previousParentIndex": 107,
+        "previousParentName": "model-armature",
+        "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+      },
+      {
+        "nodeIndex": 106,
+        "nodeName": "Mario_Hathead_VIS_O_OBJShape",
+        "previousParentIndex": 107,
+        "previousParentName": "model-armature",
+        "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+      }
+    ],
+    "drawCalls": {
+      "before": 9,
+      "after": 6
+    }
+  },
+  "excludedNativeParts": [
+    "Mario_FaceNMHalf_VIS_O_OBJShape",
+    "Mario_FaceNMOpen_VIS_O_OBJShape",
+    "Mario_Nohat_VIS_O_OBJShape",
+    "Mario_Halfblink1_VIS_O_OBJShape",
+    "Mario_Halfblink1_VIS_O_OBJShape.001",
+    "Mario_Halfblink2_VIS_O_OBJShape",
+    "Mario_Halfblink2_VIS_O_OBJShape.001",
+    "Mario_Halfblink3_VIS_O_OBJShape",
+    "Mario_Halfblink3_VIS_O_OBJShape.001",
+    "Mario_Blink_VIS_O_OBJShape",
+    "Mario_Blink_VIS_O_OBJShape.001",
+    "Mario_Ouch_VIS_O_OBJShape",
+    "Mario_Ouch_VIS_O_OBJShape.001",
+    "Mario_OuchMOpen_VIS_O_OBJShape",
+    "Mario_OuchMHalf_VIS_O_OBJShape",
+    "Mario_OuchMClose_VIS_O_OBJShape",
+    "Mario_Down_VIS_O_OBJShape",
+    "Mario_Down_VIS_O_OBJShape.001",
+    "Mario_Talk_VIS_O_OBJShape",
+    "Mario_Talk_VIS_O_OBJShape.001",
+    "Mario_TalkMOpen_VIS_O_OBJShape",
+    "Mario_HeavyAttackOpen_VIS_O_OBJShape",
+    "Mario_TalkMHalf_VIS_O_OBJShape",
+    "Mario_TalkMClose_VIS_O_OBJShape",
+    "Mario_Attack_VIS_O_OBJShape",
+    "Mario_Attack_VIS_O_OBJShape.001",
+    "Mario_Capture_VIS_O_OBJShape",
+    "Mario_Capture_VIS_O_OBJShape.001",
+    "Mario_Bound_VIS_O_OBJShape",
+    "Mario_Bound_VIS_O_OBJShape.001",
+    "Mario_Heavyouch_VIS_O_OBJShape",
+    "Mario_Heavyouch_VIS_O_OBJShape.001",
+    "Mario_Furafura_VIS_O_OBJShape",
+    "Mario_Furafura_VIS_O_OBJShape.001",
+    "Mario_Cliff_VIS_O_OBJShape",
+    "Mario_Cliff_VIS_O_OBJShape.001",
+    "Mario_Sorori_VIS_O_OBJShape",
+    "Mario_Sorori_VIS_O_OBJShape.001",
+    "Mario_Final_VIS_O_OBJShape",
+    "Mario_Final_VIS_O_OBJShape.001",
+    "Mario_Escape_VIS_O_OBJShape",
+    "Mario_Escape_VIS_O_OBJShape.001",
+    "Mario_Ottotto_VIS_O_OBJShape",
+    "Mario_Ottotto_VIS_O_OBJShape.001",
+    "Mario_Damageflyfront_VIS_O_OBJShape",
+    "Mario_Damageflyfront_VIS_O_OBJShape.001",
+    "Mario_Result_VIS_O_OBJShape",
+    "Mario_PatternB_VIS_O_OBJShape",
+    "Mario_PatternB_VIS_O_OBJShape.001",
+    "Mario_PatternC_VIS_O_OBJShape",
+    "Mario_PatternC_VIS_O_OBJShape.001",
+    "Mario_Heavyhit_VIS_O_OBJShape",
+    "Mario_Heavyhit_VIS_O_OBJShape.001"
+  ],
+  "shaderParityVerified": false,
+  "sourceAnalysis": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/source-analysis.json",
+    "bytes": 18111,
+    "sha256": "a55f770bd5dd60e06c4705ffbfaa757641ec4047d9733fa50e850acd1419049d"
+  },
+  "conversionReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-mario/2ae1470b099ac7340cacbf9973b484b59faefa707be3aa7a68878adca10aabc8/conversion.json",
+    "bytes": 3531,
+    "sha256": "3ee5d7aadb8ec92c71994bfbb5a8a14ab7cb621f094b8e7c2eccb0b8e3bf71cb"
+  }
+}

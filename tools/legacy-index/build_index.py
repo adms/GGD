@@ -15,8 +15,12 @@
    守衛（`packages/shared/src/ops/legacyIndexFresh.test.ts`）就會紅。
 
 用法：
-    python3 tools/legacy-index/build_index.py            # 寫出 docs/legacy-index.md
-    python3 tools/legacy-index/build_index.py --check    # 只比對，過期回非零
+    python3 tools/legacy-index/build_index.py            # 寫出 docs/legacy-index.md ＋ docs/legacy-index-champions.json
+    python3 tools/legacy-index/build_index.py --check    # 兩份都比對，任一過期回非零
+
+⭐ `docs/legacy-index-champions.json`（GH#1227）是 md 裡「退休英雄卡狀態」那一段的**機器可讀版**，
+   ⭐ 兩份從**同一份** `legacy_champion_records()` 寫出 —— 讀它的是
+   `packages/shared/testkit/rosterDeclaration.ts`（逐群宣告閘），⛔ 那一側不再自己推導一次。
 
 三種簡介來源，優先序由高到低：
   ① `CURATED` —— 這一份裡逐檔手寫的裁決（來自 2026-08-13 的盤點 + 對抗複驗）
@@ -32,6 +36,7 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 OUT = os.path.join(ROOT, "docs", "legacy-index.md")
+STATUS_JSON = os.path.join(ROOT, "docs", "legacy-index-champions.json")
 
 # ⚠️ 新增一個 legacy 目錄時把它加進這裡 —— 守衛掃的是這張表推導出來的檔案集合。
 #    ⛔ 不要掃 .venv（第三方 pip 自己也有一個叫 legacy 的模組）。
@@ -130,6 +135,9 @@ CURATED: dict[str, tuple[str, str]] = {
         "`validate_glb.mts` 的 tsc 編譯產物（同上）", "⛔ **`.mts` 是活的出貨工具**（`package.json` 的 `validate:glb` 真的在跑它），這裡歸檔的只有編譯殘留"),
     "docs/legacy/code/tools/w3x-import/validate_glb.mjs.map": (
         "上一項的 sourcemap", "同上"),
+    "docs/legacy/code/packages/shared/src/content/castTimeFormula.ts": (
+        "20 階吟唱公式（原 `packages/shared/src/content/`，commit `a12ffab93` 搬入，#1243 · #1260）",
+        "⛔ 已被吟唱五級距（`content/config/cast-time-tiers.json`，GH#943）取代，而它的階梯仍爬到 4 秒 —— 2026-09-12 拿它比照級距寫的內容，報出 182 支假「不一致」。owner 2026-09-12：「移到 legacy 區不要再被看到了」。規則說明在 `docs/legacy/_cast-time-20-step-ladder.md`"),
 }
 
 # `content/_legacy` 的整批語意（逐檔簡介由 JSON 推導，見 describe_content_doc）
@@ -144,6 +152,167 @@ CONTENT_LEGACY_NOTE = (
     "與後台的道具清單**全部自動看不到它們** —— ⛔ 沒有任何一份「要跳過哪些 id」的硬編名單，"
     "那會是第四個住處，必然過期。"
 )
+
+
+# ---------------------------------------------------------------------------
+# ⭐ 退休英雄卡的「狀態」欄（C13 / GH#1227）—— 從**兩個既有住處**推導
+# ---------------------------------------------------------------------------
+# owner 2026-09-15 02:44（`docs/_daily/2026-09-15.md:13`，逐字）：「你解說阿 是不是應該修一個段落 BMPNDD」
+#   ⚠️ 他那一則的 `=>` 前面是**貼回來的 Claude 條目**「C13 退休區有約 35 張英雄卡,沒有人說明它們的狀態」
+#   （出處是 Claude 寫的 valhalla 稽核頁），⛔ 不是 owner 的話；「約 35」也是 Claude 少扣了變身態的數字（實為 48 張、三群）。
+#   ⭐ 更正 ef326ac70：那一版把整句連 `=>` 前面一起標成 owner 逐字。
+#
+# 在此之前 `describe_content_doc()` 對每一張卡都算出同一句「下架，不再出貨」，
+# 而 `render()` 在 `content/_legacy` 那一段連那一句都沒印 ⇒ 待重上架的黑化Saber 與
+# 空殼 Sakuya 在索引上寫法一模一樣。
+#
+# 三條規則，照順序（變身態看卡上 `transform.counterpartId` 指的本體）：
+#   ① 它或本體在 roster.json 的 `retiredChampions`          ⇒ 已下架
+#   ② 它或本體在 `COMMUNITY_ACQUIRED_LEGACY`（#1205 那一批） ⇒ 待重上架
+#   ③ 其他                                                ⇒ 從未開放（回收桶）
+#
+# ⛔ 這裡**不抄任何 id**（CONTENT_LEGACY_NOTE 自己說過：硬編名單是第四個住處）。
+# ⚠️ ② 的住處是 TS，所以這裡用 regex 讀 —— ⭐ 而 `legacyIndexFresh.test.ts` 用**真的 import**
+#    對同一份陣列比對索引的每一列，regex 讀漏一筆就紅（⛔ 不是只信 regex）。
+# ⚠️ 這支自己的 fail-loud **只管「一筆都讀不到」**：regex 要 `id:` 在行首，所以一筆寫成單行
+#    `{ ...x, id: "…" }` 的條目會被**靜默少讀**，而 `--check` 照樣回 0（2026-09-15 突變實跑）。
+#    ⇒ 那一筆只有上面那條 import 守衛會紅；⛔ 不要以為 `--check` 綠就代表名單讀全了。
+ROSTER_SRC = "content/config/roster.json"
+REOPEN_SRC = "packages/shared/src/content/heroForge/communityAcquiredLegacy.ts"
+REOPEN_EXPORT = "COMMUNITY_ACQUIRED_LEGACY"
+STATUS_RETIRED, STATUS_REOPEN, STATUS_NEVER = "已下架", "待重上架（#1205）", "從未開放（回收桶）"
+# ⭐ JSON 版用的穩定代碼 —— 讀端比對代碼，⛔ 不比中文標籤（標籤改字不該讓閘失明）。
+STATUS_CODE = {STATUS_RETIRED: "retired", STATUS_REOPEN: "reopen", STATUS_NEVER: "never"}
+
+
+def _retired_ids() -> set[str]:
+    ids = json.load(open(os.path.join(ROOT, ROSTER_SRC), encoding="utf-8")).get("retiredChampions")
+    if not isinstance(ids, list):
+        raise SystemExit(f"⛔ {ROSTER_SRC} 沒有 retiredChampions 陣列 —— 退休卡的狀態推導不出來")
+    return set(ids)
+
+
+def _reopen_ids() -> set[str]:
+    src = open(os.path.join(ROOT, REOPEN_SRC), encoding="utf-8").read()
+    m = re.search(rf"export const {REOPEN_EXPORT}\b.*?\n\];", src, re.S)
+    ids = re.findall(r'^\s*id:\s*"([^"]+)"', m.group(0), re.M) if m else []
+    # ⛔ 讀不到就停 —— 靜默地讀到 0 筆，會把要回來的卡全部印成「從未開放」，
+    #    而那一份索引看起來完全正常（fail-open 沒錯，靜默才是缺陷）。
+    if not ids:
+        raise SystemExit(f"⛔ 在 {REOPEN_SRC} 讀不到 {REOPEN_EXPORT} 的 id —— 退休卡的狀態推導不出來")
+    return set(ids)
+
+
+def _base_of(d: dict) -> str | None:
+    """變身態的本體（卡上自己的 `transform`）；不是變身態 ⇒ None。"""
+    t = d.get("transform") or {}
+    return t.get("counterpartId") if t.get("role") == "alternate" else None
+
+
+def legacy_champion_status(d: dict, retired: set[str], reopen: set[str]) -> tuple[str, str]:
+    """一張退休英雄卡 → (狀態, 一句為什麼)。⛔ 不查表，只讀兩個住處＋卡上的 transform。"""
+    cid = str(d.get("id", ""))
+    base = _base_of(d)
+    via = f"變身態，本體 `{base}` " if base else "它"
+
+    def hit(s: set[str]) -> bool:
+        return cid in s or (base is not None and base in s)
+
+    if hit(retired):
+        return STATUS_RETIRED, f"{via}在 `{ROSTER_SRC}` 的 `retiredChampions`（下架原因寫在同一份的 `note`）"
+    if hit(reopen):
+        return STATUS_REOPEN, f"{via}在 `{REOPEN_SRC}` 的 `{REOPEN_EXPORT}`"
+    tail = f"；變身態，本體 `{base}`" if base else ""
+    return STATUS_NEVER, f"不在 `retiredChampions`、也不在 `{REOPEN_EXPORT}` ⇒ 預設歸回收桶{tail}"
+
+
+def legacy_champion_records(rows: list[tuple[str, str, str]]) -> tuple[list[dict], list[dict]]:
+    """→ (逐張 {file, id, base, label, what, why}, `COMMUNITY_ACQUIRED_LEGACY` 裡沒有退休卡的 {id, liveCard})。
+
+    ⭐ md 那一段與 `docs/legacy-index-champions.json` **都從這裡寫出** ⇒ 兩份不可能各說各話。
+    """
+    retired, reopen = _retired_ids(), _reopen_ids()
+    records, seen = [], set()
+    for rel, what, _ in rows:
+        d = json.load(open(os.path.join(ROOT, rel), encoding="utf-8"))
+        label, why = legacy_champion_status(d, retired, reopen)
+        seen.add(d.get("id"))
+        records.append({"file": os.path.basename(rel), "id": str(d.get("id", "")), "base": _base_of(d),
+                        "label": label, "what": what, "why": why})
+    missing = [
+        {"id": i, "liveCard": os.path.exists(os.path.join(ROOT, "content", "champions", f"{i}.json"))}
+        for i in sorted(i for i in reopen if i not in seen)
+    ]
+    return records, missing
+
+
+def render_champion_status_json(records: list[dict], missing: list[dict]) -> str:
+    """`docs/legacy-index-champions.json` —— 上面那一段的機器可讀版（GH#1227）。"""
+    rules = [
+        (STATUS_RETIRED, f"它或本體在 `{ROSTER_SRC}` 的 `retiredChampions`"),
+        (STATUS_REOPEN, f"它或本體在 `{REOPEN_SRC}` 的 `{REOPEN_EXPORT}`"),
+        (STATUS_NEVER, "其他"),
+    ]
+    doc = {
+        "generatedBy": "tools/legacy-index/build_index.py",
+        "schema": "ggd-legacy-champion-status@1",
+        "note": "⚙️ 產生的，⛔ 不要手改 —— `pnpm legacyindex:build`（`--check` 同時比對這一份與 docs/legacy-index.md）。"
+                "docs/legacy-index.md「退休英雄卡」那一段的機器可讀版：規則照順序、變身態看卡上 transform.counterpartId 的本體。"
+                "讀它的：packages/shared/testkit/rosterDeclaration.ts（GH#1227 逐群宣告閘）—— ⛔ 那一側不再推導一次。",
+        "rules": [
+            {"order": n, "status": STATUS_CODE[label], "label": label, "rule": rule,
+             "count": sum(1 for r in records if r["label"] == label)}
+            for n, (label, rule) in enumerate(rules, 1)
+        ],
+        "reopenWithoutLegacyCard": missing,
+        "cards": [{"file": r["file"], "id": r["id"], "base": r["base"], "status": STATUS_CODE[r["label"]]} for r in records],
+    }
+    return json.dumps(doc, ensure_ascii=False, indent=2) + "\n"
+
+
+def champion_rows(data: list[tuple[str, str, list[tuple[str, str, str]]]]) -> list[tuple[str, str, str]]:
+    """`collect()` 裡 `content/_legacy/champions/` 的那幾列（與 `render()` 的分段同一個判準）。"""
+    return [r for root, _, rows in data if root == "content/_legacy" for r in rows if r[0].split("/")[2:3] == ["champions"]]
+
+
+def render_legacy_champions(rows: list[tuple[str, str, str]]) -> list[str]:
+    """`content/_legacy/champions/` 那一段：規則說明 ＋ 逐張的狀態與為什麼。"""
+    records, missing_reopen = legacy_champion_records(rows)
+    count = {STATUS_RETIRED: 0, STATUS_REOPEN: 0, STATUS_NEVER: 0}
+    table = []
+    for r in records:
+        count[r["label"]] += 1
+        table.append(f"| `{r['file']}` | {esc(r['what'])} | {r['label']} | {esc(r['why'])} |")
+    L = [
+        "⭐ **每張卡的狀態由產生器照三條規則算出來**（⛔ 不是手寫，也⛔ 不抄名單）：",
+        "",
+        "| 順序 | 規則（變身態看卡上 `transform.counterpartId` 的本體） | 狀態 | 張數 |",
+        "|---:|---|---|---:|",
+        f"| 1 | 它或本體在 `{ROSTER_SRC}` 的 `retiredChampions` | {STATUS_RETIRED} | {count[STATUS_RETIRED]} |",
+        f"| 2 | 它或本體在 `{REOPEN_SRC}` 的 `{REOPEN_EXPORT}` | {STATUS_REOPEN} | {count[STATUS_REOPEN]} |",
+        f"| 3 | 其他 | {STATUS_NEVER} | {count[STATUS_NEVER]} |",
+        "",
+        "「沒開放的英雄搬進退休區」的**裁決** —— owner 2026-08-13 00:23（transcript `13aa0f88` 2026-08-12T16:23:20Z，逐字）：",
+        "「你可不可以把沒開放的英雄資料包含技能都放到一個 leagcy 區 預設不要再被讀取到了 不然我已經重複講了好幾次"
+        " 不知道浪費多少TOKEN反覆處理這些沒必要的英雄 請你徹底移除英雄名單 放到備份區就好」。",
+        "",
+        "「回收桶」這個**詞**取自 owner 2026-09-05 12:29（`docs/_daily/2026-09-05.md:45`，逐字）："
+        "「你應該知道我們有個 leagcy 資料夾可以運用 但留 index 可以找回就好 類似資源回收桶的概念 但暫時不會直接落入參考範圍」"
+        " —— ⚠️ 帳本那一列標的是**純討論**（legacy 索引概念），⛔ 不是裁決。",
+        "",
+    ]
+    if missing_reopen:
+        where = lambda m: "`content/champions/` 有卡" if m["liveCard"] else "兩棵樹都沒有卡"
+        L.append(f"⚠️ `{REOPEN_EXPORT}` 裡**沒有退休卡**的：" + " · ".join(f"`{m['id']}`（{where(m)}）" for m in missing_reopen) + "。")
+        L.append("")
+    L.append(
+        "⚠️ **待重上架 ≠ 選得到**（Claude 的推論，讀碼得來）：`apps/platform/internal/curation/legacyevict.go` "
+        "只看檔名在不在 `_legacy/`，同一個 id 勾進白名單會被自動剔除 ⇒ 卡還躺在這裡時它回不來；"
+        "舊卡怎麼離開退休區屬於 #1205 的範圍。"
+    )
+    L.append("")
+    L += ["| 檔案 | 是什麼 | 狀態 | 為什麼 |", "|---|---|---|---|", *table, ""]
+    return L
 
 
 def first_para(path: str) -> str:
@@ -268,8 +437,8 @@ def esc(s: str) -> str:
     return s.replace("|", "\\|").replace("\n", " ")
 
 
-def render() -> str:
-    data = collect()
+def render(data: list[tuple[str, str, list[tuple[str, str, str]]]] | None = None) -> str:
+    data = collect() if data is None else data
     total = sum(len(r) for _, _, r in data)
     # ⛔ 這裡以前烙了 `git describe` 的版本號。那是一個**自製的過期來源**：
     #    版本號每 commit 一次就變，於是索引每 commit 一次就「過期」，
@@ -347,6 +516,9 @@ def render() -> str:
             for seg in sorted(by):
                 L.append(f"### `{seg}/` （{len(by[seg])} 檔）")
                 L.append("")
+                if seg == "champions":
+                    L.extend(render_legacy_champions(by[seg]))
+                    continue
                 L.append("| 檔案 | 是什麼 |")
                 L.append("|---|---|")
                 for rel, what, why in by[seg]:
@@ -363,18 +535,26 @@ def render() -> str:
 
 
 def main() -> int:
-    text = render()
+    data = collect()
+    # ⭐ 兩份一起產、一起驗（GH#1227）—— ⛔ 只驗 md 的話，JSON 過期時讀它的閘會拿舊狀態綠。
+    outputs = [
+        (OUT, render(data)),
+        (STATUS_JSON, render_champion_status_json(*legacy_champion_records(champion_rows(data)))),
+    ]
     if "--check" in sys.argv:
-        cur = open(OUT, encoding="utf-8").read() if os.path.exists(OUT) else ""
-        if cur == text:
-            print("legacy-index.md 是最新的")
+        stale = [p for p, text in outputs
+                 if (open(p, encoding="utf-8").read() if os.path.exists(p) else "") != text]
+        if not stale:
+            print("legacy-index.md 與 legacy-index-champions.json 是最新的")
             return 0
-        print("⛔ docs/legacy-index.md 過期 —— 跑 `python3 tools/legacy-index/build_index.py`")
+        names = "、".join(os.path.relpath(p, ROOT) for p in stale)
+        print(f"⛔ {names} 過期 —— 跑 `pnpm legacyindex:build`（＝ genrun ＋ python3 tools/legacy-index/build_index.py）")
         return 1
-    with open(OUT, "w", encoding="utf-8") as f:
-        f.write(text)
-    n = sum(len(r) for _, _, r in collect())
-    print(f"寫出 {OUT}（{n} 個檔案）")
+    for p, text in outputs:
+        with open(p, "w", encoding="utf-8") as f:
+            f.write(text)
+    n = sum(len(r) for _, _, r in data)
+    print(f"寫出 {OUT} ＋ {STATUS_JSON}（{n} 個檔案）")
     return 0
 
 

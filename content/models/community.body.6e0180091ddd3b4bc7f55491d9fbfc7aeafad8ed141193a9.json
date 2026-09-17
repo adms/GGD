@@ -1,0 +1,16 @@
+{
+  "id": "community.body.6e0180091ddd3b4bc7f55491d9fbfc7aeafad8ed141193a9",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/0a696a71e8dbcd3848b0dfffebe36fffcd093442be81e6f8bc3261dba5380696.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "summon",
+    "run": "dual_slash_1",
+    "attack": "dual_slash_2",
+    "cast": "caladbolg",
+    "hurt": "dual_slash_6",
+    "death": "dual_slash_6"
+  },
+  "yawOffsetDeg": 0
+}

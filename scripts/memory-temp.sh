@@ -20,7 +20,9 @@ set -uo pipefail
 cd "$(dirname "$0")/.."
 ROOT="$PWD"
 OUT_DIR="${GGD_MEMTEMP_DIR:-$ROOT/docs/_daily}"   # 測試用；出貨一律走 docs/_daily
-PROJ="$HOME/.claude/projects/-Users-Takuro-GGD"
+# ⭐ GH#1254：Claude 目錄只問 `claude_project_dir.py`（主工作樹的 slug）；⛔ 不再寫死一台機器的路徑。
+#   推不出來 ⇒ 說出來、transcript 大小記 `?`（這支是保命快照，⛔ 不因為量不到代理值就不存）。
+PROJ="$(python3 scripts/claude_project_dir.py)" || { echo "⚠️ 推不出 Claude 專案目錄 —— transcript 大小與工作流兩節會是空的" >&2; PROJ=""; }
 
 TS="$(date '+%Y%m%d-%H%M')"
 NOW="$(date '+%Y-%m-%d %H:%M')"

@@ -1,0 +1,330 @@
+{
+  "schema": "ggd-deterministic-scoped-stage@1",
+  "sourceId": "infinity-strash-popp-pn020-00-magikaru-delivery-v2",
+  "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-pn020-00-magikaru-delivery-v2",
+  "absoluteLocalArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-pn020-00-magikaru-delivery-v2/source.tar.gz",
+  "archiveFormat": "tar-gzip",
+  "archiveMemberRoot": "",
+  "bytes": 27394909,
+  "sha256": "45840976b8ca1e7773e3e7b7813b24e20f25a555b87bfbacd7ad021553424ac5",
+  "fileCount": 60,
+  "uncompressedFileBytes": 56506069,
+  "files": [
+    {
+      "path": "assembly-v3/popp-pn020-00.blend",
+      "bytes": 4743744,
+      "sha256": "fa8a48d8e3e3f393bb80db94baa35a7574a668ef6e69a9a91c82539fe8716344"
+    },
+    {
+      "path": "assembly-v3/popp-pn020-00.glb",
+      "bytes": 4115452,
+      "sha256": "85a020edc508129b10cb801abebcd67c1ffd9d5d71934c698940a80cd2f6c6e8"
+    },
+    {
+      "path": "assembly-v3/receipt.json",
+      "bytes": 16565,
+      "sha256": "e5a7b6ca11f2a3cd28c1fe0971387e488e98dc8f98ab01557cf7afb378d13af4"
+    },
+    {
+      "path": "collection-manifest.json",
+      "bytes": 33331,
+      "sha256": "64c52e54f41a3da6b4f9ae2d66d41843a612a9385b38934325e8e14e9a2a994a"
+    },
+    {
+      "path": "failed-attempts/render-sandbox-bind/review/bundle.js",
+      "bytes": 11484680,
+      "sha256": "9ea4d41b08113031dd009c9d2c59b0b57d0c28f3b4ed4e1b533acb7bf677d80a"
+    },
+    {
+      "path": "failed-attempts/unskinned-attachment/assembly/popp-pn020-00.blend",
+      "bytes": 4744078,
+      "sha256": "778637b35903fd583904f4865801c2e4092bb36f070655ffb5988d8cd21d72bd"
+    },
+    {
+      "path": "failed-attempts/unskinned-attachment/assembly/popp-pn020-00.glb",
+      "bytes": 4066424,
+      "sha256": "0b623a07ba1a78fe5c0e32922c5d0f062c3010d500d2fcef8a85d93facce19e9"
+    },
+    {
+      "path": "failed-attempts/unskinned-attachment/assembly/receipt.json",
+      "bytes": 16564,
+      "sha256": "17b3e18188cab5437264285fa58c44887dfe3e56348b2dc97b429e4fd469efbc"
+    },
+    {
+      "path": "failed-attempts/unskinned-attachment/normalized/babylon-nullengine.json",
+      "bytes": 1121,
+      "sha256": "01b4c29489a978fb52d65de0f44eb164ca91dd5e6eb571194b60152d4a23939e"
+    },
+    {
+      "path": "failed-attempts/unskinned-attachment/normalized/ggd-upload.json",
+      "bytes": 12128,
+      "sha256": "7065f26227f34baa894ede737c60d2589edd13b8153149cb9b820993f38afdc7"
+    },
+    {
+      "path": "failed-attempts/unskinned-attachment/normalized/khronos-input.json",
+      "bytes": 549720,
+      "sha256": "f003f7941adc40ad1aa8c2815ac7fcca1b86a63bc02db5b644a91e2ec802eb63"
+    },
+    {
+      "path": "failed-attempts/unskinned-attachment/normalized/popp-pn020-00-ggd-normalized.glb",
+      "bytes": 3941560,
+      "sha256": "aa224ab797c7bd9fac55f95bfc3d18eaf22c57e8b6da54bf80e749e24318437d"
+    },
+    {
+      "path": "normalized-v3/babylon-nullengine.json",
+      "bytes": 1121,
+      "sha256": "95f355d87fea8373e8e4fb9f26aed5833b68817ae277a0cf8e986ea920abb4fb"
+    },
+    {
+      "path": "normalized-v3/ggd-upload.json",
+      "bytes": 12513,
+      "sha256": "f56620aadc016be131cf6390b89403f2184844eec1c464e3c16ea5ad832dd04f"
+    },
+    {
+      "path": "normalized-v3/khronos-input.json",
+      "bytes": 549950,
+      "sha256": "00f806f7f1fc864b14390e964c66119a2eace582ee8cb585283027b7e6c2f8a3"
+    },
+    {
+      "path": "normalized-v3/popp-pn020-00-ggd-normalized.glb",
+      "bytes": 3990712,
+      "sha256": "b335041c9c5556fc9a57a84c7073be6a922da54f5e6f385dec8458ed389349b4"
+    },
+    {
+      "path": "runtime-v4/body.glb",
+      "bytes": 2367208,
+      "sha256": "97ea8e575ee4806922954011935cf38454815861ed110a51433ce580accc74fe"
+    },
+    {
+      "path": "runtime-v4/model.json",
+      "bytes": 484,
+      "sha256": "16ab918232e6e2a109ac9e8e122cca0e756a9aadb9c01a4017ad6792c5898edc"
+    },
+    {
+      "path": "runtime-v4/receipt.json",
+      "bytes": 14619,
+      "sha256": "5307721be5f43ccee98d56beb0ac19bd4b8a168bc1638dec0e337a86ad948b57"
+    },
+    {
+      "path": "runtime-v4/uploaded-model.json",
+      "bytes": 381,
+      "sha256": "4927f87f81f2767f9b4b94fcfef2679669b9a57ae2f736f5044422fb5aa5cefc"
+    },
+    {
+      "path": "weapon/material-context-v1/Strash/Chara/Player/PN020/Weapon/Magikaru/SK_PN020_Weapon_Magikaru.bin",
+      "bytes": 157068,
+      "sha256": "82ba3b8fcba2be156ae34debe295d45cb1367d4b31d541cb9f843d1799f99c8e"
+    },
+    {
+      "path": "weapon/material-context-v1/Strash/Chara/Player/PN020/Weapon/Magikaru/SK_PN020_Weapon_Magikaru.gltf",
+      "bytes": 13007,
+      "sha256": "b646500dabc550bdf2577cd0be46dffbfce9476e99c96b1b371b3f7e8bccb56d"
+    },
+    {
+      "path": "weapon/material-context-v1/export-manifest.json",
+      "bytes": 2618,
+      "sha256": "d126ccb1367efe5362e353c7a95e468940bce9af4268908b513fb3d4489c4d43"
+    },
+    {
+      "path": "weapon/material-context-v1/strash__Content__Strash__Chara__Player__PN020__Weapon__Magikaru__SK_PN020_Weapon_Magikaru.uasset.log",
+      "bytes": 2523,
+      "sha256": "e3d8c3fb8143b68beb412065ee79ddcbd9dcae5c8587fe4b394e39b92f6b7f75"
+    },
+    {
+      "path": "weapon/mesh-psk-v1/Strash/Chara/Player/PN020/Weapon/Magikaru/SK_PN020_Weapon_Magikaru.props.txt",
+      "bytes": 1646,
+      "sha256": "58098c4b95e92f9a58b1b4de87bf8e63467616f1883efebf8f8d6cda822eac35"
+    },
+    {
+      "path": "weapon/mesh-psk-v1/Strash/Chara/Player/PN020/Weapon/Magikaru/SK_PN020_Weapon_Magikaru.psk",
+      "bytes": 112388,
+      "sha256": "09ec02df9f7f4ac96146c669d59caf6b56d52acb58afbe24b84e71dfb638523e"
+    },
+    {
+      "path": "weapon/mesh-psk-v1/export-manifest.json",
+      "bytes": 2598,
+      "sha256": "b61e9ef8455536d70e284bdc260a33c8953eaad2a010b26ca867efaccce00f69"
+    },
+    {
+      "path": "weapon/mesh-psk-v1/strash__Content__Strash__Chara__Player__PN020__Weapon__Magikaru__SK_PN020_Weapon_Magikaru.uasset.log",
+      "bytes": 2451,
+      "sha256": "4998b27c5bad76bab10d2fcf20f0e5e8a12d7aed1e9422bf9b68bb3a37421ac2"
+    },
+    {
+      "path": "weapon/textures-v1/Strash/Chara/Player/PN020/Weapon/Magikaru/T_PN020_Weapon_Magikaru_Base.png",
+      "bytes": 35022,
+      "sha256": "d0145e0c9000d836ee615d387f45b9f00a188b72511cda2810c6d8d458e39fb9"
+    },
+    {
+      "path": "weapon/textures-v1/Strash/Chara/Player/PN020/Weapon/Magikaru/T_PN020_Weapon_Magikaru_Bundle.png",
+      "bytes": 646081,
+      "sha256": "962b6e6dbda90fb7fd54794e4b2b3776e6131133c10465cf533041801ae6a8f3"
+    },
+    {
+      "path": "weapon/textures-v1/Strash/Chara/Player/PN020/Weapon/Magikaru/T_PN020_Weapon_Magikaru_Bundle_B.png",
+      "bytes": 712567,
+      "sha256": "c6fd0ff35612c4937c8c714c55cc543151b5807476617ad64d7905535613cb3e"
+    },
+    {
+      "path": "weapon/textures-v1/Strash/Chara/Player/PN020/Weapon/Magikaru/T_PN020_Weapon_Magikaru_Shade.png",
+      "bytes": 72002,
+      "sha256": "189846c8e2af060d1911fa2d6ba2af303f51fe51796a828acd9b1f42a994ccf2"
+    },
+    {
+      "path": "weapon/textures-v1/export-manifest.json",
+      "bytes": 7102,
+      "sha256": "114545602d9d4684c75f0b8e776071e37162fef55783d486f27cdfb4aa8ad9d9"
+    },
+    {
+      "path": "weapon/textures-v1/strash__Content__Strash__Chara__Player__PN020__Weapon__Magikaru__T_PN020_Weapon_Magikaru_Base.uasset.log",
+      "bytes": 1312,
+      "sha256": "b501d901117f3dafcb2caa6c1ee65efef90ac42679b1667cdea2055997cfd245"
+    },
+    {
+      "path": "weapon/textures-v1/strash__Content__Strash__Chara__Player__PN020__Weapon__Magikaru__T_PN020_Weapon_Magikaru_Bundle.uasset.log",
+      "bytes": 1322,
+      "sha256": "c0fdaaf8fb887b0c44b20f4bb70a4f832bd9fbe747307832552c6528e9abbf3b"
+    },
+    {
+      "path": "weapon/textures-v1/strash__Content__Strash__Chara__Player__PN020__Weapon__Magikaru__T_PN020_Weapon_Magikaru_Bundle_B.uasset.log",
+      "bytes": 1332,
+      "sha256": "4d3814eee2397649c6be78e606e9f49c1938200d0208665e8928551a2d833b97"
+    },
+    {
+      "path": "weapon/textures-v1/strash__Content__Strash__Chara__Player__PN020__Weapon__Magikaru__T_PN020_Weapon_Magikaru_Shade.uasset.log",
+      "bytes": 1317,
+      "sha256": "285bf0646d2895f65e4e87ab8ceb66b95c100f7be9dd5cbe7c15ea031728ed1c"
+    },
+    {
+      "path": "webgl-review-v5/bundle.js",
+      "bytes": 11484680,
+      "sha256": "9ea4d41b08113031dd009c9d2c59b0b57d0c28f3b4ed4e1b533acb7bf677d80a"
+    },
+    {
+      "path": "webgl-review-v5/chrome.log",
+      "bytes": 4718,
+      "sha256": "6169cef1e6a07624c67d15eda8146818b7441b619acad6114bad49a5a40cc3af"
+    },
+    {
+      "path": "webgl-review-v5/contact-sheet.png",
+      "bytes": 227754,
+      "sha256": "c847992be100c89bc527c671501c1df9f8c9f9628d693e11e47e2647a972a51a"
+    },
+    {
+      "path": "webgl-review-v5/ggd-state-attack-0.png",
+      "bytes": 160093,
+      "sha256": "4b3de2b821ecd26c29ce898f08be35f36984dca0f9168e943a54733ca8bfb22d"
+    },
+    {
+      "path": "webgl-review-v5/ggd-state-attack-100.png",
+      "bytes": 160168,
+      "sha256": "e6ae1f299b4eb4db53268b0a6179431e37bccf73c2ab27cde438951765617854"
+    },
+    {
+      "path": "webgl-review-v5/ggd-state-attack-50.png",
+      "bytes": 152693,
+      "sha256": "7b7482df9f8058180ab19a1f24c3b11bb89c9de12174dc06a79958152763fbb0"
+    },
+    {
+      "path": "webgl-review-v5/ggd-state-cast-0.png",
+      "bytes": 146274,
+      "sha256": "d31c176d77e9a404d9f191605af91a7c9aa107714c1306375d44dd4ca63fc0e6"
+    },
+    {
+      "path": "webgl-review-v5/ggd-state-cast-100.png",
+      "bytes": 169092,
+      "sha256": "94f241d55c2205e0be7dd0d465cc8836aaf43c3c72414a65ee32645d645a1ac7"
+    },
+    {
+      "path": "webgl-review-v5/ggd-state-cast-50.png",
+      "bytes": 182446,
+      "sha256": "c7ce5417a788e1b5e4c5501adcd4aa96fb27a9858fcb1f79053863c8e3cc4d96"
+    },
+    {
+      "path": "webgl-review-v5/ggd-state-death-0.png",
+      "bytes": 69167,
+      "sha256": "b716105e04d191f6cf7d4fbb03369ce7c1e6f0f10d1ceb9e27c1dbf0822bbc88"
+    },
+    {
+      "path": "webgl-review-v5/ggd-state-death-100.png",
+      "bytes": 69167,
+      "sha256": "b716105e04d191f6cf7d4fbb03369ce7c1e6f0f10d1ceb9e27c1dbf0822bbc88"
+    },
+    {
+      "path": "webgl-review-v5/ggd-state-death-50.png",
+      "bytes": 69167,
+      "sha256": "b716105e04d191f6cf7d4fbb03369ce7c1e6f0f10d1ceb9e27c1dbf0822bbc88"
+    },
+    {
+      "path": "webgl-review-v5/ggd-state-hurt-0.png",
+      "bytes": 69167,
+      "sha256": "b716105e04d191f6cf7d4fbb03369ce7c1e6f0f10d1ceb9e27c1dbf0822bbc88"
+    },
+    {
+      "path": "webgl-review-v5/ggd-state-hurt-100.png",
+      "bytes": 69167,
+      "sha256": "b716105e04d191f6cf7d4fbb03369ce7c1e6f0f10d1ceb9e27c1dbf0822bbc88"
+    },
+    {
+      "path": "webgl-review-v5/ggd-state-hurt-50.png",
+      "bytes": 69167,
+      "sha256": "b716105e04d191f6cf7d4fbb03369ce7c1e6f0f10d1ceb9e27c1dbf0822bbc88"
+    },
+    {
+      "path": "webgl-review-v5/ggd-state-idle-0.png",
+      "bytes": 160076,
+      "sha256": "9c239a800f5f3e70deb96368380b73a38086c61f8c884a3b34828a98ff1ee191"
+    },
+    {
+      "path": "webgl-review-v5/ggd-state-idle-100.png",
+      "bytes": 160076,
+      "sha256": "9c239a800f5f3e70deb96368380b73a38086c61f8c884a3b34828a98ff1ee191"
+    },
+    {
+      "path": "webgl-review-v5/ggd-state-idle-50.png",
+      "bytes": 160958,
+      "sha256": "129955e707da0274b799494aa5002b1d6aea76a1cdd09a404de292ae7bd233ed"
+    },
+    {
+      "path": "webgl-review-v5/ggd-state-run-0.png",
+      "bytes": 167766,
+      "sha256": "dbd60d4c8315c0409a20dd0a61fb77e0240f9ba8b4be48dba569033b45d8894e"
+    },
+    {
+      "path": "webgl-review-v5/ggd-state-run-100.png",
+      "bytes": 168097,
+      "sha256": "812236bba3d42fcda78085e1ee7a5f44e8f5ef0d157bf428d6b568dc4a93c62c"
+    },
+    {
+      "path": "webgl-review-v5/ggd-state-run-50.png",
+      "bytes": 141085,
+      "sha256": "fc9d8476fddbd083c3a0b5a33264e47c94f4f3bfb3ed03263cd9e3acdd31ea83"
+    },
+    {
+      "path": "webgl-review-v5/proof.json",
+      "bytes": 9706,
+      "sha256": "fd199307119f036a77fcd5d69fbde0703016cf4f65a255dd9b37e171a99a49f0"
+    },
+    {
+      "path": "webgl-review-v5/run.json",
+      "bytes": 674,
+      "sha256": "b0568efae7f8f518493e165db578196ff7ebba3fb316c64b756d5cd03d1c30b6"
+    }
+  ],
+  "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-popp-pn020-00-magikaru-delivery-v2/45840976b8ca1e7773e3e7b7813b24e20f25a555b87bfbacd7ad021553424ac5.tar.gz",
+  "localPreserved": true,
+  "snapshotScope": "Append-only delta over infinity-strash-popp-pn020-00-delivery-v1: original Magikaru weapon export inputs, all attachment assembly attempts, accepted rigid-skin assembly, normalized/runtime outputs, and 18-image WebGL review.",
+  "deterministicParameters": {
+    "tarFormat": "PAX",
+    "memberOrder": "lexicographic POSIX path",
+    "mode": "0644",
+    "uid": 0,
+    "gid": 0,
+    "mtime": 0,
+    "uname": "",
+    "gname": "",
+    "gzipMtime": 0,
+    "gzipFilename": "",
+    "gzipCompressLevel": 1
+  }
+}

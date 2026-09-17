@@ -1,0 +1,451 @@
+"""🧾 產出 `docs/素材缺口交接單.md` —— 給「去找素材」那條工作流的自足工單。
+
+owner 2026-09-11：「我要讓**別的工作流去找對應素材** 請你做成一個 md」
+
+⭐ 每一份清單都由**量測**填入（⛔ 不手打）：
+  `audit-five-axes.py` 的六軸明細 ＋ `collect-review-inputs.py` 的三份缺口清單。
+
+```sh
+python3 tools/hero-intake/audit-five-axes.py /tmp/a5.json
+python3 tools/hero-intake/collect-review-inputs.py --work <work>
+python3 tools/hero-intake/make-asset-handoff.py --audit /tmp/a5.json --work <work> --out docs/素材缺口交接單.md
+```
+"""
+import argparse, collections, hashlib, json, pathlib, re, subprocess, datetime
+
+ap = argparse.ArgumentParser()
+ap.add_argument("--audit", default="-", help="audit-five-axes.py 的輸出；`-` ＝ 自己量一次")
+ap.add_argument("--work", default="-", help="collect-review-inputs.py 的輸出目錄；`-` ＝ 自己量一次")
+ap.add_argument("--out", default="docs/素材缺口交接單.md")
+ap.add_argument("--check", action="store_true",
+                help="⭐ 只比對**資料指紋**：現況與文件裡記的不一致就回非零（⛔ 不比日期，⛔ 不比全文）")
+ARG = ap.parse_args()
+
+R = pathlib.Path(__file__).resolve().parents[2]; C = R/'content'
+
+# ⭐ `--check` 要**自給自足**：輸入不在就自己先量一次（⛔ 不要求呼叫端記得跑另外兩支，
+#    一個「要記得先跑三行」的閘，⛔ 就是一個沒有人跑的閘）。
+if not pathlib.Path(ARG.audit).exists() or not (pathlib.Path(ARG.work)/'quotes60.json').exists():
+    import subprocess as _sp, tempfile as _tf
+    _w = pathlib.Path(ARG.work if ARG.work != "-" else _tf.mkdtemp())
+    _w.mkdir(parents=True, exist_ok=True)
+    _a = pathlib.Path(ARG.audit if ARG.audit != "-" else _w/'a5.json')
+    _sp.run(["python3", str(R/"tools/hero-intake/audit-five-axes.py"), str(_a)], cwd=R, check=True, capture_output=True)
+    _sp.run(["python3", str(R/"tools/hero-intake/collect-review-inputs.py"), "--work", str(_w)], cwd=R, check=True, capture_output=True)
+    ARG.audit, ARG.work = str(_a), str(_w)
+
+A = json.load(open(ARG.audit))
+jl = lambda p: json.loads(pathlib.Path(p).read_text(encoding='utf-8'))
+champs = {f.stem: jl(f) for f in sorted((C/'champions').glob('*.json')) if not f.name.startswith('_')}
+models = {}
+for f in (C/'models').glob('*.json'):
+    if f.name.startswith('_'): continue
+    d = jl(f)
+    if d.get('id'): models[d['id']] = d
+q60 = jl(pathlib.Path(ARG.work)/'quotes60.json')
+pairs = jl(pathlib.Path(ARG.work)/'shared_pairs.json')
+ship34 = jl(R/'docs/_review/material/hero-intake/ship34.json')
+component_index = jl(R/'materials/asset-library/current-resources.json')
+NON = {'sela','thorne'}
+
+# `ship34.json` 是產物；在用它寫交接單前，先確認中央元件索引沒有新增、移除或改變
+# 任何與這批「0 個交付檔＋無 modelKey」角色精確 identityId 相符的元件。
+components_by_identity = collections.defaultdict(list)
+components_by_id = {}
+for c in component_index.get('modelComponents', []):
+    cid = c.get('id')
+    if not cid or cid in components_by_id:
+        print(f"⛔ current-resources.json 的 modelComponents id 缺漏或重複：{cid!r}")
+        raise SystemExit(2)
+    components_by_id[cid] = c
+    for identity in c.get('identityIds', []):
+        components_by_identity[str(identity)].append(c)
+
+for h in ship34.get('heroes', []):
+    m = h.get('model', {})
+    if m.get('files') != 0 or m.get('modelKey'):
+        continue
+    expected = {}
+    for identity in h.get('deliveryIdentityIds', []):
+        for c in components_by_identity.get(str(identity), []):
+            expected[c['id']] = c
+    actual = {c.get('id'): c for c in m.get('components', [])}
+    if set(expected) != set(actual):
+        print(f"⛔ ship34.json 的中央元件關係已過期：{h['id']} 寫 {sorted(actual)}，現況 {sorted(expected)}")
+        print("   ⇒ 用 ship34.json 檔頭的 invocation 重跑 hero-intake，再重產交接單")
+        raise SystemExit(2)
+    for cid, stored in actual.items():
+        current = expected[cid]
+        if stored.get('sha256') != current.get('sha256') or stored.get('gitPath') != current.get('gitPath'):
+            print(f"⛔ ship34.json 的元件證據已過期：{h['id']}／{cid}")
+            print("   ⇒ 用 ship34.json 檔頭的 invocation 重跑 hero-intake，再重產交接單")
+            raise SystemExit(2)
+        asset = R/current.get('gitPath', '')
+        if current.get('storageClass') == 's3-legacy-preparation':
+            split = component_index.get('s3PreparationSplit', {})
+            if (split.get('fullGetAndEveryFileVerified') is not True
+                    or current.get('s3Uri') != split.get('s3Uri')
+                    or not current.get('s3ArchiveMember')):
+                print(f"⛔ 中央元件的 S3 分割收據不完整：{h['id']}／{cid}")
+                raise SystemExit(2)
+        else:
+            if not asset.is_file():
+                print(f"⛔ 中央元件的 Git 實檔不存在：{h['id']}／{cid}／{current.get('gitPath')}")
+                raise SystemExit(2)
+            payload = asset.read_bytes()
+            if len(payload) != current.get('bytes') or hashlib.sha256(payload).hexdigest() != current.get('sha256'):
+                print(f"⛔ 中央元件的位元組數或 SHA-256 不符：{h['id']}／{cid}／{current.get('gitPath')}")
+                raise SystemExit(2)
+
+rig = [x for x in A if x['rig'][0].startswith('⛔')]
+voice_gap = [x for x in A if x['voice'][0].startswith('⛔') and x['id'] not in NON]
+voice_slot = [x for x in A if x['voice'][0].startswith('⚠️')]
+sfx_none = [x for x in A if x['sfx'][0].startswith('·')]
+sfx_part = [x for x in A if x['sfx'][0].startswith('⚠️')]
+diff_pairs = [p for p in pairs if not p['same']]
+s34_components = [h for h in ship34['heroes'] if h['model'].get('componentCount', 0) > 0 and not h['model'].get('modelKey')]
+s34_nomodel = [h for h in ship34['heroes'] if h['model'].get('files') == 0 and not h['model'].get('modelKey') and not h['model'].get('componentCount')]
+s34_novoice = [h for h in ship34['heroes'] if not (h['voice'].get('candidates') or [])]
+
+def row(x, extra=''):
+    return f"| `{x['id']}` | {x['name']} |{extra}"
+
+def git(*a):
+    return subprocess.run(["git", *a], cwd=R, capture_output=True, text=True).stdout.strip()
+
+# ⭐ 指紋只涵蓋**會影響結論的那些事實**；⛔ 日期與 commit 刻意排除在外
+#   （CLAUDE.md：「任何隨時鐘變動的欄位都會讓逐位元組比對永遠不相等，
+#     於是 --check 只能被放寬成模糊比對 —— 而一條被放寬的閘等於沒有閘」）
+FACTS = json.dumps({
+    "rig": sorted(x["id"] for x in rig),
+    "voiceGap": sorted(x["id"] for x in voice_gap),
+    "voiceSlot": sorted(x["id"] for x in voice_slot),
+    "sfxNone": sorted(x["id"] for x in sfx_none),
+    "sfxPart": sorted(x["id"] for x in sfx_part),
+    "quotes": sorted(r["id"] for r in q60),
+    "diffPairs": sorted(p["modelKey"] for p in diff_pairs),
+    "s34Components": sorted([{
+        "id": h["id"],
+        "components": [(c["id"], c.get("sha256"), c.get("verified"), c.get("nativeAnimationCount", 0)) for c in h["model"].get("components", [])],
+        "nativeAnimationCount": h["model"].get("nativeAnimationCount", 0),
+        "proceduralAnimationCount": h["model"].get("proceduralAnimationCount", 0),
+    } for h in s34_components], key=lambda x: x["id"]),
+    "s34NoModel": sorted(h["id"] for h in s34_nomodel),
+    "s34NoVoice": sorted(h["id"] for h in s34_novoice),
+}, ensure_ascii=False, sort_keys=True)
+DIGEST = hashlib.sha256(FACTS.encode()).hexdigest()[:16]
+
+if ARG.check:
+    prev = pathlib.Path(ARG.out)
+    if not prev.exists():
+        print(f"⛔ {ARG.out} 不存在 —— 跑一次 make-asset-handoff.py"); raise SystemExit(2)
+    m = re.search(r"資料指紋\s*\|\s*`([0-9a-f]{16})`", prev.read_text(encoding="utf-8"))
+    if not m:
+        print("⛔ 文件裡沒有資料指紋 —— 它是舊格式，重產一次"); raise SystemExit(2)
+    if m.group(1) != DIGEST:
+        print(f"⛔ **這份交接單過期了**：文件記 {m.group(1)} ≠ 現況 {DIGEST}\n"
+              f"   ⇒ 缺口清單已經變了（有人補了素材，或又多了缺口）。\n"
+              f"   ⇒ 重跑：python3 tools/hero-intake/make-asset-handoff.py --audit <a5.json> --work <work> --out {ARG.out}")
+        raise SystemExit(2)
+    print(f"✓ {ARG.out} 與現況一致（資料指紋 {DIGEST}）")
+    raise SystemExit(0)
+
+TODAY = datetime.date.today().isoformat()
+HEAD = git("rev-parse", "--short", "HEAD") or "(不在 git 裡)"
+BRANCH = git("rev-parse", "--abbrev-ref", "HEAD") or "?"
+
+L = []
+w = L.append
+w("# 🧾 素材缺口交接單 —— 給**去找素材**的那條工作流")
+w("")
+w("> owner 2026-09-12：「我要讓**別的工作流去找對應素材** 請你做成一個 md」")
+w("> owner 2026-09-12：「你應該要 commit 加上日期 讓別的工作流可以讀到 **但又不會讓日後的工作流誤會**」")
+w("")
+w("| | |")
+w("|---|---|")
+w(f"| 🗓 **量測日期** | **{TODAY}** |")
+w(f"| 🔖 量測的 commit | `{HEAD}`（分支 `{BRANCH}`）|")
+w(f"| 🔑 資料指紋 | `{DIGEST}` |")
+w("")
+w("### ⛔⛔ 讀這一份之前，先跑這一行 —— ⛔ 不要相信上面的日期")
+w("")
+w("```sh")
+w("python3 tools/hero-intake/make-asset-handoff.py --check      # ⭐ 一行，它自己會重量一次")
+w("```")
+w("")
+w("⭐ **綠的** ⇒ 下面每一份清單今天仍然成立，照著做。")
+w("⛔ **紅的** ⇒ 這份文件**過期了**（有人補了素材，或又多了缺口）——")
+w("⛔ 不要照抄裡面的數字，重產一份再開工：")
+w("")
+w("```sh")
+w("python3 tools/hero-intake/make-asset-handoff.py --out docs/素材缺口交接單.md")
+w("```")
+w("")
+w("⭐ 這條閘也掛在測試裡（`packages/shared/src/ops/assetHandoffFresh.test.ts`）——")
+w("⛔ 所以「忘記重產」會在 `pnpm test` 就紅，⛔ 不會等到有人照著過期清單做完才發現。")
+w("")
+w("⚠️ **為什麼不是只寫一個日期**：一個日期是**散文** —— 它在過期之後還是長得一模一樣，")
+w("而這個 repo 記錄過五次「一句活過保存期限的散文，而沒有任何東西變紅」。")
+w("⭐ 指紋只涵蓋**清單本身**（哪些英雄缺哪一軸），⛔ 刻意**不含日期與 commit** ——")
+w("不然時鐘會讓 `--check` 永遠紅，然後它就會被放寬成沒有用的東西。")
+w("")
+w("⭐ 這一份是**自足**的：你不需要讀任何對話就能開工。")
+w("")
+w("---")
+w("")
+w("## 0. ⛔ 先讀這四條規矩 —— 不讀會做白工")
+w("")
+w("| # | 規矩 | 為什麼（⭐ 都是踩過的） |")
+w("|---|---|---|")
+w("| ① | **有就用 → 沒有才 CC0/CC-BY → 再沒有才自己生成**（CLAUDE.md 第一·四守則） | 一個「我們自己畫的」資產要說得出**上面兩階為什麼不行** |")
+w("| ② | ⛔ **同名匹配只是候選**（owner 2026-09-08） | 這一份自己就有反例：傑富力士的語音候選撈到 `vc_kirby_copy_*`，而索引自己標著「**非對象本人**」⇒ ⛔ 不可用 |")
+w("| ③ | ⛔ **角色台詞不可以編** | owner 2026-09-10 逐字：「**請你給我名單就好 不要自己產 我會手動填寫**」⇒ 你的工作是**找出處**，⛔ 不是寫句子 |")
+w("| ④ | **成品進 git，半成品／來源／準備材料進 S3** （owner 2026-09-10） | S3：`ggd-390630837668-ap-east-2-an`（profile `vibe-coding`／region `ap-east-2`），內容定址佈局 `assets/<sha256 前2碼>/<sha256>.<副檔名>` |")
+w("")
+w("⚠️⚠️ **第五條，這一份是踩著它寫出來的**：")
+w("⭐ **「宣告過」⛔ 不等於「玩家拿得到」** —— `content/assets-offdisk.json` 只記位元組在哪與雜湊，")
+w("而部署走 `git fetch + checkout`、**全 repo 沒有任何一步把 S3 的位元組拉回來** ⇒ 那個檔在伺服器上不存在。")
+w("⇒ ⭐ 找回來的模型**一定要進 git**（閘 `shippedChampionModelsReachPlayers.test.ts` 會擋）。")
+w("")
+w("---")
+w("")
+w("## 1. 去哪裡找（固定入口，⛔ 不要憑印象說「我們沒有」）")
+w("")
+w("| 要什麼 | 入口 |")
+w("|---|---|")
+w("| 模型／動作／特效 | `python3 \"<素材庫>/query.py\" <關鍵字> [--kind vfx] [--pending]`；⚠️ **`--pending` 是候選，⛔ 不是入庫**（實測 342 筆裡 341 筆是候選） |")
+w("| 素材庫根目錄 | `…/ABxVFX_EDIT/GGD-Asset-Library`（固定入口是它的 `README.md`） |")
+w("| 角色語音索引 | `…/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/voice-index.json`（988 組）|")
+w("| 語音**檔案級**索引 | 同目錄 `voice-files.jsonl`（284,075 列，每列 `groupId` ＋ `path` ＋ `seconds`）；`path` 的根是 `…/ABxVFX_EDIT/` |")
+w("| 已交付但還沒進本 repo 的模型 | sibling repo `…/ABxVFX_EDIT/GGD-community-acquired-heroes`，分支 `codex/community-acquired-heroes`，交付表 `docs/_reports/community-acquired-heroes/model-delivery-summary.json` |")
+w("| 原作音效 cue 名單 | `content/audio-manifests/ability-sfx-cues.json`（52 個 cue；⛔ 這份是產生的，改 `tools/sfx-bind/build_bindings.py`）|")
+w("")
+w("⭐ **語音索引最準的一把鑰匙是 `identityIds`**（`300heroes:62`／`mba:Chara14`）——")
+w("它同時是索引的 group id。⚠️ 但**編號對上不代表名字對得上**，兩個名字都要印出來給人看。")
+w("")
+w("---")
+w("")
+
+# ── A 骨架 ──────────────────────────────────────────────────
+w(f"## A. 🦴 骨架 —— {len(rig)} 支" + ("（✅ 目前沒有缺口）" if not rig else ""))
+w("")
+w("| 英雄 | id | 現在指的模型 | 問題 |")
+w("|---|---|---|---|")
+for x in rig:
+    k = champs[x['id']].get('modelKey'); g = (models.get(k) or {}).get('glbPath','')
+    w(f"| {x['name']} | `{x['id']}` | `{k}`<br>`{g}` | {x['rig'][1]} |")
+w("")
+w("**要找的**：同一個角色、**帶骨架（skin/joints）且六格動作齊**的模型；或替現有這顆綁骨架＋做動作。")
+w("**怎麼驗**：`python3 -c` 讀 glb 的 JSON chunk，`skins` 非空、`joints` > 0；")
+w("再跑 `python3 tools/w3x-import/model_intake.py <檔> --merge`（⭐ 匯入模型**一定**要跑這一支，五件事它都會問）。")
+w("")
+
+# ── B 語音 ──────────────────────────────────────────────────
+# ⛔ 下面兩列是**逐支查過的分析**（候選來源、信心），⛔ 不是量出來的 —— 所以要跟量到的名單對得上，對不上就停
+_B_MATERIAL_IDS = {"godie-e00s", "godie-e010", "godie-u034", "godie-ucrl"}
+_B_WIRING_IDS = {"b2-maple-alt-9769eb88b85b"}
+# ⭐ 第四批（GH#1185／#1205）owner 2026-09-17「我要全部上線」⇒ 先上架、語音待補。分組**逐字取自 Codex 2026-09-16 的語音缺口盤點**
+#   （PR #1267 commit 2a5564255；重建入口 `tools/hero-model-library/sync_voice_gap_source_mappings.py`），⛔ 不是我分的。
+_B_BATCH4 = {
+    "LoL 第二批 —— 本機已有 Riot 官方 ja_JP 解碼 WAV（共 6,636 段，已登記進中央索引）⇒ 待逐段聽審＋戰鬥事件綁定":
+        ["lol-ahri", "lol-ashe", "lol-blitzcrank", "lol-chogath", "lol-fiddlesticks", "lol-garen", "lol-malphite", "lol-ornn", "lol-sett", "lol-thresh", "lol-velkoz"],
+    "有原作／原生遊戲來源候選": ["acquired-dio", "acquired-naruto", "acquired-mewtwo", "acquired-mario", "acquired-ryu"],
+    "只有 300／MOD 候選（⛔ 不能標成原作語音）": ["acquired-morgiana", "acquired-rim", "acquired-saya", "acquired-kuroyukihime", "acquired-leafa"],
+    "已有角色音訊候選": ["acquired-alice", "acquired-asuna", "acquired-emilia", "acquired-pokemon-trainer", "acquired-wargreymon"],
+    "目前沒有音訊": ["acquired-kita-kita", "acquired-beatrice", "acquired-ram", "acquired-inuyasha", "acquired-minecraft", "acquired-xiaodangjia", "acquired-zero"],
+}
+_B_BATCH4_IDS = {i for ids in _B_BATCH4.values() for i in ids}
+_measured_voice_gap = {x["id"] for x in voice_gap}
+if not _measured_voice_gap <= (_B_MATERIAL_IDS | _B_WIRING_IDS | _B_BATCH4_IDS) or not _B_MATERIAL_IDS <= _measured_voice_gap:
+    print(f"⛔ B 節的手寫分析過期了：量到 {sorted(_measured_voice_gap)}，手寫 {sorted(_B_MATERIAL_IDS | _B_WIRING_IDS | _B_BATCH4_IDS)} —— 重查再改這支產生器")
+    raise SystemExit(2)
+w("## B. 🎙 語音 —— ⭐ 真正要找素材的只有 **2 個角色**")
+w("")
+w(f"⚠️ 量到 {len(_measured_voice_gap)} 個 id 沒有語音，逐支查完之後**只有 2 個角色是素材缺口**：")
+w("")
+w("| 角色 | 佔幾個 id | 狀態 | 索引裡的候選 |")
+w("|---|---|---|---|")
+w("| 白木老樹精・白木卡迪那 | `godie-e00s` ＋ `godie-e010` | ⛔ 兩個 id 都沒有包 | `300heroes:215`「白」400 檔 —— ⚠️ **只有一個字命中，信心低**，要聽過才算 |")
+w("| 職業獵人・傑 富力士 | `godie-u034` ＋ `godie-ucrl` | ⛔ 兩個 id 都沒有包 | ⛔ **沒有可用候選**（撈到的 `vc_kirby_copy_*` 索引自己標著「非對象本人」）|")
+w("")
+w("⭐ **這幾支⛔ 不要去找素材**：")
+w("")
+w("| 英雄 | 為什麼不是素材缺口 |")
+w("|---|---|")
+if "b2-maple-alt-9769eb88b85b" in _measured_voice_gap:
+    w("| `b2-maple-alt-9769eb88b85b` 梅普露（變身） | ⭐ **本體 `b2-maple` 已經有語音包** —— 缺的是變身對借用（`contentFormPairs`）的接線 |")
+w("| `sela` / `thorne` | ⛔ **不是上架英雄** —— 內容載入失敗時 `main.tsx` 註冊的骨架 fallback |")
+w("")
+w("### 第四批 33 名 —— 先上架，語音待補（owner 2026-09-17「我要全部上線」）")
+w("")
+w("| 分組（Codex 2026-09-16 盤點） | 英雄 |")
+w("|---|---|")
+for _label, _ids in _B_BATCH4.items():
+    _present = [i for i in _ids if i in _measured_voice_gap]
+    if _present:
+        w(f"| {_label} | " + "、".join(f"`{i}`" for i in _present) + " |")
+w("")
+w("⭐ 金色魔王 `acquired-lord-nightmares`：owner 2026-09-17「金色魔王 一樣用莉娜音效」⇒ 已借用莉娜（`godie-h020`）的原作語音，⛔ 不在缺口裡。")
+w("")
+w("**要找的**：那 2 個角色的**原作日文語音**（⭐ 只收日文；⛔ 中文配音檔要排除，300英雄的 `voice_ch_*` 就是）。")
+w("**交回來**：來源群組 id ＋ 檔案清單 ＋ **你聽過的證據**（哪幾段是本人、哪幾段是旁白/其他角色）。")
+w("⛔ **不要自己合成**：合成走既有的 `tools/voice-gen/`，而它要的是**參考音**，不是成品。")
+w("")
+
+# ── C LoL 技能喊招 ──────────────────────────────────────────
+w("## C. 🎙 LoL 7 支 —— 缺的是**技能喊招**那幾格")
+w("")
+w("| 英雄 | id | 缺幾格 |")
+w("|---|---|---|")
+for x in voice_slot:
+    n = x['voice'][1].split('缺 ')[1].split('：')[0] if '缺 ' in x['voice'][1] else ''
+    w(f"| {x['name']} | `{x['id']}` | {n} |")
+w("")
+w("⭐ 這幾格**不需要編台詞** —— 喊的就是**英雄自己的技能名**（計劃書 §3 的 A 類）。")
+w("⇒ 要找的是**可以拿來複製音色的原作參考音**（該英雄的日文語音包）。")
+w("⚠️ 已知 Lux／好運姐／狼人／犽宿／李星的日文包 owner 說過可以自己下載。")
+w("")
+
+# ── D 角色對白 ──────────────────────────────────────────────
+w(f"## D. 💬 角色對白 —— {len(q60)} 支（⛔ 找**出處**，不是寫句子）")
+w("")
+w("| 分組 | 支數 | 為什麼空著 |")
+w("|---|---|---|")
+cnt = collections.Counter(r['group'] for r in q60)
+why = {'b2': '交接資料只給**身分**（作品／官方角色頁），⛔ 沒有台詞',
+       'community': '技能名多半是 GGD 自己取的佔位名／描述性名稱，引用不到原作',
+       'lol': 'LoL 這幾名沒有可引用的角色台詞'}
+for g in ('b2','community','lol'):
+    w(f"| {g} | {cnt.get(g,0)} | {why[g]} |")
+w("")
+w("**要交回來的形狀**（一行一支，⭐ 每一句都要**指得到出處**）：")
+w("")
+w("```")
+w("id, 角色名, 候選台詞（原文）, 出處（作品・話數／集數・時間碼 或 官方角色頁 URL）, 你的信心")
+w("```")
+w("")
+w("⛔ **找不到就寫「找不到」** —— 那是合法的結論，⛔ 而編一句像的不是。")
+w("⭐ 素材在 repo 裡就有：每一支的**技能名**與**卡面上已經寫過的「」台詞**")
+w(f"（{sum(1 for r in q60 if r['lines'])}/{len(q60)} 支卡面上已經有台詞可以當語氣參考）——")
+w("跑 `collect-review-inputs.py` 會產出 `quotes60.json`，裡面逐支帶著這兩樣。")
+w("")
+
+# ── E 音效 ──────────────────────────────────────────────────
+w(f"## E. 🔊 原作專屬音效 —— {len(sfx_none)} 支全通用 ＋ {len(sfx_part)} 支部分")
+w("")
+w("⚠️⚠️ **先讀這一句再開工**：這些英雄**⛔ 不是無聲**。")
+w("`apps/client/src/audio/combatSfx.ts:690` 的解析鏈是")
+w("「`bindings` 覆蓋層 → 技能自己的 `sfxKey` → **元素風聲** → 通用施法音」⇒ 一定發得出聲音。")
+w("⇒ ⭐ 這一軸要找的是**原作專屬**音效，⛔ 不是「補上沒有的聲音」。")
+w("")
+w("| | 支數 |")
+w("|---|---:|")
+w(f"| 全部技能都退到元素風聲 | {len(sfx_none)} |")
+w(f"| 部分技能有原作音 | {len(sfx_part)} |")
+w(f"| 每一格都有原作音 | {len([x for x in A if x['sfx'][0].startswith('✓')])} |")
+w("")
+w("### ⚠️ 先看清楚「已經掃過的那兩張表裡**沒有你的工作**」")
+w("")
+w("| 表 | 內容 | 你能做什麼 |")
+w("|---|---|---|")
+w("| `ability-sfx-cues.json` 的 `unmatched`（19 列） | `secondary-cue` **17** ＋ `source-map-silent` **2** | ⛔ **兩種都不是找素材**：前者是「一次施法只播一個 cue，這是沒被選中的那一個」（要的是**分層播放機制**，⛔ 不是一個檔）；後者是**原作自己就是啞的** |")
+w("| `tools/sfx-bind/UNPORTED_SFX_LEDGER.json`（26 列・17 支英雄） | JASS 掃到有施法音、但**英雄還沒進 content** | ⛔ 也不是找素材：cue 已經保留好（`reservedCue`），英雄一進 content 把它寫進 `sfxKey` 就接上了 |")
+w("")
+w("### ⭐ 那 115 支要**分成兩種來源**做，⛔ 一種做法做不完")
+w("")
+w("| 出身 | 支數 | 要走哪條路 |")
+w("|---|---:|---|")
+w("| **原作 GoDie**（`godie-*`） | 31 | ⭐ 回 `war3map.j` 找那支技能的 `gg_snd_*`；掃不到就是**原作自己沒有**（⭐ 正確結論，⛔ 不是缺口）。⚠️ 讀迴圈先問「迴圈體裡有沒有 `AddSpecialEffect`／`CreateNUnitsAtLoc`」——把傷害取樣的迴圈讀成音效來源是這個 repo 記錄過的誤讀 |")
+w("| **b2／社群／LoL**（非原作） | 84 | ⛔ **war3map.j 裡根本沒有它們** —— 這些技能是 GGD 自己寫的 ⇒ 走第一·四守則第 2 階：**CC0／CC-BY 音效庫** |")
+w("")
+w("⭐ **CC0 音效的常設授權**：owner 已經同意從 **効果音ラボ**（soundeffect-lab.info）下載，")
+w("⚠️ **條件是每一段都要列進出處頁**（⛔ 沒列＝違反授權）。")
+w("⇒ 交回來時每一段都要帶：**來源 URL ＋ 授權 ＋ 你打算綁到哪一支技能**。")
+w("")
+
+# ── F 專屬模型 ──────────────────────────────────────────────
+w(f"## F. 🧍 專屬模型 —— {len(diff_pairs)} 對「不同角色共用一顆」")
+w("")
+w("| 共用的模型 | 誰在用 | 要判斷的 |")
+w("|---|---|---|")
+for p in diff_pairs:
+    who = ' ＋ '.join(f"{n}（`{i}`）" for i, n in zip(p['ids'], p['names']))
+    w(f"| `{p['modelKey']}` | {who} | 是刻意的惡搞／替身，還是該各自一顆？ |")
+w("")
+w("⚠️ 另外 15 對共用是**同一角色**（本體↔變身態），⛔ **不要動它們** —— 那是正常的。")
+w("⭐ 這 3 對要先給 owner 判「刻意還是缺」，⛔ 判完才值得去找模型。")
+w("")
+
+# ── G 待上架 34 ─────────────────────────────────────────────
+w(f"## G. 🆕 另外 34 名正在上架 —— {len(s34_components)} 支已有已驗收獨立模型元件；{len(s34_nomodel)} 支仍完全沒有模型元件")
+w("")
+w("交付表較早寫的 `rig-source-present-actions-missing` 只代表當時沒有可交付的完整英雄模型；以下改以中央入口 `materials/asset-library/current-resources.json → modelComponents` 的較新實檔與驗收證據為準。")
+w("")
+w("| 英雄 | id | 已驗收獨立元件 | 原生／來源動作 | 尚缺 |")
+w("|---|---|---|---|---|")
+for h in s34_components:
+    m = h['model']
+    components = '<br>'.join(f"`{c['id']}`" for c in m.get('components', []))
+    native = m.get('nativeAnimationCount', 0)
+    names = '、'.join(m.get('animationNames', []))
+    actions = f"{native} 段" + (f"（{names}）" if names else "")
+    w(f"| {h['name']} | `{h['id']}` | {components} | {actions} | GGD 英雄定義、技能綁定、model@1／標準六動作映射、後台選項與實際切換驗證 |")
+w("")
+w(f"⭐ 這 {len(s34_components)} 支共有 {sum(h['model'].get('componentCount', 0) for h in s34_components)} 個元件；Git 實檔或 #1252 已完整讀回的 S3 成員、位元組數與 SHA-256 均由產生器重驗。")
+w("⛔ `fullHeroModel=false`、`heroIds=[]`、`runtimeSelectable=false`：它們是成品庫裡的合格獨立元件，仍不是完整英雄，也還不能在後台切換。")
+w("⇒ 繼續補標準動作集與角色／技能設計，再建立 model@1、角色綁定和後台選項；不能重複下載已有的模型元件。")
+if s34_nomodel:
+    w("")
+    w("仍完全沒有模型元件：")
+    w("")
+    w("| 英雄 | id | 交付表狀態 |")
+    w("|---|---|---|")
+    for h in s34_nomodel:
+        w(f"| {h['name']} | `{h['id']}` | {h['model'].get('deliveryStatus','')} |")
+w(f"⚠️ 同一批另有 {len(s34_novoice)} 支在語音索引裡**找不到任何候選來源**。")
+w("")
+w("---")
+w("")
+w("## 2. 交回來的東西放哪")
+w("")
+w("| 東西 | 住處 | 為什麼 |")
+w("|---|---|---|")
+w("| 轉好的 `.glb` 成品 | ⭐ **git** `content/assets/models/<家族>/<sha256>.glb` | ⛔ 不進 git 的位元組**到不了伺服器**（沒有 hydrate 步驟）|")
+w("| 語音成品 mp3 | ⭐ **git** `content/assets/audio/voices/lines/<id>/` | 同上 |")
+w("| 原始素材・參考音・半成品 | **S3** `ggd-390630837668-ap-east-2-an` | owner 2026-09-10 的歸屬表 |")
+w("| 清單／出處／雜湊 | ⭐ **git** | 「一個位元組如果只能靠雜湊驗、不能靠 diff 讀，它就不屬於 git」|")
+w("")
+w("## 3. 怎麼算驗過（⛔ 不是「我看起來對」）")
+w("")
+w("```sh")
+w("npx vitest run packages/shared/src/content/shippedChampionModelsReachPlayers.test.ts  # 模型到得了玩家")
+w("python3 tools/w3x-import/model_intake.py <檔…> --check                                 # 匯入模型五件事")
+w("node tools/hero-intake/run.mjs --batch <批次> --all --check                            # 材料沒過期")
+w("npx tsx tools/asset-manifest/gen.ts --check                                            # 資產引用解析得到")
+w("```")
+w("")
+w("⭐ **每一種素材都要驗兩個軸**（⛔ 單邊校準不算）：")
+w("")
+w("| 素材 | 軸一 | 軸二 |")
+w("|---|---|---|")
+w("| 模型 | glb 的 `skins`／`animations` 解析得出來 | ⭐ **真的渲染一張圖**，量非透明像素（`tools/hero-intake/shots/`）|")
+w("| 音檔 | 長度 ≥ 0.15s | `max_volume` ≥ −60dB（⭐ 量尺要先對已知靜音回 −91dB）|")
+w("| 從 S3 取回的檔 | `sha256 == 檔名` | 位元組數 == 清單記的 |")
+w("")
+w("## 4. ⛔ 不要做的事")
+w("")
+w("1. ⛔ **不要編角色台詞**（規矩③）。找不到就回報找不到。")
+w("2. ⛔ **不要手改產物** —— 動 `content/` 之前先 `bash scripts/genguard.sh <path>`。")
+w("3. ⛔ **不要把素材本體塞進 git 而沒有雜湊**，也⛔ 不要為了繞過 100MB 上限而切段。")
+w("4. ⛔ **不要拿 `--pending` 的查詢結果當成「我們有這顆」** —— 那是候選。")
+w("5. ⛔ **不要跑 `pnpm skills:sync`**（會寫 `bundle.json`，同一時間只能有一條工作流跑）。")
+w("6. ⛔ **不要 push／deploy／碰正式站**。")
+w("")
+w("---")
+w("")
+w("⭐ 這一份的數字怎麼來的：`tools/hero-intake/audit-five-axes.py`（六軸逐支量）＋")
+w("`tools/hero-intake/collect-review-inputs.py`（三份缺口清單）。兩支都可重跑，⛔ 不是手抄。")
+
+out = pathlib.Path(ARG.out)
+out.write_text("\n".join(L) + "\n", encoding='utf-8')
+print(f"寫好 {out} · {len(L)} 行 · {out.stat().st_size/1024:.1f} KB")

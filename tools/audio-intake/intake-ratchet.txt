@@ -1,0 +1,10 @@
+# 語音／音效入庫棘輪 —— ⛔ 兩個數字都只能變小；改大要在 commit 訊息貼 owner 原話。
+# 分母：遊戲讀得到（被 READERS 引用）而且在範圍內（語音／音效；BGM 範圍外）的音檔。未引用的不計。
+# 判準住 `tools/audio-intake/audio_intake.py`（problems_of）；閘 `packages/shared/src/ops/audioIntake.test.ts`。
+#
+# 2026-09-15 設定時的存量（`--all --check` 實跑）：
+#   voice=0  —— 上架語音 4,971 檔（語音包 4,066 · 喊名 375 · 名言 138 · 勝利嘲諷 379 · 播報 13）全部 ≤128k／≤44.1k／單聲道
+#   sfx=134  —— 132 個 `wc3/*.wav`（非 mp3，轉了要改引用，這一輪不改）＋ 2 個 192k（`sfx/lab/zombie-bite.mp3`、`zombie-roar.mp3`，`--fix` 會轉）
+#   （`sfx/ui-type.mp3` 133k 試轉反而變大 ⇒ 算合格，不在數字裡）
+voice=0
+sfx=134

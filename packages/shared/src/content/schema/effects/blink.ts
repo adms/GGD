@@ -2,6 +2,7 @@ import { z } from "zod";
 import type { StatusId } from "../../../ids";
 import type { EffectDef } from "../../../sim/effects/effect";
 import { zRef } from "../common";
+import { zDisplacementTier } from "../displacementDoc";
 import {
   EFFECT_COMMON_SHAPE,
   refineDispelShape,
@@ -94,6 +95,14 @@ z
           "⚠️ 與 `stopShortUnits` 互斥（兩格都在改同一段長度）。缺席＝走到目的地。",
       )
       .optional(),
+    /**
+     * ⭐ GH#1260 B3 —— 【固定距離】的級別。註冊時由 `config.displacement-tiers@1` 的
+     * travel 梯翻成 `distanceUnits`（`displacementFieldsOf`）。兩格都填 → **級別贏**；
+     * 與 `stopShortUnits` 互斥的理由同 `distanceUnits`。
+     */
+    distanceTier: zDisplacementTier
+      .optional()
+      .describe("固定瞬移距離級別（極小…極大）。填了就不用填 distanceUnits —— 由後台「位移級距」頁統一給。"),
     /** 抵達之後**同一個 tick**執行的效果。⛔ 這裡沒有 `arriveRadius`，理由見 sim 端。 */
     onArrive: z.array(z.lazy(() => zEffectDef)).optional(),
   })
@@ -112,7 +121,8 @@ export const refine = (
   refineDispelShape(e, ctx);
   // ⭐ 互斥：兩格都在改「從施法者到落點」那一段長度。⛔ 不要挑一個贏 ——
   //    一個「我填了兩格而其中一格被無聲忽略」的內容，跟填錯一樣糟。
-  if (e.distanceUnits !== undefined && e.stopShortUnits !== undefined) {
+  const tiered = (e as { distanceTier?: unknown }).distanceTier !== undefined;
+  if ((e.distanceUnits !== undefined || tiered) && e.stopShortUnits !== undefined) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["distanceUnits"],

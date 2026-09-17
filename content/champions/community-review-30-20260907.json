@@ -1,16 +1,16 @@
 {
   "id": "community-review-30-20260907",
   "name": "尼古貓貓",
-  "description": "尼古貓貓 社群英雄功能驗收稿。作品識別：《ヤニねこ／尼古喵喵》  \n角色實體：佐藤ヤニ子；保留「尼古貓貓」顯示名稱。  \n定位：日常喜劇角色轉譯、區域干擾。  \n註：以下戰鬥技能全部為 GGD 創編。\n\n視覺方向：灰煙低透明、雜物卡通輪廓、紅色驚慌符號；技能全部為 GGD 日常惡搞改編。\n以 GGD 法師 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "description": "作品識別：《ヤニねこ／尼古喵喵》  \n角色實體：佐藤ヤニ子；保留「尼古貓貓」顯示名稱。  \n定位：日常喜劇角色轉譯、區域干擾。  \n註：以下戰鬥技能全部為 GGD 創編。\n\n視覺方向：灰煙低透明、雜物卡通輪廓、紅色驚慌符號；技能全部為 GGD 日常惡搞改編。",
   "role": "mage",
   "attackType": "ranged",
   "archetype": "mage",
   "origin": "法師",
-  "modelKey": "version.body.1d851b0481a1b6c0b162697e8caebfe2b824da3c93e2ae7d",
+  "modelKey": "version.body.b2772908591ba8d3dfa879382b8b99f03ab711f05d76e483",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 29.202653061224485,
+    "maxHealth": 80,
     "healthRegen": 0.07234693877551021,
-    "maxMana": 13.676326530612242,
+    "maxMana": 50,
     "manaRegen": 0,
     "ad": 2.5489795918367353,
     "as": 0,
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -83,7 +83,7 @@
           }
         }
       ],
-      "castTimeSec": 1.633,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-30-20260907.q.webp",
       "template": {
@@ -95,7 +95,7 @@
             "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 1.633
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -123,10 +123,10 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -150,7 +150,7 @@
           "moveSpeedMult": 0.7
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-30-20260907.w.webp",
       "template": {
@@ -161,7 +161,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -187,10 +187,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -226,7 +226,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-30-20260907.e.webp",
       "template": {
@@ -245,7 +245,7 @@
           "pushSpeed": 872,
           "pushFrom": "facing",
           "pushLaunchHeight": 0,
-          "castTimeSec": 1.033
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -271,9 +271,9 @@
         90.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        600.0,
+        600.0,
+        600.0
       ],
       "manaCostTier": "大",
       "range": 6,
@@ -294,7 +294,7 @@
           "tickOnApply": true
         }
       ],
-      "castTimeSec": 1,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-30-20260907.r.webp",
       "template": {
@@ -310,7 +310,7 @@
           "impactRadius": 150,
           "scatterRadius": 120,
           "payout": "perImpact",
-          "castTimeSec": 1
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },
@@ -368,6 +368,136 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-498214-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.d0dd376d8dc09d756500861ccc7c4ddb9e797aeca35c3b0c",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.498214",
+      "modelSha256": "a5ac61e31cfdb226cc6a38b8c3a32a6a35e7ce1dc2270eee60590c91d9988251",
+      "binarySha256": "9e9d2de79f8014e80c22b01071eac9805153c666e188e16e15258724ddf6a480",
+      "registeredAt": "2026-09-10T14:45:32.999Z",
+      "source": {
+        "kind": "previous",
+        "character": "尼古貓貓",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.498214.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.f7568368073ada65fac6834932acc02361b3eff9a6804c29",
+      "label": "玉藻前",
+      "sourceModelKey": "community.body.c1d58311b32ce991b89fd6a2aba74ac9548a4bd1340b4e18",
+      "modelSha256": "f28e667799771669e45ca12e569c193ee06580db2cb497a90c3f96e8cb341413",
+      "binarySha256": "6d62a8f285dfa2541e494c90f12da1f2b7d05bce53261560eece2c0bc3a2c0cf",
+      "registeredAt": "2026-09-10T14:45:33.009Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "玉藻前",
+        "work": "Fate/EXTRA 系列",
+        "library": "300heroes",
+        "reference": "300heroes:42198014d654ce4602d8ffd2",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.558344068b0ffb74a9ad7a00ec70fa65b214cbab2d7fdbb5",
+      "label": "可爱娃娃（論壇相似模型）",
+      "sourceModelKey": "ou99.498214-standard-v2",
+      "modelSha256": "23d30149120b3f5e3e72c07a1a3d8b39137a241ee007b4a009e2e3f14c2ec1f5",
+      "binarySha256": "445ca3c7505b0d4417096d1ab14498a3db05318a70d34cc018d8f42521a4640d",
+      "registeredAt": "2026-09-10T14:48:49.525Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "可爱娃娃",
+        "work": "來源作品待核；論壇標題：可爱娃娃",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-498214-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.799894656f162f2c3a59eaf222696fce5bb8381b5a4fd08f",
+      "label": "可爱娃娃（論壇相似模型）",
+      "sourceModelKey": "ou99.498214-standard-v2",
+      "modelSha256": "85f60a773c6f33771e6bd2ff123e0107278ee2d43927dbe2af12120590002937",
+      "binarySha256": "c6a382fc292875f298ec2fb04fe9b10c23e5704adc1a01d0f3c96f6364eaf7c2",
+      "registeredAt": "2026-09-12T23:02:34.435Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "可爱娃娃",
+        "work": "來源作品待核；論壇標題：可爱娃娃",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-498214-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.e06af034a28cc0b3611d61f3278dfb7f1453b017e055645c",
+      "label": "玉藻前",
+      "sourceModelKey": "community.body.c1d58311b32ce991b89fd6a2aba74ac9548a4bd1340b4e18",
+      "modelSha256": "ddc99830a2dc53b573971100f22a05e663640140f8b7b9d2b019e7077dd9b5fe",
+      "binarySha256": "9aa88eb17c2cd49d04789d716ddeec4ad762b8af63f26de9b482a3552af4bcd8",
+      "registeredAt": "2026-09-12T23:02:34.636Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "玉藻前",
+        "work": "Fate/EXTRA 系列",
+        "library": "300heroes",
+        "reference": "300heroes:42198014d654ce4602d8ffd2",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.b2772908591ba8d3dfa879382b8b99f03ab711f05d76e483",
+      "label": "可爱娃娃（論壇相似模型）",
+      "sourceModelKey": "ou99.498214-standard-v2",
+      "modelSha256": "4727607045f42140beb410c3cd16d38d409f64dace9d405c7cc1953c7641df39",
+      "binarySha256": "c6a382fc292875f298ec2fb04fe9b10c23e5704adc1a01d0f3c96f6364eaf7c2",
+      "registeredAt": "2026-09-13T00:08:50.294Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "可爱娃娃",
+        "work": "來源作品待核；論壇標題：可爱娃娃",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-498214-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.0274c8c96c88e174248a6f8261a01398b6f1b55d7aa2d0b6",
+      "label": "玉藻前",
+      "sourceModelKey": "community.body.c1d58311b32ce991b89fd6a2aba74ac9548a4bd1340b4e18",
+      "modelSha256": "3b11037a6abe70e175396230b47447667c038f6f91ef174bc08aad57757fe744",
+      "binarySha256": "9aa88eb17c2cd49d04789d716ddeec4ad762b8af63f26de9b482a3552af4bcd8",
+      "registeredAt": "2026-09-13T00:08:50.472Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "玉藻前",
+        "work": "Fate/EXTRA 系列",
+        "library": "300heroes",
+        "reference": "300heroes:42198014d654ce4602d8ffd2",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

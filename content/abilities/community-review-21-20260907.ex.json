@@ -12,10 +12,10 @@
   ],
   "cooldownTier": "大",
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.1,
   "effects": [
     {
       "kind": "shield",
@@ -36,5 +36,6 @@
       "attachTo": "caster"
     }
   ],
-  "icon": "assets/icons/abilities/community-review-21-20260907.ex.webp"
+  "icon": "assets/icons/abilities/community-review-21-20260907.ex.webp",
+  "castTimeTier": "小"
 }

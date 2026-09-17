@@ -1,0 +1,151 @@
+{
+  "schema": "ggd.jump-force-dai-decimation@2",
+  "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+  "candidateId": "jump-force-native-dai-chr0430-uv-eye-repaired-256-v2",
+  "nativeCharacterId": "chr0430",
+  "heroIds": [
+    "godie-nbbc",
+    "godie-n01c"
+  ],
+  "input": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/jump-force-steam-dai-v1/dai-chr0430-review-v4.glb",
+    "bytes": 76796608,
+    "sha256": "53b3b19eb04e2eb0e6d1827122f5b41a403c2ced188bd3042371c9dec80cd810"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-a/dai-chr0430-review-v4.glb",
+    "bytes": 2488032,
+    "sha256": "2b3030a97ff3add18e8addbc5d0ab39153e66d2da45a0d5ccf1dc10ff0fc55ba"
+  },
+  "rebuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-b/dai-chr0430-review-v4.glb",
+    "bytes": 2488032,
+    "sha256": "2b3030a97ff3add18e8addbc5d0ab39153e66d2da45a0d5ccf1dc10ff0fc55ba"
+  },
+  "byteIdenticalRebuild": true,
+  "parameters": {
+    "decimateWhenTrianglesAbove": 10000,
+    "formalMaximumTriangles": 8000,
+    "textureEdge": 256,
+    "uvSeamsPreserved": true,
+    "opaqueEyeOverlaysCleared": true
+  },
+  "observed": {
+    "triangles": 7930,
+    "drawPrimitives": 20,
+    "maxTextureEdge": 256,
+    "skins": 1,
+    "joints": 159,
+    "textures": 24,
+    "animations": 0
+  },
+  "tools": {
+    "blender": "Blender 5.2.1 LTS",
+    "workflow": {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-decimation-v2/blender_decimate.py",
+      "bytes": 5141,
+      "sha256": "47546978164eaaaaaf6c6df88528c7cf58ff9e735c030ca28fb5b72601a38ea2"
+    },
+    "eyeRepair": {
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-decimation-v2/make_eye_layers.py",
+      "bytes": 2564,
+      "sha256": "ee121d317dfe2db810e76609addc9fb4be1b1fffd163fa5abf5038ea7069d2ae"
+    },
+    "textureReplacement": {
+      "gitPath": "tools/model-budget/optimize/replace-textures-by-name.mjs",
+      "bytes": 1248,
+      "sha256": "5c88df2f0464575d596bbe684be1e999d93f97973b44054b67cb03b84cee3d84"
+    },
+    "textureOptimizer": {
+      "gitPath": "tools/model-budget/optimize.ts",
+      "bytes": 29039,
+      "sha256": "2ea3bc2fc5b45466c2ed499d6c021c68496630f0c44ebab9cf4912665048edbf"
+    }
+  },
+  "commands": [
+    {
+      "run": "run-a",
+      "blender": [
+        "/Applications/Blender.app/Contents/MacOS/Blender",
+        "--background",
+        "--python",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-dai-face-fix/tools/hero-model-library/source-workflows/jump-force-dai-decimation-v2/blender_decimate.py",
+        "--",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/jump-force-steam-dai-v1/dai-chr0430-review-v4.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-a/stage-geometry.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-a/geometry-receipt.json"
+      ],
+      "replaceEyeLayers": [
+        "node",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-dai-face-fix/tools/model-budget/optimize/replace-textures-by-name.mjs",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-a/stage-geometry.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/eye-layers",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-a/stage-eye-fixed.glb",
+        "T_Chr0430_lens_C",
+        "T_Chr0430_eyeshadow_C"
+      ],
+      "textureOptimize": [
+        "node",
+        "--import",
+        "tsx",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-dai-face-fix/tools/model-budget/optimize.ts",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-a/stage-eye-fixed.glb",
+        "--role",
+        "champion",
+        "--tex-edge",
+        "256",
+        "--out",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-a/optimized",
+        "--apply",
+        "--force",
+        "--json"
+      ]
+    },
+    {
+      "run": "run-b",
+      "blender": [
+        "/Applications/Blender.app/Contents/MacOS/Blender",
+        "--background",
+        "--python",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-dai-face-fix/tools/hero-model-library/source-workflows/jump-force-dai-decimation-v2/blender_decimate.py",
+        "--",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/jump-force-steam-dai-v1/dai-chr0430-review-v4.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-b/stage-geometry.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-b/geometry-receipt.json"
+      ],
+      "replaceEyeLayers": [
+        "node",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-dai-face-fix/tools/model-budget/optimize/replace-textures-by-name.mjs",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-b/stage-geometry.glb",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/eye-layers",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-b/stage-eye-fixed.glb",
+        "T_Chr0430_lens_C",
+        "T_Chr0430_eyeshadow_C"
+      ],
+      "textureOptimize": [
+        "node",
+        "--import",
+        "tsx",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-dai-face-fix/tools/model-budget/optimize.ts",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-b/stage-eye-fixed.glb",
+        "--role",
+        "champion",
+        "--tex-edge",
+        "256",
+        "--out",
+        "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-b/optimized",
+        "--apply",
+        "--force",
+        "--json"
+      ]
+    }
+  ],
+  "states": {
+    "geometryTargetPassed": true,
+    "textureEdgePassed": true,
+    "visualReview": "pending-owner-review",
+    "drawCallLimitPassed": false,
+    "runtimeSelectable": false,
+    "productionDeployed": false
+  }
+}

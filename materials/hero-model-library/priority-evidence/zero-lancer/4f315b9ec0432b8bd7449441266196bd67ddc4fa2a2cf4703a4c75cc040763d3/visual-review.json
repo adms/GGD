@@ -1,0 +1,90 @@
+{
+  "schema": "ggd.zero-lancer-visual-review@1",
+  "reviewer": "Codex image inspection",
+  "imagesReviewed": 6,
+  "allSixViewed": true,
+  "observations": [
+    "Both palettes show complete head, torso, arms, hands, legs and feet in upright T-pose.",
+    "P1 dark green and P2 silver armor palettes are distinct; mapped texture is visible.",
+    "Front/back/isometric images show no detached or missing body parts at inspected views.",
+    "Hair, low-poly angular silhouette, source white highlights and simplified portable material remain source-derived."
+  ],
+  "sourceArtDiagnostic": "10 geometric versus mean-vertex-normal disagreement faces also exist in the source Unity mesh; no model repair applied.",
+  "sourceEngineShaderParity": false,
+  "animationPlaybackVerified": false,
+  "heroIdentityReview": "Author/serialized prefab/outfit names support source label Zero Lancer / Diarmuid; original platform and GGD hero mapping not established.",
+  "proofs": [
+    {
+      "variant": "P1",
+      "proofPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/evidence/webgl-p1/proof.json",
+      "proofSha256": "5dd5ba8ad2db48bfa5269e99ce99d61f552e8a4af1b894e645cc5a502732352d",
+      "worldSkinnedBounds": {
+        "min": [
+          -0.8892402523485003,
+          1.1233336053018128e-08,
+          -0.18310031533981608
+        ],
+        "max": [
+          0.8892402607677923,
+          1.7999996334526998,
+          0.1831003176971464
+        ],
+        "extent": [
+          1.7784805131162926,
+          1.7999996222193637,
+          0.3662006330369625
+        ]
+      },
+      "shots": [
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/evidence/webgl-p1/front.png",
+          "sha256": "10478b9f901d37c567461c09c1369efc3a650a678f2d86ae162e383a078b723a"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/evidence/webgl-p1/back.png",
+          "sha256": "ea4eeb2da40d67b4e05997ab0587228ac1ac4e4cef5d5e23b3ab407295dd972a"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/evidence/webgl-p1/isometric.png",
+          "sha256": "170415eed999ffb201d12a033417fe48feb30a930b3745c6f6b88a40c0e01ea3"
+        }
+      ]
+    },
+    {
+      "variant": "P2",
+      "proofPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/evidence/webgl-p2/proof.json",
+      "proofSha256": "71a2982a7479fa45e1af06e31b87fc61d179447e866ce0c6bdcc9b0ff310fa22",
+      "worldSkinnedBounds": {
+        "min": [
+          -0.8892402523485003,
+          1.1233336053018128e-08,
+          -0.18310031533981608
+        ],
+        "max": [
+          0.8892402607677923,
+          1.7999996334526998,
+          0.1831003176971464
+        ],
+        "extent": [
+          1.7784805131162926,
+          1.7999996222193637,
+          0.3662006330369625
+        ]
+      },
+      "shots": [
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/evidence/webgl-p2/front.png",
+          "sha256": "a2eaa6184495e5e84d136560c830e7639944a57caffcf532a15f8e44a167bbec"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/evidence/webgl-p2/back.png",
+          "sha256": "50eb29f4aef0c5b3f62f3883b5a2903066f6192e26386db0d56fa4ad4e2a1289"
+        },
+        {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/evidence/webgl-p2/isometric.png",
+          "sha256": "e3f74cf4817badc77e6cae1f0d8853ed683de9d23f475d59f72fb383ca9bf773"
+        }
+      ]
+    }
+  ]
+}

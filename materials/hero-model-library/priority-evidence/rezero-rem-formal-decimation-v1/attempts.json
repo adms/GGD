@@ -1,0 +1,168 @@
+{
+  "schema": "ggd.rezero-rem-material-preserving-decimation-attempts@1",
+  "source": {
+    "path": "rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-receipt-v2/final/rem/body.glb",
+    "absolutePath": "/Users/Takuro/Dropbox/\u6211\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-receipt-v2/final/rem/body.glb",
+    "bytes": 1173224,
+    "sha256": "5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93"
+  },
+  "policy": {
+    "sourceTriangles": 18328,
+    "triggerTriangles": 10000,
+    "acceptedTargetExclusive": 8000
+  },
+  "attempts": [
+    {
+      "id": "tooling-copy-v0",
+      "status": "failed-no-model-output",
+      "reason": "Copied optimiser outside its module directory; Node could not resolve @gltf-transform/core. The canonical repository tool is invoked directly instead.",
+      "preservedAt": "tooling/decimate-material-weighted.mjs"
+    },
+    {
+      "id": "weighted-7990-v1",
+      "status": "structural-pass-visual-review-complete",
+      "candidate": {
+        "path": "candidates/rem-weighted-7990.glb",
+        "absolutePath": "/Users/Takuro/Dropbox/\u6211\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-material-preserving-decimation-v1/candidates/rem-weighted-7990.glb",
+        "bytes": 1041264,
+        "sha256": "c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47"
+      },
+      "rebuild": {
+        "path": "rebuild/rem-weighted-7990.glb",
+        "absolutePath": "/Users/Takuro/Dropbox/\u6211\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-material-preserving-decimation-v1/rebuild/rem-weighted-7990.glb",
+        "bytes": 1041264,
+        "sha256": "c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47"
+      },
+      "byteIdentical": true,
+      "triangles": 7986,
+      "parameters": {
+        "materialTargets": {
+          "rem": 7990
+        },
+        "errorBound": 0.02,
+        "lockBorder": true,
+        "preservationSemantics": [
+          "NORMAL",
+          "TEXCOORD_0",
+          "WEIGHTS_0",
+          "JOINTS_0"
+        ]
+      },
+      "structuralEvidence": {
+        "path": "validation/structural.json",
+        "absolutePath": "/Users/Takuro/Dropbox/\u6211\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-material-preserving-decimation-v1/validation/structural.json",
+        "bytes": 2110,
+        "sha256": "ebde6551891b00ce13be39cb9d3fa03ac15a7a790d66aa5e27875b2d93c7c6bb"
+      },
+      "visualEvidence": {
+        "path": "visual-v3/visual-comparison.json",
+        "absolutePath": "/Users/Takuro/Dropbox/\u6211\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-material-preserving-decimation-v1/visual-v3/visual-comparison.json",
+        "bytes": 2529,
+        "sha256": "ebff801a59309352909efea51ab5340554035c40a2f26116b455efaeefb43cbe"
+      },
+      "limitations": [
+        "Source has one material/primitive, so per-material weighting cannot allocate a separate facial budget. This is a static candidate only; it does not establish native actions, runtime binding, or deployment."
+      ]
+    },
+    {
+      "id": "render-v2",
+      "status": "failed-no-visual-output",
+      "reason": "Blender 5.2 uses BLENDER_EEVEE rather than BLENDER_EEVEE_NEXT; corrected script was rerun into visual-v3.",
+      "preservedDirectory": "visual-v2"
+    }
+  ],
+  "files": {
+    "candidates/rem-weighted-7990.glb": {
+      "bytes": 1041264,
+      "sha256": "c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47"
+    },
+    "tooling/compare_images.py": {
+      "bytes": 2735,
+      "sha256": "7136d96201668dd55c8689b14290958ba62ac30a1bb24d46c8d7a0857b8e8f8b"
+    },
+    "tooling/decimate-material-weighted.mjs": {
+      "bytes": 4366,
+      "sha256": "5e4ac202a9efb7f0af46ddeec01cfca4ef2f60c7d11945e4894138a0bb533b35"
+    },
+    "tooling/render_compare_three_views.py": {
+      "bytes": 3396,
+      "sha256": "97fe7fdd34d426e024b4177ddd6f55ca201a2397437d759473b15ccdfff0e982"
+    },
+    "tooling/run.sh": {
+      "bytes": 626,
+      "sha256": "8181adf662dbb9da21fdf986060a9bd21462c3cc372bf132f58a9e24039499ba"
+    },
+    "tooling/validate.mts": {
+      "bytes": 7713,
+      "sha256": "67ed6894826f27ca52b6d5d867fa1b6a0746373c74e4d6ecd773c12693e5dca7"
+    },
+    "visual-v3/candidate-back.png": {
+      "bytes": 155197,
+      "sha256": "cac59906c6a18c322146b8c6263e44ddce0bfbb7539d120a670d9b996a0a1067"
+    },
+    "visual-v3/visual-comparison.json": {
+      "bytes": 2529,
+      "sha256": "ebff801a59309352909efea51ab5340554035c40a2f26116b455efaeefb43cbe"
+    },
+    "visual-v3/source-front.png": {
+      "bytes": 146868,
+      "sha256": "b466e87ff3b12aee100e9eaa2e6b2050897258d01b95313e269ad51caba1e5c3"
+    },
+    "visual-v3/render.json": {
+      "bytes": 1772,
+      "sha256": "38bbdef7a023c265984f0ba37f0feb7337206a82a523300a0606870a03175c95"
+    },
+    "visual-v3/candidate-isometric.png": {
+      "bytes": 145334,
+      "sha256": "4ca1788b9d22cb8700ed4154ce43ecba13e8127d0eb4d8485648d8bf08543834"
+    },
+    "visual-v3/diff-back.png": {
+      "bytes": 18569,
+      "sha256": "bbec220901b532c00c123a97d52cba134dcabf4b637b1eb1fe1c330a7bed3449"
+    },
+    "visual-v3/candidate-front.png": {
+      "bytes": 146332,
+      "sha256": "827bcd6e60bfbd5a3f6145f005fe79bf456356c79e80fd8570cb042180523872"
+    },
+    "visual-v3/diff-front.png": {
+      "bytes": 9762,
+      "sha256": "3cb1d17ec05eeadf5e3a06ee89e54b1389382475d623fff5893f73be38644161"
+    },
+    "visual-v3/contact-sheet.png": {
+      "bytes": 370133,
+      "sha256": "b13f576a151bf710b4bb08e0b3bf40955c03de9ab2cc77a1b3fb142ecbf9d0c8"
+    },
+    "visual-v3/diff-isometric.png": {
+      "bytes": 8977,
+      "sha256": "86c63047aec40369d2ed4dfdbaad0a2a20272903c99066957a30bf81f5c20179"
+    },
+    "visual-v3/source-back.png": {
+      "bytes": 155668,
+      "sha256": "c12849536186c150c1914a3892c562d8e83706df35b30e13621c933c56505cb6"
+    },
+    "visual-v3/source-isometric.png": {
+      "bytes": 145571,
+      "sha256": "1427a1e6c8f084199fd304f2e86a68b208836187c67fda92f4bcb5d13e562807"
+    },
+    "rebuild/rem-weighted-7990.glb": {
+      "bytes": 1041264,
+      "sha256": "c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47"
+    },
+    "validation/structural.json": {
+      "bytes": 2110,
+      "sha256": "ebde6551891b00ce13be39cb9d3fa03ac15a7a790d66aa5e27875b2d93c7c6bb"
+    },
+    "validation/attempts.json": {
+      "bytes": 4881,
+      "sha256": "8a0e91c75697a87f0d083bbb91d63d2bfa0b212c06acdeff75a9ff1316f855d3"
+    },
+    "validation/rebuild-decimation.json": {
+      "bytes": 743,
+      "sha256": "514bb570748b8cfb002e67ba2284fce401e92e505f47a7ebbbf40c1a9c7b349b"
+    },
+    "validation/decimation.json": {
+      "bytes": 816,
+      "sha256": "e42bc56eb40cf7009e48e6516f71930dde063ab380398d18936394b4e8862850"
+    }
+  }
+}

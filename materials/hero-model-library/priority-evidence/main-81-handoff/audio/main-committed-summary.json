@@ -1,0 +1,61 @@
+{
+  "schema": "ggd.priority81.main-committed-audio@1",
+  "revision": "b6686109a2946664827e8e59529de670b844d7c6",
+  "sourceCommit": "dcbd136a3",
+  "mergedPr": "https://github.com/adms/GGD/pull/1182",
+  "checkedAt": "2026-09-10T16:10:53.193718+00:00",
+  "heroCount": 81,
+  "heroesWithCommittedCharacterPack": 74,
+  "heroesWithoutCommittedCharacterPack": [
+    "lol-karthus",
+    "lol-leesin",
+    "lol-lux",
+    "lol-missfortune",
+    "lol-warwick",
+    "lol-xerath",
+    "lol-yasuo"
+  ],
+  "uniqueClipPaths": 1016,
+  "classificationCounts": {
+    "synthetic-own-reference-labelled": 403,
+    "source-file-reused-not-speaker-verified": 308,
+    "synthetic-donor-reference": 305
+  },
+  "allCommittedClipHashesPass": true,
+  "worktreeClipFilesMatch": 1016,
+  "requiredCoreCategories": [
+    "skill-name.q",
+    "skill-name.w",
+    "skill-name.e",
+    "skill-name.r",
+    "skill-name.ex",
+    "hurt",
+    "hurt-heavy",
+    "kill-1",
+    "defeat"
+  ],
+  "heroesCompleteCore": 74,
+  "extended11Categories": [
+    "skill-name.q",
+    "skill-name.w",
+    "skill-name.e",
+    "skill-name.r",
+    "skill-name.ex",
+    "hurt",
+    "hurt-heavy",
+    "kill-1",
+    "defeat",
+    "taunt",
+    "victory"
+  ],
+  "heroesCompleteExtended11": 73,
+  "originalSourceUniquePathsVerified": 250,
+  "originalSourceReuseRows": 308,
+  "issues": [],
+  "limitations": [
+    "Main committed assets verified independently from the moving worktree.",
+    "Original means transformed source-file reuse, not verified original actor/character identity.",
+    "Synthetic own-reference label is recorded from status metadata; no speaker audit performed.",
+    "No runtime playback or generation performed."
+  ]
+}

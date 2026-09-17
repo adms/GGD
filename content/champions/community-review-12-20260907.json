@@ -1,16 +1,16 @@
 {
   "id": "community-review-12-20260907",
   "name": "衛宮士郎",
-  "description": "衛宮士郎 社群英雄功能驗收稿。作品：《Fate/stay night》  \n採用：Unlimited Blade Works 路線。  \n定位：投影武器、短期武裝、區域劍製。\n\n視覺方向：橘色投影線稿、鋼色雙劍、紅褐劍域；不得生成永久背包武器。\n以 GGD 法鬥 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "description": "作品：《Fate/stay night》  \n採用：Unlimited Blade Works 路線。  \n定位：投影武器、短期武裝、區域劍製。\n\n視覺方向：橘色投影線稿、鋼色雙劍、紅褐劍域；不得生成永久背包武器。",
   "role": "mage",
   "attackType": "melee",
   "archetype": "mage",
   "origin": "法鬥",
-  "modelKey": "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef",
+  "modelKey": "version.body.6bc5b102e7e229b28612694c4c838637da5a87c9da9d1f62",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 35.000204081632646,
+    "maxHealth": 80,
     "healthRegen": 0.08789387755102042,
-    "maxMana": 0.9581632653061187,
+    "maxMana": 50,
     "manaRegen": 0,
     "ad": 3.2177142857142864,
     "as": 0.001523029594003207,
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 3,
@@ -126,7 +126,7 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 0.367,
+      "castTimeSec": 0.1,
       "vfxKey": "fx.prim.physical.slash",
       "vfxLayers": [
         {
@@ -149,10 +149,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -173,7 +173,7 @@
           "tickOnApply": true
         }
       ],
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-12-20260907.w.webp",
       "template": {
@@ -189,7 +189,7 @@
           "impactRadius": 150,
           "scatterRadius": 120,
           "payout": "perImpact",
-          "castTimeSec": 0.3
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -217,10 +217,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -256,7 +256,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-12-20260907.e.webp",
       "template": {
@@ -275,7 +275,7 @@
           "pushSpeed": 872,
           "pushFrom": "facing",
           "pushLaunchHeight": 0,
-          "castTimeSec": 1.033
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -301,9 +301,9 @@
         90.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        600.0,
+        600.0,
+        600.0
       ],
       "manaCostTier": "大",
       "range": 6,
@@ -334,7 +334,7 @@
           "targetMode": "reresolve"
         }
       ],
-      "castTimeSec": 1.433,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-12-20260907.r.webp",
       "template": {
@@ -347,7 +347,7 @@
           "applyTo": "enemies",
           "damageTier": "極小",
           "damageType": "physical",
-          "castTimeSec": 1.433,
+          "castTimeSec": 0.5,
           "radius": 4.5
         },
         "inheritDefaults": true
@@ -375,5 +375,61 @@
   "tags": [
     "sword"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.ec60a738f60e4f2d93ed019dd30d4e8e7cb2a704060c710b",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef",
+      "modelSha256": "9f2d1462edb53bdc72dc633a62b8d5130db17bca8842a2ee07caa92ed57898c0",
+      "binarySha256": "fdc710a316d3bbb1359906f7e99374cc32951878b38b42fb19dfc00a4ded07da",
+      "registeredAt": "2026-09-12T23:02:30.875Z",
+      "source": {
+        "kind": "previous",
+        "character": "衛宮士郎",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.cfb2ec1ac9e11405b02d605fb7e84a91102062cbc4f41b48",
+      "label": "卫宫",
+      "sourceModelKey": "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef",
+      "modelSha256": "6ec0dc1a1fc825a5c5aae50a9783df596c1ec6331a753fc1f9482b57e9c1b472",
+      "binarySha256": "a846b55907ace92d368cc8ee017adfee62e1a75c368ec39e09ce1eec4bcf595c",
+      "registeredAt": "2026-09-12T23:02:30.880Z",
+      "source": {
+        "kind": "alternate",
+        "character": "卫宫",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "300heroes:234e90fbb7002fcae4985063",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.6bc5b102e7e229b28612694c4c838637da5a87c9da9d1f62",
+      "label": "卫宫",
+      "sourceModelKey": "community.body.66e010061f046791793cc15ebf0b56bb1ad0f1ec6e98d0ef",
+      "modelSha256": "2be5dfc57188f6c5bdfa4a9d9af410d060c35d30554fc61c7fd1b5309160392d",
+      "binarySha256": "a846b55907ace92d368cc8ee017adfee62e1a75c368ec39e09ce1eec4bcf595c",
+      "registeredAt": "2026-09-13T00:08:46.964Z",
+      "source": {
+        "kind": "alternate",
+        "character": "卫宫",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "300heroes:234e90fbb7002fcae4985063",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

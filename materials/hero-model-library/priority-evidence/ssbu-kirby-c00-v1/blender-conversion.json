@@ -1,0 +1,127 @@
+{
+  "schema": "ggd-ssbu-blend-component-conversion@1",
+  "candidateId": "ssbu-kirby-c00-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/kirby/model/body/c00/kirby-c00.blend",
+    "bytes": 9042756,
+    "sha256": "8674bd9eea87d351662cf4c3090f1b18ab2a10128c96d42656b4216f2e75829b"
+  },
+  "tool": {
+    "name": "Blender",
+    "version": "4.5.13 LTS",
+    "backgroundFactoryStartupRequired": true,
+    "embeddedScriptsExecuted": false,
+    "driversMuted": 0,
+    "visibleMeshesJoinedByMaterial": false
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-kirby-c00-blender4513-v1/body.glb",
+    "bytes": 287736,
+    "sha256": "7732820d43dc20847534dc2cde429947ae09519c7730be3ad07e67e3ddc48e98"
+  },
+  "normalization": {
+    "sourceBounds": [
+      [
+        -6.789400100708008,
+        -4.718921184539795,
+        -4.049226731694944e-07
+      ],
+      [
+        6.789400100708008,
+        4.719449996948242,
+        10.000081062316895
+      ]
+    ],
+    "sourceUp": "Blender Z",
+    "glbUp": "glTF Y",
+    "targetHeightMeters": 1.8,
+    "uniformScale": 0.17999853360163412,
+    "footOrigin": true
+  },
+  "sourceRigCount": 1,
+  "sourceBoneCounts": [
+    51
+  ],
+  "sourceActionCount": 0,
+  "sourceImageCountUsed": 2,
+  "materialCompatibilityAdjustments": [
+    {
+      "material": "EyeL6",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "skin_kirby_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    }
+  ],
+  "materialJoinAdjustments": [],
+  "textureCompatibilityAdjustments": [
+    {
+      "sourceImage": "melee_eye_kirby_w_col.png",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-kirby-c00-blender4513-v1/derived-textures/melee_eye_kirby_w_col.png.ggd-256.png",
+      "derivedBytes": 20849,
+      "derivedSha256": "8e8c59ce7f5054a20817df4d7da3d09ea7db55c0914eab62ae988960e39a143f",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    }
+  ],
+  "hierarchyCompatibilityAdjustments": [
+    {
+      "nodeIndex": 51,
+      "nodeName": "Kirby_Armfoot_VIS_O_OBJShape",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 52,
+      "nodeName": "Kirby_Armfoot_VIS_O_OBJShape.001",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 53,
+      "nodeName": "Kirby_Eye1_VIS_O_OBJShape",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 54,
+      "nodeName": "Kirby_FaceN_VIS_O_OBJShape",
+      "previousParentIndex": 55,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    }
+  ],
+  "sourceBytesUnchanged": true,
+  "runtimeReady": false,
+  "backendSelectionVerified": false,
+  "defaultEligible": false,
+  "limitations": [
+    "This is a body component with source skin and basic materials; structural and visual validation are separate.",
+    "No source actions were added, synthesized, or retargeted.",
+    "Hidden native mesh variants remain preserved in the original Blender file and are excluded from this visible-appearance export.",
+    "Source normal, PRM, emissive, and game shader parity remain unverified unless they were already connected in the source Blender material graph.",
+    "Non-default source IOR values are recorded and normalized to glTF core IOR 1.5 because current GGD does not allow KHR_materials_ior.",
+    "Source textures above 256 pixels are retained by hash and resized in a separate derived copy for the current GGD budget."
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "id": "lol-sett.r",
+  "name": "嘆為觀止",
+  "provenance": "editor-json",
+  "description": "抱住單一敵人，朝目標方向帶行，移動結束後傷害並緩速周圍敵人。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    150.0,
+    150.0,
+    150.0
+  ],
+  "manaCostTier": "小",
+  "range": 3,
+  "radius": 3,
+  "rangeTier": "極小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "carry",
+      "shape": "single",
+      "durationSec": 0.55,
+      "untargetable": {
+        "autoAcquire": true,
+        "mobAggro": true,
+        "manualTarget": true,
+        "abilityAoe": false
+      },
+      "onCarrierDeath": "release"
+    },
+    {
+      "kind": "dash",
+      "mode": "forward",
+      "speed": 8,
+      "maxDistance": 5.5,
+      "onEnd": [
+        {
+          "kind": "damageArea",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "中"
+          },
+          "radius": 3,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "lol-sett.r-slow",
+              "duration": 1.5,
+              "moveSpeedMult": 0.6
+            }
+          ],
+          "radiusTier": "極小"
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "fx.prim.earth.nova-lg",
+          "at": "point"
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+    "params": {
+      "castType": "targeted",
+      "castTimeSec": 0.1,
+      "radius": 2.5,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "carry",
+          "shape": "single",
+          "durationSec": 0.55,
+          "untargetable": {
+            "autoAcquire": true,
+            "mobAggro": true,
+            "manualTarget": true,
+            "abilityAoe": false
+          },
+          "onCarrierDeath": "release"
+        },
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "speed": 8,
+          "maxDistance": 4,
+          "onEnd": [
+            {
+              "kind": "damageArea",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "中"
+              },
+              "radius": 2.5,
+              "includeOrigin": true,
+              "onHitTargets": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-sett.r-slow",
+                  "duration": 1.5,
+                  "sourceScope": "caster",
+                  "moveSpeedMult": 0.6
+                }
+              ]
+            },
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.earth.nova-lg",
+              "at": "point"
+            }
+          ]
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-sett.r.webp",
+  "radiusTier": "極小"
+}

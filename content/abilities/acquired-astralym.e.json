@@ -1,0 +1,56 @@
+{
+  "id": "acquired-astralym.e",
+  "name": "星間挪位",
+  "provenance": "editor-json",
+  "description": "瞬移到施法距離內的指定地點；不產生傳送門或跨場移動。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "cooldownTier": "中",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 4.5,
+  "radius": 3,
+  "rangeTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "blink",
+      "shape": "single",
+      "to": "point"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+    "params": {
+      "castType": "ground",
+      "castTimeSec": 0.1,
+      "radius": 2.5,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "blink",
+          "shape": "single",
+          "to": "point"
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/acquired-astralym.e.webp",
+  "radiusTier": "極小"
+}

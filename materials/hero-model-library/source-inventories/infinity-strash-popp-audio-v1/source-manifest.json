@@ -1,0 +1,95 @@
+{
+  "schema": "ggd-infinity-strash-popp-audio-source-manifest@1",
+  "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+  "parentSourceId": "steam-infinity-strash-primary-paks-build-local-20240328",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1",
+  "extractionIndex": {
+    "path": "extraction-index.json",
+    "bytes": 5333911,
+    "sha256": "9093f96e47d595bd0b3b4799c78791a85a23a9c83dbba0ecb33f1c7b4a168711"
+  },
+  "audioFileIndex": {
+    "path": "audio-file-index.json",
+    "bytes": 1092492,
+    "sha256": "1748c73508796803728ac54a35acc19e7ee7ec3ba9c6827da29c486fbc646284"
+  },
+  "selection": {
+    "pakEntries": 181304,
+    "poppDirectMembers": 2280,
+    "priorityEventsWithMedia": 565,
+    "uniqueMediaReferences": 938,
+    "selectedMediaMembers": 2805
+  },
+  "countsByNativeId": {
+    "PN010": {
+      "events": 226,
+      "referencedMedia": 366,
+      "decodedMedia": 359,
+      "payloadMissing": 7,
+      "byKind": {
+        "sound-effect": 79,
+        "voice": 288
+      }
+    },
+    "PN020": {
+      "events": 201,
+      "referencedMedia": 317,
+      "decodedMedia": 315,
+      "payloadMissing": 2,
+      "byKind": {
+        "sound-effect": 63,
+        "voice": 255
+      }
+    },
+    "EN801": {
+      "events": 73,
+      "referencedMedia": 140,
+      "decodedMedia": 140,
+      "payloadMissing": 0,
+      "byKind": {
+        "sound-effect": 92,
+        "voice": 48
+      }
+    },
+    "EN653": {
+      "events": 69,
+      "referencedMedia": 129,
+      "decodedMedia": 129,
+      "payloadMissing": 0,
+      "byKind": {
+        "sound-effect": 55,
+        "voice": 74
+      }
+    }
+  },
+  "countsByLanguage": {
+    "English_US": 338,
+    "Japanese": 333,
+    "nonlocalized": 275
+  },
+  "countsByKind": {
+    "sound-effect": 277,
+    "voice": 663
+  },
+  "states": {
+    "acquired": true,
+    "poppRawPackagesExtracted": true,
+    "audioMediaDependenciesResolved": true,
+    "audioMasterWemExtracted": true,
+    "audioDecoded": true,
+    "automatedAudioValidationPassed": true,
+    "listeningReviewComplete": false,
+    "modelConverted": false,
+    "visuallyAccepted": false,
+    "heroRegistered": false,
+    "backendSelectable": false,
+    "deployed": false
+  },
+  "gaps": [
+    "Nine referenced media packages contain no .ubulk payload and are retained as explicit missing-payload relations.",
+    "Decoded clips passed container and PCM checks but still require speaker, language and event listening review.",
+    "Popp and Vearn Unreal models, textures, skeletons, animations and effects still require the game-specific exporter and visual acceptance.",
+    "EN801 is Vearn; its pre/post-transformation model variants are not yet visually classified.",
+    "EN653 is MystVearn, a separate character. EN680/EN681 are Baran and are not merged into either identity."
+  ]
+}

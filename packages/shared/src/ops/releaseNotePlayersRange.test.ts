@@ -54,7 +54,7 @@ const violators = (rows: Row[], since: string, until: string) => {
 describe("玩家公告只撈這一版真的做了的票（GH#1021）", () => {
   it("★ 兩個方向 ＋ 量尺自證（真的跑腳本、真的打 gh）", async () => {
     const [bad, legacy, good] = await Promise.all([
-      trace("v0.38.2", "v0.39.0"), trace("v0.38.2", "v0.39.0", "updated"), trace("v0.37.2", "v0.38.0"),
+      trace("v0.38.2", "v0.39.0"), trace("v0.38.2", "v0.39.0", "updated"), trace("v0.43.3", "v0.43.4"),
     ]);
     if (!bad || !legacy || !good) {
       console.warn("⚠️ 這條閘**沒有驗到** —— 腳本／gh 跑不起來。⛔ 這不是「範圍對了」。要驗：`gh auth status` 然後重跑。");
@@ -67,8 +67,15 @@ describe("玩家公告只撈這一版真的做了的票（GH#1021）", () => {
     for (const n of [971, 916, 838])
       expect(bad.filter((r) => r.n === n && r.bucket !== "drop"), `#${n} 是 09-02／09-03 關的，⛔ 不在 v0.39.0`).toEqual([]);
     // 方向二：已知有玩家改動的區間仍撈得到（⛔ 不可以為了方向一綠而把它變瞎）
-    //   ⚠️ 讀的是 #916 今天在 GitHub 上的進度標記；它若被改寫，換一個 note 裡有 🎮 段的區間，⛔ 不是刪這條
-    expect(good.filter((r) => r.bucket === "lines").length, "v0.37.2..v0.38.0 有玩家可見的票 ⇒ 撈到 0 = 閘瞎了").toBeGreaterThan(0);
-    expect(violators(good, "v0.37.2", "v0.38.0")).toEqual([]);
+    //   ⚠️ 讀的是那幾張票**今天在 GitHub 上的進度標記**；它若被改寫，
+    //   換一個 note 裡有 🎮 段的區間，⛔ 不是刪這條。
+    //
+    // ⭐ 2026-09-11：錨從 `v0.37.2..v0.38.0` 換到 `v0.43.3..v0.43.4`。
+    // ⛔ 原因不是那條斷言錯了 —— 是**錨自己漂掉了**：舊區間靠 `#916` 的進度標記，
+    // 而 #916 在 **2026-09-02 就關掉了** ⇒ 今天那個區間撈到 0
+    // ⇒ ⭐ 而它報出來的樣子逐字是「閘瞎了」—— ⛔ 也就是這條斷言本來要抓的那個症狀。
+    // ⚠️ 新錨：`v0.43.3..v0.43.4`（note 有 🎮×2，commit 指名 #1148／#1157／#1158／#1164／#99）。
+    expect(good.filter((r) => r.bucket === "lines").length, "v0.43.3..v0.43.4 有玩家可見的票 ⇒ 撈到 0 = 閘瞎了").toBeGreaterThan(0);
+    expect(violators(good, "v0.43.3", "v0.43.4")).toEqual([]);
   }, 300_000);
 });

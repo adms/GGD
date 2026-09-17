@@ -1,0 +1,1190 @@
+{
+  "schema": "ggd-icon-subjects@1",
+  "note": "第四批 37 名（GH#1185／#1205）頭像＋六格技能的策劃主體。主體取自配方的角色身分與技能說明（content/abilities/<id>.<slot>.json），⛔ 不改技能；風格由 content/config/icon-style.json 決定（同出貨管線）。owner 2026-09-16：「頭像, 6 格技能圖示 你可以用之前本地端生成方式補上」",
+  "heroes": {
+    "acquired-alice": {
+      "hero": [
+        "a blonde knight girl in golden armour holding a golden sword, osmanthus petals floating",
+        "gold and blue"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a golden knight shield glowing with osmanthus petals",
+          "gold"
+        ],
+        "Q": [
+          "golden osmanthus petals swirling around and pinning a target",
+          "gold and orange"
+        ],
+        "W": [
+          "a glowing golden barrier around a knight ally",
+          "gold and white"
+        ],
+        "E": [
+          "a golden sword plunging down from above",
+          "gold"
+        ],
+        "R": [
+          "six golden petal beams converging inward in a circle",
+          "gold and amber"
+        ],
+        "EX": [
+          "a large golden knight crest shield",
+          "gold and blue"
+        ]
+      }
+    },
+    "acquired-astralym": {
+      "hero": [
+        "a dark star dragon with glowing constellation markings on its wings",
+        "indigo and silver"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a dark star-eclipse sigil glowing",
+          "indigo and violet"
+        ],
+        "Q": [
+          "a falling starlight lance striking a marked target",
+          "silver and violet"
+        ],
+        "W": [
+          "a zero-gravity violet vortex on the ground",
+          "violet"
+        ],
+        "E": [
+          "a star dragon blinking through a starry portal",
+          "indigo and silver"
+        ],
+        "R": [
+          "three concentric star shockwave rings on the ground",
+          "indigo and gold"
+        ],
+        "EX": [
+          "a starry crystal barrier around a dragon",
+          "silver and blue"
+        ]
+      }
+    },
+    "acquired-asuna": {
+      "hero": [
+        "a chestnut-haired anime swordswoman in white and red armour holding a rapier",
+        "white and red"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a glowing rapier tip with speed lines",
+          "white and red"
+        ],
+        "Q": [
+          "a rapier thrust with a flash of light",
+          "white and silver"
+        ],
+        "W": [
+          "a flash of white light around a sprinting swordswoman",
+          "white and gold"
+        ],
+        "E": [
+          "a swordswoman dashing forward with a rapier",
+          "red and white"
+        ],
+        "R": [
+          "a flurry of glowing rapier thrusts bursting into star sparks",
+          "white and cyan"
+        ],
+        "EX": [
+          "a warm lunch basket with a healing glow",
+          "orange and green"
+        ]
+      }
+    },
+    "acquired-beatrice": {
+      "hero": [
+        "a small blonde girl with long twin drill curls in a frilly dress holding an old book",
+        "cream and pink"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a glowing bookmark inside an old magic book",
+          "violet and gold"
+        ],
+        "Q": [
+          "a dark purple void orb projectile",
+          "purple"
+        ],
+        "W": [
+          "a forbidden library book cover forming a barrier",
+          "brown and violet"
+        ],
+        "E": [
+          "an ornate wooden door opening onto light",
+          "brown and gold"
+        ],
+        "R": [
+          "a crushing dark purple magic circle",
+          "dark purple"
+        ],
+        "EX": [
+          "a quiet library silence sigil on the floor",
+          "violet and gray"
+        ]
+      }
+    },
+    "acquired-cattiva": {
+      "hero": [
+        "a mischievous small grey cat creature with a round face and raised paws",
+        "gray and pink"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a startled cat running away in a dust puff",
+          "gray"
+        ],
+        "Q": [
+          "a cat paw punch",
+          "pink and gray"
+        ],
+        "W": [
+          "a teasing cat sticking out its tongue",
+          "pink"
+        ],
+        "E": [
+          "a cardboard box with a cat leaping out",
+          "brown"
+        ],
+        "R": [
+          "a flurry of three cat paw punches",
+          "pink and orange"
+        ],
+        "EX": [
+          "an open cat food can with sparkles",
+          "silver and orange"
+        ]
+      }
+    },
+    "acquired-dio": {
+      "hero": [
+        "a blond vampire man in a yellow jacket with a menacing pose",
+        "gold and green"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a blood drop with vampire fangs",
+          "crimson"
+        ],
+        "Q": [
+          "a golden muscular spirit throwing a barrage of fists",
+          "gold and yellow"
+        ],
+        "W": [
+          "a spread of silver throwing knives",
+          "silver"
+        ],
+        "E": [
+          "a frozen clock with time stopped",
+          "gold and gray"
+        ],
+        "R": [
+          "a heavy steamroller crashing down",
+          "yellow and gray"
+        ],
+        "EX": [
+          "a vampire golden wine goblet",
+          "crimson and gold"
+        ]
+      }
+    },
+    "acquired-emilia": {
+      "hero": [
+        "a silver-haired half-elf girl with purple eyes in a white and purple dress with ice crystals",
+        "silver and lilac"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "shattering frost crystals",
+          "ice blue"
+        ],
+        "Q": [
+          "a flying ice spear",
+          "ice blue"
+        ],
+        "W": [
+          "a small grey cat spirit wrapped in protective snow",
+          "white and blue"
+        ],
+        "E": [
+          "an ice flower blooming from the ground",
+          "cyan"
+        ],
+        "R": [
+          "a ring of ice pillars in a blizzard",
+          "ice blue and white"
+        ],
+        "EX": [
+          "a steaming cup of tea",
+          "amber"
+        ]
+      }
+    },
+    "acquired-inuyasha": {
+      "hero": [
+        "a white-haired half-demon boy with dog ears in a red robe holding a huge fang sword",
+        "red and silver"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a half-demon with a healing silver aura",
+          "silver and red"
+        ],
+        "Q": [
+          "a huge fang sword swing",
+          "silver"
+        ],
+        "W": [
+          "a wind scar energy wave from a sword",
+          "yellow and white"
+        ],
+        "E": [
+          "a red-robed half-demon leaping",
+          "red"
+        ],
+        "R": [
+          "a flurry of giant sword slashes",
+          "silver and red"
+        ],
+        "EX": [
+          "a swirling vortex of energy forming a shield",
+          "gold and red"
+        ]
+      }
+    },
+    "acquired-jetragon": {
+      "hero": [
+        "a sleek jet-like legendary dragon with metallic wings and glowing engines",
+        "black and red"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a glowing jet engine turbine charging up",
+          "orange"
+        ],
+        "Q": [
+          "a dragon firing a precise arcane bolt",
+          "purple and orange"
+        ],
+        "W": [
+          "a jet contrail streak",
+          "white and orange"
+        ],
+        "E": [
+          "a dragon dashing low with jet flames",
+          "red and orange"
+        ],
+        "R": [
+          "three meteor explosions from above",
+          "orange and red"
+        ],
+        "EX": [
+          "a boarding gate energy shield",
+          "blue and silver"
+        ]
+      }
+    },
+    "acquired-kita-kita": {
+      "hero": [
+        "a funny bald old man in a grass hula skirt dancing with a big smile",
+        "tan and green"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a dancing man glowing with a protective aura",
+          "green"
+        ],
+        "Q": [
+          "a swaying grass skirt flash blinding the eyes",
+          "green and yellow"
+        ],
+        "W": [
+          "a cheering audience stand with a protective glow",
+          "yellow"
+        ],
+        "E": [
+          "a leaping hula dance pose",
+          "green"
+        ],
+        "R": [
+          "a ring of people frozen mid dance",
+          "green and pink"
+        ],
+        "EX": [
+          "a bottle of water with a healing glow",
+          "blue"
+        ]
+      }
+    },
+    "acquired-kuroyukihime": {
+      "hero": [
+        "an elegant black-haired girl with black butterfly wings in a black dress",
+        "black and crimson"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a black lotus blade finishing strike",
+          "black and crimson"
+        ],
+        "Q": [
+          "a black blade slash with broken digital fragments",
+          "black and blue"
+        ],
+        "W": [
+          "a black butterfly glowing with speed lines",
+          "black and pink"
+        ],
+        "E": [
+          "a black armored avatar dashing forward",
+          "black and silver"
+        ],
+        "R": [
+          "a thin black arm blade piercing forward",
+          "black and red"
+        ],
+        "EX": [
+          "black butterfly wings dissolving into a blink",
+          "black and violet"
+        ]
+      }
+    },
+    "acquired-leafa": {
+      "hero": [
+        "a blonde fairy girl with a ponytail and translucent wings holding a katana",
+        "green and gold"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a gust of green wind feathers",
+          "green"
+        ],
+        "Q": [
+          "a green healing leaf spell",
+          "green and white"
+        ],
+        "W": [
+          "a fairy dashing forward pushing a gust of wind",
+          "green"
+        ],
+        "E": [
+          "a fairy jumping with wind wings",
+          "green and white"
+        ],
+        "R": [
+          "a wind barrier dome protecting allies",
+          "green and cyan"
+        ],
+        "EX": [
+          "a straight green wind blade",
+          "green"
+        ]
+      }
+    },
+    "acquired-lord-nightmares": {
+      "hero": [
+        "a mysterious golden-haired goddess of chaos with a golden aura and a dark void behind",
+        "gold and black"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "three glowing golden chaos sigils",
+          "gold"
+        ],
+        "Q": [
+          "a golden chaos bolt",
+          "gold"
+        ],
+        "W": [
+          "a dark void zone freezing everything",
+          "black and gold"
+        ],
+        "E": [
+          "a golden portal step",
+          "gold and violet"
+        ],
+        "R": [
+          "a swirling sea of chaos on the ground",
+          "black and gold"
+        ],
+        "EX": [
+          "a massive golden chaos blast",
+          "gold and white"
+        ]
+      }
+    },
+    "acquired-mario": {
+      "hero": [
+        "a cheerful plumber with a red cap, blue overalls and a mustache",
+        "red and blue"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a spinning gold coin",
+          "gold"
+        ],
+        "Q": [
+          "a bouncing fireball",
+          "orange and red"
+        ],
+        "W": [
+          "a yellow cape swirling",
+          "yellow"
+        ],
+        "E": [
+          "a plumber ground pound impact",
+          "red and brown"
+        ],
+        "R": [
+          "a huge stream of fire",
+          "orange"
+        ],
+        "EX": [
+          "a red spotted mushroom beside a gold coin",
+          "red and gold"
+        ]
+      }
+    },
+    "acquired-mewtwo": {
+      "hero": [
+        "a purple psychic cat-like monster with a round head, two short horns, big glowing eyes and a thick tail, full body creature",
+        "lavender and purple"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a psychic energy focus aura",
+          "purple"
+        ],
+        "Q": [
+          "a dark purple shadow ball",
+          "purple and black"
+        ],
+        "W": [
+          "a psychic barrier bubble",
+          "blue and purple"
+        ],
+        "E": [
+          "a psychic teleport distortion",
+          "lavender"
+        ],
+        "R": [
+          "a burst of psychic energy waves",
+          "purple and pink"
+        ],
+        "EX": [
+          "a calm glowing psychic mind",
+          "lavender"
+        ]
+      }
+    },
+    "acquired-minecraft": {
+      "hero": [
+        "a blocky pixel miner in a cyan shirt holding a diamond pickaxe",
+        "cyan and brown"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a stack of three blocky ore materials",
+          "brown and gray"
+        ],
+        "Q": [
+          "a blocky diamond pickaxe",
+          "cyan"
+        ],
+        "W": [
+          "a wall of stacked stone blocks",
+          "gray"
+        ],
+        "E": [
+          "a blocky minecart on rails",
+          "gray and brown"
+        ],
+        "R": [
+          "a red dynamite block exploding",
+          "red and white"
+        ],
+        "EX": [
+          "a blocky crafting table with bread",
+          "brown"
+        ]
+      }
+    },
+    "acquired-morgiana": {
+      "hero": [
+        "a red-haired girl with shackles on her ankles in a white outfit, strong kick pose",
+        "red and white"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a powerful bare foot kick afterimage",
+          "red"
+        ],
+        "Q": [
+          "a mighty flying kick",
+          "red and orange"
+        ],
+        "W": [
+          "a flaming chain whip pulling",
+          "orange and gray"
+        ],
+        "E": [
+          "a girl leaping high",
+          "red"
+        ],
+        "R": [
+          "spiraling flame chains in three waves",
+          "orange and red"
+        ],
+        "EX": [
+          "a maid with a defensive glow taunting",
+          "white and red"
+        ]
+      }
+    },
+    "acquired-naruto": {
+      "hero": [
+        "a blond spiky-haired ninja boy in an orange jumpsuit with a leaf headband",
+        "orange and blue"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a steaming bowl of ramen",
+          "orange and yellow"
+        ],
+        "Q": [
+          "a swirling blue energy sphere in a hand",
+          "blue"
+        ],
+        "W": [
+          "two identical orange ninja clones",
+          "orange"
+        ],
+        "E": [
+          "a ninja dashing with a kunai",
+          "orange and gray"
+        ],
+        "R": [
+          "a giant wind shuriken of energy",
+          "white and blue"
+        ],
+        "EX": [
+          "an orange ninja sprinting with energy",
+          "orange"
+        ]
+      }
+    },
+    "acquired-pokemon-trainer": {
+      "hero": [
+        "a young trainer boy with a red cap holding a red and white capture ball",
+        "red and white"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "three elemental badges of water, grass and fire",
+          "blue green and red"
+        ],
+        "Q": [
+          "a blast of water from a small turtle",
+          "blue"
+        ],
+        "W": [
+          "a green vine whip",
+          "green"
+        ],
+        "E": [
+          "an orange fire lizard charging",
+          "orange and red"
+        ],
+        "R": [
+          "three elemental orbs of water, grass and fire combining",
+          "blue green and red"
+        ],
+        "EX": [
+          "a purple spray potion bottle",
+          "purple"
+        ]
+      }
+    },
+    "acquired-ram": {
+      "hero": [
+        "a pink-haired maid girl with a white headdress",
+        "pink and black"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a gust of pink wind",
+          "pink"
+        ],
+        "Q": [
+          "a crescent wind blade",
+          "pale green and pink"
+        ],
+        "W": [
+          "a cold scornful gust slowing a target",
+          "pink and gray"
+        ],
+        "E": [
+          "a maid dashing on wind",
+          "pink"
+        ],
+        "R": [
+          "a tornado vortex pulling inward",
+          "pink and white"
+        ],
+        "EX": [
+          "a maid resting with a tea cup",
+          "pink and green"
+        ]
+      }
+    },
+    "acquired-rim": {
+      "hero": [
+        "a cute small pink dragon girl with horns and a tail, hungry expression",
+        "pink and orange"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a dragon bite on a weakened target",
+          "pink and red"
+        ],
+        "Q": [
+          "a dragon bite chomp",
+          "pink"
+        ],
+        "W": [
+          "a dragon eating from a lunch box with a glow",
+          "orange"
+        ],
+        "E": [
+          "a pink dragon pouncing",
+          "pink"
+        ],
+        "R": [
+          "a giant dragon bite devouring",
+          "pink and red"
+        ],
+        "EX": [
+          "a hungry dragon roar slowing an area",
+          "pink and purple"
+        ]
+      }
+    },
+    "acquired-ryu": {
+      "hero": [
+        "a muscular adult man martial artist with short black hair, white karate gi, red headband and black belt, fists raised",
+        "white and red"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a fighter in a ready stance with an aura",
+          "white and blue"
+        ],
+        "Q": [
+          "a blue energy fireball projectile",
+          "blue and white"
+        ],
+        "W": [
+          "a rising dragon uppercut with flames",
+          "orange and white"
+        ],
+        "E": [
+          "a spinning hurricane kick",
+          "white and cyan"
+        ],
+        "R": [
+          "a burst of rapid strikes ending in a rising uppercut",
+          "orange and red"
+        ],
+        "EX": [
+          "a meditating fighter with a protective aura",
+          "white and gold"
+        ]
+      }
+    },
+    "acquired-saya": {
+      "hero": [
+        "a pale girl with long dark teal hair in a white dress, eerie red tendrils behind",
+        "white and crimson"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a small bite of red fruit",
+          "crimson"
+        ],
+        "Q": [
+          "a strange glowing crimson feast plate",
+          "crimson"
+        ],
+        "W": [
+          "sticky red tendrils spreading on a table",
+          "crimson and purple"
+        ],
+        "E": [
+          "a horrifying eye revealing a true form",
+          "crimson and black"
+        ],
+        "R": [
+          "a dining hall covered in writhing red flesh",
+          "crimson"
+        ],
+        "EX": [
+          "a girl covering her eyes in dark mist",
+          "black and purple"
+        ]
+      }
+    },
+    "acquired-wargreymon": {
+      "hero": [
+        "an armored orange dragon warrior with a round shield on its back and claw gauntlets",
+        "orange and silver"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a round brave shield glowing",
+          "silver and orange"
+        ],
+        "Q": [
+          "sharp metal claws slashing",
+          "silver"
+        ],
+        "W": [
+          "a large round metal shield",
+          "silver and red"
+        ],
+        "E": [
+          "an armored dragon warrior leaping",
+          "orange"
+        ],
+        "R": [
+          "a massive orange energy sphere blast",
+          "orange and yellow"
+        ],
+        "EX": [
+          "a rolling wave of fire",
+          "orange and red"
+        ]
+      }
+    },
+    "acquired-xiaodangjia": {
+      "hero": [
+        "a young chef boy with a headband holding a big wok and a glowing dish",
+        "red and gold"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a tasting spoon with a small glow",
+          "gold"
+        ],
+        "Q": [
+          "a dazzling golden glowing dish",
+          "gold and white"
+        ],
+        "W": [
+          "a hot plate of steaming food",
+          "orange"
+        ],
+        "E": [
+          "a flaming wok burst",
+          "red and orange"
+        ],
+        "R": [
+          "a spicy red tofu pot bubbling",
+          "red"
+        ],
+        "EX": [
+          "a giant wok lid shield",
+          "silver and gold"
+        ]
+      }
+    },
+    "acquired-zero": {
+      "hero": [
+        "a red armored android warrior with long blond hair holding a green energy saber",
+        "red and green"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a glowing energy cell charging",
+          "green"
+        ],
+        "Q": [
+          "a green energy saber slash",
+          "green"
+        ],
+        "W": [
+          "a charged plasma buster shot",
+          "yellow and green"
+        ],
+        "E": [
+          "a red android dash slash",
+          "red and green"
+        ],
+        "R": [
+          "three green saber slashes forming a Z",
+          "green and red"
+        ],
+        "EX": [
+          "a red armor energy shield with a repair glow",
+          "red and blue"
+        ]
+      }
+    },
+    "lol-ahri": {
+      "hero": [
+        "a nine-tailed fox girl with fox ears and white tails holding a magic orb",
+        "white and pink"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a glowing pink essence orb",
+          "pink"
+        ],
+        "Q": [
+          "a blue and white magic orb flying out and returning",
+          "blue and white"
+        ],
+        "W": [
+          "three small blue fox-fire wisps",
+          "blue"
+        ],
+        "E": [
+          "a pink heart kiss projectile",
+          "pink"
+        ],
+        "R": [
+          "a fox girl dashing with spirit trails",
+          "pink and white"
+        ],
+        "EX": [
+          "a fox tail vanishing in pink sparkles",
+          "pink"
+        ]
+      }
+    },
+    "lol-ashe": {
+      "hero": [
+        "a white-haired frost archer queen in a blue hooded cloak with an ice bow",
+        "ice blue and white"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a frost-tipped arrow",
+          "ice blue"
+        ],
+        "Q": [
+          "an archer drawing rapid arrows with a blue aura",
+          "blue"
+        ],
+        "W": [
+          "a fan of ice arrows",
+          "ice blue"
+        ],
+        "E": [
+          "a crystal ice hawk diving",
+          "cyan"
+        ],
+        "R": [
+          "a giant enchanted crystal ice arrow",
+          "cyan and white"
+        ],
+        "EX": [
+          "an ice crystal block shield",
+          "ice blue"
+        ]
+      }
+    },
+    "lol-blitzcrank": {
+      "hero": [
+        "a large yellow steam golem robot with big mechanical arms",
+        "yellow and gray"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a steam robot energy barrier",
+          "blue and yellow"
+        ],
+        "Q": [
+          "a mechanical rocket fist grabbing on a chain",
+          "yellow and gray"
+        ],
+        "W": [
+          "a robot overheating with steam and speed lines",
+          "yellow and red"
+        ],
+        "E": [
+          "a glowing electric mechanical fist uppercut",
+          "yellow and blue"
+        ],
+        "R": [
+          "a crackling electric static field",
+          "blue and yellow"
+        ],
+        "EX": [
+          "a mechanical fist releasing a captured target",
+          "gray"
+        ]
+      }
+    },
+    "lol-chogath": {
+      "hero": [
+        "a monstrous purple void beast with spikes and a gaping maw",
+        "purple and green"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a void beast devouring prey with a glow",
+          "purple"
+        ],
+        "Q": [
+          "purple spikes erupting from the ground",
+          "purple"
+        ],
+        "W": [
+          "a wide cone of sonic scream",
+          "green and purple"
+        ],
+        "E": [
+          "a volley of sharp purple spikes",
+          "purple"
+        ],
+        "R": [
+          "a gaping void maw devouring",
+          "purple and red"
+        ],
+        "EX": [
+          "a bloated void beast resting",
+          "purple and green"
+        ]
+      }
+    },
+    "lol-fiddlesticks": {
+      "hero": [
+        "a creepy scarecrow with a sickle and glowing eyes, crows around",
+        "brown and green"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a small creepy scarecrow effigy",
+          "brown"
+        ],
+        "Q": [
+          "a terrifying scarecrow face with glowing eyes",
+          "green and black"
+        ],
+        "W": [
+          "green life drain tendrils",
+          "green"
+        ],
+        "E": [
+          "a sickle crescent slash",
+          "green and gray"
+        ],
+        "R": [
+          "a storm of black crows swirling",
+          "black and green"
+        ],
+        "EX": [
+          "three small scarecrow decoys",
+          "brown"
+        ]
+      }
+    },
+    "lol-garen": {
+      "hero": [
+        "an armored warrior with a big broadsword and a blue cape",
+        "blue and gold"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a regenerating golden armor glow",
+          "gold"
+        ],
+        "Q": [
+          "a heavy sword strike",
+          "gold and blue"
+        ],
+        "W": [
+          "a golden courage shield",
+          "gold"
+        ],
+        "E": [
+          "a spinning sword whirlwind",
+          "silver and gold"
+        ],
+        "R": [
+          "a giant golden sword falling from the sky",
+          "gold and white"
+        ],
+        "EX": [
+          "a warrior resting with a healing glow",
+          "blue and green"
+        ]
+      }
+    },
+    "lol-malphite": {
+      "hero": [
+        "a massive rock golem of shattered stone",
+        "gray and orange"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a stone granite shield",
+          "gray"
+        ],
+        "Q": [
+          "a flying rock shard",
+          "brown and gray"
+        ],
+        "W": [
+          "a stone fist shockwave",
+          "gray and orange"
+        ],
+        "E": [
+          "a ground slam cracking the earth",
+          "brown"
+        ],
+        "R": [
+          "a rock golem charging into a huge impact",
+          "orange and gray"
+        ],
+        "EX": [
+          "a stone fortress wall",
+          "gray"
+        ]
+      }
+    },
+    "lol-ornn": {
+      "hero": [
+        "a giant horned ram blacksmith with a hammer and molten lava",
+        "brown and orange"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a glowing forge anvil with molten metal",
+          "orange"
+        ],
+        "Q": [
+          "a lava crack line ending in a rising stone pillar",
+          "orange and gray"
+        ],
+        "W": [
+          "a breath of fire",
+          "orange and red"
+        ],
+        "E": [
+          "a horned ram charging through a stone pillar",
+          "orange and brown"
+        ],
+        "R": [
+          "a giant lava ram stampeding",
+          "orange and red"
+        ],
+        "EX": [
+          "a forged metal shield glowing",
+          "silver and orange"
+        ]
+      }
+    },
+    "lol-sett": {
+      "hero": [
+        "a muscular red-haired brawler boss with wrapped fists",
+        "red and gold"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "alternating punching fists",
+          "red"
+        ],
+        "Q": [
+          "a glowing punching fist",
+          "orange"
+        ],
+        "W": [
+          "a giant spectral punch blast",
+          "gold and red"
+        ],
+        "E": [
+          "two enemies being slammed together",
+          "red and gray"
+        ],
+        "R": [
+          "a wrestler slamming a foe into an impact crater",
+          "gold and red"
+        ],
+        "EX": [
+          "a ringing phone with a heart",
+          "pink"
+        ]
+      }
+    },
+    "lol-thresh": {
+      "hero": [
+        "a spectral chain warden holding a green lantern and a hook",
+        "green and black"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a green soul fragment",
+          "green"
+        ],
+        "Q": [
+          "a chained hook flying forward",
+          "green and gray"
+        ],
+        "W": [
+          "a glowing green lantern",
+          "green"
+        ],
+        "E": [
+          "a sweeping chain flay",
+          "green"
+        ],
+        "R": [
+          "a pentagon of spectral walls",
+          "green and black"
+        ],
+        "EX": [
+          "a chain pushing an enemy away",
+          "green and gray"
+        ]
+      }
+    },
+    "lol-velkoz": {
+      "hero": [
+        "a floating void eye creature with tentacles",
+        "purple and pink"
+      ],
+      "slots": {
+        "PASSIVE": [
+          "a void research mark sigil",
+          "purple and white"
+        ],
+        "Q": [
+          "a plasma bolt splitting into two",
+          "purple and cyan"
+        ],
+        "W": [
+          "a purple void rift line",
+          "purple"
+        ],
+        "E": [
+          "an exploding ground disruption",
+          "purple and pink"
+        ],
+        "R": [
+          "a giant purple disintegration laser beam",
+          "purple and white"
+        ],
+        "EX": [
+          "a void eye erasing a research mark",
+          "purple"
+        ]
+      }
+    }
+  }
+}

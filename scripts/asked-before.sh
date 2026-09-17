@@ -25,7 +25,6 @@ done
 set -- "${ARGS[@]+"${ARGS[@]}"}"
 [ $# -eq 0 ] && { echo "用法: $0 [--strict] <關鍵字> [關鍵字…]" >&2; exit 2; }
 
-PROJ="$HOME/.claude/projects/-Users-Takuro-GGD"
 TMPD="${TMPDIR:-/tmp}"; TMPD="${TMPD%/}"   # ⛔ GH#1003：⛔ 不寫死 macOS 專屬的 /private 實體路徑（Linux 上建不出來 ⇒ 重導靜默失敗）
 HITS=0
 for kw in "$@"; do

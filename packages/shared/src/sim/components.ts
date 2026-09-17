@@ -185,6 +185,13 @@ export interface ProjectileComp {
   returns?: boolean;
   /** GH#1197 分裂彈設定（從 `ProjectileDef.split` 複製）。 */
   split?: { projectileId: ProjectileId; on: readonly ("hit" | "recast")[] };
+  /**
+   * GH#1187【撞擊改向】還沒用掉的改向（從 `spawnProjectile.onRedirectHit` 烘好複製）。改向一次或作廢之後**刪掉**
+   * ⇒ 缺 = 這發已經不能再被改向（`sim/projectileRedirect.ts`）。
+   */
+  redirectOnHit?: import("./effects/effect").EffectDef[];
+  /** 施法者按下後段的那一 tick（`contact` 模式等著被撞）。缺 = 還沒按。 */
+  redirectArmedTick?: number;
   /** effects executed on each unit hit (caster = owner) */
   onHit: import("./effects/effect").EffectDef[];
   /** rank of the spawning ability (for scaling in onHit) */
@@ -805,4 +812,26 @@ export interface ObstacleComp {
   expiresAtTick: number;
   shatterable: boolean;
   origin: string;
+}
+
+/**
+ * 【互動物】（GH#1189 瑟雷西 W 燈籠）—— 技能放在地上、**隊友送指令才會觸發**的物件。
+ * ⛔ 沒有 transform／health：它不是單位、索敵與碰撞都看不到它；生命週期與接受規則在 `sim/interactables.ts`。
+ */
+export interface InteractableComp {
+  castInstance?: import("./content/castInstance").CastInstance;
+  ownerId: EntityId;
+  zone: number;
+  center: Vec2;
+  radius: number;
+  expiresAtTick: number;
+  /** 還剩幾位隊友可以用（0 ⇒ 當場收掉） */
+  usesLeft: number;
+  /** 已經接受過的隊友（id 遞增）—— 同一人不重複接受 */
+  acceptedBy: EntityId[];
+  /** 施放那一刻烘好的 onAccept（`bakeList`） */
+  onAccept: import("./effects/effect").EffectDef[];
+  rank: number;
+  origin: string;
+  abilitySlot?: CastableSlot;
 }

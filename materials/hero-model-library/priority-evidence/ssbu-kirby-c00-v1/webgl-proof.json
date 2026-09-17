@@ -1,0 +1,163 @@
+{
+  "schema": "ggd.ssbu-static-webgl@1",
+  "babylonVersion": "7.54.3",
+  "renderer": "actual Babylon WebGL glTF loader in right-handed scene; source material/culling preserved; CPU-skinned world bounds used for camera framing",
+  "worldSkinnedBounds": {
+    "min": [
+      -1.222081793374464,
+      -1.380002400413439e-07,
+      -0.8494462901639184
+    ],
+    "max": [
+      1.222081965034441,
+      1.7999994181211147,
+      0.8494467831915405
+    ],
+    "extent": [
+      2.444163758408905,
+      1.7999995561213549,
+      1.698893073355459
+    ]
+  },
+  "geometry": [
+    {
+      "name": "Kirby_Armfoot_VIS_O_OBJShape_primitive0",
+      "vertices": 2807,
+      "indices": 13836,
+      "worldBounds": {
+        "min": [
+          -1.222081793374464,
+          0.10050556708170294,
+          -0.8494462901639184
+        ],
+        "max": [
+          1.222081965034441,
+          1.7999994181211147,
+          0.8494467831915405
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 51,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "Kirby_Armfoot_VIS_O_OBJShape_primitive1",
+      "vertices": 499,
+      "indices": 2664,
+      "worldBounds": {
+        "min": [
+          -0.7553890417073035,
+          -1.380002400413439e-07,
+          -0.518900579417034
+        ],
+        "max": [
+          0.7553890417073035,
+          0.4682535100671563,
+          0.7018277141871422
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 51,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    }
+  ],
+  "animationGroups": 0,
+  "skeletons": 1,
+  "materials": [
+    {
+      "name": "EyeL6",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "EyeL6 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "skin_kirby_001",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "skin_kirby_001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 16,
+          "height": 16
+        }
+      },
+      "normalTexture": null
+    }
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 208,
+        "height": 1
+      }
+    },
+    {
+      "name": "EyeL6 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "skin_kirby_001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 16,
+        "height": 16
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "front",
+      "alpha": 1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "back",
+      "alpha": -1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "isometric",
+      "alpha": 0.7853981633974483,
+      "beta": 1.1635528346628863
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "gameplayAcceptance": false
+}

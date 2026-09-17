@@ -1,16 +1,16 @@
 {
   "id": "community-review-10-20260907",
   "name": "魯路修",
-  "description": "魯路修 社群英雄功能驗收稿。作品：《Code Geass 反叛的魯路修》  \n定位：戰術標記、有限命令、隊伍配合。\n\n視覺方向：紅色 Geass 眼形、棋盤格區域、黑紅戰術標記；控制完成要有清楚復原提示。\n以 GGD 軟輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "description": "作品：《Code Geass 反叛的魯路修》  \n定位：戰術標記、有限命令、隊伍配合。\n\n視覺方向：紅色 Geass 眼形、棋盤格區域、黑紅戰術標記；控制完成要有清楚復原提示。",
   "role": "fighter",
   "attackType": "ranged",
   "archetype": "fighter",
   "origin": "軟輔",
-  "modelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
+  "modelKey": "version.body.3091a7751a9eb837445245a69561448610dc33d8287c7dbc",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 26.93612244897959,
+    "maxHealth": 60,
     "healthRegen": 0.07386938775510205,
-    "maxMana": 29.456938775510206,
+    "maxMana": 35,
     "manaRegen": 0,
     "ad": 2.220326530612245,
     "as": 0,
@@ -62,10 +62,10 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -82,7 +82,7 @@
           }
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-10-20260907.q.webp",
       "template": {
@@ -93,7 +93,7 @@
             "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -119,10 +119,10 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -146,7 +146,7 @@
           "moveSpeedMult": 0.7
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-10-20260907.w.webp",
       "template": {
@@ -157,7 +157,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -203,7 +203,7 @@
           "duration": 3
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-10-20260907.e.webp",
       "template": {
@@ -217,7 +217,7 @@
               "msBonusTier": "極小"
             }
           ],
-          "castTimeSec": 0.267
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -243,9 +243,9 @@
         45.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        600.0,
+        600.0,
+        600.0
       ],
       "manaCostTier": "大",
       "range": 4.5,
@@ -269,7 +269,7 @@
           "stun": true
         }
       ],
-      "castTimeSec": 0.8,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-10-20260907.r.webp",
       "template": {
@@ -280,7 +280,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.8
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },
@@ -305,5 +305,61 @@
   "tags": [
     "magic"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.ddbb44714e45ba5420d77fe15af26a0bb18224f3e47ae68e",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
+      "modelSha256": "75e377bde6d84af327602de1f079a2dfd5ad8b0bd8d268bdcf6a3a83ad17b450",
+      "binarySha256": "a618784d5d670f7749b090a044c32a0ed882ddb859b3f4c1edda0ff3d59190f8",
+      "registeredAt": "2026-09-12T23:02:30.355Z",
+      "source": {
+        "kind": "previous",
+        "character": "魯路修",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.fd4f76adddc93ce19df5c6ca906f6f177cd527fb848687e3",
+      "label": "鲁路修",
+      "sourceModelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
+      "modelSha256": "20185450b04b328274667f9e18f2862ccc6ca7f7adc4df0230bb97be09235a30",
+      "binarySha256": "ade150afe0b6d690eef510559e854487440a8631d5469fe428763a81a96f8071",
+      "registeredAt": "2026-09-12T23:02:30.359Z",
+      "source": {
+        "kind": "exact",
+        "character": "鲁路修",
+        "work": "Code Geass 反叛的魯路修",
+        "library": "300heroes",
+        "reference": "300heroes:33317960eca2c46de312fce2",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.3091a7751a9eb837445245a69561448610dc33d8287c7dbc",
+      "label": "鲁路修",
+      "sourceModelKey": "community.body.3d570cd3729203c95df9707b19b66453a74c3cca1a685840",
+      "modelSha256": "1cc874dbf0b6023b974638a6645a41def217ab1cfac357e79dbb720fcba285e9",
+      "binarySha256": "ade150afe0b6d690eef510559e854487440a8631d5469fe428763a81a96f8071",
+      "registeredAt": "2026-09-13T00:08:46.406Z",
+      "source": {
+        "kind": "exact",
+        "character": "鲁路修",
+        "work": "Code Geass 反叛的魯路修",
+        "library": "300heroes",
+        "reference": "300heroes:33317960eca2c46de312fce2",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

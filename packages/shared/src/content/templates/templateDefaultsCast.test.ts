@@ -28,6 +28,7 @@
  * MUTATION（落地前跑過）：`sim/effects/summon.ts` 的 `capRaw <= 0 ? ∞ : capRaw` 改回
  * `Math.max(0, capRaw)`（GH#1076 修法回退）⇒ 🔴 指名 `tpl-summon-agent`。
  */
+import { createHash } from "node:crypto";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { beforeAll, describe, expect, it } from "vitest";
@@ -65,7 +66,23 @@ const DUMMY = "godie-hart" as ChampionId;
  */
 const EXTRA_TICKS = 4 * TICK_HZ;
 
-const probeId = (t: TemplateDoc): AbilityId => `probe1078.${t.id}.q` as AbilityId;
+/**
+ * ⭐ 探針技能的 id —— ⛔ **不可以**是 `probe1078.<模板 id>.q`。
+ *
+ * ⚠️ 內容 id 上限是 **64 字元**（`schema/common.ts:201` 的 `.max(64)`），而
+ * 2026-09-11 進來的 `hero-template.<48 位 sha>` 本身就 **62 字元**
+ * ⇒ 加上前後綴變成 **74** ⇒ `zAbilityDoc` 拒收 ⇒ registry **把它降級**
+ * ⇒ ⭐ 24 份模板一起被報成「預設展開在 sim 裡什麼都不做」。
+ *
+ * ⛔⛔ 而那個報告**是假的**：那 24 份模板單獨 `expand()` **全部 OK**。
+ * ⇒ ⭐ 壞的是**量尺**（探針造了一個過長的 id），⛔ 不是模板 ——
+ *   而它報出來的症狀與「模板真的是 no-op」**長得一模一樣**。
+ *
+ * ⇒ ⭐ 改成**定長**：`probe1078.<模板 id 的 12 位雜湊>.q`（共 27 字元），
+ *   ⛔ 而雜湊只取模板 id ⇒ 同一份模板每次跑都是同一個 id（可重現）。
+ */
+const probeId = (t: TemplateDoc): AbilityId =>
+  `probe1078.${createHash("sha256").update(t.id).digest("hex").slice(0, 12)}.q` as AbilityId;
 const champOf = (t: TemplateDoc): ChampionId => `probe1078.${t.id}` as ChampionId;
 const isPassiveTemplate = (t: TemplateDoc): boolean => {
   const ex = expand(t, defaultParamsFor(t));
@@ -126,9 +143,10 @@ function targetFor(def: AbilityDef, foe: EntityId, ally: EntityId, at: { x: numb
   return { type: "point", point: { x: at.x, z: at.z } };
 }
 
-interface Row { id: string; verdict: string; channel?: string; reason?: string }
+interface Row { id: string; family?: string; verdict: string; channel?: string; reason?: string }
 
 function probe(t: TemplateDoc): Row {
+  // ⭐ GH#1281：把 family 帶出來 —— 前置條件的理由是**家族**的性質，⛔ 不是某一個 id 的。
   const world = new SimWorld(SKELETON_ARENA, 4242);
   world.ultGateOverride = true;
   const caster = spawn(world, champOf(t), 0, 0);
@@ -196,7 +214,7 @@ function probe(t: TemplateDoc): Row {
       ? { id: t.id, verdict: "MODEL_FX", channel: `modelFxSpawn×${modelFxInstances}` }
       : { id: t.id, verdict: "FAIL", reason: "純演出模板連一具模型都沒生（modelFxSpawn 零實例）" };
   }
-  return { id: t.id, ...out };
+  return { id: t.id, family: t.family, ...out };
 }
 
 /**
@@ -221,7 +239,14 @@ describe("每一份 enabled 模板的預設展開，在真的 SimWorld 裡施放
     // 報告用：`GGD_1078_ROWS=1 npx vitest run …` 印出每一份量到的頻道（⛔ 平時不吵）。
     if (process.env["GGD_1078_ROWS"]) console.log(rows.map((r) => `${r.id}\t${r.verdict}\t${r.channel ?? ""}\t${r.reason ?? ""}`).join("\n"));
     const bad = rows.filter(
-      (r) => !["PASS", "PASSIVE", "MODEL_FX"].includes(r.verdict) && !PRECONDITION_BY_DESIGN[r.id],
+      // ⭐⭐ GH#1281（2026-09-17）—— 豁免要**認家族**，⛔ 不是認一個 id。
+      //   `tpl-spend-resource` 的理由（「這一族的定義就是要有 N 層資源才放得出來」）
+      //   對**每一份**同家族的模板都成立，而編譯出來的英雄模板叫 `hero-template.<雜湊>`
+      //   ⇒ 只認 id 的話，第四批帶進來的那一份（金色魔王 EX／艾希 Q 用的）就被判成 no-op。
+      (r) =>
+        !["PASS", "PASSIVE", "MODEL_FX"].includes(r.verdict) &&
+        !PRECONDITION_BY_DESIGN[r.id] &&
+        !(r.family !== undefined && PRECONDITION_BY_DESIGN[`tpl-${r.family}`]),
     );
     expect(bad.map((r) => `${r.id}: ${r.verdict}（${r.reason ?? ""}）`), "預設展開在 sim 裡什麼都不做的模板").toEqual([]);
     // sentinel：分母要是全部 enabled 模板，而且三種形狀各自至少量到一個 —— 迴圈沒跑到也是全綠。

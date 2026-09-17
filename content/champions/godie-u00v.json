@@ -25,9 +25,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 76.4612,
+    "maxHealth": 80,
     "healthRegen": 0.2034,
-    "maxMana": 47.0969,
+    "maxMana": 50,
     "manaRegen": 0.1667,
     "ad": 3.0073,
     "armor": 0.8764,
@@ -69,11 +69,11 @@
         6.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -107,7 +107,8 @@
             ]
           }
         ]
-      }
+      },
+      "castTimeTier": "極小"
     },
     "W": {
       "id": "godie-u00v.w",
@@ -125,15 +126,15 @@
         45.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.earth.shockwave",
       "sfxKey": "wc3.gluescreenmeteorhit1",
-      "castTimeSec": 1.433,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
@@ -146,9 +147,10 @@
             "damageTier": "小"
           },
           "damageType": "magic",
-          "castTimeSec": 1.433
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "E": {
       "id": "godie-u00v.e",
@@ -166,10 +168,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "range": 0,
       "effects": [
@@ -180,20 +182,20 @@
           "modelKey": "w3x.stock.tornadoelemental",
           "clip": "idle",
           "soundKey": "wc3.blademasterwhirlwind",
-          "scale": 3.0,
+          "scale": 3,
           "tint": [
             0.7843,
             0.3922,
             0.3922
           ],
-          "lifeSec": 5.0
+          "lifeSec": 5
         }
       ],
       "vfxKey": "fx.prim.ki.beam",
       "sfxKey": "wc3.dragonyes2",
       "targetsEnemies": true,
       "radius": 6,
-      "castTimeSec": 0.8,
+      "castTimeSec": 1,
       "template": {
         "ref": "tpl-proxy-cast",
         "params": {
@@ -209,14 +211,15 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 0.8,
+          "castTimeSec": 1,
           "statusId": "burnstun",
           "statusDurationSec": 0.8
         }
       },
       "cooldownTier": "小",
       "manaCostTier": "小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-u00v.r",
@@ -233,9 +236,9 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [
         {
@@ -273,14 +276,14 @@
             {
               "kind": "knockback",
               "distanceTier": "極大",
-              "speed": 16.0,
+              "speed": 16,
               "from": "caster",
               "distance": 8
             },
             {
               "kind": "applyStatus",
               "statusId": "burnstun",
-              "duration": 1.0,
+              "duration": 1,
               "stun": true
             }
           ]
@@ -288,7 +291,7 @@
       ],
       "vfxKey": "fx.w3x.locust.boomnl.p01",
       "targetsEnemies": true,
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "hitFeel": {
         "hitstopTicks": 5,
         "hitstunTicks": 8,
@@ -306,7 +309,8 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
-      "manaCostTier": "小"
+      "manaCostTier": "小",
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

@@ -25,9 +25,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 75.9918,
+    "maxHealth": 80,
     "healthRegen": 0.2026,
-    "maxMana": 47.8622,
+    "maxMana": 50,
     "manaRegen": 0.1774,
     "ad": 3.0637,
     "armor": 0.8468,
@@ -69,11 +69,11 @@
         15.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [
         {
@@ -92,7 +92,7 @@
         {
           "kind": "applyStatus",
           "statusId": "slow40",
-          "duration": 1.0,
+          "duration": 1,
           "moveSpeedMult": 0.6
         },
         {
@@ -105,11 +105,12 @@
       ],
       "vfxKey": "fx.prim.physical.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "小",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "大"
     },
     "W": {
       "id": "godie-hart.w",
@@ -128,11 +129,11 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [
         {
@@ -153,7 +154,7 @@
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
       "radius": 4.5,
-      "castTimeSec": 1.133,
+      "castTimeSec": 1,
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "極小",
@@ -164,7 +165,7 @@
         "params": {
           "mode": "toPoint",
           "applyTo": "self",
-          "apexHeight": 600.0,
+          "apexHeight": 600,
           "durationSec": 0.82,
           "landRadius": 249.82,
           "damage": {
@@ -182,9 +183,10 @@
             "duration": 1.5,
             "moveSpeedMult": 0.6
           },
-          "castTimeSec": 1.133
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "E": {
       "id": "godie-hart.e",
@@ -202,10 +204,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [
         {
@@ -232,7 +234,7 @@
           ],
           "dispellable": true,
           "polarity": "debuff",
-          "duration": 5.0,
+          "duration": 5,
           "perRank": [
             {
               "modifiers": [
@@ -242,7 +244,7 @@
                   "value": -3
                 }
               ],
-              "duration": 5.0
+              "duration": 5
             },
             {
               "modifiers": [
@@ -252,7 +254,7 @@
                   "value": -6
                 }
               ],
-              "duration": 5.0
+              "duration": 5
             },
             {
               "modifiers": [
@@ -262,7 +264,7 @@
                   "value": -9
                 }
               ],
-              "duration": 5.0
+              "duration": 5
             },
             {
               "modifiers": [
@@ -272,7 +274,7 @@
                   "value": -12
                 }
               ],
-              "duration": 5.0
+              "duration": 5
             }
           ]
         },
@@ -283,23 +285,24 @@
           "modelKey": "w3x.stock.tornadoelemental",
           "clip": "idle",
           "soundKey": "wc3.blademasterwhirlwind",
-          "scale": 2.0,
+          "scale": 2,
           "tint": [
             0.5882,
             0.5882,
-            1.0
+            1
           ]
         }
       ],
       "vfxKey": "fx.prim.physical.beam",
       "targetsEnemies": true,
-      "radius": 6.0,
-      "castTimeSec": 1.633,
+      "radius": 6,
+      "castTimeSec": 1,
       "rangeTier": "極小",
       "range": 3,
       "cooldownTier": "小",
       "manaCostTier": "小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-hart.r",
@@ -316,9 +319,9 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [
         {
@@ -374,7 +377,7 @@
               "sizeScale": 1.2,
               "riseSpeed": 1.6,
               "durationSec": 1.1,
-              "driftSpeed": 1.0,
+              "driftSpeed": 1,
               "driftAngleDeg": 0,
               "driftAngleStepDeg": 270,
               "driftFrom": "casterFacing"
@@ -455,7 +458,7 @@
           "modelKey": "imported.herocloudstrife",
           "alpha": 0.6,
           "path": "toTarget",
-          "speed": 30.0,
+          "speed": 30,
           "onArrive": [
             {
               "kind": "spawnVfx",
@@ -467,7 +470,7 @@
       ],
       "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",
       "targetsEnemies": true,
-      "castTimeSec": 1.833,
+      "castTimeSec": 1,
       "hitFeel": {
         "hitstopTicks": 5,
         "hitstunTicks": 9,
@@ -485,7 +488,8 @@
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "極大",
-      "manaCostTier": "小"
+      "manaCostTier": "小",
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [

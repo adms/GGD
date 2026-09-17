@@ -1,0 +1,66 @@
+{
+  "id": "acquired-mario.passive",
+  "name": "叮！不是薪水",
+  "provenance": "editor-json",
+  "description": "施放 E 後取得 6 秒硬幣標記，供 EX 換取較多回復與護盾。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onAbilityCast",
+            "abilitySlot": "E",
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "sourceScope": "caster",
+                "statusId": "acquired-mario.coin",
+                "duration": 6,
+                "applyTo": "self"
+              }
+            ],
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "castTimeTier": "極小",
+  "template": {
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+    "params": {
+      "hooks": [
+        {
+          "on": "onAbilityCast",
+          "abilitySlot": "E",
+          "target": "self",
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "acquired-mario.coin",
+              "duration": 6,
+              "sourceScope": "caster",
+              "applyTo": "self"
+            }
+          ]
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/acquired-mario.passive.webp"
+}

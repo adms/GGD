@@ -218,6 +218,11 @@ describe("INPUT validator — command shape rules (sec-input-02)", () => {
     expect(sanitizeCommand({ kind: "buyItem", itemId: "sword" })).toEqual({ kind: "buyItem", itemId: "sword" });
     expect(sanitizeCommand({ kind: "pickOffer", offerId: huge })).toBeUndefined();
   });
+
+  it("GH#1189 interact：只放行非負整數的 objectId（⛔ 丟掉的指令＝玩家點燈毫無反應）", () => {
+    expect(sanitizeCommand({ kind: "interact", objectId: 42, extra: "x" })).toEqual({ kind: "interact", objectId: 42 });
+    for (const objectId of [-1, 1.5, "42", undefined]) expect(sanitizeCommand({ kind: "interact", objectId })).toBeUndefined();
+  });
 });
 
 describe("INPUT validator — oversized payloads (sec-input-03)", () => {

@@ -122,15 +122,24 @@ function armSlot(world: SimWorld, id: EntityId, slot: CoreAbilitySlot): void {
   hp.mana = hp.maxMana = 9999;
 }
 
-/** Press the button and let the cast resolve. Returns every event seen. */
+/**
+ * Press the button and let the cast resolve. Returns every event seen.
+ *
+ * ⭐ 2026-09-15 —— 等多久由 **sim 自己**說（按下那一 tick 寫進 `ab.cast.ticksLeft` 的吟唱 tick 數，
+ * 已套過 `castTimeRules` 三格），再加原本的 20 tick 餘裕。⛔ 在此之前是寫死 20 tick ＝ 替吟唱時間抄了
+ * 一個字面值：`da508309c` 把這三支的 `castTimeSec` 對齊到五級距（0.267／0.667 → 1.0，極大）之後，
+ * 20 tick（0.667 秒）等不到解算 ⇒ 按鈕照樣被接受、身體卻「沒變」—— 紅的訊息指向變身，真相是吟唱變長。
+ */
 function pressAndSettle(
   world: SimWorld,
   id: EntityId,
   slot: CoreAbilitySlot,
-  ticks = 20,
+  margin = 20,
 ): string[] {
   const res = castAbility(world, id, slot, { type: "self" });
   expect(res, `pressing ${slot} was accepted`).toBe("ok");
+  const castTicks = world.abilities.get(id)!.cast?.ticksLeft ?? 0;
+  const ticks = castTicks + margin;
   const seen: string[] = [...world.events.map((e) => e.type)];
   for (let i = 0; i < ticks; i++) {
     world.step(NO_INTENTS);

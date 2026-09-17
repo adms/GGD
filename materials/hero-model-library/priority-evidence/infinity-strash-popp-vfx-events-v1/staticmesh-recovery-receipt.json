@@ -1,0 +1,2622 @@
+{
+  "schema": "ggd.infinity-strash-popp-vfx-staticmesh-recovery@1",
+  "sourceId": "steam-infinity-strash-popp-vfx-staticmesh-recovery-build-local-20240328",
+  "parentSourceId": "steam-infinity-strash-popp-vfx-dependency-export-build-local-20240328",
+  "inputManifest": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-dependency-export-v1/source-manifest.json",
+    "bytes": 1647155,
+    "sha256": "9bd59c6ddff68a0c4b17929b0859fa31e00d128aeaf8efdd077dc1f57221ee9d"
+  },
+  "rawRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw",
+  "tools": {
+    "umodel": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/UEViewer/specific-infinity-strash-macos-v2-staticmesh-export/umodel",
+      "bytes": 1280976,
+      "sha256": "880600582a8b69a7d2872a76805be30e883694d30b7491d027a418d6656c95a1",
+      "version": "UE Viewer (UModel)\nCompiled Sep 13 2026 (build (unversioned))\nCopyright 2007-2022 Konstantin Nosov (Gildor). All rights reserved.\nLicensed under the MIT License, see LICENSE.txt for more information.\nhttps://www.gildor.org/en/projects/umodel"
+    },
+    "assimp": {
+      "absolutePath": "/usr/local/Cellar/assimp/6.0.5/bin/assimp",
+      "bytes": 125040,
+      "sha256": "5e3ec1da224641cf22f941be4c387d59b640a11ac10ceddd15a779bdbfc233e1",
+      "version": "------------------------------------------------------ \nOpen Asset Import Library (\"Assimp\", https://github.com/assimp/assimp) \n -- Commandline toolchain --\n------------------------------------------------------ \n\nVersion 6.0 -shared -st (GIT commit 0)"
+    }
+  },
+  "summary": {
+    "failedStaticMeshPackagesAttempted": 33,
+    "packagesConverted": 33,
+    "packagesStillBlocked": 0,
+    "glbFiles": 33,
+    "glbBytes": 2157436,
+    "vertices": 30459,
+    "triangles": 37091
+  },
+  "rows": [
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Cylinder_Tube/SM_RingB1_kh_01",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/SM_RingB1_kh_01",
+      "tag": "000-741536e4ee8a",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/SM_RingB1_kh_01.uasset",
+          "bytes": 2468,
+          "sha256": "d4b10016c8ed4cf6bc98638738a9315e24075fcba6db363f96841465572bf1c8"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/SM_RingB1_kh_01.uexp",
+          "bytes": 26270,
+          "sha256": "ed2757ecb41d7f8b8dae99f79c8431a31e161c3365a752b9fee0fea165df6e25"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/000-741536e4ee8a/umodel.log",
+        "bytes": 2143,
+        "sha256": "7c2d84081b1e4724d27d8f84a618ab261518fbfa4cfb9703a4cd7ab1b71d8a9e",
+        "path": "gltf/000-741536e4ee8a/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/000-741536e4ee8a/Strash/VFX/Staticmesh/Cylinder_Tube/SM_RingB1_kh_01.gltf",
+          "bytes": 2019,
+          "sha256": "6ab26aacabc218650360ace9082e1cb5c5b4ca152002482dddc5e9dd2d7f006e",
+          "path": "gltf/000-741536e4ee8a/Strash/VFX/Staticmesh/Cylinder_Tube/SM_RingB1_kh_01.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 5
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/000-741536e4ee8a/SM_RingB1_kh_01.glb",
+          "bytes": 17332,
+          "sha256": "e7ccd8dbaf043e6a5cc52b6ac125a2201b5a23047d4c4444261de1165542d1f4",
+          "path": "glb/000-741536e4ee8a/SM_RingB1_kh_01.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 260,
+            "indices": 768,
+            "triangles": 256,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Cylinder_Tube/SM_Ring_kt_00",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/SM_Ring_kt_00",
+      "tag": "001-4a54908d0280",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/SM_Ring_kt_00.uasset",
+          "bytes": 2853,
+          "sha256": "675ef8e9f96877ef81e12d1b182560636b298ade0cd4f35ba53525eab9efecf3"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/SM_Ring_kt_00.uexp",
+          "bytes": 73737,
+          "sha256": "b790279ca5684a425b6e6c5ce9dd97818b0f41d0e61e939047c850fd82860d5b"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/001-4a54908d0280/umodel.log",
+        "bytes": 2133,
+        "sha256": "8c48a80395d2e80e53e87aa08651cc030dcad3a72ed81ccbd1f92590b37e10f6",
+        "path": "gltf/001-4a54908d0280/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/001-4a54908d0280/Strash/VFX/Staticmesh/Cylinder_Tube/SM_Ring_kt_00.gltf",
+          "bytes": 2242,
+          "sha256": "ce1e0ae30ab95ec307de3a02e349d7ac03dc04efca22bbc291c6a412bbae3c0f",
+          "path": "gltf/001-4a54908d0280/Strash/VFX/Staticmesh/Cylinder_Tube/SM_Ring_kt_00.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 6
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/001-4a54908d0280/SM_Ring_kt_00.glb",
+          "bytes": 38692,
+          "sha256": "9c8875746077f43b8749b6546561db8db4f84979a4994bb17d2771c845577a6c",
+          "path": "glb/001-4a54908d0280/SM_Ring_kt_00.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 429,
+            "indices": 2304,
+            "triangles": 768,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Cylinder_Tube/SM_Ring_simple_00_Tk",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/SM_Ring_simple_00_Tk",
+      "tag": "002-94b78b3d7c42",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/SM_Ring_simple_00_Tk.uasset",
+          "bytes": 2519,
+          "sha256": "437a1689c23eaa29ac01769ecdb8f3905b9b531df71abbd2f463c708f3616ca2"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/SM_Ring_simple_00_Tk.uexp",
+          "bytes": 53223,
+          "sha256": "4959d1cd13a45f6946a36ecadb9aa0e07b95c2470bf13453fad41bf9284f7ef4"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/002-94b78b3d7c42/umodel.log",
+        "bytes": 2168,
+        "sha256": "6c3f4ba2238f00b6d14f84842010554f6fbfd6eae26ee351f17b992c7b65c2df",
+        "path": "gltf/002-94b78b3d7c42/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/002-94b78b3d7c42/Strash/VFX/Staticmesh/Cylinder_Tube/SM_Ring_simple_00_Tk.gltf",
+          "bytes": 2271,
+          "sha256": "36e76bb839700945129b6ac2c411a6f8ff29ce424a5da72b6a7612c2068eb060",
+          "path": "gltf/002-94b78b3d7c42/Strash/VFX/Staticmesh/Cylinder_Tube/SM_Ring_simple_00_Tk.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 6
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/002-94b78b3d7c42/SM_Ring_simple_00_Tk.glb",
+          "bytes": 26384,
+          "sha256": "f2f7e17083357e71b2f8adc8bb0a9f6c95aada9dd0c71a9fdf78f51a1019c2de",
+          "path": "glb/002-94b78b3d7c42/SM_Ring_simple_00_Tk.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 325,
+            "indices": 1536,
+            "triangles": 512,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_Cone_hf_01",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_Cone_hf_01",
+      "tag": "003-a29db91fee7f",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_Cone_hf_01.uasset",
+          "bytes": 2867,
+          "sha256": "80de17dff2996ecb382c83d1d2b50baf2e141809f8f6b5d63d4545f69953af25"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_Cone_hf_01.uexp",
+          "bytes": 66993,
+          "sha256": "9be6e39cb61a55feb69abe65df576451dc08becad8e67b9b2886ca162514c9da"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/003-a29db91fee7f/umodel.log",
+        "bytes": 2148,
+        "sha256": "c9c0af0e109e4c8b557510f5205c31399eace84b2e16a5b93c1a34da21757951",
+        "path": "gltf/003-a29db91fee7f/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/003-a29db91fee7f/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_Cone_hf_01.gltf",
+          "bytes": 2012,
+          "sha256": "02259c3c8db9ad18d6d2b31b90a9bf84a937c3eb43afd1e92abfaf2efb299795",
+          "path": "gltf/003-a29db91fee7f/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_Cone_hf_01.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 5
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/003-a29db91fee7f/SM_ef_Cone_hf_01.glb",
+          "bytes": 26944,
+          "sha256": "4ce34b0ce99660772476603ac3e5da20237b2554e2912baa8c071383ddfca19b",
+          "path": "glb/003-a29db91fee7f/SM_ef_Cone_hf_01.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 363,
+            "indices": 1920,
+            "triangles": 640,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_Taperd_Cylinder_tk_00",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_Taperd_Cylinder_tk_00",
+      "tag": "004-e046390408ff",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_Taperd_Cylinder_tk_00.uasset",
+          "bytes": 2501,
+          "sha256": "0c59aa73c7338734581096f64dc909f82c50f742aac13215b72bed35a72fc13c"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_Taperd_Cylinder_tk_00.uexp",
+          "bytes": 62060,
+          "sha256": "9e32d7484fa53c6caaace4535e82cd07b4fa1b205d91ef9247cdc4df4881725c"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/004-e046390408ff/umodel.log",
+        "bytes": 2203,
+        "sha256": "3a8e08b5ccb45bf8e99b1419253c60988209b98614fad110353724c59ca1665d",
+        "path": "gltf/004-e046390408ff/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/004-e046390408ff/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_Taperd_Cylinder_tk_00.gltf",
+          "bytes": 2290,
+          "sha256": "e1efb22b3ba96ff4d22705c6402b670a36542445e9176246f5c71c5a5627981a",
+          "path": "gltf/004-e046390408ff/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_Taperd_Cylinder_tk_00.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 6
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/004-e046390408ff/SM_ef_Taperd_Cylinder_tk_00.glb",
+          "bytes": 30124,
+          "sha256": "d16b0a0fd04c4a410c74d1828101b836706b5f6d99f3d5fdc870f269f88f5f0c",
+          "path": "glb/004-e046390408ff/SM_ef_Taperd_Cylinder_tk_00.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 330,
+            "indices": 1728,
+            "triangles": 576,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_WaveCone_at_01",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_WaveCone_at_01",
+      "tag": "005-a92cddf50b94",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_WaveCone_at_01.uasset",
+          "bytes": 2487,
+          "sha256": "fbf2371a0d4b0ccbaaa0a432a79c40c888898d78501d0bfa12f0352eb6d19fc4"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_WaveCone_at_01.uexp",
+          "bytes": 37634,
+          "sha256": "92fe60700c6f936f00713c08a727a0082cfa5872d2a8d44dae29ec7e03e4ea1d"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/005-a92cddf50b94/umodel.log",
+        "bytes": 2168,
+        "sha256": "965832b54198b8a69323fe4e527f7f4dac83067c7de987054bcf0d19647a97e4",
+        "path": "gltf/005-a92cddf50b94/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/005-a92cddf50b94/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_WaveCone_at_01.gltf",
+          "bytes": 2291,
+          "sha256": "8fcfac1b6c9299c816a7fdb7144606716a4f4dbf18eb1620c2cefb66ba369ec2",
+          "path": "gltf/005-a92cddf50b94/Strash/VFX/Staticmesh/Cylinder_Tube/SM_ef_WaveCone_at_01.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 6
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/005-a92cddf50b94/SM_ef_WaveCone_at_01.glb",
+          "bytes": 20328,
+          "sha256": "cc182c2c9459a6cfc73c528f6c7a2b597436ef59bebc592c99757ade4803d256",
+          "path": "glb/005-a92cddf50b94/SM_ef_WaveCone_at_01.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 217,
+            "indices": 1080,
+            "triangles": 360,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Cylinder_Tube/S_Tube128Offset_tk_00",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/S_Tube128Offset_tk_00",
+      "tag": "006-0a545f0e0c8e",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/S_Tube128Offset_tk_00.uasset",
+          "bytes": 2489,
+          "sha256": "73d682cb3433071e477a8c78cb9a052b3d23b26c5b586d74bb176b689d2cc961"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/S_Tube128Offset_tk_00.uexp",
+          "bytes": 80160,
+          "sha256": "cfd88ee8abac83257cb7d01cf9c533705a7a96a9ee45736c703c7096e2c66123"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/006-0a545f0e0c8e/umodel.log",
+        "bytes": 2173,
+        "sha256": "4afa408527f200e7fca23349760e9ccff135d771e6874ce3e2b53dc591a8c598",
+        "path": "gltf/006-0a545f0e0c8e/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/006-0a545f0e0c8e/Strash/VFX/Staticmesh/Cylinder_Tube/S_Tube128Offset_tk_00.gltf",
+          "bytes": 2263,
+          "sha256": "da09f7f0152bae6f5ed39689088e545f3c62737c7ac27860bf1a49fe79221338",
+          "path": "gltf/006-0a545f0e0c8e/Strash/VFX/Staticmesh/Cylinder_Tube/S_Tube128Offset_tk_00.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 6
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/006-0a545f0e0c8e/S_Tube128Offset_tk_00.glb",
+          "bytes": 55416,
+          "sha256": "376f15b3b1d9cbb2c2613ddfd50808f22cc4895691c0a1f4183086868b56cc0b",
+          "path": "glb/006-0a545f0e0c8e/S_Tube128Offset_tk_00.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 645,
+            "indices": 3072,
+            "triangles": 1024,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Cylinder_Tube/S_UniqueRing_tk_01",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/S_UniqueRing_tk_01",
+      "tag": "007-78c630730695",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/S_UniqueRing_tk_01.uasset",
+          "bytes": 2483,
+          "sha256": "f1faf0276964b692b150f5049f4cda8021f93f7e91d8e66ae79fcd904759df63"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Cylinder_Tube/S_UniqueRing_tk_01.uexp",
+          "bytes": 76562,
+          "sha256": "309b34d319ad3dfc705883726b86ae5a6e51a58d8501e0cc361861cf0b76a92a"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/007-78c630730695/umodel.log",
+        "bytes": 2158,
+        "sha256": "598113306848f39d5efbf27749618e5b6aa7b4d0a5108a06b7174d6004014fe7",
+        "path": "gltf/007-78c630730695/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/007-78c630730695/Strash/VFX/Staticmesh/Cylinder_Tube/S_UniqueRing_tk_01.gltf",
+          "bytes": 2291,
+          "sha256": "a3953528068ad602bf42b6ef49b43fd0844b24fdde577afbb09d04f4dbb0da6f",
+          "path": "gltf/007-78c630730695/Strash/VFX/Staticmesh/Cylinder_Tube/S_UniqueRing_tk_01.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 6
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/007-78c630730695/S_UniqueRing_tk_01.glb",
+          "bytes": 55688,
+          "sha256": "83f74b1ac36558e57920c9186c0b6e36522134f7befc986108618e7e0c8a17bd",
+          "path": "glb/007-78c630730695/S_UniqueRing_tk_01.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 645,
+            "indices": 3072,
+            "triangles": 1024,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Disk_Plane/FBX_ef_slash_impact_kh_01",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Disk_Plane/FBX_ef_slash_impact_kh_01",
+      "tag": "008-f9c6c8700d04",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/FBX_ef_slash_impact_kh_01.uasset",
+          "bytes": 2494,
+          "sha256": "13cc1cd989ce3f9555f67fd43ff327a0b7f5a160de5b3e29db6f87b735fcdbb5"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/FBX_ef_slash_impact_kh_01.uexp",
+          "bytes": 10270,
+          "sha256": "672b9c806b96e08a33a24e9a7fe185fcbf3181df9870cb9961201f2ef9792bf4"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/008-f9c6c8700d04/umodel.log",
+        "bytes": 2184,
+        "sha256": "fbc21b872901e6d865714bc39ca487dda7164f7a174b6294425347a3ef58bc62",
+        "path": "gltf/008-f9c6c8700d04/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/008-f9c6c8700d04/Strash/VFX/Staticmesh/Disk_Plane/FBX_ef_slash_impact_kh_01.gltf",
+          "bytes": 2035,
+          "sha256": "5616003feaa7ac0f36c503dcbd641bb1c44504f1b65d9876da2da02baeefd67e",
+          "path": "gltf/008-f9c6c8700d04/Strash/VFX/Staticmesh/Disk_Plane/FBX_ef_slash_impact_kh_01.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 5
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/008-f9c6c8700d04/FBX_ef_slash_impact_kh_01.glb",
+          "bytes": 4360,
+          "sha256": "7d6a098138f7bba8eaa203b67c88ed0013ec2e36253d29bdc5ee48b6a29aa4bc",
+          "path": "glb/008-f9c6c8700d04/FBX_ef_slash_impact_kh_01.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 42,
+            "indices": 120,
+            "triangles": 40,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_CurveRing_tk_00",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_CurveRing_tk_00",
+      "tag": "009-142f96e49b17",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_CurveRing_tk_00.uasset",
+          "bytes": 2480,
+          "sha256": "13bd472bfaf235769912f5b7a806bc18d423986e2865a91bd0f5a7e4c2743733"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_CurveRing_tk_00.uexp",
+          "bytes": 31026,
+          "sha256": "b2640185b0613d06ac077c2395cecfcac5c1339d6f7d18c9e1f6722a1e625cd5"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/009-142f96e49b17/umodel.log",
+        "bytes": 2149,
+        "sha256": "92c5b677df25b5dd4e30fb15e59a8bf00cf75aae1176020ad2cd880f378ca32b",
+        "path": "gltf/009-142f96e49b17/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/009-142f96e49b17/Strash/VFX/Staticmesh/Disk_Plane/SM_CurveRing_tk_00.gltf",
+          "bytes": 2286,
+          "sha256": "ef31ae57a2f5d249143b191d4fdb80aeffc131ae4ad8ccf7a36c066f3f7d7bef",
+          "path": "gltf/009-142f96e49b17/Strash/VFX/Staticmesh/Disk_Plane/SM_CurveRing_tk_00.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 6
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/009-142f96e49b17/SM_CurveRing_tk_00.glb",
+          "bytes": 22408,
+          "sha256": "91653cd88c6f5eb3e2a4437f41ec193b0183124fdde4e58765a9d972254ad10c",
+          "path": "glb/009-142f96e49b17/SM_CurveRing_tk_00.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 245,
+            "indices": 1152,
+            "triangles": 384,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_DiskPlane_kh_01",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_DiskPlane_kh_01",
+      "tag": "010-e58f68fe9ab9",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_DiskPlane_kh_01.uasset",
+          "bytes": 2471,
+          "sha256": "91958a631ab300ba7462c70a22758a0de8c502ba214831fdfb4c630e77b3eedf"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_DiskPlane_kh_01.uexp",
+          "bytes": 5782,
+          "sha256": "adca12308eecaa5f71db0ab31c1392e7488dd49b80611dea71c695beba583b2b"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/010-e58f68fe9ab9/umodel.log",
+        "bytes": 2149,
+        "sha256": "e89ccd1867e2d778b282a1b2ea1705032107119bf0fcea075d9b0cdcc27dafac",
+        "path": "gltf/010-e58f68fe9ab9/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/010-e58f68fe9ab9/Strash/VFX/Staticmesh/Disk_Plane/SM_DiskPlane_kh_01.gltf",
+          "bytes": 2019,
+          "sha256": "b613739dd490bc2b7ecf770609325ec0af5967c7a3199cc969316f34d8799821",
+          "path": "gltf/010-e58f68fe9ab9/Strash/VFX/Staticmesh/Disk_Plane/SM_DiskPlane_kh_01.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 5
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/010-e58f68fe9ab9/SM_DiskPlane_kh_01.glb",
+          "bytes": 2944,
+          "sha256": "f1bb8ec2ac79a1f5b4439b56810ea299f48942077bab28e6b2bc2ca0f5d49af5",
+          "path": "glb/010-e58f68fe9ab9/SM_DiskPlane_kh_01.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 18,
+            "indices": 48,
+            "triangles": 16,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_Plane_kh_02",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_Plane_kh_02",
+      "tag": "011-1cc0ebbd17cf",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_Plane_kh_02.uasset",
+          "bytes": 2463,
+          "sha256": "6cb7cc3c29ac3cd31f5444a03e9c959b932b34344b2fd73f03ee04763070ea23"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_Plane_kh_02.uexp",
+          "bytes": 17422,
+          "sha256": "88c12adb1a3277737f18a19eac22eee5f7ab0f3664beac562e93c6ac5f69d0a7"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/011-1cc0ebbd17cf/umodel.log",
+        "bytes": 2129,
+        "sha256": "5bc9a34781a893d690d2015b273c41d635b9286fa503b7bbc230e5c8e0c07ad2",
+        "path": "gltf/011-1cc0ebbd17cf/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/011-1cc0ebbd17cf/Strash/VFX/Staticmesh/Disk_Plane/SM_Plane_kh_02.gltf",
+          "bytes": 2236,
+          "sha256": "6a77da88191777ac73415248518799ab4614cf19b5867777a369f75063c43c56",
+          "path": "gltf/011-1cc0ebbd17cf/Strash/VFX/Staticmesh/Disk_Plane/SM_Plane_kh_02.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 6
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/011-1cc0ebbd17cf/SM_Plane_kh_02.glb",
+          "bytes": 10096,
+          "sha256": "6edaaf6d0adf6193e109e757754e239bdfb6f0f98f7cabcc55683f2056aa84da",
+          "path": "glb/011-1cc0ebbd17cf/SM_Plane_kh_02.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 108,
+            "indices": 528,
+            "triangles": 176,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_64_4_Tk_00",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_64_4_Tk_00",
+      "tag": "012-b4cfed2d7fdd",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_64_4_Tk_00.uasset",
+          "bytes": 2512,
+          "sha256": "1455605829cffbeabfed2bb8058234ae81edb78a717253cdf227ef1cfe340cee"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_64_4_Tk_00.uexp",
+          "bytes": 30339,
+          "sha256": "ea4ec809290cc8ed3df4e7d276a916059d926d9553bcb3ee501bbaffe17a4fea"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/012-b4cfed2d7fdd/umodel.log",
+        "bytes": 2149,
+        "sha256": "34a6ba857b2c98dc31c3dbcf2349e1cdec6216634ee035d7698f6d2e3b21e3f9",
+        "path": "gltf/012-b4cfed2d7fdd/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/012-b4cfed2d7fdd/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_64_4_Tk_00.gltf",
+          "bytes": 2495,
+          "sha256": "4e56190c7f6fed41be822e547d09975082c45567660c4e2e0bc8243290722ec1",
+          "path": "gltf/012-b4cfed2d7fdd/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_64_4_Tk_00.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 7
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/012-b4cfed2d7fdd/SM_Ring_64_4_Tk_00.glb",
+          "bytes": 17144,
+          "sha256": "aed2601a0281b24079adaeecdd1faf9f17f0ec558df3a2591514167670139db1",
+          "path": "glb/012-b4cfed2d7fdd/SM_Ring_64_4_Tk_00.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 165,
+            "indices": 768,
+            "triangles": 256,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_Tight_64_Tk_00",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_Tight_64_Tk_00",
+      "tag": "013-4f827522e1c7",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_Tight_64_Tk_00.uasset",
+          "bytes": 2520,
+          "sha256": "289dad0cc07b073eff7bb67637c483f8ba6a36aa7e3dd7a07e994b1423bda465"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_Tight_64_Tk_00.uexp",
+          "bytes": 56179,
+          "sha256": "b72bfdec1505b0b3f4f00d23fe8c4b725098781114f1db0f08b8587f5ab46052"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/013-4f827522e1c7/umodel.log",
+        "bytes": 2169,
+        "sha256": "03fba21df32902819901f6377a5f1cbee056a9b1726e103324e00f2da47936bb",
+        "path": "gltf/013-4f827522e1c7/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/013-4f827522e1c7/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_Tight_64_Tk_00.gltf",
+          "bytes": 2532,
+          "sha256": "0b57c1a7ad7419c38f2aa0810f98f34fbd981b18281655ca28a7f9a9eb672392",
+          "path": "gltf/013-4f827522e1c7/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_Tight_64_Tk_00.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 7
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/013-4f827522e1c7/SM_Ring_Tight_64_Tk_00.glb",
+          "bytes": 31960,
+          "sha256": "a5ce3e15fd342327fd421cb3b35ab6b6c54cc110003ad6252f7e7e96e7119d7c",
+          "path": "glb/013-4f827522e1c7/SM_Ring_Tight_64_Tk_00.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 328,
+            "indices": 1536,
+            "triangles": 512,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_Wide_FrontX_128_Tk_00",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_Wide_FrontX_128_Tk_00",
+      "tag": "014-93dacdc3c065",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_Wide_FrontX_128_Tk_00.uasset",
+          "bytes": 2534,
+          "sha256": "428651135647cca67aa662fce559437906c1b00c051e0668a9cd8174caffdf0f"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_Wide_FrontX_128_Tk_00.uexp",
+          "bytes": 146867,
+          "sha256": "747a6d7c7d588494de1d61d547c45b2ec0007f2648b71639f9a4d8195d377725"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/014-93dacdc3c065/umodel.log",
+        "bytes": 2204,
+        "sha256": "ef7daf58a3ac88c77e104a32c6dd504d34b134ce18f28f035e50d7d5b8f0f1eb",
+        "path": "gltf/014-93dacdc3c065/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/014-93dacdc3c065/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_Wide_FrontX_128_Tk_00.gltf",
+          "bytes": 2557,
+          "sha256": "f5d36a7528aef8dd0f48cca78a6f6e03ea4bd0d49773feaae92ed2cdaaf76cd1",
+          "path": "gltf/014-93dacdc3c065/Strash/VFX/Staticmesh/Disk_Plane/SM_Ring_Wide_FrontX_128_Tk_00.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 7
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/014-93dacdc3c065/SM_Ring_Wide_FrontX_128_Tk_00.glb",
+          "bytes": 82444,
+          "sha256": "c46b07d468b6b8bd88731a31a5dc5d82c9dbed0bb97957e8ffa02285454f086a",
+          "path": "glb/014-93dacdc3c065/SM_Ring_Wide_FrontX_128_Tk_00.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 858,
+            "indices": 4608,
+            "triangles": 1536,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_TwistPlane_ny_01",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_TwistPlane_ny_01",
+      "tag": "015-3a84cd5ab4ea",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_TwistPlane_ny_01.uasset",
+          "bytes": 2481,
+          "sha256": "e3d63404def49bd09e6627fcf35a344e66191ec5689b29fda767ceb5faaad6fa"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_TwistPlane_ny_01.uexp",
+          "bytes": 28794,
+          "sha256": "510de8c116b6c385d48d7376ffb3f27b3386eba199fd769853e19e896dcc06fa"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/015-3a84cd5ab4ea/umodel.log",
+        "bytes": 2154,
+        "sha256": "f72159c91334df52554abd82ff7a063b8b86da91c78e6d77a65cd6a49885477e",
+        "path": "gltf/015-3a84cd5ab4ea/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/015-3a84cd5ab4ea/Strash/VFX/Staticmesh/Disk_Plane/SM_TwistPlane_ny_01.gltf",
+          "bytes": 2019,
+          "sha256": "81cef3eadbfc63b1bb2ddcfc3df8312d81113658ebb3be339ba1d80ac9113756",
+          "path": "gltf/015-3a84cd5ab4ea/Strash/VFX/Staticmesh/Disk_Plane/SM_TwistPlane_ny_01.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 5
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/015-3a84cd5ab4ea/SM_TwistPlane_ny_01.glb",
+          "bytes": 25040,
+          "sha256": "4729b3847d700d3a80c029c73de55b75cfdd6d2dd78b898777bcd9e312310ce0",
+          "path": "glb/015-3a84cd5ab4ea/SM_TwistPlane_ny_01.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 442,
+            "indices": 486,
+            "triangles": 162,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_circle_mesh_A2_kh_00",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_circle_mesh_A2_kh_00",
+      "tag": "016-55ce15d4b80b",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_circle_mesh_A2_kh_00.uasset",
+          "bytes": 2481,
+          "sha256": "1c89b55cf319858fb8cfc587577a50d35344ddda3a39ae78e065f7d23a5bcf5a"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_circle_mesh_A2_kh_00.uexp",
+          "bytes": 91132,
+          "sha256": "fd0a2849dabfafa710cf2f9d1f71dd1700d6a55d6315f6b58e48a67e05159b5b"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/016-55ce15d4b80b/umodel.log",
+        "bytes": 2174,
+        "sha256": "048592a539d6169bd883f990ad3a4210ca39920a550d5191f071d214f8c69806",
+        "path": "gltf/016-55ce15d4b80b/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/016-55ce15d4b80b/Strash/VFX/Staticmesh/Disk_Plane/SM_circle_mesh_A2_kh_00.gltf",
+          "bytes": 2047,
+          "sha256": "3636f8b63c10da0a0c37c8ecb549bd8a2fb36b562c99a599782ddcb3488f4a69",
+          "path": "gltf/016-55ce15d4b80b/Strash/VFX/Staticmesh/Disk_Plane/SM_circle_mesh_A2_kh_00.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 5
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/016-55ce15d4b80b/SM_circle_mesh_A2_kh_00.glb",
+          "bytes": 40044,
+          "sha256": "69cfb90b69ea41aad2e933f0f6ea11669b809344450035b8d6ae2bc1f844a034",
+          "path": "glb/016-55ce15d4b80b/SM_circle_mesh_A2_kh_00.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 560,
+            "indices": 2850,
+            "triangles": 950,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Disk_Plane/SM_ef_Simple_Plane_tk_00",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_ef_Simple_Plane_tk_00",
+      "tag": "017-97a5bff0aaf2",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_ef_Simple_Plane_tk_00.uasset",
+          "bytes": 2477,
+          "sha256": "90b962668a6b948bd0e549ddb6e1b836a1cb5ff95c0704024cb86142b09d8136"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Disk_Plane/SM_ef_Simple_Plane_tk_00.uexp",
+          "bytes": 17013,
+          "sha256": "39af017e2fe2dbc2f3044c7a78cf97a0fa9a361c5982f7cd89e9dd80ecd9d7d0"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/017-97a5bff0aaf2/umodel.log",
+        "bytes": 2179,
+        "sha256": "7a2de98ec044beae4683e889fa16fbbd0164d86870d4adbbb5299fb436ac6ddb",
+        "path": "gltf/017-97a5bff0aaf2/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/017-97a5bff0aaf2/Strash/VFX/Staticmesh/Disk_Plane/SM_ef_Simple_Plane_tk_00.gltf",
+          "bytes": 1980,
+          "sha256": "86f9473e43abfd54090acf33e6dfbe74a62579268ae81868ab14ec389a911d2a",
+          "path": "gltf/017-97a5bff0aaf2/Strash/VFX/Staticmesh/Disk_Plane/SM_ef_Simple_Plane_tk_00.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 5
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/017-97a5bff0aaf2/SM_ef_Simple_Plane_tk_00.glb",
+          "bytes": 1856,
+          "sha256": "ea92ac5aa59b3a56f13b0c29f2420cebc0cf9ac6f4fa2b0c8ed663c468e6b53f",
+          "path": "glb/017-97a5bff0aaf2/SM_ef_Simple_Plane_tk_00.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 4,
+            "indices": 6,
+            "triangles": 2,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Flash/SM_Flash_tk_00",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Flash/SM_Flash_tk_00",
+      "tag": "018-8a78c6efcaae",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Flash/SM_Flash_tk_00.uasset",
+          "bytes": 2499,
+          "sha256": "21786abab197c647139e5ebfd4866ba75b999c49751afbf38905f7d06bac0d67"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Flash/SM_Flash_tk_00.uexp",
+          "bytes": 29175,
+          "sha256": "1dde15f16af59bea5f5dca8309dde3a51f70dd073f8acd21908dc65804b8f13c"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/018-8a78c6efcaae/umodel.log",
+        "bytes": 2114,
+        "sha256": "0348a0b87702309c1db30695391291feff6775dbad03a8e208f40a6eae187dd9",
+        "path": "gltf/018-8a78c6efcaae/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/018-8a78c6efcaae/Strash/VFX/Staticmesh/Flash/SM_Flash_tk_00.gltf",
+          "bytes": 2234,
+          "sha256": "116194b122cb744bcbc3a16ada640823885f51dcef91f9c293ab7576b8062b36",
+          "path": "gltf/018-8a78c6efcaae/Strash/VFX/Staticmesh/Flash/SM_Flash_tk_00.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 6
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/018-8a78c6efcaae/SM_Flash_tk_00.glb",
+          "bytes": 9640,
+          "sha256": "3e5e48836a3bbcd86d1b39b54a7acaad01322817a3ba7f319a7155bacc647dc5",
+          "path": "glb/018-8a78c6efcaae/SM_Flash_tk_00.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 108,
+            "indices": 408,
+            "triangles": 136,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_Ice_core_kh_01",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_Ice_core_kh_01",
+      "tag": "019-6685296bcdae",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_Ice_core_kh_01.uasset",
+          "bytes": 2488,
+          "sha256": "1d0960fd0817c90b1f68eb670407477f855f870ace83d3a45af91b6db53098e3"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_Ice_core_kh_01.uexp",
+          "bytes": 167142,
+          "sha256": "0e887fa5b8ce41b118b838f6303ca2adaa275e37f6094d864b14b238eacfe2b4"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/019-6685296bcdae/umodel.log",
+        "bytes": 2189,
+        "sha256": "af0d3a391801dd22362a4744d3bf310dc6a1672c938a261785357c5669882a6e",
+        "path": "gltf/019-6685296bcdae/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/019-6685296bcdae/Strash/VFX/Staticmesh/Rock_Ice/SM_Ice_core_kh_01.gltf",
+          "bytes": 2272,
+          "sha256": "1cc8c6f4cd4773ed95e9502756d9a6c2a8fc156ed625d245757830537d91b7e8",
+          "path": "gltf/019-6685296bcdae/Strash/VFX/Staticmesh/Rock_Ice/SM_Ice_core_kh_01.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 6
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/019-6685296bcdae/SM_Ice_core_kh_01.glb",
+          "bytes": 175924,
+          "sha256": "e0c8781d6e345ac1a8b49d9881db671f8b28532cefc81b6406d6b94c880d013e",
+          "path": "glb/019-6685296bcdae/SM_Ice_core_kh_01.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 2769,
+            "indices": 4671,
+            "triangles": 1557,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Ice_at_01",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Ice_at_01",
+      "tag": "020-acd596ee15ed",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Ice_at_01.uasset",
+          "bytes": 2446,
+          "sha256": "98e1f8e48e3ce5c1dbff26bb22602f9b2254e7c29681872adbeab6bb621f83f6"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Ice_at_01.uexp",
+          "bytes": 19494,
+          "sha256": "f60d8324639d5f3ada796cc045d2b3a06d2b317a65b5f98f862b33290760c392"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/020-acd596ee15ed/umodel.log",
+        "bytes": 2128,
+        "sha256": "c112c91d44db66979eb9b52cb36f706f2f0d4da0ad98c140c8ae157ecfd00d36",
+        "path": "gltf/020-acd596ee15ed/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/020-acd596ee15ed/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Ice_at_01.gltf",
+          "bytes": 2023,
+          "sha256": "42c93ed570bab6824058ac16e85b497ea263c259c6ae889ab559130464dce39e",
+          "path": "gltf/020-acd596ee15ed/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Ice_at_01.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 5
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/020-acd596ee15ed/SM_ef_Ice_at_01.glb",
+          "bytes": 18268,
+          "sha256": "bd0133d62b637efb44cdfa1719eaa2fcdc3a24d674c5fa44e9b0cd85a843dd65",
+          "path": "glb/020-acd596ee15ed/SM_ef_Ice_at_01.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 314,
+            "indices": 324,
+            "triangles": 108,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Ice_at_02",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Ice_at_02",
+      "tag": "021-3edf27c7b4b3",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Ice_at_02.uasset",
+          "bytes": 2446,
+          "sha256": "fb567491408c38e2c5413105cd44cbdd55eb7290465f771fd7189af4dc7317cc"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Ice_at_02.uexp",
+          "bytes": 9862,
+          "sha256": "a6274c7845cba1c70efdaa01e6d1aaef48c38e52979d3a0e6998d1b1c83dcef4"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/021-3edf27c7b4b3/umodel.log",
+        "bytes": 2128,
+        "sha256": "dbd6c706de5634e391340421bbc5379026c50d71152db5766d12f5c831842b6c",
+        "path": "gltf/021-3edf27c7b4b3/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/021-3edf27c7b4b3/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Ice_at_02.gltf",
+          "bytes": 2020,
+          "sha256": "2a04a81faa273f9d16485c4a2a352714b99062f230f319a148b17902b81f28cd",
+          "path": "gltf/021-3edf27c7b4b3/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Ice_at_02.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 5
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/021-3edf27c7b4b3/SM_ef_Ice_at_02.glb",
+          "bytes": 6980,
+          "sha256": "b07993f29eaa88aa1127e3453ecbff436e6a4ee17ccbbe93c7f20e48573f22c0",
+          "path": "glb/021-3edf27c7b4b3/SM_ef_Ice_at_02.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 97,
+            "indices": 102,
+            "triangles": 34,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_MahyadoIce_at_01",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_MahyadoIce_at_01",
+      "tag": "022-49269ccc294a",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_MahyadoIce_at_01.uasset",
+          "bytes": 2460,
+          "sha256": "b01c181343029d8e9415774c7009691845f94c031797eb513813f6ef032c94db"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_MahyadoIce_at_01.uexp",
+          "bytes": 161930,
+          "sha256": "4583618a01b665f1428fb00f937f593a7c2488506e464303d7d18d5d0e7776c8"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/022-49269ccc294a/umodel.log",
+        "bytes": 2163,
+        "sha256": "eb754b7c79a926bcd8824512f5d0cf38e65fc800cdf4850149063ab883561680",
+        "path": "gltf/022-49269ccc294a/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/022-49269ccc294a/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_MahyadoIce_at_01.gltf",
+          "bytes": 2058,
+          "sha256": "6d79cfc4174da7595149fe861596809a7aad978549c44cf4156f3342b6fdd950",
+          "path": "gltf/022-49269ccc294a/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_MahyadoIce_at_01.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 5
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/022-49269ccc294a/SM_ef_MahyadoIce_at_01.glb",
+          "bytes": 153068,
+          "sha256": "b62d6a2e68cdd1e61963d5301e6fe392a01101fcbb2622e2887578ba57fb2a4e",
+          "path": "glb/022-49269ccc294a/SM_ef_MahyadoIce_at_01.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 2882,
+            "indices": 3201,
+            "triangles": 1067,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_RockTest_at_06",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_RockTest_at_06",
+      "tag": "023-c2dd4702dc43",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_RockTest_at_06.uasset",
+          "bytes": 2456,
+          "sha256": "e28dfa0700c0741a59a6d7697ed41d230080737fbb43866d994ef2ef99da7598"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_RockTest_at_06.uexp",
+          "bytes": 8478,
+          "sha256": "75d45b996d6f98c53daf686409a4c9e04ed5dd4b4e5fa25515e550e4cdd65262"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/023-c2dd4702dc43/umodel.log",
+        "bytes": 2153,
+        "sha256": "e5415a33ce34992d818c6955ffe6b18ee01974b6c9d0e63617f8266e0417b69e",
+        "path": "gltf/023-c2dd4702dc43/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/023-c2dd4702dc43/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_RockTest_at_06.gltf",
+          "bytes": 2027,
+          "sha256": "04339c345e375dfc22b080395db8ec6943f119a0ad14a21618547ea2347c75b0",
+          "path": "gltf/023-c2dd4702dc43/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_RockTest_at_06.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 5
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/023-c2dd4702dc43/SM_ef_RockTest_at_06.glb",
+          "bytes": 4212,
+          "sha256": "4d508ccd865a16b6b122d5d876bd95c102bb1abe9415c99a0e4dba47a9bd3642",
+          "path": "glb/023-c2dd4702dc43/SM_ef_RockTest_at_06.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 39,
+            "indices": 108,
+            "triangles": 36,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Rock_hf_01",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Rock_hf_01",
+      "tag": "024-2c0619a88b0c",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Rock_hf_01.uasset",
+          "bytes": 2480,
+          "sha256": "615250298c162bc5061a4b1b96ac8b5cf066372b2d58b86c2ae1fac4e621ba6b"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Rock_hf_01.uexp",
+          "bytes": 10203,
+          "sha256": "cddefa96719236df3439f226eeb8ba2101a1e1be44f54da609c6bf0dea1d3379"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/024-2c0619a88b0c/umodel.log",
+        "bytes": 2133,
+        "sha256": "8612d4d06620ce56fa856efd399f0b40f59face22882c16c69983e7cd9973837",
+        "path": "gltf/024-2c0619a88b0c/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/024-2c0619a88b0c/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Rock_hf_01.gltf",
+          "bytes": 2239,
+          "sha256": "ed2fc0897f79d0e3e56829f41faa265a7062f4870dc82b96b0f0a180ad5a25db",
+          "path": "gltf/024-2c0619a88b0c/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_Rock_hf_01.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 6
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/024-2c0619a88b0c/SM_ef_Rock_hf_01.glb",
+          "bytes": 5836,
+          "sha256": "8d62c5749c993299dbaf4f87d21cbecdd879875c2d500b5ee53908566db91db5",
+          "path": "glb/024-2c0619a88b0c/SM_ef_Rock_hf_01.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 58,
+            "indices": 108,
+            "triangles": 36,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_rock_st_03",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_rock_st_03",
+      "tag": "025-7d55ca524801",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_rock_st_03.uasset",
+          "bytes": 2828,
+          "sha256": "586a7ca195f9b78b2eaff01dcb6b2a6ca135f6f0e4d2f22071e70314bcb6ca53"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_rock_st_03.uexp",
+          "bytes": 371472,
+          "sha256": "a630c4893aee5ecdf9eec97bd91c02c1054206665e4aa20d644212c023f42cd7"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/025-7d55ca524801/umodel.log",
+        "bytes": 2133,
+        "sha256": "14c78b840137a8f9530a6577d048a058d4fb3f8f0a512291dbc21fd9c0fa74fa",
+        "path": "gltf/025-7d55ca524801/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/025-7d55ca524801/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_rock_st_03.gltf",
+          "bytes": 2044,
+          "sha256": "912a2be5916fef426e1e6931d85b1be7dbe332d99f57b2e796b19b2e95230bbb",
+          "path": "gltf/025-7d55ca524801/Strash/VFX/Staticmesh/Rock_Ice/SM_ef_rock_st_03.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 5
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/025-7d55ca524801/SM_ef_rock_st_03.glb",
+          "bytes": 342304,
+          "sha256": "2505942e8b81495d981b26f3de6e1e06adaefa90414eb58de88a487474bc686d",
+          "path": "glb/025-7d55ca524801/SM_ef_rock_st_03.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 6415,
+            "indices": 8115,
+            "triangles": 2705,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Slash/SM_ef_Common_H_kh_02",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Slash/SM_ef_Common_H_kh_02",
+      "tag": "026-28023b41a5fc",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Slash/SM_ef_Common_H_kh_02.uasset",
+          "bytes": 2512,
+          "sha256": "e8b3ade4a429db5065486c3e06517b9363dc6661e5c2a6d1245642c1172b6832"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Slash/SM_ef_Common_H_kh_02.uexp",
+          "bytes": 20571,
+          "sha256": "361f81749e22aa15982cd9bf6114e0e1e21733ab1d993b9147fe8a5d81872c7e"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/026-28023b41a5fc/umodel.log",
+        "bytes": 2144,
+        "sha256": "3d383620ef14aaa6e8efa652dc9b8fb6408a10fd9abceeaaac224226d6b6f823",
+        "path": "gltf/026-28023b41a5fc/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/026-28023b41a5fc/Strash/VFX/Staticmesh/Slash/SM_ef_Common_H_kh_02.gltf",
+          "bytes": 2257,
+          "sha256": "cc9c06261a80e14973dffe87a87baa0ade1dd6cea2eaa763a8f499445ff044bd",
+          "path": "gltf/026-28023b41a5fc/Strash/VFX/Staticmesh/Slash/SM_ef_Common_H_kh_02.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 6
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/026-28023b41a5fc/SM_ef_Common_H_kh_02.glb",
+          "bytes": 10788,
+          "sha256": "b867b3ae62901b03b22301edf920b8003103b03a6d4e948d791da452dce2cb10",
+          "path": "glb/026-28023b41a5fc/SM_ef_Common_H_kh_02.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 120,
+            "indices": 504,
+            "triangles": 168,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_64_Tk_00",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_64_Tk_00",
+      "tag": "027-13e8bb054888",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_64_Tk_00.uasset",
+          "bytes": 2514,
+          "sha256": "67e405c49d62c27429ec318e3e3f231de77767a0e1ab3218aee1a95af366fa37"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_64_Tk_00.uexp",
+          "bytes": 718175,
+          "sha256": "f50636701ea4217391737baf101dcf78671caa836695dfcdb7e1e754fea73b1a"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/027-13e8bb054888/umodel.log",
+        "bytes": 2152,
+        "sha256": "b17127588d91f67a1566d2602d2c8d8431577be8d2c93750ac68bd2f2691c2a0",
+        "path": "gltf/027-13e8bb054888/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/027-13e8bb054888/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_64_Tk_00.gltf",
+          "bytes": 2275,
+          "sha256": "198d9217f0a45735ea191969db1e43c87e7cdef6a1f2348abf0d9ffddd1d7961",
+          "path": "gltf/027-13e8bb054888/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_64_Tk_00.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 6
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/027-13e8bb054888/SM_Sphere_64_64_Tk_00.glb",
+          "bytes": 335240,
+          "sha256": "c631c4c06c4916e4e834859a7d6963313a1e40f19d5e463a3ea0e61feed0f93a",
+          "path": "glb/027-13e8bb054888/SM_Sphere_64_64_Tk_00.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 4223,
+            "indices": 24192,
+            "triangles": 8064,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_64_Tk_1",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_64_Tk_1",
+      "tag": "028-98be3a0aaa9b",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_64_Tk_1.uasset",
+          "bytes": 2508,
+          "sha256": "bbc63ccb45f054c18dcd5a9c5ca2ed1011c80765af180eff4b5f6d3014231057"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_64_Tk_1.uexp",
+          "bytes": 718175,
+          "sha256": "ed1896d66f04fc7d32abe601e45f5bf3754429700f0f639c73e200cd22cb7655"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/028-98be3a0aaa9b/umodel.log",
+        "bytes": 2147,
+        "sha256": "ca093ac0f7419c5bf37785761c120b18efd3e5e51b98f6be7cbf5d3b0d22db5e",
+        "path": "gltf/028-98be3a0aaa9b/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/028-98be3a0aaa9b/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_64_Tk_1.gltf",
+          "bytes": 2272,
+          "sha256": "55784714f6548837b320256a04d658e7c7dd6484dca76238105ef00fcea0f2d1",
+          "path": "gltf/028-98be3a0aaa9b/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_64_Tk_1.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 6
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/028-98be3a0aaa9b/SM_Sphere_64_64_Tk_1.glb",
+          "bytes": 335240,
+          "sha256": "a40c3cacff47d855c26b9a29f459c20a952edeca5b76c4a5beff24039d3d3e57",
+          "path": "glb/028-98be3a0aaa9b/SM_Sphere_64_64_Tk_1.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 4223,
+            "indices": 24192,
+            "triangles": 8064,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_Half32_Tk_00",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_Half32_Tk_00",
+      "tag": "029-44d9970b8d13",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_Half32_Tk_00.uasset",
+          "bytes": 2522,
+          "sha256": "5af46ae2f78a6cf35a114b659ea30fec41cd8ed6d159b8ad69f971d391a6bfbf"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_Half32_Tk_00.uexp",
+          "bytes": 369639,
+          "sha256": "d7a49c6557ee1a9b96b7f76e2fa6f97ca65ecac55260d68c2c6955abe0124b6c"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/029-44d9970b8d13/umodel.log",
+        "bytes": 2172,
+        "sha256": "ffe7b5fdb4eb82204756eb2d979a4563435758d1097702d3b45bc020420bb5dd",
+        "path": "gltf/029-44d9970b8d13/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/029-44d9970b8d13/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_Half32_Tk_00.gltf",
+          "bytes": 2293,
+          "sha256": "768ca86532509b5199a5b1fc31f6007c744b019220cf4d3d06f2aad6fd257d1e",
+          "path": "gltf/029-44d9970b8d13/Strash/VFX/Staticmesh/Sphere/SM_Sphere_64_Half32_Tk_00.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 6
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/029-44d9970b8d13/SM_Sphere_64_Half32_Tk_00.glb",
+          "bytes": 170532,
+          "sha256": "e887b7c2f92ad3a5ddbb845ca270deba004c405f046b0a7c23b2076e5ed59130",
+          "path": "glb/029-44d9970b8d13/SM_Sphere_64_Half32_Tk_00.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 2144,
+            "indices": 12096,
+            "triangles": 4032,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Sphere/SM_ef_HalfSphere_hf_00",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Sphere/SM_ef_HalfSphere_hf_00",
+      "tag": "030-902047616295",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Sphere/SM_ef_HalfSphere_hf_00.uasset",
+          "bytes": 2458,
+          "sha256": "94579fc16d5c0e6bb91ea608928c3e8977fd9fa80054d0349347c35f3bbee11a"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Sphere/SM_ef_HalfSphere_hf_00.uexp",
+          "bytes": 115750,
+          "sha256": "2a7be1e1f9c86d86635d7786bc7f96ebb3590e5721ac03726ecba89f4ea8a16c"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/030-902047616295/umodel.log",
+        "bytes": 2157,
+        "sha256": "bc1168e1bde074e1c05d7759e6ad411b6ae007aed789e5d48f18aa57003f1624",
+        "path": "gltf/030-902047616295/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/030-902047616295/Strash/VFX/Staticmesh/Sphere/SM_ef_HalfSphere_hf_00.gltf",
+          "bytes": 2028,
+          "sha256": "d642bc30ccbb66b7366f390a0de7f1a9abb0d68ca8f52d072eb0e490da8ffa0a",
+          "path": "gltf/030-902047616295/Strash/VFX/Staticmesh/Sphere/SM_ef_HalfSphere_hf_00.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 5
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/030-902047616295/SM_ef_HalfSphere_hf_00.glb",
+          "bytes": 50608,
+          "sha256": "8d8fc2d2e74a96935c9c75d9748ec300e47789396692b1b94a35800dffbe47fe",
+          "path": "glb/030-902047616295/SM_ef_HalfSphere_hf_00.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 703,
+            "indices": 3780,
+            "triangles": 1260,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Trail/SM_Trail_ny_01",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Trail/SM_Trail_ny_01",
+      "tag": "031-1b69a073053d",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Trail/SM_Trail_ny_01.uasset",
+          "bytes": 2466,
+          "sha256": "3556f5cca0fc287fa8b55d9dcda622b1f654cd4cb0f21f983d69088a15bb1167"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Trail/SM_Trail_ny_01.uexp",
+          "bytes": 26471,
+          "sha256": "ee1b8af4545d55de5143a3ecfea2df675950270da9706d2229e8a152f7dc5ed6"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/031-1b69a073053d/umodel.log",
+        "bytes": 2114,
+        "sha256": "bb27c4efec694e90a9af18e48a9ffe4647bdc9dcab3f0511996df87f4f4e8773",
+        "path": "gltf/031-1b69a073053d/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/031-1b69a073053d/Strash/VFX/Staticmesh/Trail/SM_Trail_ny_01.gltf",
+          "bytes": 2019,
+          "sha256": "59fc2cca36df7f952f00798716f65f53004c09ab13e5bf3ae38f9d120bb969e0",
+          "path": "gltf/031-1b69a073053d/Strash/VFX/Staticmesh/Trail/SM_Trail_ny_01.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 5
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/031-1b69a073053d/SM_Trail_ny_01.glb",
+          "bytes": 14796,
+          "sha256": "20515664e7cc38f3d13479eb2c20dcd94e5d48daa4afd9da3d7ee9cd92a31937",
+          "path": "glb/031-1b69a073053d/SM_Trail_ny_01.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 190,
+            "indices": 945,
+            "triangles": 315,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    },
+    {
+      "reference": "/Game/Strash/VFX/Staticmesh/Trail/SM_Trail_ny_02",
+      "pakStem": "strash/Content/Strash/VFX/Staticmesh/Trail/SM_Trail_ny_02",
+      "tag": "032-ceace961fe3b",
+      "input": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Trail/SM_Trail_ny_02.uasset",
+          "bytes": 2466,
+          "sha256": "428f1abef9cc755591a9e00c99d4a0b240a08006d0755c7d23f9cbddf092bff5"
+        },
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1/raw/strash/Content/Strash/VFX/Staticmesh/Trail/SM_Trail_ny_02.uexp",
+          "bytes": 26779,
+          "sha256": "b2160eb7a4c2dfeeec497f769c8312b2bc0bd4f2aad65c605f2115b18d42e498"
+        }
+      ],
+      "umodelReturnCode": 0,
+      "umodelLog": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/032-ceace961fe3b/umodel.log",
+        "bytes": 2114,
+        "sha256": "3fbdf1c11f472de07fa8591e1bfdc72632df7b64350005d6d1abdb239c11e0c9",
+        "path": "gltf/032-ceace961fe3b/umodel.log"
+      },
+      "gltf": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/gltf/032-ceace961fe3b/Strash/VFX/Staticmesh/Trail/SM_Trail_ny_02.gltf",
+          "bytes": 2018,
+          "sha256": "5f3d8eca5e6357e2e8a05c2b24d9bde6f9cff2c530d3b12638ed8f5b9b885fe9",
+          "path": "gltf/032-ceace961fe3b/Strash/VFX/Staticmesh/Trail/SM_Trail_ny_02.gltf",
+          "structure": {
+            "meshes": 1,
+            "primitives": 1,
+            "accessors": 5
+          }
+        }
+      ],
+      "glb": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/032-ceace961fe3b/SM_Trail_ny_02.glb",
+          "bytes": 14796,
+          "sha256": "c28f3a8c3a925c5f1636e6f685d1fb0ea378696c2e1b6318072c50a7fe31ab93",
+          "path": "glb/032-ceace961fe3b/SM_Trail_ny_02.glb",
+          "structure": {
+            "chunks": 2,
+            "meshes": 1,
+            "primitives": 1,
+            "vertices": 190,
+            "indices": 945,
+            "triangles": 315,
+            "materials": 2,
+            "animations": 0
+          },
+          "normalization": {
+            "unusedTangentBindingsRemoved": 1
+          }
+        }
+      ],
+      "status": "converted-staticmesh-support"
+    }
+  ],
+  "files": [
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/000-741536e4ee8a/SM_RingB1_kh_01.glb",
+      "bytes": 17332,
+      "sha256": "e7ccd8dbaf043e6a5cc52b6ac125a2201b5a23047d4c4444261de1165542d1f4",
+      "path": "glb/000-741536e4ee8a/SM_RingB1_kh_01.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 260,
+        "indices": 768,
+        "triangles": 256,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/001-4a54908d0280/SM_Ring_kt_00.glb",
+      "bytes": 38692,
+      "sha256": "9c8875746077f43b8749b6546561db8db4f84979a4994bb17d2771c845577a6c",
+      "path": "glb/001-4a54908d0280/SM_Ring_kt_00.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 429,
+        "indices": 2304,
+        "triangles": 768,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/002-94b78b3d7c42/SM_Ring_simple_00_Tk.glb",
+      "bytes": 26384,
+      "sha256": "f2f7e17083357e71b2f8adc8bb0a9f6c95aada9dd0c71a9fdf78f51a1019c2de",
+      "path": "glb/002-94b78b3d7c42/SM_Ring_simple_00_Tk.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 325,
+        "indices": 1536,
+        "triangles": 512,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/003-a29db91fee7f/SM_ef_Cone_hf_01.glb",
+      "bytes": 26944,
+      "sha256": "4ce34b0ce99660772476603ac3e5da20237b2554e2912baa8c071383ddfca19b",
+      "path": "glb/003-a29db91fee7f/SM_ef_Cone_hf_01.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 363,
+        "indices": 1920,
+        "triangles": 640,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/004-e046390408ff/SM_ef_Taperd_Cylinder_tk_00.glb",
+      "bytes": 30124,
+      "sha256": "d16b0a0fd04c4a410c74d1828101b836706b5f6d99f3d5fdc870f269f88f5f0c",
+      "path": "glb/004-e046390408ff/SM_ef_Taperd_Cylinder_tk_00.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 330,
+        "indices": 1728,
+        "triangles": 576,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/005-a92cddf50b94/SM_ef_WaveCone_at_01.glb",
+      "bytes": 20328,
+      "sha256": "cc182c2c9459a6cfc73c528f6c7a2b597436ef59bebc592c99757ade4803d256",
+      "path": "glb/005-a92cddf50b94/SM_ef_WaveCone_at_01.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 217,
+        "indices": 1080,
+        "triangles": 360,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/006-0a545f0e0c8e/S_Tube128Offset_tk_00.glb",
+      "bytes": 55416,
+      "sha256": "376f15b3b1d9cbb2c2613ddfd50808f22cc4895691c0a1f4183086868b56cc0b",
+      "path": "glb/006-0a545f0e0c8e/S_Tube128Offset_tk_00.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 645,
+        "indices": 3072,
+        "triangles": 1024,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/007-78c630730695/S_UniqueRing_tk_01.glb",
+      "bytes": 55688,
+      "sha256": "83f74b1ac36558e57920c9186c0b6e36522134f7befc986108618e7e0c8a17bd",
+      "path": "glb/007-78c630730695/S_UniqueRing_tk_01.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 645,
+        "indices": 3072,
+        "triangles": 1024,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/008-f9c6c8700d04/FBX_ef_slash_impact_kh_01.glb",
+      "bytes": 4360,
+      "sha256": "7d6a098138f7bba8eaa203b67c88ed0013ec2e36253d29bdc5ee48b6a29aa4bc",
+      "path": "glb/008-f9c6c8700d04/FBX_ef_slash_impact_kh_01.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 42,
+        "indices": 120,
+        "triangles": 40,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/009-142f96e49b17/SM_CurveRing_tk_00.glb",
+      "bytes": 22408,
+      "sha256": "91653cd88c6f5eb3e2a4437f41ec193b0183124fdde4e58765a9d972254ad10c",
+      "path": "glb/009-142f96e49b17/SM_CurveRing_tk_00.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 245,
+        "indices": 1152,
+        "triangles": 384,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/010-e58f68fe9ab9/SM_DiskPlane_kh_01.glb",
+      "bytes": 2944,
+      "sha256": "f1bb8ec2ac79a1f5b4439b56810ea299f48942077bab28e6b2bc2ca0f5d49af5",
+      "path": "glb/010-e58f68fe9ab9/SM_DiskPlane_kh_01.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 18,
+        "indices": 48,
+        "triangles": 16,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/011-1cc0ebbd17cf/SM_Plane_kh_02.glb",
+      "bytes": 10096,
+      "sha256": "6edaaf6d0adf6193e109e757754e239bdfb6f0f98f7cabcc55683f2056aa84da",
+      "path": "glb/011-1cc0ebbd17cf/SM_Plane_kh_02.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 108,
+        "indices": 528,
+        "triangles": 176,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/012-b4cfed2d7fdd/SM_Ring_64_4_Tk_00.glb",
+      "bytes": 17144,
+      "sha256": "aed2601a0281b24079adaeecdd1faf9f17f0ec558df3a2591514167670139db1",
+      "path": "glb/012-b4cfed2d7fdd/SM_Ring_64_4_Tk_00.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 165,
+        "indices": 768,
+        "triangles": 256,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/013-4f827522e1c7/SM_Ring_Tight_64_Tk_00.glb",
+      "bytes": 31960,
+      "sha256": "a5ce3e15fd342327fd421cb3b35ab6b6c54cc110003ad6252f7e7e96e7119d7c",
+      "path": "glb/013-4f827522e1c7/SM_Ring_Tight_64_Tk_00.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 328,
+        "indices": 1536,
+        "triangles": 512,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/014-93dacdc3c065/SM_Ring_Wide_FrontX_128_Tk_00.glb",
+      "bytes": 82444,
+      "sha256": "c46b07d468b6b8bd88731a31a5dc5d82c9dbed0bb97957e8ffa02285454f086a",
+      "path": "glb/014-93dacdc3c065/SM_Ring_Wide_FrontX_128_Tk_00.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 858,
+        "indices": 4608,
+        "triangles": 1536,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/015-3a84cd5ab4ea/SM_TwistPlane_ny_01.glb",
+      "bytes": 25040,
+      "sha256": "4729b3847d700d3a80c029c73de55b75cfdd6d2dd78b898777bcd9e312310ce0",
+      "path": "glb/015-3a84cd5ab4ea/SM_TwistPlane_ny_01.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 442,
+        "indices": 486,
+        "triangles": 162,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/016-55ce15d4b80b/SM_circle_mesh_A2_kh_00.glb",
+      "bytes": 40044,
+      "sha256": "69cfb90b69ea41aad2e933f0f6ea11669b809344450035b8d6ae2bc1f844a034",
+      "path": "glb/016-55ce15d4b80b/SM_circle_mesh_A2_kh_00.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 560,
+        "indices": 2850,
+        "triangles": 950,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/017-97a5bff0aaf2/SM_ef_Simple_Plane_tk_00.glb",
+      "bytes": 1856,
+      "sha256": "ea92ac5aa59b3a56f13b0c29f2420cebc0cf9ac6f4fa2b0c8ed663c468e6b53f",
+      "path": "glb/017-97a5bff0aaf2/SM_ef_Simple_Plane_tk_00.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 4,
+        "indices": 6,
+        "triangles": 2,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/018-8a78c6efcaae/SM_Flash_tk_00.glb",
+      "bytes": 9640,
+      "sha256": "3e5e48836a3bbcd86d1b39b54a7acaad01322817a3ba7f319a7155bacc647dc5",
+      "path": "glb/018-8a78c6efcaae/SM_Flash_tk_00.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 108,
+        "indices": 408,
+        "triangles": 136,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/019-6685296bcdae/SM_Ice_core_kh_01.glb",
+      "bytes": 175924,
+      "sha256": "e0c8781d6e345ac1a8b49d9881db671f8b28532cefc81b6406d6b94c880d013e",
+      "path": "glb/019-6685296bcdae/SM_Ice_core_kh_01.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 2769,
+        "indices": 4671,
+        "triangles": 1557,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/020-acd596ee15ed/SM_ef_Ice_at_01.glb",
+      "bytes": 18268,
+      "sha256": "bd0133d62b637efb44cdfa1719eaa2fcdc3a24d674c5fa44e9b0cd85a843dd65",
+      "path": "glb/020-acd596ee15ed/SM_ef_Ice_at_01.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 314,
+        "indices": 324,
+        "triangles": 108,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/021-3edf27c7b4b3/SM_ef_Ice_at_02.glb",
+      "bytes": 6980,
+      "sha256": "b07993f29eaa88aa1127e3453ecbff436e6a4ee17ccbbe93c7f20e48573f22c0",
+      "path": "glb/021-3edf27c7b4b3/SM_ef_Ice_at_02.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 97,
+        "indices": 102,
+        "triangles": 34,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/022-49269ccc294a/SM_ef_MahyadoIce_at_01.glb",
+      "bytes": 153068,
+      "sha256": "b62d6a2e68cdd1e61963d5301e6fe392a01101fcbb2622e2887578ba57fb2a4e",
+      "path": "glb/022-49269ccc294a/SM_ef_MahyadoIce_at_01.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 2882,
+        "indices": 3201,
+        "triangles": 1067,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/023-c2dd4702dc43/SM_ef_RockTest_at_06.glb",
+      "bytes": 4212,
+      "sha256": "4d508ccd865a16b6b122d5d876bd95c102bb1abe9415c99a0e4dba47a9bd3642",
+      "path": "glb/023-c2dd4702dc43/SM_ef_RockTest_at_06.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 39,
+        "indices": 108,
+        "triangles": 36,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/024-2c0619a88b0c/SM_ef_Rock_hf_01.glb",
+      "bytes": 5836,
+      "sha256": "8d62c5749c993299dbaf4f87d21cbecdd879875c2d500b5ee53908566db91db5",
+      "path": "glb/024-2c0619a88b0c/SM_ef_Rock_hf_01.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 58,
+        "indices": 108,
+        "triangles": 36,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/025-7d55ca524801/SM_ef_rock_st_03.glb",
+      "bytes": 342304,
+      "sha256": "2505942e8b81495d981b26f3de6e1e06adaefa90414eb58de88a487474bc686d",
+      "path": "glb/025-7d55ca524801/SM_ef_rock_st_03.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 6415,
+        "indices": 8115,
+        "triangles": 2705,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/026-28023b41a5fc/SM_ef_Common_H_kh_02.glb",
+      "bytes": 10788,
+      "sha256": "b867b3ae62901b03b22301edf920b8003103b03a6d4e948d791da452dce2cb10",
+      "path": "glb/026-28023b41a5fc/SM_ef_Common_H_kh_02.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 120,
+        "indices": 504,
+        "triangles": 168,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/027-13e8bb054888/SM_Sphere_64_64_Tk_00.glb",
+      "bytes": 335240,
+      "sha256": "c631c4c06c4916e4e834859a7d6963313a1e40f19d5e463a3ea0e61feed0f93a",
+      "path": "glb/027-13e8bb054888/SM_Sphere_64_64_Tk_00.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 4223,
+        "indices": 24192,
+        "triangles": 8064,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/028-98be3a0aaa9b/SM_Sphere_64_64_Tk_1.glb",
+      "bytes": 335240,
+      "sha256": "a40c3cacff47d855c26b9a29f459c20a952edeca5b76c4a5beff24039d3d3e57",
+      "path": "glb/028-98be3a0aaa9b/SM_Sphere_64_64_Tk_1.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 4223,
+        "indices": 24192,
+        "triangles": 8064,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/029-44d9970b8d13/SM_Sphere_64_Half32_Tk_00.glb",
+      "bytes": 170532,
+      "sha256": "e887b7c2f92ad3a5ddbb845ca270deba004c405f046b0a7c23b2076e5ed59130",
+      "path": "glb/029-44d9970b8d13/SM_Sphere_64_Half32_Tk_00.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 2144,
+        "indices": 12096,
+        "triangles": 4032,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/030-902047616295/SM_ef_HalfSphere_hf_00.glb",
+      "bytes": 50608,
+      "sha256": "8d8fc2d2e74a96935c9c75d9748ec300e47789396692b1b94a35800dffbe47fe",
+      "path": "glb/030-902047616295/SM_ef_HalfSphere_hf_00.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 703,
+        "indices": 3780,
+        "triangles": 1260,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/031-1b69a073053d/SM_Trail_ny_01.glb",
+      "bytes": 14796,
+      "sha256": "20515664e7cc38f3d13479eb2c20dcd94e5d48daa4afd9da3d7ee9cd92a31937",
+      "path": "glb/031-1b69a073053d/SM_Trail_ny_01.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 190,
+        "indices": 945,
+        "triangles": 315,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/glb/032-ceace961fe3b/SM_Trail_ny_02.glb",
+      "bytes": 14796,
+      "sha256": "c28f3a8c3a925c5f1636e6f685d1fb0ea378696c2e1b6318072c50a7fe31ab93",
+      "path": "glb/032-ceace961fe3b/SM_Trail_ny_02.glb",
+      "structure": {
+        "chunks": 2,
+        "meshes": 1,
+        "primitives": 1,
+        "vertices": 190,
+        "indices": 945,
+        "triangles": 315,
+        "materials": 2,
+        "animations": 0
+      },
+      "normalization": {
+        "unusedTangentBindingsRemoved": 1
+      }
+    }
+  ],
+  "states": {
+    "staticMeshSupportConverted": 33,
+    "niagaraSystemsConverted": 0,
+    "ggdVfxConverted": 0,
+    "visualAcceptancePassed": false,
+    "runtimeBound": false,
+    "deployed": false
+  },
+  "claim": "This manifest proves byte-pinned recovery and structural conversion of static-mesh support assets only. It does not prove Niagara conversion, reconstructed GGD VFX, visual equivalence, skill binding, runtime availability, or deployment.",
+  "createdAt": "2026-09-13T19:42:32.947901+00:00"
+}

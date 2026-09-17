@@ -92,6 +92,12 @@ export type DisplacementLadderTable = Readonly<Record<DisplacementTierName, Disp
 export interface DisplacementTiers {
   /** ① 級距的止血閥。false = `distanceTier` 不解析（填了不生效，但看得見它是關的）。 */
   enabled: boolean;
+  /**
+   * ⭐ GH#1260 B3 —— **沒標級別的位移距離**要不要在載入時吸到最近一格
+   * （「值 → 級別」只住 `geometrySnap.ts`；只動距離，⛔ 不動作者的速度）。
+   * `enabled:false` 時一併不跑。⭐ rollback：false ⇒ 逐位元回到作者手寫的距離。
+   */
+  snapUntiered: boolean;
   /** ② 速度天花板的止血閥。⚠️ 關掉它 = #318 回來。與 `enabled` 刻意分開。 */
   clampSpeed: boolean;
   /** 距離門檻的安全係數，`maxSpeed` 的唯一手動輸入。 */
@@ -171,6 +177,7 @@ const SHIPPED_TIER_SPEED = maxSpeedFor(CHAMPION_BODY_RADIUS, DEFAULT_DISPLACEMEN
  */
 export const DEFAULT_DISPLACEMENT_TIERS: DisplacementTiers = Object.freeze({
   enabled: true,
+  snapUntiered: true,
   clampSpeed: true,
   safetyFactor: DEFAULT_DISPLACEMENT_SAFETY_FACTOR,
   minBodyRadius: CHAMPION_BODY_RADIUS,
@@ -265,6 +272,7 @@ export function displacementTiersFromDoc(
     | {
         schema?: string;
         enabled?: unknown;
+        snapUntiered?: unknown;
         clampSpeed?: unknown;
         safetyFactor?: unknown;
         travel?: unknown;
@@ -283,6 +291,10 @@ export function displacementTiersFromDoc(
   const maxSpeed = maxSpeedFor(minBodyRadius, safetyFactor);
   return {
     enabled: known && typeof d.enabled === "boolean" ? d.enabled : DEFAULT_DISPLACEMENT_TIERS.enabled,
+    snapUntiered:
+      known && typeof d.snapUntiered === "boolean"
+        ? d.snapUntiered
+        : DEFAULT_DISPLACEMENT_TIERS.snapUntiered,
     clampSpeed:
       known && typeof d.clampSpeed === "boolean"
         ? d.clampSpeed
@@ -313,19 +325,39 @@ export function displacementTiersFromDoc(
  */
 interface DisplacementFields {
   readonly ladder: DisplacementLadder;
+  /** 飛的是**目標**（`applyTo:"target"`）時改走這一條 —— 被拋的人是「被推」，⛔ 不是「自己動」。 */
+  readonly targetLadder?: DisplacementLadder;
   readonly distanceField: string;
-  readonly speedField: string;
+  /** ⚠️ `blink` 沒有速度、`leap` 用飛行時間 ⇒ 缺席＝級別只寫距離。 */
+  readonly speedField?: string;
 }
 const DISPLACEMENT_KIND_FIELDS: Readonly<Record<string, DisplacementFields | undefined>> =
   Object.freeze({
     dash: Object.freeze({ ladder: "travel", distanceField: "maxDistance", speedField: "speed" }),
     knockback: Object.freeze({ ladder: "push", distanceField: "distance", speedField: "speed" }),
+    // ⭐ GH#1260 B3：`blink` 的【固定距離】與 `leap` 的拋投距離在此之前沒有級別可填。
+    blink: Object.freeze({ ladder: "travel", distanceField: "distanceUnits" }),
+    leap: Object.freeze({ ladder: "travel", targetLadder: "push", distanceField: "throwDistance" }),
   } as const);
 
 /** 出貨支援級距的 kind 名單（給 schema / 後台 / 契約匯出共用一份）。 */
 export const DISPLACEMENT_TIER_KINDS = Object.freeze(
   Object.keys(DISPLACEMENT_KIND_FIELDS),
 ) as readonly string[];
+
+/**
+ * 一個節點的位移欄位與**它該走哪一條梯子**（沒有位移距離 ⇒ undefined）。
+ * ⭐ `resolveDisplacementTier`（級別 → 值）與 `geometrySnap.ts`（值 → 級別）共用這一支。
+ */
+export function displacementFieldsOf(
+  node: Readonly<Record<string, unknown>>,
+): { ladder: DisplacementLadder; distanceField: string; speedField?: string } | undefined {
+  const kind = node["kind"];
+  const f = typeof kind === "string" ? DISPLACEMENT_KIND_FIELDS[kind] : undefined;
+  if (f === undefined) return undefined;
+  const ladder = node["applyTo"] === "target" && f.targetLadder !== undefined ? f.targetLadder : f.ladder;
+  return { ladder, distanceField: f.distanceField, ...(f.speedField !== undefined ? { speedField: f.speedField } : {}) };
+}
 
 /**
  * 把一份技能／道具文件裡的位移節點正規化。**兩件事，順序固定**：
@@ -353,8 +385,7 @@ export function resolveDisplacementTier<T extends Record<string, unknown>>(
     const out: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(rec)) out[k] = walk(v);
 
-    const kind = rec["kind"];
-    const fields = typeof kind === "string" ? DISPLACEMENT_KIND_FIELDS[kind] : undefined;
+    const fields = displacementFieldsOf(rec);
     if (fields === undefined) return out;
 
     if (tiers.enabled) {
@@ -365,11 +396,11 @@ export function resolveDisplacementTier<T extends Record<string, unknown>>(
           | undefined;
         if (row !== undefined) {
           out[fields.distanceField] = row.distance;
-          out[fields.speedField] = row.speed;
+          if (fields.speedField !== undefined) out[fields.speedField] = row.speed;
         }
       }
     }
-    if (tiers.clampSpeed) {
+    if (tiers.clampSpeed && fields.speedField !== undefined) {
       const s = out[fields.speedField];
       if (typeof s === "number" && Number.isFinite(s) && s > tiers.maxSpeed) {
         out[fields.speedField] = tiers.maxSpeed;

@@ -1,0 +1,11 @@
+{
+  "id": "lol-velkoz.researched",
+  "schema": "status-effect@1",
+  "name": "結構毀滅",
+  "description": "威寇茲「結構毀滅」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-velkoz.researched",
+    "debuff"
+  ]
+}

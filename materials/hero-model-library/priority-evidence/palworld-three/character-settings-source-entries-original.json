@@ -1,0 +1,80 @@
+{
+  "schema": "ggd.palworld-settings.delivery@1",
+  "entries": [
+    {
+      "id": "palworld-three-character-settings-paldb-v1-0-4",
+      "target": "Jetragon/Cattiva/Astralym three characters, five forms: PalDB factual settings snapshot",
+      "heroIds": [],
+      "url": "https://paldb.cc/tw/",
+      "sourceUrls": [
+        "https://paldb.cc/tw/Jetragon",
+        "https://paldb.cc/tw/Cattiva",
+        "https://paldb.cc/tw/Astralym",
+        "https://paldb.cc/tw/Nullstar_Calamity_Zenara_%26_Astralym",
+        "https://paldb.cc/tw/Blightstar_Calamity_Zenara_%26_Astralym"
+      ],
+      "sourceWork": "Palworld / 幻獸帕魯",
+      "sourceClass": "community-game-data-snapshot",
+      "reportedGameVersion": "v1.0.4",
+      "localPath": "GGD-Asset-Library/intake/public-models-20260911/palworld-three-character-settings",
+      "assetKinds": [
+        "character-settings",
+        "skill-settings",
+        "partner-skill-tiers"
+      ],
+      "modelCount": 0,
+      "audioCount": 0,
+      "nativeAnimationCount": 0,
+      "acquisitionStatus": "downloaded-verified",
+      "readiness": "community-settings-parsed-verified",
+      "originalGameDataTablesAcquired": false,
+      "ggdHeroImplementation": false,
+      "defaultEligible": false,
+      "publicationStatus": "s3-legacy-full-get-verified",
+      "sourcePageCount": 5,
+      "characterCount": 3,
+      "formCount": 5,
+      "activeSkillRowCount": 34,
+      "partnerTierRowCount": 10,
+      "parsedSettings": {
+        "path": "parsed-character-settings.json",
+        "sha256": "c72f2ae21f85f960d49b78689d5744d202f5e918f93eb44522b13e5d2dfc8e17"
+      },
+      "independentVerification": {
+        "path": "independent-audit.json",
+        "sha256": "531f9a36c966e6e02b50c49ec2bc9ba92e0bc36c9ecc419bca982b773507f8f6",
+        "numericFieldsChecked": 230,
+        "allFactualFieldsAndSkillFieldsMatch": true
+      },
+      "limitations": [
+        "PalDB community HTML snapshots claim v1.0.4; not original game DataTables.",
+        "Astralym normal empty learnset does not imply boss has no attacks; both boss forms retained with eight skills each.",
+        "Astralym has no populated partner tiers in these source pages; only Jetragon and Cattiva have five levels.",
+        "Source movement -1 retained as sentinel, not a usable runtime speed.",
+        "No hero definition or GGD ability implementation created."
+      ],
+      "backup": {
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-settings/palworld-three-character-settings-paldb-v1-0-4-20260911/7b617d68d24f37e143fae9f4f71360913ba2b33e8168ad01b492b56af3584ac6.tar.gz",
+        "bytes": 80132,
+        "sha256": "7b617d68d24f37e143fae9f4f71360913ba2b33e8168ad01b492b56af3584ac6",
+        "readbackVerified": true,
+        "archiveFormat": "tar-gzip",
+        "archiveMemberRoot": "",
+        "receiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-three-character-settings-20260911/palworld-three-character-settings-paldb-v1-0-4.s3-backup.json"
+      },
+      "s3BackupReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-three-character-settings-20260911/palworld-three-character-settings-paldb-v1-0-4.s3-backup.json",
+      "filesManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/palworld-three-character-settings/files-sha256.json",
+      "filesManifestSha256": "e802c44d43d1ec94aa59bb17dac25cac133606029b6866ce83c96f34d1a4ab5c"
+    }
+  ],
+  "s3BackupReceipts": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-three-character-settings-20260911/palworld-three-character-settings-paldb-v1-0-4.s3-backup.json",
+      "sha256": "f4ad9ca698f899735792829a091738eec7fa969d760480a0676458f153a95dfc",
+      "sourceId": "palworld-three-character-settings-paldb-v1-0-4"
+    }
+  ],
+  "sourceRootsImmutable": true,
+  "centralFilesModified": false,
+  "gitMutation": false
+}

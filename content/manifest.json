@@ -1,14 +1,14 @@
 {
-  "contentVersion": "cv_6fbc4aae62ba",
+  "contentVersion": "cv_c146a194de5f",
   "collections": {
     "champions": {
-      "hash": "f031b135eb22",
-      "count": 153,
+      "hash": "0aa760bd14a1",
+      "count": 190,
       "path": "champions/_index.json"
     },
     "abilities": {
-      "hash": "849c081263f8",
-      "count": 907,
+      "hash": "1b7e7a67ebe6",
+      "count": 1129,
       "path": "abilities/_index.json"
     },
     "items": {
@@ -22,13 +22,13 @@
       "path": "augments/_index.json"
     },
     "projectiles": {
-      "hash": "952cffc4b28b",
-      "count": 21,
+      "hash": "96d7945c88d3",
+      "count": 23,
       "path": "projectiles/_index.json"
     },
     "status-effects": {
-      "hash": "7219076b5f8e",
-      "count": 51,
+      "hash": "2df4afcca3af",
+      "count": 167,
       "path": "status-effects/_index.json"
     },
     "loot-tables": {
@@ -47,18 +47,18 @@
       "path": "maps/_index.json"
     },
     "config": {
-      "hash": "95a0e0a7be39",
-      "count": 103,
+      "hash": "bfd13aae75f1",
+      "count": 105,
       "path": "config/_index.json"
     },
     "models": {
-      "hash": "a4bfc6ef85a1",
-      "count": 416,
+      "hash": "5ab0a3342afb",
+      "count": 1063,
       "path": "models/_index.json"
     },
     "vfx": {
-      "hash": "7df129081586",
-      "count": 702,
+      "hash": "b8f430d12052",
+      "count": 726,
       "path": "vfx/_index.json"
     },
     "skins": {
@@ -67,13 +67,13 @@
       "path": "skins/_index.json"
     },
     "ability-templates": {
-      "hash": "48fcf2ce8923",
-      "count": 82,
+      "hash": "b67dbb330302",
+      "count": 89,
       "path": "ability-templates/_index.json"
     },
     "vfx-scripts": {
-      "hash": "20b5e06e9013",
-      "count": 45,
+      "hash": "5a5dcb1cbe14",
+      "count": 230,
       "path": "vfx-scripts/_index.json"
     },
     "vfx-subtypes": {

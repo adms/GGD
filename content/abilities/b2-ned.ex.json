@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 1.233,
+  "castTimeSec": 1,
   "castType": "ground",
   "cooldown": [
     45.0
@@ -17,7 +17,7 @@
   ],
   "id": "b2-ned.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "本體沒批假也能撤",
@@ -28,7 +28,7 @@
   "template": {
     "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c",
     "params": {
-      "castTimeSec": 1.233
+      "castTimeSec": 1
     },
     "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4"
   },
@@ -39,5 +39,6 @@
       "vfxKey": "fx.prim.arcane.dash"
     }
   ],
-  "icon": "assets/icons/abilities/b2-ned.ex.webp"
+  "icon": "assets/icons/abilities/b2-ned.ex.webp",
+  "castTimeTier": "極大"
 }

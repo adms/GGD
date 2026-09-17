@@ -1,0 +1,48 @@
+{
+  "schema": "ggd.skinned-component-visual-review@1",
+  "componentId": "rezero-felix-thunderstore-0.1.1-static-skinned-v1",
+  "modelSha256": "35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-12",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "findings": [
+    "Front, back and isometric renders show the complete visible Felix Argyle head, torso, arms, hands, legs and feet.",
+    "Hair, face and costume materials remain visible with no detached primary geometry, opaque face card or bind-pose collapse.",
+    "The corrected Z-up to Y-up output stands upright at 1.8 metres.",
+    "Review covers a static bind pose because source and output contain no animation clips."
+  ],
+  "shots": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/front.png",
+      "bytes": 155816,
+      "sha256": "d774b7f0535af6f1b1f5164ebc0cb0ec46b7cd3216265bc7e179f4c29cd7f257"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/back.png",
+      "bytes": 138406,
+      "sha256": "ee4c69881f9264ea274cf8339a61593f2410c4af7216e1de4b921cea0822feb0"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/isometric.png",
+      "bytes": 140410,
+      "sha256": "1076d546598b3111b66d4c38be6fed0d6ad025db7a945e8be6683396064e5530"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/contact-sheet.png",
+      "bytes": 287081,
+      "sha256": "0563c6843a053b7f67f038e20d53072d8bbdad3f2ed103ca1ecf62095f68cd87"
+    }
+  ],
+  "webglProof": {
+    "gitPath": "materials/hero-model-library/priority-evidence/rezero-static/f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d/webgl-proof.json",
+    "bytes": 2404,
+    "sha256": "64ad096916cd8f8fcaa6ba3dcc148b4b4dc78d9080291069d5c572aaa917217b"
+  },
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

@@ -45,6 +45,7 @@ import { clearCooldownPrediction, noteCooldownPrediction } from "./cooldownPredi
 import { notePassiveProc, passiveHookIcdSeconds, passiveProcAbilityId } from "./passiveProc";
 import { INNATE_INERT_NOTE, passiveSlotView } from "./passiveSlot";
 import { stripAbilityNumber } from "./components/abilityText";
+import { interactRejectionFromEvent } from "../input/interactables";
 
 const CORE_INDEX: Record<CoreAbilitySlot, number> = { Q: 0, W: 1, E: 2, R: 3 };
 
@@ -215,6 +216,12 @@ export function recordCastEvent(ev: CastEventLike, localEntityId: number | null,
   // castBegin/abilityCast，它藏在 `buffApply` / `damage` / `heal` … 的 `origin` 裡。
   // ⛔ 放在閘後面等於這整條線一次都不會跑（失敗形態③：可以整段刪掉而測試全綠）。
   recordPassiveProc(ev, localEntityId, nowMs);
+  // ⭐ GH#1189 —— 右鍵點燈被伺服器拒絕：每一次都要回一句話（⛔ 點了沒反應＝玩家以為壞了）。
+  const lanternNotice = interactRejectionFromEvent(ev, localEntityId);
+  if (lanternNotice) {
+    pushCastNotice(lanternNotice);
+    return;
+  }
   if (!isCastFeedbackEvent(ev.type)) return;
   if (ev.type === "castRejected") {
     const slot = typeof ev.data.slot === "string" ? ev.data.slot : "";

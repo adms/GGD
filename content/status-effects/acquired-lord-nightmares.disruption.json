@@ -1,0 +1,16 @@
+{
+  "id": "acquired-lord-nightmares.disruption",
+  "schema": "status-effect@1",
+  "name": "宇宙暫停受理",
+  "description": "金色魔王／惡夢之王「宇宙暫停受理」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-lord-nightmares.disruption",
+    "root",
+    "immobilize",
+    "move-denied",
+    "disable",
+    "cc",
+    "debuff"
+  ]
+}

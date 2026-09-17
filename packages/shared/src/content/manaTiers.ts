@@ -68,7 +68,20 @@ export function manaTiersFromPool(pool: number): Readonly<Record<ManaTierName, n
   // 每爬一格，「撐得住幾發」變成幾倍（owner 的兩個錨之間量出來的）。
   const perStep = ib === ia ? 1 : (b.casts / a.casts) ** (1 / (ib - ia));
   const castsAt = (i: number): number => a.casts * perStep ** (i - ia);
-  const smallest = Math.max(1, Math.round(pool / castsAt(0)));
+  // ⭐⭐ **取整到 25 的倍數**（owner 2026-09-12：「別忘了他也連動到耗魔 **也要取整數**」）。
+  //
+  // ⚠️ 傷害那一張早就有同樣的東西（`ceil(x/50)*50`），⛔ 而耗魔這一張沒有
+  // ⇒ 它一直吐出 `73 / 146 / 292 / 584 / 1168` 這種**算得對但讀起來像雜訊**的值。
+  //
+  // ⭐ 為什麼是 25：五格是 **×2 的梯子**，所以只要最小那格是 25 的倍數，
+  //   ⭐ 五格就**全部**是 25 的倍數（75 → 150 / 300 / 600 / 1200）。
+  // ⛔ 取 50 會讓最小格跳到 100（+37%），⚠️ 那是調平衡不是取整。
+  const MANA_TIER_ROUND = 25;
+  const raw = Math.max(1, pool / castsAt(0));
+  const smallest = Math.max(
+    MANA_TIER_ROUND,
+    Math.round(raw / MANA_TIER_ROUND) * MANA_TIER_ROUND,
+  );
   const out = {} as Record<ManaTierName, number>;
   for (let i = 0; i < SKILL_TIER_NAMES.length; i++) {
     out[SKILL_TIER_NAMES[i]!] = Math.round(smallest * (castsAt(0) / castsAt(i)));

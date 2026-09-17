@@ -13,12 +13,13 @@
     120.0
   ],
   "manaCost": [
-    448.0,
-    448.0,
-    448.0
+    300.0,
+    300.0,
+    300.0
   ],
   "range": 0.0,
   "radiusTier": "中",
+  "castTimeTier": "極大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -33,8 +34,8 @@
       "amount": {
         "damageTierPerRank": [
           "小",
-          "中",
-          "大"
+          "小",
+          "中"
         ]
       },
       "radius": 6.0,
@@ -68,6 +69,6 @@
   "icon": "assets/icons/abilities/godie-hapm.r.webp",
   "vfxKey": "fx.prim.physical.shockwave-lg",
   "cooldownTier": "極大",
-  "manaCostTier": "大",
-  "castTimeSec": 0.067
+  "manaCostTier": "中",
+  "castTimeSec": 1
 }

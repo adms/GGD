@@ -1,0 +1,63 @@
+{
+  "schema": "ggd-hero-design-backlog-final-index-receipt@1",
+  "generatedAt": "2026-09-13T01:56:24Z",
+  "baseGitCommit": "1a19935b2b46d2d11c4af0ce627c4ed11f6f0917",
+  "analysisGenerationReceiptSha256": "811169763045627df031c058e2abaff0f9a9b17d7277d88ce8a743581ebf18df",
+  "s3BackupReceiptSha256": "99a6740f789a03188185ce837886e6ab76f63ec6b073d508be9f12f5089efbf9",
+  "analysisBackup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/design-backlog/hero-design-coverage-refresh-1a19935b2/23adc28eb4371b85ae501d1df2694c5691738cd8c8ccabd359f1200de5a821b4.tar.gz",
+    "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/design-backlog/hero-design-coverage-refresh-1a19935b2/23adc28eb4371b85ae501d1df2694c5691738cd8c8ccabd359f1200de5a821b4.files.json",
+    "archiveSha256": "23adc28eb4371b85ae501d1df2694c5691738cd8c8ccabd359f1200de5a821b4",
+    "fileCount": 5,
+    "fullGetVerified": true,
+    "allMemberSha256Verified": true,
+    "localUnchangedAtBackup": true
+  },
+  "finalGitFiles": [
+    {
+      "path": "materials/hero-model-library/已取得模型待設計英雄.json",
+      "sha256": "ce8bd6b79cac98a08f5543307483a2a8f780a88825b9dc180c199357e53b9dd7"
+    },
+    {
+      "path": "materials/hero-model-library/已取得模型待設計英雄.md",
+      "sha256": "79af6b76608573c2108aa82f1e88631cae407669d5dd876f00fffc7cf924ae4e"
+    },
+    {
+      "path": "tools/hero-model-library/build_model_design_backlog.py",
+      "sha256": "f85638ba4aed0273cf6b87b8dea72fbb126b09c23381a0098583bcf1441003c4"
+    },
+    {
+      "path": "tools/hero-model-library/design-backlog/README.md",
+      "sha256": "9f7fb064afe68827bd721021623a3459a96d14bf57721010137ca86a69f894eb"
+    }
+  ],
+  "semanticComparison": {
+    "sourceIdentityCount": 732,
+    "characterIdsChanged": 0,
+    "modelCandidatesChanged": 0,
+    "currentHeroChecksChanged": 86,
+    "uncertainHeroesBefore": 152,
+    "uncertainHeroesAfter": 0,
+    "statusCounts": {
+      "not-defined": 388,
+      "definitions-incomplete": 11,
+      "identity-review": 247,
+      "designed": 86,
+      "source-unavailable": 0
+    }
+  },
+  "checks": [
+    "python3 tools/hero-model-library/build_model_design_backlog.py --check",
+    "python3 tools/hero-model-library/inventory.py --check",
+    "python3 tools/hero-model-library/check-index.py",
+    "python3 tools/hero-model-library/current_resource_index.py --check --check-git",
+    "python3 tools/hero-model-library/verify_fateubw_reserve.py",
+    "python3 -m py_compile tools/hero-model-library/build_model_design_backlog.py",
+    "git diff --check"
+  ],
+  "boundaries": [
+    "This refresh proves current hero-definition and ability-coverage indexing only.",
+    "It does not prove source fidelity, model conversion, runtime selection, backend availability or deployment.",
+    "Large parsed inputs and the previous compact snapshot remain local and in S3 legacy; Git contains the fixed indexes, generator, documentation and compact receipts."
+  ]
+}

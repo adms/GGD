@@ -93,7 +93,7 @@ export interface SummonSpawnSpec {
   pos: Vec2;
   teamId: TeamId;
   seatId: SeatId;
-  /** ABSOLUTE despawn tick; `Number.POSITIVE_INFINITY` = permanent */
+  /** ABSOLUTE despawn tick; `Number.POSITIVE_INFINITY` = no deadline (⛔ not match-long: {@link endCombatSummons} collects it at 回合結算) */
   expiresAtTick: number;
   /** cap-group key (see {@link SummonComp.capKey}) */
   capKey: string;
@@ -401,7 +401,8 @@ export function summonSystem(world: SimWorld): void {
 
     // 2) DEADLINE. ABSOLUTE tick, so a save/replay resumes on the same tick
     //    (a decrementing counter drifts — see CLAUDE.md's 硬性技術約束).
-    //    A permanent summon stores +Infinity and never trips this.
+    //    A no-deadline summon stores +Infinity and never trips this — it is
+    //    collected at 回合結算 by `endCombatSummons` instead (GH#1241).
     if (world.tick >= sm.expiresAtTick) {
       despawn(id, sm, "expired");
       continue;
@@ -453,6 +454,28 @@ export function summonSystem(world: SimWorld): void {
     nav.attackTarget = best;
     nav.attackTargetAuto = true;
   }
+}
+
+/**
+ * 回合結束：場上每一具召喚物收走（GH#1241）—— `endCombatMobs` 那一族的第九支。
+ *
+ * owner 2026-08-19（GH#429，逐字）：
+ * > 「回合清理的分析 你還少了召喚物 以及技能殘留效果 …（除非有特別寫跨回合）」
+ *
+ * ⛔ 為什麼在此之前會漏：{@link summonSystem} 只認三個結束條件（死亡／到期／主人死），
+ * ⛔ 而回合邊界**三個都不成立** —— 贏家的主人活著、`expiresAtTick` 是絕對 tick
+ * （`durationSec` 比結算＋中場長的那一具就活得過去；缺席更是 +Infinity）。
+ * 而回合清理是 `concludeCombat` 裡**逐類手列**的 `endCombat*`，沒有人替召喚物補上這一行。
+ *
+ * ⭐ 規則對**全部**召喚物一視同仁（⛔ 沒有逐 id／逐技能的例外）。owner 括號裡的
+ * 「特別寫跨回合」今天出貨 0 支；真的有一支要寫時，它是 `summon` schema 的一格
+ * 欄位（進 fieldAdoption 棘輪），⛔ 不是這裡的一個 if。
+ *
+ * 靜默 destroy、⛔ 不發 `summonDespawn`：與同族八支一致（殭屍／守衛／金幣⋯回合結束
+ * 都是靜默收走），實體從 snapshot 消失本身就是客戶端的訊號。
+ */
+export function endCombatSummons(world: SimWorld): void {
+  for (const id of [...world.summon.keys()].sort((a, b) => a - b)) world.destroy(id);
 }
 
 /**

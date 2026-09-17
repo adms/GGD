@@ -1,0 +1,149 @@
+{
+  "schema": "ggd.ssbu-ryu-source-fidelity@1",
+  "sourceId": "gitlab-ssbu-models",
+  "componentId": "ssbu-ryu-c00-static-skinned-v1",
+  "sourceSha256": "5fb1670818167a6728afe1664c80e6ab7fd50ea064ae6302991fdc18a4e62042",
+  "blenderExportSha256": "d53057c01574141daf7cb017273e3d70e217376a59965150f8b98ad4891b9482",
+  "outputSha256": "57567f89b05498968977b9fde7a86aaf40dfb6a25b5e874ca393b13a85c4a8b6",
+  "sourceBytesUnchanged": true,
+  "visibleMeshCount": 11,
+  "sourceVisiblePolygonCount": 14621,
+  "sourceVisibleMeshCount": 11,
+  "blenderPrimitiveCount": 5,
+  "outputPrimitiveCount": 5,
+  "outputTriangleCount": 14621,
+  "sourceBoneCount": 154,
+  "outputJointCount": 154,
+  "materialJoinGroups": [
+    {
+      "material": "alp_ryu_001",
+      "armature": "model-armature",
+      "sourceMeshes": [
+        {
+          "name": "GamemodelShape",
+          "vertices": 1985,
+          "polygons": 3352
+        },
+        {
+          "name": "Ryu_Openblink_VIS_O_OBJShape",
+          "vertices": 82,
+          "polygons": 72
+        },
+        {
+          "name": "Ryu_faceN_Brow_VIS_O_OBJShape",
+          "vertices": 248,
+          "polygons": 288
+        }
+      ],
+      "outputMesh": "GGD_joined_alp_ryu_001",
+      "outputVertices": 2315,
+      "outputPolygons": 3712,
+      "reason": "Reduce draw primitives without mixing materials or changing world-space source geometry."
+    },
+    {
+      "material": "def_ryu_001",
+      "armature": "model-armature",
+      "sourceMeshes": [
+        {
+          "name": "GamemodelShape.001",
+          "vertices": 2095,
+          "polygons": 2959
+        },
+        {
+          "name": "ryu_dogiup1_VIS_O_OBJShape",
+          "vertices": 1602,
+          "polygons": 2136
+        }
+      ],
+      "outputMesh": "GGD_joined_def_ryu_001",
+      "outputVertices": 3697,
+      "outputPolygons": 5095,
+      "reason": "Reduce draw primitives without mixing materials or changing world-space source geometry."
+    },
+    {
+      "material": "skin_ryu_001",
+      "armature": "model-armature",
+      "sourceMeshes": [
+        {
+          "name": "GamemodelShape.002",
+          "vertices": 2952,
+          "polygons": 4758
+        },
+        {
+          "name": "Ryu_Openblink_VIS_O_OBJShape.001",
+          "vertices": 160,
+          "polygons": 286
+        },
+        {
+          "name": "Ryu_faceN_Brow_VIS_O_OBJShape.001",
+          "vertices": 138,
+          "polygons": 202
+        },
+        {
+          "name": "Ryu_faceN_Mouth_VIS_O_OBJShape",
+          "vertices": 280,
+          "polygons": 460
+        }
+      ],
+      "outputMesh": "GGD_joined_skin_ryu_001",
+      "outputVertices": 3530,
+      "outputPolygons": 5706,
+      "reason": "Reduce draw primitives without mixing materials or changing world-space source geometry."
+    }
+  ],
+  "sourceActionCount": 0,
+  "outputClipCount": 0,
+  "usedSourceImageCount": 6,
+  "embeddedOutputImageCount": 5,
+  "excludedNativeParts": [
+    "ryu_dogiup2_VIS_O_OBJShape",
+    "ryu_dogiup3_VIS_O_OBJShape2",
+    "ryu_dogiup4_VIS_O_OBJShape1",
+    "ryu_dogiup5_VIS_O_OBJShape",
+    "ryu_dogiup6_VIS_O_OBJShape",
+    "Ryu_Eye2_VIS_O_OBJShape",
+    "Ryu_Eye2_VIS_O_OBJShape.001",
+    "Ryu_Halfblink_VIS_O_OBJShape",
+    "Ryu_Halfblink_VIS_O_OBJShape.001",
+    "Ryu_Blink_VIS_O_OBJShape",
+    "Ryu_Blink_VIS_O_OBJShape.001",
+    "Ryu_Talk_Brow_VIS_O_OBJShape",
+    "Ryu_Talk_Brow_VIS_O_OBJShape.001",
+    "Ryu_HeavyAttack_Brow_VIS_O_OBJShape",
+    "Ryu_HeavyAttack_Brow_VIS_O_OBJShape.001",
+    "Ryu_Capture_Brow_VIS_O_OBJShape",
+    "Ryu_Capture_Brow_VIS_O_OBJShape.001",
+    "Ryu_Ouch_Brow_VIS_O_OBJShape",
+    "Ryu_Ouch_Brow_VIS_O_OBJShape.001",
+    "Ryu_HeavyOuch_Brow_VIS_O_OBJShape",
+    "Ryu_HeavyOuch_Brow_VIS_O_OBJShape.001",
+    "Ryu_HeavyAttack_Mouth_VIS_O_OBJShape",
+    "Ryu_HeavyAttack_Mouth_VIS_O_OBJShape.001",
+    "Ryu_Escape_Mouth_VIS_O_OBJShape",
+    "Ryu_Escape_Mouth_VIS_O_OBJShape.001",
+    "Ryu_Ouch_Mouth_VIS_O_OBJShape",
+    "Ryu_Ouch_Mouth_VIS_O_OBJShape.001",
+    "Ryu_Capture_Mouth_VIS_O_OBJShape",
+    "Ryu_Capture_Mouth_VIS_O_OBJShape.001",
+    "Ryu_Down_Mouth_VIS_O_OBJShape",
+    "Ryu_Down_Mouth_VIS_O_OBJShape.001",
+    "Ryu_VoiceC_Mouth_VIS_O_OBJShape",
+    "Ryu_VoiceC_Mouth_VIS_O_OBJShape.001",
+    "Ryu_VoiceB_Mouth_VIS_O_OBJShape",
+    "Ryu_VoiceB_Mouth_VIS_O_OBJShape.001",
+    "Ryu_PatternB_Mouth_VIS_O_OBJShape",
+    "Ryu_Result_Mouth_VIS_O_OBJShape",
+    "Ryu_Result_Mouth_VIS_O_OBJShape.001"
+  ],
+  "shaderParityVerified": false,
+  "sourceAnalysis": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu/4325c63eceb763a91c8cb4cf5ddbe8a519481ff86b1cf4ac1cae6c52cd144187/source-analysis.json",
+    "bytes": 19595,
+    "sha256": "1ad0ccebdd7f0e802f49e675994b5663d63fba0fe2bbe962c9c965d11932a8ea"
+  },
+  "conversionReceipt": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu/4325c63eceb763a91c8cb4cf5ddbe8a519481ff86b1cf4ac1cae6c52cd144187/conversion.json",
+    "bytes": 3519,
+    "sha256": "ed1aaf90929a21719e853a1e257ba5eb0aade1f7b4eeb733d964b76d51c6d512"
+  }
+}

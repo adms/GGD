@@ -51,6 +51,7 @@ import type { EffectDef } from "./effect";
 import { runEffects } from "./effectRunner";
 import { shatterObstaclesAt } from "../obstacles";
 import { len, sub } from "../math/vec2";
+import { enemiesInCapsule } from "./capsuleEnemies";
 
 /** 一筆「等這一次衝刺結束就跑」的待付回呼。 */
 export interface DashOnEndPending {
@@ -73,6 +74,11 @@ export interface DashOnEndPending {
   /** 衝刺途中死掉還要不要揮。 */
   onEndWhenDead: boolean;
   zone: number;
+  /**
+   * ⭐ GH#1190 鄂爾 E【衝刺沿途命中】（`dash.onPathHit`，`dashPath.mode:"sweep"`）。
+   * `last` = 上一次掃到的位置；`hit` = 這一次衝刺已經打過的人（一人一次）。缺 = 沒有沿途命中。
+   */
+  path?: { effects: EffectDef[]; halfWidth: number; last: Vec2; hit: Set<EntityId> };
 }
 
 /** 這個世界的待付回呼佇列 —— **唯一**的存取點（同 `randomAreaQueue` 的先例）。 */
@@ -101,6 +107,10 @@ export function dashOnEndSystem(world: SimWorld): void {
 
   let anyDone = false;
   for (const p of q) {
+    // ⭐ GH#1190 —— 沿途命中先掃：途中每 tick 掃、結束那一 tick 也掃（那一 tick 的位移已在 slot 5 走完）。
+    //   ⚠️ 被擊退／拋飛接管的那一 tick ⛔ 不掃（那一段位移不是這一次衝刺走的）。
+    const ov = world.nav.get(p.caster)?.override;
+    if (p.path !== undefined && (ov === null || ov === undefined || ov.kind === "dash")) sweepDashPath(world, p);
     if (stillDashing(world, p)) continue;
     anyDone = true;
 
@@ -123,6 +133,7 @@ export function dashOnEndSystem(world: SimWorld): void {
     const didBlock = blockedAt !== undefined && blockedAt >= p.startTick;
     if (p.onEndOn === "blocked" && !didBlock) continue;
     if (p.shatter && didBlock) shatterObstaclesAt(world, t.zone, t.pos, t.radius, p.caster);
+    if (p.effects.length === 0) continue; // GH#1190：只登記了沿途命中、沒有結束效果
 
     // ⭐ 這一行是整個機制：圓心是**現在**的座標（衝刺終點），不是起點。
     runEffects(p.effects, {
@@ -144,4 +155,33 @@ export function dashOnEndSystem(world: SimWorld): void {
     q.length = 0;
     for (const p of live) q.push(p);
   }
+}
+
+/**
+ * ⭐ GH#1190 鄂爾 E【衝刺沿途命中】—— 這一 tick 身體從 `last` 走到**現在**的那一段，掃到的新敵人各吃一次。
+ * 被柱／牆擋停 ⇒ 位移停在擋停點 ⇒ 擋停點後面的人永遠不在任何一段裡（⛔ 不是施放那一刻沿整條長度結算）。
+ * 判準與 `damageLine` 同一支（`capsuleEnemies.ts`）；施法者死亡／分區已結算 ⇒ 不再掃。
+ */
+function sweepDashPath(world: SimWorld, p: DashOnEndPending): void {
+  const path = p.path;
+  const t = world.transform.get(p.caster);
+  if (path === undefined || t === undefined) return;
+  if (world.settledZones.has(p.zone) || world.health.get(p.caster)?.alive !== true) return;
+  const now = { x: t.pos.x, z: t.pos.z };
+  const fresh = enemiesInCapsule(world, p.caster, t.zone, path.last, now, path.halfWidth, path.hit).map((v) => v.id);
+  path.last = now;
+  if (fresh.length === 0) return;
+  for (const id of fresh) path.hit.add(id);
+  runEffects(path.effects, {
+    castInstance: p.castInstance,
+    world,
+    caster: p.caster,
+    rank: p.rank,
+    targets: fresh,
+    point: now,
+    direction: { x: t.facing.x, z: t.facing.z },
+    origin: p.origin,
+    ...(p.abilitySlot !== undefined ? { abilitySlot: p.abilitySlot } : {}),
+    rng: world.rng,
+  });
 }

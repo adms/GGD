@@ -1,0 +1,31 @@
+{
+  "schema": "ggd.skinned-component-visual-review@1",
+  "componentId": "ssbu-ryu-c00-static-decimated-v1",
+  "modelSha256": "abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-15",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "method": "source-versus-candidate Babylon WebGL A/B; owner authorized resource intake",
+  "comparison": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-static-decimation-v1/visual-comparison.json",
+    "bytes": 2710,
+    "sha256": "e79289c409cac82900e3f3ecc7d8a638bd1aeafa20e59b74876d69674996d822"
+  },
+  "contactSheet": {
+    "gitPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-static-decimation-v1/contact-sheet.png",
+    "bytes": 699567,
+    "sha256": "f913ef9d45f02811b16c7cdbebf34b068c06e89632555108d996b6132d6c5ff6"
+  },
+  "findings": [
+    "No body-part or primary-material loss in three fixed views.",
+    "Largest lit-pixel XOR is 0.411563%, below the 5% contract.",
+    "Minor reduced surface detail is retained as expected decimation cost."
+  ],
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

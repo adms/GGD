@@ -1,0 +1,244 @@
+{
+  "schema": "ggd.eight-missing-models-audit@1",
+  "generatedFromGitTree": true,
+  "summary": {
+    "heroes": 8,
+    "acceptedIndependentComponents": 13,
+    "heroesWithAnySourceOrProceduralMotion": 2,
+    "newlyRegisteredNonDefaultOptions": 1,
+    "productionDeployed": 0
+  },
+  "heroes": [
+    {
+      "heroId": "acquired-zero",
+      "name": "Zero",
+      "existingHeroForgeRecipe": true,
+      "components": [
+        {
+          "componentId": "ssbu-zero-c00-static-skinned-v1",
+          "gitPath": "content/assets/models/community/3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1.glb",
+          "bytes": 596332,
+          "sha256": "3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0
+        }
+      ],
+      "sourceOrProceduralMotionCount": 0,
+      "status": "static-model-ready-actions-missing",
+      "runtimeDropdownRegistered": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "heroId": "acquired-ram",
+      "name": "拉姆",
+      "existingHeroForgeRecipe": true,
+      "components": [
+        {
+          "componentId": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
+          "gitPath": "content/assets/models/community/333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b.glb",
+          "bytes": 1180240,
+          "sha256": "333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0
+        }
+      ],
+      "sourceOrProceduralMotionCount": 0,
+      "status": "static-model-ready-actions-missing",
+      "runtimeDropdownRegistered": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "heroId": "acquired-beatrice",
+      "name": "碧翠絲",
+      "existingHeroForgeRecipe": true,
+      "components": [
+        {
+          "componentId": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
+          "gitPath": "content/assets/models/community/4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c.glb",
+          "bytes": 1246640,
+          "sha256": "4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0
+        }
+      ],
+      "sourceOrProceduralMotionCount": 0,
+      "status": "static-model-ready-actions-missing",
+      "runtimeDropdownRegistered": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "heroId": "acquired-mario",
+      "name": "Mario",
+      "existingHeroForgeRecipe": true,
+      "components": [
+        {
+          "componentId": "ssbu-mario-c00-static-skinned-v1",
+          "gitPath": "content/assets/models/community/bf35a1a5f517a37424b7b186978c78e8ab5717d68b7dbb23035e2d641e2248a6.glb",
+          "bytes": 818052,
+          "sha256": "bf35a1a5f517a37424b7b186978c78e8ab5717d68b7dbb23035e2d641e2248a6",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0
+        },
+        {
+          "componentId": "ssbu-mario-c00-static-skinned-v2",
+          "gitPath": "content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb",
+          "bytes": 865396,
+          "sha256": "87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0
+        },
+        {
+          "componentId": "ssbu-mario-c00-ultimate14-motion-v1",
+          "gitPath": "content/assets/models/community/bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526.glb",
+          "bytes": 1148100,
+          "sha256": "bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526",
+          "readiness": "accepted-independent-native-motion-five-clips-incomplete-action-set",
+          "nativeAnimationCount": 5,
+          "proceduralAnimationCount": 0
+        }
+      ],
+      "sourceOrProceduralMotionCount": 5,
+      "status": "native-mod-special-clips-incomplete",
+      "runtimeDropdownRegistered": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "heroId": "acquired-mewtwo",
+      "name": "Mewtwo",
+      "existingHeroForgeRecipe": true,
+      "components": [
+        {
+          "componentId": "ssbu-mewtwo-c00-static-skinned-v1",
+          "gitPath": "content/assets/models/community/ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9.glb",
+          "bytes": 667904,
+          "sha256": "ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0
+        }
+      ],
+      "sourceOrProceduralMotionCount": 0,
+      "status": "static-model-ready-actions-missing",
+      "runtimeDropdownRegistered": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "heroId": "acquired-pokemon-trainer",
+      "name": "Pokémon Trainer",
+      "existingHeroForgeRecipe": true,
+      "components": [
+        {
+          "componentId": "ssbu-ptrainer-male-c00-static-skinned-v1",
+          "gitPath": "content/assets/models/community/f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b.glb",
+          "bytes": 1317084,
+          "sha256": "f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0
+        },
+        {
+          "componentId": "ssbu-ptrainer-female-c01-static-skinned-v1",
+          "gitPath": "content/assets/models/community/a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec.glb",
+          "bytes": 1373732,
+          "sha256": "a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0
+        }
+      ],
+      "sourceOrProceduralMotionCount": 0,
+      "status": "two-static-model-options-ready-actions-missing",
+      "runtimeDropdownRegistered": false,
+      "productionDeploymentVerified": false
+    },
+    {
+      "heroId": "acquired-ryu",
+      "name": "Ryu",
+      "existingHeroForgeRecipe": true,
+      "components": [
+        {
+          "componentId": "ssbu-ryu-c00-static-skinned-v1",
+          "gitPath": "content/assets/models/community/cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c.glb",
+          "bytes": 1005808,
+          "sha256": "cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0
+        },
+        {
+          "componentId": "ssbu-ryu-c00-procedural-six-state-decimated-v1",
+          "gitPath": "content/assets/models/community/c932402930880da55b3f79c1bdc47b955e9a3f048e46a74800bd39f5d9698b8c.glb",
+          "bytes": 748828,
+          "sha256": "c932402930880da55b3f79c1bdc47b955e9a3f048e46a74800bd39f5d9698b8c",
+          "readiness": "registered-non-default-procedural-six-state-option-current-policy-pass",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 6
+        }
+      ],
+      "sourceOrProceduralMotionCount": 6,
+      "status": "registered-non-default-procedural-six-state-option-current-policy-pass",
+      "runtimeDropdownRegistered": true,
+      "productionDeploymentVerified": false
+    },
+    {
+      "heroId": "acquired-minecraft",
+      "name": "Steve／Alex",
+      "existingHeroForgeRecipe": true,
+      "components": [
+        {
+          "componentId": "ssbu-pickel-steve-c00-static-skinned-v1",
+          "gitPath": "content/assets/models/community/087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75.glb",
+          "bytes": 51664,
+          "sha256": "087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0
+        },
+        {
+          "componentId": "ssbu-pickel-alex-c01-static-skinned-v1",
+          "gitPath": "content/assets/models/community/681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177.glb",
+          "bytes": 51960,
+          "sha256": "681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177",
+          "readiness": "accepted-independent-static-skinned-component-actions-missing",
+          "nativeAnimationCount": 0,
+          "proceduralAnimationCount": 0
+        }
+      ],
+      "sourceOrProceduralMotionCount": 0,
+      "status": "two-static-model-options-ready-actions-missing",
+      "runtimeDropdownRegistered": false,
+      "productionDeploymentVerified": false
+    }
+  ],
+  "registration": {
+    "componentId": "ssbu-ryu-c00-procedural-six-state-v1",
+    "heroId": "acquired-ryu",
+    "modelKey": "community.body.02b6e37dfb4f8a061e3244a48707a55a43c91d95c83f99c7",
+    "label": "Ryu SSBU c00（GGD 程序化六狀態）",
+    "isDefault": false,
+    "motionProvenance": "ggd-procedural-fallback-not-native-or-retargeted",
+    "modelGlb": {
+      "gitPath": "content/assets/models/community/c932402930880da55b3f79c1bdc47b955e9a3f048e46a74800bd39f5d9698b8c.glb",
+      "bytes": 748828,
+      "sha256": "c932402930880da55b3f79c1bdc47b955e9a3f048e46a74800bd39f5d9698b8c"
+    },
+    "modelDocument": {
+      "gitPath": "content/models/community.body.02b6e37dfb4f8a061e3244a48707a55a43c91d95c83f99c7.json",
+      "bytes": 524,
+      "sha256": "07441db7de9d1fe15e67f123731c11d0a0e16551cac8c6faa8c8f6d43a0b0314"
+    },
+    "runtimeSelectable": true,
+    "productionDeploymentVerified": false
+  },
+  "boundaries": [
+    "Mario 的 5 段 d01special* 是 Ultimate14 社群 MOD 原生特殊動作，未核准映射為 idle/run/attack/cast/hurt/death。",
+    "Zero、拉姆、碧翠絲、Mewtwo、Pokémon Trainer、Steve/Alex 的模型、貼圖及骨架已驗收，但來源沒有可用完整動作。",
+    "Ryu 六段為 GGD 程序化備援，明確不宣稱 SSBU 或 Street Fighter 原生動作。",
+    "本收據證明 Git 分支上的模型選項，不證明 Main 合併、正式站部署或正式站切換。"
+  ]
+}

@@ -47,12 +47,13 @@
  * stable and reviewable. Run before `pnpm content:build`.
  */
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   applyFormVoiceShares,
   planFormVoiceShares,
+  contentFormPairs,
 } from "../../packages/shared/src/content/voiceFormSharing.ts";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -66,6 +67,10 @@ const OUT_PATH = join(REPO, "content/assets/audio/voices/champions/MANIFEST.json
  * heroes.csv therefore cannot drop them (that file never lists them).
  */
 const CASTING_PATH = join(LINES_DIR, "COMBAT_CASTING.json");
+const PALWORLD_APPROVED_PATH = join(
+  REPO,
+  "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/runtime-bindings.json",
+);
 /** `--check`: rebuild in memory and exit 1 when the shipped MANIFEST.json differs. */
 const CHECK = process.argv.includes("--check");
 /** Clip paths are content-mount relative; the client strips no prefix here. */
@@ -101,6 +106,60 @@ function canonicalCategories(cats) {
 function fail(msg) {
   console.error(`[voice:index] FAIL — ${msg}`);
   process.exit(1);
+}
+
+/**
+ * Fold the owner-approved Palworld creature cries into the same per-champion
+ * category router contextualVoice already consumes.  The source manifest is
+ * generated from approved-components + owner-decisions; this function only
+ * checks its bytes and translates the declared runtime categories into the
+ * established voice-pack shape.
+ */
+function applyPalworldApprovedCries(champions) {
+  if (!existsSync(PALWORLD_APPROVED_PATH)) return 0;
+  const doc = readJson(PALWORLD_APPROVED_PATH);
+  if (doc.schema !== "ggd.palworld-approved-runtime-bindings@1") {
+    fail(`unexpected Palworld runtime-binding schema: ${doc.schema ?? "missing"}`);
+  }
+  if (doc.summary?.characters !== 3 || doc.summary?.approvedCrySourceBindings !== 18) {
+    fail("Palworld runtime-binding summary is incomplete");
+  }
+  const byHero = new Map();
+  for (const row of doc.cries ?? []) {
+    if (!row?.heroId || !row?.clip?.path || !Array.isArray(row.runtimeCategories)) {
+      fail("Palworld runtime-binding row is malformed");
+    }
+    const file = join(REPO, "content", row.clip.path);
+    if (!existsSync(file)) fail(`Palworld runtime clip missing: ${row.clip.path}`);
+    const bytes = statSync(file).size;
+    const hash = createHash("sha256").update(readFileSync(file)).digest("hex");
+    if (bytes !== row.clip.bytes || hash !== row.clip.sha256) {
+      fail(`Palworld runtime clip changed: ${row.clip.path}`);
+    }
+    let entry = byHero.get(row.heroId);
+    if (!entry) {
+      entry = { engine: "original-game-audio", variant: "palworld-owner-approved-v1", lines: {} };
+      byHero.set(row.heroId, entry);
+    }
+    const clip = {
+      clip: row.clip.path,
+      text: row.clip.text ?? row.sourceLabel ?? "",
+      lang: row.clip.language ?? "zxx",
+      durationSec: 0,
+      speakerSim: null,
+      hash,
+    };
+    for (const category of row.runtimeCategories) {
+      if (typeof category !== "string" || !category) fail(`Palworld runtime category missing: ${row.candidateId}`);
+      (entry.lines[category] ??= []).push({ ...clip });
+    }
+  }
+  if (byHero.size !== 3) fail(`expected 3 Palworld runtime heroes, got ${byHero.size}`);
+  for (const [id, entry] of [...byHero.entries()].sort(([a], [b]) => a.localeCompare(b))) {
+    if (champions[id]) fail(`Palworld runtime hero would overwrite an existing pack: ${id}`);
+    champions[id] = entry;
+  }
+  return byHero.size;
 }
 
 function main() {
@@ -242,7 +301,7 @@ function main() {
       // ⭐ owner 2026-09-10「每個角色可以支援最多三個口頭禪經典台詞 可被隨機播放」:
       // a category may carry extra takes as `<cat>.2`, `<cat>.3`, … (status key + mp3
       // name); they ride along in the same array and the client picks at random.
-      for (let n = 2; n <= 9; n++) {
+      for (let n = 2; ; n++) {
         const key = `${cat}.${n}`;
         const mp3 = join(dir, `${key}.mp3`);
         const entry = statusLines[key];
@@ -264,12 +323,23 @@ function main() {
     if (isPartial) partial++;
   }
 
+  // Original nonverbal creature cries are a generated supplemental source,
+  // keyed by the same champion/category contract as synthesized voice packs.
+  shipped += applyPalworldApprovedCries(champions);
+
   // FORM SHARING. Every pair with clips on exactly ONE side lends them to the
   // other, in whichever direction the corpus happens to sit. The borrowed entry
   // is the donor's, stamped `sharedFrom`, so its clip paths still point at the
   // donor's files — nothing is copied. A champion that owns a pack is never
   // named, so a real recorded asset can never be shadowed by a borrowed one.
-  const shares = planFormVoiceShares(Object.keys(champions));
+  // ⭐ 2026-09-15：內容檔宣告的變身對（b2／社群）也借 —— 與執行期 `resolveVoicePackId` 同一張表。
+  const championDir = join(REPO, "content/champions");
+  const contentPairs = contentFormPairs(
+    readdirSync(championDir)
+      .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+      .map((f) => JSON.parse(readFileSync(join(championDir, f), "utf8"))),
+  );
+  const shares = planFormVoiceShares(Object.keys(champions), contentPairs);
   const withShares = applyFormVoiceShares(champions, shares);
   const landed = shares.filter((s) => withShares[s.championId]);
 

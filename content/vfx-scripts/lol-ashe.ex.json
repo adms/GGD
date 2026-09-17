@@ -1,0 +1,30 @@
+{
+  "id": "lol-ashe.ex",
+  "schema": "vfx-script@1",
+  "abilityId": "lol-ashe.ex",
+  "notes": "艾希 EX：GGD 基本演出，非原作特效還原。投射物依實際命中、週期演出依 strike、移動結束依 onLand/onEnd；落點與成功分支使用既有 spawnVfx。判定與尚缺機制仍以技能資料為準。",
+  "yields": [
+    "caster.castFx"
+  ],
+  "segments": [
+    {
+      "kind": "anim",
+      "on": "castStart",
+      "replaces": "caster.action",
+      "at": "caster",
+      "pulse": "cast"
+    },
+    {
+      "vfxId": "fx.prim.holy.pulse",
+      "at": "self",
+      "kind": "vfx",
+      "on": "castEffect",
+      "w3xScale": 0.8,
+      "tint": [
+        105,
+        200,
+        255
+      ]
+    }
+  ]
+}

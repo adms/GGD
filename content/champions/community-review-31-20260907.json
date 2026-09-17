@@ -1,16 +1,16 @@
 {
   "id": "community-review-31-20260907",
   "name": "SUN樂",
-  "description": "SUN樂 社群英雄功能驗收稿。作品：《香格里拉・開拓異境》  \n角色實體：サンラク／陽務樂郎。  \n定位：精準回避、反擊、短期強化。  \n來源錨點：作者公開小說中的實際招式。\n\n視覺方向：鳥頭面具待製、青色滑步線、反擊橙色火花、螺旋短刃切線。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "description": "作品：《香格里拉・開拓異境》  \n角色實體：サンラク／陽務樂郎。  \n定位：精準回避、反擊、短期強化。  \n來源錨點：作者公開小說中的實際招式。\n\n視覺方向：鳥頭面具待製、青色滑步線、反擊橙色火花、螺旋短刃切線。",
   "role": "fighter",
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "鬥士",
-  "modelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
+  "modelKey": "version.body.0ba9a895eadae18bf59fc8b3d44e9e4a346e5ab6ee7ead95",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 35.000204081632646,
+    "maxHealth": 80,
     "healthRegen": 0.08789387755102042,
-    "maxMana": 26.357142857142858,
+    "maxMana": 50,
     "manaRegen": 0,
     "ad": 4.289142857142858,
     "as": 0,
@@ -62,10 +62,10 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -82,7 +82,7 @@
           }
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-31-20260907.q.webp",
       "template": {
@@ -93,7 +93,7 @@
             "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -119,10 +119,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -150,7 +150,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-31-20260907.w.webp",
       "template": {
@@ -166,7 +166,7 @@
             "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 1.033
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -219,7 +219,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-31-20260907.e.webp",
       "template": {
@@ -227,7 +227,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -277,7 +277,7 @@
           "duration": 3
         }
       ],
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-31-20260907.r.webp",
       "template": {
@@ -296,7 +296,7 @@
               "value": 0.2
             }
           ],
-          "castTimeSec": 0.667
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },
@@ -322,5 +322,100 @@
   "tags": [
     "magic"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.062da662b79749bb7e3c2426852190c23fe9368484710a47",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
+      "modelSha256": "8f39b70f9c6556bf21a741acb2c1342be666965927bdb70d0e63db136e55a42d",
+      "binarySha256": "ef6264861d505d146eb722e39bab0b011567d37d3e4813361df82a872916f5b0",
+      "registeredAt": "2026-09-12T23:02:34.910Z",
+      "source": {
+        "kind": "previous",
+        "character": "SUN樂",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.91fc5f0da24c195fa2dad1b910c09a28dcc1fede867c7805",
+      "label": "哈桑",
+      "sourceModelKey": "community.body.5c069db6116a962fa6be78aebd9869344d2e1c965112628a",
+      "modelSha256": "e639b86560966b0746f744292e51bde0bdc88e8763353e3646fcbe3753a2f97f",
+      "binarySha256": "8b56bb8f2cf1015969d0d64b97a8131fed375a1d852dd928dc6420b815fe26c0",
+      "registeredAt": "2026-09-12T23:02:34.914Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "哈桑",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "300heroes:1b46757671158e661a0105d1",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.96f230f15717574b6fee492b178849f764930d46f8f01f18",
+      "label": "SUN樂（獨立副本／哈桑）",
+      "sourceModelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
+      "modelSha256": "86126c96bd939e47e44dbe49710d424f5f464b6220efd1de5d5defa5e2cdfbe2",
+      "binarySha256": "f5ee6f2f81183ff9c2c4448b9fbbce4aee7748da53bceccfdc888ea3abeb86ed",
+      "registeredAt": "2026-09-12T23:02:35.119Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "SUN樂（獨立副本／哈桑）",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "derivative:sunraku",
+        "tier": "300heroes",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.e7d0349be264bd9a51eae80334b0cd9c1b73375ffa98f5ac",
+      "label": "哈桑",
+      "sourceModelKey": "community.body.5c069db6116a962fa6be78aebd9869344d2e1c965112628a",
+      "modelSha256": "8a2c378829e6a565bed2d793f5a380ac5cd9276c0023a96681d6e7b5472b00b4",
+      "binarySha256": "8b56bb8f2cf1015969d0d64b97a8131fed375a1d852dd928dc6420b815fe26c0",
+      "registeredAt": "2026-09-13T00:08:50.729Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "哈桑",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "300heroes:1b46757671158e661a0105d1",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.0ba9a895eadae18bf59fc8b3d44e9e4a346e5ab6ee7ead95",
+      "label": "SUN樂（獨立副本／哈桑）",
+      "sourceModelKey": "community.body.2daac4266fc6caf9fa290b0b466aaaf01d2ddfd5beb7a855",
+      "modelSha256": "002d3639b0ee8eba2dd664f1c66a58ecea9d86c6df25019573d8529cdaf03755",
+      "binarySha256": "f5ee6f2f81183ff9c2c4448b9fbbce4aee7748da53bceccfdc888ea3abeb86ed",
+      "registeredAt": "2026-09-13T00:08:50.922Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "SUN樂（獨立副本／哈桑）",
+        "work": "Fate/stay night",
+        "library": "300heroes",
+        "reference": "derivative:sunraku",
+        "tier": "300heroes",
+        "selectionClass": "manual",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

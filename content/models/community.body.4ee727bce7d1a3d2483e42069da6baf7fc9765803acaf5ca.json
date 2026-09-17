@@ -1,0 +1,16 @@
+{
+  "id": "community.body.4ee727bce7d1a3d2483e42069da6baf7fc9765803acaf5ca",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "walk",
+    "run": "run",
+    "attack": "one_hand_heavy_1",
+    "cast": "leap_slash",
+    "hurt": "fake_death",
+    "death": "death"
+  },
+  "yawOffsetDeg": 0
+}

@@ -1,0 +1,78 @@
+{
+  "schema": "ggd.jump-force-dai-six-draw-conversion@1",
+  "candidateId": "jump-force-native-dai-chr0430-uv-eye-repaired-six-draw-v3",
+  "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+  "nativeCharacterId": "chr0430",
+  "heroIds": [
+    "godie-nbbc",
+    "godie-n01c"
+  ],
+  "input": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-a/dai-chr0430-review-v4.glb",
+    "bytes": 2488032,
+    "sha256": "2b3030a97ff3add18e8addbc5d0ab39153e66d2da45a0d5ccf1dc10ff0fc55ba"
+  },
+  "atlasPlan": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v3d/atlas/atlas-plan.json",
+    "bytes": 2455,
+    "sha256": "7bd1816381abafb07c110c99609bd10f54b5228ea5b230a50de9f4ecb7385c91"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v3d/run-a/dai-chr0430-six-draw.glb",
+    "bytes": 3087152,
+    "sha256": "8be8b64eb20eeaeb4be1be69804dfe4486a11ce50c1ffa42849d16985775c71c"
+  },
+  "rebuild": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v3d/run-b/dai-chr0430-six-draw.glb",
+    "bytes": 3087152,
+    "sha256": "8be8b64eb20eeaeb4be1be69804dfe4486a11ce50c1ffa42849d16985775c71c"
+  },
+  "byteIdenticalRebuild": true,
+  "observed": {
+    "triangles": 7930,
+    "drawPrimitives": 6,
+    "maxTextureEdge": 256,
+    "skins": 1,
+    "joints": 159,
+    "animations": 0
+  },
+  "tools": {
+    "builder": {
+      "bytes": 18980,
+      "sha256": "b19d7d914241d48818801057cc1dc48950961d52e905081ee3bea8bdd27cd81f",
+      "gitPath": "tools/hero-model-library/source-workflows/jump-force-dai-decimation-v2/build_six_draw_candidate.py"
+    },
+    "pillow": "12.3.0"
+  },
+  "commands": [
+    {
+      "run": "run-a",
+      "implementation": "merge_six_draw",
+      "input": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-a/dai-chr0430-review-v4.glb",
+      "atlasPlan": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v3d/atlas/atlas-plan.json",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v3d/run-a/dai-chr0430-six-draw.glb"
+    },
+    {
+      "run": "run-b",
+      "implementation": "merge_six_draw",
+      "input": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v2/run-a/dai-chr0430-review-v4.glb",
+      "atlasPlan": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v3d/atlas/atlas-plan.json",
+      "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v3d/run-b/dai-chr0430-six-draw.glb"
+    }
+  ],
+  "states": {
+    "geometryTargetPassed": true,
+    "drawCallLimitPassed": true,
+    "textureEdgePassed": true,
+    "visualReview": "pending-owner-review",
+    "animationBinding": "blocked-no-reviewed-motion",
+    "backendOptionRegistered": false,
+    "runtimeSelectable": false,
+    "productionDeployed": false
+  },
+  "limitations": [
+    "The opaque body sets are resampled into one 256px source-specific base/normal/ORM atlas; face retains 128x128 and transparent eye/hair layers remain separate.",
+    "No reviewed motion binding exists for this JUMP FORCE skeleton; no clip was invented or borrowed automatically.",
+    "Visual approval is required for this new atlas output before runtime registration."
+  ]
+}

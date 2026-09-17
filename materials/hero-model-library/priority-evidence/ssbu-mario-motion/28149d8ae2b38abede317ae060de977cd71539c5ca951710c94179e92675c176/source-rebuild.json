@@ -1,0 +1,77 @@
+{
+  "schema": "ggd.ssbu-mario-ultimate14-motion-source-rebuild@1",
+  "componentId": "ssbu-mario-c00-ultimate14-motion-v1",
+  "firstImport": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/import-01/import-receipt.json",
+    "bytes": 6807,
+    "sha256": "224e9f48ccf2097ffc69a8031daadd9d5e8fcf88e233d8453b227de1cba0353f"
+  },
+  "secondImport": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/import-02/import-receipt.json",
+    "bytes": 6807,
+    "sha256": "284d5339e2dab21a10437fef4a4a88e62d58e354eaa4588eb364e972d4af42fa"
+  },
+  "intermediateBlendByteIdentical": false,
+  "intermediateBlendBytes": [
+    24142181,
+    24142181
+  ],
+  "firstBlenderGlb": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/converted-01/body.glb",
+    "bytes": 1148060,
+    "sha256": "9df1d4eba2fb3f15c4f1476037413c8671b3e9782d9b0172c5850144f7c728ef"
+  },
+  "secondBlenderGlb": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/converted-02/body.glb",
+    "bytes": 1148060,
+    "sha256": "9df1d4eba2fb3f15c4f1476037413c8671b3e9782d9b0172c5850144f7c728ef"
+  },
+  "blenderGlbByteIdenticalRebuild": true,
+  "firstFinalGlb": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/normalized-01/component.glb",
+    "bytes": 1148100,
+    "sha256": "bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526"
+  },
+  "secondFinalGlb": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/normalized-02/component.glb",
+    "bytes": 1148100,
+    "sha256": "bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526"
+  },
+  "finalGlbByteIdenticalRebuild": true,
+  "outputSha256": "bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526",
+  "note": "Blender save metadata makes the two intermediate .blend hashes differ; both Blender GLB exports and both normalized final GLBs are byte-identical.",
+  "toolPins": [
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/integrate.py",
+      "sha256": "a827874c5c4565633ee5a6d482bc86c18407a5e1556fe782bdcb021dd6b9a938"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/import_nuanmb_actions.py",
+      "sha256": "7eb13e708518f0328819ea5c8c52764e05b5c12a815d142f47382b57f0982c52"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/normalize_materials.py",
+      "sha256": "c501a09f9a13614b045bc6a2f3b6862fd4d1f4a187305d24e2f49ffd98b8d245"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/validate_motion_component.mts",
+      "sha256": "c944d7a3202cd053c3317f1fe3804ac6357baa8bfb14acf8ec6c0ad0b34c46af"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/render_motion_glb.py",
+      "sha256": "636a5fd8e3a62753fd6af5ed501886793feb1c2fc3db6db6c2f9abc35db35622"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/render_motion_glb.mjs",
+      "sha256": "f70d3bb209fc11c670860745f484a7707e3e53406eaddf0269cdb6ee0c029e02"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/ssbu-models-v1/convert_blend_component.py",
+      "sha256": "cb8e2dea1f5a9a552a8a734691eb235ad344a7261667d32eeddc1fe7da3342ea"
+    },
+    {
+      "path": "tools/w3x-import/repair_alpha_backdrops.py",
+      "sha256": "dcbc750871857277084c31ef9b6fbf6b581b5040b79aa48ee34970968be91a1a"
+    }
+  ]
+}

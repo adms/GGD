@@ -7,6 +7,8 @@
  *
  * ⇒ 「並非每個技能都一個特定特效」是一句**可以量的**話：
  *   **只被 1 支技能引用的特效 key**（＝專屬積木）的數量。
+ *   原作遊戲直接擷取、owner 逐項核准且有固定收據的視覺例外不冒充共用積木；
+ *   收據必須逐 id、已綁技能，失效或擴張都會讓本檔紅燈。
  *   它今天是 **69**，而這條閘讓它**只能變少**。
  *
  * ── ⭐ 五條斷言，⛔ 沒有一條靠人讀 ────────────────────────────────────────
@@ -77,6 +79,10 @@ const VFX_DIR = join(ROOT, "content/vfx");
 const ABILITY_DIR = join(ROOT, "content/abilities");
 const SCRIPT_DIR = join(ROOT, "content/vfx-scripts");
 const SUBTYPE_DIR = join(ROOT, "content/vfx-subtypes");
+const POPP_NATIVE_VFX_APPROVAL_RECEIPT = join(
+  ROOT,
+  "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-runtime-v1/receipt.json",
+);
 
 /**
  * ⭐ 量到的（2026-09-05，`content/abilities/*.json` 421 份 × `content/vfx/` 702 份）：
@@ -84,7 +90,8 @@ const SUBTYPE_DIR = join(ROOT, "content/vfx-subtypes");
  * ≥5 支 29。⚠️ 票文寫的是 178/68（技能數 422）—— 差一支，⭐ 這裡用**重量到**的。
  * ⚠️ 2026-09-06 重量：仍是 69 —— 子模組動的是 vfx-script 那一層，⛔ 技能↔特效 key 的引用一格沒變。
  */
-const EXCLUSIVE_VFX_BASELINE = 60;
+// ⭐ 2026-09-17（GH#1281）：60 → 56（棘輪只能往下；第四批 37 名共用既有 fx.prim.* 家族，專屬特效變少）。
+const EXCLUSIVE_VFX_BASELINE = 56;
 /**
  * ⭐ 量到的（2026-09-10，45 支出貨 script × 4 顆子模組）：**0**。
  *
@@ -134,6 +141,31 @@ function referenceCensus(): Map<string, Set<string>> {
     }
   }
   return byVfx;
+}
+
+/**
+ * 原作特效不該被假裝成共用積木。這份窄例外只接受 owner 已逐項核准、
+ * 已綁技能且有固定 release id 的 Popp 原作視覺收據；其餘專屬特效仍受 60 顆棘輪約束。
+ */
+function approvedNativeExclusiveVfx(): Set<string> {
+  const receipt = read(POPP_NATIVE_VFX_APPROVAL_RECEIPT) as {
+    schema?: string;
+    authority?: { decision?: string };
+    releasedVfx?: Array<{
+      releaseVfxId?: string;
+      ownerVisualDecision?: string;
+      skillBound?: boolean;
+    }>;
+  };
+  expect(receipt.schema).toBe("ggd.popp-vfx-runtime-release@1");
+  expect(receipt.authority?.decision).toBe("owner-requested-completion-of-reviewed-vfx-adaptation");
+  const ids = (receipt.releasedVfx ?? [])
+    .filter((entry) => entry.ownerVisualDecision === "approve" && entry.skillBound === true)
+    .map((entry) => entry.releaseVfxId)
+    .filter((id): id is string => typeof id === "string" && id.length > 0);
+  expect(new Set(ids).size, "Popp 原作特效核准收據有重複 releaseVfxId").toBe(ids.length);
+  expect(ids, "Popp owner 核准且已綁技能的原作特效必須固定為逐項審查通過的 7 顆").toHaveLength(7);
+  return new Set(ids);
 }
 
 /** 出貨腳本**展開後**的段落（⭐ 走共用展開器 —— 播放器看到的就是這一份）。 */
@@ -266,7 +298,14 @@ describe("GH#990 特效子模組 —— 棘輪 · 出處 · 等價", () => {
 
   it("① 棘輪（雙向）：只被 1 支技能引用的專屬特效數只能變少", () => {
     const census = referenceCensus();
-    const exclusive = [...census.entries()].filter(([, a]) => a.size === 1).map(([k]) => k);
+    const rawExclusive = [...census.entries()].filter(([, a]) => a.size === 1).map(([k]) => k);
+    const approvedNative = approvedNativeExclusiveVfx();
+    const staleApprovals = [...approvedNative].filter((id) => !rawExclusive.includes(id));
+    expect(
+      staleApprovals,
+      "Popp 原作特效核准收據含未被單一技能引用的 id；請修收據或引用，不能把它當通用豁免",
+    ).toEqual([]);
+    const exclusive = rawExclusive.filter((id) => !approvedNative.has(id));
     const n = exclusive.length;
     expect(
       n,

@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "法刺",
-  "modelKey": "imported.herosasuke",
+  "modelKey": "version.body.80bf9fc88e4c0b75200173260218c85045dcd0325755582f",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.01,
@@ -25,9 +25,9 @@
     "range": 1.4
   },
   "growth": {
-    "maxHealth": 36.0571,
+    "maxHealth": 40,
     "healthRegen": 0.1305,
-    "maxMana": 37.5347,
+    "maxMana": 35,
     "manaRegen": 0.1341,
     "ad": 1.1828,
     "armor": 0.3801,
@@ -67,10 +67,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "range": 12.0,
       "radiusTier": "中",
@@ -162,15 +162,16 @@
               "stacking": "refresh"
             }
           ],
-          "castTimeSec": 1.033
+          "castTimeSec": 1
         }
       },
       "icon": "assets/icons/abilities/godie-edem.q.webp",
       "vfxKey": "fx.prim.fire.explosion",
       "cooldownTier": "小",
-      "manaCostTier": "小",
+      "castTimeTier": "極大",
       "rangeTier": "極大",
-      "castTimeSec": 1.033
+      "manaCostTier": "小",
+      "castTimeSec": 1
     },
     "W": {
       "id": "godie-edem.w",
@@ -187,10 +188,10 @@
         45.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "range": 0.0,
       "radiusTier": "中",
@@ -272,14 +273,15 @@
               "moveSpeedMult": 0.5
             }
           ],
-          "castTimeSec": 0.833
+          "castTimeSec": 1
         }
       },
       "icon": "assets/icons/abilities/godie-edem.w.webp",
       "vfxKey": "fx.prim.lightning.beam",
       "cooldownTier": "小",
+      "castTimeTier": "極大",
       "manaCostTier": "極小",
-      "castTimeSec": 0.833
+      "castTimeSec": 1
     },
     "E": {
       "id": "godie-edem.e",
@@ -296,13 +298,14 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "range": 12.0,
       "radiusTier": "中",
+      "castTimeTier": "極大",
       "targetsEnemies": true,
       "effects": [
         {
@@ -366,9 +369,9 @@
         }
       ],
       "cooldownTier": "小",
-      "manaCostTier": "小",
       "rangeTier": "極大",
-      "castTimeSec": 0.067
+      "manaCostTier": "小",
+      "castTimeSec": 1
     },
     "R": {
       "id": "godie-edem.r",
@@ -494,7 +497,8 @@
       },
       "vfxKey": "fx.prim.void.pulse-lg",
       "sfxKey": "wc3.thunderboltmissiledeath",
-      "icon": "assets/icons/abilities/godie-edem.r.png"
+      "icon": "assets/icons/abilities/godie-edem.r.png",
+      "castTimeTier": "極小"
     }
   },
   "skillOrder": [
@@ -517,5 +521,57 @@
     "爆發",
     "切後排"
   ],
-  "pitch": "等待破綻快速切入，把技能集中在脆弱目標身上，殺完立即脫離。"
+  "pitch": "等待破綻快速切入，把技能集中在脆弱目標身上，殺完立即脫離。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.12a41bb3d02989589112cd532f76e895bf419097e4c33f16",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.herosasuke",
+      "modelSha256": "7de25854b9d7ed36a53ebe431ae6bf44ee45c19603434cffbf6fe8691f4adaa0",
+      "binarySha256": "c5977e07303923cd1df7a10cbecfe5a7ef236fd2cd818d125774e3f4ea9bb939",
+      "registeredAt": "2026-09-09T07:13:26.403Z",
+      "source": {
+        "kind": "previous",
+        "character": "寫輪眼復仇者 - 宇智波佐助",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.herosasuke.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.c7c18b4fe781830b000e7fe0c755d9c945f3779ddee8e6d6",
+      "label": "左二少",
+      "sourceModelKey": "community.body.69ac4b9dd172a08f65d964ce2fac0d131de2f4df22840fff",
+      "modelSha256": "7891fab95af9fdad28cb5747193fa38fffff9468cd1d6c358fc95a912b0c57e6",
+      "binarySha256": "9716b4d9495a359cebf1facde9fcbbd4c21a48859fa185edb610ba3926259d74",
+      "registeredAt": "2026-09-09T07:13:26.416Z",
+      "source": {
+        "kind": "exact",
+        "character": "左二少",
+        "work": "火影忍者 NARUTO",
+        "library": "300heroes",
+        "reference": "300heroes:2ed8dd0b7fc060908c5302b8",
+        "tier": "300heroes"
+      }
+    },
+    {
+      "modelKey": "version.body.80bf9fc88e4c0b75200173260218c85045dcd0325755582f",
+      "label": "原上線模型（glTF 驗證修正）",
+      "sourceModelKey": "imported.herosasuke",
+      "modelSha256": "5f0785201518dfceb782454cc6eeb0d3223f5c07a75dd3253c2e4e91883971f3",
+      "binarySha256": "865a87dbf0a8d90d31ec20dfebeb846b932f10688948221b8c36d13a73148041",
+      "registeredAt": "2026-09-15T03:56:35.084Z",
+      "source": {
+        "kind": "exact",
+        "character": "寫輪眼復仇者 - 宇智波佐助",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.herosasuke.json",
+        "tier": "w3x"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "manual"
 }

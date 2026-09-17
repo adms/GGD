@@ -15,10 +15,10 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    56.0,
-    56.0,
-    56.0,
-    56.0
+    75.0,
+    75.0,
+    75.0,
+    75.0
   ],
   "manaCostTier": "極小",
   "effects": [],
@@ -37,16 +37,17 @@
       "damageType": "magic",
       "status": {
         "statusId": "alcohol-enema",
-        "duration": 8.0,
+        "duration": 8,
         "moveSpeedMult": 0.9
       },
-      "castTimeSec": 1.133
+      "castTimeSec": 1
     }
   },
   "vfxKey": "fx.prim.nature.nova",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 1.133,
+  "castTimeSec": 1,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "極大"
 }

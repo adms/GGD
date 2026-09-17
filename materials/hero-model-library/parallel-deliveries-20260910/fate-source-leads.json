@@ -1,0 +1,68 @@
+{
+  "schema": "ggd.source-leads.proposal@1",
+  "registrationType": "lead-only-not-publicSources-assets",
+  "centralModified": false,
+  "newAssetSourceEntries": [],
+  "leadEntries": [
+    {
+      "sourceId": "nexus-fuc-bazett-sifu-757",
+      "url": "https://www.nexusmods.com/sifu/mods/757",
+      "author": "Anonymous / uploader DrStylish",
+      "sourceGame": "Fate/unlimited codes (Bazett only); Fate/Extra (Kirei)",
+      "platform": "unknown",
+      "targetModGame": "Sifu",
+      "checkedVia": "web public page and ordinary Manual link",
+      "status": "page-only-download-unresolved",
+      "acquiredFiles": 0,
+      "evidence": "Public author description identifies two different source games. Ordinary Manual link did not resolve through the web tool. No attachment obtained or download bypass attempted.",
+      "reuseTerms": "Author page requires permission for asset use; forbids conversion to other games and reupload.",
+      "defaultEligible": false
+    },
+    {
+      "sourceId": "gamebanana-illya-heracles-462581",
+      "url": "https://gamebanana.com/mods/462581",
+      "author": "AngelLeyend",
+      "sourceGame": "Composite: FUC Illya outfit; Superdimensional hair; FGO Arcade Heracles",
+      "platform": "unknown",
+      "targetModGame": "Honkai: Star Rail",
+      "authorMirrorEvidence": "https://www.nexusmods.com/honkaistarrail/mods/6?tab=logs",
+      "status": "blocked-403",
+      "checkedVia": "Ordinary public urllib HTTPS GET, after sandbox DNS prevented the first request",
+      "requestedUrl": "https://gamebanana.com/apiv11/Mod/462581/ProfilePage",
+      "httpStatus": 403,
+      "observedError": "urllib.error.HTTPError: HTTP Error 403: Forbidden",
+      "responseBodySaved": false,
+      "acquiredFiles": 0,
+      "stoppedAfter403": true,
+      "defaultEligible": false,
+      "note": "Author independently lists GameBanana mirror. No alternative download endpoint was attempted after this 403."
+    },
+    {
+      "sourceId": "steam-saber-hair-xcom2-959415569",
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=959415569",
+      "author": "($S360)Aeronautic; XNALara attribution xo-BAHAMUT-ox",
+      "sourceGame": "Fate/unlimited codes (author-labelled hairstyle only)",
+      "platform": "unknown",
+      "targetModGame": "XCOM 2",
+      "status": "indexed-source-attribution-only-not-downloaded",
+      "checkedVia": "Public search-indexed author description",
+      "acquiredFiles": 0,
+      "fullCharacterModel": false,
+      "nativeMotionPackage": false,
+      "note": "Only hair component; author credits prior XNALara model but exact original download not found. No Workshop download attempted.",
+      "defaultEligible": false
+    },
+    {
+      "sourceId": "ffshrine-arutoa-fuc-psp-audio-claim",
+      "url": "https://ffshrine.org/alpha23s-streamed-vgm-thread/",
+      "author": "Arutoa",
+      "sourceGame": "Fate/unlimited codes",
+      "platform": "PSP (poster claim)",
+      "status": "indexed-discussion-only-no-package",
+      "checkedVia": "Public search-indexed discussion",
+      "acquiredFiles": 0,
+      "note": "Poster describes having ripped/looped PSP music in 2010-2011. Indexed excerpt provides no accessible native audio archive. Not counted as acquisition, voice, or SFX.",
+      "defaultEligible": false
+    }
+  ]
+}

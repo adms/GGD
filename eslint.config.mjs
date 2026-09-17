@@ -115,6 +115,9 @@ const IGNORES = [
   "scratchpad/**",
   // vite 跑起來時暫時寫在 apps/*/ 底下的設定 bundle
   "**/vite.config.*.timestamp-*.mjs",
+  // ⭐ 2026-09-15（v0.45.2 整合）：GH#1257 新增 apps/editor/vitest.config.ts 之後，vitest 也會寫同形的暫存 bundle；
+  //   ship:check 並行段 lint 掃到它、vitest 收工刪掉 ⇒ ESLint ENOENT 崩潰（exit 2）。與上一列同一個理由。
+  "**/vitest.config.*.timestamp-*.mjs",
 ];
 
 export default tseslint.config(
@@ -286,6 +289,19 @@ export default tseslint.config(
   {
     files: ["**/*.cjs"],
     rules: { "@typescript-eslint/no-require-imports": "off" },
+  },
+
+  // Frozen meshoptimizer v0.25 decoder; source-files.json pins its unchanged
+  // upstream bytes (SHA-256 05e1d7b12b8fe408b07690d701328671d026c4ace808684c942f398b1f0801d5).
+  // Its ES5 loops deliberately reuse function-scoped `var i`; the guarded AMD
+  // branch uses a loader-provided `define`. Keep every other rule, including
+  // no-undef, active; this exception does not apply to our replay adapters.
+  {
+    files: [
+      "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-astralym/meshopt_decoder.cjs",
+    ],
+    languageOptions: { globals: { define: "readonly" } },
+    rules: { "no-redeclare": "off" },
   },
 
   // ══════════════════════════════════════════════════════════════════════

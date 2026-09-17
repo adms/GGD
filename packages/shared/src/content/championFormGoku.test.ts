@@ -182,8 +182,24 @@ const adBoostSpaceOf = (world: SimWorld, id: EntityId): number =>
  */
 function pressE(world: SimWorld, id: EntityId): void {
   expect(castAbility(world, id, "E", { type: "self" }), "E 真的施放出去").toBe("ok");
-  for (let i = 0; i < 20; i++) world.step(NO_INTENTS);
-  expect(world.abilities.get(id)!.cast, "施法已經解算完（不是還卡在前搖）").toBeNull();
+  // ⭐⭐ 推進到**施法真的解算完**，⛔ 不要寫死 tick 數（2026-09-12，GH#1243）。
+  //
+  // ⛔ 在此之前這裡是 `for (i < 20)` ＝ 0.67 秒 —— ⚠️ 而吟唱**五級距**把
+  // `09-03` 拉到 `極大`（1.0 秒 ＝ 30 tick）⇒ 20 tick 還卡在前搖 ⇒ 這條紅了。
+  // ⭐ 而它紅的**不是變身壞了**，是這個等待寫死了一個會變的數字。
+  //
+  // ⇒ ⭐ 等待條件改成「cast 變成 null」，上界用**一個明顯夠大的數**當保險絲：
+  //   ⛔ 保險絲燒掉要紅（那才是「真的卡住」），⛔ 不是靜默繼續。
+  const CAST_WAIT_FUSE = 200; // ≈ 6.7 秒 —— ⭐ 遠大於任何級距（最大 1.0 秒）
+  let waited = 0;
+  while (world.abilities.get(id)!.cast !== null && waited < CAST_WAIT_FUSE) {
+    world.step(NO_INTENTS);
+    waited++;
+  }
+  expect(
+    world.abilities.get(id)!.cast,
+    `施法已經解算完（不是還卡在前搖）—— 等了 ${waited} tick 仍未解算 ⇒ ⛔ 真的卡住了`,
+  ).toBeNull();
 }
 
 // ---------------------------------------------------------------------------

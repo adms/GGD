@@ -109,6 +109,7 @@ import { SKELETON_ARENA } from "./world/ArenaDef";
 import { spawnChampion } from "./spawnChampion";
 import { castAbility, rankUpAbility, learnEx } from "./abilities/abilitySystem";
 import { isPassiveOnly, isPassiveInnate, abilityPassiveSourceId } from "./abilities/abilityPassives";
+import { augmentOf, collectAugmentOps, isAugmentingAbility } from "./abilities/abilityAugment";
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../ids";
 import type { AbilityDef, CastType } from "./content/defs";
 import { INNATE_SLOT, type CastTarget, type CastableSlot, type CoreAbilitySlot } from "./intents";
@@ -1082,6 +1083,21 @@ function testSlot(championId: string, slot: CastableSlot, seed: number): Cell {
           reason: "鑰匙被動：同英雄的技能以 `learned` 條件葉指著這一格 —— 學了它，那些技能的追加段才會發生。",
         };
       }
+      // ⭐ 2026-09-15（v0.45.2 整合）：強化被動（`ability-augment@1`）—— 這一格本身零來源，
+      //   它的作用是**改同英雄別的技能的數字**（77-002 御雷劍：雷鳴劍發動機率「至」50%、GLADIARIA ALAT「至」30 秒）。
+      //   GH#1239 拿掉那條五層都沒有的 40% 落雷之後，它只剩 augment ⇒ 在此之前被量成 inert。
+      //   ⛔ 不是宣告就算：真的去收集持有者身上**已學會**的強化操作（出貨的 `collectAugmentOps`），收得到才算。
+      if (isAugmentingAbility(def)) {
+        const hit = (augmentOf(def)?.targets ?? []).some((t) => collectAugmentOps(world, caster, t.abilityId).length > 0);
+        if (hit) {
+          return {
+            verdict: "PASSIVE",
+            castType: def.castType,
+            channel: "passive:augment",
+            reason: "強化被動：學了這一格之後，同英雄的目標技能真的收集得到它的強化操作（`collectAugmentOps`）。",
+          };
+        }
+      }
       return {
         verdict: "FAIL",
         castType: def.castType,
@@ -1443,6 +1459,18 @@ describe("task #128 — in-game castability coverage sweep", () => {
         ).length,
       0,
     );
+    // ⭐ GH#1281（2026-09-17）：比例掉下來的時候要**指名是哪一格** —— ⛔ 不是叫人去翻報告，
+    //   那份報告的母體（首發名單）與這裡的分母（tracked）本來就不一樣。
+    const brokenCells = trackedResults.flatMap((r) =>
+      COLS.filter(
+        (s) =>
+          r.cells[s].verdict !== "NONE" &&
+          r.cells[s].verdict !== "FORM_GATED" &&
+          !r.cells[s].seedDependent &&
+          !["PASS", "PASSIVE"].includes(r.cells[s].verdict),
+      ).map((s) => `${r.id}|${s}: ${r.cells[s].verdict} ${r.cells[s].reason ?? ""}`),
+    );
+    expect(brokenCells, "⛔ 這幾格放不出來（或放出去什麼都沒動）").toEqual([]);
     expect(
       working / cells,
       `working cells (PASS + verified PASSIVE) 是 ${working}/${cells} = ` +

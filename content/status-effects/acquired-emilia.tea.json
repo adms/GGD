@@ -1,0 +1,14 @@
+{
+  "id": "acquired-emilia.tea",
+  "schema": "status-effect@1",
+  "name": "熱茶先不要冰",
+  "description": "愛蜜莉雅「熱茶先不要冰」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-emilia.tea",
+    "silence",
+    "cast-denied",
+    "cc",
+    "debuff"
+  ]
+}

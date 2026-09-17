@@ -1,5 +1,6 @@
-import { encodeUploadGlb, parseUploadGlb, readFloatAccessor, type GlbDocument, type GlbPrimitive } from "./glb";
+import { encodeUploadGlb, isModelUploadImageMimeType, parseUploadGlb, readFloatAccessor, type GlbDocument, type GlbPrimitive } from "./glb";
 import { HERO_MODEL_BUDGET } from "./budget";
+import { sniffImageHeader } from "../icons/encodeIcon";
 
 /**
  * 匯入模型的**正規化＋自動修正** —— ⭐ 後台與編輯器兩條匯入路徑都自動帶它。
@@ -41,6 +42,8 @@ export interface NormalizeReport {
   drawCalls: { before: number; after: number };
   /** 被丟掉的零長度片段名（多半是作者署名）。 */
   droppedZeroClips: string[];
+  /** Original animation index to retained index; null means that clip was removed. */
+  clipIndexMap: (number | null)[];
   /** 縮過的貼圖：`[原邊長, 新邊長]`。 */
   resizedTextures: [number, number][];
   /** ⛔ 仍然超過上限的貼圖邊長（沒有注入縮圖器，或縮不動）。 */
@@ -87,7 +90,16 @@ function clipSpanSeconds(json: GlbDocument, bin: Uint8Array, clip: GlbDocument["
 
 export async function normalizeUploadedModel(
   bytes: Uint8Array,
-  options: { maxTextureEdge?: number; resizeImage?: ResizeImage } = {},
+  options: {
+    maxTextureEdge?: number; resizeImage?: ResizeImage;
+    /**
+     * ⭐ GH#1173：模型文件宣告了 `hiddenPrimitives`（按 `mesh.primitives[i]` 索引藏殘留幾何／分形態身體）時
+     * **不合併 primitive** —— 合併會重排索引，而「畫法相同」的被藏那塊會跟本體接成一塊 ⇒ 再也藏不掉。
+     * 量到的：`imported.heroichigo`（黑崎一護雙身體 geoset，#742）5 個 draw 只有 1 種畫法、藏 [2]
+     * ⇒ 從它註冊新版本會把兩具身體接成一塊。⛔ 不重映射索引（保守：寧可少合併也不猜被藏的是哪一塊）。
+     */
+    preservePrimitiveIndices?: boolean;
+  } = {},
 ): Promise<{ bytes: Uint8Array; report: NormalizeReport }> {
   const cap = options.maxTextureEdge ?? HERO_MODEL_BUDGET.texEdge.limit;
   const { json, bin } = parseUploadGlb(bytes);
@@ -96,9 +108,15 @@ export async function normalizeUploadedModel(
 
   // ── ② 零長度片段 ────────────────────────────────────────────────────────
   const dropped: string[] = [];
+  const clipIndexMap: (number | null)[] = [];
   if (json.animations?.length) {
+    let retainedIndex = 0;
     const kept = json.animations.filter((clip) => {
-      if (clipSpanSeconds(json, bin, clip) > 0) return true;
+      if (clipSpanSeconds(json, bin, clip) > 0) {
+        clipIndexMap.push(retainedIndex++);
+        return true;
+      }
+      clipIndexMap.push(null);
       dropped.push(clip.name ?? "(未命名)");
       return false;
     });
@@ -124,10 +142,15 @@ export async function normalizeUploadedModel(
       const size = imageSize(raw);
       if (!size || Math.max(size.w, size.h) <= cap) continue;
       const next = options.resizeImage ? await options.resizeImage(raw, cap) : null;
-      const got = next ? imageSize(next) : null;
-      if (!next || !got || Math.max(got.w, got.h) > cap) { overCap.push(Math.max(size.w, size.h)); continue; }
+      const got = next ? sniffImageHeader(next) : null;
+      if (!next || !got || !isModelUploadImageMimeType(got.mime)
+        || got.width <= 0 || got.height <= 0 || Math.max(got.width, got.height) > cap) {
+        overCap.push(Math.max(size.w, size.h)); continue;
+      }
       replacements.set(i, next);
-      resized.push([Math.max(size.w, size.h), Math.max(got.w, got.h)]);
+      // Both current hosts encode PNG even when the source image was JPEG.
+      image.mimeType = got.mime;
+      resized.push([Math.max(size.w, size.h), Math.max(got.width, got.height)]);
     }
     if (replacements.size) texBin = rebuildWithImages(json, texBin, replacements);
   }
@@ -138,7 +161,7 @@ export async function normalizeUploadedModel(
   const bin2 = texBin;
   const meshNodes = (json.nodes ?? []).filter((n) => n.mesh !== undefined);
   const singleMesh = new Set(meshNodes.map((n) => n.mesh)).size === 1 && meshNodes.length === 1;
-  if (singleMesh && json.meshes) {
+  if (singleMesh && json.meshes && !options.preservePrimitiveIndices) {
     const mesh = json.meshes[meshNodes[0]!.mesh!]!;
     const groups = new Map<string, GlbPrimitive[]>();
     for (const prim of mesh.primitives) {
@@ -158,7 +181,7 @@ export async function normalizeUploadedModel(
     const changed = after !== before || dropped.length > 0 || resized.length > 0;
     return {
       bytes: changed ? encodeUploadGlb(doc, buffer) : bytes,
-      report: { drawCalls: { before, after }, droppedZeroClips: dropped,
+      report: { drawCalls: { before, after }, droppedZeroClips: dropped, clipIndexMap,
                 resizedTextures: resized, texturesOverCap: overCap, changed },
     };
   }
@@ -178,7 +201,7 @@ function mergeGroups(json: GlbDocument, bin: Uint8Array, groups: GlbPrimitive[][
     tail.push(blob); offset += blob.byteLength;
     return json.bufferViews.length - 1;
   };
-  const raw = (index: number): { bytes: Uint8Array; count: number; width: number; unit: number; componentType: number; type: string } | null => {
+  const raw = (index: number): { bytes: Uint8Array; count: number; width: number; unit: number; componentType: number; type: string; normalized: boolean } | null => {
     const a = json.accessors[index];
     if (!a || a.sparse || a.bufferView === undefined) return null;              // ⛔ 稀疏資料不接
     const width = WIDTH[a.type], unit = BYTES[a.componentType];
@@ -186,7 +209,15 @@ function mergeGroups(json: GlbDocument, bin: Uint8Array, groups: GlbPrimitive[][
     const view = json.bufferViews[a.bufferView]!;
     if (view.byteStride && view.byteStride !== width * unit) return null;        // ⛔ 交錯排列不接
     const start = (view.byteOffset ?? 0) + (a.byteOffset ?? 0);
-    return { bytes: bin.subarray(start, start + a.count * width * unit), count: a.count, width, unit, componentType: a.componentType, type: a.type };
+    return {
+      bytes: bin.subarray(start, start + a.count * width * unit),
+      count: a.count,
+      width,
+      unit,
+      componentType: a.componentType,
+      type: a.type,
+      normalized: (a as typeof a & { normalized?: boolean }).normalized === true,
+    };
   };
   const primitives: GlbPrimitive[] = [];
   for (const group of groups) {
@@ -199,12 +230,16 @@ function mergeGroups(json: GlbDocument, bin: Uint8Array, groups: GlbPrimitive[][
       const parts = group.map((p) => raw(p.attributes[name]!));
       if (parts.some((x) => x === null)) return null;
       const first = parts[0]!;
-      if (parts.some((x) => x!.componentType !== first.componentType || x!.type !== first.type)) return null;
+      if (parts.some((x) => x!.componentType !== first.componentType || x!.type !== first.type
+        || x!.normalized !== first.normalized)) return null;
       const blob = new Uint8Array(parts.reduce((n, x) => n + x!.bytes.byteLength, 0));
       let at = 0;
       for (const part of parts) { blob.set(part!.bytes, at); at += part!.bytes.byteLength; }
       const count = parts.reduce((n, x) => n + x!.count, 0);
-      const accessor: GlbDocument["accessors"][number] = { bufferView: push(blob, 34962), componentType: first.componentType, count, type: first.type };
+      const accessor: GlbDocument["accessors"][number] = {
+        bufferView: push(blob, 34962), componentType: first.componentType, count, type: first.type,
+        ...(first.normalized ? { normalized: true } : {}),
+      };
       if (name === "POSITION") {
         // ⭐ 邊界要用真的資料重算 —— ⛔ 沿用任何一段的 min/max 都會「超界」。
         const values = new Float32Array(blob.buffer, blob.byteOffset, count * 3);

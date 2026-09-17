@@ -1,0 +1,71 @@
+{
+  "schema": "ggd-priority-release-validation@1",
+  "contentVersion": "cv_b4ba8abb40e2",
+  "modelRegistrationAndHashesPassed": true,
+  "finishedStagedBytesVerification": {
+    "files": 543,
+    "bytes": 436533346
+  },
+  "targetedModelTests": {
+    "files": 5,
+    "passed": 37
+  },
+  "pythonTests": {
+    "passed": 54
+  },
+  "fullReleasePassed": false,
+  "requiredCommandsRunConcurrently": [
+    "pnpm skills:check",
+    "pnpm editor:accept:release",
+    "pnpm coord:check"
+  ],
+  "remainingFailures": [
+    {
+      "command": "pnpm models:check",
+      "detail": "22 geometry findings across Keyaru, Kaede, Haga and existing Doraemon source groups, including originals and retained versions.",
+      "log": "models-check.log"
+    },
+    {
+      "command": "pnpm shapes:check",
+      "detail": "Existing shape-axis decisions do not cover current main ability fields.",
+      "log": "shapes-check.log"
+    },
+    {
+      "command": "pnpm coord:check",
+      "detail": "Regenerated claim.editor-form-receipts changes measured capability/content fields while type-catalog fingerprint is unchanged; checker reports duplicate merged packet. Current model-library claim passes.",
+      "log": "coord-check.log"
+    },
+    {
+      "command": "pnpm combat:check",
+      "detail": "package.json references tools/voice-gen/src/build-combat-lines.mjs, absent from tracked origin/main and this branch; another worktree uncommitted file was not copied.",
+      "log": "combat-check.log"
+    },
+    {
+      "command": "pnpm editor:accept:release",
+      "detail": "Skill Forge selected acceptance cases omit consumeStatus/evasion/pull/spendHealth used by current main abilities; capability-only list also stale. Main skill catalog byte equality and used fields are recorded.",
+      "log": "editor-accept-release.log"
+    }
+  ],
+  "refreshedGenerators": [
+    "content:build",
+    "pitch:build",
+    "appearance:build",
+    "assets:manifest",
+    "skillforge:audit",
+    "skillforge:visual-review:build",
+    "skillforge:visual-advisory:build",
+    "skillforge:visual-sheets:build",
+    "vfxforge:handback:build",
+    "editorcov:build",
+    "bricks:build",
+    "formreceipts:build",
+    "lod:build",
+    "contract:numbers",
+    "docs:readme",
+    "decor:build",
+    "clipdeg:build",
+    "receipt:build",
+    "handback:build"
+  ],
+  "note": "Original failed invocations retained. Stale generated reports were rebuilt and checked; semantic/geometry/absent-file failures remain. This is not an authorization to deploy."
+}

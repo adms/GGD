@@ -1,0 +1,48 @@
+{
+  "schema": "ggd.jump-force-dai-v6-alpha-visual-review@1",
+  "candidate": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v6-alpha/run-a/dai-chr0430-six-draw.glb",
+    "sha256": "bdd72532896ff92db3f18238771fc63e0139f845068bb78a678ca7bede9d999d",
+    "bytes": 3010632
+  },
+  "render": {
+    "runAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v6-alpha/render-v1/run.json",
+    "runSha256": "9562b98b4115ffb8cc08aa79951da411f33ab99fbe83677d41275e5008b28001",
+    "proofAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-six-draw-v6-alpha/render-v1/proof.json",
+    "proofSha256": "4d8218fbd3ebca2591ee23418b90f79223a59790401e357d6d214d422d932e38",
+    "images": [
+      {
+        "view": "front",
+        "bytes": 224041,
+        "sha256": "7ad18154287b9b94b2048fc2d0cd62adaba4162ac0c156dc4b385abc8984c0be"
+      },
+      {
+        "view": "back",
+        "bytes": 213404,
+        "sha256": "60bddcc4b83f89a810e43c261ba2feef3b9f77650cb3e447c4dc6a6b45141742"
+      },
+      {
+        "view": "isometric",
+        "bytes": 216475,
+        "sha256": "02192d357b883e7d937370e8a83b91f008f9abd885cbcee9350e7d5e4e77d5cd"
+      }
+    ]
+  },
+  "technicalRenderComplete": true,
+  "stageBackup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-six-draw-v6-alpha-render-v1/9310befc86e078ca6c300a964a5a66bd57aa6a29e638f528983688def8adfa17.tar.gz",
+    "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/jump-force-dai-six-draw-v6-alpha-render-v1/9310befc86e078ca6c300a964a5a66bd57aa6a29e638f528983688def8adfa17.files.json",
+    "archiveSha256": "9310befc86e078ca6c300a964a5a66bd57aa6a29e638f528983688def8adfa17",
+    "archiveBytes": 7989347,
+    "fileCount": 12,
+    "fullGetVerified": true,
+    "allMemberSha256Verified": true,
+    "localUnchanged": true,
+    "profile": "vibe-coding",
+    "region": "ap-east-2"
+  },
+  "ownerVisualQualityReview": "pending-owner-v6-alpha-normalization-review",
+  "backendOptionRegistered": false,
+  "runtimeSelectable": false,
+  "productionDeployed": false
+}

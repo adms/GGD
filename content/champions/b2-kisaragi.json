@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -49,10 +49,10 @@
       ],
       "id": "b2-kisaragi.e",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -65,7 +65,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.667,
+          "castTimeSec": 0.5,
           "castType": "ground",
           "effects": [
             {
@@ -114,10 +114,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-kisaragi.e.webp"
+      "icon": "assets/icons/abilities/b2-kisaragi.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -133,7 +134,7 @@
           "destination": "caster",
           "kind": "pull",
           "maxTargets": 8,
-          "radius": 6.0,
+          "radius": 6,
           "shape": "circle",
           "side": "enemies",
           "speed": 20,
@@ -143,10 +144,10 @@
       ],
       "id": "b2-kisaragi.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "逃票乘客請先集合",
@@ -157,7 +158,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "self",
           "effects": [
             {
@@ -184,10 +185,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-kisaragi.q.webp"
+      "icon": "assets/icons/abilities/b2-kisaragi.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -196,7 +198,7 @@
       ],
       "cooldownTier": "大",
       "provenance": "editor-json",
-      "description": "「如月末班車・乘客全數迷途！」\n以半徑{{radius}} 與敵人碰撞體重疊選取最多 8 名敵人，先受極小傷害，各自等權抽 8／12／16 單位，朝施法者方向瞬移，可越過車身；合法落點裁切。抵達依出貨配方施加 curse、blind、confusion。不是全地圖均勻亂數；友軍與圈外排除。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
+      "description": "「如月末班車・乘客全數迷途！」\n以半徑{{radius}} 與敵人碰撞體重疊選取最多 8 名敵人，先受極小傷害，各自等權抽小／中／大三種距離，朝施法者方向瞬移，可越過車身；合法落點裁切。抵達依出貨配方施加 curse、blind、confusion。不是全地圖均勻亂數；友軍與圈外排除。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：一台誤點電車，把整團敵人載去隨機錯站。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "amount": {
@@ -335,9 +337,9 @@
       ],
       "id": "b2-kisaragi.r",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -349,7 +351,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.833,
+          "castTimeSec": 1,
           "castType": "self",
           "effects": [
             {
@@ -499,10 +501,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-kisaragi.r.webp"
+      "icon": "assets/icons/abilities/b2-kisaragi.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -540,10 +543,10 @@
       ],
       "id": "b2-kisaragi.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "緊急煞車先拉手閘",
@@ -554,7 +557,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.067,
+          "castTimeSec": 0.1,
           "castType": "self",
           "effects": [
             {
@@ -594,7 +597,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-kisaragi.w.webp"
+      "icon": "assets/icons/abilities/b2-kisaragi.w.webp",
+      "castTimeTier": "小"
     }
   },
   "archetype": "tank",
@@ -620,8 +624,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 6,
     "range": 1.4
@@ -636,13 +640,13 @@
     "as": 0,
     "healthRegen": 0.08196326530612243,
     "manaRegen": 0,
-    "maxHealth": 27.67734693877551,
-    "maxMana": 0.9209183673469388,
+    "maxHealth": 100,
+    "maxMana": 20,
     "mr": 5.279591836734694
   },
   "msGrowthTier": "極小",
   "id": "b2-kisaragi",
-  "modelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+  "modelKey": "version.body.1a87cfbf719afb88a1d7195443786a06c76fdcaa12245bd4",
   "name": "如月電車",
   "origin": "坦克",
   "passiveAbility": "b2-kisaragi.passive",
@@ -657,5 +661,61 @@
   "tags": [
     "thrown"
   ],
-  "icon": "assets/icons/champions/b2-kisaragi.webp"
+  "icon": "assets/icons/champions/b2-kisaragi.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.8ccd5ce36ba95dcfbe12a95f88e973cc09b630b883632578",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c",
+      "modelSha256": "c622f7b653ef5730a2a3ddf4377b196bd39444bb2ac6f8f999821778e417603f",
+      "binarySha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443",
+      "registeredAt": "2026-09-12T23:34:58.589Z",
+      "source": {
+        "kind": "previous",
+        "character": "如月電車",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.e934a767de2b7cd47af4cdff17b3e5fe30d2e848cde241f4",
+      "label": "GGD 原創如月電車",
+      "sourceModelKey": "community.body.6d64a9f6883b5f7b6fc6de78cef8d9acbc6880af087a1b7c",
+      "modelSha256": "b115af28ce63f5e69e2a06f3e561e169f8b5eb32e3e02489b1da3d700a816e56",
+      "binarySha256": "8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607",
+      "registeredAt": "2026-09-12T23:34:58.590Z",
+      "source": {
+        "kind": "exact",
+        "character": "GGD 原創如月電車",
+        "work": "GGD 原創",
+        "library": "original",
+        "reference": "existing:tram",
+        "tier": "original"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.1a87cfbf719afb88a1d7195443786a06c76fdcaa12245bd4",
+      "label": "GGD 原創如月電車",
+      "sourceModelKey": "community.body.6d64a9f6883b5f7b6fc6de78cef8d9acbc6880af087a1b7c",
+      "modelSha256": "cc9165bedaa23c4fe792c75e2747bbf306075fa5af3521365456eec9b53b4cac",
+      "binarySha256": "8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607",
+      "registeredAt": "2026-09-13T00:09:07.596Z",
+      "source": {
+        "kind": "exact",
+        "character": "GGD 原創如月電車",
+        "work": "GGD 原創",
+        "library": "original",
+        "reference": "existing:tram",
+        "tier": "original",
+        "selectionClass": "original",
+        "sourceGame": "GGD procedural asset",
+        "sourcePlatform": "GGD runtime"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

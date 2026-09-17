@@ -178,6 +178,65 @@ export function hostDigest(ctl: MatchController): number {
       m.num((e.root ? 1 : 0) + (e.stun ? 2 : 0));
     }
   }
+  // --- 技能生出來的地形（GH#1190 暫時障礙 / GH#1197 邊界陣）------------------
+  // 兩張表都是 authoritative sim state，⛔ 而且**兩者都沒有 transform／health**
+  // ⇒ 上面每一圈、`SimWorld.digest()` 的逐實體迴圈都看不到它們（與 `coin` 同型：
+  // 沒有身體的東西，唯一會被 hash 的路就是它自己那一圈）。
+  //   · obstacle：決定誰走得過去 —— 一根早一 tick 消失的柱，分岔要等某人撞上才在位置上說話
+  //   · threshold：`segments[i].alive` 決定這一段還會不會打人；`lastPos` 是「上一次看到你在哪」
+  //     的記憶，單位離開查詢圈再回來時它是舊值 ⇒ 它決定下一次穿越算不算數
+  // ⭐ PRESENT-ONLY（逐字照 `SimWorld.digest()` 的 dot / summon / coin 先例）：表是空的就
+  //   一個位元組都不折 ⇒ 沒有人放這兩招的比賽，hostDigest 與改動前逐位元相同。
+  //   逐層先排序：Map 的插入順序是 host 的施法順序，⛔ 不可以染到 digest。
+  for (const id of [...w.obstacle.keys()].sort((a, b) => a - b)) {
+    const o = w.obstacle.get(id)!;
+    m.num(id);
+    m.num(o.ownerId);
+    m.num(o.zone);
+    m.num(o.center.x);
+    m.num(o.center.z);
+    m.num(o.radius);
+    m.num(o.expiresAtTick);
+    m.num(o.shatterable ? 1 : 0);
+    m.str(o.origin);
+  }
+  for (const id of [...w.threshold.keys()].sort((a, b) => a - b)) {
+    const th = w.threshold.get(id)!;
+    m.num(id);
+    m.num(th.ownerId);
+    m.num(th.zone);
+    m.num(th.center.x);
+    m.num(th.center.z);
+    m.num(th.radius);
+    m.num(th.expiresAtTick);
+    m.num(th.rank);
+    m.str(th.origin);
+    m.num(th.segments.length);
+    for (const s of th.segments) m.num(s.alive ? 1 : 0);
+    for (const cid of [...th.lastPos.keys()].sort((a, b) => a - b)) {
+      const p = th.lastPos.get(cid)!;
+      m.num(cid);
+      m.num(p.x);
+      m.num(p.z);
+    }
+  }
+  // GH#1189 【互動物】—— 同上兩張表的形狀（沒有 transform／health、PRESENT-ONLY、逐層排序）。
+  //   `usesLeft` / `acceptedBy` 決定下一次點燈算不算數，一格分岔要等某人點燈才在位置上說話。
+  for (const id of [...w.interactable.keys()].sort((a, b) => a - b)) {
+    const it = w.interactable.get(id)!;
+    m.num(id);
+    m.num(it.ownerId);
+    m.num(it.zone);
+    m.num(it.center.x);
+    m.num(it.center.z);
+    m.num(it.radius);
+    m.num(it.expiresAtTick);
+    m.num(it.usesLeft);
+    m.num(it.rank);
+    m.str(it.origin);
+    for (const a of it.acceptedBy) m.num(a);
+    m.num(it.acceptedBy.length);
+  }
   m.num(w.combatActive ? 1 : 0);
   // PER-ZONE COMBAT LIVENESS (#216). `settledZones` decides whether the fire
   // ring keeps burning a zone and whether mobs keep arriving in it, so a

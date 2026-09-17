@@ -1,0 +1,72 @@
+{
+  "schema": "ggd-ssbu-ptrainer-static-visual-comparison@1",
+  "variant": "female-c01",
+  "source": {
+    "gitPath": "content/assets/models/community/a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec.glb",
+    "bytes": 1373732,
+    "sha256": "a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec"
+  },
+  "candidate": {
+    "localPath": "GGD-Asset-Library/conversions/ssbu-ptrainer-formal-decimation-v1/female-c01/candidate.glb",
+    "bytes": 1221592,
+    "sha256": "73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a"
+  },
+  "sampling": {
+    "views": [
+      "front",
+      "back",
+      "isometric"
+    ],
+    "renderer": "Babylon WebGL right-handed scene; identical lighting and per-model CPU-skinned bounds camera fitting"
+  },
+  "metric": {
+    "contractMaxPct": 5,
+    "changedPixelDefinition": "any RGB channel delta > 10 / all 800x800 pixels",
+    "litPixelDefinition": "XOR of luma >= 128 / all pixels"
+  },
+  "rows": [
+    {
+      "view": "front",
+      "changedPixelPctAtChannelDeltaGt10": 0.199219,
+      "meanAbsoluteChannelDelta": 0.087668,
+      "litClassificationXorPctAtLuma128": 0.047813,
+      "maxChannelDelta": 88
+    },
+    {
+      "view": "back",
+      "changedPixelPctAtChannelDeltaGt10": 0.136406,
+      "meanAbsoluteChannelDelta": 0.050059,
+      "litClassificationXorPctAtLuma128": 0.032031,
+      "maxChannelDelta": 89
+    },
+    {
+      "view": "isometric",
+      "changedPixelPctAtChannelDeltaGt10": 0.224531,
+      "meanAbsoluteChannelDelta": 0.086716,
+      "litClassificationXorPctAtLuma128": 0.036406,
+      "maxChannelDelta": 108
+    }
+  ],
+  "maxChangedPixelPctAtChannelDeltaGt10": 0.224531,
+  "maxLitClassificationXorPctAtLuma128": 0.047813,
+  "underFivePercentContract": true,
+  "contactSheet": {
+    "file": "visual-ab-contact-sheet.png",
+    "bytes": 486656,
+    "sha256": "a7a98a0a10c186fd863677deb8e0f6b989e295a926d50f2098159aed2c4b2d53"
+  },
+  "worstDifferenceOverview": {
+    "file": "worst-difference-overview.png",
+    "bytes": 236681,
+    "sha256": "10d772dd0cc251830fb4625539d8146fb6ca752a011884df484e5afed2353032",
+    "view": "isometric",
+    "heatmapScale": "max RGB delta x4"
+  },
+  "rawRendersRetainedLocally": true,
+  "pillowVersion": "12.3.0",
+  "humanReview": {
+    "reviewer": "Codex visual inspection",
+    "result": "accepted",
+    "scope": "front/back/isometric silhouette, face, clothes, bag, thin parts and material identity"
+  }
+}

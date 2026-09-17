@@ -75,7 +75,7 @@ import { MODEL_LOD_SPEC, VFX_BUDGET_SPEC, VFX_CLEANUP_SPEC, VFX_SCRIPTS_SPEC, WE
 import {
   CONTROLLER_SCHEME_SPEC, AP_DAMAGE_SCALING_SPEC, ONE_SHOT_CLAMP_SPEC, BLOCK_SPEC, COOLDOWN_RULES_SPEC, CRIT_SPEC, DAMAGE_RULES_SPEC, FEEL_FX_SPEC, GORE_SPEC, SHIELD_SPEC, WEAKNESS_SPEC, WOUNDS_SPEC } from "./configForms/specs/combat";
 import { AUTHORING_RULES_SPEC, CAST_TIME_SPEC, CONTENT_LOAD_SPEC, ICON_UPLOAD_SPEC, NEW_HERO_CHECKS_SPEC } from "./configForms/specs/authoring";
-import { AOE_TIERS_SPEC, AP_COEFFICIENT_SPEC, CAST_TIME_TIERS_SPEC, RANK_GROWTH_SPEC, COOLDOWN_TIERS_SPEC, DAMAGE_TIERS_SPEC, MANA_ECONOMY_SPEC, MANA_TIERS_SPEC, MOVE_SPEED_TIERS_SPEC, RANGE_TIERS_SPEC, SKILL_NORMALIZE_SPEC, SPEED_GROWTH_TIERS_SPEC } from "./configForms/specs/tiers";
+import { AOE_TIERS_SPEC, AP_COEFFICIENT_SPEC, BALANCE_ANCHORS_SPEC, CAST_TIME_TIERS_SPEC, RANK_GROWTH_SPEC, COOLDOWN_TIERS_SPEC, DAMAGE_TIERS_SPEC, MANA_ECONOMY_SPEC, MANA_TIERS_SPEC, MOVE_SPEED_TIERS_SPEC, RANGE_TIERS_SPEC, SKILL_NORMALIZE_SPEC, SPEED_GROWTH_TIERS_SPEC } from "./configForms/specs/tiers";
 import { AUGMENT_FILTER_SPEC, BERSERK_SPEC, DISPEL_SPEC, STAT_NORMALIZATION_SPEC, STEALTH_SPEC, TAUNT_SPEC } from "./configForms/specs/stats";
 import { ARENA_FIRE_SPEC, BODY_SCALE_SPEC, BOSS_INTRO_SPEC, DAMAGE_COLORS_SPEC, REGEN_SPEC, REPLAY_SPEC, VICTORY_FX_SPEC, VICTORY_PODIUM_SPEC } from "./configForms/specs/visuals";
 import { ITEM_CARD_SPEC } from "./configForms/specs/itemCard";
@@ -88,6 +88,7 @@ import { VOXEL_LOOK_SPEC } from "./configForms/specs/voxelLook";
 import { ADMIN_FRIEND_SPEC, CAST_APPROACH_SPEC, LOBBY_RALLY_SPEC, UI_CUES_SPEC } from "./configForms/specs/lobby";
 import { AUDIO_MAP_SPEC } from "./configForms/specs/audio";
 import { UGC_SPEC } from "./configForms/specs/ugc";
+import { SKIN_TIER_PRICES_SPEC } from "./configForms/specs/skinTierPrices";
 
 /**
  * 有序註冊表。⭐ **`as const` 是承重的**（GH#807）：少了它，元素型別會被壓成
@@ -217,6 +218,7 @@ export const CONFIG_DOC_SPECS = [
   //   操作者調「吟唱要幾秒」與「吟唱值多少係數」時會先想到其中一個,兩頁相鄰就不會找錯。
   // ⚠️ ⭐ AP 係數那一頁的 `enabled` 就是 owner 常設指令要的**一鍵 rollback**:
   //   關掉 ⇒ 148 個節點回到自己文件裡那個手填的 coeff。
+  BALANCE_ANCHORS_SPEC,
   CAST_TIME_TIERS_SPEC,
   AP_COEFFICIENT_SPEC,
   // ⭐ 升級成長率（GH#938）—— 它從**冷卻級距**推導,所以緊接在級距那一族後面。
@@ -239,6 +241,9 @@ export const CONFIG_DOC_SPECS = [
   REGEN_SPEC,
   BOSS_INTRO_SPEC,
   ITEM_CARD_SPEC,
+  // 🏷️ 造型分級售價（GH#1177 追加，owner 2026-09-15「新模型加購參考 LOL 分級標價」）。
+  // ⭐ 導覽列那一列由 Zod 根節點的 `@nav` 推導（「武器道具」組）；消費端是 Go（wallet/skinprice.go）。
+  SKIN_TIER_PRICES_SPEC,
   REPLAY_SPEC,
   CAST_APPROACH_SPEC,
   // 畫面提示（GH#576 / GH#573，owner 2026-08-23 三則 [優先]）。⚠️ 這一列要跟三件事

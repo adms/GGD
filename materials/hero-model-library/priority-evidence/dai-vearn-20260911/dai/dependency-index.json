@@ -1,0 +1,67 @@
+{
+  "missingExternalFileCount": 6,
+  "missingReferenceCount": 350,
+  "files": [
+    {
+      "path": "/data/DAZ 3D/Genesis 8/Male/Genesis8Male.dsf",
+      "usedBy": [
+        "extracted/People/@Cosplay/Dragon Quest/The Adventure of Dai/Dai/Jump Force/Jump Force Dai.duf",
+        "extracted/data/DAZ 3D/Genesis 8/Male/Morphs/shinteo5/Dragon Quest/The Adventure of Dai/Dai/Dai Body Morph.dsf",
+        "extracted/data/DAZ 3D/Genesis 8/Male/Morphs/shinteo5/Dragon Quest/The Adventure of Dai/Dai/Dai Head Morph.dsf"
+      ],
+      "existsInArchive": false
+    },
+    {
+      "path": "/data/DAZ 3D/Genesis 8/Male/Morphs/DAZ 3D/Head/PHMEyelashesCurl.dsf",
+      "usedBy": [
+        "extracted/People/@Cosplay/Dragon Quest/The Adventure of Dai/Dai/Jump Force/Jump Force Dai.duf"
+      ],
+      "existsInArchive": false
+    },
+    {
+      "path": "/data/DAZ 3D/Genesis 8/Male/Morphs/DAZ 3D/Head/PHMEyelashesLengthLower.dsf",
+      "usedBy": [
+        "extracted/People/@Cosplay/Dragon Quest/The Adventure of Dai/Dai/Jump Force/Jump Force Dai.duf"
+      ],
+      "existsInArchive": false
+    },
+    {
+      "path": "/data/DAZ 3D/Genesis 8/Male/Morphs/DAZ 3D/Head/PHMEyelashesLengthUpper.dsf",
+      "usedBy": [
+        "extracted/People/@Cosplay/Dragon Quest/The Adventure of Dai/Dai/Jump Force/Jump Force Dai.duf"
+      ],
+      "existsInArchive": false
+    },
+    {
+      "path": "/data/Daz 3D/Genesis 8/Male 8_1/Genesis8_1Male.dsf",
+      "usedBy": [
+        "extracted/People/@Cosplay/Dragon Quest/The Adventure of Dai/Dai/Jump Force/Jump Force Dai G8.1M.duf"
+      ],
+      "existsInArchive": false
+    },
+    {
+      "path": "/data/Daz 3D/Genesis 8/Male 8_1/Morphs/Daz 3D/Mouth Realism/PHMMouthRealism8_1_HD_div4.dsf",
+      "usedBy": [
+        "extracted/People/@Cosplay/Dragon Quest/The Adventure of Dai/Dai/Jump Force/Jump Force Dai G8.1M.duf"
+      ],
+      "existsInArchive": false
+    }
+  ],
+  "criticalBaseFiles": [
+    "/data/DAZ 3D/Genesis 8/Male/Genesis8Male.dsf",
+    "/data/Daz 3D/Genesis 8/Male 8_1/Genesis8_1Male.dsf"
+  ],
+  "targetedWorkspaceCheck": {
+    "roots": [
+      "GGD-Asset-Library",
+      "outputs"
+    ],
+    "glob": [
+      "*Genesis8*",
+      "*genesis8*"
+    ],
+    "foundFiles": 0,
+    "scope": "filenames only in those workspace asset/output trees; not an exhaustive computer-wide search"
+  },
+  "preventsCompleteIndependentCharacter": true
+}

@@ -30,6 +30,7 @@ owner 2026-09-10 逐字：
 ⚠️ 寫成名單的話，下一隻新分身會靜靜地通過（那正是「有實體而無宣告」）。
 """
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -93,6 +94,19 @@ def _load_declared_skeletons() -> dict[str, dict]:
     return {r["id"]: {k: v for k, v in r.items() if k != "id"} for r in rows}
 
 
+def _load_shipped_ahead() -> dict[str, dict]:
+    """⭐ 出貨跑在盤點表前面的那幾名（GH#1281）—— 每一名帶 owner 的原話。
+
+    ⛔ 不是豁免：盤點表是 owner 的檔（repo 外），他把某一名補上去之後，
+    這裡那一列就變成**過期宣告**，`shippedAheadStale` 會紅並要求刪掉它。
+    """
+    if not BASELINE.exists():
+        return {}
+    doc = json.loads(BASELINE.read_text(encoding="utf-8"))
+    rows = (doc.get("shippedAheadOfInventory") or {}).get("rows") or []
+    return {r["id"]: {k: v for k, v in r.items() if k != "id"} for r in rows}
+
+
 def _resolve_aliases(rows: list[dict], shipped: dict[str, dict]) -> tuple[dict, dict, list[dict]]:
     """⭐ **先驗那把鑰匙**（第〇·六守則 / GH#635），⛔ 不是拿 key 直接 join。
 
@@ -144,6 +158,33 @@ def _resolve_aliases(rows: list[dict], shipped: dict[str, dict]) -> tuple[dict, 
     return alias_of, aliased_ship, issues
 
 
+def _skeleton_model_source(repo: Path, model_key: str) -> str | None:
+    """Follow frozen model provenance; a versioned placeholder remains a placeholder."""
+    chain: list[str] = []
+    current = model_key
+    while True:
+        if not isinstance(current, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._:-]*", current):
+            raise ValueError(f"Invalid model reference {current!r}; chain: {' -> '.join(chain)}")
+        if current in chain:
+            raise ValueError(f"Model provenance cycle: {' -> '.join(chain + [current])}")
+        chain.append(current)
+        path = repo / "content/models" / f"{current}.json"
+        if not path.is_file():
+            raise ValueError(f"Missing model document {path}; chain: {' -> '.join(chain)}")
+        try:
+            model = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as error:
+            raise ValueError(f"Cannot read model document {path}: {error}") from error
+        if not isinstance(model, dict) or model.get("id") != current:
+            raise ValueError(f"Model document ID does not match {current}: {path}")
+        version = model.get("bodyVersion")
+        if version is None:
+            return current if current in SKELETON.values() else None
+        if not isinstance(version, dict) or not version.get("sourceModelKey"):
+            raise ValueError(f"Missing bodyVersion.sourceModelKey in {path}")
+        current = version["sourceModelKey"]
+
+
 def audit(inventory: Path, repo: Path) -> dict:
     """⭐ 一次回答三題，⛔ 而且每個數字都附**分母與探針**。"""
     lod = json.loads((repo / "content/config/model-lod.json").read_text(encoding="utf-8"))
@@ -174,6 +215,8 @@ def audit(inventory: Path, repo: Path) -> dict:
 
     # ── ③ 反向：出貨有、表上沒有（⭐ 變身態的豁免是**推導**的）──────
     reverse_gap, alternates_exempted = [], []
+    ahead_declared = _load_shipped_ahead()
+    ahead_live: list[str] = []
     for hid in sorted(community):
         # ⭐ 直接同名，或**驗過的別名**指到它 ⇒ 表上有這個人。
         if hid in inv_ids or hid in aliased_ship:
@@ -182,6 +225,16 @@ def audit(inventory: Path, repo: Path) -> dict:
         counterpart = tf.get("counterpartId")
         if tf.get("role") == "alternate" and counterpart in inv_ids:
             alternates_exempted.append({"id": hid, "counterpartId": counterpart})
+            continue
+        # ⭐⭐ GH#1281（2026-09-17）—— **出貨跑在盤點表前面**的那一種，逐名宣告。
+        #
+        # owner 2026-09-17 逐字：「我要全部上線」／2026-09-16「全部英雄上架是預設的 不需要我審查通過」
+        # ⇒ 第四批 37 名今天就在選人畫面上，⭐ 而盤點表是 owner 的檔（repo 外，⛔ 我不可以改）
+        #   ⇒ 「有落差就紅」在這一頭會變成**我這邊做什麼都不會變綠**的閘（失敗形態⑨）。
+        # ⭐ 所以它們進 `shippedAheadOfInventory`：⛔ 不是豁免，是**登記**＋棘輪 ——
+        #   owner 把某一名補進盤點表之後，那一列就變成過期宣告（下面的 stale 會紅）。
+        if hid in ahead_declared:
+            ahead_live.append(hid)
             continue
         reverse_gap.append(hid)
 
@@ -194,11 +247,16 @@ def audit(inventory: Path, repo: Path) -> dict:
     # 逐字寫「用 GGD 原版」的**決定**。問題是**兩者長得一模一樣**：
     # 一個暫時的佔位與一個刻意的選擇，在 JSON 裡都只是 `champ.thorne`。
     # ⇒ ⭐ 每一名用骨架的都必須在棘輪裡**宣告它是哪一種**，並附一個能被反駁的理由。
-    skeleton_model_keys = set(SKELETON.values())
+    skeleton_sources = {}
+    for hid, champion in community.items():
+        try:
+            skeleton_sources[hid] = _skeleton_model_source(repo, champion.get("modelKey"))
+        except ValueError as error:
+            raise ValueError(f"{hid}: {error}") from error
     undeclared, declared = [], []
     for hid in sorted(community):
         mk = community[hid].get("modelKey")
-        if mk not in skeleton_model_keys:
+        if skeleton_sources[hid] is None:
             continue
         row = declared_skeletons.get(hid)
         if row is None:
@@ -209,7 +267,7 @@ def audit(inventory: Path, repo: Path) -> dict:
     # ⭐ 反方向也要走（形態⑫）：宣告了、而它今天**已經不用骨架了** ⇒ 那一列該退休。
     stale_declarations = [
         hid for hid in sorted(declared_skeletons)
-        if community.get(hid, {}).get("modelKey") not in skeleton_model_keys
+        if skeleton_sources.get(hid) is None
     ]
 
     return {
@@ -229,6 +287,9 @@ def audit(inventory: Path, repo: Path) -> dict:
         "staleBlockers": stale,
         "forwardGap": forward_gap,
         "reverseGap": reverse_gap,
+        # ⭐ 登記過的「出貨跑在盤點表前面」—— 兩個方向都印：還成立的、以及已經過期的。
+        "shippedAheadOfInventory": sorted(ahead_live),
+        "shippedAheadStale": sorted(i for i in ahead_declared if i not in {*ahead_live}),
         "aliasIssues": alias_issues,
         # ⭐ ④ 骨架佔位這一軸 —— 兩個方向都印出來。
         "skeletonUndeclared": undeclared,

@@ -1,0 +1,55 @@
+{
+  "id": "lol-fiddlesticks.ex",
+  "name": "尖叫外包",
+  "provenance": "editor-json",
+  "description": "召喚三具四秒低血低傷替身，分散對手注意力。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "summon",
+      "body": "self",
+      "championId": "self",
+      "count": 3,
+      "durationSec": 4,
+      "formation": "ring",
+      "spread": 2,
+      "maxAlive": 3,
+      "onOwnerDeath": "despawn",
+      "hpMult": 0.1,
+      "damageMult": 0.15
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.59ba7332983158d400e3448711b6a0892912367211a09756",
+    "params": {
+      "body": "self",
+      "count": 3,
+      "durationSec": 4,
+      "hpMult": 0.1,
+      "damageMult": 0.15,
+      "formation": "ring",
+      "spread": 2,
+      "maxAlive": 3,
+      "onOwnerDeath": "despawn",
+      "cleanse": "none",
+      "castTimeSec": 0.1
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:28911a3620fffaad01d4b1d5cb95b4ba5fcf53474b5534c3012ac4cf4ad22a4b"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-fiddlesticks.ex.webp"
+}

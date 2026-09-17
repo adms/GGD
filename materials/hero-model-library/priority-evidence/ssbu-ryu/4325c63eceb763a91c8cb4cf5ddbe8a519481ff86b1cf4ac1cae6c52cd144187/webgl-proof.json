@@ -1,0 +1,307 @@
+{
+  "schema": "ggd.ssbu-static-webgl@1",
+  "babylonVersion": "7.54.3",
+  "renderer": "actual Babylon WebGL glTF loader in right-handed scene; source material/culling preserved; CPU-skinned world bounds used for camera framing",
+  "worldSkinnedBounds": {
+    "min": [
+      -0.9888493452290845,
+      9.42303746663542e-09,
+      -0.2984430699524023
+    ],
+    "max": [
+      0.9888492592683917,
+      1.7999992826200124,
+      0.29844366385916493
+    ],
+    "extent": [
+      1.9776986044974763,
+      1.799999273196975,
+      0.5968867338115672
+    ]
+  },
+  "geometry": [
+    {
+      "name": "GGD_joined_alp_ryu_001_primitive0",
+      "vertices": 2315,
+      "indices": 11136,
+      "worldBounds": {
+        "min": [
+          -0.11262349694559859,
+          1.5720085425046857,
+          -0.08862293066574314
+        ],
+        "max": [
+          0.11263167395649987,
+          1.7999992826200124,
+          0.17997981794014822
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 154,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "GGD_joined_alp_ryu_001_primitive1",
+      "vertices": 3697,
+      "indices": 15285,
+      "worldBounds": {
+        "min": [
+          -0.8906403712099689,
+          0.10926877457036134,
+          -0.2984430699524023
+        ],
+        "max": [
+          0.8906402852492761,
+          1.6930615817934649,
+          0.2953800452131892
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 154,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "GGD_joined_alp_ryu_001_primitive2",
+      "vertices": 3530,
+      "indices": 17118,
+      "worldBounds": {
+        "min": [
+          -0.9888493452290845,
+          9.42303746663542e-09,
+          -0.1496020534096687
+        ],
+        "max": [
+          0.9888492592683917,
+          1.6974151475187558,
+          0.29844366385916493
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 154,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "GGD_joined_alp_ryu_001_primitive3",
+      "vertices": 35,
+      "indices": 162,
+      "worldBounds": {
+        "min": [
+          0.01771343911980683,
+          1.6287822483088443,
+          0.13369568506039498
+        ],
+        "max": [
+          0.051468766021576684,
+          1.645255410189937,
+          0.14345654109664818
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 154,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "GGD_joined_alp_ryu_001_primitive4",
+      "vertices": 35,
+      "indices": 162,
+      "worldBounds": {
+        "min": [
+          -0.051470426137456116,
+          1.6287822483088443,
+          0.13369568506039498
+        ],
+        "max": [
+          -0.017715092520007136,
+          1.645255410189937,
+          0.14345654109664818
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 154,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    }
+  ],
+  "animationGroups": 0,
+  "skeletons": 1,
+  "materials": [
+    {
+      "name": "alp_ryu_001",
+      "alpha": 1,
+      "transparencyMode": 2,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "alp_ryu_001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "def_ryu_001",
+      "alpha": 1,
+      "transparencyMode": 2,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "def_ryu_001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "skin_ryu_001",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "skin_ryu_001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "EyeL",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "EyeL (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "EyeR",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "EyeR (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    }
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 620,
+        "height": 1
+      }
+    },
+    {
+      "name": "alp_ryu_001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "def_ryu_001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "skin_ryu_001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "EyeL (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "EyeR (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "front",
+      "alpha": 1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "back",
+      "alpha": -1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "isometric",
+      "alpha": 0.7853981633974483,
+      "beta": 1.1635528346628863
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "gameplayAcceptance": false
+}

@@ -1,0 +1,814 @@
+{
+  "schema": "ggd-staged-artifact-integrity@1",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 243096,
+      "sha256": "9057194c3ee675e1c06994b2e8720fa00c1302791d4de0badc5c8cb0ef6749f9"
+    },
+    {
+      "path": "content/assets-manifest.json",
+      "bytes": 850023,
+      "sha256": "015886f3e7d5fe7521cf8b0c9e7411a73f6fef08acc90c3a677e94f685ce4061"
+    },
+    {
+      "path": "content/assets/models/community/70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515.glb",
+      "bytes": 658700,
+      "sha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515"
+    },
+    {
+      "path": "content/assets/models/community/versions/70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515.glb",
+      "bytes": 658700,
+      "sha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515"
+    },
+    {
+      "path": "content/bundle.json",
+      "bytes": 4414239,
+      "sha256": "ac59e6a7cc27db837a44adf918e72bca6480240397ae680d39cd048856dfcfa2"
+    },
+    {
+      "path": "content/champions/_index.json",
+      "bytes": 21467,
+      "sha256": "0d26e10471ca508a4c6dcc7abb26367830faab89be617c60ca7eb93445b35593"
+    },
+    {
+      "path": "content/champions/b2-haga.json",
+      "bytes": 13252,
+      "sha256": "1e0bd5a9f2c82ff9f15bd33e93aafac227d25d69792d8b1ecf25f15ed7d4d1cc"
+    },
+    {
+      "path": "content/config/_index.json",
+      "bytes": 13443,
+      "sha256": "845866a80411743f1e039792beee33f88c18b0bf30020a9904b864e3bcef69a5"
+    },
+    {
+      "path": "content/editor-target-profile.json",
+      "bytes": 362973,
+      "sha256": "3d9cd17c2344fae4d0fa5b8f3a5d55a027916ce44e57b282bd28510cbfe0292a"
+    },
+    {
+      "path": "content/manifest.json",
+      "bytes": 1862,
+      "sha256": "628a94f2c7ddc94dac2cde1b9a85cc01e286ea77e1db13fb8e6ead319e1c22b7"
+    },
+    {
+      "path": "content/models/_index.json",
+      "bytes": 109315,
+      "sha256": "af70dd0cae4f2c7ef06b27cd4e9bdcec85c9ce6ec7b0ca2b9f6f780c5c432f29"
+    },
+    {
+      "path": "content/models/ou99.495015-native-visibility-v1.json",
+      "bytes": 373,
+      "sha256": "ade84bb5a28d7e565f4eba5e2d581275e14f1d6ae6c94beb27850f2103c25368"
+    },
+    {
+      "path": "content/models/version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a.json",
+      "bytes": 544,
+      "sha256": "a8b8abd2e0115c2e25e25f9e959cc38259b2a5e6860cb3f8ff312c5bb4d826f6"
+    },
+    {
+      "path": "docs/_release/ggd-board.html",
+      "bytes": 390879,
+      "sha256": "0a9c258689e87fa75d2b4f45663d74be944d2bee7a3f2ddf4d544087732a4bfc"
+    },
+    {
+      "path": "docs/editor-contract/ggd-clip-degradation.json",
+      "bytes": 99997,
+      "sha256": "64da547fe95c10396470bfe1c57f004e0a96fe6f919a46355eacb4a5e8aba808"
+    },
+    {
+      "path": "docs/editor-contract/ggd-config-decoration-census.json",
+      "bytes": 17906,
+      "sha256": "0b2a412cc143ab89c1e8f8dd78e70e7a6dde669dee3854dffe3b89870fe332bc"
+    },
+    {
+      "path": "docs/editor-contract/ggd-config-decoration-census.md",
+      "bytes": 13879,
+      "sha256": "a59c444417c6ea9fda2c871490f16459f5d5ef045aaaafb8e5f9f12077ece98a"
+    },
+    {
+      "path": "docs/editor-contract/ggd-presentation-receipt.json",
+      "bytes": 8805,
+      "sha256": "6f9ac84652a1555b3612144985030e7b4f9373e07ebb22d10f898acb66b643c1"
+    },
+    {
+      "path": "docs/editor-contract/ggd-resolved-appearance.json",
+      "bytes": 184004,
+      "sha256": "dbe9296b5b5ce86b2321db4d843ee6b7b6c17859932f4fb3bfa902874ba8eefa"
+    },
+    {
+      "path": "docs/legacy/_overwrites/_ledger.tsv",
+      "bytes": 1722410,
+      "sha256": "7dc379bc3d8c0358d21bdf50088ac9c1c9f4464e62c3d7e84a4955626be086ba"
+    },
+    {
+      "path": "docs/legacy/_overwrites/overwrite_temp_20260910-234929/docs/_release/ggd-board.html",
+      "bytes": 390880,
+      "sha256": "810f69666163f8ed935c2c89fe8cb815f7bdd76a077e601e91bcabd553ecfcb8"
+    },
+    {
+      "path": "docs/reference/abilities.md",
+      "bytes": 179338,
+      "sha256": "272c884defab775886a1427a8ec7ef3e80abd9fc4d50075c97e1cc53cdb7dd90"
+    },
+    {
+      "path": "docs/reference/grail-wishes.md",
+      "bytes": 116302,
+      "sha256": "13e668569b64a7436abf74967a1fd1e65dbbac0e2783be21f589cad9cd86abab"
+    },
+    {
+      "path": "docs/reference/items.md",
+      "bytes": 28918,
+      "sha256": "afca5d715c77eb1178f0f157ce3c3c25dced835a0654371fe4993e1557056846"
+    },
+    {
+      "path": "docs/reference/mechanics.md",
+      "bytes": 47245,
+      "sha256": "c40a66a17836cb3411cb8050a300107bb7f1b18b29aacbc60e8622a3a13cc69a"
+    },
+    {
+      "path": "docs/reference/roster.md",
+      "bytes": 48586,
+      "sha256": "6b594f7358419db1187217853ab707386cd6ab4487594c86db5bdb8f33b27b4c"
+    },
+    {
+      "path": "docs/技能標記機制與效果規則.md",
+      "bytes": 297413,
+      "sha256": "8455655d5c508718cfc0d2635545ec814074401e9fd99ee5941c0aba8ab0125a"
+    },
+    {
+      "path": "docs/技能編輯器引擎須知 20260811.md",
+      "bytes": 407692,
+      "sha256": "26bcab4805f33c8048a6516c092491b6190953625ec5b7a313368a482ed68d9d"
+    },
+    {
+      "path": "materials/asset-library/current-resources.json",
+      "bytes": 260175,
+      "sha256": "f4bab334af12712acf4730d02813006c0d94576c5248207d0730ccf9335dfe26"
+    },
+    {
+      "path": "materials/hero-model-library/default-policy.json",
+      "bytes": 14708,
+      "sha256": "228786c0709519299965ae76ab5e05761ad39e0be2b03e874bf84946b9ca20cb"
+    },
+    {
+      "path": "materials/hero-model-library/download-sources.json",
+      "bytes": 1700516,
+      "sha256": "6e167b891033abf5d570a05f6f22d35c1978ef8a1548379b6fa51e6851ad2a06"
+    },
+    {
+      "path": "materials/hero-model-library/inventory-validation.json",
+      "bytes": 407,
+      "sha256": "fff12b6f86274eb59f9aa70a50a540fc9dd17d7c4df909b8b31563d4c324b1f8"
+    },
+    {
+      "path": "materials/hero-model-library/inventory.json",
+      "bytes": 4072992,
+      "sha256": "fd53b4251e708c8b86c74d25a2c5400d97895ce12260716cb99c584fe68d8f33"
+    },
+    {
+      "path": "materials/hero-model-library/parallel-deliveries-20260910/audio-index-validation.json",
+      "bytes": 870,
+      "sha256": "3d05120d475017b2a325836479be94e4152c290555616df30095ad10d7f9bf86"
+    },
+    {
+      "path": "materials/hero-model-library/parallel-deliveries-20260910/fate-source-leads.json",
+      "bytes": 3304,
+      "sha256": "76ccf2cd479c650b59c7127f9e73b1106d1e907ae8e49b354c05244b6e8f49cf"
+    },
+    {
+      "path": "materials/hero-model-library/parallel-deliveries-20260910/ggd-fuc-batch9-final-report.json",
+      "bytes": 3361,
+      "sha256": "f9b3b1c7e7fd35890971634a13b3dd19184901229e03d48aee131c835ba8c42a"
+    },
+    {
+      "path": "materials/hero-model-library/parallel-deliveries-20260910/ggd-infinity-strash-body-source-audit-report.json",
+      "bytes": 1864,
+      "sha256": "78094221f0ee08cffd509e8d62396e4b8be43e24e233b0e98c6e2324d59b1049"
+    },
+    {
+      "path": "materials/hero-model-library/parallel-deliveries-20260910/ggd-kof-round21-final-receipt.json",
+      "bytes": 14083,
+      "sha256": "214178890aee682cbbbb9b011eb2f01373a2da44946a12ee9bd647f6ea799bec"
+    },
+    {
+      "path": "materials/hero-model-library/parallel-deliveries-20260910/infinity-strash-source-leads.json",
+      "bytes": 22685,
+      "sha256": "f7c6b7644db2640be01e38bd40f6269c1b3a57b10da9e75398fd86bbee760dec"
+    },
+    {
+      "path": "materials/hero-model-library/parallel-deliveries-20260910/integration-receipt.json",
+      "bytes": 1140,
+      "sha256": "a199f4aa290821ddc0ec2f7124f2b7824f984a0dacd6d2136fdce554891f82fc"
+    },
+    {
+      "path": "materials/hero-model-library/parallel-deliveries-20260910/iori-xv-audio-entry.json",
+      "bytes": 3770,
+      "sha256": "57beb723bbe1d5b28f2e4a469b91407362107ab54d23db28a81a3a0cac5cb99e"
+    },
+    {
+      "path": "materials/hero-model-library/parallel-deliveries-20260910/iori-xv-audio-files.json",
+      "bytes": 156009,
+      "sha256": "96e946edd2721a05afff0386f75b52c10ce76faab6c35dd62efc17001b32f93f"
+    },
+    {
+      "path": "materials/hero-model-library/parallel-deliveries-20260910/prior-voice-index-validation.json",
+      "bytes": 1627,
+      "sha256": "b965b3664c2c42c9e02676aab1f79a13b10d9cbef88a4470bf76b360df6c85a3"
+    },
+    {
+      "path": "materials/hero-model-library/post-registration-review.json",
+      "bytes": 3206,
+      "sha256": "b5db0093a481840aa184e4a6bbeebe003b8108d00ec1b373a056f33c509169c7"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/README.md",
+      "bytes": 1625,
+      "sha256": "8d2641b56460800613dffa516f0b33033eb2470efe57d76be49f211eaf37cc0b"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/admission.json",
+      "bytes": 23839,
+      "sha256": "483d81fdf598cd9f5d94a12946a9e8404b79d488fe85b130440dd8d9e6b6cc13"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/backend-prepare-receipt.json",
+      "bytes": 16819,
+      "sha256": "b4e8c9f741138daa7a5c4f63fa57fb1db59229ea6fc097b129b2920e8eb34b22"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/conversion.json",
+      "bytes": 3361,
+      "sha256": "cedfee72f6b05e65936ab0406962d00712095f4c352033ae37f0e692ebc8e617"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/corrected-decay-flesh-0.png",
+      "bytes": 94526,
+      "sha256": "624567f1c42a33d22a34c3f256b8ac400c9c34fa0c676a799ec2c7543922a465"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/corrected-decay-flesh-629.png",
+      "bytes": 107635,
+      "sha256": "7cce2b16bab26e3ced758e9b9b79779c2d6616a01084b2c1883b5814b0bee75b"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/corrected-stand-6000.png",
+      "bytes": 124559,
+      "sha256": "9ac1845310cc2b2428f1afe097db28d86b90fa5ab7b0f341042b676c3889736e"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/final-integrity.json",
+      "bytes": 824001,
+      "sha256": "0f72499551a24fe348c3ceaf7c150fa346606285511f76e142870bbc313c8cfd"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/khronos-unlimited.json",
+      "bytes": 1402,
+      "sha256": "81e3c377f6d57a04b85f4b098b21d591b7d96fd55bfe413f868926fcb1aedd9e"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/local-file-manifest.json",
+      "bytes": 7219,
+      "sha256": "f7997ff9abea7bbcb0533ce74cb645a8f0629254b9e5c25af67c907acab3a48e"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/native-geoset-proof.json",
+      "bytes": 6336,
+      "sha256": "cd71018917f47c72d2908aef1377e557e686da8c3dfa4a6bccf8ffee7b872e11"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/original-stand-6000.png",
+      "bytes": 168242,
+      "sha256": "3bbcfa577ab48e8b888e0a12ecac25049d17b45114ded075ba35cef0e58b5d98"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/prior-registration.json",
+      "bytes": 460173,
+      "sha256": "8424df08d5105bc9eae2ef1a3a770c95a8300582660f5b176c3276c4d08e1961"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/receipt.json",
+      "bytes": 3274,
+      "sha256": "c98c7daecbf0758a52a933a1a3150e009ba8ac40568ab2b22cb9ee7161074fae"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/assets-manifest-build.log",
+      "bytes": 647,
+      "sha256": "518cee1032b8feb1149080bd6955e4466f04e87acd521bea69f1a7e5a5575613"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/before-assets-manifest/coord-check.log",
+      "bytes": 6259,
+      "sha256": "0a2c2437f611c9222de34b1833001b02156072939cd9a19286740e48eba524fb"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/before-assets-manifest/editor-accept-release.log",
+      "bytes": 3197,
+      "sha256": "fc97fd20ab90b01ef82b6e2966ab539bb31a13caee35cd5d87494e9684805437"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/before-assets-manifest/skills-check.log",
+      "bytes": 5735,
+      "sha256": "2789f9d7f54b8917cd3d52dcdc13c2f85b063ec83b6d246ab0840c1f91a2b49b"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/before-content-build/coord-check.log",
+      "bytes": 6259,
+      "sha256": "0a2c2437f611c9222de34b1833001b02156072939cd9a19286740e48eba524fb"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/before-content-build/editor-accept-release.log",
+      "bytes": 3197,
+      "sha256": "94a5c050820b6e46008aac59a17a4f1e8631938f0c403accd8e04cadae6334cc"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/before-content-build/skills-check.log",
+      "bytes": 2830,
+      "sha256": "98eaaeeefcd0d761b7ef9767c915912a08499aeb0c9d1d67a0a362394ef9315f"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/before-final-doc-refresh/coord-check.log",
+      "bytes": 6259,
+      "sha256": "0a2c2437f611c9222de34b1833001b02156072939cd9a19286740e48eba524fb"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/before-final-doc-refresh/editor-accept-release.log",
+      "bytes": 3197,
+      "sha256": "8e279efc85cd1db089b8a00ca78c87823f734cae222454dfbf24aee616ac9c1b"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/before-final-doc-refresh/skills-check.log",
+      "bytes": 20836,
+      "sha256": "462f671c06c9c6719d7fe3575f7323264faad474cb218a34cd83067010cb942c"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/content-build.log",
+      "bytes": 3670,
+      "sha256": "00977cbe620493ba15bcdfc0858c8788c83488410aa01f5c9d210463a32d66f2"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/coord-check-sandbox.log",
+      "bytes": 6259,
+      "sha256": "0a2c2437f611c9222de34b1833001b02156072939cd9a19286740e48eba524fb"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/coord-check.log",
+      "bytes": 6259,
+      "sha256": "0a2c2437f611c9222de34b1833001b02156072939cd9a19286740e48eba524fb"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/editor-accept-release-sandbox.log",
+      "bytes": 2016,
+      "sha256": "553a864eb89491e507daa9e8820d837001cbba52b8c8af356bce5847d28f1739"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/editor-accept-release.log",
+      "bytes": 3197,
+      "sha256": "55e873a4e8d480ac165231ac1e3aeba18982d96ce760bc5cdfd84d10bc3d0b69"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/models-check.log",
+      "bytes": 4999,
+      "sha256": "f6793985b0dcc721813a5d5f0069e7e84160629b2e94d30e1c57bc91356634bc"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/python-tests.log",
+      "bytes": 159,
+      "sha256": "05d391c590b7315ad661a23af80c2ab604dd9273cb1dcd7e623938e1f89ee94f"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/rebuilt-checks/appearance-check.log",
+      "bytes": 221,
+      "sha256": "2ac08810b1b14ad90227d0603360e4cf515a22a11b78cec87c08cda3250c7f1d"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/rebuilt-checks/board-check.log",
+      "bytes": 188,
+      "sha256": "319a84b64a3ea8a70594d06e9a866be26b637d345098c1b4b7d7754d692ba885"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/rebuilt-checks/clipdeg-check.log",
+      "bytes": 233,
+      "sha256": "d5178719965a06056a23cc8dc47f39ffdea2580c2158780bc76957e8ea49b636"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/rebuilt-checks/contract-numbers-check.log",
+      "bytes": 246,
+      "sha256": "8165e9afbb6abf27e003a29469856ed63dfad5468dc041e626973c4f60c0b92b"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/rebuilt-checks/decor-check.log",
+      "bytes": 210,
+      "sha256": "b476074be2c1336562c60e0f2a5f97da8247f1c8aca170ce5fbfe7f74e6cc1ec"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/rebuilt-checks/docs-readme-check.log",
+      "bytes": 258,
+      "sha256": "df653fad14d00d448a679b6ed3a86fe97ea7be1170dbebabf5790fae483d77a6"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/rebuilt-checks/handback-check.log",
+      "bytes": 228,
+      "sha256": "d3b9cddaf7d0a01451b646e6d3dfb5b80b15c767799bb06c5f84a132960ac548"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/rebuilt-checks/receipt-check.log",
+      "bytes": 211,
+      "sha256": "1ecfef54262f402cab370c874588624c2d992ef7cdeda27aaf001d9b540d75f6"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/rebuilt-checks/results.json",
+      "bytes": 1725,
+      "sha256": "bd02d2f23257fa965ac8053f05cbabb59e1d80ff0385c1159e4de6c06e28f681"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/anchors-check.log",
+      "bytes": 277,
+      "sha256": "3add013998ff7783ebdec283c1e178b3eb72e54e3a4ea58e8e21658e9bf969d4"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/apcoeffdiff-check.log",
+      "bytes": 238,
+      "sha256": "517d66dc93d58f1a76f8d71de8e3932d3e132f4d48acce82df815ebcf575bc02"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/apconv-check.log",
+      "bytes": 354,
+      "sha256": "aaa73bc0600f08e12c0f319ff5a7927710ac23742e89b1f49d265b57bed145c3"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/apconv-plan-check.log",
+      "bytes": 223,
+      "sha256": "c344c5a642ad474a47afa42c29486063e3e854663f2ed7db3db747259f475a3b"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/apdmg-check.log",
+      "bytes": 224,
+      "sha256": "19ccc9dc35f4563904d70c56dd85562a72930e5a2dfc0e6d075b46e2f994f177"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/appearance-check.log",
+      "bytes": 300,
+      "sha256": "8bd5710d78235b249a761a3edcdc21c38a61bde33534bd4e2fb2be1a4bf6c9f8"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/archetypes-check.log",
+      "bytes": 224,
+      "sha256": "1c98d80ecd194ce564a723e9a4f10b53200c993ce2c29460d27f1e31807fae0c"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/atlas-check.log",
+      "bytes": 191,
+      "sha256": "9c51f2a2ac4e7b47226180624218557e8ec93744529988e6bea80453812ae1c9"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/audit-check.log",
+      "bytes": 233,
+      "sha256": "79f984ecf98c54bad814eb46d8f96defe778cdf6c5727132c2f4542e546ccad2"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/beam-check.log",
+      "bytes": 270,
+      "sha256": "b1a7211c25b2e9229b78cd828f45c18bdc49bbaa2f15e7927d2ecb009787f8b3"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/board-check.log",
+      "bytes": 481,
+      "sha256": "0f192433aa2c6804461d8ac0774fdde2b7c8a22cb44031b35e04e7de6598bace"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/board-roll-check.log",
+      "bytes": 269,
+      "sha256": "243e32deedf4c7f16b66912e5cedcb8265fff840bd1358ac2dd9fb6255f7ddac"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/clipdeg-check.log",
+      "bytes": 327,
+      "sha256": "10a07092750a9ddf761b9368524cd393ea81b14fcba76bc930ca1b6c625f3aeb"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/combat-check.log",
+      "bytes": 2156,
+      "sha256": "6c16926bed3ebec8beaad3c8fd82290b081425074356c872349e6256a4fcabd3"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/contract-numbers-check.log",
+      "bytes": 548,
+      "sha256": "ae64fe5b55cbb75f64928ffd7d9f7c7084fe71765ce33d5d9066c36114df450d"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/coord-check.log",
+      "bytes": 6259,
+      "sha256": "0a2c2437f611c9222de34b1833001b02156072939cd9a19286740e48eba524fb"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/declshape-check.log",
+      "bytes": 228,
+      "sha256": "682e541c01e5d6657230cbb82bc4fcb8fbac02d354af3e4d59912bf365c9600c"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/decor-check.log",
+      "bytes": 337,
+      "sha256": "43ec08dc04145ce82350e830b71ab813df4cf3725ce4f4820c939c460c239d3f"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/docs-readme-check.log",
+      "bytes": 575,
+      "sha256": "93cca40ef5ecdb8fe6ca926edcc498ce0d4569db40d516e65c07ee436f7ff265"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/docs-status-check.log",
+      "bytes": 287,
+      "sha256": "b10ef07100eec989cc93f6d7c4e6f9c8036abeabc1c8eb48641cf0ac35f8f380"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/echoloop-check.log",
+      "bytes": 866,
+      "sha256": "c31e7c88c8510c7e40774353b93d9f8bc91ae378cc92d2209fb4c898a774c31b"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/enableaudit-check.log",
+      "bytes": 241,
+      "sha256": "5be088c1dfd6f7b26fea460a05c05c874306c13d9e47af19233016ed01a742e7"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/formreceipts-check.log",
+      "bytes": 260,
+      "sha256": "5cd0e5de38739d5e2d8325e090d101d06bab266040dcac9db0be76573d03813b"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/handback-check.log",
+      "bytes": 228,
+      "sha256": "d3b9cddaf7d0a01451b646e6d3dfb5b80b15c767799bb06c5f84a132960ac548"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/iconplan-check.log",
+      "bytes": 783,
+      "sha256": "076dd5b8e1a22a556115d151f612d6209d0e0b5806e1027503c965015f9b5475"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/jasscombo-check.log",
+      "bytes": 205,
+      "sha256": "14e454482203cdf1e1b4041b4302fb389f7d9e9d36b372577f2cdd74c6feb8eb"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/locust-check.log",
+      "bytes": 205,
+      "sha256": "dfac38200ccfd28694312a4ec5f72ee9b675706f4668e9197cc01dcb811f1d27"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/lod-check.log",
+      "bytes": 243,
+      "sha256": "7a747d1666975c29e5dadb0073da3e24b2e3377bf4807fd04783ead48776784b"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/lowdmg-check.log",
+      "bytes": 237,
+      "sha256": "1e2001d03dc8c0479e68c2fa57515bd2c67caeceb4b76cee6be2bc4ccdecab51"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/models-check.log",
+      "bytes": 4999,
+      "sha256": "f6793985b0dcc721813a5d5f0069e7e84160629b2e94d30e1c57bc91356634bc"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/msgledger-check.log",
+      "bytes": 10076,
+      "sha256": "5fa2d63824432cd6c2de07272d141d2ee5415d3074005bf257e554be23d8092d"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/newhero-check.log",
+      "bytes": 275,
+      "sha256": "30c7d66a707e1da3c0a7b4c4b27f7f4fc1fcf33d02fab0bf1df56fd481164012"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/pitch-check.log",
+      "bytes": 292,
+      "sha256": "d136c185a51349d28dfbed3d1a10a8baa7e7288a6f16c850c0379b78d6638a48"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/prose-check.log",
+      "bytes": 185,
+      "sha256": "63a0b12d41dbb890552a0f5ace8fbda26c0f6d2e7a89316729f380c3a0521c83"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/ptokens-check.log",
+      "bytes": 226,
+      "sha256": "1cecb2d5ce399a23261a2213b43c67ffff049ceff75228399bc7ec18e5680570"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/receipt-check.log",
+      "bytes": 211,
+      "sha256": "1ecfef54262f402cab370c874588624c2d992ef7cdeda27aaf001d9b540d75f6"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/results.json",
+      "bytes": 10619,
+      "sha256": "52c3acdaef0bb29ae02299254fd48ff68b84067320f3803ba6d3f39757b04262"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/review-check.log",
+      "bytes": 4764,
+      "sha256": "9b6165aa1e80a0eebb2556323191253a42c66e440132d1a3e0e3cf441fc9e179"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/roster-check.log",
+      "bytes": 154,
+      "sha256": "a1957b7f0e28579d042cd21be00bd4f75c0a320df1099305012fc7a8f1de0ca2"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/ruleslip-check.log",
+      "bytes": 232,
+      "sha256": "266eb90cd7cf7a9a1394ad9f9c4cf10438ce0eaaca4df6dc990e650cfb8f995f"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/sfxbind-check.log",
+      "bytes": 318,
+      "sha256": "5dde7d1d4cf02925481dbb7276f8fd8deecb0f14ca55301dbb85826e4cffb6bd"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/shapes-check.log",
+      "bytes": 1604,
+      "sha256": "18b9798aa5e14f1d002ccf37d750e4422ecc217da592c07b26c28cead2d406fe"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/skillnorm-check.log",
+      "bytes": 228,
+      "sha256": "7a734820edd07b89a2c909d05628fa389504a18f38b4806d2899f7539d3a9a62"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/speedlists-check.log",
+      "bytes": 235,
+      "sha256": "ebe0b2f1f046089a96345693bc0172f58314429214ab6b74f766faeb92d8df4b"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/speedtiers-check.log",
+      "bytes": 669,
+      "sha256": "a65dbf8d91b97661dbb2dd65fab03c93bd65ea0958d13bf8cfe9be087859ee90"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/statcaps-check.log",
+      "bytes": 240,
+      "sha256": "af2ae507e8553fb5a68c878ad128bcad3c7ae27cebf123617148a39f52cb66ab"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/templates-check.log",
+      "bytes": 255,
+      "sha256": "5b8b82481c2a2eb4a49a895e26ff6c495447d59b8b0b332d714f9d68b574b73c"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/treasure-csv-check.log",
+      "bytes": 221,
+      "sha256": "2d7af3cbc4a3f224f44ce28bcf8433b4a6f4d623f048d5e5e8c71bcca49e1598"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/vfxbind-check.log",
+      "bytes": 5544,
+      "sha256": "c9b4e51a867314ffd66af77363d770e73075a7f52439f97c4bd37c47a3c04710"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/voices-check.log",
+      "bytes": 1457,
+      "sha256": "1f8df473f2e96a55191ba73b023924ff8dba23635f8ad7ca55b71d97063164b9"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/remaining/w3a-check.log",
+      "bytes": 197,
+      "sha256": "f2019878efc8e206ce8e779b407380ce81387f3ca11034d7cec6d4d7d2faf9ed"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/skills-check-sandbox.log",
+      "bytes": 3622,
+      "sha256": "a97e43c24944bbc4ce61e78a1deeddd4313dd6f6fe4a70545f41f59325b3d2b6"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/targeted-tests.log",
+      "bytes": 3732,
+      "sha256": "c2113cccfd9f96c3110b0af9933c0855bdaa4dd6e95317d293198e9c26678ef7"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/release-gates/voice-tests.log",
+      "bytes": 105,
+      "sha256": "d2560999038a5a55e5555b1ab5b679a96f92f9f3092671fcd2dc197aa9996f22"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/haga-native-visibility/render-proof.json",
+      "bytes": 19973,
+      "sha256": "8d5cca33981f23e21de947516a8b4276da64b3d85f4bebfeed6b4cd9f7bdabdf"
+    },
+    {
+      "path": "materials/hero-model-library/priority-registration.json",
+      "bytes": 464860,
+      "sha256": "72c35365798cf3dba150e4723fffd80d782b964f963b63982b3d266ef3af1978"
+    },
+    {
+      "path": "materials/hero-model-library/priority-release.json",
+      "bytes": 24336,
+      "sha256": "4da3a388b8d5156db96171ade98e823a79465051149279d74500b68457793a16"
+    },
+    {
+      "path": "materials/hero-model-library/priority-release.md",
+      "bytes": 4476,
+      "sha256": "e6f1f24034603f6eaeccd479216c17d0c2cff80f64d44fe7c19ac697d98314fe"
+    },
+    {
+      "path": "materials/hero-model-library/priority-runtime-inputs.json",
+      "bytes": 12527,
+      "sha256": "df081608a4693b2ebbb7859ecdd9eb1028b1abb4f893957db5ca071dd7c8d7c4"
+    },
+    {
+      "path": "materials/hero-model-library/priority-runtime-options.json",
+      "bytes": 21273,
+      "sha256": "fecfead73c02b55bcd78c85ba8ab5180a753de2567b4e4a95114bfbee9ced98a"
+    },
+    {
+      "path": "materials/hero-model-library/voice-files.jsonl.gz",
+      "bytes": 26531986,
+      "sha256": "a8467a29cae1cbbc3a6ffb9ba78502064044674366916155503946e82848a286"
+    },
+    {
+      "path": "materials/hero-model-library/voice-index-validation.json",
+      "bytes": 1379,
+      "sha256": "5426754fb51f271b0a236601912f26c6030d668afc794c5cbb1ae083eeb7e230"
+    },
+    {
+      "path": "materials/hero-model-library/voice-index.json",
+      "bytes": 4140737,
+      "sha256": "9089252f9163b43c2aa4ce16d54f22546c54818e6b5046dc09a14185fd976e9c"
+    },
+    {
+      "path": "materials/hero-model-library/全角色模型盤點.md",
+      "bytes": 262898,
+      "sha256": "9f788071cc0aca77e8dabd382eaf36dcc0fd84284dc67a4add1f41243bfab363"
+    },
+    {
+      "path": "materials/hero-model-library/角色語音索引.md",
+      "bytes": 195134,
+      "sha256": "3b84ac616ce912006f016c9fced52d1073223f08d94ccf01989d77b8171c3863"
+    },
+    {
+      "path": "tools/hero-model-library/build_priority_runtime_catalog.py",
+      "bytes": 2217,
+      "sha256": "f5772319a3a1edbc29b305b80d9ba2f4517c3416f8d1cedb35979ce49b2b325c"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/haga/ggd-haga-prepare.mts",
+      "bytes": 5304,
+      "sha256": "a410022ae16b710b0bfbf2faee1753a33ec3d9a9867d0c0bde6dde3f0938015b"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/haga/ggd-haga-render-server.py",
+      "bytes": 3251,
+      "sha256": "977c4e7cf502fb3fcc7188a2c520da5785b480c6f0920f6f9cbe91eb0f68c686"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/haga/ggd-haga-render.mjs",
+      "bytes": 4256,
+      "sha256": "cb72b30f8e8d6f16982e9fbcfdbb71ff965bc733b2f063e28c7513b476ff14ff"
+    },
+    {
+      "path": "tools/hero-model-library/priority-conversion/ou99/ggd-final-priority-integrity.mts",
+      "bytes": 14773,
+      "sha256": "bcbfe0b2b5b1bc4b69d4d8b3547db4ab07be850e3caec39ee2d5db6e55786077"
+    },
+    {
+      "path": "tools/hero-model-library/restore_exclusive_geoset_visibility.py",
+      "bytes": 8550,
+      "sha256": "49429a8213ed667276309e1d094b7b29e89be611b59240cd878c8ce519715d3b"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/kof-round21/acquire-iori.py",
+      "bytes": 2120,
+      "sha256": "2f5525e67e8dac6aa3b7ec189fe474af6334e27618b98b6f95400eb4889fc061"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/kof-round21/extract_public_sources.py",
+      "bytes": 16940,
+      "sha256": "f0eecb39206b557c75a9dc5bf0d2f131bc61c00466f7fb9ab81c3d780b4a7d66"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/kof-round21/validate-iori.py",
+      "bytes": 9808,
+      "sha256": "7d772df7e1771f3484c72187264eacb715a3d9bae9040fd7d0b7b2eccd05f7eb"
+    },
+    {
+      "path": "tools/hero-model-library/test_native_geoset_visibility.py",
+      "bytes": 2895,
+      "sha256": "39aca62359439d3a5d33a09a9ea5bcc69efeae9adb2674ba17a35f0bfdc07ef6"
+    },
+    {
+      "path": "tools/hero-model-library/test_voice_delivery.py",
+      "bytes": 5989,
+      "sha256": "d61a18adb5ebd26098bc6b0b397d0bf2a1c2a688c9c374ed76ed290a500e7208"
+    },
+    {
+      "path": "tools/hero-model-library/voice_index.py",
+      "bytes": 32691,
+      "sha256": "23e2be0566b3ddc599a253a02594b5929b5fbd7cc49f32ed852f4b3fb68feecf"
+    }
+  ],
+  "count": 161,
+  "totalBytes": 51350566,
+  "allStagedBytesEqualLocal": true,
+  "temporaryExclusion": "Still-running skills-check.log is verified again after completion"
+}

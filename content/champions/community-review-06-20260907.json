@@ -1,16 +1,16 @@
 {
   "id": "community-review-06-20260907",
   "name": "卡比",
-  "description": "卡比 社群英雄功能驗收稿。作品：《星之卡比》  \n定位：吸入、吐出、受控技能複製。\n\n視覺方向：粉紅輪廓、黃色星星、石頭灰面、巨劍金白；保留公平碰撞尺寸。\n以 GGD 坦克 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "description": "作品：《星之卡比》  \n定位：吸入、吐出、受控技能複製。\n\n視覺方向：粉紅輪廓、黃色星星、石頭灰面、巨劍金白；保留公平碰撞尺寸。",
   "role": "tank",
   "attackType": "melee",
   "archetype": "tank",
   "origin": "坦克",
-  "modelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
+  "modelKey": "version.body.79e1dba7dd1a95c11afa89ba46ab3a87b822c738eb1a3b2b",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 27.67734693877551,
+    "maxHealth": 100,
     "healthRegen": 0.08196326530612243,
-    "maxMana": 26.357142857142858,
+    "maxMana": 20,
     "manaRegen": 0,
     "ad": 2.728816326530612,
     "as": 0,
@@ -51,7 +51,7 @@
       "id": "community-review-06-20260907.q",
       "name": "吸入",
       "provenance": "editor-json",
-      "description": "【目前模板可執行】拖拉指定目標後向前投擲 120 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】錐形牽引；短暫含住一個合法目標或可吸收物件，期間移動受限。\n【待補機制】不是錐形吸入與含住；需吞入持有狀態、單目標釋放。",
+      "description": "【目前模板可執行】拖拉指定目標後向前投擲{{push}}距離，0.45 秒拋物線，落地{{radius}}範圍小級傷害。\n【目標設計】錐形牽引；短暫含住一個合法目標或可吸收物件，期間移動受限。\n【待補機制】不是錐形吸入與含住；需吞入持有狀態、單目標釋放。",
       "slot": "Q",
       "castType": "ground",
       "maxRank": 4,
@@ -62,10 +62,10 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -77,7 +77,7 @@
           "kind": "leap",
           "applyTo": "target",
           "mode": "toPoint",
-          "apexHeight": 0.005,
+          "apexHeight": 1.2,
           "durationSec": 0.45,
           "throwDistance": 2.2,
           "dragToCaster": true,
@@ -99,7 +99,7 @@
           ]
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-06-20260907.q.webp",
       "template": {
@@ -108,14 +108,14 @@
           "mode": "toPoint",
           "grabMode": "dragToCaster",
           "throwMode": "distance",
-          "apexHeight": 1.2,
+          "apexHeight": 300,
           "durationSec": 0.45,
           "throwDistance": 120,
           "landRadius": 2,
           "landDamageTier": "小",
           "landApRatio": 0,
           "damageType": "physical",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -141,10 +141,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -179,7 +179,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-06-20260907.w.webp",
       "template": {
@@ -193,7 +193,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.267
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -245,7 +245,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-06-20260907.e.webp",
       "template": {
@@ -253,7 +253,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -279,9 +279,9 @@
         90.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        600.0,
+        600.0,
+        600.0
       ],
       "manaCostTier": "大",
       "range": 6,
@@ -316,7 +316,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.833,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-06-20260907.r.webp",
       "template": {
@@ -330,7 +330,7 @@
             "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 0.833
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },
@@ -355,5 +355,100 @@
   "tags": [
     "fist"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.bda54bedcd01cc108b31736112105fd4fcd4b214e9c3ed65",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
+      "modelSha256": "13cfdd80d33b22061d3bb63817ab8fcdacdb0ada4efdbc8ef43de741f7b8aa46",
+      "binarySha256": "e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5",
+      "registeredAt": "2026-09-12T23:16:12.266Z",
+      "source": {
+        "kind": "previous",
+        "character": "卡比",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.339146ce17e5d0bdfcf9253458ff343acd92864bd726e5e1",
+      "label": "GGD 圓滾滾粉紅替身",
+      "sourceModelKey": "community.body.a8131f3adecfb0602a0e3fda93558497981727ce00efffd7",
+      "modelSha256": "d8afd3d930d0deffc1e17effb074cb20735c5d2ed9927519b78de309e7f93b6d",
+      "binarySha256": "d51ee6e4a9918fc4271f030d91d904c68b262f6c6ffc61e92896cde81dc90ef8",
+      "registeredAt": "2026-09-12T23:16:12.267Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "GGD 圓滾滾粉紅替身",
+        "work": "GGD 自製程序化卡通替身",
+        "library": "original",
+        "reference": "generated:ggd-cartoon-proxy-pink-round",
+        "tier": "original",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.619fced60e8e80ba5e8dc0e16780642db6f18a1d5fd54cf5",
+      "label": "卡比（獨立副本／GGD 圓滾滾粉紅替身）",
+      "sourceModelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
+      "modelSha256": "7030e8e8aaf24cb7502d4e3d89f5f0bdca4742d5a7dd84913d8a27d5db42eb46",
+      "binarySha256": "e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5",
+      "registeredAt": "2026-09-12T23:16:12.296Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "卡比（獨立副本／GGD 圓滾滾粉紅替身）",
+        "work": "GGD 自製程序化卡通替身",
+        "library": "original",
+        "reference": "derivative:kirby",
+        "tier": "original",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.99efcd308140f52bf02376b66f04713065a5939f4fdc5bf9",
+      "label": "GGD 圓滾滾粉紅替身",
+      "sourceModelKey": "community.body.a8131f3adecfb0602a0e3fda93558497981727ce00efffd7",
+      "modelSha256": "b8fcd7cdbef3559037fc622cd9e4f0cffb532b52524e04a4ec3785ccd4dc1abf",
+      "binarySha256": "d51ee6e4a9918fc4271f030d91d904c68b262f6c6ffc61e92896cde81dc90ef8",
+      "registeredAt": "2026-09-13T00:08:44.523Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "GGD 圓滾滾粉紅替身",
+        "work": "GGD 自製程序化卡通替身",
+        "library": "original",
+        "reference": "generated:ggd-cartoon-proxy-pink-round",
+        "tier": "original",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "GGD procedural asset",
+        "sourcePlatform": "GGD runtime"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.79e1dba7dd1a95c11afa89ba46ab3a87b822c738eb1a3b2b",
+      "label": "卡比（獨立副本／GGD 圓滾滾粉紅替身）",
+      "sourceModelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
+      "modelSha256": "0567620d1ae36c6ad0aa48357e25e17cf381d505b225da8c64982366af47e59a",
+      "binarySha256": "e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5",
+      "registeredAt": "2026-09-13T00:08:44.542Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "卡比（獨立副本／GGD 圓滾滾粉紅替身）",
+        "work": "GGD 自製程序化卡通替身",
+        "library": "original",
+        "reference": "derivative:kirby",
+        "tier": "original",
+        "selectionClass": "manual",
+        "sourceGame": "GGD procedural asset",
+        "sourcePlatform": "GGD runtime"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

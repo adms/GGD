@@ -26,9 +26,9 @@
     "range": 8.2
   },
   "growth": {
-    "maxHealth": 61.4731,
+    "maxHealth": 60,
     "healthRegen": 0.2062,
-    "maxMana": 35.851,
+    "maxMana": 35,
     "manaRegen": 0.2033,
     "ad": 1.9592,
     "armor": 0.7048,
@@ -69,10 +69,10 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "template": {
@@ -89,18 +89,19 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.133
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.sound.nova",
       "targetsEnemies": true,
-      "radius": 8.0,
-      "castTimeSec": 1.133,
+      "radius": 8,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
       "manaCostTier": "極小",
-      "radiusTier": "大"
+      "radiusTier": "大",
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-o02p.w",
@@ -118,15 +119,15 @@
         15.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "effects": [],
       "vfxKey": "fx.prim.sound.pulse",
       "targetsEnemies": false,
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "小",
@@ -136,21 +137,22 @@
           "target": "ally",
           "amount": {
             "perRank": [
-              200.0,
-              275.0,
-              350.0,
-              425.0
+              200,
+              275,
+              350,
+              425
             ],
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1.0
+                "coeff": 1
               }
             ]
           },
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
-      }
+      },
+      "castTimeTier": "小"
     },
     "E": {
       "id": "godie-o02p.e",
@@ -168,15 +170,15 @@
         45.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.sound.explosion",
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.3,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -193,10 +195,11 @@
               "value": 3
             }
           ],
-          "castTimeSec": 0.267
+          "castTimeSec": 0.3
         }
       },
-      "cooldownTier": "大"
+      "cooldownTier": "大",
+      "castTimeTier": "中"
     },
     "R": {
       "id": "godie-o02p.r",
@@ -213,9 +216,9 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [
@@ -223,9 +226,9 @@
           "kind": "heal",
           "amount": {
             "perRank": [
-              200.0,
-              275.0,
-              350.0
+              200,
+              275,
+              350
             ]
           }
         },
@@ -233,13 +236,13 @@
           "kind": "delayed",
           "shape": "circle",
           "radiusTier": "中",
-          "radius": 6.0,
+          "radius": 6,
           "side": "enemies",
           "anchor": "caster",
           "targetMode": "reresolve",
-          "delaySec": 1.0,
+          "delaySec": 1,
           "count": 4,
-          "intervalSec": 1.0,
+          "intervalSec": 1,
           "effects": [
             {
               "kind": "damage",
@@ -252,8 +255,9 @@
         }
       ],
       "vfxKey": "fx.prim.holy.nova-lg",
-      "castTimeSec": 0.067,
-      "cooldownTier": "中"
+      "castTimeSec": 0.1,
+      "cooldownTier": "中",
+      "castTimeTier": "小"
     }
   },
   "skillOrder": [

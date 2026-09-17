@@ -78,8 +78,10 @@ def replacements_for(doc: dict, binary: bytes, *, effect_model: bool) -> tuple[d
             continue
         carrier_share, carrier_edge_share = opaque_carrier_shares(image)
         image.close()
+        # Emission alone is not carrier evidence: opaque emissive colour is
+        # valid on a 3D body (for example Jetragon's solid crystal fins).
         if not (
-            (material_is_planar_card(doc, material_index) or emissive > 0 or effect_model)
+            (material_is_planar_card(doc, material_index) or effect_model)
             and carrier_share >= OPAQUE_CARRIER_TOTAL_SHARE
             and carrier_edge_share >= OPAQUE_CARRIER_EDGE_SHARE
         ):

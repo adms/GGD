@@ -89,6 +89,11 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   "obstacleSpawn",
   "obstacleShatter",
   "obstacleEnd",
+  // GH#1189 【互動物】（瑟雷西 W 燈籠）：放下（畫燈＋登記點選表）／收掉（到期・用完・施法者死亡・回合重置）／
+  //   隊友點了卻被拒（逐人私訊，見 PRIVATE_EVENT_RULES）。一次施放／一次點擊一則 —— ⛔ 不是逐 tick。
+  "interactableSpawn",
+  "interactableEnd",
+  "interactRejected",
   "levelUp",
   "castBegin",
   "castEnd",
@@ -632,6 +637,21 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
  * classified; a name here is a decision, not an oversight.
  */
 export const SERVER_ONLY_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
+  // ── GH#1203／#1211（2026-09-11）—— `cooldownModified` ────────────────────
+  // ⭐ 它是**給施放可行性普查看的訊號**（`sim/castabilityVerdict.ts:322` 的
+  //   `cooldown` 頻道靠它判斷「那一格按鈕提早亮起來」），⛔ 不是一個畫面事件。
+  //
+  // ⛔ 為什麼**不外送**：客戶端的冷卻**本來就有來源** —— 它讀 `SeatView` 的
+  //   逐格冷卻狀態（每一幀都是最新的），⭐ 而那是**狀態**，⛔ 不是事件。
+  //   ⇒ 再送一則事件會是同一件事的第二個住處：兩者不同步時畫面會閃回舊值，
+  //   ⚠️ 而「按鈕亮了又暗」比「晚亮半幀」難查得多。
+  //
+  // ⚠️ ⭐ 而它的頻率是**每一次冷卻被改動**（減 CD、重置、EX 退款…）⇒ 連段技能
+  //   一次施放可能改好幾格 —— ⛔ 外送它等於替一個已經有狀態通道的東西開一條流。
+  //
+  // ⭐ 哪天真的要畫「冷卻被縮短」的表現：正確做法是讓客戶端**比較兩幀的 SeatView**，
+  //   ⛔ 不是把這一則放出去。
+  "cooldownModified",
   // ── GH#354（2026-08-17）—— 四則**只餵 hook** 的事件 ────────────────────
   // ⚠️ 四則都刻意不外送：它們沒有任何客戶端表現，而且每一則都與一個**已經在
   // 外送**的事件講同一件事（送出去就是同一件事在線上出現兩次，浮動數字與特效
@@ -646,6 +666,10 @@ export const SERVER_ONLY_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // `MatchController` 發，不是 sim，而這兩個集合的守衛掃的是
   // `packages/shared/src/sim` —— 列進來會被正確地判成「分類了但沒有人發」。
   // 它們不外送是**因為外送是白名單**（`isFannedOutEvent`），不是因為列在這裡。
+  // ── GH#1189（2026-09-15）—— `interactAccepted` ─────────────────────────
+  // ⛔ 不外送：接受之後**畫面上的結果各有自己的通道** —— 位移走 `onAccept` 裡那個位移 kind
+  //   本來的事件、用完收燈走 `interactableEnd{reason:"used"}`。再送一則就是同一件事的第二個住處。
+  "interactAccepted",
   "abilityHit",
   "lethalDamage",
   // ⚠️ `resourceSwap` **不在這張表上了**（GH#406，2026-08-19）：v0.21.1 把它
@@ -951,6 +975,9 @@ export const PRIVATE_EVENT_RULES: ReadonlyMap<string, PrivateEventRule> = new Ma
   // 拒絕 line the routing should already be right rather than being a second
   // change nobody remembers to make.
   ["coinDropRejected", { entityFields: [], seatFields: ["seatId"] }],
+  // 【互動物】點燈被拒（GH#1189）。`{ entity, seatId, objectId, reason }`，發射站 systems/CommandSystem。
+  // 消費端 ui/castAnnounce.recordCastEvent（只收 `entity === localEntityId` 的那一則）。
+  ["interactRejected", { entityFields: ["entity"], seatFields: ["seatId"] }],
 ]);
 
 /** Where a private event is addressed: one entity, or one seat. */

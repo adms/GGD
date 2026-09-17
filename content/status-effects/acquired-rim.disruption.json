@@ -1,0 +1,15 @@
+{
+  "id": "acquired-rim.disruption",
+  "schema": "status-effect@1",
+  "name": "沒吃飽不准下班",
+  "description": "莉姆（Rim；粉紅魔龍）「沒吃飽不准下班」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-rim.disruption",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "狂戰",
-  "modelKey": "w3x.stock.satyrtrickster",
+  "modelKey": "version.body.6762543e2beb02d969c86576c4f12079362e820376133999",
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
@@ -25,9 +25,9 @@
     "range": 1.4
   },
   "growth": {
-    "maxHealth": 60.0649,
+    "maxHealth": 60,
     "healthRegen": 0.3328,
-    "maxMana": 21.9668,
+    "maxMana": 20,
     "manaRegen": 0.0679,
     "ad": 3.1016,
     "armor": 0.6681,
@@ -188,7 +188,8 @@
       "cooldownShape": "單體",
       "icon": "assets/icons/abilities/godie-e00r.q.webp",
       "vfxKey": "fx.prim.void.explosion",
-      "cooldownTier": "極小"
+      "cooldownTier": "極小",
+      "castTimeTier": "極小"
     },
     "W": {
       "id": "godie-e00r.w",
@@ -303,7 +304,8 @@
         ]
       },
       "icon": "assets/icons/abilities/godie-e00r.w.webp",
-      "vfxKey": "fx.prim.physical.slash"
+      "vfxKey": "fx.prim.physical.slash",
+      "castTimeTier": "極小"
     },
     "E": {
       "id": "godie-e00r.e",
@@ -476,11 +478,12 @@
         "flashColor": [
           0.7,
           0.85,
-          1.0
+          1
         ],
         "flashMs": 120,
         "camKick": 0.3
-      }
+      },
+      "castTimeTier": "極小"
     },
     "R": {
       "id": "godie-e00r.r",
@@ -496,11 +499,12 @@
         60.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        300.0,
+        300.0,
+        300.0
       ],
       "range": 8.0,
+      "castTimeTier": "極大",
       "targetsEnemies": true,
       "effects": [
         {
@@ -565,9 +569,9 @@
         }
       ],
       "cooldownTier": "極大",
-      "manaCostTier": "大",
       "rangeTier": "大",
-      "castTimeSec": 0.833
+      "manaCostTier": "中",
+      "castTimeSec": 1
     }
   },
   "skillOrder": [
@@ -596,5 +600,42 @@
     "高攻速",
     "追擊"
   ],
-  "pitch": "一旦進入戰鬥就不停手，用狂暴與高速攻擊把敵人拖進近身死鬥。"
+  "pitch": "一旦進入戰鬥就不停手，用狂暴與高速攻擊把敵人拖進近身死鬥。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.55be69fe0b0a5d52e642fed79d2beee8059bd86b0726b85e",
+      "label": "原上線模型",
+      "sourceModelKey": "w3x.stock.satyrtrickster",
+      "modelSha256": "551632fe1efd01ff3eb53d205528d926ceec5a53a1fe8c74e437f9ba3ab8d7a9",
+      "binarySha256": "dea0c0e38be2cf832a0b3da80ea25c52f61b2bec9233bd389cc7b8b401854a6b",
+      "registeredAt": "2026-09-16T14:04:53.038Z",
+      "source": {
+        "kind": "previous",
+        "character": "最終泛用人型決戰兵器 - 初號機",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/w3x.stock.satyrtrickster.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.6762543e2beb02d969c86576c4f12079362e820376133999",
+      "label": "ou99 初號機（本尊·減面＋逐動作顯示）",
+      "sourceModelKey": "ou99.498341",
+      "modelSha256": "8dd913525cf36fe3f32730940459f77a4ff727e984e7926abdfe4a468192fd8a",
+      "binarySha256": "ceee652e34be4500e33d90909ed912943bab55be90a50ee06217112822174bcd",
+      "registeredAt": "2026-09-16T14:04:53.042Z",
+      "source": {
+        "kind": "exact",
+        "character": "初號機",
+        "work": "新世紀福音戰士",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-498341-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

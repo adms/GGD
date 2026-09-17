@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 1.633,
+  "castTimeSec": 1,
   "castType": "targeted",
   "cooldown": [
     90.0,
@@ -36,9 +36,9 @@
   ],
   "id": "b2-bojji.r",
   "manaCost": [
-    112.0,
-    112.0,
-    112.0
+    150.0,
+    150.0,
+    150.0
   ],
   "manaCostTier": "小",
   "maxRank": 3,
@@ -52,7 +52,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "castType": "targeted",
       "effects": [
         {
@@ -92,5 +92,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-bojji.r.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "極大"
 }

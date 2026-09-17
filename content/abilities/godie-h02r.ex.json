@@ -12,14 +12,14 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [],
   "template": {
     "ref": "tpl-buff-self",
     "params": {
-      "duration": 6.0,
+      "duration": 6,
       "modifiers": [
         {
           "stat": "ad",
@@ -27,10 +27,11 @@
           "value": 0.35
         }
       ],
-      "castTimeSec": 1.033
+      "castTimeSec": 1
     }
   },
   "vfxKey": "fx.prim.nature.pulse-lg",
   "schema": "ability@1",
-  "castTimeSec": 1.033
+  "castTimeSec": 1,
+  "castTimeTier": "極大"
 }

@@ -1,0 +1,27 @@
+{
+  "sourceId": "parallel-community-lina-rays-300-retarget",
+  "sourceReportSha256": "902753c71008c47a409879b3a410aa59baa566fbdb42946b7d3f8c58705f7ad6",
+  "files": [
+    {
+      "path": "evidence/playback-v3/rays-retarget-idle-front-000.png",
+      "bytes": 291112,
+      "sha256": "dd76f05f9a95e44fee3fdef9121398a115309633c1af1240ba6feb4522d8809c"
+    },
+    {
+      "path": "evidence/playback-v3/rays-retarget-idle-playback.mp4",
+      "bytes": 478888,
+      "sha256": "03e667a8f584d7869fb358f7614c5d9bc971d76f54c341c20d14e455749d225b"
+    },
+    {
+      "path": "evidence/playback-v3/rays-retarget-run-playback.mp4",
+      "bytes": 724242,
+      "sha256": "ad175d992225861d54ac6c1c7fc609af8bb0489cd9d1e0cde896f5c2a7c5eade"
+    },
+    {
+      "path": "evidence/playback-v3/rays-retarget-run-side-000.png",
+      "bytes": 232372,
+      "sha256": "35936f60cdd8870be2e969e46079f6fa5e40182b8161d85a1e06577d782e2326"
+    }
+  ],
+  "runtimeReady": false
+}

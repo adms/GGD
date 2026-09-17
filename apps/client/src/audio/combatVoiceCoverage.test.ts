@@ -32,6 +32,7 @@ import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
 import { readStarterRoster } from "@ggd/shared/testkit/starterRoster";
 import { CHAMPION_FORM_PAIRS, counterpartFormId } from "@ggd/shared/content/championForms";
+import { VOICE_GAP_BATCH4 } from "@ggd/shared/content/voiceGapBatch4";
 import {
   VOICE_PACK_MANIFEST_PATH,
   packClips,
@@ -130,7 +131,13 @@ const VOICE_GAP: readonly string[] = [
   // built from ORIGINAL clips only (owner 2026-09-10「LOL7個角色應該有自己語音檔 可以排除」
   // excludes them from synthesis, ⛔ not from shipping). They are audible, so they are not
   // a gap; they are incomplete, so they are pinned in ORIGINALS_ONLY below instead.
-  "b2-kisaragi",
+  // ⭐ 2026-09-14（PR #1152 合併準備）: b2-kisaragi LEFT this list — the train's ORIGINAL clips
+  // landed (3c85197b8: 「ドアが閉まります」 announcement as select/taunt, JR departure melody as
+  // victory), which is the "or an original clip" exit the note above named. It is audible now.
+  // ⭐ 2026-09-17（GH#1281）：第四批 37 名「先上架、語音待補」的宣告住在
+  //   `@ggd/shared/content/voiceGapBatch4`（⛔ 不是四條語音守衛各抄一份；棘輪只能變短）。
+  //   ⚠️ 順序跟著量到的順序走（出貨名單的順序），⛔ 不是我排的。
+  ...VOICE_GAP_BATCH4,
 ];
 
 /**
@@ -294,8 +301,16 @@ describe("the form share, on the real content tree", () => {
         sharedFrom: null,
       });
       // and its clips are its own files, never the counterpart's
+      // ⭐⭐ GH#1281（2026-09-17）—— 在此之前這裡問的是「路徑裡有沒有它的 id」，
+      //   ⛔ 而那是**檔案放在哪**，不是**這段音是誰的**。合併進來的原檔語音包
+      //   住在**來源語料**目錄（`assets/audio/voices/palworld/astralym/…`），
+      //   檔案仍然只屬於它自己 ⇒ 舊寫法把「資料夾換了名字」讀成「借了別人的聲音」。
+      // ⭐ 改成問真正的性質：**同一個檔不可以同時掛在第二位英雄身上**（那才叫遮蔽）。
       for (const c of packClips(PACK, id, "victory")) {
-        expect(c.clip).toContain(`/${id}/`);
+        const alsoOwnedBy = [...ownPackIds(PACK)].filter(
+          (other) => other !== id && packClips(PACK, other, "victory").some((x) => x.clip === c.clip),
+        );
+        expect(alsoOwnedBy, `${id} 的 ${c.clip} 同時掛在別人身上 ⇒ 有人被遮蔽了`).toEqual([]);
       }
     }
   });

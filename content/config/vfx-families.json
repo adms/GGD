@@ -270,6 +270,9 @@
     "b2-orphen.r": {
       "pitchDeg": 82
     },
+    "b2-popp.q": {
+      "pitchDeg": 42
+    },
     "b2-shadow.ex": {
       "pitchDeg": 3
     },
@@ -289,13 +292,13 @@
       "pitchDeg": 43
     },
     "community-review-34-20260907.e": {
-      "pitchDeg": 52
+      "pitchDeg": 83
     },
     "community-review-34-20260907.ex": {
-      "pitchDeg": 52
+      "pitchDeg": 83
     },
     "community-review-34-20260907.q": {
-      "pitchDeg": 52
+      "pitchDeg": 83
     },
     "community-review-36-20260907.e": {
       "pitchDeg": 87
@@ -389,6 +392,9 @@
     "godie-e00r.r": {
       "family": "groundDust",
       "soundLaunch": "wc3.markofchaos"
+    },
+    "godie-e00r.w": {
+      "pitchDeg": 35
     },
     "godie-e00s.q": {
       "family": "burst",
@@ -888,13 +894,13 @@
     },
     "godie-nbbc.r": {
       "family": "mirrorImage",
-      "pitchDeg": 75,
+      "pitchDeg": 35,
       "soundImpact": "wc3.wandofneutralization"
     },
     "godie-nbbc.w": {
       "family": "shockwaveRing",
       "anchor": "chest",
-      "pitchDeg": 75
+      "pitchDeg": 35
     },
     "godie-nsjs.e": {
       "soundLaunch": "wc3.altarofelderswhat1"
@@ -1406,7 +1412,7 @@
     },
     "godie-umal.e": {
       "family": "shockwaveRing",
-      "pitchDeg": 89
+      "pitchDeg": 17
     },
     "godie-umal.ex": {
       "family": "shockwaveRing"
@@ -1415,7 +1421,7 @@
       "family": "burst",
       "w3xScale": 1.1,
       "soundLaunch": "wc3.gruntwhat2",
-      "pitchDeg": 89,
+      "pitchDeg": 17,
       "soundImpact": "wc3.peondeath"
     },
     "godie-umal.r": {

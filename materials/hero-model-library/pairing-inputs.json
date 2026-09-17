@@ -1,0 +1,828 @@
+{
+  "schema": "ggd-hero-model-pairing-inputs@1",
+  "source_notes": "角色配對與出處設定；只作候選配對，不代表已轉換或部署。原始量測另留來源存檔。",
+  "imported_from": [
+    {
+      "path": "batch2-37/visual-pairs.json",
+      "sha256": "1e2a20787a442f1946adc5485fb465e38aefd859bb43e336af260bda9a4b9987"
+    },
+    {
+      "path": "existing-hero-upgrades/upgrades.json",
+      "sha256": "bf47bf9d357736edc781aa7daef799f5ad9485b8a3044be7a3676c8ae0e43e9b"
+    }
+  ],
+  "batch2": [
+    {
+      "id": "b2-popp",
+      "name": "何布",
+      "work": "神龍之謎／DRAGON QUEST 達伊的大冒險",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "119",
+        "name": "李小狼",
+        "origin": "TSUBASA 翼／翼年代記"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-rem",
+      "name": "蕾姆",
+      "work": "Re:從零開始",
+      "visual_match_status": "identity_candidate",
+      "primary": {
+        "id": "310",
+        "name": "蕾姆",
+        "origin": "Re:從零開始的異世界生活"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-zenitsu",
+      "name": "我妻善逸",
+      "work": "鬼滅之刃",
+      "visual_match_status": "identity_candidate",
+      "primary": {
+        "id": "332",
+        "name": "我妻善逸",
+        "origin": "鬼滅之刃"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-rin",
+      "name": "遠坂凜",
+      "work": "Fate/stay night",
+      "visual_match_status": "identity_candidate",
+      "primary": {
+        "id": "160",
+        "name": "远坂凛",
+        "origin": "Fate/stay night"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-uncle",
+      "name": "異世界舅舅",
+      "work": "異世界舅舅",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "319",
+        "name": "坂本",
+        "origin": "在下坂本，有何貴幹？"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-boxxo",
+      "name": "阿箱＋拉蜜絲",
+      "work": "轉生成自動販賣機的我今天也在迷宮徘徊",
+      "visual_match_status": "partial_components",
+      "primary": {
+        "id": "pod",
+        "name": "POD 機械寵物 06_pod",
+        "origin": "来源遊戲 300英雄；外觀近 NieR POD，出處未獨立確認"
+      },
+      "alternates": [],
+      "additional_components": [
+        {
+          "id": "lux",
+          "name": "Lux 拉克絲",
+          "origin": "League of Legends"
+        }
+      ]
+    },
+    {
+      "id": "b2-shadow",
+      "name": "闇影",
+      "work": "我想成為影之強者",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "102",
+        "name": "黑衣剑士",
+        "origin": "刀劍神域 Sword Art Online"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-bojji",
+      "name": "波吉",
+      "work": "國王排名",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "tiny-kirito",
+        "name": "小桐人寵物",
+        "origin": "刀劍神域；依檔名與外觀推定"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-maomao",
+      "name": "貓貓",
+      "work": "藥師少女的獨語",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "246",
+        "name": "少司命",
+        "origin": "秦時明月"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-elma",
+      "name": "艾爾瑪",
+      "work": "被逐出家門的重騎士以遊戲知識開無雙",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "20",
+        "name": "阿尔冯斯",
+        "origin": "鋼之鍊金術師"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-albus",
+      "name": "阿爾巴斯",
+      "work": "廻天のアルバス",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "269",
+        "name": "尤吉欧",
+        "origin": "刀劍神域 Sword Art Online"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-goblin",
+      "name": "哥布林殺手",
+      "work": "哥布林殺手",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "20",
+        "name": "阿尔冯斯",
+        "origin": "鋼之鍊金術師"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-maple",
+      "name": "梅普露",
+      "work": "怕痛的我把防禦力點滿就對了",
+      "visual_match_status": "identity_candidate",
+      "primary": {
+        "id": "272",
+        "name": "梅普露",
+        "origin": "怕痛的我，把防禦力點滿就對了"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-naofumi",
+      "name": "岩谷尚文",
+      "work": "盾之勇者成名錄",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "81",
+        "name": "骑士娃",
+        "origin": "葫蘆兄弟／葫蘆娃"
+      },
+      "alternates": [
+        {
+          "id": "20",
+          "name": "阿尔冯斯",
+          "origin": "鋼之鍊金術師"
+        }
+      ],
+      "additional_components": []
+    },
+    {
+      "id": "b2-makoto",
+      "name": "深澄真",
+      "work": "月光下的異世界之旅",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "209",
+        "name": "司波达也",
+        "origin": "魔法科高中的劣等生"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-noor",
+      "name": "諾爾",
+      "work": "我要招架一切",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "cloud",
+        "name": "Cloud 克勞德模型",
+        "origin": "Final Fantasy VII；現有匯入模型"
+      },
+      "alternates": [
+        {
+          "id": "41",
+          "name": "赫拉克勒斯",
+          "origin": "Fate/stay night"
+        }
+      ],
+      "additional_components": []
+    },
+    {
+      "id": "b2-touka",
+      "name": "托卡・史考特",
+      "work": "勇者死了",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "121",
+        "name": "绯村剑心",
+        "origin": "神劍闖江湖／浪客劍心"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-haga",
+      "name": "羽賀",
+      "work": "這個世界漏洞百出",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "319",
+        "name": "坂本",
+        "origin": "在下坂本，有何貴幹？"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-guts",
+      "name": "凱茲",
+      "work": "烙印勇士",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "cloud",
+        "name": "Cloud 克勞德模型",
+        "origin": "Final Fantasy VII；現有匯入模型"
+      },
+      "alternates": [
+        {
+          "id": "41",
+          "name": "赫拉克勒斯",
+          "origin": "Fate/stay night"
+        }
+      ],
+      "additional_components": []
+    },
+    {
+      "id": "b2-keyaru",
+      "name": "凱亞爾",
+      "work": "回復術士的重來人生",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "119",
+        "name": "李小狼",
+        "origin": "TSUBASA 翼／翼年代記"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-kaede",
+      "name": "楓",
+      "work": "異世界転移したのでチートを生かして魔法剣士やることにする",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "102",
+        "name": "黑衣剑士",
+        "origin": "刀劍神域 Sword Art Online"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-matthias",
+      "name": "馬提亞斯",
+      "work": "失格紋的最強賢者",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "209",
+        "name": "司波达也",
+        "origin": "魔法科高中的劣等生"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-sinbad",
+      "name": "辛巴達",
+      "work": "マギ シンドバッドの冒険",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "69",
+        "name": "左二少",
+        "origin": "火影忍者 NARUTO"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-kumoko",
+      "name": "蜘蛛子",
+      "work": "轉生成蜘蛛又怎樣",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "spider",
+        "name": "白色蜘蛛寵物 27_zhizhuzi",
+        "origin": "來源遊戲 300英雄；檔名含蜘蛛子，尚未獨立確認授權角色身分"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-yogiri",
+      "name": "高遠夜霧",
+      "work": "秒殺外掛太強了，異世界的傢伙們根本就不是對手",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "36",
+        "name": "富樫勇太",
+        "origin": "中二病也想談戀愛！"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-kaiji",
+      "name": "伊藤開司",
+      "work": "賭博默示錄",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "118",
+        "name": "黑",
+        "origin": "DARKER THAN BLACK－黑之契約者"
+      },
+      "alternates": [
+        {
+          "id": "319",
+          "name": "坂本",
+          "origin": "在下坂本，有何貴幹？"
+        }
+      ],
+      "additional_components": []
+    },
+    {
+      "id": "b2-fushi",
+      "name": "不死",
+      "work": "致不滅的你",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "137",
+        "name": "坂田银时",
+        "origin": "銀魂"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-orphen",
+      "name": "歐菲",
+      "work": "魔術士歐菲",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "118",
+        "name": "黑",
+        "origin": "DARKER THAN BLACK－黑之契約者"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-klaus",
+      "name": "克勞斯",
+      "work": "覺醒了自動機能的十五年無成冒險者",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "209",
+        "name": "司波达也",
+        "origin": "魔法科高中的劣等生"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-takopi",
+      "name": "章魚嗶",
+      "work": "章魚嗶的原罪",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "octopus",
+        "name": "八爪魚寵物 11_bazhuayu",
+        "origin": "來源遊戲 300英雄；其他作品出處未確認"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-luckyman",
+      "name": "幸運超人",
+      "work": "幸運超人",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "256",
+        "name": "埼玉",
+        "origin": "一拳超人 ONE-PUNCH MAN"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-misery",
+      "name": "米瑟利",
+      "work": "來自魔界／アウターゾーン",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "199",
+        "name": "优克莉伍德",
+        "origin": "這樣算是殭屍嗎？"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-nube",
+      "name": "鵺野鳴介",
+      "work": "靈異教師神眉",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "319",
+        "name": "坂本",
+        "origin": "在下坂本，有何貴幹？"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-shinchan",
+      "name": "野原新之助",
+      "work": "蠟筆小新",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "tiny-kirito",
+        "name": "小桐人寵物",
+        "origin": "刀劍神域；依檔名與外觀推定"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-aladdin",
+      "name": "阿拉丁",
+      "work": "魔笛 MAGI",
+      "visual_match_status": "visual_proxy",
+      "primary": {
+        "id": "112",
+        "name": "小悟空",
+        "origin": "七龍珠／Dragon Ball 系列"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-ned",
+      "name": "青蛙劍士 Ned",
+      "work": "AVARTH／アヴァルト",
+      "visual_match_status": "partial_components",
+      "primary": {
+        "id": "bulbasaur",
+        "name": "妙蛙種子模型",
+        "origin": "Pokémon；現有匯入模型"
+      },
+      "alternates": [],
+      "additional_components": []
+    },
+    {
+      "id": "b2-kisaragi",
+      "name": "如月電車",
+      "work": "如月車站題材・GGD 原創",
+      "visual_match_status": "original",
+      "primary": {
+        "id": "tram",
+        "name": "GGD 原創如月電車",
+        "origin": "GGD 原創"
+      },
+      "alternates": [],
+      "additional_components": []
+    }
+  ],
+  "existing_upgrades": [
+    {
+      "hero": "莉娜・因巴斯",
+      "old_bindings": [
+        {
+          "id": "godie-h020",
+          "name": "黑魔導士 - 莉娜因巴斯"
+        },
+        {
+          "id": "godie-hjai",
+          "name": "黑魔導士 - 莉娜因巴斯"
+        }
+      ],
+      "new_candidates": [
+        {
+          "character_id": "300heroes:46",
+          "name": "莉娜·因巴斯",
+          "origin": "秀逗魔導士 Slayers"
+        },
+        {
+          "character_id": "mba:Chara02",
+          "name": "莉娜·因巴斯",
+          "origin": "秀逗魔導士"
+        }
+      ]
+    },
+    {
+      "hero": "Saber",
+      "old_bindings": [
+        {
+          "id": "godie-e002",
+          "name": "亞瑟王 - Saber"
+        },
+        {
+          "id": "godie-e00l",
+          "name": "亞瑟王 - Saber"
+        }
+      ],
+      "new_candidates": [
+        {
+          "character_id": "300heroes:53",
+          "name": "亚瑟王",
+          "origin": "Fate/stay night"
+        }
+      ]
+    },
+    {
+      "hero": "夏娜",
+      "old_bindings": [
+        {
+          "id": "godie-e008",
+          "name": "火霧戰士 - 夏娜"
+        }
+      ],
+      "new_candidates": [
+        {
+          "character_id": "300heroes:109",
+          "name": "夏娜",
+          "origin": "灼眼的夏娜"
+        }
+      ]
+    },
+    {
+      "hero": "宇智波佐助",
+      "old_bindings": [
+        {
+          "id": "godie-edem",
+          "name": "寫輪眼復仇者 - 宇智波佐助"
+        }
+      ],
+      "new_candidates": [
+        {
+          "character_id": "300heroes:69",
+          "name": "左二少",
+          "origin": "火影忍者 NARUTO"
+        }
+      ]
+    },
+    {
+      "hero": "黑崎一護",
+      "old_bindings": [
+        {
+          "id": "godie-h01n",
+          "name": "開外掛的死神 - 黑崎一護"
+        },
+        {
+          "id": "godie-h01o",
+          "name": "外掛開很大的死神 - 黑崎一護"
+        }
+      ],
+      "new_candidates": [
+        {
+          "character_id": "300heroes:227",
+          "name": "小一",
+          "origin": "BLEACH 死神"
+        }
+      ]
+    },
+    {
+      "hero": "海克力斯／Berserker",
+      "old_bindings": [
+        {
+          "id": "godie-hapm",
+          "name": "海克力斯 - Berserker"
+        }
+      ],
+      "new_candidates": [
+        {
+          "character_id": "300heroes:41",
+          "name": "赫拉克勒斯",
+          "origin": "Fate/stay night"
+        }
+      ]
+    },
+    {
+      "hero": "賽菲洛斯",
+      "old_bindings": [
+        {
+          "id": "godie-u00j",
+          "name": "神性的流失 - 賽菲洛斯"
+        }
+      ],
+      "new_candidates": [
+        {
+          "character_id": "300heroes:113",
+          "name": "片翼天使",
+          "origin": "Final Fantasy VII／最終幻想 VII"
+        }
+      ]
+    },
+    {
+      "hero": "美杜莎／Rider",
+      "old_bindings": [
+        {
+          "id": "godie-hvsh",
+          "name": "梅杜莎 - Rider"
+        }
+      ],
+      "new_candidates": [
+        {
+          "character_id": "300heroes:253",
+          "name": "美杜莎",
+          "origin": "Fate/stay night"
+        }
+      ]
+    },
+    {
+      "hero": "殺生丸",
+      "old_bindings": [
+        {
+          "id": "godie-osam",
+          "name": "犬妖 - 殺生丸"
+        }
+      ],
+      "new_candidates": [
+        {
+          "character_id": "300heroes:115",
+          "name": "贵公子",
+          "origin": "犬夜叉"
+        }
+      ]
+    },
+    {
+      "hero": "魯夫",
+      "old_bindings": [
+        {
+          "id": "godie-u00n",
+          "name": "草帽小子 - 蒙其.D.魯夫"
+        },
+        {
+          "id": "godie-u00o",
+          "name": "草帽小子 - 蒙其.D.魯夫"
+        }
+      ],
+      "new_candidates": [
+        {
+          "character_id": "300heroes:48",
+          "name": "草帽小子",
+          "origin": "ONE PIECE 航海王"
+        }
+      ]
+    },
+    {
+      "hero": "索隆",
+      "old_bindings": [
+        {
+          "id": "godie-u01u",
+          "name": "三刀流劍士 - 索隆"
+        },
+        {
+          "id": "godie-udre",
+          "name": "三刀流劍士 - 索隆"
+        }
+      ],
+      "new_candidates": [
+        {
+          "character_id": "300heroes:85",
+          "name": "佐罗",
+          "origin": "ONE PIECE 航海王"
+        }
+      ]
+    },
+    {
+      "hero": "十六夜咲夜",
+      "old_bindings": [
+        {
+          "id": "godie-e00u",
+          "name": "完全而瀟灑的女僕 - 十六夜Sakuya"
+        }
+      ],
+      "new_candidates": [
+        {
+          "character_id": "300heroes:135",
+          "name": "十六夜咲夜",
+          "origin": "東方 Project"
+        }
+      ]
+    },
+    {
+      "hero": "高町奈葉",
+      "old_bindings": [
+        {
+          "id": "godie-o01z",
+          "name": "魔砲少女 - 高町奈葉"
+        },
+        {
+          "id": "godie-o02v",
+          "name": "白色惡魔 - 高町奈葉"
+        }
+      ],
+      "new_candidates": [
+        {
+          "character_id": "300heroes:165",
+          "name": "高町奈叶",
+          "origin": "魔法少女奈葉"
+        },
+        {
+          "character_id": "mba:Chara01",
+          "name": "高町奈葉（少女版）",
+          "origin": "魔法少女奈葉"
+        },
+        {
+          "character_id": "mba:Chara12_01",
+          "name": "高町奈葉（StrikerS 成年版）",
+          "origin": "魔法少女奈葉"
+        }
+      ]
+    },
+    {
+      "hero": "菲特",
+      "old_bindings": [
+        {
+          "id": "godie-ntin",
+          "name": "時空管理局執務官 - 菲特·泰斯塔羅沙"
+        }
+      ],
+      "new_candidates": [
+        {
+          "character_id": "300heroes:169",
+          "name": "菲特",
+          "origin": "魔法少女奈葉"
+        },
+        {
+          "character_id": "mba:Chara04_01",
+          "name": "菲特·泰斯塔羅莎（少女版）",
+          "origin": "魔法少女奈葉"
+        },
+        {
+          "character_id": "mba:Chara04_02",
+          "name": "菲特·泰斯塔羅莎（少女版）",
+          "origin": "魔法少女奈葉"
+        },
+        {
+          "character_id": "mba:Chara15_01",
+          "name": "菲特（StrikerS 成年版）",
+          "origin": "魔法少女奈葉"
+        },
+        {
+          "character_id": "mba:Chara15_02",
+          "name": "菲特（StrikerS 成年版）",
+          "origin": "魔法少女奈葉"
+        }
+      ]
+    },
+    {
+      "hero": "坂田銀時",
+      "old_bindings": [
+        {
+          "id": "community-review-23-20260907",
+          "name": "坂田銀時"
+        }
+      ],
+      "new_candidates": [
+        {
+          "character_id": "300heroes:137",
+          "name": "坂田银时",
+          "origin": "銀魂"
+        }
+      ]
+    }
+  ]
+}

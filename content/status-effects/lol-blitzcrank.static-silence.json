@@ -1,0 +1,14 @@
+{
+  "id": "lol-blitzcrank.static-silence",
+  "schema": "status-effect@1",
+  "name": "靜電力場",
+  "description": "布里姿「靜電力場」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-blitzcrank.static-silence",
+    "silence",
+    "cast-denied",
+    "cc",
+    "debuff"
+  ]
+}

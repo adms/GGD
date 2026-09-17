@@ -1,0 +1,320 @@
+{
+  "schema": "ggd.native-textures-verified@1",
+  "sourceId": "iori-xv-raw",
+  "files": [
+    {
+      "path": "extracted-v1/Raw Files/IOR_AO_FACE.tga",
+      "bytes": 4194322,
+      "sha256": "d5bb0a6437a5067457cf6d2ae96d8393e3b6ac40a13a6089d1815d1e782792c9",
+      "width": 1024,
+      "height": 1024,
+      "mode": "RGBA",
+      "channelExtrema": [
+        [
+          0,
+          255
+        ],
+        [
+          60,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          255,
+          255
+        ]
+      ]
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_AO_HAIR.tga",
+      "bytes": 4194322,
+      "sha256": "c4b83541f0ed7c540a0e821d5d585faf3b4e3ae4042629186e849959247f1869",
+      "width": 1024,
+      "height": 1024,
+      "mode": "RGBA",
+      "channelExtrema": [
+        [
+          49,
+          255
+        ],
+        [
+          254,
+          255
+        ],
+        [
+          254,
+          255
+        ],
+        [
+          255,
+          255
+        ]
+      ]
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_AO_OTR.tga",
+      "bytes": 4194322,
+      "sha256": "346cd77ade628b5e503d3197e40f0df51f106dc812afad5112f0512f1f423761",
+      "width": 1024,
+      "height": 1024,
+      "mode": "RGBA",
+      "channelExtrema": [
+        [
+          0,
+          255
+        ],
+        [
+          254,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          255,
+          255
+        ]
+      ]
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_COL_FACE_P1.tga",
+      "bytes": 67108882,
+      "sha256": "6aac9c09c267d6449911df98d287610dc2243090c422002a37c3fa939de1f850",
+      "width": 4096,
+      "height": 4096,
+      "mode": "RGBA",
+      "channelExtrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          250
+        ]
+      ]
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_COL_HAIR_P1.tga",
+      "bytes": 67108882,
+      "sha256": "d672c6244fb806dc19ee1f07445c11cdb03fa3e8bee4843624824cd201ddc43a",
+      "width": 4096,
+      "height": 4096,
+      "mode": "RGBA",
+      "channelExtrema": [
+        [
+          0,
+          213
+        ],
+        [
+          0,
+          194
+        ],
+        [
+          0,
+          197
+        ],
+        [
+          255,
+          255
+        ]
+      ]
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_COL_OTR_P1.tga",
+      "bytes": 67108882,
+      "sha256": "14d8cf41c3ece7fb7b010daa16562f67affb8070e2cefb8afa818635a3f7b171",
+      "width": 4096,
+      "height": 4096,
+      "mode": "RGBA",
+      "channelExtrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          206
+        ],
+        [
+          0,
+          205
+        ],
+        [
+          0,
+          255
+        ]
+      ]
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_NOR_FACE.tga",
+      "bytes": 67108882,
+      "sha256": "3f7f54fbe4b7ffc773bc1f96a386c2808f5375c146e263168a82fa77e71f0a13",
+      "width": 4096,
+      "height": 4096,
+      "mode": "RGBA",
+      "channelExtrema": [
+        [
+          1,
+          243
+        ],
+        [
+          11,
+          253
+        ],
+        [
+          127,
+          254
+        ],
+        [
+          255,
+          255
+        ]
+      ]
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_NOR_HAIR.tga",
+      "bytes": 67108882,
+      "sha256": "fd2b3fc4dd2a37e261c206a3368b303f3bc863e7c878568ff60e429b1e35fab9",
+      "width": 4096,
+      "height": 4096,
+      "mode": "RGBA",
+      "channelExtrema": [
+        [
+          0,
+          254
+        ],
+        [
+          0,
+          254
+        ],
+        [
+          127,
+          254
+        ],
+        [
+          255,
+          255
+        ]
+      ]
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_NOR_OTR.tga",
+      "bytes": 67108882,
+      "sha256": "c968e63b49d63fd88097e1f8f3b774e2bde163b2377daba3109c2e09688a6a60",
+      "width": 4096,
+      "height": 4096,
+      "mode": "RGBA",
+      "channelExtrema": [
+        [
+          0,
+          254
+        ],
+        [
+          0,
+          254
+        ],
+        [
+          127,
+          254
+        ],
+        [
+          255,
+          255
+        ]
+      ]
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_SSS_FACE.tga",
+      "bytes": 67108882,
+      "sha256": "e06b1fbe4356e39db672f6c0eef6dda8638d0ff4db92a3bc7e6609c532087b98",
+      "width": 4096,
+      "height": 4096,
+      "mode": "RGBA",
+      "channelExtrema": [
+        [
+          8,
+          255
+        ],
+        [
+          160,
+          255
+        ],
+        [
+          8,
+          255
+        ],
+        [
+          0,
+          233
+        ]
+      ]
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_SSS_HAIR.tga",
+      "bytes": 16777234,
+      "sha256": "ef9b3ed882dcde841fdc5d6247eb9fae2391760f8f0fa94f3e6a97792bcb461a",
+      "width": 2048,
+      "height": 2048,
+      "mode": "RGBA",
+      "channelExtrema": [
+        [
+          0,
+          123
+        ],
+        [
+          56,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          221,
+          255
+        ]
+      ]
+    },
+    {
+      "path": "extracted-v1/Raw Files/IOR_SSS_OTR.tga",
+      "bytes": 67108882,
+      "sha256": "f7cbb622e1fe4b0c55978e6392bf73c0a6aea62223640353d6e590ec76627b15",
+      "width": 4096,
+      "height": 4096,
+      "mode": "RGBA",
+      "channelExtrema": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ]
+    }
+  ],
+  "decodedCount": 12,
+  "mutatedSourceFiles": 0
+}

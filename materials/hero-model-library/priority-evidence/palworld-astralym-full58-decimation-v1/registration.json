@@ -1,0 +1,76 @@
+{
+  "schema": "ggd-palworld-astralym-full58-registration@1",
+  "heroId": "acquired-astralym",
+  "modelKey": "community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f",
+  "isDefault": false,
+  "modelDocument": {
+    "gitPath": "content/models/community.body.d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f.json",
+    "bytes": 456,
+    "sha256": "ffe2ef5c49f792b0d4ad663999c55f049455f55c5debebeab6072fef348dfa0c"
+  },
+  "modelGlb": {
+    "gitPath": "content/assets/models/community/d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874.glb",
+    "bytes": 17043436,
+    "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+  },
+  "localCandidate": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-full58-decimation-v1/final/astralym-full58-256-decimated.glb",
+    "bytes": 17043436,
+    "sha256": "d45146e882628fe8bbf635727ad272ff8f82238cf36b4d5f481dbbf0d9b45874"
+  },
+  "measured": {
+    "triangles": 7896,
+    "drawPrimitives": 3,
+    "maxTextureEdge": 256,
+    "maxClipChannels": 435,
+    "clipCount": 58
+  },
+  "semanticMap": {
+    "idle": "Idle",
+    "run": "Walk",
+    "attack": "FarSkill_Action",
+    "cast": "HaloBeam_Loop",
+    "hurt": "Damage",
+    "death": "Damage"
+  },
+  "nativeMotionLibraryPreserved": true,
+  "defaultsChanged": 0,
+  "productionDeploymentVerified": false,
+  "conversionStageBackupStatus": "full-download-and-all-member-sha256-verified",
+  "conversionStageBackup": {
+    "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/palworld-astralym-full58-decimation-v1/8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5.tar.gz",
+    "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/palworld-astralym-full58-decimation-v1/8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5.files.json",
+    "archiveSha256": "8336c5cbf08c073e0d30bbdac08d0ae54f6d6d8a4b63be8972618da28a7fa0c5",
+    "archiveBytes": 53102420,
+    "fileCount": 74,
+    "fullGetVerified": true,
+    "allMemberSha256Verified": true,
+    "localUnchanged": true,
+    "receipt": {
+      "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/s3-backup-receipt.json",
+      "bytes": 1231,
+      "sha256": "7b4a6bed91fecb61dbabc835910b558a4d65d01f2fcc7d07547ebbbbe67dd978"
+    },
+    "manifest": {
+      "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/s3-backup-manifest.json",
+      "bytes": 13958,
+      "sha256": "07078528e85e8d0034ff1a3699f8a2273951779ce57dc9cd576cda38b74de6ee"
+    },
+    "candidateArchiveMember": "final/astralym-full58-256-decimated.glb"
+  },
+  "validationEvidence": {
+    "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/validation.json",
+    "bytes": 22294,
+    "sha256": "81917a42a9b5e9f7f7e36e9ea31612b9d83dc21c250ad968832f92b59466ecfc"
+  },
+  "generationEvidence": {
+    "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/generation.json",
+    "bytes": 5073,
+    "sha256": "268c378a863324ccae3e15abd78490e6df91c891dc254b64b249539fec5838ba"
+  },
+  "visualEvidence": {
+    "gitPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/visual-comparison.json",
+    "bytes": 6481,
+    "sha256": "389853c25b845c953dde14bf44011ba6b8aeae147c59c6bf3f08b950a56d3be1"
+  }
+}

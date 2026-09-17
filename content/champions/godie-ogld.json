@@ -11,7 +11,7 @@
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 1,
-    "maxMana": 200,
+    "maxMana": 100,
     "manaRegen": 0.1,
     "ad": 30,
     "ap": 0,
@@ -26,9 +26,9 @@
     "range": 12
   },
   "growth": {
-    "maxHealth": 34.8837,
+    "maxHealth": 40,
     "healthRegen": 0.1184,
-    "maxMana": 34.8306,
+    "maxMana": 35,
     "manaRegen": 0.1105,
     "ad": 4.7828,
     "armor": 0.3995,
@@ -70,11 +70,11 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "template": {
@@ -90,16 +90,17 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.033
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.holy.pulse",
       "targetsEnemies": true,
-      "castTimeSec": 1.033,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-ogld.w",
@@ -116,14 +117,14 @@
         15.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.void.swarm",
       "targetsEnemies": true,
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "小",
@@ -134,12 +135,13 @@
           "damageTier": "小",
           "apRatio": 0.6,
           "damageType": "magic",
-          "intervalSec": 1.0,
-          "durationSec": 10.0,
+          "intervalSec": 1,
+          "durationSec": 10,
           "stacking": "refresh",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "E": {
       "id": "godie-ogld.e",
@@ -156,9 +158,9 @@
         45.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "template": {
@@ -174,16 +176,17 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.833
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.holy.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-ogld.r",
@@ -200,16 +203,16 @@
         90.0
       ],
       "manaCost": [
-        224.0,
-        224.0,
-        224.0
+        300.0,
+        300.0,
+        300.0
       ],
       "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
-      "radius": 3.0,
-      "castTimeSec": 0.8,
+      "radius": 3,
+      "castTimeSec": 1,
       "template": {
         "ref": "tpl-proxy-cast",
         "params": {
@@ -225,14 +228,15 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.8,
+          "castTimeSec": 1,
           "statusId": "burnstun",
           "statusDurationSec": 0.8
         }
       },
       "cooldownTier": "大",
       "manaCostTier": "中",
-      "radiusTier": "極小"
+      "radiusTier": "極小",
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [
@@ -280,7 +284,7 @@
       "modelKey": "version.body.d39ccfe076898ede67a391497a69f789d7023f8f7457ba24",
       "label": "ou99 黑人牙膏（本尊／相似造型）",
       "sourceModelKey": "ou99.495978",
-      "modelSha256": "49fb772ba52347a34f551ed988f04aa11e6b63678f5dbf9cdb063c2b51bdd40c",
+      "modelSha256": "098aec78a71152b830a000a4d8a0c151484cf2f391a45c69670eb6d572dc446e",
       "binarySha256": "9b37c1b932bcf45f612b3fd4412152c20736501929f5ae0297bfa4995f34a727",
       "registeredAt": "2026-09-10T18:20:40.543Z",
       "source": {

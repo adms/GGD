@@ -1,0 +1,11 @@
+{
+  "id": "acquired-saya.disruption",
+  "schema": "status-effect@1",
+  "name": "餐桌黏黏的",
+  "description": "沙耶「餐桌黏黏的」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-saya.disruption",
+    "debuff"
+  ]
+}

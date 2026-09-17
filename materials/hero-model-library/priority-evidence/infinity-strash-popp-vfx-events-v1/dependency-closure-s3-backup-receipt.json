@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/game-intakes/infinity-strash-popp-vfx-dependency-closure-v1/fff8096491ae81106ae13de3a5ec237cdfd9b838e4df629809fbd697ccd83de5.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/game-intakes/infinity-strash-popp-vfx-dependency-closure-v1/fff8096491ae81106ae13de3a5ec237cdfd9b838e4df629809fbd697ccd83de5.files.json",
+  "archiveSha256": "fff8096491ae81106ae13de3a5ec237cdfd9b838e4df629809fbd697ccd83de5",
+  "archiveBytes": 19748525,
+  "fileCount": 700,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-popp-vfx-dependency-closure-v1",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-vfx-dependency-closure-v1/6202ce516db6859206bae67277ba288f09dc74de03e30d7acd6028a2d6461a36/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-vfx-dependency-closure-v1/6202ce516db6859206bae67277ba288f09dc74de03e30d7acd6028a2d6461a36/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-vfx-dependency-closure-v1/6202ce516db6859206bae67277ba288f09dc74de03e30d7acd6028a2d6461a36/manifest.json"
+}

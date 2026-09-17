@@ -1,0 +1,74 @@
+{
+  "schema": "ggd.community-model-acquisition@1",
+  "sourceId": "bowlroll-sabakan359-vearn-mmd-v087",
+  "character": {
+    "nameZh": "巴恩大魔王",
+    "originalName": "大魔王バーン",
+    "form": "elderly-pre-transformation",
+    "heroIds": [
+      "godie-ubal"
+    ]
+  },
+  "sourceWork": "ドラゴンクエスト ダイの大冒険",
+  "sourceUrl": "https://bowlroll.net/file/37061",
+  "author": "鯖缶359",
+  "version": "0.87",
+  "published": "2014-05-05",
+  "platform": "MMD",
+  "format": [
+    "PMX",
+    "BMP",
+    "TGA",
+    "SPH"
+  ],
+  "acquiredAt": "2026-09-13T22:59:00+08:00",
+  "acquisitionMethod": "normal public BowlRoll download using the download key publicly stated by the author distribution reference; no login or access-control bypass",
+  "archive": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260913/bowlroll-sabakan359-vearn-mmd-v087/original/vearn-mmd-v087.zip",
+    "bytes": 8370775,
+    "sha256": "5948beb33e350ce50da0294e2ce387b6c533cd3e783b2b1759662f00dc0ed0a3"
+  },
+  "extracted": {
+    "fileCount": 18,
+    "bytes": 39847182,
+    "manifestPath": "local-intake/extraction-files.json",
+    "manifestSha256": "ea805bf66bacda3d75b7d5055b3d0f9e6b9c593baa8eed0b79c41f147b0b01e0"
+  },
+  "models": [
+    "大魔王バーン/カイザーフェニックス素体.pmx",
+    "大魔王バーン/光魔の杖.pmx",
+    "大魔王バーン/大魔王バーン.pmx",
+    "大魔王バーン/大魔王バーン杖装備.pmx",
+    "大魔王バーン/影バーン.pmx"
+  ],
+  "assetKinds": [
+    "character-model",
+    "embedded-skeleton",
+    "textures",
+    "staff-accessory",
+    "kaiser-phoenix-vfx-helper"
+  ],
+  "nativeMotionFiles": 0,
+  "audioFiles": 0,
+  "identityFinding": "Package is the elderly/pre-transformation Vearn MMD model family. It does not contain young true-body/post-transformation Vearn.",
+  "reuseTerms": {
+    "source": "readme_必ずお読みください.txt",
+    "decodedUtf8Path": "local-intake/readme-utf8.txt",
+    "commercialUseAllowed": false,
+    "redistributionAllowed": false,
+    "modifiedRedistributionAllowed": false,
+    "authorPermissionRequiredForSharedRuntimeIntegration": true
+  },
+  "integration": {
+    "acquisitionStatus": "downloaded-verified",
+    "conversionStatus": "not-started-license-blocked",
+    "runtimeReady": false,
+    "backendSelectable": false,
+    "productionDeployed": false
+  },
+  "limitations": [
+    "Community-authored MMD model; not an Infinity Strash native game extraction.",
+    "Author readme prohibits commercial use and redistribution with or without modification.",
+    "Sketchfab mirror CC Attribution label is not treated as superseding the original author readme or borrowed-component terms."
+  ]
+}

@@ -25,9 +25,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 39,
+    "maxHealth": 80,
     "healthRegen": 0.1,
-    "maxMana": 17,
+    "maxMana": 50,
     "manaRegen": 0.06,
     "ad": 0.9,
     "armor": 0.8,
@@ -67,17 +67,17 @@
         15.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.physical.beam",
       "sfxKey": "wc3.peondeath",
       "targetsEnemies": true,
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "rangeTier": "極小",
       "range": 3,
       "cooldownTier": "小",
@@ -96,7 +96,8 @@
           },
           "damageType": "magic"
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "W": {
       "id": "godie-u00l.w",
@@ -108,16 +109,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "effects": [],
       "vfxKey": "fx.prim.physical.pulse-sm",
@@ -163,7 +164,8 @@
             ]
           }
         ]
-      }
+      },
+      "castTimeTier": "極小"
     },
     "E": {
       "id": "godie-u00l.e",
@@ -181,16 +183,16 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.physical.swarm",
       "targetsEnemies": true,
-      "radius": 6.0,
-      "castTimeSec": 1.633,
+      "radius": 6,
+      "castTimeSec": 1,
       "rangeTier": "極小",
       "range": 3,
       "cooldownTier": "中",
@@ -210,9 +212,10 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 1.633
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-u00l.r",
@@ -229,9 +232,9 @@
         60.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [
         {
@@ -253,22 +256,23 @@
           "preset": "tpl-locust-strike",
           "modelKey": "w3x.stock.monsoonbolttarget",
           "anchor": "target",
-          "scale": 10.0,
+          "scale": 10,
           "tint": [
-            1.0,
-            0.0,
-            0.0
+            1,
+            0,
+            0
           ]
         }
       ],
       "vfxKey": "fx.prim.physical.pulse-lg",
       "sfxKey": "wc3.nocute",
       "targetsEnemies": true,
-      "castTimeSec": 1.633,
+      "castTimeSec": 0.5,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

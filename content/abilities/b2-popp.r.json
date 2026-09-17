@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.833,
+  "castTimeSec": 1,
   "castType": "ground",
   "cooldown": [
     45.0,
@@ -25,9 +25,9 @@
   ],
   "id": "b2-popp.r",
   "manaCost": [
-    112.0,
-    112.0,
-    112.0
+    150.0,
+    150.0,
+    150.0
   ],
   "manaCostTier": "小",
   "maxRank": 3,
@@ -40,7 +40,7 @@
     "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
     "params": {
       "aim": "target",
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "damage": {
         "damageTier": "中"
       },
@@ -50,12 +50,29 @@
     },
     "ref": "hero-template.895ceb9c437ad0cf6b74a583c7dcc6d6c978841f3076cb71"
   },
-  "vfxKey": "fx.prim.arcane.bolt",
+  "vfxKey": "fx.strash.popp.nps-merami-muzzle",
   "vfxLayers": [
     {
+      "vfxKey": "fx.strash.popp.nps-merami-muzzle",
       "attachTo": "caster",
-      "vfxKey": "fx.prim.arcane.bolt"
+      "delayMs": 0
+    },
+    {
+      "vfxKey": "fx.strash.popp.nps-merami-core",
+      "attachTo": "caster",
+      "delayMs": 100
+    },
+    {
+      "vfxKey": "fx.strash.popp.nps-merami-firetrail-00",
+      "attachTo": "caster",
+      "delayMs": 180
+    },
+    {
+      "vfxKey": "fx.strash.popp.nps-merami-landing-2",
+      "attachTo": "point",
+      "delayMs": 1000
     }
   ],
-  "icon": "assets/icons/abilities/b2-popp.r.webp"
+  "icon": "assets/icons/abilities/b2-popp.r.webp",
+  "castTimeTier": "極大"
 }

@@ -15,10 +15,10 @@
   ],
   "cooldownTier": "大",
   "manaCost": [
-    56.0,
-    56.0,
-    56.0,
-    56.0
+    75.0,
+    75.0,
+    75.0,
+    75.0
   ],
   "manaCostTier": "極小",
   "effects": [],
@@ -30,13 +30,14 @@
         "damageTier": "小"
       },
       "damageType": "magic",
-      "castTimeSec": 1.433
+      "castTimeSec": 1
     }
   },
   "vfxKey": "fx.prim.earth.shockwave",
   "sfxKey": "wc3.gluescreenmeteorhit1",
   "schema": "ability@1",
-  "castTimeSec": 1.433,
+  "castTimeSec": 1,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "極大"
 }

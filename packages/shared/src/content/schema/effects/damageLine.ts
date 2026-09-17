@@ -35,8 +35,15 @@ z
     length: z.number().positive().max(SPREAD_MAX_RADIUS),
     /** GGD 單位, 鞭子的**寬度** (不是半徑)。一個身位 = 1.2 */
     width: z.number().positive().max(SPREAD_MAX_RADIUS),
-    /** 指向: 穿過這次事件的受害者 (預設) 或身體的面向 */
-    aim: z.enum(["facing", "target"]).optional(),
+    /**
+     * 指向: 穿過這次事件的受害者 (預設) 或身體的面向。
+     * GH#1197 威寇茲 W：`cast` = 起點與方向**凍結在施放那一刻**（放在 `delayed` 裡 = 排程那一刻），
+     * 施法者之後轉身或走開，這條線仍在原處。
+     */
+    aim: z
+      .enum(["facing", "target", "cast"])
+      .optional()
+      .describe("線朝哪裡：target（預設，穿過這次事件的受害者）／facing（身體當下面向）／cast（起點與方向凍結在施放那一刻；放在延遲效果裡，施法者轉身或走開後這條線仍在原處）"),
     /** 從施法者自己身上出發 (預設 true =「面前」) 還是從受害者身上延伸 */
     fromCaster: z.boolean().optional(),
     maxTargets: z.number().int().min(1).max(SPREAD_MAX_TARGETS).optional(),

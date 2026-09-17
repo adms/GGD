@@ -1,0 +1,99 @@
+{
+  "schema": "ggd.jumpforce-dai-current-policy-audit@1",
+  "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+  "candidateId": "jump-force-native-dai-chr0430-review-v4",
+  "nativeCharacterId": "chr0430",
+  "heroIds": [
+    "godie-nbbc",
+    "godie-n01c"
+  ],
+  "glb": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/jump-force-steam-dai-v1/dai-chr0430-review-v4.glb",
+    "bytes": 76796608,
+    "sha256": "53b3b19eb04e2eb0e6d1827122f5b41a403c2ced188bd3042371c9dec80cd810"
+  },
+  "metrics": {
+    "triangles": 59768,
+    "drawCalls": 20,
+    "maxTextureEdge": 2048,
+    "channelsPerFrame": 0,
+    "skins": 1,
+    "joints": 159,
+    "clips": 0,
+    "embeddedImages": 24
+  },
+  "currentChampionPolicy": {
+    "warningValues": {
+      "triangles": 16000,
+      "drawCalls": 3,
+      "maxTextureEdge": 256,
+      "animChannels": 300
+    },
+    "limitValues": {
+      "triangles": 28000,
+      "drawCalls": 6,
+      "maxTextureEdge": 256,
+      "animChannels": 500
+    },
+    "verdict": "over",
+    "blockingAxes": [
+      "triangles",
+      "drawCalls",
+      "maxTextureEdge"
+    ],
+    "pass": false
+  },
+  "formalHeroAdoption": {
+    "sourceTriangleTriggerAbove": 10000,
+    "decimatedCandidateTargetMax": 8000,
+    "requiresDecimatedCandidate": true,
+    "eligible": false
+  },
+  "states": {
+    "structuralGlbReadable": true,
+    "genericPbrVisualReviewPreviouslyAccepted": true,
+    "currentHardPolicyPassed": false,
+    "nativeGameplayAnimationsPresent": false,
+    "ggdIntakeAccepted": false,
+    "backendRegistered": false,
+    "runtimeSelectable": false,
+    "productionDeployed": false
+  },
+  "limitations": [
+    "Current-policy measurement does not prove source-game shader parity or gameplay readiness.",
+    "No animation clip is present; the candidate cannot satisfy the six-state hero contract.",
+    "The local review GLB remains a conversion candidate and is not a Git runtime asset."
+  ],
+  "generatedFrom": [
+    {
+      "gitPath": "materials/hero-model-library/source-inventories/jump-force-steam-dai-v1/conversion-receipt.json",
+      "bytes": 19414,
+      "sha256": "f43d519c7f9bf08abf5382e4fb60145899ff72ea95bd67a0400b5d1954e90694"
+    },
+    {
+      "gitPath": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
+      "bytes": 292,
+      "sha256": "e82083fc605b125a3479f66ea2f1cf451dbcd5b2d2bcf22cf6be443613d623cf"
+    },
+    {
+      "gitPath": "packages/shared/src/content/modelUpload/budget.ts",
+      "bytes": 6864,
+      "sha256": "34b02f3726bb7d315508239f56ec8d8c4c2675f7160152ccb81e2dfedf5e3da4"
+    },
+    {
+      "gitPath": "tools/model-budget/glb.ts",
+      "bytes": 12311,
+      "sha256": "aea1f9d648bc5306e9a01c7f71accaf12bac45e41e4086e1a49817c71f1316ce"
+    },
+    {
+      "gitPath": "tools/model-budget/limits.ts",
+      "bytes": 21656,
+      "sha256": "09fb1ac4341108c2ce593838d9305febf06c3b679859d13efe7fa58c74d3e1b1"
+    },
+    {
+      "gitPath": "tools/model-budget/roles.ts",
+      "bytes": 5929,
+      "sha256": "0a064e7381df15d8df50a99afaecc67b3c59f3f65efefbdc30a1a7676edf6258"
+    }
+  ]
+}

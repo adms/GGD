@@ -299,6 +299,17 @@ def template_damage_tier(doc):
 #: TS 那兩份在同一個 package，Python 這份跨語言，沒有共用的辦法）。
 CUE_KINDS = ("screenFlash", "screenShake", "floatingText")
 
+#: ⭐⭐ GH#1281（2026-09-17）—— **實體幾何三兄弟**：它們的 `radius` 是一根柱子／一顆道具／
+#: 一圈觸發線的**大小**，⛔ 不是「誰被打到」的命中圈 ⇒ ⛔ 不吃 AoE 五級距。
+#:
+#: ⚠️ 量到的代價（這一條就是被它打出來的）：鄂爾 Q 的 `spawnObstacle.radius = 1`（一根柱）
+#: 被吸到 AoE 最小級距 **極小 = 3** ⇒ 柱子粗三倍、擋停的位置整個前移 ⇒ E 撞柱之後的震波
+#: 打不到原本站在範圍內的人（`communityLolBatch2Mechanics` 鄂爾 E 那一條紅）。
+#: ⭐ 三份 Zod schema 上**本來就沒有** `radiusTier` 這一格 —— 那不是漏，是同一個判斷：
+#: 級距表量的是平衡（決鬥區半徑 24 的 1/8…1/2），實體大小量的是碰撞。
+#: ⛔ 修法不是替它們補上 `radiusTier`（2026-09-16 我做過那件事，而它就是這一條紅的來源）。
+STRUCTURE_KINDS = ("spawnObstacle", "spawnInteractable", "spawnThresholds")
+
 
 def _mentions(node, names):
     """⚠️ **鍵名與 `kind` 值兩種都要看** —— 理由逐字同 `cooldownTiers.ts::mentions`：
@@ -690,7 +701,7 @@ def _assign_geometry_tiers(doc, grids, log):
         # ⭐ GH#838 —— cue 的 `radius` 是觀眾半徑：它**沒有** `radiusTier` 這一格
         #    （`zScreenShake` 是 `.strict()` ⇒ 蓋下去內容當場驗不過），而且級距表
         #    的單位是平衡值、cue 的是 JASS 逐字換算（512wc3u=9.39）。
-        if node.get("kind") in CUE_KINDS:
+        if node.get("kind") in CUE_KINDS or node.get("kind") in STRUCTURE_KINDS:
             return
         r = node.get("radius")
         if node.get("radiusTier") is None and isinstance(r, (int, float)) and r > 0:
@@ -871,10 +882,24 @@ def tierize(doc, grids=None, log=None):
             #    「傷害跟耗魔是一起變動的」被弄反的樣子。
             # ⚠️ 而且它有一道硬閘在守：`abilityAffordableAtUnlock.test.ts`
             #    （「首階 MP 超過持有者當時的魔力池 = 那顆鈕永遠按不下去」）。
+            #
+            # ⭐⭐ GH#1260（2026-09-15）—— **級別贏**：文件已經寫了 `manaCostTier`，
+            #    ⇒ 值從表查（級別 → 值），⛔ 不再從原始值重新歸級（值 → 級別）。
+            #    只有**還沒有級別**的文件才走「最近一格」。
+            #
+            # ⛔ 在此之前這裡**每次**都從 `manaCost[0]` 重新歸級，而原始值會跟著表一起被改寫 ⇒
+            #    表連續動兩次，中間值就決定了級別：`ac0aa0658` 把「小」寫成 112（那張表後來撤掉），
+            #    `1bb6c3fea` 換成 75/150 時 112 離 75 差 37、離 150 差 38 ⇒ **293 支掉一格**
+            #    （218 支 小→極小、60 支 大→中、15 支 中→小），⛔ 沒有人決定過、沒有東西紅。
+            #    owner 核准的是**表**（「all ok」，transcript 9fdde660 2026-09-11T18:40:35Z），
+            #    ⛔ 不是那 293 支減半。
+            # ⚠️ 產生器擁有的 90 支不受影響：`common.py::SPEC_OWNED` 收了 `manaCostTier`，
+            #    舊級別不會被 A-6 救回來 ⇒ 它們照舊從**規格的** mp 歸級（同 GH#433 的 rangeTier）。
             grid = grids.mana_row()
-            mi = nearest_index(float(mp[0]), grid)
+            authored = doc.get("manaCostTier")
+            mi = TIER_NAMES.index(authored) if authored in TIER_NAMES else nearest_index(float(mp[0]), grid)
             v = grid[mi]
-            if doc.get("manaCostTier") != TIER_NAMES[mi] or mp != [v] * len(mp):
+            if authored != TIER_NAMES[mi] or mp != [v] * len(mp):
                 log.append(("mana", list(mp), v, f"收進耗魔級距 {TIER_NAMES[mi]}（首階參照）"))
             doc["manaCostTier"] = TIER_NAMES[mi]
             doc["manaCost"] = [v] * len(mp)

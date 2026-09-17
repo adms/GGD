@@ -12,11 +12,11 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    448.0
+    600.0
   ],
   "manaCostTier": "大",
   "range": 4.5,
-  "castTimeSec": 1.433,
+  "castTimeSec": 1,
   "effects": [
     {
       "kind": "leap",
@@ -53,5 +53,6 @@
     }
   ],
   "icon": "assets/icons/abilities/community-review-34-20260907.ex.webp",
-  "rangeTier": "小"
+  "rangeTier": "小",
+  "castTimeTier": "極大"
 }

@@ -1,0 +1,691 @@
+{
+  "schema": "ggd-mba-unused-model-pilot@1",
+  "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+  "generatedOn": "2026-09-14",
+  "status": "four-independent-components-policy-and-static-visual-validated; motion-review-hero-design-registration-and-deployment-pending",
+  "summary": {
+    "sourcesReviewed": 5,
+    "componentsAccepted": 4,
+    "componentsRejected": 1,
+    "newDownloads": 0,
+    "sourceBytesPreserved": true,
+    "distinctSourceSha256": 4,
+    "distinctOutputSha256": 4,
+    "nativeClipsRetained": 24,
+    "runtimeSelectable": 0,
+    "defaultsChanged": 0,
+    "heroDefinitionsCreated": 0,
+    "vfxConverted": 0,
+    "audioConverted": 0
+  },
+  "policy": {
+    "decimationTriggerTriangles": 10000,
+    "targetTriangles": 8000,
+    "runtimeWarnLimit": {
+      "triangles": 16000,
+      "drawPrimitives": 3,
+      "textureEdge": 256,
+      "channelsPerClip": 300
+    },
+    "source": "packages/shared/src/content/modelUpload/adoptionPolicy.json plus current model budget modules"
+  },
+  "candidates": [
+    {
+      "id": "mba-unused-ruru-native-six-motion-v1",
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "sourceCharacterId": "mba:Chara01_O",
+      "nameZh": "露露·傑拉德",
+      "originalName": "ルル・ジェラード",
+      "workZh": "原創（魔法少女武鬥祭）",
+      "sourceVersion": "Complete Form 1.60+",
+      "sourcePlatform": "Windows PC",
+      "selectionClass": "mba",
+      "resourceRole": "independent-mba-character-body-native-motion-reserve",
+      "sourceClass": "original-game-direct-extraction",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara01_O/Ruru.glb",
+        "workspaceRelativePath": "outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara01_O/Ruru.glb",
+        "bytes": 6179096,
+        "sha256": "c3aa6e901a46f8b2c974520790549747681e9f6cce7a9194492cc7b49f6df5e7"
+      },
+      "gitPath": "content/assets/models/community/7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed.glb",
+      "bytes": 618276,
+      "sha256": "7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed",
+      "componentReady": true,
+      "converted": true,
+      "fullHeroModel": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "automaticEligible": false,
+      "defaultEligible": false,
+      "readiness": "policy-and-static-visual-validated-component; native-motion-semantics-and-playback-pending",
+      "metrics": {
+        "triangles": 2787,
+        "drawPrimitives": 1,
+        "textures": 1,
+        "maxTextureEdge": 256,
+        "skins": 1,
+        "skinnedPrimitives": 1,
+        "nativeClips": 6,
+        "maxChannelsPerClip": 87
+      },
+      "nativeMotion": {
+        "clipMap": {
+          "idle": "wait",
+          "run": "F-Move",
+          "attack": "attack_01",
+          "cast": "sp01_01",
+          "hurt": "Damage-1",
+          "death": "D-Down"
+        },
+        "origin": "native-same-character-mba",
+        "semanticApproval": "pending",
+        "continuousPlaybackReview": "pending",
+        "death": "D-Down is a native knockdown proposed only as a death surrogate"
+      },
+      "validation": {
+        "budgetErrors": [],
+        "budgetWarnings": [],
+        "khronosErrors": 0,
+        "khronosWarnings": 20,
+        "khronosWarningCodes": [
+          "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "NODE_SKINNED_MESH_LOCAL_TRANSFORMS",
+          "NODE_SKINNED_MESH_NON_ROOT"
+        ],
+        "allFinite": true,
+        "deterministicRebuild": true
+      },
+      "scaleAndOrientation": {
+        "sourceWorldSkinnedBounds": {
+          "min": [
+            -1.9798624333718777,
+            0.5678573693015778,
+            -1.7234911221786007
+          ],
+          "max": [
+            2.3952331899886303,
+            6.037999815315004,
+            2.8995287373591765
+          ],
+          "extent": [
+            4.375095623360508,
+            5.470142446013426,
+            4.623019859537777
+          ]
+        },
+        "frontBackIsometricRendered": true,
+        "runtimeHeightNormalization": "ChampionView target-height normalization applies after future hero binding; no baked hero scale claimed"
+      },
+      "staticVisualReview": {
+        "accepted": true,
+        "reviewedOn": "2026-09-14",
+        "scope": "source-to-final-front plus final front/isometric/back; shader parity and motion gameplay excluded",
+        "screenshots": {
+          "front": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/front.png",
+            "bytes": 266450,
+            "sha256": "53e6cb600ea102de6beaac914f103b11fad29769c1810e1268746494f41fe871"
+          },
+          "isometric": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/isometric.png",
+            "bytes": 266206,
+            "sha256": "afd654a2c25ede2141bc3422f3c7c3da72193e484f2b2d1b4a0eed4a8cdea27c"
+          },
+          "back": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/back.png",
+            "bytes": 264305,
+            "sha256": "312e4d1ee179abffcfac091bd72bdce725166ec7e83489f7f3036fbecc6fb63d"
+          }
+        },
+        "sourceFront": {
+          "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/source-front.png",
+          "bytes": 296775,
+          "sha256": "0f1096fe3945c722b617b0d6297a0b6a0e18636edb65f4d930257e55a60bc958"
+        }
+      },
+      "conversionEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/conversion.json",
+        "bytes": 12022,
+        "sha256": "41d1ddefec467b6a2fc06dd6da82beddcc8bfec6e19f8fd11d6915729905ef98"
+      },
+      "preparationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/preparation.json",
+        "bytes": 5519,
+        "sha256": "0cb2a0f6f89f833b94394fd9c52a6d4d7eca5ec3b6a1a3ceef44e6c07341bea1"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/webgl-proof.json",
+        "bytes": 2408,
+        "sha256": "d7dbe142224faec6e1178554b8da124d32fa4b6b06bf05e10472c476e420c5a2"
+      },
+      "webglRunEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/webgl-run.json",
+        "bytes": 340,
+        "sha256": "c2fbb3496fb17e9255ce9417de646a11d6718a8e07ec8c8662b83adf69d6cb40"
+      },
+      "sourceSnapshot": {
+        "s3Prefix": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/snapshots/20260908T075704221576Z/magical-battle-arena/",
+        "readbackVerified": true,
+        "filesIndexSha256": "647e0990e4fc911b05cac5877abacb5606731540d0c17d1f4b58d2acc843f876",
+        "automaticConsumption": false
+      },
+      "missing": [
+        "GGD hero definition and skill design",
+        "motion playback and semantic approval",
+        "D-Down death-surrogate approval",
+        "source-engine shader parity",
+        "backend dropdown registration and selection test",
+        "Git commit S3 backup and Main deployment verification"
+      ]
+    },
+    {
+      "id": "mba-unused-kirara-native-six-motion-v1",
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "sourceCharacterId": "mba:Chara05",
+      "nameZh": "星空綺羅羅",
+      "originalName": "星空きらら",
+      "workZh": "原創（魔法少女武鬥祭）",
+      "sourceVersion": "Complete Form 1.60+",
+      "sourcePlatform": "Windows PC",
+      "selectionClass": "mba",
+      "resourceRole": "independent-mba-character-body-native-motion-reserve",
+      "sourceClass": "original-game-direct-extraction",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara05/Kirara.glb",
+        "workspaceRelativePath": "outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara05/Kirara.glb",
+        "bytes": 8961832,
+        "sha256": "445b4cee62703096c16b0593f0064028706fb256c05a08ee37fffcb45bcdc0d0"
+      },
+      "gitPath": "content/assets/models/community/86b49786366d05057bdb714c419aa209bb04c55acd55974d01945debe0cabbd6.glb",
+      "bytes": 911004,
+      "sha256": "86b49786366d05057bdb714c419aa209bb04c55acd55974d01945debe0cabbd6",
+      "componentReady": true,
+      "converted": true,
+      "fullHeroModel": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "automaticEligible": false,
+      "defaultEligible": false,
+      "readiness": "policy-and-static-visual-validated-component; native-motion-semantics-and-playback-pending",
+      "metrics": {
+        "triangles": 4192,
+        "drawPrimitives": 1,
+        "textures": 1,
+        "maxTextureEdge": 256,
+        "skins": 1,
+        "skinnedPrimitives": 1,
+        "nativeClips": 6,
+        "maxChannelsPerClip": 117
+      },
+      "nativeMotion": {
+        "clipMap": {
+          "idle": "wait",
+          "run": "F-Move",
+          "attack": "attack_01",
+          "cast": "sp01_01",
+          "hurt": "Damage-1",
+          "death": "D-Down"
+        },
+        "origin": "native-same-character-mba",
+        "semanticApproval": "pending",
+        "continuousPlaybackReview": "pending",
+        "death": "D-Down is a native knockdown proposed only as a death surrogate"
+      },
+      "validation": {
+        "budgetErrors": [],
+        "budgetWarnings": [],
+        "khronosErrors": 0,
+        "khronosWarnings": 19,
+        "khronosWarningCodes": [
+          "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "NODE_SKINNED_MESH_NON_ROOT"
+        ],
+        "allFinite": true,
+        "deterministicRebuild": true
+      },
+      "scaleAndOrientation": {
+        "sourceWorldSkinnedBounds": {
+          "min": [
+            -2.5080187217595977,
+            -0.29933588950836487,
+            -1.712953402295014
+          ],
+          "max": [
+            2.5042618171015647,
+            7.865000269785526,
+            3.1218281257424962
+          ],
+          "extent": [
+            5.012280538861162,
+            8.16433615929389,
+            4.83478152803751
+          ]
+        },
+        "frontBackIsometricRendered": true,
+        "runtimeHeightNormalization": "ChampionView target-height normalization applies after future hero binding; no baked hero scale claimed"
+      },
+      "staticVisualReview": {
+        "accepted": true,
+        "reviewedOn": "2026-09-14",
+        "scope": "source-to-final-front plus final front/isometric/back; shader parity and motion gameplay excluded",
+        "screenshots": {
+          "front": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/front.png",
+            "bytes": 232652,
+            "sha256": "3d89ac47feb22fd60c5f2097783ebcd200a5f1768da2092adb2ba6421bee60c8"
+          },
+          "isometric": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/isometric.png",
+            "bytes": 249987,
+            "sha256": "2550cd2f8c08f3e0595c224f140cdfc1def44540806e92735d10ddc7efb74190"
+          },
+          "back": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/back.png",
+            "bytes": 214845,
+            "sha256": "30938dabacb61b968a5e4b0c0dfbf8a9846638a3927ec69baf375c47014f075d"
+          }
+        },
+        "sourceFront": {
+          "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/source-front.png",
+          "bytes": 243000,
+          "sha256": "823d32d7b377f741813357e7e50a80622ca44776f6c7e2eefca37d2602683080"
+        }
+      },
+      "conversionEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/conversion.json",
+        "bytes": 11820,
+        "sha256": "d9b11fa4e114acd78df6dc466bb83ae309067e4a696f568f239d3ed820350155"
+      },
+      "preparationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/preparation.json",
+        "bytes": 5641,
+        "sha256": "1986865acf8b63fb69e6569082dbb07d00788a4b97797cd88f5f075b79761abf"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/webgl-proof.json",
+        "bytes": 2408,
+        "sha256": "27d571de97e04c6924201af0ff8ccec41593bfd3a0c4300c28cbe6078189f0e1"
+      },
+      "webglRunEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/webgl-run.json",
+        "bytes": 342,
+        "sha256": "582f51b801bf38a7a8d8846b8f554d6ce71a2726b7b9adb92e824d8b1d71ad81"
+      },
+      "sourceSnapshot": {
+        "s3Prefix": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/snapshots/20260908T075704221576Z/magical-battle-arena/",
+        "readbackVerified": true,
+        "filesIndexSha256": "647e0990e4fc911b05cac5877abacb5606731540d0c17d1f4b58d2acc843f876",
+        "automaticConsumption": false
+      },
+      "missing": [
+        "GGD hero definition and skill design",
+        "motion playback and semantic approval",
+        "D-Down death-surrogate approval",
+        "source-engine shader parity",
+        "backend dropdown registration and selection test",
+        "Git commit S3 backup and Main deployment verification"
+      ]
+    },
+    {
+      "id": "mba-unused-sarara-native-six-motion-v1",
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "sourceCharacterId": "mba:Chara06",
+      "nameZh": "星空紗羅羅",
+      "originalName": "星空さらら",
+      "workZh": "原創（魔法少女武鬥祭）",
+      "sourceVersion": "Complete Form 1.60+",
+      "sourcePlatform": "Windows PC",
+      "selectionClass": "mba",
+      "resourceRole": "independent-mba-character-body-native-motion-reserve",
+      "sourceClass": "original-game-direct-extraction",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara06/Sarara.glb",
+        "workspaceRelativePath": "outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara06/Sarara.glb",
+        "bytes": 6190828,
+        "sha256": "2dbb0fac2373a64a84ebdc36d740fc08808a81a9aa075aa03d6625cd3dd2f524"
+      },
+      "gitPath": "content/assets/models/community/b21fef58c3cc97ac9ae7bb75d9e5e96dbd3a5da5507ba285cc9f5a81124feab1.glb",
+      "bytes": 750360,
+      "sha256": "b21fef58c3cc97ac9ae7bb75d9e5e96dbd3a5da5507ba285cc9f5a81124feab1",
+      "componentReady": true,
+      "converted": true,
+      "fullHeroModel": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "automaticEligible": false,
+      "defaultEligible": false,
+      "readiness": "policy-and-static-visual-validated-component; native-motion-semantics-and-playback-pending",
+      "metrics": {
+        "triangles": 3365,
+        "drawPrimitives": 1,
+        "textures": 1,
+        "maxTextureEdge": 256,
+        "skins": 1,
+        "skinnedPrimitives": 1,
+        "nativeClips": 6,
+        "maxChannelsPerClip": 99
+      },
+      "nativeMotion": {
+        "clipMap": {
+          "idle": "wait",
+          "run": "F-Move",
+          "attack": "attack_01",
+          "cast": "sp01_01",
+          "hurt": "Damage-1",
+          "death": "D-Down"
+        },
+        "origin": "native-same-character-mba",
+        "semanticApproval": "pending",
+        "continuousPlaybackReview": "pending",
+        "death": "D-Down is a native knockdown proposed only as a death surrogate"
+      },
+      "validation": {
+        "budgetErrors": [],
+        "budgetWarnings": [],
+        "khronosErrors": 0,
+        "khronosWarnings": 19,
+        "khronosWarningCodes": [
+          "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "NODE_SKINNED_MESH_NON_ROOT"
+        ],
+        "allFinite": true,
+        "deterministicRebuild": true
+      },
+      "scaleAndOrientation": {
+        "sourceWorldSkinnedBounds": {
+          "min": [
+            -2.5695190812575674,
+            0.2235339913298784,
+            -1.6031538248532087
+          ],
+          "max": [
+            2.5850006488710733,
+            7.762753411572476,
+            2.0192808452141406
+          ],
+          "extent": [
+            5.154519730128641,
+            7.539219420242597,
+            3.6224346700673493
+          ]
+        },
+        "frontBackIsometricRendered": true,
+        "runtimeHeightNormalization": "ChampionView target-height normalization applies after future hero binding; no baked hero scale claimed"
+      },
+      "staticVisualReview": {
+        "accepted": true,
+        "reviewedOn": "2026-09-14",
+        "scope": "source-to-final-front plus final front/isometric/back; shader parity and motion gameplay excluded",
+        "screenshots": {
+          "front": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/sarara/front.png",
+            "bytes": 252037,
+            "sha256": "93a85ae7644971edee8e6f5442d9d8e487c36cdbfb518fd4a5da0f64ee52ae9e"
+          },
+          "isometric": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/sarara/isometric.png",
+            "bytes": 217691,
+            "sha256": "0ef705b80d80830a71ebd19baea0545d9f4bcd69a49d7fd627cabe12f0a5311c"
+          },
+          "back": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/sarara/back.png",
+            "bytes": 245077,
+            "sha256": "ffb9c4c555d3e32ae0012f7226cdc62f1ee3cb5127be69a6efd306daa1c386bd"
+          }
+        },
+        "sourceFront": {
+          "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/sarara/source-front.png",
+          "bytes": 276330,
+          "sha256": "3c5014cc0a1833401896bb190a78a3c93b58440baea8e2c4a1a60d49e3575fcf"
+        }
+      },
+      "conversionEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/sarara/conversion.json",
+        "bytes": 11566,
+        "sha256": "aa273f6665defe939825d891c40d158093a3b0ada11072c9039d87e07a545a49"
+      },
+      "preparationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/sarara/preparation.json",
+        "bytes": 5276,
+        "sha256": "9ace40867e03733b61ef1307172a4c7f3fc4fff2aedfe73e6f21b5f4ac09f2fc"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/sarara/webgl-proof.json",
+        "bytes": 2409,
+        "sha256": "4894ddc01c3d3d74beec521affac39d82e66f4ef52b47db781a68f1b6ce551fb"
+      },
+      "webglRunEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/sarara/webgl-run.json",
+        "bytes": 342,
+        "sha256": "d30588264fc24567ba65a60d690887890627b84e1bfd0b676c82851464117314"
+      },
+      "sourceSnapshot": {
+        "s3Prefix": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/snapshots/20260908T075704221576Z/magical-battle-arena/",
+        "readbackVerified": true,
+        "filesIndexSha256": "647e0990e4fc911b05cac5877abacb5606731540d0c17d1f4b58d2acc843f876",
+        "automaticConsumption": false
+      },
+      "missing": [
+        "GGD hero definition and skill design",
+        "motion playback and semantic approval",
+        "D-Down death-surrogate approval",
+        "source-engine shader parity",
+        "backend dropdown registration and selection test",
+        "Git commit S3 backup and Main deployment verification"
+      ]
+    },
+    {
+      "id": "mba-unused-vita-native-six-motion-v1",
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "sourceCharacterId": "mba:Chara11",
+      "nameZh": "薇塔",
+      "originalName": "ヴィータ",
+      "workZh": "魔法少女奈葉（魔法少女武鬥祭）",
+      "sourceVersion": "Complete Form 1.60+",
+      "sourcePlatform": "Windows PC",
+      "selectionClass": "mba",
+      "resourceRole": "independent-mba-character-body-native-motion-reserve",
+      "sourceClass": "original-game-direct-extraction",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara11/Vita.glb",
+        "workspaceRelativePath": "outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara11/Vita.glb",
+        "bytes": 6108960,
+        "sha256": "02814a9992181579ece78b5b993fe87edbc8dc1093fd3f10af4f259bd36c57de"
+      },
+      "gitPath": "content/assets/models/community/982a9f483f3bf953fe622dc31393079988577903bcd0eef57cc8b19937ac7cdf.glb",
+      "bytes": 707692,
+      "sha256": "982a9f483f3bf953fe622dc31393079988577903bcd0eef57cc8b19937ac7cdf",
+      "componentReady": true,
+      "converted": true,
+      "fullHeroModel": false,
+      "heroIds": [],
+      "relatedHeroIds": [],
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "automaticEligible": false,
+      "defaultEligible": false,
+      "readiness": "policy-and-static-visual-validated-component; native-motion-semantics-and-playback-pending",
+      "metrics": {
+        "triangles": 4412,
+        "drawPrimitives": 1,
+        "textures": 1,
+        "maxTextureEdge": 256,
+        "skins": 1,
+        "skinnedPrimitives": 1,
+        "nativeClips": 6,
+        "maxChannelsPerClip": 81
+      },
+      "nativeMotion": {
+        "clipMap": {
+          "idle": "wait",
+          "run": "F-Move",
+          "attack": "attack_01",
+          "cast": "sp01_01",
+          "hurt": "Damage-1",
+          "death": "D-Down"
+        },
+        "origin": "native-same-character-mba",
+        "semanticApproval": "pending",
+        "continuousPlaybackReview": "pending",
+        "death": "D-Down is a native knockdown proposed only as a death surrogate"
+      },
+      "validation": {
+        "budgetErrors": [],
+        "budgetWarnings": [],
+        "khronosErrors": 0,
+        "khronosWarnings": 19,
+        "khronosWarningCodes": [
+          "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "NODE_SKINNED_MESH_NON_ROOT"
+        ],
+        "allFinite": true,
+        "deterministicRebuild": true
+      },
+      "scaleAndOrientation": {
+        "sourceWorldSkinnedBounds": {
+          "min": [
+            -2.1044218376937778,
+            -0.3830833015305295,
+            -1.9086580560901467
+          ],
+          "max": [
+            2.1044214562240455,
+            6.645533851467576,
+            2.2994892463011922
+          ],
+          "extent": [
+            4.208843293917823,
+            7.028617152998105,
+            4.208147302391339
+          ]
+        },
+        "frontBackIsometricRendered": true,
+        "runtimeHeightNormalization": "ChampionView target-height normalization applies after future hero binding; no baked hero scale claimed"
+      },
+      "staticVisualReview": {
+        "accepted": true,
+        "reviewedOn": "2026-09-14",
+        "scope": "source-to-final-front plus final front/isometric/back; shader parity and motion gameplay excluded",
+        "screenshots": {
+          "front": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/vita/front.png",
+            "bytes": 232881,
+            "sha256": "edfa5070380205f32f12ce3e51d6ba004c2008f954459a0a09b346af792aec91"
+          },
+          "isometric": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/vita/isometric.png",
+            "bytes": 249701,
+            "sha256": "f1977716d5abc8b19b861807a258844ad69282662d80221db93ff47f91a9e04d"
+          },
+          "back": {
+            "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/vita/back.png",
+            "bytes": 224068,
+            "sha256": "780cc03ac6c615976c9f7a66ddd9bcdd5637a777aa73b04398e35d9fb12f7b99"
+          }
+        },
+        "sourceFront": {
+          "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/vita/source-front.png",
+          "bytes": 269606,
+          "sha256": "06051e3adf3457b78ecb7a6090ff7139ae90e61329a7cc2cc2cf36b4d49eb430"
+        }
+      },
+      "conversionEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/vita/conversion.json",
+        "bytes": 12085,
+        "sha256": "79b54a58a8d7fb4c3d6d169dac55568992735d7c106fe27a80811bf4746791a0"
+      },
+      "preparationEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/vita/preparation.json",
+        "bytes": 5912,
+        "sha256": "9d1a0c9e8aea9619d0cffdd85fb5276062efdcfe9b5f019fbb5b87a27d742d7f"
+      },
+      "webglProofEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/vita/webgl-proof.json",
+        "bytes": 2410,
+        "sha256": "e0cd6bfb4cecfaa1fc6ea58c45680edf17e7f90bb244cd5021e8639952e59850"
+      },
+      "webglRunEvidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/vita/webgl-run.json",
+        "bytes": 340,
+        "sha256": "485872f4962a1b8a128b36a131a8099254c6dfb9c0540284ec3d11211e597c25"
+      },
+      "sourceSnapshot": {
+        "s3Prefix": "s3://ggd-390630837668-ap-east-2-an/legacy/ggd-asset-library/snapshots/20260908T075704221576Z/magical-battle-arena/",
+        "readbackVerified": true,
+        "filesIndexSha256": "647e0990e4fc911b05cac5877abacb5606731540d0c17d1f4b58d2acc843f876",
+        "automaticConsumption": false
+      },
+      "missing": [
+        "GGD hero definition and skill design",
+        "motion playback and semantic approval",
+        "D-Down death-surrogate approval",
+        "source-engine shader parity",
+        "backend dropdown registration and selection test",
+        "Git commit S3 backup and Main deployment verification"
+      ]
+    }
+  ],
+  "rejected": [
+    {
+      "schema": "ggd-mba-unused-model-rejection@1",
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "sourceCharacterId": "mba:Chara10",
+      "nameZh": "八神疾風",
+      "originalName": "八神はやて",
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara10/Hayate.glb",
+        "bytes": 4688112,
+        "sha256": "3ccd6bf1a537c45c45433945a2e92aac4f77336869c8a6a9496e98e85db21abc"
+      },
+      "status": "rejected-before-standardization",
+      "reason": "source WebGL views show severe opaque black rectangular strips across the character; material/UV repair requires a dedicated source fix",
+      "screenshots": {
+        "front": {
+          "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/hayate-rejected/front.png",
+          "bytes": 197265,
+          "sha256": "5782375917b7011323fd78aa3cd3c4b28da4ef8e5c25d61c3b0c3bfbadf28801"
+        },
+        "isometric": {
+          "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/hayate-rejected/isometric.png",
+          "bytes": 204196,
+          "sha256": "ace4b223d4458107508e2ca84ef826eff7185dc283c4e2dad776351ca1289617"
+        },
+        "back": {
+          "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/hayate-rejected/back.png",
+          "bytes": 138109,
+          "sha256": "7efda0474a251370172c8269bbeba8346a46309063af8b9fb8cbfac15fae7e2e"
+        }
+      },
+      "proof": {
+        "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/hayate-rejected/webgl-proof.json",
+        "bytes": 7661,
+        "sha256": "b70e47d7b2db9edf0641ec97d5c1fa473bc4e907ab3e3663048cab6ec5a59886"
+      },
+      "runtimeSelectable": false,
+      "defaultEligible": false,
+      "sourcePreserved": true,
+      "evidence": {
+        "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/hayate-rejected/rejection.json",
+        "bytes": 1815,
+        "sha256": "87f33987de71fa7724f952173227611c5abd5784b831a93f2146fe5f2b9971ca"
+      }
+    }
+  ],
+  "contactSheet": {
+    "gitPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/source-final-contact-sheet.png",
+    "bytes": 658192,
+    "sha256": "ce918dfc7709526b78ef48c4c6c017597118029e1e02e7c7ec01ef0560050872"
+  },
+  "boundaries": [
+    "Khronos warning counts are retained, not hidden; all four have zero Khronos errors.",
+    "Static visual acceptance does not approve motion meaning, source shader parity, hero binding, dropdown selection or deployment.",
+    "No decimation, recolor, proxy mapping, default change or extension of the eleven authorized derivatives occurred."
+  ]
+}

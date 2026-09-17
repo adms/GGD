@@ -20,6 +20,7 @@ import { isInnateSlot } from "../abilities/innateActive";
 import { buyItem, sellItem, undoShopAction } from "../economy/shop";
 import { shopAccess } from "../economy/shopAccess";
 import { dropCoinCommand } from "../coins";
+import { acceptInteractable } from "../interactables";
 
 export function commandSystem(world: SimWorld, intents: ReadonlyMap<SeatId, IntentFrame>): void {
   tickCooldowns(world);
@@ -112,12 +113,29 @@ export function commandSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Inte
           dropCoinCommand(world, entity, seatId);
           break;
         case "pickOffer":
-          // offers are host-side state; surface the pick as an event
-          world.emit("pickOffer", { entity, seatId, offerId: cmd.offerId });
+          // offers are host-side state; surface the pick as an event.
+          // `swapSlot` (GH#1110 B) rides along ONLY when present, so a plain pick's
+          // payload stays byte-identical to every recorded replay.
+          world.emit(
+            "pickOffer",
+            cmd.swapSlot === undefined
+              ? { entity, seatId, offerId: cmd.offerId }
+              : { entity, seatId, offerId: cmd.offerId, swapSlot: cmd.swapSlot },
+          );
           break;
         case "ready":
           world.emit("ready", { entity, seatId });
           break;
+        case "interact": {
+          // 【互動物】（GH#1189 瑟雷西 W 燈籠）—— 隊友**自己**點燈。每一個拒絕都回給按的人（⛔ 不靜默）。
+          // ⚠️ 控場（暈／定身／施法鎖／擊倒／被背著 ⇒ `controlled`）也在 `checkInteractable` 裡驗，⛔ 不在這裡另寫一份：
+          //   bot 規則（`Tier0Brain`）問的是同一支，兩個呼叫端才不會一邊擋一邊放。
+          const result = acceptInteractable(world, entity, cmd.objectId);
+          if (result !== "ok") {
+            world.emit("interactRejected", { entity, seatId, objectId: cmd.objectId, reason: result });
+          }
+          break;
+        }
         case "recall":
         case "useItem":
           // deferred features — accepted but inert in the skeleton

@@ -1,0 +1,14 @@
+{
+  "id": "lol-sett.phone",
+  "schema": "status-effect@1",
+  "name": "媽媽來電",
+  "description": "賽特「媽媽來電」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-sett.phone",
+    "disarm",
+    "attack-denied",
+    "cc",
+    "debuff"
+  ]
+}

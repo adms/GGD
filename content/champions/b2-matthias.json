@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -32,10 +32,10 @@
       ],
       "id": "b2-matthias.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "退回重寫保護欄",
@@ -46,7 +46,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.067,
+          "castTimeSec": 0.1,
           "castType": "self",
           "effects": [
             {
@@ -79,10 +79,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-matthias.e.webp"
+      "icon": "assets/icons/abilities/b2-matthias.e.webp",
+      "castTimeTier": "小"
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -112,10 +113,10 @@
       ],
       "id": "b2-matthias.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "護甲答案扣二十分",
@@ -127,7 +128,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "targeted",
           "effects": [
             {
@@ -159,10 +160,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-matthias.q.webp"
+      "icon": "assets/icons/abilities/b2-matthias.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 1.033,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -183,9 +185,9 @@
       ],
       "id": "b2-matthias.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "期末考禁止交頭接耳",
@@ -197,7 +199,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.033,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -221,10 +223,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-matthias.r.webp"
+      "icon": "assets/icons/abilities/b2-matthias.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -246,10 +249,10 @@
       ],
       "id": "b2-matthias.w",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -261,7 +264,7 @@
       "template": {
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
         "params": {
-          "castTimeSec": 0.567,
+          "castTimeSec": 0.5,
           "damage": {
             "damageTier": "小"
           },
@@ -276,7 +279,8 @@
           "vfxKey": "fx.prim.arcane.slash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-matthias.w.webp"
+      "icon": "assets/icons/abilities/b2-matthias.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "mage",
@@ -302,8 +306,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 6,
     "range": 1.6
@@ -318,13 +322,13 @@
     "as": 0,
     "healthRegen": 0.08789387755102042,
     "manaRegen": 0,
-    "maxHealth": 35.000204081632646,
-    "maxMana": 0.9581632653061187,
+    "maxHealth": 80,
+    "maxMana": 50,
     "mr": 2.1118367346938776
   },
   "msGrowthTier": "極小",
   "id": "b2-matthias",
-  "modelKey": "version.body.75e3f6c83377e20f63b8d3646cab3cf783c5b5789552744c",
+  "modelKey": "version.body.f91fa769b197ce0120c73d5fa5184710f67af9b05f1b1ecd",
   "name": "馬提亞斯",
   "origin": "法鬥",
   "passiveAbility": "b2-matthias.passive",
@@ -360,7 +364,7 @@
       "modelKey": "version.body.75e3f6c83377e20f63b8d3646cab3cf783c5b5789552744c",
       "label": "ou99 「休闲西装版七夜智贵」（相似造型）",
       "sourceModelKey": "ou99.465884",
-      "modelSha256": "88f75746516d1e9f30d081614acb22359827b44244b04175201428bd2ff7e4c0",
+      "modelSha256": "ec8b48c0029d987ff5c0c8ec1051795a54dd08368048490c968450db6c30c07e",
       "binarySha256": "d0af04a6c264d91bae5f7a2f7bd151928187222f5489d139487373835073f95c",
       "registeredAt": "2026-09-10T11:29:18.317Z",
       "source": {
@@ -370,6 +374,136 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-465884-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.eb4aebd7df2667ce6fb86153e5104ca3c06cf94902932195",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.465884",
+      "modelSha256": "34197c08dd0ede7f05fadd319117f11cdb901415cd2c1c23fdc7aa9f7fe94c76",
+      "binarySha256": "42b6371f2e481f7d6f1a3eb27f53c04bb5ea94f9bdd14375ef1edddbfdf2dd2a",
+      "registeredAt": "2026-09-10T14:45:39.869Z",
+      "source": {
+        "kind": "previous",
+        "character": "馬提亞斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.465884.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.581a61a4958783c37b9069de33efd1e529555bc6a77ff1e3",
+      "label": "休闲西装版七夜智贵（論壇相似模型）",
+      "sourceModelKey": "ou99.465884-standard",
+      "modelSha256": "7addd655877cef0e48d4b11ee81c2dc8bdab86d33115da8d547eea74694f2d39",
+      "binarySha256": "c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06",
+      "registeredAt": "2026-09-10T14:45:39.893Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "休闲西装版七夜智贵",
+        "work": "來源作品待核；論壇標題：休闲西装版七夜智贵",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-465884-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.689f7ba0800ee63c56192ca9cd95163249ad898c3008a5b5",
+      "label": "司波达也",
+      "sourceModelKey": "community.body.d957801eb0beb4f58eb7aa1849f191ea25e3bc3b4dabec35",
+      "modelSha256": "43f59f9de5e171a28e7066c9f3b89370000d66ae676a77424a79c6ace69eaf60",
+      "binarySha256": "ffe8ee7f8f7dd436393a9d5c0e1a810bcb28e65ebd667c9e4ff9cea6423b4e2b",
+      "registeredAt": "2026-09-10T14:45:39.953Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "司波达也",
+        "work": "魔法科高中的劣等生",
+        "library": "300heroes",
+        "reference": "300heroes:6fe63c2b60adef813eea9cf2",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.011519df0a017a8fdeac699189cc2158f6e96662ff27d851",
+      "label": "休闲西装版七夜智贵（論壇相似模型）",
+      "sourceModelKey": "ou99.465884-standard",
+      "modelSha256": "67a1a4bb7269c2e71e833989df02496f4f1ecc96dfd0f3627fa9527e473fca67",
+      "binarySha256": "0b547fe6b46eee9671457b16fd6862dbe8d08be9bce62b0f8cda6e128a736717",
+      "registeredAt": "2026-09-12T23:04:52.301Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "休闲西装版七夜智贵",
+        "work": "來源作品待核；論壇標題：休闲西装版七夜智贵",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-465884-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.5eb9ddbdb654ce21bdf7e33d8a804ab054f153c99bf9a60b",
+      "label": "司波达也",
+      "sourceModelKey": "community.body.d957801eb0beb4f58eb7aa1849f191ea25e3bc3b4dabec35",
+      "modelSha256": "0caa69a4335850445a05b733ae574252904175c1e9ce6e1223f2009283549f4f",
+      "binarySha256": "7966bfb6ab8a40d6bb47d6537a30a88f1a5d403760d0b6e453e41e404172efc3",
+      "registeredAt": "2026-09-12T23:11:58.474Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "司波达也",
+        "work": "魔法科高中的劣等生",
+        "library": "300heroes",
+        "reference": "300heroes:6fe63c2b60adef813eea9cf2",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.f91fa769b197ce0120c73d5fa5184710f67af9b05f1b1ecd",
+      "label": "休闲西装版七夜智贵（論壇相似模型）",
+      "sourceModelKey": "ou99.465884-standard",
+      "modelSha256": "5c9fca6896a981091144e70343e775ede0a7dd00be85a1092bcc7132b15c188d",
+      "binarySha256": "0b547fe6b46eee9671457b16fd6862dbe8d08be9bce62b0f8cda6e128a736717",
+      "registeredAt": "2026-09-13T00:09:02.367Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "休闲西装版七夜智贵",
+        "work": "來源作品待核；論壇標題：休闲西装版七夜智贵",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-465884-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.8969f24e8d72db2e53db22dcdd9622313e6d1dfa75a39a2b",
+      "label": "司波达也",
+      "sourceModelKey": "community.body.d957801eb0beb4f58eb7aa1849f191ea25e3bc3b4dabec35",
+      "modelSha256": "c12c12f2f91428fe9e095567ceaf20801c5f7809aaf03f778d79a4deb91c8b82",
+      "binarySha256": "7966bfb6ab8a40d6bb47d6537a30a88f1a5d403760d0b6e453e41e404172efc3",
+      "registeredAt": "2026-09-13T00:09:02.487Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "司波达也",
+        "work": "魔法科高中的劣等生",
+        "library": "300heroes",
+        "reference": "300heroes:6fe63c2b60adef813eea9cf2",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

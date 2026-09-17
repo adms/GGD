@@ -37,6 +37,7 @@ export const EFFECT_CHILD_CHAINS = [
   "effects", // randomArea · delayed
   "finalEffects", // delayed
   "finisher", // comboStrikes —— 收尾那一發（#541）
+  "onAccept", // spawnInteractable —— 隊友送出 interact 指令那一刻對接受者跑的那一串（GH#1189 瑟雷西 W）
   "onArrive", // blink · spawnModelFx（#551 抵達/壽命到的落點那一串）
   "onDevour", // devour
   "onConsumed", // consumeStatus
@@ -46,6 +47,8 @@ export const EFFECT_CHILD_CHAINS = [
   "onHit", // spawnProjectile
   "onHitTargets", // damageArea · damageLine
   "onLand", // leap
+  "onPathHit", // dash —— 衝刺沿途身體真的掃過的人（GH#1190 鄂爾 E）
+  "onRedirectHit", // spawnProjectile —— 被再次施放撞擊改向之後命中跑的那一串（GH#1187 鄂爾 R）
   "onTouch", // spawnModelFx —— 路徑上碰到人的那一串（#551）
   "perStrike", // comboStrikes —— 每一段各跑一次的那一串（#541）
 ] as const;

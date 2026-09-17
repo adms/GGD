@@ -1,0 +1,178 @@
+{
+  "schema": "ggd-mba-source-preparation@1",
+  "slug": "gajet1",
+  "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+  "sourceVersion": "Complete Form 1.60+",
+  "sourcePlatform": "Windows PC",
+  "selectionClass": "mba",
+  "identity": {
+    "sourceCharacterId": "mba:Chara09",
+    "definition": "CharacterDefinitions/Chara09.chr",
+    "characterNative": "ガジェットドローンⅠ型",
+    "nativeModel": "Model/Chara09/Gajet1.x",
+    "convertedGlb": "models/Model/Chara09/Gajet1.glb",
+    "relationship": "direct-character-definition"
+  },
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara09/Gajet1.glb",
+    "bytes": 1402636,
+    "sha256": "89066fee1031928d45eba7dad942923b876575bd593b29c391a9e6ad0deea909"
+  },
+  "preparation": {
+    "sourceDrawPrimitives": 1,
+    "outputDrawPrimitives": 1,
+    "vertices": 132,
+    "triangles": 168,
+    "atlasEdge": 512,
+    "sourceAtlasEdge": 512,
+    "renamedDuplicateClips": [],
+    "normalizedRotationAccessors": 48,
+    "tiledUvDomains": {
+      "0": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "weightNormalization": {
+      "vertices": 0,
+      "maxSumDelta": 0.0
+    },
+    "adaptations": [
+      "Diffuse textures packed; final atlas downsampled to at most 1024px, normalized UV coordinates retained",
+      "Existing joint indices retained and weights normalized",
+      "Unlit textured material replaces Assimp specular material",
+      "Original rig and clip timing retained; quaternion orientation normalized"
+    ]
+  },
+  "toolchain": {
+    "python": "3.10.4",
+    "pillow": "12.3.0",
+    "sourcePreparation": "tools/community-hero-forge/prepare_mba_body.py",
+    "workflow": "tools/hero-model-library/source-workflows/mba-unused-model-batch2-v1/prepare_sources.py"
+  },
+  "nativeClips": {
+    "originalCount": 63,
+    "originalNames": [
+      "sp02_02",
+      "sp02_01",
+      "sp01_02",
+      "sp01_01",
+      "b_dash_attack_02",
+      "b_dash_attack_01",
+      "maryokudan_move",
+      "lose",
+      "win",
+      "kakusei",
+      "maryokudan_02",
+      "maryokudan_01",
+      "hukitobasi",
+      "utiorosi",
+      "utiage",
+      "Charge",
+      "attack_03",
+      "attack_02",
+      "attack_01",
+      "wait",
+      "Escape",
+      "B-Dash-End",
+      "B-Dash-Start",
+      "DIM_BIND_Damage",
+      "DIM_BIND",
+      "RB_DAMAGE",
+      "RB_HIT",
+      "RB_BIND",
+      "Barel-END",
+      "Barel-Hit",
+      "D-Down-Damage",
+      "U-Down-Damage",
+      "C-Falte",
+      "D-GetUp",
+      "D-Down",
+      "U-GetUp",
+      "U-Down",
+      "F-Scatter-Stop",
+      "F-Scatter",
+      "F-Falter-Stop",
+      "F-Falter",
+      "B-Scatter-Stop",
+      "B-Scatter",
+      "B-Falter-Stop",
+      "B-Falter",
+      "Damage-5",
+      "Damage-4",
+      "Damage-3",
+      "Damage-2",
+      "Damage-1",
+      "Guard",
+      "D-Move",
+      "U-Move",
+      "Warp",
+      "Dash-Stop",
+      "Dash",
+      "B-Step",
+      "R-Step",
+      "L-Step",
+      "B-Move",
+      "R-Move",
+      "L-Move",
+      "F-Move"
+    ],
+    "selected": [
+      {
+        "name": "wait",
+        "originalIndex": 19
+      },
+      {
+        "name": "F-Move",
+        "originalIndex": 62
+      },
+      {
+        "name": "attack_01",
+        "originalIndex": 18
+      },
+      {
+        "name": "sp01_01",
+        "originalIndex": 3
+      },
+      {
+        "name": "Damage-1",
+        "originalIndex": 49
+      },
+      {
+        "name": "D-Down",
+        "originalIndex": 34
+      }
+    ],
+    "selectionReason": "Retain exact same-character native clips for idle/run/attack/cast/hurt/death-surrogate review and satisfy the 4 MiB backend JSON limit"
+  },
+  "atlas": {
+    "sourceAtlasDimensions": [
+      512,
+      512
+    ],
+    "outputAtlasDimensions": [
+      256,
+      256
+    ],
+    "outputAtlasSha256": "44fa6b6284354a0d865731336ea05d806082c9cde2ea18cf4546707fb5ae1755",
+    "maxEdge": 256,
+    "resampler": "Pillow Image.Resampling.LANCZOS"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/prepared/gajet1/body-prepared.glb",
+    "bytes": 1300488,
+    "sha256": "048c077d6141bcfb38e6731f2b86b9445d5d20435752c03ce75da9cc812098c9"
+  },
+  "sourcePreserved": true,
+  "limitations": [
+    "The atlas adaptation replaces original Assimp specular materials with one portable unlit diffuse atlas.",
+    "The 256px atlas is a derived texture and still needs final WebGL visual review.",
+    "No hero binding, default selection, backend registration or deployment is performed."
+  ]
+}

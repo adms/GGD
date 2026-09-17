@@ -1,0 +1,15 @@
+{
+  "id": "lol-ornn.r-slow",
+  "schema": "status-effect@1",
+  "name": "鑄火者的呼喚",
+  "description": "鄂爾「鑄火者的呼喚」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-ornn.r-slow",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

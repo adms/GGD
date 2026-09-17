@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "〔不知火流身法〕",
   "provenance": "editor-json",
-  "description": "完成位移後獲得一次短效普攻強化；刷新不疊加。",
+  "description": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 {{cd}} 秒。\n【目標設計】完成位移後獲得一次短效普攻強化；刷新不疊加。\n【待補機制】需位移完成後一次普攻增益，刷新不疊加。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,
@@ -49,5 +49,6 @@
       "vfxKey": "fx.prim.fire.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/community-review-03-20260907.passive.webp"
+  "icon": "assets/icons/abilities/community-review-03-20260907.passive.webp",
+  "castTimeTier": "極小"
 }

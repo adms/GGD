@@ -1,0 +1,619 @@
+{
+  "schema": "ggd.dai-daz-component-candidates.v1",
+  "character": "小呆／達伊 Dai",
+  "work": "勇者鬥惡龍 達伊的大冒險",
+  "presets": [
+    {
+      "id": "dai-daz-v2-g8.1m",
+      "name": "達伊／小呆 JUMP FORCE 造型（Daz G8.1M）",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/extracted/People/@Cosplay/Dragon Quest/The Adventure of Dai/Dai/Jump Force/Jump Force Dai G8.1M.duf",
+        "relativePath": "extracted/People/@Cosplay/Dragon Quest/The Adventure of Dai/Dai/Jump Force/Jump Force Dai G8.1M.duf",
+        "bytes": 208428,
+        "sha256": "a04aa68f86bf432ae0ca6ecfcecbf61e0bf067e35468975f5ff60b22b628c3ac"
+      },
+      "readiness": "reserved-pending-dependencies",
+      "missingBodyBase": true,
+      "standaloneCharacterBody": false,
+      "nativeAnimationCount": 0,
+      "sourceClass": "community-adaptation",
+      "GGDTargetHeroIds": [
+        "godie-nbbc"
+      ],
+      "dragonFormTargetHeroIdsNotAssigned": [
+        "godie-n01c"
+      ]
+    },
+    {
+      "id": "dai-daz-v2-g8m",
+      "name": "達伊／小呆 JUMP FORCE 造型（Daz G8M）",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/extracted/People/@Cosplay/Dragon Quest/The Adventure of Dai/Dai/Jump Force/Jump Force Dai.duf",
+        "relativePath": "extracted/People/@Cosplay/Dragon Quest/The Adventure of Dai/Dai/Jump Force/Jump Force Dai.duf",
+        "bytes": 210546,
+        "sha256": "35641ca9a1c2d8c8f6f2db04be365a60cbb46c9ee1cc56607714f6ace9b3127e"
+      },
+      "readiness": "reserved-pending-dependencies",
+      "missingBodyBase": true,
+      "standaloneCharacterBody": false,
+      "nativeAnimationCount": 0,
+      "sourceClass": "community-adaptation",
+      "GGDTargetHeroIds": [
+        "godie-nbbc"
+      ],
+      "dragonFormTargetHeroIdsNotAssigned": [
+        "godie-n01c"
+      ]
+    }
+  ],
+  "components": [
+    {
+      "id": "dai-daz-v2-component-01",
+      "name": "Papnican Boots",
+      "resourceRole": "skinned-appearance-component",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes/Papnican Boots/Papnican Boots_1282.dsf",
+        "relativePath": "extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes/Papnican Boots/Papnican Boots_1282.dsf",
+        "bytes": 77716,
+        "sha256": "bab0d04b2e5a56ea889d3a88a67205c0dc95d3d66b397ec26afe7f99b6282557"
+      },
+      "nativeFormat": "Daz DSON DSF",
+      "geometry": {
+        "id": "Papnican Boots",
+        "name": "Papnican Boots",
+        "vertexCount": 1282,
+        "polygonCount": 2460,
+        "materialGroups": {
+          "count": 2,
+          "values": [
+            "24_Pants_0.2_16_16",
+            "24_+Outfit.Pants_Default_Parts_2_0.2_16_16"
+          ]
+        },
+        "uvSet": "/data/shinteo5/Dragon%20Quest/The%20Adventures%20of%20Dai/Dai/Outfit/Papnican%20Clothes/Papnican%20Boots/UV%20Sets/shinteo5/Base/default.dsf#default"
+      },
+      "boneDefinitions": 35,
+      "skinModifiers": [
+        {
+          "id": "SkinBinding",
+          "node": "#Papnican%20Boots_1282",
+          "geometry": "#Papnican%20Boots",
+          "vertexCount": 1282,
+          "jointCount": 34
+        }
+      ],
+      "nativeAnimationCount": 0,
+      "standaloneCharacterBody": false,
+      "readiness": "native-component-reserve-not-converted",
+      "formIdentityUnverified": true
+    },
+    {
+      "id": "dai-daz-v2-component-02",
+      "name": "Sword of Dai Sheath",
+      "resourceRole": "skinned-appearance-component",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes/Sword Of Dai Sheath/Sword of Dai Sheath_2973.dsf",
+        "relativePath": "extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes/Sword Of Dai Sheath/Sword of Dai Sheath_2973.dsf",
+        "bytes": 141661,
+        "sha256": "7b147c0e950246f2d6f2a3f51db62164683b27df0ed8a1b13c0ff5ec91adf6fa"
+      },
+      "nativeFormat": "Daz DSON DSF",
+      "geometry": {
+        "id": "Sword of Dai Sheath",
+        "name": "Sword of Dai Sheath",
+        "vertexCount": 2973,
+        "polygonCount": 5671,
+        "materialGroups": {
+          "count": 3,
+          "values": [
+            "24_+Weapon_Belt.Sheath_0.3_16_16",
+            "24_+Weapon_Belt.Weapon_Belt_0.2_16_16",
+            "24_+Weapon_Belt.Weapon_Belt_Red_Glass_0.3_16_16"
+          ]
+        },
+        "uvSet": "/data/shinteo5/Dragon%20Quest/The%20Adventures%20of%20Dai/Dai/Outfit/Papnican%20Clothes/Sword%20Of%20Dai%20Sheath/UV%20Sets/shinteo5/Base/default.dsf#default"
+      },
+      "boneDefinitions": 46,
+      "skinModifiers": [
+        {
+          "id": "SkinBinding",
+          "node": "#Sword%20of%20Dai%20Sheath_2973",
+          "geometry": "#Sword%20of%20Dai%20Sheath",
+          "vertexCount": 2973,
+          "jointCount": 33
+        }
+      ],
+      "nativeAnimationCount": 0,
+      "standaloneCharacterBody": false,
+      "readiness": "native-component-reserve-not-converted",
+      "formIdentityUnverified": true
+    },
+    {
+      "id": "dai-daz-v2-component-03",
+      "name": "Sword of Dai Back-1",
+      "resourceRole": "weapon-or-prop",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes/Sword of Dai Back/Sword of Dai Back.dsf",
+        "relativePath": "extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes/Sword of Dai Back/Sword of Dai Back.dsf",
+        "bytes": 27908,
+        "sha256": "a70977f73c0781cf5d0c88867b103cbd236b9966a834a6dc5613d59f9126eb6d"
+      },
+      "nativeFormat": "Daz DSON DSF",
+      "geometry": {
+        "id": "Sword of Dai Back-1",
+        "name": "Sword of Dai Back",
+        "vertexCount": 998,
+        "polygonCount": 1854,
+        "materialGroups": {
+          "count": 2,
+          "values": [
+            "24_+Sword_Back.Sword_Back_0.2_16_16",
+            "24_+Sword_Back.Sword_Back_Red_Glass__0.3_16_16"
+          ]
+        },
+        "uvSet": "/data/shinteo5/Dragon%20Quest/The%20Adventures%20of%20Dai/Dai/Outfit/Papnican%20Clothes/Sword%20of%20Dai%20Back/UV%20Sets/shinteo5/Base/default.dsf#default"
+      },
+      "boneDefinitions": 0,
+      "skinModifiers": [],
+      "nativeAnimationCount": 0,
+      "standaloneCharacterBody": false,
+      "readiness": "native-component-reserve-not-converted",
+      "formIdentityUnverified": true
+    },
+    {
+      "id": "dai-daz-v2-component-04",
+      "name": "Papnican Bracer",
+      "resourceRole": "skinned-appearance-component",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes/Papnican Bracer/Papnican Bracer_820.dsf",
+        "relativePath": "extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes/Papnican Bracer/Papnican Bracer_820.dsf",
+        "bytes": 57040,
+        "sha256": "150a244b51de7b4e83b205fd32adc25be1a66dc14dae3cc2ac22a13ab50c7a9d"
+      },
+      "nativeFormat": "Daz DSON DSF",
+      "geometry": {
+        "id": "Papnican Bracer",
+        "name": "Papnican Bracer",
+        "vertexCount": 820,
+        "polygonCount": 1572,
+        "materialGroups": {
+          "count": 1,
+          "values": [
+            "24_+Outfit.Outfit_0.4_16_16"
+          ]
+        },
+        "uvSet": "/data/shinteo5/Dragon%20Quest/The%20Adventures%20of%20Dai/Dai/Outfit/Papnican%20Clothes/Papnican%20Bracer/UV%20Sets/shinteo5/Base/default.dsf#default"
+      },
+      "boneDefinitions": 31,
+      "skinModifiers": [
+        {
+          "id": "SkinBinding",
+          "node": "#Papnican%20Bracer_820",
+          "geometry": "#Papnican%20Bracer",
+          "vertexCount": 820,
+          "jointCount": 17
+        }
+      ],
+      "nativeAnimationCount": 0,
+      "standaloneCharacterBody": false,
+      "readiness": "native-component-reserve-not-converted",
+      "formIdentityUnverified": true
+    },
+    {
+      "id": "dai-daz-v2-component-05",
+      "name": "Papnican Pants",
+      "resourceRole": "skinned-appearance-component",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes/Papnican Pants/Papnican Pants_2532.dsf",
+        "relativePath": "extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes/Papnican Pants/Papnican Pants_2532.dsf",
+        "bytes": 147597,
+        "sha256": "0173c731fbe08b74de15d787bdccb7b793823451599ca042309c46776144498f"
+      },
+      "nativeFormat": "Daz DSON DSF",
+      "geometry": {
+        "id": "Papnican Pants",
+        "name": "Papnican Pants",
+        "vertexCount": 2532,
+        "polygonCount": 4948,
+        "materialGroups": {
+          "count": 4,
+          "values": [
+            "24_Pants_0.2_16_16",
+            "24_+Weapon_Belt.Weapon_Belt_Red_Glass_0.3_16_16",
+            "24_+Outfit.Pants_Default_Parts_2_0.2_16_16",
+            "24_+Outfit.Pants_Parts_2_0.2_16_16"
+          ]
+        },
+        "uvSet": "/data/shinteo5/Dragon%20Quest/The%20Adventures%20of%20Dai/Dai/Outfit/Papnican%20Clothes/Papnican%20Pants/UV%20Sets/shinteo5/Base/default.dsf#default"
+      },
+      "boneDefinitions": 16,
+      "skinModifiers": [
+        {
+          "id": "SkinBinding",
+          "node": "#Papnican%20Pants_2532",
+          "geometry": "#Papnican%20Pants",
+          "vertexCount": 2532,
+          "jointCount": 11
+        }
+      ],
+      "nativeAnimationCount": 0,
+      "standaloneCharacterBody": false,
+      "readiness": "native-component-reserve-not-converted",
+      "formIdentityUnverified": true
+    },
+    {
+      "id": "dai-daz-v2-component-06",
+      "name": "Papnican Shirt",
+      "resourceRole": "skinned-appearance-component",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes/Papnican Shirt/Papnican Shirt_2673.dsf",
+        "relativePath": "extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes/Papnican Shirt/Papnican Shirt_2673.dsf",
+        "bytes": 232831,
+        "sha256": "064fb5cb10a2f36e24467b65bb809c16426f4e212f20be1f1165d78a1efcc538"
+      },
+      "nativeFormat": "Daz DSON DSF",
+      "geometry": {
+        "id": "Papnican Shirt",
+        "name": "Papnican Shirt",
+        "vertexCount": 2673,
+        "polygonCount": 5217,
+        "materialGroups": {
+          "count": 2,
+          "values": [
+            "24_+Outfit.Outfit_0.4_16_16",
+            "24_+Outfit.Upper_Pad_0.4_16_16"
+          ]
+        },
+        "uvSet": "/data/shinteo5/Dragon%20Quest/The%20Adventures%20of%20Dai/Dai/Outfit/Papnican%20Clothes/Papnican%20Shirt/UV%20Sets/shinteo5/Base/default.dsf#default"
+      },
+      "boneDefinitions": 48,
+      "skinModifiers": [
+        {
+          "id": "SkinBinding",
+          "node": "#Papnican%20Shirt_2673",
+          "geometry": "#Papnican%20Shirt",
+          "vertexCount": 2673,
+          "jointCount": 21
+        }
+      ],
+      "nativeAnimationCount": 0,
+      "standaloneCharacterBody": false,
+      "readiness": "native-component-reserve-not-converted",
+      "formIdentityUnverified": true
+    },
+    {
+      "id": "dai-daz-v2-component-07",
+      "name": "Papnican Boots Torn",
+      "resourceRole": "skinned-appearance-component",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes Torn/Papnican Boot Torn/Papnican Boots Torn_1576.dsf",
+        "relativePath": "extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes Torn/Papnican Boot Torn/Papnican Boots Torn_1576.dsf",
+        "bytes": 90963,
+        "sha256": "998712561180674675ef74932040d2bf6b0119755fa44cb440116e93bbdf935f"
+      },
+      "nativeFormat": "Daz DSON DSF",
+      "geometry": {
+        "id": "Papnican Boots Torn",
+        "name": "Papnican Boots Torn",
+        "vertexCount": 1576,
+        "polygonCount": 2994,
+        "materialGroups": {
+          "count": 3,
+          "values": [
+            "25_-Outfit.Pants_Parts_Ripped_2_0.2_16_16",
+            "24_-Outfit.Pants_Parts_Ripped__0.2_16_16",
+            "24_Pants_0.2_16_16"
+          ]
+        },
+        "uvSet": "/data/shinteo5/Dragon%20Quest/The%20Adventures%20of%20Dai/Dai/Outfit/Papnican%20Clothes%20Torn/Papnican%20Boot%20Torn/UV%20Sets/shinteo5/Base/default.dsf#default"
+      },
+      "boneDefinitions": 35,
+      "skinModifiers": [
+        {
+          "id": "SkinBinding",
+          "node": "#Papnican%20Boots%20Torn_1576",
+          "geometry": "#Papnican%20Boots%20Torn",
+          "vertexCount": 1576,
+          "jointCount": 34
+        }
+      ],
+      "nativeAnimationCount": 0,
+      "standaloneCharacterBody": false,
+      "readiness": "native-component-reserve-not-converted",
+      "formIdentityUnverified": true
+    },
+    {
+      "id": "dai-daz-v2-component-08",
+      "name": "Papnican Bracer Torn",
+      "resourceRole": "skinned-appearance-component",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes Torn/Papnican Bracer Torn/Papnican Bracer Torn_712.dsf",
+        "relativePath": "extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes Torn/Papnican Bracer Torn/Papnican Bracer Torn_712.dsf",
+        "bytes": 52359,
+        "sha256": "08e7d75f3102f500223a45afab9e613adb25805ceb621148cc8d3f1ab913f1e5"
+      },
+      "nativeFormat": "Daz DSON DSF",
+      "geometry": {
+        "id": "Papnican Bracer Torn",
+        "name": "Papnican Bracer Torn",
+        "vertexCount": 712,
+        "polygonCount": 1300,
+        "materialGroups": {
+          "count": 1,
+          "values": [
+            "25_-Outfit.Torso_Ripped_0.4_16_16"
+          ]
+        },
+        "uvSet": "/data/shinteo5/Dragon%20Quest/The%20Adventures%20of%20Dai/Dai/Outfit/Papnican%20Clothes%20Torn/Papnican%20Bracer%20Torn/UV%20Sets/shinteo5/Base/default.dsf#default"
+      },
+      "boneDefinitions": 31,
+      "skinModifiers": [
+        {
+          "id": "SkinBinding",
+          "node": "#Papnican%20Bracer%20Torn_712",
+          "geometry": "#Papnican%20Bracer%20Torn",
+          "vertexCount": 712,
+          "jointCount": 17
+        }
+      ],
+      "nativeAnimationCount": 0,
+      "standaloneCharacterBody": false,
+      "readiness": "native-component-reserve-not-converted",
+      "formIdentityUnverified": true
+    },
+    {
+      "id": "dai-daz-v2-component-09",
+      "name": "Papnican Shirt Torn",
+      "resourceRole": "skinned-appearance-component",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes Torn/Papnican Shirt Torn/Papnican Shirt Torn_954.dsf",
+        "relativePath": "extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes Torn/Papnican Shirt Torn/Papnican Shirt Torn_954.dsf",
+        "bytes": 49157,
+        "sha256": "e8ee51e89e48f41de94c79528a46d5559cc53a79bc19b02263b493ac7e7e4288"
+      },
+      "nativeFormat": "Daz DSON DSF",
+      "geometry": {
+        "id": "Papnican Shirt Torn",
+        "name": "Papnican Shirt Torn",
+        "vertexCount": 954,
+        "polygonCount": 1814,
+        "materialGroups": {
+          "count": 1,
+          "values": [
+            "25_-Outfit.Torso_Ripped_0.4_16_16"
+          ]
+        },
+        "uvSet": "/data/shinteo5/Dragon%20Quest/The%20Adventures%20of%20Dai/Dai/Outfit/Papnican%20Clothes%20Torn/Papnican%20Shirt%20Torn/UV%20Sets/shinteo5/Base/default.dsf#default"
+      },
+      "boneDefinitions": 27,
+      "skinModifiers": [
+        {
+          "id": "SkinBinding",
+          "node": "#Papnican%20Shirt%20Torn_954",
+          "geometry": "#Papnican%20Shirt%20Torn",
+          "vertexCount": 954,
+          "jointCount": 20
+        }
+      ],
+      "nativeAnimationCount": 0,
+      "standaloneCharacterBody": false,
+      "readiness": "native-component-reserve-not-converted",
+      "formIdentityUnverified": true
+    },
+    {
+      "id": "dai-daz-v2-component-10",
+      "name": "Papnican Pants Torn",
+      "resourceRole": "skinned-appearance-component",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes Torn/Papnican Pants Torn/Papnican Pants Torn_3695.dsf",
+        "relativePath": "extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Outfit/Papnican Clothes Torn/Papnican Pants Torn/Papnican Pants Torn_3695.dsf",
+        "bytes": 206644,
+        "sha256": "1a7da141245947e8c9cb92c1515b349076001621a63ed9e1bc3409c3f6103494"
+      },
+      "nativeFormat": "Daz DSON DSF",
+      "geometry": {
+        "id": "Papnican Pants Torn",
+        "name": "Papnican Pants Torn",
+        "vertexCount": 3695,
+        "polygonCount": 7098,
+        "materialGroups": {
+          "count": 4,
+          "values": [
+            "25_-Outfit.Pants_Parts_Ripped_2_0.2_16_16",
+            "24_-Outfit.Pants_Parts_Ripped__0.2_16_16",
+            "24_Pants_0.2_16_16",
+            "24_+Weapon_Belt.Weapon_Belt_Red_Glass_0.3_16_16"
+          ]
+        },
+        "uvSet": "/data/shinteo5/Dragon%20Quest/The%20Adventures%20of%20Dai/Dai/Outfit/Papnican%20Clothes%20Torn/Papnican%20Pants%20Torn/UV%20Sets/shinteo5/Base/default.dsf#default"
+      },
+      "boneDefinitions": 16,
+      "skinModifiers": [
+        {
+          "id": "SkinBinding",
+          "node": "#Papnican%20Pants%20Torn_3695",
+          "geometry": "#Papnican%20Pants%20Torn",
+          "vertexCount": 3695,
+          "jointCount": 11
+        }
+      ],
+      "nativeAnimationCount": 0,
+      "standaloneCharacterBody": false,
+      "readiness": "native-component-reserve-not-converted",
+      "formIdentityUnverified": true
+    },
+    {
+      "id": "dai-daz-v2-component-11",
+      "name": "Sword of Dai-1",
+      "resourceRole": "weapon-or-prop",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Weapon/Sword of Dai/Sword of Dai.dsf",
+        "relativePath": "extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Weapon/Sword of Dai/Sword of Dai.dsf",
+        "bytes": 27011,
+        "sha256": "c521bbbf8570e69b7936bcbbe02e73c39c627a5a65abdfcbc8177cbbe79cf49e"
+      },
+      "nativeFormat": "Daz DSON DSF",
+      "geometry": {
+        "id": "Sword of Dai-1",
+        "name": "Sword of Dai",
+        "vertexCount": 942,
+        "polygonCount": 1854,
+        "materialGroups": {
+          "count": 2,
+          "values": [
+            "24_-Sword_Hand.Sword_Hand__0.2_16_16.001",
+            "24_-Sword_Hand.Sword_Hand_Red_Glass__0.3_16_16"
+          ]
+        },
+        "uvSet": "/data/shinteo5/Dragon%20Quest/The%20Adventures%20of%20Dai/Dai/Weapon/Sword%20of%20Dai/UV%20Sets/shinteo5/Base/default.dsf#default"
+      },
+      "boneDefinitions": 0,
+      "skinModifiers": [],
+      "nativeAnimationCount": 0,
+      "standaloneCharacterBody": false,
+      "readiness": "native-component-reserve-not-converted",
+      "formIdentityUnverified": true
+    },
+    {
+      "id": "dai-daz-v2-component-12",
+      "name": "Dai Hair Without Crown",
+      "resourceRole": "skinned-appearance-component",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Hair/Dai Hair Without Crown/Dai Hair Without Crown_13085.dsf",
+        "relativePath": "extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Hair/Dai Hair Without Crown/Dai Hair Without Crown_13085.dsf",
+        "bytes": 488117,
+        "sha256": "edb7d99994d54a2ae3aa8a9154d19ed755443036101bdd7b9c5a6c03dd76ee3c"
+      },
+      "nativeFormat": "Daz DSON DSF",
+      "geometry": {
+        "id": "Dai Hair Without Crown",
+        "name": "Dai Hair Without Crown",
+        "vertexCount": 13085,
+        "polygonCount": 25728,
+        "materialGroups": {
+          "count": 2,
+          "values": [
+            "24_+Face.Hair_Default_0.2_16_16",
+            "24_-Hair_Without_Crown.Hair_Without_Crown_0.2_16_16"
+          ]
+        },
+        "uvSet": "/data/shinteo5/Dragon%20Quest/The%20Adventures%20of%20Dai/Dai/Hair/Dai%20Hair%20Without%20Crown/UV%20Sets/shinteo5/Base/default.dsf#default"
+      },
+      "boneDefinitions": 37,
+      "skinModifiers": [
+        {
+          "id": "SkinBinding",
+          "node": "#Dai%20Hair%20Without%20Crown_13085",
+          "geometry": "#Dai%20Hair%20Without%20Crown",
+          "vertexCount": 13085,
+          "jointCount": 37
+        }
+      ],
+      "nativeAnimationCount": 0,
+      "standaloneCharacterBody": false,
+      "readiness": "native-component-reserve-not-converted",
+      "formIdentityUnverified": true
+    },
+    {
+      "id": "dai-daz-v2-component-13",
+      "name": "Dai Hair Dragon Aura",
+      "resourceRole": "skinned-appearance-component",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Hair/Dai Hair Dragon Aura/Dai Hair Dragon Aura_18588.dsf",
+        "relativePath": "extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Hair/Dai Hair Dragon Aura/Dai Hair Dragon Aura_18588.dsf",
+        "bytes": 692353,
+        "sha256": "665be78c3a4694118b3f88e2b218417a52899a6fe95cf89af8482cc30550e521"
+      },
+      "nativeFormat": "Daz DSON DSF",
+      "geometry": {
+        "id": "Dai Hair Dragon Aura",
+        "name": "Dai Hair Dragon Aura",
+        "vertexCount": 18588,
+        "polygonCount": 36230,
+        "materialGroups": {
+          "count": 3,
+          "values": [
+            "24_-Face.Dragon_Aura_Hair_0.2_16_16",
+            "31_-Face.Dragon_Aura_Effect_0.1_16_16",
+            "6_-Face.Dragon_Aura_Face_Shadow_0.1_16_16"
+          ]
+        },
+        "uvSet": "/data/shinteo5/Dragon%20Quest/The%20Adventures%20of%20Dai/Dai/Hair/Dai%20Hair%20Dragon%20Aura/UV%20Sets/shinteo5/Base/default.dsf#default"
+      },
+      "boneDefinitions": 25,
+      "skinModifiers": [
+        {
+          "id": "SkinBinding",
+          "node": "#Dai%20Hair%20Dragon%20Aura_18588",
+          "geometry": "#Dai%20Hair%20Dragon%20Aura",
+          "vertexCount": 18588,
+          "jointCount": 25
+        }
+      ],
+      "nativeAnimationCount": 0,
+      "standaloneCharacterBody": false,
+      "readiness": "native-component-reserve-not-converted",
+      "formIdentityUnverified": true
+    },
+    {
+      "id": "dai-daz-v2-component-14",
+      "name": "Dai Hair With Crown",
+      "resourceRole": "skinned-appearance-component",
+      "source": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-dai-shinteo-public-20260911/extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Hair/Dai Hair With Crown/Dai Hair With Crown_11774.dsf",
+        "relativePath": "extracted/data/shinteo5/Dragon Quest/The Adventures of Dai/Dai/Hair/Dai Hair With Crown/Dai Hair With Crown_11774.dsf",
+        "bytes": 436575,
+        "sha256": "2c29cde778cfb48ba8c862d9b6700e7c1f43671e8aafe5bbec540305e5a59729"
+      },
+      "nativeFormat": "Daz DSON DSF",
+      "geometry": {
+        "id": "Dai Hair With Crown",
+        "name": "Dai Hair With Crown",
+        "vertexCount": 11774,
+        "polygonCount": 23126,
+        "materialGroups": {
+          "count": 4,
+          "values": [
+            "24_+Face.Hair_Default_0.2_16_16",
+            "24_+Gold_Crown.Hair_Front_0.2_16_16",
+            "24_+Gold_Crown.Gold_Crown_0.5_16_16",
+            "24_+Gold_Crown.Gold_Crown_Red_Glass_0.3_16_16"
+          ]
+        },
+        "uvSet": "/data/shinteo5/Dragon%20Quest/The%20Adventures%20of%20Dai/Dai/Hair/Dai%20Hair%20With%20Crown/UV%20Sets/shinteo5/Base/default.dsf#default"
+      },
+      "boneDefinitions": 37,
+      "skinModifiers": [
+        {
+          "id": "SkinBinding",
+          "node": "#Dai%20Hair%20With%20Crown_11774",
+          "geometry": "#Dai%20Hair%20With%20Crown",
+          "vertexCount": 11774,
+          "jointCount": 37
+        }
+      ],
+      "nativeAnimationCount": 0,
+      "standaloneCharacterBody": false,
+      "readiness": "native-component-reserve-not-converted",
+      "formIdentityUnverified": true
+    }
+  ],
+  "fullIndependentCharacterBodyCount": 0,
+  "sourcePresetCount": 2,
+  "nativeComponentGeometryFileCount": 14,
+  "inlineEyeAndEyebrowGeometryDefinitions": "2 per character/wearable DUF, repeated in three presets; preserved in those originals, not three new characters.",
+  "nativeGameMotionCount": 0,
+  "newAudioCount": 0,
+  "newStandaloneVfxCount": 0,
+  "variantsPreserved": [
+    "Papnican Clothes",
+    "Papnican Clothes Torn",
+    "Dai Hair Without Crown",
+    "Dai Hair With Crown",
+    "Dai Hair Dragon Aura",
+    "Sword of Dai",
+    "Sword of Dai Back",
+    "Sword of Dai Sheath"
+  ],
+  "dragonAuraHairIsNotVerifiedDragonDemonFullBody": true
+}

@@ -1,0 +1,57 @@
+{
+  "modelKey": "ou99.491448-standard-v2",
+  "finalGlbSha256": "e5eb1d3f616d40ed123d7d962dc0fd43b5ddaac4df9c4890c6a46464ed16e468",
+  "nodeHierarchyAndInverseBindMatricesUnchanged": true,
+  "nativeMotion": [
+    {
+      "name": "Stand",
+      "channels": 56,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "Walk",
+      "channels": 56,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "Attack",
+      "channels": 56,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "Spell",
+      "channels": 56,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "Stand Ready",
+      "channels": 56,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    },
+    {
+      "name": "Death",
+      "channels": 56,
+      "allFinalSamplerBytesAndTargetsEqualSource": true
+    }
+  ],
+  "allOriginalEmbeddedImageBytesRetainedInFinal": true,
+  "originalImageSha256": [
+    "b413e86d1cfa01427a42cf2cc9f626eeaff59460a21b3510e2a8b3c134e6b79b",
+    "e30812c5cfde5e3cc6aa5c9a9b21d25625e5bdfd2c823f849c9ea573a4ecc777",
+    "4502ef0a69c441cda843b4fcb6e04543cf0b8d31900eeec765c0c087cd5589eb",
+    "9dcdd5b1aff659eaff0a05a59b361fa3b4d070375b317f922287fc7c1d5fd05f",
+    "9c6120a8f70fe1d92b713e142dbe5239cdff5699db4cfbcc68e396001be87259",
+    "421b372a05d84bc6c715cea99b3fec3ee88a43d2fec6d17ad2c2f2e99586c8c3"
+  ],
+  "finalImageSha256": [
+    "b413e86d1cfa01427a42cf2cc9f626eeaff59460a21b3510e2a8b3c134e6b79b",
+    "e30812c5cfde5e3cc6aa5c9a9b21d25625e5bdfd2c823f849c9ea573a4ecc777",
+    "4502ef0a69c441cda843b4fcb6e04543cf0b8d31900eeec765c0c087cd5589eb",
+    "9dcdd5b1aff659eaff0a05a59b361fa3b4d070375b317f922287fc7c1d5fd05f",
+    "9c6120a8f70fe1d92b713e142dbe5239cdff5699db4cfbcc68e396001be87259",
+    "421b372a05d84bc6c715cea99b3fec3ee88a43d2fec6d17ad2c2f2e99586c8c3",
+    "b54ced82e8583e4787e2277f8aa5a96ed7d1dcdca125e7663e1665656e1284f6"
+  ],
+  "geometryLod": false,
+  "textureLod": false
+}

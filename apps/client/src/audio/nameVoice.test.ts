@@ -36,6 +36,7 @@ import {
   type NameVoiceElement,
 } from "./nameVoice";
 import { DEFAULT_AUDIO_VOLUMES } from "./audioSettings";
+import { VOICE_GAP_BATCH4 } from "@ggd/shared/content/voiceGapBatch4";
 
 // ---------------------------------------------------------------------------
 // stubs
@@ -561,7 +562,9 @@ describe("the generated MANIFEST carries a zh-稱號 + ja-全名 clip per champi
     const liveDocs = readdirSync(`${CONTENT}/champions`)
       .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
       .map((f) => f.slice(0, -5));
-    expect(ids.slice().sort()).toEqual(liveDocs.slice().sort());
+    // ⭐ GH#1281（2026-09-17）：宣告過的語音缺口（第四批 37 名先上架、唸名待補）不在這一份裡；
+    //   名單住 `@ggd/shared/content/voiceGapBatch4`，做好一位就刪一列（⛔ 棘輪，不是豁免）。
+    expect(ids.slice().sort()).toEqual(liveDocs.filter((id) => !VOICE_GAP_BATCH4.includes(id)).sort());
 
     for (const id of ids) {
       const e = doc.champions[id]!;

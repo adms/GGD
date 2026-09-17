@@ -1,0 +1,17 @@
+{
+  "renderer": "/Applications/Blender.app/Contents/MacOS/Blender",
+  "results": [
+    {
+      "modelSha256": "5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93",
+      "returnCode": -11,
+      "imageProduced": false,
+      "stderrTail": " ArchWarn: ARCH_CACHE_LINE_SIZE != Arch_ObtainCacheLineSize()\n Function: Arch_ValidateAssumptions\n     File: /Users/jonas/blender-dev-deps/build_darwin/deps_arm64/build/usd/src/external_usd/pxr/base/arch/assumptions.cpp\n     Line: 140\n"
+    },
+    {
+      "modelSha256": "66ac1e2abc5e04d066c03514c7ed387a6808d5182bfad68b4e0fd84d887e8f12",
+      "returnCode": -11,
+      "imageProduced": false,
+      "stderrTail": " ArchWarn: ARCH_CACHE_LINE_SIZE != Arch_ObtainCacheLineSize()\n Function: Arch_ValidateAssumptions\n     File: /Users/jonas/blender-dev-deps/build_darwin/deps_arm64/build/usd/src/external_usd/pxr/base/arch/assumptions.cpp\n     Line: 140\n"
+    }
+  ]
+}

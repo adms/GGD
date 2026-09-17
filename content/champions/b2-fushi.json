@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -50,10 +50,10 @@
       ],
       "id": "b2-fushi.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "記憶形狀先借一塊",
@@ -65,7 +65,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.067,
+          "castTimeSec": 0.1,
           "castType": "targeted",
           "effects": [
             {
@@ -116,10 +116,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-fushi.e.webp"
+      "icon": "assets/icons/abilities/b2-fushi.e.webp",
+      "castTimeTier": "小"
     },
     "Q": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -158,10 +159,10 @@
       ],
       "id": "b2-fushi.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "請溫柔敲擊測試",
@@ -172,7 +173,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.067,
+          "castTimeSec": 0.1,
           "castType": "self",
           "effects": [
             {
@@ -213,10 +214,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-fushi.q.webp"
+      "icon": "assets/icons/abilities/b2-fushi.q.webp",
+      "castTimeTier": "小"
     },
     "R": {
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -246,9 +248,9 @@
       ],
       "id": "b2-fushi.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "耐用形狀保固四秒",
@@ -257,7 +259,7 @@
       "template": {
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997",
         "params": {
-          "castTimeSec": 0.667,
+          "castTimeSec": 0.5,
           "duration": 4,
           "modifiers": [
             {
@@ -281,10 +283,11 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "icon": "assets/icons/abilities/b2-fushi.r.webp"
+      "icon": "assets/icons/abilities/b2-fushi.r.webp",
+      "castTimeTier": "大"
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -321,10 +324,10 @@
       ],
       "id": "b2-fushi.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "把破掉的地方長回來",
@@ -335,7 +338,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "self",
           "effects": [
             {
@@ -374,7 +377,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-fushi.w.webp"
+      "icon": "assets/icons/abilities/b2-fushi.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "tank",
@@ -400,8 +404,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 6,
     "range": 1.6
@@ -416,13 +420,13 @@
     "as": 2.9226239784265093e-05,
     "healthRegen": 0.023048979591836743,
     "manaRegen": 0,
-    "maxHealth": 38.2761224489796,
-    "maxMana": 0.8520408163265306,
+    "maxHealth": 100,
+    "maxMana": 35,
     "mr": 3.299795918367347
   },
   "msGrowthTier": "極小",
   "id": "b2-fushi",
-  "modelKey": "version.body.f1de5fcd9bb9a63ca9bcfd43149305e845c379451ce673e8",
+  "modelKey": "version.body.2664f94a3071ed917dd65c84d1ea72c276f8dea5df637484",
   "name": "不死",
   "origin": "硬輔",
   "passiveAbility": "b2-fushi.passive",
@@ -468,6 +472,136 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-467227-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.dca02a145aeb23ef6fc2d02e14c45d70322d0f7617cec679",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.467227",
+      "modelSha256": "c89b2697bd14832e6fc42770b3bccda5e1b7b69f94d784207d580cebc77d8ce6",
+      "binarySha256": "121d7349938ef9582c4bb0e187ba68cacbdbd7bf7310710c54a570cabe188612",
+      "registeredAt": "2026-09-10T14:45:41.345Z",
+      "source": {
+        "kind": "previous",
+        "character": "不死",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.467227.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.3cbbdb70f6bf78a715e5c724495d93b845f271df21b053c3",
+      "label": "天使可爱小女孩派蒙（論壇相似模型）",
+      "sourceModelKey": "ou99.467227-standard",
+      "modelSha256": "a2d68e9705525f1d1bf43a6c092c7bf3125ae95705a1cd299735fd487dfa1fe7",
+      "binarySha256": "ad3a1ec49f24598aa028409451726262b2382f724e26274256f6aab5f1d15564",
+      "registeredAt": "2026-09-10T14:45:41.368Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "天使可爱小女孩派蒙",
+        "work": "來源作品待核；論壇標題：天使可爱小女孩派蒙",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-467227-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.83a74a3e67615f3bd45b10b8cb101cedf53f48279ee413e1",
+      "label": "坂田银时",
+      "sourceModelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
+      "modelSha256": "576eb8b2260d049a406c88461750f6e344c1b1ed58ff4cba4058f6d82d24c5ab",
+      "binarySha256": "8b90c8e0f3afdab7d1887840332f13e63caea700d75ddf23d14f669390b249c2",
+      "registeredAt": "2026-09-10T14:45:41.442Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂田银时",
+        "work": "銀魂",
+        "library": "300heroes",
+        "reference": "300heroes:4a4c507abbd6a236e206dd15",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.75ba2633b331165aa31ed04fb63b7dfe082e4d95e73a1bb3",
+      "label": "天使可爱小女孩派蒙（論壇相似模型）",
+      "sourceModelKey": "ou99.467227-standard",
+      "modelSha256": "b5220d8f9638d018348046c46432c0249fde602a3f60262bc581c7a13da27d78",
+      "binarySha256": "fafbc4478af888660ffaf25e67cc620e107943ea0a21e056b144e1f5f2960618",
+      "registeredAt": "2026-09-12T23:12:00.652Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "天使可爱小女孩派蒙",
+        "work": "來源作品待核；論壇標題：天使可爱小女孩派蒙",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-467227-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.354364bf35caacfd883adc74a39dcfe9871048c9353aa745",
+      "label": "坂田银时",
+      "sourceModelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
+      "modelSha256": "1e8e85363f93e9b5710ee988bc4301b17176eb21757d7efb5cf9e96aa45d9ee8",
+      "binarySha256": "02b6cd26cdd988632f0d79a282b48d2f7f29603911654ba25c2fd5fbcf814d5d",
+      "registeredAt": "2026-09-12T23:12:00.764Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂田银时",
+        "work": "銀魂",
+        "library": "300heroes",
+        "reference": "300heroes:4a4c507abbd6a236e206dd15",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.2664f94a3071ed917dd65c84d1ea72c276f8dea5df637484",
+      "label": "天使可爱小女孩派蒙（論壇相似模型）",
+      "sourceModelKey": "ou99.467227-standard",
+      "modelSha256": "3d99607994e00f09f368636c3f10c94e8adba453cfb8908974eedfa24b5fbbab",
+      "binarySha256": "fafbc4478af888660ffaf25e67cc620e107943ea0a21e056b144e1f5f2960618",
+      "registeredAt": "2026-09-13T00:09:04.665Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "天使可爱小女孩派蒙",
+        "work": "來源作品待核；論壇標題：天使可爱小女孩派蒙",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-467227-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.a4910d30bc08f391094d52fe51dcbfa96ef6279776874fd7",
+      "label": "坂田银时",
+      "sourceModelKey": "community.body.0c36be173804c784e9aaadafc4db59248baf0a259f2a0916",
+      "modelSha256": "55672333668f725f1b9500a9c5488b3d1dcaf86d90807dca001118299fc849eb",
+      "binarySha256": "02b6cd26cdd988632f0d79a282b48d2f7f29603911654ba25c2fd5fbcf814d5d",
+      "registeredAt": "2026-09-13T00:09:04.773Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂田银时",
+        "work": "銀魂",
+        "library": "300heroes",
+        "reference": "300heroes:4a4c507abbd6a236e206dd15",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

@@ -1,0 +1,72 @@
+{
+  "schema": "ggd.jump-force-dai-static-visual-comparison@1",
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/jump-force-steam-dai-v1/dai-chr0430-review-v4.glb",
+    "bytes": 76796608,
+    "sha256": "53b3b19eb04e2eb0e6d1827122f5b41a403c2ced188bd3042371c9dec80cd810"
+  },
+  "candidate": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jump-force-dai-decimation-v1/run-a/dai-chr0430-review-v4.glb",
+    "bytes": 2619896,
+    "sha256": "f8f3f1c025b50c76f0c31beddd2876733215bc48dc0a47238cb35c58016d1b23"
+  },
+  "sampling": {
+    "views": [
+      "front",
+      "back",
+      "isometric"
+    ],
+    "renderer": "Babylon WebGL right-handed scene; identical lighting and CPU-skinned fixed camera fitting"
+  },
+  "metric": {
+    "litPixelContractMaxPct": 5,
+    "litPixelDefinition": "XOR of luma >= 128 / all 800x800 pixels",
+    "changedPixelDiagnostic": "any RGB channel delta > 10 / all pixels"
+  },
+  "rows": [
+    {
+      "view": "front",
+      "changedPixelPctAtChannelDeltaGt10": 6.298594,
+      "meanAbsoluteChannelDelta": 2.280001,
+      "litClassificationXorPctAtLuma128": 1.01625,
+      "maxChannelDelta": 236
+    },
+    {
+      "view": "back",
+      "changedPixelPctAtChannelDeltaGt10": 4.813438,
+      "meanAbsoluteChannelDelta": 1.994664,
+      "litClassificationXorPctAtLuma128": 0.773906,
+      "maxChannelDelta": 214
+    },
+    {
+      "view": "isometric",
+      "changedPixelPctAtChannelDeltaGt10": 5.178281,
+      "meanAbsoluteChannelDelta": 1.974982,
+      "litClassificationXorPctAtLuma128": 0.822344,
+      "maxChannelDelta": 227
+    }
+  ],
+  "maxChangedPixelPctAtChannelDeltaGt10": 6.298594,
+  "maxLitClassificationXorPctAtLuma128": 1.01625,
+  "litPixelContractPassed": true,
+  "contactSheet": {
+    "file": "ab-contact-sheet.png",
+    "bytes": 1216259,
+    "sha256": "b7d44981723405b4ea73a8db49fa7683184424fbeec26d1063fcdc32dd9a02f9"
+  },
+  "worstDifferenceOverview": {
+    "file": "worst-difference-overview.png",
+    "view": "front",
+    "bytes": 616849,
+    "sha256": "56cb47e5d17a9203b1a5b536e15cf1315839e5c9b515ac9d5615c82f58bfbad6",
+    "heatmapScale": "max RGB delta x4"
+  },
+  "rawRendersRetainedLocally": true,
+  "pillowVersion": "12.3.0",
+  "humanReview": {
+    "reviewer": "Codex bounded visual inspection",
+    "result": "accepted",
+    "scope": "front/back/isometric silhouette, face, hair spikes, hands, clothing, weapon, textures and missing-part regression",
+    "finding": "No missing body part, material loss or whole-model breakup observed; reduced hair/face edge detail is visible at the stricter review framing."
+  }
+}

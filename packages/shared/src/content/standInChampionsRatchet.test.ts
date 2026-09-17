@@ -26,6 +26,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { isStandInModel } from "./championIdentity";
+import { readShippedModelDocs } from "../../testkit/shippedModelDocs";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
 
@@ -46,10 +47,21 @@ const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../conte
  *  · ⭐ **2026-09-02：`godie-e00r` 已經修好了** —— 18 → **17**。
  *    w3x 說它用 SatyrTrickster ⇒ 從 retail MPQ 抽出來、轉成
  *    `w3x.stock.satyrtrickster`（573 頂點 · 13 個動畫）並指過去。
+ *
+ * ── ⛔⛔ 2026-09-15（GH#1250 審查）第二次更正：17 → **5** ─────────────────────
+ * 這支測試**不載 registry**，而 `isStandInModel` 那時在 registry 缺席時會退回手寫 4 顆種子
+ * ⇒ 它量的是**種子規則**，⛔ 不是出貨的 glb 規則（失敗形態⑤）。種子退路拿掉之後，
+ * 這裡把磁碟上的模型文件逐顆傳進去 ⇒ 走跟瀏覽器同一條規則。
+ * 量到的 5 位：sela・thorne（本人的 rig）・godie-h02k・godie-umal（`champ.skin.barbarian`）・
+ * ⭐ **godie-zombiex**（`champ.godie-zombiex` → 殭屍小怪的 blocky-undead.glb，種子規則數不到它）。
+ * 17 → 4（種子規則今天的值）之間的那一段是模型綁定陸續把英雄移出通用身體（例：`0c2446749`），
+ * ⛔ 而 CEIL 沒有人跟著調小 —— 棘輪只擋變多，不會自己記錄進步。
  */
-const STAND_IN_CEIL = 17;
+const STAND_IN_CEIL = 5;
 
 describe("共用替身英雄（只准變少）", () => {
+  const models = readShippedModelDocs(CONTENT);
+  const standIn = (modelKey: string | undefined): boolean => isStandInModel(modelKey, models.get(modelKey ?? "") ?? null);
   const champs = readdirSync(join(CONTENT, "champions"))
     .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
     .map(
@@ -63,7 +75,7 @@ describe("共用替身英雄（只准變少）", () => {
 
   it("★★ ⭐ 數量只准變少（⛔ 而每一位都指名）", () => {
     const standIns = champs
-      .filter((c) => isStandInModel(c.modelKey))
+      .filter((c) => standIn(c.modelKey))
       .map((c) => `${c.id}（${c.name ?? "?"}）→ ${c.modelKey}`)
       .sort();
     expect(champs.length, "儀器：一位英雄都沒讀到 ⇒ 下面在量空氣").toBeGreaterThan(50);
@@ -78,7 +90,7 @@ describe("共用替身英雄（只准變少）", () => {
   });
 
   it("★ ⭐ 儀器：今天**真的**有替身英雄（⛔ 否則上面那條在量空氣）", () => {
-    const n = champs.filter((c) => isStandInModel(c.modelKey)).length;
+    const n = champs.filter((c) => standIn(c.modelKey)).length;
     expect(
       n,
       "⛔ 一位替身英雄都沒量到 ⇒ ⭐ 那不是「都修好了」（CEIL 會跟著調小），\n" +
@@ -90,11 +102,13 @@ describe("共用替身英雄（只准變少）", () => {
     const e00r = champs.find((c) => c.id === "godie-e00r");
     expect(e00r, "儀器：初號機不在出貨樹裡").toBeDefined();
     expect(
-      isStandInModel(e00r!.modelKey),
+      standIn(e00r!.modelKey),
       "⛔⛔ 初號機**又**變回共用替身了 ⇒ ⭐ 它在 2026-09-02 已經有自己的模型：\n" +
         "   w3x `heroes.E00R.model = units\\creeps\\SatyrTrickster\\SatyrTrickster.mdl`\n" +
         "   ⇒ 從 retail MPQ 抽出來轉成 `w3x.stock.satyrtrickster`（573 頂點 · 13 動畫）。",
     ).toBe(false);
-    expect(e00r!.modelKey).toBe("w3x.stock.satyrtrickster");
+    // ⭐ 2026-09-16（PR #1280）初號機再換成 ou99 論壇模型 —— owner（逐字）：「我應該全部都有綁模型 並且不是體素orWar3 才對」
+    //   ⇒ ⛔ 不再釘 `w3x.stock.satyrtrickster` 這個值，改問那句話本身：不是 War3 內建模型。
+    expect((e00r!.modelKey ?? "").startsWith("w3x.stock."), "初號機又退回 War3 內建模型").toBe(false);
   });
 });

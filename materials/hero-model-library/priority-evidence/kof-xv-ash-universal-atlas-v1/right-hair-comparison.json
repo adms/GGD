@@ -1,0 +1,195 @@
+{
+  "source": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-material-v2-budget-v2/right-hair/body.glb",
+    "sha256": "707e3dde8ddd50d71935a079def959399b741aa199a1192eb36343ab337193bf"
+  },
+  "candidate": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/right-hair/body.glb",
+    "sha256": "edac44456a6b522cb8959f8cf89a07f12c68f533fa4e888ff31f8d9093be31cc"
+  },
+  "renders": {
+    "source": [
+      {
+        "label": "source",
+        "view": "front",
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/right-hair/render-compare/source/front.png",
+        "bytes": 117328,
+        "sha256": "823db1cbd53ecfd52097073425a82617809c0084ea99e2917a9ca1f94b26db35",
+        "camera": {
+          "location": [
+            0,
+            -4,
+            0.9
+          ],
+          "target": [
+            0,
+            0,
+            0.9
+          ],
+          "orthoScale": 2.05,
+          "resolution": [
+            384,
+            576
+          ]
+        }
+      },
+      {
+        "label": "source",
+        "view": "three-quarter",
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/right-hair/render-compare/source/three-quarter.png",
+        "bytes": 111154,
+        "sha256": "d702fc1fcd8a806411f3df8c91c017700fc2b3fc78477c1f6a3f0870837d8f63",
+        "camera": {
+          "location": [
+            3,
+            -4,
+            1.35
+          ],
+          "target": [
+            0,
+            0,
+            0.9
+          ],
+          "orthoScale": 2.1,
+          "resolution": [
+            384,
+            576
+          ]
+        }
+      },
+      {
+        "label": "source",
+        "view": "face",
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/right-hair/render-compare/source/face.png",
+        "bytes": 172881,
+        "sha256": "36c7d028c1f50de696aa20ee120bc08c50dcce0c2b6c34d42555d826d27ca30d",
+        "camera": {
+          "location": [
+            0,
+            -4,
+            1.61
+          ],
+          "target": [
+            0,
+            0,
+            1.61
+          ],
+          "orthoScale": 0.46,
+          "resolution": [
+            448,
+            448
+          ]
+        }
+      }
+    ],
+    "candidate": [
+      {
+        "label": "candidate",
+        "view": "front",
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/right-hair/render-compare/candidate/front.png",
+        "bytes": 114928,
+        "sha256": "3ed5eb097a79d4906419f1c64456fb10f4c02a24cbc2003f7b657adec50c4ba6",
+        "camera": {
+          "location": [
+            0,
+            -4,
+            0.9
+          ],
+          "target": [
+            0,
+            0,
+            0.9
+          ],
+          "orthoScale": 2.05,
+          "resolution": [
+            384,
+            576
+          ]
+        }
+      },
+      {
+        "label": "candidate",
+        "view": "three-quarter",
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/right-hair/render-compare/candidate/three-quarter.png",
+        "bytes": 108669,
+        "sha256": "38cc28830bae880391e690e74eb47accea4baf3f42d35577e919e13fda80f565",
+        "camera": {
+          "location": [
+            3,
+            -4,
+            1.35
+          ],
+          "target": [
+            0,
+            0,
+            0.9
+          ],
+          "orthoScale": 2.1,
+          "resolution": [
+            384,
+            576
+          ]
+        }
+      },
+      {
+        "label": "candidate",
+        "view": "face",
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/kof-xv-ash-universal-atlas-v1/right-hair/render-compare/candidate/face.png",
+        "bytes": 172148,
+        "sha256": "0090f4e65b49ba437c717cbc6a78c0712adb0dc9174bd700e41d587022973249",
+        "camera": {
+          "location": [
+            0,
+            -4,
+            1.61
+          ],
+          "target": [
+            0,
+            0,
+            1.61
+          ],
+          "orthoScale": 0.46,
+          "resolution": [
+            448,
+            448
+          ]
+        }
+      }
+    ]
+  },
+  "comparison": {
+    "schema": "ggd.kof-xv-ash-universal-atlas-render-comparison@1",
+    "threshold": {
+      "changedPixelChannelDelta": 12,
+      "maxChangedPixelPct": 5
+    },
+    "views": [
+      {
+        "view": "face",
+        "pixels": 200704,
+        "changedPixels": 92,
+        "changedPixelPct": 0.04583864795918367,
+        "meanMaxChannelDelta": 0.5770039461096939,
+        "maxChannelDelta": 28
+      },
+      {
+        "view": "front",
+        "pixels": 221184,
+        "changedPixels": 711,
+        "changedPixelPct": 0.32145182291666663,
+        "meanMaxChannelDelta": 0.47458676938657407,
+        "maxChannelDelta": 46
+      },
+      {
+        "view": "three-quarter",
+        "pixels": 221184,
+        "changedPixels": 892,
+        "changedPixelPct": 0.40328414351851855,
+        "meanMaxChannelDelta": 0.46159306278935186,
+        "maxChannelDelta": 55
+      }
+    ],
+    "maxChangedPixelPct": 0.40328414351851855,
+    "visualAcceptance": "pending-owner-review"
+  }
+}

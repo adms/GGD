@@ -1,5 +1,6 @@
 # deps
 node_modules/
+node_modules
 .pnpm-store/
 
 # local AI image generation (tools/icon-gen/local): python venv + multi-GB model
@@ -90,6 +91,12 @@ backup-*/
 __pycache__/
 *.pyc
 apps/platform/platform
+# `go build ./cmd/opstate` 的產物（Makefile 走 `go run`、映像在 docker/platform.Dockerfile 內建）—— GH#1160 從樹裡退休
+apps/platform/opstate
+
+# Full local voice manifest. The deterministic gzip copy is the Git entry point;
+# voice_index.py keeps this 200MB uncompressed copy locally for direct inspection.
+/materials/hero-model-library/voice-files.jsonl
 
 # generated voice-line pack PROVENANCE — the 24kHz clone SOURCE, per-take
 # renders and .method sidecars are never a playable line and never shipped; the
@@ -97,6 +104,9 @@ apps/platform/platform
 # tools/voice-gen/index-lines.mjs, which verifies clips via status.json hashes).
 content/assets/audio/voices/lines/**/takes/
 content/assets/audio/voices/lines/**/reference.wav
+# 後台「上傳參考音」寫進 <hero>/reference/<檔名>（tools/voice-gen/src/serve.mjs 的 champDir + "reference"）——
+# 那是複製聲音的**來源**，⛔ 不是出貨的語音，所以整個資料夾都不進 git（2026-09-16 owner 交辦）。
+content/assets/audio/voices/lines/**/reference/
 content/assets/audio/voices/lines/**/*.method
 
 # voice-reference-pipeline delivery bundles — large binary zips of the 51 refs,
@@ -117,3 +127,44 @@ docs/傳說武器道具.xlsx
 # ⚠️ 在此之前它沒被忽略 ⇒ 每一次 `genrun`／`skills:sync` 之後工作樹就永遠「不乾淨」，
 #   ⭐ 而一個永遠髒的工作樹會讓「乾淨」這個訊號失去意義（下一個人會學會忽略它）。
 .content-tree.lock
+
+# 部署主機身分（scripts/_hosts.sh 讀它）—— ⭐ 這個 repo 是 public 的,
+# 一個寫死的 `user@ip` 等於公開 ssh 憑證的一半。`.example` 才進 git。
+scripts/hosts.local.sh
+tools/secret-scan/hosts.local.tsv
+
+# PR #1152 preparation/review payloads archived under the S3 split manifest.
+# Keep restored local copies inspectable without adding them back to Git.
+/materials/hero-model-library/lol-project-seven/gap-listening-review.html
+/materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json
+/materials/hero-model-library/priority-evidence/all-model-dropdown-audit/all-model-dropdown-audit.json
+/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/dependency-support-catalog.json
+/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-candidates.json
+/materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-review.html
+/materials/hero-model-library/priority-evidence/ssbu-ptrainer-formal-decimation-v1/female-c01/visual-ab-contact-sheet.png
+/materials/hero-model-library/priority-evidence/ssbu-ptrainer-formal-decimation-v1/female-c01/worst-difference-overview.png
+/materials/hero-model-library/priority-evidence/ssbu-ptrainer-formal-decimation-v1/male-c00/visual-ab-contact-sheet.png
+/materials/hero-model-library/priority-evidence/ssbu-ptrainer-formal-decimation-v1/male-c00/worst-difference-overview.png
+/materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/back.png
+/materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/front.png
+/materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/isometric.png
+/materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/back.png
+/materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/front.png
+/materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/isometric.png
+/materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/back.png
+/materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/front.png
+/materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/isometric.png
+/materials/hero-model-library/priority-evidence/valhalla-37-model-options-v1/audit.json
+/materials/hero-model-library/review/asset-review-portal-v1/review-queue.json
+/materials/hero-model-library/review/fate-unlimited-codes-ps2-audio-review-v1/review-queue.json
+/materials/hero-model-library/source-inventories/community-unused-assets-v1/inventory.json
+/materials/hero-model-library/source-inventories/jstars-stpk-research-v1/analysis.json
+/materials/hero-model-library/source-inventories/jump-force-full-roster-v1/selected-paths.jsonl.gz
+/materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/IOR.png
+/materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/KYO.png
+/materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/MAI.png
+/materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-mapping.json
+/materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-review.html
+/materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/identity-map.json
+/materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/inventory.json
+/materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/files.jsonl.gz

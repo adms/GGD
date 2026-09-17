@@ -14,6 +14,9 @@
  * ── 突變紀錄（一批一條）──────────────────────────────────────────────────────
  *  · 把產生器裡 `if (s.error) { fail(...); continue; }` 的 fail 拿掉 ⇒ 第 2 條紅
  *    （沙盒裡缺名字的技能被靜默跳過，EXIT 0）。實測過。
+ *  · #1211（2026-09-15）donor WAV 改成合成夾具後重跑同一個突變 ⇒ 第 2 條紅（stderr 不再指名 b2-aladdin）。實測過。
+ *    ⚠️ 那一次量到沙盒**不管有沒有突變都 EXIT 1**（原檔表的上千個 mp3 缺席）⇒ `toBe(1)` 是單邊的尺；
+ *    同一批補了「清空原檔表 → 沒有突變時 EXIT 0」的控制組（突變是在補控制組之前跑的）。
  */
 import { describe, expect, it } from "vitest";
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -26,6 +29,15 @@ const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const GEN = "tools/voice-gen/src/build-combat-lines.mjs";
 const run = (cwd: string, ...args: string[]) =>
   spawnSync("node", ["--import", "tsx", GEN, ...args], { cwd, encoding: "utf8", env: { ...process.env, VOICE_GEN_PYTHON: "" } });
+/** 0.1 秒 24 kHz 16-bit mono 靜音 PCM WAV（44 位元組檔頭＋資料）。 */
+function silentWav(samples = 2400, rate = 24000): Buffer {
+  const b = Buffer.alloc(44 + samples * 2);
+  b.write("RIFF", 0); b.writeUInt32LE(36 + samples * 2, 4); b.write("WAVEfmt ", 8);
+  b.writeUInt32LE(16, 16); b.writeUInt16LE(1, 20); b.writeUInt16LE(1, 22); b.writeUInt32LE(rate, 24);
+  b.writeUInt32LE(rate * 2, 28); b.writeUInt16LE(2, 32); b.writeUInt16LE(16, 34);
+  b.write("data", 36); b.writeUInt32LE(samples * 2, 40);
+  return b;
+}
 
 describe("戰鬥語音產生器 join 出貨 roster (combat-lines-generator-runs)", () => {
   it("⭐ 真的 repo：--check EXIT 0（status.json 與技能名／擬聲／owner 台詞一致）", () => {
@@ -47,12 +59,14 @@ describe("戰鬥語音產生器 join 出貨 roster (combat-lines-generator-runs)
     for (const f of ["CATEGORIES.json", "ROSTER.json", "COMBAT_CASTING.json", "COMBAT_GRUNTS.json", "SKILL_READINGS.json", "OWNER_LINES.csv", "COMBAT_ORIGINALS.json"]) {
       cpSync(join(REPO, L, f), join(root, L, f));
     }
-    // the donor wavs are gitignored material; point the sandbox at the real ones via symlink-free copy of ONE hero's donor
+    // ⭐ 夾具，⛔ 不是借真的 donor WAV（#1211）：`approved/processed/*.wav` 是 gitignored 素材，
+    // CI 那台沒有 ⇒ 以前這一行 cpSync 在 CI 上 ENOENT，⛔ 而本機永遠綠。產生器對 donor 只做
+    // `sha256(readFileSync(ref.path))`（combatLinesLib.referenceFor），⛔ 不解碼 ⇒ 一顆合成的靜音 WAV 就夠。
     const casting = JSON.parse(readFileSync(join(root, L, "COMBAT_CASTING.json"), "utf8"));
     const heroId = "b2-aladdin";
     const donor = casting.champions[heroId].donor as string;
     mkdirSync(join(root, "voice-reference-pipeline/approved/processed"), { recursive: true });
-    cpSync(join(REPO, "voice-reference-pipeline/approved/processed", `${donor}.wav`), join(root, "voice-reference-pipeline/approved/processed", `${donor}.wav`));
+    writeFileSync(join(root, "voice-reference-pipeline/approved/processed", `${donor}.wav`), silentWav());
     // Narrow the sandbox roster to that one hero so the run is fast and the message is about him.
     casting.champions = { [heroId]: casting.champions[heroId] };
     writeFileSync(join(root, L, "COMBAT_CASTING.json"), JSON.stringify(casting));
@@ -61,6 +75,11 @@ describe("戰鬥語音產生器 join 出貨 roster (combat-lines-generator-runs)
     const start = src.indexOf("starterChampions = []string{");
     const end = src.indexOf("\n\t}", start);
     writeFileSync(go, src.slice(0, start) + `starterChampions = []string{\n\t\t"${heroId}",` + src.slice(end));
+    // ⭐ 反方向（#1211 補的）：原檔表會讓沙盒冒出上千個「mp3 不存在」⇒ 以前這個沙盒**不管有沒有突變都 EXIT 1**，
+    // 那一條 `toBe(1)` 是單邊的尺。⇒ 清空原檔表，先證明**沒有突變的沙盒是乾淨的**，下面的 EXIT 1 才是那一格造成的。
+    writeFileSync(join(root, L, "COMBAT_ORIGINALS.json"), JSON.stringify({ champions: {} }));
+    const clean = run(root);
+    expect(clean.status, clean.stdout + clean.stderr).toBe(0);
     // THE MUTATION UNDER TEST: one ability loses its name.
     const ab = join(root, "content/abilities", `${heroId}.w.json`);
     writeFileSync(ab, JSON.stringify({ ...JSON.parse(readFileSync(ab, "utf8")), name: "" }));

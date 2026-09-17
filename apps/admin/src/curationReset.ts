@@ -26,6 +26,7 @@
  * and a human pause in the middle of it.
  */
 import { baseFormIdOf, CHAMPION_SPLIT_FORMS, isTransformedBody } from "@ggd/shared/content/championForms";
+import type { ContentFormPair } from "@ggd/shared/content/voiceFormSharing";
 import { abilityIdsFor, missingAbilitySlots } from "./quickApproval";
 import { KINDS, KIND_LABEL, type Kind, type StarterBundle, type WhitelistDoc } from "./curation";
 
@@ -42,10 +43,15 @@ export { KINDS as RESET_KINDS, KIND_LABEL as RESET_KIND_LABEL };
  * resolve to themselves and be mis-reported as real heroes. Asking
  * `isTransformedBody` without also resolving split bodies is the exact bug
  * `championForms.ts` documents.
+ *
+ * ⭐ GH#1258（2026-09-15 審查）：手寫表之外，再問**內容卡宣告的一對**（`voiceFormSharing.contentFormPairs`
+ * —— 兩張卡互相指著對方）。⛔ 在此之前這裡只查手寫表 ⇒ `b2-maple-alt-*` 被重設預覽歸成「本體英雄」。
  */
-export function baseChampionOf(id: string): string {
+export function baseChampionOf(id: string, contentPairs: readonly ContentFormPair[] = []): string {
   const alt = baseFormIdOf(id);
   if (alt !== id) return alt;
+  const content = contentPairs.find((p) => p.alternateId === id);
+  if (content) return content.baseId;
   for (const split of CHAMPION_SPLIT_FORMS) {
     if (split.tiers.some((t) => t.championId === id)) return split.baseId;
   }
@@ -112,6 +118,8 @@ export interface BuildResetPlanInput {
   starter: StarterBundle;
   /** id → display name, from /content/champions/<id>.json. Optional. */
   championNames?: ReadonlyMap<string, string>;
+  /** 內容卡宣告的變身配對（`contentFormPairs(英雄卡)`）。Optional —— 缺席時只認手寫表。 */
+  contentPairs?: readonly ContentFormPair[];
 }
 
 function diff(a: readonly string[], b: readonly string[]): string[] {
@@ -129,7 +137,7 @@ function diff(a: readonly string[], b: readonly string[]): string[] {
  * where they are not.
  */
 export function buildResetPlan(input: BuildResetPlanInput): ResetPlan {
-  const { live, starter, championNames } = input;
+  const { live, starter, championNames, contentPairs = [] } = input;
 
   const byKind = {} as Record<ResetKind, KindPlan>;
   const emptyKinds: ResetKind[] = [];
@@ -149,8 +157,8 @@ export function buildResetPlan(input: BuildResetPlanInput): ResetPlan {
 
   const starterChampions = new Set(starter.champions);
   const championsOff: ChampionOffRow[] = byKind.champions.off.map((id) => {
-    const baseId = baseChampionOf(id);
-    const transformed = isTransformedBody(id);
+    const baseId = baseChampionOf(id, contentPairs);
+    const transformed = isTransformedBody(id) || contentPairs.some((p) => p.alternateId === id);
     const baseStaysEnabled = starterChampions.has(baseId);
     const cls: ChampionOffClass = !transformed
       ? "real-hero"

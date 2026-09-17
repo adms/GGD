@@ -1,0 +1,145 @@
+{
+  "id": "parallel-infinity-strash-sorcerer-popp",
+  "target": "何布 Popp／PN020：Sorcerer Popp 動畫與法術加工補充包",
+  "heroIds": [
+    "b2-popp"
+  ],
+  "ownerEntryIds": [],
+  "url": "https://patch.ali213.net/showpatch/263685.html",
+  "downloadUrl": "https://patch1.ventacorius.com/2024/AL213-Sorcerer%20Popp-21-0-1-1718317608-263685.zip",
+  "uploader": "Tellah9；公開鏡像 Ali213",
+  "format": "ZIP／未加密 PAK v3／53 UASSET＋53 UEXP＋3 LOCRES＋2 BAK；1 AnimSequence＋5 AnimMontage（MOD 加工來源）",
+  "accessStatus": "public-direct-download",
+  "checkedAt": "2026-09-10T15:07:56.786074+00:00",
+  "acquisitionStatus": "downloaded-verified",
+  "readiness": "reserved-pending-dependencies",
+  "resourceRole": "animation-supplement",
+  "assetKinds": [
+    "animation",
+    "texture",
+    "configuration"
+  ],
+  "defaultEligible": false,
+  "purchaseDecision": "no-purchase-continue-public-source-search",
+  "discoveryChannel": "mod-community-public-mirror",
+  "platform": "PC",
+  "sourceGame": "Infinity Strash: DRAGON QUEST The Adventure of Dai",
+  "sourceWork": "ドラゴンクエスト ダイの大冒険",
+  "selectionClass": "MOD社群修改",
+  "selectionClassNote": "社群加工的 Unreal 動畫／法術儲備，原遊戲 bytes 不在本批，不能稱原著原樣模型或原生 6 clips。",
+  "localPath": "GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp",
+  "files": [
+    {
+      "path": "original/AL213-Sorcerer Popp-21-0-1-1718317608-263685.zip",
+      "bytes": 877392,
+      "sha256": "66a21ce0385ae3be38167c8a8e8c44df20e0a7ed6afb1bac2725fe9e2bfc7a8b"
+    },
+    {
+      "path": "extracted/MasterWizardPopp.pak",
+      "bytes": 14060310,
+      "sha256": "d0b035719bf17a8ff7f72a51c82bfa250f8ab4fdfeb332706c9dd50b5a6e2a33"
+    }
+  ],
+  "upstreamArchiveSha256": "66a21ce0385ae3be38167c8a8e8c44df20e0a7ed6afb1bac2725fe9e2bfc7a8b",
+  "modelCount": 0,
+  "modelCandidates": [],
+  "nativeAssetCounts": {
+    "bodyModelFileCount": 0,
+    "modelPartFileCount": 0,
+    "skeletonFileCount": 0,
+    "nativeAudioBankFileCount": 0,
+    "communityAnimSequenceAssetCount": 1,
+    "communityAnimMontageAssetCount": 5,
+    "playableGlbClipCount": 0,
+    "confirmedOriginalUnmodifiedClipCount": 0,
+    "skillIconTexture2DCount": 2,
+    "originalUnmodifiedEquivalence": "unknown-no-base-game-comparison"
+  },
+  "motionIndex": {
+    "path": "animation-candidates.json",
+    "bytes": 16841,
+    "sha256": "e7c57cbce791dddf75a98c18366e4e9afc391349c76536082d586994195424ca"
+  },
+  "audioFileIndex": {
+    "reportPath": "audio-file-index.json",
+    "reportSha256": "e8d4212f2a1a03be7290a11b806890811783cfd9328a0018bd252f197b58105f"
+  },
+  "sourceFileManifest": {
+    "path": "pak-extracted.manifest.json",
+    "bytes": 39130,
+    "sha256": "67f369ba9b376f3b0365c24196a1f9584b4141740c78bf1966a4f1bf398ab770"
+  },
+  "filesManifest": {
+    "path": "file-manifest.json",
+    "bytes": 28614,
+    "sha256": "682caa0d7ef3f86b7dd186e33ad02403488cad207d497b8b90ece92a9a41995b"
+  },
+  "sourceManifest": {
+    "path": "source.json",
+    "bytes": 3229,
+    "sha256": "a0cd4ffd97548eaf62ab10563f301fdb937c91c4e55f99a891b9d5e67458ee96"
+  },
+  "sourceEvidence": {
+    "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp",
+    "sourceManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/source.json",
+    "motionIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/animation-candidates.json",
+    "audioFileIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/audio-file-index.json",
+    "dependencyIndexPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/dependency-index.json",
+    "uassetExportAnalysisPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/uasset-export-analysis.json",
+    "uassetExportAnalysisSha256": "9158248434cd8b05f22a7317e1c548283949026d2364c0bc6545c6c02925b87f",
+    "extractedManifestPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/pak-extracted.manifest.json",
+    "extractedManifestSha256": "67f369ba9b376f3b0365c24196a1f9584b4141740c78bf1966a4f1bf398ab770",
+    "gameAliases": [
+      "インフィニティ ストラッシュ ドラゴンクエスト ダイの大冒険",
+      "Infinity Strash Dragon Quest Dai no Daibouken",
+      "無限神速斬 勇者鬥惡龍 達伊的大冒險",
+      "无限神速斩勇者斗恶龙达伊的大冒险",
+      "無限神速劍（使用者原稱）"
+    ],
+    "manifestScope": "file-manifest.json freezes the acquisition batch before this source-entry addendum; package payload list is pak-extracted.manifest.json"
+  },
+  "verification": "原 ZIP 877392 bytes／SHA-256 已核對；PAK v3 的索引與 111 個 payload 全部通過內建 SHA-1。UE4.26 export table 確認 1 AnimSequence 與 5 AnimMontage；AS_PN020_00_B_Spl01 屬性為36 frames／1.1666666秒，壓縮骨節尚未解碼與播放。5 montage 不能當5個獨立骨骼序列。未取得 Popp body、Skeleton、音訊或完整 NiagaraSystem。",
+  "gaps": [
+    "77 external Unreal package dependencies, including SK_PN020_Skeleton and other animations/VFX/audio",
+    "No Popp body model or skeleton; do not close character-model gap",
+    "1 community AnimSequence and 5 community AnimMontage, not six independent native clips",
+    "Compressed bone tracks not decoded; no GLB or runtime playback validation",
+    "No audio files or banks; 15 AkEvent notifications are references only"
+  ],
+  "audioAcquisition": {
+    "audioCount": 0,
+    "nativeAudioBankCount": 0,
+    "confirmedVoiceCount": 0,
+    "runtimeReady": false,
+    "note": "AkEvent references are not acquired audio."
+  },
+  "reuseTerms": "Public mirror download; original mod author credited Tellah9; no explicit redistribution/conversion grant established in inspected mirror. Preserve provenance; do not treat acquisition as license grant.",
+  "publicRedistributionRightsVerified": false,
+  "usage": "intake-only animation reserve; no automatic runtime selection",
+  "backendIntegration": {
+    "required": true,
+    "state": "pending-dependencies",
+    "heroIds": [
+      "b2-popp"
+    ],
+    "selectionVerified": false,
+    "components": [
+      "AM_PN020_00_B_Spl011",
+      "AM_PN020_00_B_Spl0111",
+      "AM_PN020_00_B_Spl01111",
+      "AM_PN020_00_B_Spl022",
+      "AM_PN020_00_B_Spl02222",
+      "AS_PN020_00_B_Spl01"
+    ],
+    "note": "先補原骨架／body／外部依賴再轉換與驗收。保留 1 sequence＋5 montage 來源選項；目前不可作角色模型下拉成品或預設。"
+  },
+  "publicationStatus": "local-only-awaiting-s3-upload",
+  "pendingBackup": {
+    "status": "not-uploaded",
+    "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp/original/AL213-Sorcerer Popp-21-0-1-1718317608-263685.zip",
+    "bytes": 877392,
+    "sha256": "66a21ce0385ae3be38167c8a8e8c44df20e0a7ed6afb1bac2725fe9e2bfc7a8b",
+    "readbackVerified": false
+  },
+  "verifiedLocalDeliveryOnly": true
+}

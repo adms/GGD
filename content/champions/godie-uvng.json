@@ -26,9 +26,9 @@
     "range": 1.4
   },
   "growth": {
-    "maxHealth": 36.5265,
+    "maxHealth": 40,
     "healthRegen": 0.1289,
-    "maxMana": 37.5347,
+    "maxMana": 35,
     "manaRegen": 0.1341,
     "ad": 1.1878,
     "armor": 0.3801,
@@ -70,17 +70,17 @@
         45.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.w3x.particle.flamessmoke.p01",
       "sfxKey": "wc3.darksummoninglaunch1",
       "targetsEnemies": true,
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
@@ -108,9 +108,10 @@
           },
           "damageType": "magic",
           "invulnerableSec": 0.24,
-          "castTimeSec": 1.633
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-uvng.w",
@@ -129,18 +130,18 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "godie-fireblast-p3",
       "sfxKey": "wc3.hcancelbuilding",
       "targetsEnemies": true,
-      "radius": 6.0,
-      "castTimeSec": 1.133,
+      "radius": 6,
+      "castTimeSec": 1,
       "hitFeel": {
         "hitstopTicks": 3,
         "hitstunTicks": 5,
@@ -186,9 +187,10 @@
           "damageType": "magic",
           "statusId": "slow40",
           "statusDurationSec": 1.5,
-          "castTimeSec": 1.133
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "E": {
       "id": "godie-uvng.e",
@@ -206,10 +208,10 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [
         {
@@ -217,10 +219,10 @@
           "shape": "single",
           "modelKey": "imported.darkraor",
           "path": "forward",
-          "speed": 30.0,
-          "distance": 14.0,
-          "spinDegPerSec": 240.0,
-          "scale": 2.0,
+          "speed": 30,
+          "distance": 14,
+          "spinDegPerSec": 240,
+          "scale": 2,
           "touchRadius": 4.58,
           "touchSide": "enemies",
           "touchOncePerTarget": true,
@@ -233,7 +235,7 @@
                 "ratios": [
                   {
                     "stat": "ap",
-                    "coeff": 1.0
+                    "coeff": 1
                   }
                 ]
               }
@@ -268,15 +270,15 @@
           "path": "orbit",
           "count": 12,
           "distance": 6.42,
-          "speed": 30.0,
-          "lifeSec": 3.0,
-          "scale": 1.0,
+          "speed": 30,
+          "lifeSec": 3,
+          "scale": 1,
           "soundKey": "guardianSlam"
         }
       ],
       "vfxKey": "godie-tectonicfury-p0",
       "sfxKey": "wc3.dragonyes2",
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.3,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 6,
@@ -294,7 +296,8 @@
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極大",
-      "manaCostTier": "小"
+      "manaCostTier": "小",
+      "castTimeTier": "中"
     },
     "R": {
       "id": "godie-uvng.r",
@@ -311,15 +314,15 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.w3x.particle.flamessmoke.p01",
       "sfxKey": "wc3.dragonroostwhat1",
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 7,
@@ -350,10 +353,11 @@
               "value": -10
             }
           ],
-          "castTimeSec": 0.667
+          "castTimeSec": 0.5
         }
       },
-      "cooldownTier": "極大"
+      "cooldownTier": "極大",
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

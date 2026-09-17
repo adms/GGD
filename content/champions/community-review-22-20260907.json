@@ -1,16 +1,16 @@
 {
   "id": "community-review-22-20260907",
   "name": "菜月昴",
-  "description": "菜月昴 社群英雄功能驗收稿。作品：《Re:從零開始的異世界生活》  \n定位：個人狀態保存、有限致死攔截、資訊累積。\n\n視覺方向：黑紫 Shamac、存檔沙漏符號、舊位置輪廓與回復線；不得以瞬移加回血冒稱回溯。\n以 GGD 硬輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "description": "作品：《Re:從零開始的異世界生活》  \n定位：個人狀態保存、有限致死攔截、資訊累積。\n\n視覺方向：黑紫 Shamac、存檔沙漏符號、舊位置輪廓與回復線；不得以瞬移加回血冒稱回溯。",
   "role": "tank",
   "attackType": "melee",
   "archetype": "tank",
   "origin": "硬輔",
-  "modelKey": "version.body.d67cfcf8d7047c8adb80f95ca1443342f5b53987acca993c",
+  "modelKey": "version.body.e9ad359ba08df5be99538a43207527153580435ced64a2cd",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 38.2761224489796,
+    "maxHealth": 100,
     "healthRegen": 0.05743673469387757,
-    "maxMana": 11.026530612244898,
+    "maxMana": 35,
     "manaRegen": 0,
     "ad": 2.9131428571428573,
     "as": 2.9226239784265093e-05,
@@ -62,10 +62,10 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -89,7 +89,7 @@
           "moveSpeedMult": 0.7
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-22-20260907.q.webp",
       "template": {
@@ -100,7 +100,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -115,7 +115,7 @@
       "id": "community-review-22-20260907.w",
       "name": "〔鞭繩牽制〕",
       "provenance": "editor-json",
-      "description": "【目前模板可執行】拖拉指定目標後向前投擲 100 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】中短距離鞭擊，命中後小幅牽引。\n【待補機制】抓投是模板預覽；需鞭擊後小幅牽引，不應拋飛目標。",
+      "description": "【目前模板可執行】拖拉指定目標後向前投擲{{push}}距離，0.45 秒拋物線，落地{{radius}}範圍小級傷害。\n【目標設計】中短距離鞭擊，命中後小幅牽引。\n【待補機制】抓投是模板預覽；需鞭擊後小幅牽引，不應拋飛目標。",
       "slot": "W",
       "castType": "ground",
       "maxRank": 4,
@@ -126,10 +126,10 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -141,7 +141,7 @@
           "kind": "leap",
           "applyTo": "target",
           "mode": "toPoint",
-          "apexHeight": 0.005,
+          "apexHeight": 1.2,
           "durationSec": 0.45,
           "throwDistance": 1.83,
           "dragToCaster": true,
@@ -163,7 +163,7 @@
           ]
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-22-20260907.w.webp",
       "template": {
@@ -172,14 +172,14 @@
           "mode": "toPoint",
           "grabMode": "dragToCaster",
           "throwMode": "distance",
-          "apexHeight": 1.2,
+          "apexHeight": 300,
           "durationSec": 0.45,
           "throwDistance": 100,
           "landRadius": 2,
           "landDamageTier": "小",
           "landApRatio": 0,
           "damageType": "physical",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -231,7 +231,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-22-20260907.e.webp",
       "template": {
@@ -239,7 +239,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -286,7 +286,7 @@
           "applyTo": "self"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-22-20260907.r.webp",
       "template": {
@@ -294,7 +294,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },
@@ -341,7 +341,7 @@
       "modelKey": "version.body.d67cfcf8d7047c8adb80f95ca1443342f5b53987acca993c",
       "label": "ou99 貼文 #311294（相似造型）",
       "sourceModelKey": "ou99.311294",
-      "modelSha256": "7ee5a5282234dd3ba048321d84e10333603a387ffa32927a95797cb408582e6e",
+      "modelSha256": "062daba66c04364cd23c094bea6cc8b268380e35dff2da4e1b2e18f8c77dd29f",
       "binarySha256": "bbaa448e0ffe310540583bec08b33c83f79ff4353847b4ced259dea51b6d4cf9",
       "registeredAt": "2026-09-10T11:25:32.174Z",
       "source": {
@@ -351,6 +351,136 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-311294-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.cc688f0c9acfeab9c68254e817d2ed85a6447f9b093bd3db",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.311294",
+      "modelSha256": "520f9763456cd89238ecb430ee7c7d72cebfccea8c5f2f781ac525858502d078",
+      "binarySha256": "ab8fac4ed6d70be1dcdf6c7c92061e8dfe46413ca8d2fa952adc567531941bd9",
+      "registeredAt": "2026-09-10T14:45:31.415Z",
+      "source": {
+        "kind": "previous",
+        "character": "菜月昴",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.311294.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.3fb1524235ab7cd7eda871d312baf831c7885f6ddcb7a3cc",
+      "label": "夜斗",
+      "sourceModelKey": "community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e",
+      "modelSha256": "66e5be55728c19f8e6501da622b55d6768fc3f074a4c5411e7c158dbaa24356f",
+      "binarySha256": "57ee177f0c20a31aaa7b729e5b5311f67c5a2427040060b5f317b70d633398a9",
+      "registeredAt": "2026-09-10T14:45:31.420Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "夜斗",
+        "work": "流浪神差／野良神",
+        "library": "300heroes",
+        "reference": "300heroes:64db6774e13416da32390b5b",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.930e91a3c5aa5ff03840cc4be7d982fcd66ad3c2ef3a9c52",
+      "label": "菜月昴（論壇模型）",
+      "sourceModelKey": "ou99.311294-standard-v2",
+      "modelSha256": "ad46cc7afe26afb048a0d597677dbbcb683f866e29331d45d6a0c95b8c45f4f2",
+      "binarySha256": "5728d345dd924c0f64d87692ca4da5416977b47d02ac57b3d9b2599f2678e684",
+      "registeredAt": "2026-09-10T14:48:48.570Z",
+      "source": {
+        "kind": "exact",
+        "character": "菜月昴",
+        "work": "Re:從零開始的異世界生活",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-311294-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.8c74009a34302d2b681b0ec3a97d7d1084a178fe24da6a57",
+      "label": "夜斗",
+      "sourceModelKey": "community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e",
+      "modelSha256": "a937b9c49cca155a0814396b7f6913286da81755a1dfcec63821ff7c86d75a96",
+      "binarySha256": "aa3d330fe0b439969b825a9b56b0ba72a59f59f5d9860ba8037d6eb797674f1c",
+      "registeredAt": "2026-09-12T23:02:32.574Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "夜斗",
+        "work": "流浪神差／野良神",
+        "library": "300heroes",
+        "reference": "300heroes:64db6774e13416da32390b5b",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.7919e337bb1ff2951b09593af79b1d3f780724ddf3a24332",
+      "label": "菜月昴（論壇模型）",
+      "sourceModelKey": "ou99.311294-standard-v2",
+      "modelSha256": "a208c1fe119eb4f79d48fd680ff10c67b82f7f2ce8fbeabfc012ed1bb9bbf32a",
+      "binarySha256": "f26cc59dc0901c51e2e1858db05b80a792279d78c04f28f82c33e8f41758e36e",
+      "registeredAt": "2026-09-12T23:02:32.797Z",
+      "source": {
+        "kind": "exact",
+        "character": "菜月昴",
+        "work": "Re:從零開始的異世界生活",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-311294-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.bd1c798db5d38234790653550b4a035af6ec5e13a5e784d6",
+      "label": "夜斗",
+      "sourceModelKey": "community.body.2956d65224d9c24236376242811bda048b1e0f45fb85254e",
+      "modelSha256": "4fc79ac3e2eb4ccecc7cee7b5f397fbeb9af2b251d667a7872ea2299b9a30133",
+      "binarySha256": "aa3d330fe0b439969b825a9b56b0ba72a59f59f5d9860ba8037d6eb797674f1c",
+      "registeredAt": "2026-09-13T00:08:48.478Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "夜斗",
+        "work": "流浪神差／野良神",
+        "library": "300heroes",
+        "reference": "300heroes:64db6774e13416da32390b5b",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.e9ad359ba08df5be99538a43207527153580435ced64a2cd",
+      "label": "菜月昴（論壇模型）",
+      "sourceModelKey": "ou99.311294-standard-v2",
+      "modelSha256": "1ee799ed2f2cd71472ba2b125d3821c004df63c30d4592aabe732a5a12388f8c",
+      "binarySha256": "f26cc59dc0901c51e2e1858db05b80a792279d78c04f28f82c33e8f41758e36e",
+      "registeredAt": "2026-09-13T00:08:48.697Z",
+      "source": {
+        "kind": "exact",
+        "character": "菜月昴",
+        "work": "Re:從零開始的異世界生活",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-311294-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

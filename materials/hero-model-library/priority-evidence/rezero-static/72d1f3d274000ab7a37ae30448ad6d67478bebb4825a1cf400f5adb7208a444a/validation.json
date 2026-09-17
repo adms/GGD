@@ -1,0 +1,81 @@
+{
+  "schema": "ggd.rezero-static-component-validation@1",
+  "candidateId": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
+  "sourceId": "thunderstore-rezero",
+  "glb": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/final/beatrice/body.glb",
+    "bytes": 1246640,
+    "sha256": "4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c",
+    "triangles": 20932,
+    "drawPrimitives": 1,
+    "skins": 1,
+    "skinnedPrimitives": 1,
+    "joints": [
+      228
+    ],
+    "textures": [
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 43204,
+        "sha256": "203a5419ae2efee58e6ffd803edd2b845f4c8e8f740d45de770a78ea8c1e84be"
+      }
+    ],
+    "clips": []
+  },
+  "conversionReceipt": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-ram-beatrice-thunderstore-0.1.1-v1/source-conversion/beatrice/conversion.json",
+    "sha256": "bcecc1d2452883d6d64f3ea87506cad1de431e4f4fe4f8b6bb1c3e52ae095753"
+  },
+  "khronosIssues": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "ggdInspection": {
+    "triangles": 20932,
+    "drawPrimitives": 1,
+    "skinnedPrimitives": 1,
+    "skinCount": 1,
+    "joints": [
+      228
+    ],
+    "textureCount": 1,
+    "textures": [
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 43204,
+        "sha256": "203a5419ae2efee58e6ffd803edd2b845f4c8e8f740d45de770a78ea8c1e84be"
+      }
+    ],
+    "clipCount": 0,
+    "clips": [],
+    "budget": {
+      "errors": [],
+      "warnings": [
+        "三角面 20932 高於警戒值 16000，送審時需檢查演出負載。"
+      ]
+    }
+  },
+  "finiteFloatAccessors": {
+    "passed": true,
+    "accessorCount": 5,
+    "valueCount": 188460
+  },
+  "allAccessorBytesPreserved": true,
+  "structuralValidationPassed": true,
+  "visualValidationPassed": false,
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false,
+  "limitations": [
+    "The 2048px source texture is retained separately; the GGD candidate uses a 256px Lanczos PNG.",
+    "The source bundle contains no AnimationClip objects and the candidate has no clips.",
+    "Unity custom shader behavior is represented only by portable base-color PBR material data.",
+    "Hero binding, backend dropdown registration, runtime switching and deployment were not performed."
+  ]
+}

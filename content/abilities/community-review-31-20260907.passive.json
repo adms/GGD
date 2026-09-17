@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "〔糞作獵人的讀招〕",
   "provenance": "editor-json",
-  "description": "成功以位移避開有效攻擊後，獲得一層讀招，上限三層。單純空按移動不增加。",
+  "description": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 {{cd}} 秒。\n【目標設計】成功以位移避開有效攻擊後，獲得一層讀招，上限三層。單純空按移動不增加。\n【待補機制】需真正閃避事件的三層讀招，空按不增加。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,
@@ -49,5 +49,6 @@
       "vfxKey": "fx.prim.wind.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/community-review-31-20260907.passive.webp"
+  "icon": "assets/icons/abilities/community-review-31-20260907.passive.webp",
+  "castTimeTier": "極小"
 }

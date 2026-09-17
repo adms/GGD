@@ -35,6 +35,20 @@
  *   · 指紋相同 ⇒ 重用（留 node_modules）＋ 用 git 把真 repo 的改動（含未追蹤新檔）增量同步進沙盒
  *   · `--fresh` 強制重建；`--reset` 要沙盒 .git 與真 repo 同 HEAD，否則自動重建
  *   · genrun 裡的對帳快照對探針隱形（scripts/genrun.sh 的 `env -u GGD_TRACE_LOG …`）⇒ reads 只含真的讀
+ *
+ * ── ⭐⭐ GH#1166：**量測前提 —— 每一支都要有活可做** ─────────────────────────────
+ *   寫入端是 mtime 差分 ⇒ 一支「內容不同才寫」的產生器在**已經收斂**的樹上量到 **0 寫**，
+ *   ⛔ 而那不是「它不寫」，是**這一趟沒給它活**。2026-09-10 實跑：直接重量 ⇒ 正規化器
+ *   （`tiers:apply`／`skillremake:provenance`⋯）0 寫 ⇒ `tiers:apply` 下游閉包 >5 塌成 **0**、
+ *   `apps/**` 的裁剪從 <34 惡化到 **52 支** —— ⭐ 圖變得**更糟**，而量測本身每一步都「成功」。
+ *   ⇒ 全量模式（整份覆寫 `--out`）寫回之前擋兩種 0 寫，exit 3、檔案一個位元組都不動、逐支指名：
+ *     · 既有戶籍（同一個 script）記著它 **>0 寫** ⇒ 這一趟會把它的出邊整條抹掉
+ *     · 它名列 `normalizers.json` 而 `--out` 就是**正式戶籍**（`<repo>/tools/parallel-gates/sync-io.json`）
+ *   ⭐ 正道仍是兩趟（乾淨樹 → 回捲樹，各寫**暫存檔**）再 `merge-io.mjs` 聯集；暫存檔的第一趟
+ *     量到正規化器 0 寫是**預期的**（它只負責讀），⛔ 不擋，只印一行提醒。
+ *   逃生口 `--allow-empty-writes "<理由>"`（真的不再寫的步驟）；沒帶理由 ⇒ exit 2。
+ *   單步模式（`mergeStepsInto`，聯集）不受影響：0 寫併進去**不會**抹掉任何一條既有的寫。
+ *   守衛：packages/shared/src/ops/traceSingleStep.test.ts ⑤
  */
 import { spawn } from "node:child_process";
 import { execFileSync } from "node:child_process";
@@ -85,6 +99,12 @@ const REPO_ROOT = resolve(arg("--repo", new URL("../..", import.meta.url).pathna
 const ALLOW_EMPTY = argv.includes("--allow-empty-reads") ? String(arg("--allow-empty-reads", "") ?? "") : null;
 if (ALLOW_EMPTY !== null && (!ALLOW_EMPTY.trim() || ALLOW_EMPTY.startsWith("--"))) {
   console.error('⛔ --allow-empty-reads 要帶一個理由（例：--allow-empty-reads "純 shell 步驟，探針結構上看不見"）');
+  process.exit(2);
+}
+/** ⭐ GH#1166：量測前提的逃生口（見檔頭）。與 `--allow-empty-reads` 同一個形狀：⛔ 沒有理由就不放行。 */
+const ALLOW_IDLE = argv.includes("--allow-empty-writes") ? String(arg("--allow-empty-writes", "") ?? "") : null;
+if (ALLOW_IDLE !== null && (!ALLOW_IDLE.trim() || ALLOW_IDLE.startsWith("--"))) {
+  console.error('⛔ --allow-empty-writes 要帶一個理由（例：--allow-empty-writes "這一支已經改成純檢查，不再寫任何檔"）');
   process.exit(2);
 }
 const HOOKS = `${SANDBOX}/tools/parallel-gates/hooks`;
@@ -465,6 +485,32 @@ if (refused.length && ALLOW_EMPTY === null) {
   );
   process.exit(3);
 }
+// ⭐ GH#1166：量測前提（見檔頭）—— 全量覆寫之前，問「0 寫的那幾支是真的不寫，還是這一趟沒給它活？」
+const normalizerNames = (() => {
+  try {
+    return new Set(JSON.parse(readFileSync(`${REPO_ROOT}/tools/parallel-gates/normalizers.json`, "utf8")).normalizers.map((n) => n.step));
+  } catch { return new Set(); } // 沒有這張表（守衛的假 repo）⇒ 只剩「既有戶籍 >0 寫」那一條
+})();
+// ⚠️ 同一支在鏈上可以出現兩次（GH#1225 的 content:build）⇒ 以**名字**加總：任何一次寫過就不算閒置。
+const wrote = new Map();
+for (const s of traced) wrote.set(s.name, (wrote.get(s.name) ?? 0) + s.writes.length);
+const idleNames = [...wrote].filter(([, n]) => n === 0).map(([name]) => name);
+const idleNormalizers = idleNames.filter((n) => normalizerNames.has(n));
+if (!singleStep) {
+  const registry = OUT === resolve(REPO_ROOT, "tools/parallel-gates/sync-io.json");
+  const prior = existing?.script === SCRIPT && Array.isArray(existing.steps) ? existing.steps : [];
+  const hadWrites = (name) => prior.find((e) => e.name === name)?.writes?.length ?? 0;
+  const idle = idleNames.filter((n) => hadWrites(n) > 0 || (registry && normalizerNames.has(n)));
+  if (idle.length && ALLOW_IDLE === null) {
+    console.error(`\n⛔ 量測前提不成立：這幾支量到 0 寫 —— ⭐ 在一棵已經收斂的樹上，那是「沒活可做」，⛔ 不是「它不寫」⇒ ${OUT} **一個位元組都不動**：`);
+    for (const n of idle) console.error(`   · ${n}  寫 0  ⇒ ${hadWrites(n) > 0 ? `既有戶籍記著 ${hadWrites(n)} 份，這一趟會把它的出邊整條抹掉` : "名列 normalizers.json（內容不同才寫）"}`);
+    console.error(
+      `   ⇒ 正道：兩趟（乾淨樹 → 回捲樹）各寫暫存檔，再 node tools/parallel-gates/merge-io.mjs 聯集（見 sync.mjs 的過期訊息）。\n` +
+        `   ⇒ 真的不再寫的步驟 ⇒ --allow-empty-writes "<理由>"（GH#1166）。`,
+    );
+    process.exit(3);
+  }
+}
 if (singleStep) {
   const merged = mergeStepsInto(existing, traced);
   /**
@@ -494,12 +540,14 @@ if (singleStep) {
     `${JSON.stringify({ script: SCRIPT, chain, steps: traced }, null, 2)}\n`,
     "utf8",
   );
-  console.log(`\n⭐ 寫進 ${OUT}`);
+  console.log(`\n⭐ 寫進 ${OUT}${ALLOW_IDLE !== null ? `（--allow-empty-writes：${ALLOW_IDLE}）` : ""}`);
 }
 
 const silent = blind;
 const nowrite = traced.filter((s) => s.writes.length === 0);
 if (silent.length) console.log(`⚠️ 探針沒抓到讀取的(⇒ 排程器會把它當柵欄): ${silent.map((s) => s.name).join(" · ")}`);
 if (nowrite.length) console.log(`ℹ️  沒有寫入端的(⇒ 純檢查/純讀): ${nowrite.map((s) => s.name).join(" · ")}`);
+if (idleNormalizers.length)
+  console.log(`⚠️ 正規化器這一趟 0 寫（內容不同才寫）⇒ 這份只能當第一趟（讀），⛔ 不可以直接當戶籍: ${idleNormalizers.join(" · ")}`);
 const bad = traced.filter((s) => !s.ok);
 if (bad.length) console.log(`⚠️ 沙盒裡紅了 ${bad.length} 支(⛔ 不影響 I/O 量測): ${bad.map((s) => s.name).join(" · ")}`);

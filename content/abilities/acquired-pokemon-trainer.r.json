@@ -1,0 +1,165 @@
+{
+  "id": "acquired-pokemon-trainer.r",
+  "name": "三重指令結帳",
+  "provenance": "editor-json",
+  "description": "先對指定敵人造成中級魔法傷害，再分別消耗水徽記減速、草徽記鎖足、火徽記追加小級傷害。缺哪一枚就少哪一項。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    600.0,
+    600.0,
+    600.0
+  ],
+  "manaCostTier": "大",
+  "range": 8,
+  "radius": 3,
+  "rangeTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "中"
+      }
+    },
+    {
+      "kind": "consumeStatus",
+      "shape": "single",
+      "statusId": "acquired-pokemon-trainer.water",
+      "count": 1,
+      "subject": "self",
+      "appliedBy": "self",
+      "onConsumed": [
+        {
+          "kind": "applyStatus",
+          "sourceScope": "caster",
+          "statusId": "acquired-pokemon-trainer.triple-water",
+          "duration": 1.5,
+          "applyTo": "target",
+          "moveSpeedMult": 0.6
+        }
+      ]
+    },
+    {
+      "kind": "consumeStatus",
+      "shape": "single",
+      "statusId": "acquired-pokemon-trainer.grass",
+      "count": 1,
+      "subject": "self",
+      "appliedBy": "self",
+      "onConsumed": [
+        {
+          "kind": "applyStatus",
+          "sourceScope": "caster",
+          "statusId": "acquired-pokemon-trainer.triple-grass",
+          "duration": 0.7,
+          "applyTo": "target",
+          "root": true
+        }
+      ]
+    },
+    {
+      "kind": "consumeStatus",
+      "shape": "single",
+      "statusId": "acquired-pokemon-trainer.fire",
+      "count": 1,
+      "subject": "self",
+      "appliedBy": "self",
+      "onConsumed": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小"
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+    "params": {
+      "castType": "targeted",
+      "castTimeSec": 0.1,
+      "radius": 2.5,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "中"
+          }
+        },
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "subject": "self",
+          "statusId": "acquired-pokemon-trainer.water",
+          "appliedBy": "self",
+          "count": 1,
+          "onConsumed": [
+            {
+              "kind": "applyStatus",
+              "statusId": "acquired-pokemon-trainer.triple-water",
+              "duration": 1.5,
+              "sourceScope": "caster",
+              "applyTo": "target",
+              "moveSpeedMult": 0.6
+            }
+          ]
+        },
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "subject": "self",
+          "statusId": "acquired-pokemon-trainer.grass",
+          "appliedBy": "self",
+          "count": 1,
+          "onConsumed": [
+            {
+              "kind": "applyStatus",
+              "statusId": "acquired-pokemon-trainer.triple-grass",
+              "duration": 0.7,
+              "sourceScope": "caster",
+              "applyTo": "target",
+              "root": true
+            }
+          ]
+        },
+        {
+          "kind": "consumeStatus",
+          "shape": "single",
+          "subject": "self",
+          "statusId": "acquired-pokemon-trainer.fire",
+          "appliedBy": "self",
+          "count": 1,
+          "onConsumed": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/acquired-pokemon-trainer.r.webp",
+  "radiusTier": "極小"
+}

@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -41,10 +41,10 @@
       ],
       "id": "b2-kaiji.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "不看牌先退桌",
@@ -55,7 +55,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "self",
           "effects": [
             {
@@ -97,10 +97,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-kaiji.e.webp"
+      "icon": "assets/icons/abilities/b2-kaiji.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "self",
       "cooldown": [
         45.0,
@@ -127,10 +128,10 @@
       ],
       "id": "b2-kaiji.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "午餐錢全押這次",
@@ -141,7 +142,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "self",
           "effects": [
             {
@@ -170,10 +171,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-kaiji.q.webp"
+      "icon": "assets/icons/abilities/b2-kaiji.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "self",
       "cooldown": [
         90.0,
@@ -223,9 +225,9 @@
       ],
       "id": "b2-kaiji.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "最後一把抽獎機",
@@ -236,7 +238,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.833,
+          "castTimeSec": 1,
           "castType": "self",
           "effects": [
             {
@@ -289,10 +291,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-kaiji.r.webp"
+      "icon": "assets/icons/abilities/b2-kaiji.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -319,10 +322,10 @@
       ],
       "id": "b2-kaiji.w",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -335,7 +338,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.833,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -364,7 +367,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-kaiji.w.webp"
+      "icon": "assets/icons/abilities/b2-kaiji.w.webp",
+      "castTimeTier": "極大"
     }
   },
   "archetype": "fighter",
@@ -390,8 +394,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 6,
     "range": 8.2
@@ -406,13 +410,13 @@
     "as": 0,
     "healthRegen": 0.1168285714285714,
     "manaRegen": 0,
-    "maxHealth": 10.305102040816323,
-    "maxMana": 6.564285714285716,
+    "maxHealth": 60,
+    "maxMana": 35,
     "mr": 2.1118367346938776
   },
   "msGrowthTier": "極小",
   "id": "b2-kaiji",
-  "modelKey": "version.body.3645f26fcf23503838fa8d833b06bf8680efe8bbdfdf0fe6",
+  "modelKey": "version.body.90e1d0ec0bf4829a0d3ea279eead5fc5f8bf5627eaddea95",
   "name": "伊藤開司",
   "origin": "軟輔",
   "passiveAbility": "b2-kaiji.passive",
@@ -448,7 +452,7 @@
       "modelKey": "version.body.3645f26fcf23503838fa8d833b06bf8680efe8bbdfdf0fe6",
       "label": "ou99 伊藤開司（本尊／相似造型）",
       "sourceModelKey": "ou99.457710",
-      "modelSha256": "cd425ec6efa2e24e88a3ab32328770fc3d3d95f20fd2b68c12c244a4ffd4e18f",
+      "modelSha256": "476901348d5cd994ceec20eaba6bbbdc53ef588bfbd7355eb5ae6c8557f03fc5",
       "binarySha256": "0ffce2b9f25b79753a9128d548a978de691985db46d4077d1466f880deececd3",
       "registeredAt": "2026-09-10T18:20:39.968Z",
       "source": {
@@ -458,6 +462,123 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-457710-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.607aa79d97d336724463ef14aa4f8d16110c276daf27398a",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "b7ce0e58526376f3add67bc10456fa1319f3930de5063170d41f7852956826ac",
+      "binarySha256": "df75e87ce8691ee25b8c623ae03f54a4a786a2d5396c6bc5ef769a0849d9360f",
+      "registeredAt": "2026-09-12T23:12:00.102Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.95425b904b5861bd4ed610e991b31030a6cc9977a6cbc415",
+      "label": "黑",
+      "sourceModelKey": "community.body.c2416634adcb2b9a9fb4847c92fbf35ec3daa9d7a4dd79b1",
+      "modelSha256": "14d55af803db801980ce4778241ff76bad1481dc76d6437c8b37fdf8d031f271",
+      "binarySha256": "80e4420378f76a95fdf9bbbdde2b06c26055997c8107282971faf31e8dd36b2d",
+      "registeredAt": "2026-09-12T23:12:00.209Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑",
+        "work": "DARKER THAN BLACK－黑之契約者",
+        "library": "300heroes",
+        "reference": "300heroes:3d7222e80131dc1b4fa7c782",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.074099f6c8d7eade75620a4f42b0af4810fea3edcedef42f",
+      "label": "伊藤開司｜holya 社群模型＋GGD 基本六態",
+      "sourceModelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+      "modelSha256": "a2997a1e64f65dafd12709fce65bdec07b4eafa30aa519e9d28a68a9f4527481",
+      "binarySha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a",
+      "registeredAt": "2026-09-12T23:12:00.224Z",
+      "source": {
+        "kind": "exact",
+        "character": "伊藤開司",
+        "work": "賭博默示錄",
+        "library": "Lethal Company MOD／holya",
+        "reference": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/",
+        "tier": "original",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.b5e016b1d41fb497966bc0df2c40243444f9acb69268fe54",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "896cde23d4cf3070948518e60ddbe95e3bd6f7939d40f363477e24db79958a99",
+      "binarySha256": "df75e87ce8691ee25b8c623ae03f54a4a786a2d5396c6bc5ef769a0849d9360f",
+      "registeredAt": "2026-09-13T00:09:04.132Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.85b59f48d84ac3e3954a1d01191659095ff41d2ba1eb4ffd",
+      "label": "黑",
+      "sourceModelKey": "community.body.c2416634adcb2b9a9fb4847c92fbf35ec3daa9d7a4dd79b1",
+      "modelSha256": "e20a2c8d6b36846f822b192df53e2b17d25ea17190b671c24ee13c39e726460d",
+      "binarySha256": "80e4420378f76a95fdf9bbbdde2b06c26055997c8107282971faf31e8dd36b2d",
+      "registeredAt": "2026-09-13T00:09:04.235Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑",
+        "work": "DARKER THAN BLACK－黑之契約者",
+        "library": "300heroes",
+        "reference": "300heroes:3d7222e80131dc1b4fa7c782",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.90e1d0ec0bf4829a0d3ea279eead5fc5f8bf5627eaddea95",
+      "label": "伊藤開司｜holya 社群模型＋GGD 基本六態",
+      "sourceModelKey": "community.body.424d7db8825fd5f62344946a5fae5536bf38e710bed83036",
+      "modelSha256": "674cb667076da4f9de8818e5564ccb02a276dce1ca886bf08189bdfbbe962f3c",
+      "binarySha256": "9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a",
+      "registeredAt": "2026-09-13T00:09:04.252Z",
+      "source": {
+        "kind": "exact",
+        "character": "伊藤開司",
+        "work": "賭博默示錄",
+        "library": "Lethal Company MOD／holya",
+        "reference": "https://thunderstore.io/c/lethal-company/p/holya/kaiji_suit_2/",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "sourceGame": "Lethal Company",
+        "sourcePlatform": "Windows",
+        "sourceGameReleasedAt": "2023-10-23",
+        "sourceGameReleaseReference": "https://store.steampowered.com/app/1966720/Lethal_Company/"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

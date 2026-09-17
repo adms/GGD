@@ -1,0 +1,18 @@
+{
+  "id": "lol-fiddlesticks.fear",
+  "schema": "status-effect@1",
+  "name": "恐懼",
+  "description": "稻草人「恐懼」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-fiddlesticks.fear",
+    "fear",
+    "uncontrollable",
+    "ai-override",
+    "flee",
+    "attack-denied",
+    "disable",
+    "cc",
+    "debuff"
+  ]
+}

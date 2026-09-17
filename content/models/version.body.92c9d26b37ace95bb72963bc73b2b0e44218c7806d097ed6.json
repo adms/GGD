@@ -1,0 +1,20 @@
+{
+  "id": "version.body.92c9d26b37ace95bb72963bc73b2b0e44218c7806d097ed6",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/versions/1d970e175efd465d1db09f9c1ddf2233051d32acdcffaa2db980df5d39f178fc.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "xerath_idle1",
+    "run": "xerath_run",
+    "attack": "xerath_attack1",
+    "cast": "xerath_spell1",
+    "hurt": "xerath_idle1",
+    "death": "xerath_death"
+  },
+  "bodyVersion": {
+    "sourceModelKey": "community.body.38eafeffeb7d4c57ab370df9a4afd0a5067a9ef32b56148c",
+    "legacyAppearance": false
+  },
+  "yawOffsetDeg": 0
+}

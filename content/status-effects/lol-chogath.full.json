@@ -1,0 +1,15 @@
+{
+  "id": "lol-chogath.full",
+  "schema": "status-effect@1",
+  "name": "吃太飽走不動",
+  "description": "科加斯「吃太飽走不動」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-chogath.full",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

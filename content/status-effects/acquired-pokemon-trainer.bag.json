@@ -1,0 +1,11 @@
+{
+  "id": "acquired-pokemon-trainer.bag",
+  "schema": "status-effect@1",
+  "name": "包包裡有傷藥",
+  "description": "Pokémon Trainer「包包裡有傷藥」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "acquired-pokemon-trainer.bag",
+    "buff"
+  ]
+}

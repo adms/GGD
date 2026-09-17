@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 1.233,
+  "castTimeSec": 1,
   "castType": "ground",
   "cooldown": [
     45.0
@@ -23,7 +23,7 @@
   ],
   "id": "b2-uncle.ex",
   "manaCost": [
-    112.0
+    150.0
   ],
   "manaCostTier": "小",
   "maxRank": 1,
@@ -36,7 +36,7 @@
     "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
     "params": {
       "aim": "target",
-      "castTimeSec": 1.233,
+      "castTimeSec": 1,
       "damage": {
         "damageTier": "中"
       },
@@ -53,5 +53,6 @@
       "vfxKey": "fx.prim.arcane.bolt"
     }
   ],
-  "icon": "assets/icons/abilities/b2-uncle.ex.webp"
+  "icon": "assets/icons/abilities/b2-uncle.ex.webp",
+  "castTimeTier": "極大"
 }

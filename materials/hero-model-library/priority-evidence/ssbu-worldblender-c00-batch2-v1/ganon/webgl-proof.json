@@ -1,0 +1,355 @@
+{
+  "schema": "ggd.ssbu-static-webgl@1",
+  "babylonVersion": "7.54.3",
+  "renderer": "actual Babylon WebGL glTF loader in right-handed scene; source material/culling preserved; CPU-skinned world bounds used for camera framing",
+  "worldSkinnedBounds": {
+    "min": [
+      -1.1553073300565302,
+      5.854404324457177e-07,
+      -0.3170009250734633
+    ],
+    "max": [
+      1.1553067812902782,
+      1.8000000004259573,
+      0.31699819152787767
+    ],
+    "extent": [
+      2.3106141113468084,
+      1.799999414985525,
+      0.633999116601341
+    ]
+  },
+  "geometry": [
+    {
+      "name": "GamemodelShape_primitive0",
+      "vertices": 513,
+      "indices": 1854,
+      "worldBounds": {
+        "min": [
+          -0.6262546012538337,
+          0.01636598014328819,
+          -0.3170009250734633
+        ],
+        "max": [
+          0.6262423911878159,
+          1.711176953033536,
+          0.23067022977501306
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 90,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "GamemodelShape_primitive1",
+      "vertices": 3175,
+      "indices": 12690,
+      "worldBounds": {
+        "min": [
+          -1.0164505402867974,
+          5.854404324457177e-07,
+          -0.15570609220660975
+        ],
+        "max": [
+          1.0164501287123073,
+          1.7064277689158933,
+          0.31699819152787767
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 90,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "GamemodelShape_primitive2",
+      "vertices": 831,
+      "indices": 3870,
+      "worldBounds": {
+        "min": [
+          -1.1553073300565302,
+          1.3762119237638413,
+          -0.032741052460865255
+        ],
+        "max": [
+          1.1553067812902782,
+          1.7248689609727499,
+          0.2623263082889192
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 90,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "GamemodelShape_primitive3",
+      "vertices": 16,
+      "indices": 51,
+      "worldBounds": {
+        "min": [
+          0.021531522494585786,
+          1.60210057522047,
+          0.18936596137355782
+        ],
+        "max": [
+          0.053256007049888865,
+          1.6305962648514631,
+          0.20526064025168628
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 90,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "GamemodelShape_primitive4",
+      "vertices": 16,
+      "indices": 51,
+      "worldBounds": {
+        "min": [
+          -0.053290060616754786,
+          1.6021005752204673,
+          0.18936596994804206
+        ],
+        "max": [
+          -0.021565571774209147,
+          1.6305962648514607,
+          0.2052606488261705
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 90,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    },
+    {
+      "name": "GamemodelShape_primitive5",
+      "vertices": 1660,
+      "indices": 5154,
+      "worldBounds": {
+        "min": [
+          -0.09951315063920774,
+          1.5391560552646484,
+          -0.0631281146709668
+        ],
+        "max": [
+          0.0994792299768612,
+          1.8000000004259573,
+          0.2311043912680591
+        ]
+      },
+      "skeleton": "model-armature",
+      "bones": 90,
+      "numBoneInfluencers": 4,
+      "gpuSkinning": true
+    }
+  ],
+  "animationGroups": 0,
+  "skeletons": 1,
+  "materials": [
+    {
+      "name": "alp_ganon_002",
+      "alpha": 1,
+      "transparencyMode": 2,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "alp_ganon_002 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 128,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "def_ganon_001",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "def_ganon_001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "skin_ganon_001",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "skin_ganon_001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 171
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "EyeL",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "EyeL (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "EyeR",
+      "alpha": 1,
+      "transparencyMode": 0,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "EyeR (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "alp_ganon_001",
+      "alpha": 1,
+      "transparencyMode": 2,
+      "backFaceCulling": true,
+      "metallic": 0,
+      "roughness": 1,
+      "albedoTexture": {
+        "name": "alp_ganon_001 (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    }
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 364,
+        "height": 1
+      }
+    },
+    {
+      "name": "alp_ganon_002 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 128,
+        "height": 256
+      }
+    },
+    {
+      "name": "def_ganon_001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "skin_ganon_001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 171
+      }
+    },
+    {
+      "name": "EyeL (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "EyeR (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "alp_ganon_001 (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "front",
+      "alpha": 1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "back",
+      "alpha": -1.5707963267948966,
+      "beta": 1.5707963267948966
+    },
+    {
+      "name": "isometric",
+      "alpha": 0.7853981633974483,
+      "beta": 1.1635528346628863
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "gameplayAcceptance": false
+}

@@ -1,0 +1,11 @@
+{
+  "id": "acquired-ram.wind",
+  "schema": "status-effect@1",
+  "name": "掃除前先開窗",
+  "description": "拉姆「掃除前先開窗」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "acquired-ram.wind",
+    "buff"
+  ]
+}

@@ -1,16 +1,16 @@
 {
   "id": "lol-lux",
   "name": "拉克絲",
-  "description": "結合光束、短效束縛與護盾，以清楚的施法提示協助隊伍創造進攻空間。\n\n概念來源：LoL 拉克絲\nhttps://www.leagueoflegends.com/zh-tw/champions/lux/\n\n本遊戲改編：\n• 照明標記改為有內置冷卻的普攻魔法追加，不保留標記引爆條件。\n• 護盾改為自身護盾，束縛只命中指定一人；光束依本遊戲距離與傷害級距結算。\n\n採用既有 GGD 模型與特效，外觀為驗收用替身。",
+  "description": "結合光束、短效束縛與護盾，以清楚的施法提示協助隊伍創造進攻空間。\n\n概念來源：LoL 拉克絲\nhttps://www.leagueoflegends.com/zh-tw/champions/lux/\n\n本遊戲改編：\n• 照明標記改為有內置冷卻的普攻魔法追加，不保留標記引爆條件。\n• 護盾改為自身護盾，束縛只命中指定一人；光束依本遊戲距離與傷害級距結算。",
   "role": "fighter",
   "attackType": "ranged",
   "archetype": "fighter",
   "origin": "軟輔",
-  "modelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+  "modelKey": "version.body.c55acb04a86281e81f22da8dfc65e01ef5ac8607d751f690",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 10.305102040816323,
+    "maxHealth": 60,
     "healthRegen": 0.1168285714285714,
-    "maxMana": 6.564285714285716,
+    "maxMana": 35,
     "manaRegen": 0,
     "ad": 2.220326530612245,
     "as": 0,
@@ -62,10 +62,10 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -89,7 +89,7 @@
           "root": true
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
@@ -99,7 +99,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e"
@@ -147,14 +147,14 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
@@ -176,10 +176,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -210,7 +210,7 @@
           "targetMode": "reresolve"
         }
       ],
-      "castTimeSec": 0.833,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "template": {
         "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
@@ -222,7 +222,7 @@
           "applyTo": "enemies",
           "damageTier": "極小",
           "damageType": "magic",
-          "castTimeSec": 0.833,
+          "castTimeSec": 0.1,
           "radius": 4.5
         },
         "inheritDefaults": true,
@@ -245,9 +245,9 @@
         90.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        600.0,
+        600.0,
+        600.0
       ],
       "manaCostTier": "大",
       "range": 8,
@@ -282,7 +282,7 @@
           "radiusTier": "極小"
         }
       ],
-      "castTimeSec": 0.833,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "template": {
         "ref": "hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699",
@@ -295,7 +295,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.833
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true,
         "contentSha256": "sha256:9999c00222278ac5d4d0292370b6c40e265b572b4767a50bcd8abd951136db23"
@@ -316,5 +316,138 @@
     "magic"
   ],
   "schema": "champion@1",
-  "icon": "assets/icons/champions/lol-lux.webp"
+  "icon": "assets/icons/champions/lol-lux.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.b66e6ed971eb3c071bf34c0ce11669ba7b2c1ad251cbbf1d",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+      "modelSha256": "41cf995e51e62590239488985358729a47ac9c9a8335a387ff7d024426dae550",
+      "binarySha256": "5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee",
+      "registeredAt": "2026-09-10T14:45:44.084Z",
+      "source": {
+        "kind": "previous",
+        "character": "拉克絲",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.147f3d7695219be6c006ea69b00cd3cc805bce91d692c822",
+      "label": "拉克絲（LOL 原生模型）",
+      "sourceModelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+      "modelSha256": "dd748669e0885593010e0f4dd26738259eec1baa98e06085de55a847c0cb97c1",
+      "binarySha256": "5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee",
+      "registeredAt": "2026-09-10T14:45:44.103Z",
+      "source": {
+        "kind": "exact",
+        "character": "拉克絲",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "content/champions/lol-lux.json",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.18edc31837b643ead94792d4a4885f5ae23fcbdabf29b046",
+      "label": "拉克絲",
+      "sourceModelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+      "modelSha256": "627cf0393e8756c33db729fadb5555f8ba87460880d31f90e02b6d987981f099",
+      "binarySha256": "5848bf71f2ea57df9e919cafb908a963b71a83ff8ca5974f17800923aa9361ee",
+      "registeredAt": "2026-09-10T14:45:44.191Z",
+      "source": {
+        "kind": "exact",
+        "character": "拉克絲",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "lol:lux",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.1c285b4d672c8f7a369c2752163c93483ff1bbebc110c1ab",
+      "label": "拉克絲（LOL 原生模型）",
+      "sourceModelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+      "modelSha256": "c2afcf2a503e78342e25aa838fef31c8e46bbb1583bdb2e415e0e8701f32fd21",
+      "binarySha256": "3638a0a5830a5b4d0f776d508a42592976239b555850030fa585c90d6dd161ea",
+      "registeredAt": "2026-09-12T23:12:04.236Z",
+      "source": {
+        "kind": "exact",
+        "character": "拉克絲",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "content/champions/lol-lux.json",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.0d1754c369476a31d32a478469cd6b54cf15bce1b32d6a2b",
+      "label": "拉克絲",
+      "sourceModelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+      "modelSha256": "89cde8f23bc17dbf0205f059328742ff18061e649daf9890f3e3d69d70912f5a",
+      "binarySha256": "3638a0a5830a5b4d0f776d508a42592976239b555850030fa585c90d6dd161ea",
+      "registeredAt": "2026-09-12T23:12:04.357Z",
+      "source": {
+        "kind": "exact",
+        "character": "拉克絲",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "lol:lux",
+        "tier": "original",
+        "selectionClass": "canonical-game"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.ee9ef73ec42a1ec58b34147794f5e1d820b44f22090a7519",
+      "label": "拉克絲（LOL 原生模型）",
+      "sourceModelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+      "modelSha256": "edb73838f67dd9f88f5bb9ceef1750f7c42f2b1e8f6c9bbf48491f482afbc379",
+      "binarySha256": "3638a0a5830a5b4d0f776d508a42592976239b555850030fa585c90d6dd161ea",
+      "registeredAt": "2026-09-13T00:09:08.266Z",
+      "source": {
+        "kind": "exact",
+        "character": "拉克絲",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "content/champions/lol-lux.json",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "League of Legends",
+        "sourcePlatform": "Windows / macOS",
+        "sourceGameReleaseReference": "https://www.riotgames.com/darkroom/original/8e2a0ca2dbd5c484ff503513ed591f32%3Adb0dce6771e17a4e90bf6ba43a32c7ab/leagueoflegends-fact-sheet.pdf"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.c55acb04a86281e81f22da8dfc65e01ef5ac8607d751f690",
+      "label": "拉克絲",
+      "sourceModelKey": "community.body.43101f7e4088e7f389bb2ee8f4a6784f1e951651e7643128",
+      "modelSha256": "b6d539688960235b9f1aa9c59fee54b7f27ea5c3b87b6fdb0d2304ce4193aba0",
+      "binarySha256": "3638a0a5830a5b4d0f776d508a42592976239b555850030fa585c90d6dd161ea",
+      "registeredAt": "2026-09-13T00:09:08.382Z",
+      "source": {
+        "kind": "exact",
+        "character": "拉克絲",
+        "work": "英雄聯盟 League of Legends",
+        "library": "lol",
+        "reference": "lol:lux",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "League of Legends",
+        "sourcePlatform": "Windows / macOS",
+        "sourceGameReleaseReference": "https://www.riotgames.com/darkroom/original/8e2a0ca2dbd5c484ff503513ed591f32%3Adb0dce6771e17a4e90bf6ba43a32c7ab/leagueoflegends-fact-sheet.pdf"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

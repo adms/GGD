@@ -344,11 +344,14 @@ def _pending_block(doc, heading_level):
         "",
         f"⭐ 那份文件的狀態定義逐字：**{doc['statusDefinition']}**",
         "",
+        "`追蹤鍵` 原樣保存來源快照的值；英雄卡尚未進 `content/champions/` 時，"
+        "不得將該值宣稱為目前可用的 GGD hero ID，也不代表已上架。",
+        "",
         "⚠️ ⛔ 技能名稱這裡印不出來 —— 技能文件與英雄卡一起還沒進來。",
     ])
     for g in doc["groups"]:
         out += [f"**{g['batch']}**（{len(g['rows'])} 名 · {g['ticket']}）", "",
-                "| # | ID | 角色 | 狀態 |", "| ---: | --- | --- | --- |"]
+                "| # | 追蹤鍵 | 角色 | 狀態 |", "| ---: | --- | --- | --- |"]
         for i, r in enumerate(g["rows"], 1):
             out.append(f"| {i} | `{r['id']}` | {G.cell(r['name'])} | {G.cell(r['status'])} |")
         out.append("")
@@ -371,20 +374,54 @@ def hero_group(cid):
     return "其他"
 
 
+#: ⭐ 一格 `—` 回答不了 owner 2026-09-11 問的「**為什麼這幾隻沒上架**」。
+#: ⛔ 而在此之前這張表只印 ✅/— ⇒ 讀起來像「153 名裡有 23 名漏掉了」，
+#: ⭐ 而真相是那 23 名**沒有一名是漏掉的**。⇒ 理由逐格印出來，⛔ 不是印在表腳的散文裡
+#: （第一·五守則的同族：一個限定詞只寫在表頭，第一個複製這張表的人就會把它丟掉）。
+#:
+#: ⚠️ ⭐ 每一條都**從內容推導**，⛔ 沒有一條是寫死的 id 名單：
+#:   · `transform.role == "alternate"` —— 它是**某一位已上架英雄的第二具身體**，
+#:     結構上不可獨立選取（`formPairShipping.ts` 與 `championForms.test.ts` 逐對釘死）
+#:   · `retiredChampions` —— owner 逐字下架（理由存在 `content/config/roster.json` 的 note 裡）
+#:   · 三者皆無（origin / 天生 / EX）—— 內容載入失敗時 `main.tsx:186` 註冊的**骨架替身**，
+#:     ⛔ 它本來就不該是玩家選得到的英雄
+def offlist_reason(c, retired):
+    """⭐ 它**不在**開放名單上的理由。回 None ＝ ⛔ 真的沒有理由（那就是一個缺口）。"""
+    if (c.get("transform") or {}).get("role") == "alternate":
+        return "變身態"
+    if c["id"] in retired:
+        return "已下架"
+    if c.get("origin") is None and c.get("passiveAbility") is None and c.get("exAbility") is None:
+        return "骨架"
+    return None
+
+
+def _retired_ids():
+    """⛔ 讀 `content/config/roster.json`，⛔ 不抄一份 id 名單進這裡（第〇·四守則）。"""
+    path = os.path.join(G.CONTENT, "config", "roster.json")
+    if not os.path.exists(path):
+        return frozenset()
+    with open(path, encoding="utf-8") as f:
+        return frozenset(json.load(f).get("retiredChampions") or ())
+
+
 def all_heroes_rows(ctx):
     """(組, id, 全名, 稱號, 六格技能名) —— ⭐ 缺的槽印 `—`，⛔ 不是省略那一格
     （省略會讓表格錯位，而且看不出來「這一支沒有 EX」）。"""
     open_ids = ctx["open_champions"]
+    retired = _retired_ids()
     rows = []
     for c in ctx["champions"]:
         names = {slot: G.cell(a.get("name") or a.get("id")) for slot, a in kit_slots(c, ctx)}
         title, full = G.split_champion_name(c.get("name", ""))
+        is_open = c["id"] in open_ids
         rows.append({
             "group": hero_group(c["id"]),
             "id": c["id"],
             "full": G.cell(full),
             "title": G.cell(title),
-            "open": c["id"] in open_ids,
+            "open": is_open,
+            "reason": None if is_open else offlist_reason(c, retired),
             "slots": [names.get(s, "—") for s in ("天生", "Q", "W", "E", "R", "EX")],
         })
     rows.sort(key=lambda r: (
@@ -398,10 +435,57 @@ def _all_heroes_table(rows, flags):
     out = ["| 英雄 | 稱號 | 上架 | 天生 | Q | W | E | R | EX |",
            "| --- | --- | :-: | --- | --- | --- | --- | --- | --- |"]
     for r in rows:
-        flag = ("✅" if r["open"] else "—") if flags else "·"
+        # ⭐ 不在名單上時印**理由**，⛔ 不是一個問不出東西的 `—`。
+        flag = ("✅" if r["open"] else (r["reason"] or "⛔ 未列入")) if flags else "·"
         out.append("| " + " | ".join([
             f"**{r['full']}**<br>`{r['id']}`", r["title"], flag, *r["slots"],
         ]) + " |")
+    return out
+
+
+def _rosterHeadline(rows, opened):
+    """⭐ 標題行：**角色** / 變身態 / 骨架 分開數。
+
+    ⛔ 「153 名英雄，其中 130 名在開放名單內」把三種東西放進同一個分母 ——
+    ⭐ 而變身態**不是第 21 位角色**，它是某一位已上架角色的第二具身體。
+    """
+    off = [r for r in rows if not r["open"]]
+    alt = sum(1 for r in off if r["reason"] == "變身態")
+    skel = sum(1 for r in off if r["reason"] == "骨架")
+    other = len(off) - alt - skel
+    bits = [f"**{opened}** 名角色（⭐ 全部在開放名單內）"]
+    if alt: bits.append(f"**{alt}** 個變身態（⭐ 它們的本體都已上架）")
+    if skel: bits.append(f"**{skel}** 個骨架替身")
+    if other: bits.append(f"⛔ **{other}** 名未列入（⭐ 這一格要處理）")
+    return [f"這份文件共 **{len(rows)}** 列 ＝ " + " ＋ ".join(bits) + "。"]
+
+
+def _offlist_summary(rows, opened):
+    """⭐ owner 2026-09-11 問「153 名全部上架」⇒ 這幾行就是答案。
+
+    ⛔ 在此之前這份文件只說「153 名，其中 130 名在開放名單內」——
+    ⭐ 那句話**每個字都對**，⚠️ 而它讀起來像「有 23 名漏掉了」。
+    ⇒ 這裡把差額**逐類拆開**，⛔ 不是留給讀的人自己去數。
+    """
+    off = [r for r in rows if not r["open"]]
+    if not off:
+        return [f"⭐ **{opened} 名全部在開放名單內** —— 零缺口。"]
+    buckets = {}
+    for r in off:
+        buckets.setdefault(r["reason"] or "⛔ 未列入", []).append(r["id"])
+    why = {
+        "變身態": "**某一位已上架英雄的第二具身體**，結構上不可獨立選取"
+                  "（`transform.role = \"alternate\"`；`formPairShipping.ts` 逐對釘死）",
+        "已下架": "owner 逐字下架，理由存在 `content/config/roster.json` 的 note 裡",
+        "骨架": "內容載入失敗時 `apps/client/src/main.tsx:186` 註冊的**替身**，"
+                "⛔ 本來就不該是玩家選得到的英雄",
+        "⛔ 未列入": "⛔ **沒有推導得出來的理由** —— 這是一個真的缺口，要處理",
+    }
+    out = [f"⭐ 差額 **{len(off)}** 名 ⛔ **沒有一名是「漏掉」的**，逐類如下："]
+    out += ["", "| 為什麼不在名單上 | 幾名 | 是什麼 |", "| --- | :-: | --- |"]
+    for reason, ids in sorted(buckets.items(), key=lambda kv: -len(kv[1])):
+        out.append(f"| {reason} | {len(ids)} | {why.get(reason, '—')} |")
+    out += ["", f"⇒ ⭐ **每一位獨立可選的英雄（{opened} 名）今天都在開放名單上。**"]
     return out
 
 
@@ -447,7 +531,15 @@ def gen_all_heroes_doc(ctx):
         f"> ⛔ **這份文件是產生的**（`{CMD}`）—— 手改會在下一次重新產生時被打回來。",
         f"> 來源只有 `content/champions/` 與進版控的策展快照；contentVersion `{ctx['contentVersion']}`。",
         "",
-        f"共 **{len(rows)}** 名英雄，其中 **{opened}** 名在開放名單內。",
+        # ⭐ owner 2026-09-11：「我的目標是 **153 名全部上架**」。
+        # ⇒ 這一行本來寫「共 153 名英雄，其中 130 名在開放名單內」——
+        #   ⛔ 而那讀起來像「有 23 名沒上架」。⭐ 實際不是：那 23 列裡
+        #   **21 個是變身態**（而它們的本體 **21/21 全部已上架**，量過的），
+        #   2 個是內容載入失敗時的骨架替身。
+        # ⇒ ⭐ 改成按**它們是什麼**分開數，⛔ 不是把角色與第二具身體混在一個分母裡。
+        *_rosterHeadline(rows, opened),
+        "",
+        *_offlist_summary(rows, opened),
         "",
         "每一列六格＝**天生 / Q / W / E / R / EX**，印的是技能**名稱**。",
         "一行效果見 README 的開放名單那一段；完整效果文字見 `docs/reference/abilities.md`。",
@@ -1150,6 +1242,29 @@ def gen_tiers(ctx):
     num, den = wc3_per_unit()
     env = (load_config("combat-env").get("multipliers") or {})
     cdrules = load_config("cooldown-rules")
+    # ⭐ 錨點血量「固定值 or 名單中位」看 `balance-anchors.json` 的 `enabled` —— ⛔ 不寫死成「固定值」
+    #   （2026-09-15 #1260 審查：上一版寫死，⛔ 沒顧到 `enabled:false` 會退回取中位）。
+    #   讀不到檔時照 `tools/balance-anchors/gen.ts` 的 `shippedAnchors()` 一樣退回中位（明說，⛔ 不是 sys.exit）。
+    anchors_path = os.path.join(G.CONTENT, "config", "balance-anchors.json")
+    anchors_fixed = False
+    if os.path.exists(anchors_path):
+        with open(anchors_path, encoding="utf-8") as f:
+            anchors_fixed = json.load(f).get("enabled") is not False
+    if anchors_fixed:
+        anchor_src = (
+            "錨點血量是 `content/config/balance-anchors.json` 的**固定值**"
+            "（owner 2026-09-12「以後固定數值 别再取中位數了」），⛔ 不再取名單中位"
+            "（⚠️ 那一份的 `enabled` 翻成 `false` ＝ 一鍵退回取中位）。")
+        pop_role = (
+            f"⚠️ 錨點是固定值時，這 {pop} 位**⛔ 不進**級距推導 —— `anchors:build` 仍量名單中位，"
+            "只用來印「固定值 vs 今天的名單中位」的偏差（⛔ 不改值）。")
+    else:
+        anchor_src = (
+            "⚠️ `content/config/balance-anchors.json` 目前**沒有生效**（`enabled:false` 或檔案不在）"
+            f" ⇒ 錨點血量退回取這 {pop} 位的**純基礎中位**（刻度會隨上架名單漂）。")
+        pop_role = (
+            f"⚠️ 錨點目前取名單中位 ⇒ 這 {pop} 位**直接決定**級距刻度"
+            "（owner 2026-09-12「以後固定數值 别再取中位數了」—— 翻回 `enabled:true` 就回到固定值）。")
 
     L = [
         f"#### ⭐ 技能五級距（{len(tables)} 張表 · {rows} 條梯子 · 母體 **{pop} 位對戰可選英雄**）",
@@ -1283,10 +1398,11 @@ def gen_tiers(ctx):
         "| 冷卻 | w3x 匯進來的自由秒數 | owner 2026-08-19 **直接給滿**十五格"
         "（單體／範圍／變身各一列），⛔ 所以這一軸照抄，沒有推導梯子。"
         "不在格點上的走 `tierSnap` 靠攏 |",
-        f"| 傷害 | 技能自己手寫的 `flat` / `perRank` | **推導**：母體 {pop} 位可選英雄的"
-        f"純基礎中位血量 ÷ owner 的「20 發要能殺死」× HP 倍率 ＋ 初始加成 ÷ 20 → 進位 "
-        f"= 極小；其餘四格 = 極小 × **單體冷卻比**。填了 `damageTier` 就**取代** "
-        f"`flat`/`perRank`（⛔ 不是相加） |",
+        "| 傷害 | 技能自己手寫的 `flat` / `perRank` | **推導**：（純基礎血量錨點 ＋ 初始加成）"
+        "÷ owner 的「20 發要能殺死」→ 進位 = 極小。⛔ 推導鏈裡**沒有** HP 系統倍率"
+        "（owner 2026-08-22「不能把系統倍率乘進去再反推」）；" + anchor_src
+        + "其餘四格 = 極小 × **單體冷卻比**。填了 `damageTier` 就**取代** "
+        "`flat`/`perRank`（⛔ 不是相加） |",
     ]
     L.append("")
     L += note([
@@ -1294,6 +1410,8 @@ def gen_tiers(ctx):
         "那一份含**變身態**（同一位英雄的第二張卡 ⇒ 重複計數）與 fail-open 骨架佔位。"
         "定義只有一個住處（`packages/shared/testkit/balancePopulation.ts`："
         "對戰可選名單 − 退場名單 − 變身態），`pnpm roster:check` 逐份交付物驗它。",
+        "",
+        pop_role,
         "",
         f"逐格推導、三個錨點（LV30 hard / LV50 soft / LV99 極限）的達成率、"
         f"以及兩個「空間」（純基礎 ↔ 引擎最終）的對照表在 "

@@ -2,6 +2,7 @@
   "id": "lol-missfortune.ex",
   "schema": "vfx-script@1",
   "abilityId": "lol-missfortune.ex",
+  "yields": [],
   "segments": [
     {
       "kind": "anim",

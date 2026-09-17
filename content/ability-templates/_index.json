@@ -1,12 +1,18 @@
 {
   "collection": "ability-templates",
-  "hash": "48fcf2ce8923",
+  "hash": "b67dbb330302",
   "entries": [
     {
       "id": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8",
       "path": "ability-templates/hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8.json",
       "hash": "cba5b2f29e6f",
       "size": 1411
+    },
+    {
+      "id": "hero-template.0be1bfa8b23464460a5358493424fb52eef0e3fbd67c671e",
+      "path": "ability-templates/hero-template.0be1bfa8b23464460a5358493424fb52eef0e3fbd67c671e.json",
+      "hash": "de6287f0c106",
+      "size": 4981
     },
     {
       "id": "hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b",
@@ -27,6 +33,12 @@
       "size": 1513
     },
     {
+      "id": "hero-template.22f3592f006a022a252618d0bbc9fb733d12e81613182d1c",
+      "path": "ability-templates/hero-template.22f3592f006a022a252618d0bbc9fb733d12e81613182d1c.json",
+      "hash": "93c3c9cb2381",
+      "size": 3399
+    },
+    {
       "id": "hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6",
       "path": "ability-templates/hero-template.231f0dfefbb7bfcdc79c8bd7390d325dd53050127edd7cd6.json",
       "hash": "b61b2a1c1ffc",
@@ -39,6 +51,18 @@
       "size": 2449
     },
     {
+      "id": "hero-template.3b6dc9abd1a6bc788e34c86d538f73a7703f54633dedd28f",
+      "path": "ability-templates/hero-template.3b6dc9abd1a6bc788e34c86d538f73a7703f54633dedd28f.json",
+      "hash": "df96cb858122",
+      "size": 1544
+    },
+    {
+      "id": "hero-template.3b9c31df23e1aedf3fa6b6b180d933bdf92e565f947bcf1b",
+      "path": "ability-templates/hero-template.3b9c31df23e1aedf3fa6b6b180d933bdf92e565f947bcf1b.json",
+      "hash": "297c2306b1ac",
+      "size": 4121
+    },
+    {
       "id": "hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699",
       "path": "ability-templates/hero-template.431130d91b0e5931e4733fe4bd0977b7fae69cbf48285699.json",
       "hash": "9999c0022227",
@@ -49,6 +73,12 @@
       "path": "ability-templates/hero-template.4943347c4d1f7e52606a8e42024c3ca0fd53449f7b045f16.json",
       "hash": "3bbc417d5c5a",
       "size": 2499
+    },
+    {
+      "id": "hero-template.59ba7332983158d400e3448711b6a0892912367211a09756",
+      "path": "ability-templates/hero-template.59ba7332983158d400e3448711b6a0892912367211a09756.json",
+      "hash": "28911a3620ff",
+      "size": 3948
     },
     {
       "id": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
@@ -99,6 +129,12 @@
       "size": 843
     },
     {
+      "id": "hero-template.bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e",
+      "path": "ability-templates/hero-template.bd9d8342c4ff231d5c4eb94f3e87434981ccc5d4ba402b7e.json",
+      "hash": "189e2e089e4e",
+      "size": 1140
+    },
+    {
       "id": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
       "path": "ability-templates/hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692.json",
       "hash": "ce3a548348b5",
@@ -127,6 +163,12 @@
       "path": "ability-templates/hero-template.c9ccb3b440c3024518be1a4ec531f04e61a6c134c3f55010.json",
       "hash": "8d2edc181c15",
       "size": 3353
+    },
+    {
+      "id": "hero-template.cd1a55b463af1810a2877caa1a555bc5133aea203f5bb082",
+      "path": "ability-templates/hero-template.cd1a55b463af1810a2877caa1a555bc5133aea203f5bb082.json",
+      "hash": "d9e67f69678c",
+      "size": 3455
     },
     {
       "id": "hero-template.e4284bb72d791d2863042dd5fdcec2a19e0bf561c115771c",
@@ -467,8 +509,8 @@
     {
       "id": "tpl-summon-agent",
       "path": "ability-templates/tpl-summon-agent.json",
-      "hash": "1112de91c808",
-      "size": 4675
+      "hash": "59ba73329831",
+      "size": 4755
     },
     {
       "id": "tpl-team-synergy",

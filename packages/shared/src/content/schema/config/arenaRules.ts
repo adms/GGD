@@ -668,10 +668,13 @@ export const zLegendaryShelfConfig = z
      *   卡片**留著**（⛔ 機會不被吃掉），而且**事先**就標出「道具欄已滿」。
      * ⇒ B 段問的是下一題：**要不要讓他當場賣掉一件換上新的**。
      *
-     * ⚠️ ⭐ 出貨 `false` 是刻意的：它改變的是**一場比賽的取捨**
-     *   （「先想清楚再拿」vs「隨時可換」）——⛔ 那是 owner 的設計決定，
-     *   ⛔ 不是我能引用得到原話的東西（第一守則）。
-     *   ⭐ 開關先接好，他要開就是改這一格。
+     * ⭐ 出貨 `true` —— owner 2026-09-08 02:28 的原話只有兩句：「隨機選寶具的時候 道具欄已滿 怎麼辦」
+     *   與「A ＋ B 開票」（`docs/_daily/ledger-source_temp_20260908.md:13` · `docs/_daily/2026-09-08.md:13`）。
+     *   ⚠️ 裁決紀錄後面的括號（A＝…；B＝讓玩家挑一件丟掉/賣掉再換上。⛔ 不做 C「事前不發卡」）是 Claude 補的定義，
+     *   而「預設開」是 Claude 依 2026-08-23 常設指令「自己判斷 但是留後台開關可以簡易 rollback」的推論。
+     *   ⚠️ 在此之前這裡寫過「上面那一句就是原話（逐字寫在 GH#1110 最上面）」—— ⛔ 那把括號也算成了原話（2026-09-15 審查更正）。
+     *   ⭐ 與客戶端換裝介面（`apps/client/src/ui/panels/draftSwapPicker.tsx`）同一個 commit 翻開。
+     *   ⛔ 一鍵回頭：取消勾選 ⇒ 回到「背包滿的卡點了不換」（A 段行為）。
      *
      * ⚠️ 退款走**上面那一格** `sellRefundPct` —— ⛔ 不另開第二個百分比：
      *   同一個值兩個住處必然各自漂（第〇·四守則）。
@@ -1016,6 +1019,59 @@ export const zBotShopConfig = z
   .strict();
 
 /**
+ * ⭐ **bot 會不會自己點隊友放的技能互動物**（GH#1189 瑟雷西 W 燈籠）。
+ *
+ * ⛔ 為什麼是欄位不是 sim 裡的 `if (isBot)`：sim 從頭到尾不知道「bot」這個概念 ——
+ * 點燈是一則普通的 `interact` 指令，真人與 bot 走**同一條**指令路。
+ * 這一格只決定 host 的 AI 大腦（`apps/game-server/src/ai/Tier0Brain.ts`）會不會替 bot 送那一則。
+ *
+ * ⭐ 出貨 **false**（Claude 挑的，依 owner 2026-08-23 常設指令「自己判斷 但是留後台開關可以簡易 rollback」）：票文「隊友可自行決定是否點燈」，
+ * 而 bot 沒有「決定」可言 —— 一律自動接受會把正在打的 bot 從戰鬥中拔走。
+ * **true** ＝ 一鍵改成「bot 站進燈籠圈就點」。
+ */
+export interface BotInteractConfig {
+  /** bot 站進隊友燈籠的接受圈時會不會自己點。出貨 false。 */
+  autoAccept: boolean;
+}
+export const DEFAULT_BOT_INTERACT: BotInteractConfig = { autoAccept: false };
+export const zBotInteractConfig = z
+  .object({
+    autoAccept: z
+      .boolean()
+      .describe("@zh bot 會不會自己點隊友的燈籠\n" +
+      "@note 瑟雷西 W 這一類「隊友自己決定要不要用」的技能物件（GH#1189）。關著（出貨）＝ bot 從不點，只有真人隊友會飛回施法者；打開＝ bot 只要站進接受圈就會點。⚠️ 它只管 bot，⛔ 不影響真人玩家的點選。\n" +
+      "bot 站進隊友技能互動物的接受圈時，要不要自己送出接受指令。"),
+  })
+  .strict();
+
+/**
+ * ⭐ **右鍵點到隊友技能互動物（瑟雷西 W 燈籠）的本體、而游標下同時有敵人時，誰先**（GH#1189 審查）。
+ *
+ * ⛔ 為什麼是欄位：這是操作手感的**決策點**（第一守則），兩邊都說得通 ——
+ *   敵人先 ＝ 燈籠就丟在隊友打架的位置，存活那幾秒裡右鍵打人不會被燈籠吃掉（票文驗收②「選擇不搭乘仍可正常戰鬥」）；
+ *   燈籠先 ＝ 救命的那一下壓在敵人身上也點得到。
+ * ⭐ 出貨 **true**（敵人先）—— Claude 挑的，依 owner 2026-08-23 常設指令「自己判斷 但是留後台開關可以簡易 rollback」。
+ * ⚠️ 兩邊的點選範圍都只算燈籠**本體**（`apps/client/src/input/interactables.ts::LANTERN_BODY_RADIUS`），
+ *   ⛔ 不是地上那一整圈接受圈（審查實跑：整圈都算點到燈時，圈內右鍵點敵人或地面全被燈籠吃掉）。
+ * 消費端：`apps/client/src/input/InputCapture.ts` 的右鍵分支（經 `input/interactables.ts::interactClickEnemyFirst`）。
+ * ⛔ 伺服器不讀它：接受規則仍然只有 `sim/interactables.ts::checkInteractable` 一個住處。
+ */
+export interface InteractClickConfig {
+  /** 游標下同時有敵人與燈籠本體時，右鍵先打敵人。出貨 true。 */
+  enemyFirst: boolean;
+}
+export const DEFAULT_INTERACT_CLICK: InteractClickConfig = { enemyFirst: true };
+export const zInteractClickConfig = z
+  .object({
+    enemyFirst: z
+      .boolean()
+      .describe("@zh 燈籠上壓著敵人時右鍵先打敵人\n" +
+      "@note 隊友放的技能互動物（瑟雷西 W 燈籠那一類，GH#1189）。開著（出貨）＝ 右鍵點下去時游標下有敵人就攻擊敵人，只有點在燈籠本體上、而且沒有壓著敵人才會點燈；關掉＝ 點在燈籠本體上一律點燈（即使壓著敵人）。⚠️ 兩邊的點選範圍都只有燈籠本體，⛔ 不是地上那一整圈；⛔ 不影響伺服器的接受規則。\n" +
+      "右鍵點到燈籠本體、游標下同時有敵人時，先攻擊敵人還是先點燈。"),
+  })
+  .strict();
+
+/**
  * 出貨值。⚠️ 這是**第三個住處**（`content/config/arena-rules.json` ·
  * 這裡 · admin 的 `SHIPPED_LEGENDARY_SHELF`），三者由 drift 測試釘在一起。
  * 引擎那一份常數（`sim/economy/shopShelf.ts`）是 world 的預設值，兩邊必須同值 ——
@@ -1028,8 +1084,8 @@ export const DEFAULT_LEGENDARY_SHELF: LegendaryShelfConfig = {
   // ⚠️ 歷史：6 →（owner 2026-08-17「一場根本買不起 2 把⋯改成 4 倍比較好?」）→ 4 → 3。
   priceMultiplier: 3,
   sellRefundPct: 0.4,
-  // ⭐ 出貨 false —— 它是**設計決定**（一場比賽的取捨），⛔ 不是我能自己轉的（第一守則）。
-  swapWhenFull: false,
+  // ⭐ 出貨 true（Claude 依 owner 2026-09-08「A ＋ B 開票」推論；B 的定義是 Claude 補的，見上面 swapWhenFull 的註解）。GH#1110。
+  swapWhenFull: true,
   // ⭐ GH#1111（owner 2026-09-06:「開票 確保所有EX都進隨機清單」）——
   //   [EX解放] 與 [EX∅ 根源] 兩階**只能隨機**,而在此之前那件事是靠
   //   ⛔ **`cost: 0` 的副作用**達成的（`shop.ts:199-202` 算不出價 ⇒ `"not-purchasable"`）。
@@ -1322,6 +1378,18 @@ export const zConfigArenaRulesDoc = z
         "bot 在中場怎麼花錢。owner 2026-08-18：「一樣花錢買隨機寶具，只是消耗金錢是半價」。" +
           "⚠️ 關掉 buyWeapons 之後 bot 整場不會花任何金幣（每位英雄手寫的推薦出裝已經退場）。",
       ),
+    /**
+     * ⭐ **bot 會不會自己點隊友的技能互動物**（GH#1189）。省略 = {@link DEFAULT_BOT_INTERACT}。
+     */
+    botInteract: zBotInteractConfig
+      .optional()
+      .describe("bot 對隊友放的技能互動物（瑟雷西 W 燈籠那一類）怎麼反應。出貨關著：只有真人隊友會點。"),
+    /**
+     * ⭐ **右鍵點燈籠本體時的優先序**（GH#1189 審查）。省略 = {@link DEFAULT_INTERACT_CLICK}。
+     */
+    interactClick: zInteractClickConfig
+      .optional()
+      .describe("右鍵點隊友技能互動物（瑟雷西 W 燈籠那一類）時的優先序。出貨：游標下有敵人就先打敵人。"),
     /**
      * 劣勢值 `D` 的三項權重（owner 2026-08-17 的 50/30/20）。
      * 省略 = {@link DEFAULT_DISADVANTAGE_WEIGHTS}。

@@ -1,0 +1,63 @@
+{
+  "id": "lol-garen.w",
+  "name": "勇氣",
+  "provenance": "editor-json",
+  "description": "短暂護盾抵禦爆發。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 140,
+        "perRank": [
+          0,
+          70,
+          140,
+          210
+        ]
+      },
+      "duration": 2,
+      "absorbs": "all"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.cd1a55b463af1810a2877caa1a555bc5133aea203f5bb082",
+    "params": {
+      "target": "self",
+      "amount": {
+        "flat": 140,
+        "perRank": [
+          0,
+          70,
+          140,
+          210
+        ]
+      },
+      "duration": 2,
+      "absorbs": "all",
+      "castTimeSec": 0.1
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:d9e67f69678caa935803c78dc7d92eb2fd87bc1b19801e600ad1fe23035137dd"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-garen.w.webp"
+}

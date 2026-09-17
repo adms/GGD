@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.067,
+  "castTimeSec": 0.1,
   "castType": "self",
   "cooldown": [
     45.0
@@ -17,7 +17,7 @@
   ],
   "id": "b2-elma.ex",
   "manaCost": [
-    0.0
+    0
   ],
   "maxRank": 1,
   "name": "攻略漏寫帶補包",
@@ -30,7 +30,7 @@
       "amount": {
         "flat": 120
       },
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "target": "self"
     },
     "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"
@@ -42,5 +42,6 @@
       "vfxKey": "fx.prim.wind.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/b2-elma.ex.webp"
+  "icon": "assets/icons/abilities/b2-elma.ex.webp",
+  "castTimeTier": "小"
 }

@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -11,7 +11,7 @@
       ],
       "cooldownTier": "小",
       "provenance": "editor-json",
-      "description": "「請退後不要問會不會呱！」\n對敵人造成極小物理傷害並推離 3 單位；改變後续近身與線斬位置。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，非原作招式與數值聲明。",
+      "description": "「請退後不要問會不會呱！」\n對敵人造成極小物理傷害並推離{{push}}距離；改變後续近身與線斬位置。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "amount": {
@@ -31,10 +31,10 @@
       ],
       "id": "b2-ned.e",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -47,7 +47,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.833,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -79,10 +79,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-ned.e.webp"
+      "icon": "assets/icons/abilities/b2-ned.e.webp",
+      "castTimeTier": "極大"
     },
     "Q": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -92,7 +93,7 @@
       ],
       "cooldownTier": "小",
       "provenance": "editor-json",
-      "description": "「蛙跳出差交通費！」\n跳向指定合法落點，空中弧線與落地傷害由現有 leap-strike 執行；落地半徑約 1.8 單位。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，非原作招式與數值聲明。",
+      "description": "「蛙跳出差交通費！」\n跳向指定合法落點，空中弧線與落地傷害由現有 leap-strike 執行；落地{{radius}}範圍。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：青蛙劍士認真揮劍，旁人只注意他到底會不會呱。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "apexHeight": 1,
@@ -114,10 +115,10 @@
       ],
       "id": "b2-ned.q",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -132,7 +133,7 @@
         "params": {
           "apexHeight": 250,
           "applyTo": "self",
-          "castTimeSec": 0.833,
+          "castTimeSec": 1,
           "damage": {
             "damageTier": "極小"
           },
@@ -150,10 +151,11 @@
           "vfxKey": "fx.prim.arcane.dash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-ned.q.webp"
+      "icon": "assets/icons/abilities/b2-ned.q.webp",
+      "castTimeTier": "極大"
     },
     "R": {
-      "castTimeSec": 0.833,
+      "castTimeSec": 1,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -179,9 +181,9 @@
       ],
       "id": "b2-ned.r",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -193,7 +195,7 @@
         "contentSha256": "sha256:a22546087b67870fc42cccb7ec6efa544612e96277e2929deefd1f491d1588d5",
         "params": {
           "aim": "target",
-          "castTimeSec": 0.833,
+          "castTimeSec": 1,
           "damage": {
             "damageTier": "中"
           },
@@ -210,10 +212,11 @@
           "vfxKey": "fx.prim.arcane.bolt"
         }
       ],
-      "icon": "assets/icons/abilities/b2-ned.r.webp"
+      "icon": "assets/icons/abilities/b2-ned.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 1.7,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -240,10 +243,10 @@
       ],
       "id": "b2-ned.w",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -256,7 +259,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.7,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -285,7 +288,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-ned.w.webp"
+      "icon": "assets/icons/abilities/b2-ned.w.webp",
+      "castTimeTier": "極大"
     }
   },
   "archetype": "fighter",
@@ -311,8 +315,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 8,
     "range": 1.6
@@ -327,13 +331,13 @@
     "as": 0,
     "healthRegen": 0.13085306122448978,
     "manaRegen": 0,
-    "maxHealth": 35.000204081632646,
-    "maxMana": 26.357142857142858,
+    "maxHealth": 80,
+    "maxMana": 50,
     "mr": 2.639795918367347
   },
   "msGrowthTier": "極小",
   "id": "b2-ned",
-  "modelKey": "version.body.db80a14d14fe5bf724271e3fc298b87ed497bb61f27a564b",
+  "modelKey": "version.body.d57b7bedd7ee4ffc1cea387346be58a2552d2903d0e8d5db",
   "name": "青蛙劍士 Ned",
   "origin": "鬥士",
   "passiveAbility": "b2-ned.passive",
@@ -379,6 +383,119 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-456917-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.dd99970740ea79bf75fa97ed0fd4e7bfa351853038b27261",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.456917",
+      "modelSha256": "63d3820cca08f697d3fb3761600b856592fb72d03dcb2872f3e82365d40d46aa",
+      "binarySha256": "1c95656d2842703c1b028a67db0f8530d55cbd1c81616b4230c6e6cf3b1f98c6",
+      "registeredAt": "2026-09-10T14:45:43.393Z",
+      "source": {
+        "kind": "previous",
+        "character": "青蛙劍士 Ned",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.456917.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.84de20dba609752ac3d0d1c6f1242d8752408655ec183580",
+      "label": "妙蛙種子模型",
+      "sourceModelKey": "community.body.6db170052bfc70f342be8027580562fdefc595acec455209",
+      "modelSha256": "b3c19ef48278a9f94da54e4b71b1fdb3db48193acde9620b08bd52ef9623ad24",
+      "binarySha256": "d28b8e6fef41eb1afc2d194de86397902ff5a594123adeca23a1d2e62a712a6c",
+      "registeredAt": "2026-09-10T14:45:43.397Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "妙蛙種子模型",
+        "work": "Pokémon；現有匯入模型",
+        "library": "w3x",
+        "reference": "existing:bulbasaur",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.945c63a96de885aae7790aad0dc19328c4977761670d693b",
+      "label": "蛤蟆蘸酱柯松剑客（論壇相似模型）",
+      "sourceModelKey": "ou99.456917-standard-v2",
+      "modelSha256": "c920907527b571ecdc3c6deea3fd95ca6ce3591d7a6f523cd6975985181f5d78",
+      "binarySha256": "43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919",
+      "registeredAt": "2026-09-10T14:48:58.431Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "蛤蟆蘸酱柯松剑客",
+        "work": "來源作品待核；論壇標題：蛤蟆蘸酱柯松剑客",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-456917-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.b1601b8f09f29d061dc213b11c973da4f408216fc5b8c32e",
+      "label": "蛤蟆蘸酱柯松剑客（論壇相似模型）",
+      "sourceModelKey": "ou99.456917-standard-v2",
+      "modelSha256": "c4bdd64a68fbf8b3a7678d0bb18fe70f851f4db41dbbba86d7897f2940387767",
+      "binarySha256": "a0ba6020b24e79da91c6f34d13c08095de0306df7efc4733577e0f4fb74fd20e",
+      "registeredAt": "2026-09-12T23:12:03.559Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "蛤蟆蘸酱柯松剑客",
+        "work": "來源作品待核；論壇標題：蛤蟆蘸酱柯松剑客",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-456917-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.d57b7bedd7ee4ffc1cea387346be58a2552d2903d0e8d5db",
+      "label": "蛤蟆蘸酱柯松剑客（論壇相似模型）",
+      "sourceModelKey": "ou99.456917-standard-v2",
+      "modelSha256": "9762423e55d3d47de865d9c82c7e047689891c60aa186f0a9de9c2adb4d6d130",
+      "binarySha256": "a0ba6020b24e79da91c6f34d13c08095de0306df7efc4733577e0f4fb74fd20e",
+      "registeredAt": "2026-09-13T00:09:07.537Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "蛤蟆蘸酱柯松剑客",
+        "work": "來源作品待核；論壇標題：蛤蟆蘸酱柯松剑客",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-456917-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.f23a2b06a901277dc9eceed7d3fbebe1d5db784bab74640d",
+      "label": "妙蛙種子模型",
+      "sourceModelKey": "community.body.6db170052bfc70f342be8027580562fdefc595acec455209",
+      "modelSha256": "7d8841e6927e6d58c12f52169baa9fee5279bc04e90d919c4d8430f8d4811059",
+      "binarySha256": "d28b8e6fef41eb1afc2d194de86397902ff5a594123adeca23a1d2e62a712a6c",
+      "registeredAt": "2026-09-13T00:09:07.551Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "妙蛙種子模型",
+        "work": "Pokémon；現有匯入模型",
+        "library": "w3x",
+        "reference": "existing:bulbasaur",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

@@ -1,0 +1,27 @@
+{
+  "schema": "ggd-ssbu-sonic-formal-decimation-acceptance@1",
+  "candidateId": "ssbu-sonic-c00-static-skinned-v2",
+  "acceptedAt": "2026-09-14",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "inputTriangles": 8980,
+  "outputTriangles": 7900,
+  "triangleReduction": 1080,
+  "triangleReductionPct": 12.026726057906458,
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "maximumChangedPixelPct": 1.405,
+  "findings": [
+    "Source and candidate are visually equivalent at the fixed WebGL review camera positions.",
+    "The silhouette, face, gloves, shoes and material identity remain intact.",
+    "Khronos validation has zero errors and warnings; the GGD hard budget has zero errors.",
+    "All OPAQUE textures are fully opaque and the two builds are byte-identical."
+  ],
+  "limitations": [
+    "The source and candidate contain zero animation clips.",
+    "This acceptance does not establish a hero binding, backend dropdown option, runtime switching or deployment."
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "95a0e0a7be39",
+  "hash": "bfd13aae75f1",
   "entries": [
     {
       "id": "ability-vfx-bindings",
@@ -23,14 +23,14 @@
     {
       "id": "aoe-tiers",
       "path": "config/aoe-tiers.json",
-      "hash": "5f4b138cc6e9",
-      "size": 1142
+      "hash": "e85b4d3fece0",
+      "size": 1166
     },
     {
       "id": "ap-coefficient",
       "path": "config/ap-coefficient.json",
-      "hash": "33bb88afbeaf",
-      "size": 2450
+      "hash": "b0bacf136fcd",
+      "size": 2471
     },
     {
       "id": "ap-damage-scaling",
@@ -47,8 +47,8 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "71deb9c6113b",
-      "size": 10010
+      "hash": "f03f654a4a0e",
+      "size": 10106
     },
     {
       "id": "asset-cdn",
@@ -85,6 +85,12 @@
       "path": "config/authoring-rules.json",
       "hash": "debe3d095be9",
       "size": 5477
+    },
+    {
+      "id": "balance-anchors",
+      "path": "config/balance-anchors.json",
+      "hash": "249b5f562c62",
+      "size": 1948
     },
     {
       "id": "base-bonus",
@@ -131,8 +137,8 @@
     {
       "id": "cast-time",
       "path": "config/cast-time.json",
-      "hash": "54107ce3c680",
-      "size": 1656
+      "hash": "53d807e36264",
+      "size": 1942
     },
     {
       "id": "cast-time-tiers",
@@ -143,8 +149,8 @@
     {
       "id": "champion-voices",
       "path": "config/champion-voices.json",
-      "hash": "051141e3804c",
-      "size": 21057
+      "hash": "57615be9f422",
+      "size": 24699
     },
     {
       "id": "combat-env",
@@ -221,8 +227,8 @@
     {
       "id": "damage-tiers",
       "path": "config/damage-tiers.json",
-      "hash": "7edc151e7fde",
-      "size": 3347
+      "hash": "0254cf7e6bb4",
+      "size": 3344
     },
     {
       "id": "dispel",
@@ -233,8 +239,8 @@
     {
       "id": "displacement-tiers",
       "path": "config/displacement-tiers.json",
-      "hash": "b3e44fc40e26",
-      "size": 3022
+      "hash": "ee7b706dbdd6",
+      "size": 3140
     },
     {
       "id": "feel-fx",
@@ -269,8 +275,8 @@
     {
       "id": "icon-plan",
       "path": "config/icon-plan.json",
-      "hash": "975ad940dc18",
-      "size": 921
+      "hash": "ee7bb65a2174",
+      "size": 923
     },
     {
       "id": "icon-style",
@@ -311,8 +317,8 @@
     {
       "id": "mana-tiers",
       "path": "config/mana-tiers.json",
-      "hash": "6d500097e499",
-      "size": 2110
+      "hash": "29b26f94dac9",
+      "size": 2606
     },
     {
       "id": "map-report",
@@ -335,8 +341,8 @@
     {
       "id": "model-lod",
       "path": "config/model-lod.json",
-      "hash": "e3a1aa269cfa",
-      "size": 1129
+      "hash": "2d6f356593b7",
+      "size": 1016
     },
     {
       "id": "move-speed-tiers",
@@ -353,8 +359,8 @@
     {
       "id": "one-shot-clamp",
       "path": "config/one-shot-clamp.json",
-      "hash": "18be96faf9c3",
-      "size": 1256
+      "hash": "840256a8643e",
+      "size": 1517
     },
     {
       "id": "origin-routes",
@@ -365,8 +371,8 @@
     {
       "id": "owner-knobs",
       "path": "config/owner-knobs.json",
-      "hash": "6d1c98f7bc46",
-      "size": 14705
+      "hash": "02b05e6fd3c1",
+      "size": 14700
     },
     {
       "id": "per-level-bonus",
@@ -389,8 +395,8 @@
     {
       "id": "range-tiers",
       "path": "config/range-tiers.json",
-      "hash": "d87cdbcfecf4",
-      "size": 789
+      "hash": "a41729664528",
+      "size": 813
     },
     {
       "id": "rank-growth",
@@ -425,8 +431,8 @@
     {
       "id": "roster",
       "path": "config/roster.json",
-      "hash": "b8ee47643f51",
-      "size": 8945
+      "hash": "4e0cf198f7f9",
+      "size": 10056
     },
     {
       "id": "round-grade",
@@ -453,6 +459,12 @@
       "size": 1038
     },
     {
+      "id": "skin-tier-prices",
+      "path": "config/skin-tier-prices.json",
+      "hash": "7b78302b5778",
+      "size": 2404
+    },
+    {
       "id": "speed-growth-tiers",
       "path": "config/speed-growth-tiers.json",
       "hash": "44d5928e9d17",
@@ -461,7 +473,7 @@
     {
       "id": "stat-caps",
       "path": "config/stat-caps.json",
-      "hash": "11de07da31da",
+      "hash": "78e31f81326a",
       "size": 918
     },
     {
@@ -521,7 +533,7 @@
     {
       "id": "unsafe-textures",
       "path": "config/unsafe-textures.json",
-      "hash": "d2133597dd85",
+      "hash": "5ef90e8bce82",
       "size": 5852
     },
     {
@@ -551,14 +563,14 @@
     {
       "id": "vfx-families",
       "path": "config/vfx-families.json",
-      "hash": "be6e790c73cf",
-      "size": 29852
+      "hash": "92d35183f76e",
+      "size": 29949
     },
     {
       "id": "vfx-scripts",
       "path": "config/vfx-scripts.json",
-      "hash": "1b951b2a6090",
-      "size": 610
+      "hash": "501feddf68d2",
+      "size": 972
     },
     {
       "id": "victory-fx",

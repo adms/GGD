@@ -1,0 +1,15 @@
+{
+  "id": "acquired-pokemon-trainer.triple-water",
+  "schema": "status-effect@1",
+  "name": "三重指令結帳",
+  "description": "Pokémon Trainer「三重指令結帳」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-pokemon-trainer.triple-water",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

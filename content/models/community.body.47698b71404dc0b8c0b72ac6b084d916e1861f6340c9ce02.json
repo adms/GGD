@@ -1,0 +1,16 @@
+{
+  "id": "community.body.47698b71404dc0b8c0b72ac6b084d916e1861f6340c9ce02",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/059cdf64bf7040a33ad40257a6ad0b37e82424127a72d243fee468772fe5fcad.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "summon",
+    "run": "horizontal_slashes",
+    "attack": "vertical_slashes",
+    "cast": "aestus_domus_aurea_full",
+    "hurt": "stab",
+    "death": "stab"
+  },
+  "yawOffsetDeg": 0
+}

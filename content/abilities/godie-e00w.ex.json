@@ -20,29 +20,8 @@
     "name": "77-002 御雷劍",
     "ranks": [
       {
-        "hooks": [
-          {
-            "on": "onBasicAttack",
-            "effects": [
-              {
-                "kind": "damageArea",
-                "damageType": "magic",
-                "amount": {
-                  "ratios": [
-                    {
-                      "stat": "ap",
-                      "coeff": 0.1
-                    }
-                  ]
-                },
-                "radius": 3.0,
-                "radiusTier": "極小"
-              }
-            ],
-            "chance": 0.4,
-            "target": "event"
-          }
-        ]
+        "modifiers": [],
+        "hooks": []
       }
     ]
   },
@@ -71,5 +50,6 @@
     ]
   },
   "icon": "assets/icons/abilities/godie-e00w.ex.webp",
-  "vfxKey": "fx.prim.lightning.beam-lg"
+  "vfxKey": "fx.prim.lightning.beam-lg",
+  "castTimeTier": "極小"
 }

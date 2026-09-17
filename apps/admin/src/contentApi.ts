@@ -49,6 +49,12 @@ import {
   type WritePlanStep,
 } from "@ggd/shared/content/editModel";
 import type { ChampionModelVersionState, ModelVersionCommand } from "@ggd/shared/content/schema/championModelVersions";
+import type { SkinDoc } from "@ggd/shared/content/schema/skin";
+import {
+  SKIN_TIER_PRICES_DOC_ID,
+  zConfigSkinTierPricesDoc,
+  type ConfigSkinTierPricesDoc,
+} from "@ggd/shared/content/schema/config/skinTierPrices";
 
 /** Vite dev flag, guarded so plain node (vitest) never throws. */
 function isDevBuild(): boolean {
@@ -650,3 +656,71 @@ export const heroCatalogApi = {
   preview: (heroPath: string, versionId: string, opts?: ContentApiOptions) => catalogRequest<CatalogHeroPreview>("preview", "POST", {heroPath, versionId}, opts),
   restore: (preview: CatalogHeroPreview, opts?: ContentApiOptions) => catalogRequest<{versionId: string; restoredFrom: string; previousVersion: string; contentVersion: string}>("restore", "POST", {heroPath: preview.hero.path, versionId: preview.versionId, expectedCurrentVersion: preview.currentVersion, planDigest: preview.planDigest}, opts),
 };
+
+/**
+ * ⭐ GH#1177 模型版本商店 —— 造型（skin@1）的**窄口**。
+ *
+ * `skins` 刻意⛔不進 EDIT_COLLECTIONS（那會長出一整頁通用表單，而商店只需要「上架／售價／下架」
+ * 三個動作）⇒ 這裡只開兩個函式，⭐ 仍然住在這一支（contentGate：本檔是後台唯一的 /content-api 呼叫端），
+ * 仍然吃同一個 `ENABLED` 部署閘，寫入仍然「先 validate 再 PUT」（content-api 覆蓋前先留底）。
+ *
+ * ⚠️ 寫進去的是 `content/skins/*.json` —— 平台的商店目錄**開機時**讀它（wallet/catalog.go LoadCatalog）
+ * ⇒ 玩家看得到要 `pnpm content:build`（PUT 走 reindex 會刪 bundle.json）＋ commit ＋ 完整部署。
+ * ⛔ 這不是 content-overlay（線上即時）那條路。
+ */
+export const modelShopApi = {
+  /** 同一個 `ENABLED` 部署閘 —— UI 關著時整段收起（⛔ 不是讓 owner 填完售價才吃 OFF_MESSAGE）。 */
+  enabled: ENABLED,
+  async listSkins(championId: string, opts: ContentApiOptions = {}): Promise<{ docs: SkinDoc[]; error: string | null }> {
+    if (!ENABLED) return { docs: [], error: OFF_MESSAGE };
+    const fetchFn = opts.fetchFn ?? defaultFetch;
+    const url = "/content-api/skins/_index";
+    try {
+      const res = await send(fetchFn, url, "GET");
+      if (res.status !== 200) return { docs: [], error: errorOf(res.body, res.status, url) };
+      const entries = (res.body as { entries?: { id?: unknown }[] } | null)?.entries;
+      if (!Array.isArray(entries)) return { docs: [], error: "造型清單格式不完整。" };
+      // ⭐ 讀**全部**造型再按文件裡的 championId 篩（⛔ 不靠 id 前綴）—— 「同模型已有造型」要看得到手寫的那幾份。
+      const ids = entries.map((entry) => entry.id).filter((id): id is string => typeof id === "string");
+      const docs: SkinDoc[] = [];
+      for (const one of await Promise.all(ids.map(async (id) => {
+        const docUrlOf = `/content-api/skins/${encodeURIComponent(id)}`;
+        return { docUrlOf, res: await send(fetchFn, docUrlOf, "GET") };
+      }))) {
+        if (one.res.status !== 200) return { docs: [], error: errorOf(one.res.body, one.res.status, one.docUrlOf) };
+        const doc = one.res.body as SkinDoc | null;
+        if (doc?.championId === championId) docs.push(doc);
+      }
+      return { docs, error: null };
+    } catch (error) { return { docs: [], error: error instanceof Error ? error.message : String(error) }; }
+  },
+  async saveSkin(doc: SkinDoc, opts: ContentApiOptions = {}): Promise<{ ok: boolean; issues: EditIssue[]; error: string | null }> {
+    if (!ENABLED) return { ok: false, issues: [], error: OFF_MESSAGE };
+    const fetchFn = opts.fetchFn ?? defaultFetch;
+    const url = `/content-api/skins/${encodeURIComponent(doc.id)}`;
+    try {
+      const v = await send(fetchFn, `${url}/validate`, "POST", doc);
+      if (v.status === 422) return { ok: false, issues: issuesOf(v.body), error: null };
+      if (v.status !== 200) return { ok: false, issues: [], error: errorOf(v.body, v.status, `${url}/validate`) };
+      const res = await send(fetchFn, url, "PUT", doc);
+      if (res.status !== 200 && res.status !== 201) return { ok: false, issues: issuesOf(res.body), error: errorOf(res.body, res.status, url) };
+      return { ok: true, issues: [], error: null };
+    } catch (error) { return { ok: false, issues: [], error: error instanceof Error ? error.message : String(error) }; }
+  },
+  /**
+   * 🏷️ GH#1177 追加 —— 分級售價表（owner 2026-09-15「新模型加購參考 LOL 分級標價」）。讀**本機 content 樹**那一份：
+   * 造型文件寫進同一棵樹、平台開機時拿同一份驗 `priceTier` ⇒ 下拉選單只可能選到開機驗得過的分級。
+   * ⚠️ 線上若在後台「造型分級售價」改過價錢，玩家實際付的是覆蓋層那一格（這裡顯示的是出貨價）。
+   */
+  async getPriceTiers(opts: ContentApiOptions = {}): Promise<{ doc: ConfigSkinTierPricesDoc | null; error: string | null }> {
+    if (!ENABLED) return { doc: null, error: OFF_MESSAGE };
+    const url = `/content-api/config/${SKIN_TIER_PRICES_DOC_ID}`;
+    try {
+      const res = await send(opts.fetchFn ?? defaultFetch, url, "GET");
+      if (res.status !== 200) return { doc: null, error: errorOf(res.body, res.status, url) };
+      const parsed = zConfigSkinTierPricesDoc.safeParse(res.body);
+      return parsed.success ? { doc: parsed.data, error: null } : { doc: null, error: "分級售價表（content/config/skin-tier-prices.json）格式不合 schema。" };
+    } catch (error) { return { doc: null, error: error instanceof Error ? error.message : String(error) }; }
+  },
+};
+export type ModelShopApi = Pick<typeof modelShopApi, "enabled" | "listSkins" | "saveSkin" | "getPriceTiers">;

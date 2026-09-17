@@ -72,6 +72,7 @@ import {
   LootTables,
   Projectiles,
 } from "@ggd/shared/sim/content/registry";
+import { TARGETING_RADIUS_WHEN_OMITTED, targetingRadius } from "@ggd/shared/sim/abilities/abilitySystem";
 import {
   BODY_RADIUS,
   SIM_GROUND_DEFAULT_RADIUS,
@@ -90,6 +91,13 @@ function stripComments(src: string): string {
 }
 function simSource(rel: string): string {
   return stripComments(readFileSync(join(REPO_ROOT, "packages/shared/src/sim", rel), "utf8"));
+}
+/** One top-level function's text, from its signature to its closing brace. */
+function functionBody(src: string, signature: string): string {
+  const start = src.indexOf(signature);
+  if (start < 0) throw new Error(`${signature} is gone from the sim source — re-aim this PIN`);
+  const end = src.indexOf("\n}\n", start);
+  return src.slice(start, end < 0 ? undefined : end);
 }
 
 const MULT = 0.6; // the live content/config/combat-env.json abilityRange
@@ -117,9 +125,24 @@ describe("telegraph geometry is derived from content, at the SIM's own size", ()
 
   it("a ground ability with NO radius uses the sim's own `?? 1`, never an invented 1.2", () => {
     cover("telegraph-shape-derivation");
-    // PIN, half 1 — the default has exactly ONE home: `groundAoeTargets`.
-    expect(simSource("abilities/abilitySystem.ts")).toContain("def.radius ?? 1)");
-    expect(SIM_GROUND_DEFAULT_RADIUS).toBe(1);
+    // PIN, half 1 — the default has exactly ONE home.
+    // ⚠️ GH#1246 (`4d8aa368f`, 2026-09-12) moved the literal `def.radius ?? 1`
+    // out of `groundAoeTargets` into the named resolver `targetingRadius(def)` →
+    // `TARGETING_RADIUS_WHEN_OMITTED` (and `ops/noLiteralRadiusDefault.test.ts`
+    // now forbids that literal everywhere else). The rule did not change — the
+    // code moved: the same 失敗形態⑥ this file's header records for GH#481.
+    // ⭐ So pin the RELATIONSHIP, not the spelling:
+    //   (a) `groundAoeTargets` selects through `targetingRadius` — NOT
+    //       `authoredAoeRadius`, whose omitted ⇒ 0 means "not an AoE" and would
+    //       select nobody while the ring still draws — and owns no `?? <n>`;
+    //   (b) the client's ring radius IS what that resolver returns (the client
+    //       now imports the constant instead of copying a `1`).
+    const ground = functionBody(simSource("abilities/abilitySystem.ts"), "export function groundAoeTargets(");
+    expect(ground).toContain("targetingRadius(def)");
+    expect(ground).not.toContain("authoredAoeRadius");
+    expect(ground).not.toMatch(/radius\s*\?\?/);
+    expect(targetingRadius({})).toBe(TARGETING_RADIUS_WHEN_OMITTED);
+    expect(SIM_GROUND_DEFAULT_RADIUS).toBe(targetingRadius({}));
     // PIN, half 2 — the re-query at the END of a wind-up REACHES that home
     // instead of deriving its own radius. Both halves matter: a telegraph is
     // drawn at cast-BEGIN and the hit set is recomputed at cast-END, so the
@@ -132,7 +155,7 @@ describe("telegraph geometry is derived from content, at the SIM's own size", ()
     expect(castResolve).not.toMatch(/radius/);
 
     const g = deriveTelegraphGeometry(ability({ castType: "ground" }), env());
-    expect(g?.kind === "circle" ? g.radius : null).toBeCloseTo(1 * MULT, 6);
+    expect(g?.kind === "circle" ? g.radius : null).toBeCloseTo(targetingRadius({}) * MULT, 6);
     // the number VfxSystem used to draw — it belonged to nothing
     expect(g?.kind === "circle" ? g.radius : null).not.toBeCloseTo(1.2 * MULT, 6);
   });
@@ -162,8 +185,11 @@ describe("telegraph geometry is derived from content, at the SIM's own size", ()
     // exactly CLAUDE.md 失敗形態⑥ and is why the assertions that MATTER in this
     // file are the geometry ones below. These two PINs stay only as a
     // cheap "the sim still does what the telegraph assumes" tripwire.
-    expect(stripComments(readFileSync(join(REPO_ROOT, "packages/shared/src/sim/effects/spawnProjectile.ts"), "utf8")))
-      .toContain("remainingRange: resolveAbilityRange(world, def.maxRange)");
+    // ⚠️ MOVED AGAIN 2026-09-15（GH#1187 `launchFrom:"rangeEnd"`）：射程先算進 `range`，
+    //   正常投射物仍是 `remainingRange: range`（回程彈才用射程盡頭到施法者的 `reach`）⇒ PIN 跟著新寫法，語意不變。
+    const spawnSrc = stripComments(readFileSync(join(REPO_ROOT, "packages/shared/src/sim/effects/spawnProjectile.ts"), "utf8"));
+    expect(spawnSrc).toContain("const range = resolveAbilityRange(world, def.maxRange)");
+    expect(spawnSrc).toContain("remainingRange: fromEnd ? reach : range");
     // … and so is its HIT RADIUS. An earlier revision of this test asserted the
     // opposite ("hit radius really is not"), which made every skillshot
     // corridor 1/mult too narrow — a telegraph that lies about how wide it

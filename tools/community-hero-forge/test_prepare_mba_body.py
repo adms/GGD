@@ -87,8 +87,8 @@ class PreparationTest(unittest.TestCase):
             with self.assertRaises(ValueError):
                 prepare(doc, binary)
 
-    def test_rejects_zero_weights_and_uvs_that_need_wrapping(self):
-        for key, replacement in (("WEIGHTS_0", (0, 0, 0, 0)), ("TEXCOORD_0", (-0.5, 0.2))):
+    def test_rejects_zero_weights_and_excessive_uv_wrapping(self):
+        for key, replacement in (("WEIGHTS_0", (0, 0, 0, 0)), ("TEXCOORD_0", (-5.5, 0.2))):
             doc, data = fixture()
             index = doc["meshes"][0]["primitives"][0]["attributes"][key]
             view = doc["bufferViews"][doc["accessors"][index]["bufferView"]]
@@ -96,6 +96,23 @@ class PreparationTest(unittest.TestCase):
             struct.pack_into("<" + "f" * len(replacement), binary, view["byteOffset"], *replacement)
             with self.assertRaises(ValueError):
                 prepare(doc, bytes(binary))
+
+    def test_bakes_negative_repeat_uv_and_preserves_duplicate_motion(self):
+        doc, data = fixture()
+        before = copy.deepcopy(doc["animations"][0])
+        doc["animations"].append(copy.deepcopy(before))
+        index = doc["meshes"][0]["primitives"][0]["attributes"]["TEXCOORD_0"]
+        view = doc["bufferViews"][doc["accessors"][index]["bufferView"]]
+        binary = bytearray(data)
+        struct.pack_into("<2f", binary, view["byteOffset"], -0.5, 0.2)
+        result, output, report = prepare(doc, bytes(binary))
+        self.assertEqual(report["tiledUvDomains"][0], ([-1, 0], [1, 1]))
+        self.assertEqual(len(result["animations"]), 2)
+        self.assertEqual(result["animations"][0], before)
+        self.assertNotEqual(result["animations"][0]["name"], result["animations"][1]["name"])
+        self.assertEqual(result["animations"][1]["samplers"], before["samplers"])
+        uv = decoded(result, output, result["meshes"][0]["primitives"][0]["attributes"]["TEXCOORD_0"], "f", 2)
+        self.assertTrue(all(0 <= v <= 1 for row in uv for v in row))
 
     def test_rejects_incomplete_glb(self):
         doc, binary = fixture()

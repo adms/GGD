@@ -1,0 +1,11 @@
+{
+  "id": "lol-ahri.essence",
+  "schema": "status-effect@1",
+  "name": "銷魂",
+  "description": "阿璃「銷魂」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "lol-ahri.essence",
+    "buff"
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "schema": "ggd-priority-three-canonical-report@1",
+  "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910",
+  "candidateManifest": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/candidate-manifest.json",
+    "bytes": 26399,
+    "sha256": "cc79ce25595a389f59cbe7b83e88342090fb993ff9ebef06262708ad92a03108"
+  },
+  "fileManifest": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/file-manifest.json",
+    "bytes": 76930,
+    "sha256": "26ac78e5974e662a090bfa18bf9f4cc6fbf2d4a3fbadea7d9a12243a75c6ff49"
+  },
+  "primaryCandidates": [
+    {
+      "candidateId": "guts-community-procedural-ready-20260910",
+      "runtimeDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/guts/runtime-v1",
+      "body": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/guts/runtime-v1/body.glb",
+        "bytes": 4389196,
+        "sha256": "183fd32bb6df783bc997cf3b0c6ae5c14a8d77c52bbe99938d450ef087e6bea1"
+      },
+      "modelDoc": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/guts/runtime-v1/model.json",
+        "bytes": 504,
+        "sha256": "02d9872a35e93854de3cbf7b8207643e6a4b860a7c4980a8facf516b797295ab"
+      },
+      "renderEvidence": {
+        "directory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/guts/render-evidence-v2",
+        "proof": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/guts/render-evidence-v2/render-proof.json",
+          "bytes": 7342,
+          "sha256": "165c179c694d3c6890c0a0e4b8c3ddb44d9d9809a508721f9a3ffacdb493751b"
+        },
+        "pngCount": 14,
+        "allTexturesReady": true,
+        "observedSampleBoundsMinY": -0.00018237531185150146,
+        "observedSampleBoundsMaxY": 0.02258794568479061,
+        "scope": "14 actual WebGL samples: 2 per six states plus idle side/back; primary front body and selected motion frames visually reviewed"
+      },
+      "limitations": [
+        "All six motions are GGD authored procedural fallbacks, not native or retargeted game animations.",
+        "No source-specific combat timing, root-motion velocity, foot IK, cloth simulation, or whole-game gameplay acceptance is claimed.",
+        "Whole-body floor lift is authored at 30Hz keys; interpolation can have submillimetre floor penetration, and idle bob may lift feet.",
+        "Shared upload/runtime loading and sampled WebGL visual proof are complete; backend registration/default selection and production deployment belong to parent integration.",
+        "LOD uses Blender COLLAPSE; 2048 body texture reduced to1024; other three material textures retained.",
+        "Cape follows source skin weights without cloth simulation; death is a generic sideways fall."
+      ]
+    },
+    {
+      "candidateId": "maomao-community-procedural-ready-20260910",
+      "runtimeDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/maomao/runtime-v2",
+      "body": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/maomao/runtime-v2/body.glb",
+        "bytes": 2255820,
+        "sha256": "a43514ed9cefe6ab66b391f4da2ff2b90dfaecdc7f8abe7675dff007fce34c67"
+      },
+      "modelDoc": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/maomao/runtime-v2/model.json",
+        "bytes": 504,
+        "sha256": "03250a8b206fe27d8c62e88b34cf8940572e6a1d84bfff502e51c44c57d78cb9"
+      },
+      "renderEvidence": {
+        "directory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/maomao/render-small-stride-v2",
+        "proof": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/maomao/render-small-stride-v2/render-proof.json",
+          "bytes": 7115,
+          "sha256": "ea96f03b58e966620e52e86add1a8a9ce85279e712f997ba9169f5a988099598"
+        },
+        "pngCount": 14,
+        "allTexturesReady": true,
+        "observedSampleBoundsMinY": -4.704296588897705e-05,
+        "observedSampleBoundsMaxY": 0.08472339808940887,
+        "scope": "14 actual WebGL samples: 2 per six states plus idle side/back; primary front body and selected motion frames visually reviewed"
+      },
+      "limitations": [
+        "All six motions are GGD authored procedural fallbacks, not native or retargeted game animations.",
+        "No source-specific combat timing, root-motion velocity, foot IK, cloth simulation, or whole-game gameplay acceptance is claimed.",
+        "Whole-body floor lift is authored at 30Hz keys; interpolation can have submillimetre floor penetration, and idle bob may lift feet.",
+        "Shared upload/runtime loading and sampled WebGL visual proof are complete; backend registration/default selection and production deployment belong to parent integration.",
+        "This explicitly named neutral-face derivative omits 58 source facial morph targets; original Unity bundle retains all 58, whose defaults are zero.",
+        "Run amplitude is 0.18 of initial procedural fallback to limit leg/skirt intersections; it is a restrained running-state gesture, not original character running motion.",
+        "The high-resolution original and original topology remain preserved; LOD uses Blender COLLAPSE and textures are reduced from2048 to1024.",
+        "Initial runtime-v1 is retained as historical review variant with visible large-stride skirt clipping; prefer runtime-v2."
+      ]
+    },
+    {
+      "candidateId": "turbo-granny-community-procedural-ready-20260910",
+      "runtimeDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/turbo-granny/runtime-v1",
+      "body": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/turbo-granny/runtime-v1/body.glb",
+        "bytes": 875584,
+        "sha256": "02adca6e1ead3a50c15e9f8a52bebb07d34a2db5b9be4eff5166adff982349a3"
+      },
+      "modelDoc": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/turbo-granny/runtime-v1/model.json",
+        "bytes": 504,
+        "sha256": "72f43e059e28e506d3126eca0bf3807aeaf8176c563e89f5fcaa79c146da5d7d"
+      },
+      "renderEvidence": {
+        "directory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/turbo-granny/render-evidence-v2",
+        "proof": {
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-five-canonical-20260910/turbo-granny/render-evidence-v2/render-proof.json",
+          "bytes": 7498,
+          "sha256": "69439771e80157e164f53adc3b060fb9e9b32092e58532d87d37bc10ed2501fa"
+        },
+        "pngCount": 14,
+        "allTexturesReady": true,
+        "observedSampleBoundsMinY": -0.00011986307799816132,
+        "observedSampleBoundsMaxY": 0.02259860560297966,
+        "scope": "14 actual WebGL samples: 2 per six states plus idle side/back; primary front body and selected motion frames visually reviewed"
+      },
+      "limitations": [
+        "All six motions are GGD authored procedural fallbacks, not native or retargeted game animations.",
+        "No source-specific combat timing, root-motion velocity, foot IK, cloth simulation, or whole-game gameplay acceptance is claimed.",
+        "Whole-body floor lift is authored at 30Hz keys; interpolation can have submillimetre floor penetration, and idle bob may lift feet.",
+        "Shared upload/runtime loading and sampled WebGL visual proof are complete; backend registration/default selection and production deployment belong to parent integration.",
+        "Confirmed lucky-cat form; distinct from pre-existing ou99.458013 owner-listed similar proxy.",
+        "All 9432 source triangles and five material slots retained; no decimation required."
+      ]
+    }
+  ],
+  "allFiles": 207,
+  "allBytes": 141840731,
+  "primaryRuntimeBytes": 7520600
+}

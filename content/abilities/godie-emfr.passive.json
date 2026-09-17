@@ -55,5 +55,6 @@
     ]
   },
   "icon": "assets/icons/abilities/godie-emfr.passive.webp",
-  "vfxKey": "fx.prim.arcane.pulse"
+  "vfxKey": "fx.prim.arcane.pulse",
+  "castTimeTier": "極小"
 }

@@ -4,9 +4,10 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import type { FastifyInstance } from "fastify";
 import { buildServer } from "./server";
+import { ModelVersions } from "./modelVersions";
 import { writeDocAtomic, rebuildAllIndexes } from "@ggd/shared/content/node";
 import { modelUploadFixture } from "@ggd/shared/content/modelUpload/fixtures";
-import { encodeUploadGlb } from "@ggd/shared/content/modelUpload/glb";
+import { encodeUploadGlb, parseUploadGlb } from "@ggd/shared/content/modelUpload/glb";
 import { zChampionDoc } from "@ggd/shared/content/schema/champion";
 import { contentSha256 } from "@ggd/shared/content/import/jcs";
 import type { ChampionModelVersionState, ModelVersionCommand } from "@ggd/shared/content/schema/championModelVersions";
@@ -48,6 +49,48 @@ beforeEach(async () => {
 afterEach(async () => { await app.close(); rmSync(root, { recursive: true, force: true }); });
 
 describe("retained hero model versions", () => {
+  it("retains paid delivery aliases of identical bytes as independent selectable versions", async () => {
+    const add = async (reference: string, label: string) => update({ action: "register", expectedHash: (await state()).expectedHash,
+      sourceModelKey: "candidate", label, source: { ...source, library: "論壇付費", reference } });
+    const first = await add("forum:attachment-a:v1", "付費來源 A v1");
+    expect(first.statusCode, first.body).toBe(200);
+    const second = await add("forum:attachment-b:v2", "付費來源 B v2");
+    expect(second.statusCode, second.body).toBe(200);
+    const versions = second.json<ChampionModelVersionState>().versions;
+    expect(versions).toHaveLength(3);
+    expect(versions[1]!.binarySha256).toBe(versions[2]!.binarySha256);
+    expect(versions[1]!.modelKey).not.toBe(versions[2]!.modelKey);
+    expect(versions.slice(1).map((v) => v.source.reference)).toEqual(["forum:attachment-a:v1", "forum:attachment-b:v2"]);
+    for (const version of versions.slice(1)) {
+      const selected = await update({ action: "activate", expectedHash: (await state()).expectedHash, modelKey: version.modelKey });
+      expect(selected.statusCode, selected.body).toBe(200);
+      expect(selected.json().activeModelKey).toBe(version.modelKey);
+      expect(selected.json().versions).toEqual(versions);
+    }
+    expect((await add("forum:attachment-b:v2", "付費來源 B v2")).statusCode).toBe(409);
+  });
+
+  it("retains unapproved high-tier proxies for manual selection while automatic mode uses approved candidates", async () => {
+    const approved = (await register()).json<ChampionModelVersionState>();
+    const response = await update({ action: "register", expectedHash: approved.expectedHash, sourceModelKey: "candidate", label: "保留的相似模型",
+      source: { ...source, kind: "style-proxy", tier: "300heroes" } });
+    expect(response.statusCode, response.body).toBe(200);
+    const saved = response.json<ChampionModelVersionState>();
+    const proxy = saved.versions.at(-1)!;
+    expect(proxy.automaticEligible).toBe(false);
+    expect(saved.activeModelKey).toBe(approved.activeModelKey);
+    expect(saved.preferredModelKey).toBe(approved.activeModelKey);
+    const manual = await update({ action: "activate", expectedHash: saved.expectedHash, modelKey: proxy.modelKey });
+    expect(manual.json().activeModelKey).toBe(proxy.modelKey);
+    const automatic = await update({ action: "automatic", expectedHash: manual.json().expectedHash });
+    expect(automatic.json().activeModelKey).toBe(approved.activeModelKey);
+    expect(automatic.json().versions).toHaveLength(3);
+    const ownerApproved = await update({ action: "register", expectedHash: automatic.json().expectedHash, sourceModelKey: "candidate", label: "Owner 核准加工副本",
+      source: { ...source, kind: "style-proxy", tier: "300heroes" }, automaticEligible: true });
+    expect(ownerApproved.statusCode, ownerApproved.body).toBe(200);
+    expect(ownerApproved.json().activeModelKey).toBe(ownerApproved.json().versions.at(-1).modelKey);
+  });
+
   it("defaults to the new frozen body, retains old bytes/bindings, and rolls both ways after the import source is deleted", async () => {
     const before = read("champions", heroId);
     const beforeBytes = readFileSync(join(root, "models/old-body.json"));
@@ -59,7 +102,7 @@ describe("retained hero model versions", () => {
     expect(saved.activeModelKey).toBe(next!.modelKey);
     expect(saved.expectedHash).not.toBe(contentSha256(before));
     const after = read("champions", heroId);
-    const { modelKey: _key, modelVersions: _versions, ...unchanged } = after;
+    const { modelKey: _key, modelVersions: _versions, modelSelectionMode: _mode, ...unchanged } = after;
     const { modelKey: _beforeKey, ...original } = before;
     expect(unchanged).toEqual(original);
     expect(readFileSync(join(root, "models/old-body.json"))).toEqual(beforeBytes);
@@ -76,6 +119,31 @@ describe("retained hero model versions", () => {
       expect(read("champions", heroId).modelKey).toBe(version.modelKey);
       expect(response.json().versions).toEqual(saved.versions);
     }
+  });
+
+  it("prioritizes 300 > MBA > original > W3X and preserves manual choices across imports", async () => {
+    const add = async (id: string, tier: "300heroes" | "mba" | "original" | "w3x") => {
+      writeDocAtomic(root, "models", model(id, "assets/models/new.glb"));
+      const response = await update({ action: "register", expectedHash: (await state()).expectedHash, sourceModelKey: id, label: id, source: { ...source, tier } });
+      expect(response.statusCode, response.body).toBe(200);
+      return response.json<ChampionModelVersionState>();
+    };
+    const borrowed = await add("borrowed", "w3x");
+    expect(borrowed.activeModelKey).toBe(borrowed.versions[0]!.modelKey);
+    const mba = await add("mba", "mba");
+    expect(mba.activeModelKey).toBe(mba.versions.at(-1)!.modelKey);
+    const high = await add("300", "300heroes");
+    expect(high.activeModelKey).toBe(high.versions.at(-1)!.modelKey);
+    expect((await add("lower", "mba")).activeModelKey).toBe(high.activeModelKey);
+    const manual = await update({ action: "activate", expectedHash: (await state()).expectedHash, modelKey: borrowed.versions[0]!.modelKey });
+    expect(manual.json().selectionMode).toBe("manual");
+    const newer = await add("300-new", "300heroes");
+    expect(newer.activeModelKey).toBe(borrowed.versions[0]!.modelKey);
+    expect(newer.preferredModelKey).toBe(newer.versions.at(-1)!.modelKey);
+    const restored = await update({ action: "automatic", expectedHash: newer.expectedHash });
+    expect(restored.json()).toMatchObject({ selectionMode: "automatic", activeModelKey: newer.preferredModelKey });
+    const doc = read("champions", heroId);
+    expect((await app.inject({ method: "PUT", url: `/content-api/champions/${heroId}`, payload: { ...doc, modelSelectionMode: "manual" } })).statusCode).toBe(409);
   });
 
   it("rejects stale and simultaneous selections without losing a version", async () => {
@@ -137,6 +205,40 @@ describe("retained hero model versions", () => {
     const champion = read("champions", heroId);
     expect(zChampionDoc.safeParse({ ...champion, modelKey: "old-body" }).success).toBe(false);
     expect(zChampionDoc.safeParse({ ...champion, modelVersions: [...champion.modelVersions, champion.modelVersions[0]] }).success).toBe(false);
+  });
+
+  it("★ GH#1173：來源宣告了 hiddenPrimitives 就不合併 primitive（兩個方向）", async () => {
+    // ⭐ 出貨真的會出現的形狀：同一個 mesh 兩塊畫法相同、有索引的 primitive（`imported.heroichigo` 5 塊 1 種畫法、藏 [2]）
+    const fx = modelUploadFixture();
+    fx.json.animations![1]!.name = "Cast";
+    const prim = fx.json.meshes![0]!.primitives[0]!;
+    const idx = new Uint16Array([0, 1, 2]), bin = new Uint8Array(fx.bin.byteLength + 8);
+    bin.set(fx.bin); bin.set(new Uint8Array(idx.buffer), fx.bin.byteLength);
+    fx.json.bufferViews.push({ buffer: 0, byteOffset: fx.bin.byteLength, byteLength: 6, target: 34963 });
+    fx.json.accessors.push({ bufferView: fx.json.bufferViews.length - 1, componentType: 5123, count: 3, type: "SCALAR" });
+    prim.indices = fx.json.accessors.length - 1;
+    fx.json.meshes![0]!.primitives.push({ ...prim });
+    fx.json.buffers = [{ byteLength: bin.byteLength }];
+    putAsset("assets/models/twin.glb", encodeUploadGlb(fx.json, bin));
+    const primitivesOf = (key: string) =>
+      parseUploadGlb(new Uint8Array(readFileSync(join(root, read("models", key).glbPath)))).json.meshes![0]!.primitives.length;
+    const add = async (id: string, extra: Record<string, unknown>) => {
+      writeDocAtomic(root, "models", { ...model(id, "assets/models/twin.glb"), ...extra });
+      const response = await update({ action: "register", expectedHash: (await state()).expectedHash, sourceModelKey: id, label: id, source });
+      expect(response.statusCode, response.body).toBe(200);
+      return response.json<ChampionModelVersionState>().versions.at(-1)!.modelKey;
+    };
+    // ① 沒有宣告 ⇒ 照常合併（⛔ 這一半證明夾具真的「可合併」，否則②永遠是綠的）
+    expect(primitivesOf(await add("twin-merge", {}))).toBe(1);
+    // ② 宣告藏第 1 塊 ⇒ 索引必須原封不動，被藏的那塊才藏得掉
+    const kept = await add("twin-hidden", { hiddenPrimitives: [1] });
+    expect(primitivesOf(kept)).toBe(2);
+    expect(read("models", kept).hiddenPrimitives).toEqual([1]);
+    // ③ 修正輪：作者工具的 preservePrimitives（半透明不合併，`register-normalized-version.mts --reason blend-order`）⇒ 沒宣告也不合併
+    writeDocAtomic(root, "models", model("twin-keep", "assets/models/twin.glb"));
+    const command: ModelVersionCommand = { action: "register", expectedHash: (await state()).expectedHash, sourceModelKey: "twin-keep", label: "twin-keep", source };
+    const prepared = await new ModelVersions(root).prepare(heroId, command, { preservePrimitives: true });
+    expect(parseUploadGlb(prepared.artifacts.at(-1)!.bytes).json.meshes![0]!.primitives.length).toBe(2);
   });
 
   it("rejects a model document linked outside the content root", async () => {

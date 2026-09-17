@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/design-backlog/hero-design-coverage-refresh-1a19935b2/23adc28eb4371b85ae501d1df2694c5691738cd8c8ccabd359f1200de5a821b4.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/design-backlog/hero-design-coverage-refresh-1a19935b2/23adc28eb4371b85ae501d1df2694c5691738cd8c8ccabd359f1200de5a821b4.files.json",
+  "archiveSha256": "23adc28eb4371b85ae501d1df2694c5691738cd8c8ccabd359f1200de5a821b4",
+  "archiveBytes": 1090819,
+  "fileCount": 5,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog/hero-design-coverage-refresh-1a19935b2",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/hero-design-coverage-refresh-1a19935b2/b342e45b247f1bdea891aba99dba9458fae84eccfacd0db352ee6005e37502b7/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/hero-design-coverage-refresh-1a19935b2/b342e45b247f1bdea891aba99dba9458fae84eccfacd0db352ee6005e37502b7/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/hero-design-coverage-refresh-1a19935b2/b342e45b247f1bdea891aba99dba9458fae84eccfacd0db352ee6005e37502b7/manifest.json"
+}

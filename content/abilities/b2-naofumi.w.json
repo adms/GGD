@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.467,
+  "castTimeSec": 0.5,
   "castType": "targeted",
   "cooldown": [
     45.0,
@@ -36,10 +36,10 @@
   ],
   "id": "b2-naofumi.w",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "憑通行證補一口血",
@@ -52,7 +52,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "effects": [
         {
@@ -91,5 +91,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-naofumi.w.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "大"
 }

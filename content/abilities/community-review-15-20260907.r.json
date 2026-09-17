@@ -2,7 +2,7 @@
   "id": "community-review-15-20260907.r",
   "name": "〔兄貴背摔〕",
   "provenance": "editor-json",
-  "description": "【目前模板可執行】拖拉指定目標後向前投擲 400 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】對抓取中的目標進行背摔；未抓取時先做可被閃避的近身捕捉。\n【待補機制】目前單次投擲；需大摔技雙人動作同步與有限區域衝擊。",
+  "description": "【目前模板可執行】拖拉指定目標後向前投擲{{push}}距離，0.45 秒拋物線，落地{{radius}}範圍小級傷害。\n【目標設計】對抓取中的目標進行背摔；未抓取時先做可被閃避的近身捕捉。\n【待補機制】目前單次投擲；需大摔技雙人動作同步與有限區域衝擊。",
   "slot": "R",
   "castType": "ground",
   "maxRank": 3,
@@ -13,9 +13,9 @@
   ],
   "cooldownTier": "大",
   "manaCost": [
-    448.0,
-    448.0,
-    448.0
+    600.0,
+    600.0,
+    600.0
   ],
   "manaCostTier": "大",
   "range": 4.5,
@@ -26,7 +26,7 @@
       "kind": "leap",
       "applyTo": "target",
       "mode": "toPoint",
-      "apexHeight": 0.005,
+      "apexHeight": 1.2,
       "durationSec": 0.45,
       "throwDistance": 7.33,
       "dragToCaster": true,
@@ -48,7 +48,7 @@
       ]
     }
   ],
-  "castTimeSec": 1.633,
+  "castTimeSec": 0.5,
   "castTimeTier": "大",
   "icon": "assets/icons/abilities/community-review-15-20260907.r.webp",
   "template": {
@@ -57,14 +57,14 @@
       "mode": "toPoint",
       "grabMode": "dragToCaster",
       "throwMode": "distance",
-      "apexHeight": 1.2,
+      "apexHeight": 300,
       "durationSec": 0.45,
       "throwDistance": 400,
       "landRadius": 2,
       "landDamageTier": "小",
       "landApRatio": 0,
       "damageType": "physical",
-      "castTimeSec": 1.633
+      "castTimeSec": 0.5
     },
     "inheritDefaults": true
   },

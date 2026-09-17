@@ -1,0 +1,66 @@
+{
+  "id": "acquired-naruto.e",
+  "name": "忍者插隊術",
+  "provenance": "editor-json",
+  "description": "快速移向指定敵人，抵達造成極小級物理傷害；落點仍受地形限制。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    150.0,
+    150.0,
+    150.0,
+    150.0
+  ],
+  "manaCostTier": "小",
+  "range": 6,
+  "radius": 3,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "toPoint",
+      "apexHeight": 0,
+      "durationSec": 0.1,
+      "landRadius": 3,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "damageTier": "極小",
+            "ratios": []
+          }
+        }
+      ]
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.0e807c24299291d3e0b66bc67f569a749b0f1d3ce797209b",
+    "params": {
+      "destination": "targetUnit",
+      "travelSec": 0.1,
+      "arriveRadius": 150,
+      "damage": {
+        "damageTier": "極小",
+        "ratios": []
+      },
+      "damageType": "physical"
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:7687b75d1bb1945a3dc0ca45c1015ad419c38757ac6e22cbc4d740088ce70761"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/acquired-naruto.e.webp"
+}

@@ -20,6 +20,7 @@
     0.0
   ],
   "range": 8.0,
+  "castTimeTier": "小",
   "targetsEnemies": true,
   "effects": [
     {
@@ -69,5 +70,5 @@
   "cooldownTier": "極小",
   "radiusTier": "極小",
   "rangeTier": "大",
-  "castTimeSec": 0.067
+  "castTimeSec": 0.1
 }

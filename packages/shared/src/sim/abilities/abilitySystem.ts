@@ -29,8 +29,10 @@ import { applyCastTimeRules, comboWindowFrozenAtCommit } from "../castTimeRules"
 import { abilityInstanceFor, innateCastBlock } from "./innateActive";
 import { berserkCastBlock, berserkCooldownFactor } from "./berserkRules";
 import { armRecovery } from "./abilityRecovery";
-import { armRecast, bindRecastSerial, consumeRecastCharge, recastPressGate, sweepRecast } from "./recast";
+import { armRecast, bindRecastSerial, consumeRecastCharge, finishRecast, liveRecastAnchor, recastPressGate, sweepRecast } from "./recast";
+import { aimChannel, beginChannel } from "./channel";
 import { splitLiveProjectiles } from "../projectileSplit";
+import { armProjectileRedirects } from "../projectileRedirect";
 // ⭐ GH#1091 ——【法術護盾】整發攔截（07-01 臨、兵、鬥 / 原作 ANss Spell Shield）。
 import { spellWardRefusesCast } from "../spellWardCast";
 import { enterToggle, exitToggle, isToggleOn } from "./toggle";
@@ -64,6 +66,67 @@ export function resolveAbilityRange(world: SimWorld, range: number): number {
 }
 
 /** Ability AoE RADIUS after the same `abilityRange` factor (task #136). */
+/**
+ * ⭐⭐ 【技能**省略 `radius`** 時它是多少 —— 唯一的答案住這裡】（GH#1246）
+ *
+ * owner 2026-09-12（逐字）：
+ * > 「對 要**抽象化 統一 維持一致性** 不是逐個去填」　「**這是我一貫風格**」
+ *
+ * ⛔ 在此之前這個預設值住**三個地方，而且三個不一樣**：
+ *
+ * | 誰 | 當成 |
+ * |---|---:|
+ * | 這個檔的選人路徑 `def.radius ?? 1` | **1** |
+ * | `systems/MobSystem.ts` 王的瞄準 `(def.radius ?? 0) <= 0` | **0** |
+ * | `content/castTimeFormula.ts` 的兇殘分數 `def.radius ?? 0` | **0** |
+ *
+ * ⇒ ⭐ 量到的：**907 支技能裡 626 支省略它**，其中 `castType:"ground"` 的 **51 支**
+ * 真的受影響 —— 它們**真的打一個 1 單位的圈**（選人那一側），
+ * ⛔ 而殭屍王把它們當單體（不瞄人群）、吟唱公式把它們當非 AoE（吟唱偏短）。
+ *
+ * ⭐ 預設取 **1**，⛔ 不是 0 —— 理由是**玩家今天實際經歷的就是 1**
+ * （選人那一條路決定誰被打到）。⇒ 統一之後**玩家那一側零變化**，
+ * ⭐ 動的是另外兩個原本就與它不一致的消費端。
+ *
+ * ⚠️ ⛔ 不要在任何地方寫 `def.radius ?? <字面值>` —— 閘
+ * `packages/shared/src/ops/noLiteralRadiusDefault.test.ts` 會紅。
+ */
+/**
+ * ⛔⛔ 【更正：那是**兩個概念**，⛔ 不是一個常數】（2026-09-12，同一天內）
+ *
+ * ⚠️ ⭐ 我第一版把三個消費端統一成 `?? 1`，⇒ **39 條測試紅** ——
+ * 其中最尖銳的一條逐字是：
+ * > 「一支**玩家從來沒有按過**的被動會讓畫面跑出施法條」（98 支）
+ *
+ * ⭐ 根因：`radius` 的「省略」在兩種語境裡**真的是不同的意思**：
+ *
+ * | 語境 | 省略的意思 | 值 |
+ * |---|---|---:|
+ * | **選人**（誰被打到） | 「沒宣告 ⇒ 用一個 1 單位的圈當後備」 | **1** |
+ * | **它是不是 AoE**（兇殘分數／王的瞄準） | 「⛔ **這不是 AoE**」 | **0** |
+ *
+ * ⇒ ⭐ 把它們壓成一個值 ＝ 讓每一支省略 `radius` 的**被動**看起來像 AoE
+ *   ⇒ 兇殘分數升高 ⇒ 推導出非零吟唱 ⇒ ⛔ **畫面跑出施法條**。
+ *
+ * ⇒ ⭐ 正確的抽象是**兩個具名函式**（各自一個住處），⛔ 不是一個共用常數 ——
+ *   owner 2026-09-12：「要**抽象化 統一 維持一致性**」⭐ 而一致性指的是
+ *   「同一個**意思**只有一個住處」，⛔ 不是「同一個**欄位名**只有一個值」。
+ */
+export const TARGETING_RADIUS_WHEN_OMITTED = 1;
+
+/** ⭐ **選人**用的圈：省略 ⇒ {@link TARGETING_RADIUS_WHEN_OMITTED}（後備值）。 */
+export function targetingRadius(def: { readonly radius?: number }): number {
+  return def.radius ?? TARGETING_RADIUS_WHEN_OMITTED;
+}
+
+/**
+ * ⭐ **宣告的 AoE 大小**：省略 ⇒ **0 ＝ 它不是 AoE**。
+ * ⚠️ ⛔ 不要拿這一支去選人 —— 0 會選不到任何人（那是 {@link targetingRadius}）。
+ */
+export function authoredAoeRadius(def: { readonly radius?: number }): number {
+  return def.radius ?? 0;
+}
+
 export function resolveAbilityRadius(world: SimWorld, radius: number): number {
   return radius * world.combatEnv.abilityRange;
 }
@@ -195,7 +258,7 @@ export function groundAoeTargets(
   def: { targetsEnemies?: boolean; radius?: number },
   point: { x: number; z: number },
 ): EntityId[] {
-  const radius = resolveAbilityRadius(world, def.radius ?? 1);
+  const radius = resolveAbilityRadius(world, targetingRadius(def));
   if (def.targetsEnemies !== false) return enemiesInCircle(world, caster, point, radius);
   const allies = bodiesInCircle(world, caster, point, radius, { side: "allies" });
   const t = world.transform.get(caster);
@@ -576,6 +639,14 @@ export function castAbility(
   if ((world.knockdown.get(caster) ?? 0) > 0) return "stunned";
   // already mid-cast (another ability's cast time) — animation-locked
   if (ab.cast) return "cooldown";
+  // ⭐ GH#1191【持續引導】—— 引導中別的技能按不出來（同上一行的施法鎖）；
+  //   同一格再按 ⇒ **只更新瞄準**（⛔ 不付成本、不重跑效果）：滑鼠／觸控沒有連續 aim，這是它們轉動射線的入口。
+  if (ab.channel) {
+    if (ab.channel.slot !== slot) return "cooldown";
+    const aim = target.type === "dir" ? target.dir : target.type === "point" ? sub(target.point, t.pos) : undefined;
+    if (aim) aimChannel(world, caster, normalize(aim));
+    return "ok";
+  }
   // ⭐ GH#1187【再次施放】—— 窗口內的按鍵是「後段」：⛔ 不撞冷卻、耗魔走 costPerRecast、
   //   效果走 recastEffects（沒寫就重跑 effects —— 阿璃 R 三段同一個衝刺）。
   //   放在冷卻閘**前面**是這個機制存在的全部意義：`cooldownAt:"first"` 時冷卻已經在跑。
@@ -588,6 +659,13 @@ export function castAbility(
     const rp = inst.recast.point;
     const rd = inst.recast.direction;
     target = def.castType === "ground" ? { type: "point", point: { x: rp.x, z: rp.z } } : rd ? { type: "dir", dir: { x: rd.x, z: rd.z } } : target;
+  }
+  // ⭐ GH#1187 瑟雷西 Q：後段目標＝首段命中的第一個單位。錨點失效（死亡／消失／換區）⇒ 階段當場結束並拒絕，
+  //   ⛔ 不退回這一按的瞄準（那會變成一次免費的普通施放）。位置在付任何成本之前。
+  const recastAnchorUnit = isRecast && def.recast?.anchor === "firstHit" ? liveRecastAnchor(world, inst, t.zone) : undefined;
+  if (isRecast && def.recast?.anchor === "firstHit" && recastAnchorUnit === undefined) {
+    finishRecast(inst);
+    return "bad-target";
   }
   if (!isRecast && inst.cooldownRemainingTicks > 0) return "cooldown";
 
@@ -640,7 +718,13 @@ export function castAbility(
   let direction: { x: number; z: number } | undefined;
   const selfTeam = world.team.get(caster);
 
-  switch (def.castType) {
+  if (recastAnchorUnit !== undefined) {
+    // `anchor:"firstHit"` 的後段：⛔ 不看施放型別與這一按的瞄準 —— 目標、落點、方向全部指向那個人。
+    const at = world.transform.get(recastAnchorUnit)!;
+    targets = [recastAnchorUnit];
+    point = { x: at.pos.x, z: at.pos.z };
+    direction = normalize(sub(at.pos, t.pos));
+  } else switch (def.castType) {
     case "self":
       targets = [caster];
       break;
@@ -764,6 +848,7 @@ export function castAbility(
   const cdTicks = Math.round(cdSecs / world.dt);
   if (isRecast) {
     splitLiveProjectiles(world, caster, slot, inst.recast?.serial ?? -1); // GH#1197 威寇茲 Q：再按 ⇒ 主彈當場分裂
+    armProjectileRedirects(world, caster, slot, inst.recast?.serial ?? -1, direction ?? t.facing); // GH#1187 鄂爾 R：再按 ⇒ 首段的羊等著被撞
     consumeRecastCharge(inst); // 用完 ⇒ finishRecast 會把 `cooldownAt:"end"` 暫存的冷卻寫進去
   } else if (def.recast) {
     inst.cooldownRemainingTicks = armRecast(inst, def.recast, world.tick, world.dt, cdTicks);
@@ -955,6 +1040,8 @@ export function castAbility(
       castCommitTick: world.tick,
       rng: world.rng,
     });
+    // ⭐ GH#1191 —— 效果開始了 ⇒ 開始引導（`def.channel` 缺席 ⇒ no-op）。有吟唱的雙胞胎在 CastResolveSystem。
+    if (!isRecast) beginChannel(world, caster, inst.abilityId, def, { slot, rank: inst.rank, ...(castInstance !== undefined ? { castInstance } : {}), commitTick: world.tick, targets, ...(point !== undefined ? { point } : {}), ...(direction !== undefined ? { direction } : {}) });
   }
 
   // ⛔ `onAbilityCast` **不**受整發攔截影響：他確實放了一發（魔力也扣了）。
@@ -1037,7 +1124,13 @@ export function tickCooldowns(world: SimWorld): void {
     // ⭐ GH#1187 後段窗口到期／施法者死亡 ⇒ 結束。放在冷卻凍結的 `continue` **前面**：
     //   窗口是真實時間，⛔ 不吃流逝速度。
     const alive = world.health.get(id)?.alive !== false;
-    for (const slot of ["Q", "W", "E", "R"] as const) sweepRecast(ab.slots[slot], world.tick, alive);
+    for (const slot of ["Q", "W", "E", "R"] as const) {
+      const inst = ab.slots[slot];
+      // `anchor:"firstHit"`（瑟雷西 Q）：被鉤的人死了／消失了 ⇒ HUD 上的「可再按」當場消失，⛔ 不等窗口到期。
+      const anchorLost = inst.recast?.anchor !== undefined && Abilities.get(inst.abilityId).recast?.anchor === "firstHit"
+        && liveRecastAnchor(world, inst, world.transform.get(id)?.zone ?? -1) === undefined;
+      sweepRecast(inst, world.tick, alive, anchorLost);
+    }
     // ⭐ G17 —— 這個單位的流逝速度。0 = ×1 = 今天（同 `OutputDamagePct` 那一族：
     // 出貨 0，內容不開就是**嚴格 no-op**，而且下面走的是原本那條 `--`）。
     const bonus = world.stats.get(id)?.final[Stat.CooldownDrainRate] ?? 0;

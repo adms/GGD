@@ -88,7 +88,10 @@ MIRRORED = (
 #: 刪掉它＝把一個活著的機制從遊戲裡拔走而全套 schema 綠（失敗形態②）。
 #: `abilityMirror.test.ts` 也刻意只驗「兩邊都有而值不同」，⛔ 不驗單邊 ——
 #: 這一格跟它同一個立場。單邊清單是刻意的紀錄，⛔ 不是漏。
-MIRRORED_UPDATE_ONLY = ("passive",)
+#: ⭐ GH#1281（2026-09-17）—— `channel` 同一族：級距把 standalone 的 `channel.onComplete[].radius`
+#: 補上 `radiusTier`，內嵌版停在沒有 ⇒ lol-fiddlesticks.W 判「兩份副本互相矛盾」。
+#: 全庫量過兩邊不一致只有這一格；照 passive 的立場只覆寫、⛔ 不刪內嵌版獨有的。
+MIRRORED_UPDATE_ONLY = ("passive", "channel")
 
 
 def _insert_after(doc, key, after, value):

@@ -2,6 +2,11 @@ import { z } from "zod";
 import { zId } from "../common";
 import { zAudioAssetPath } from "./_shared";
 
+export const AUDIO_SFX_COOLDOWN_MS_MIN = 0;
+export const AUDIO_SFX_MAX_CONCURRENT_MIN = 1;
+export const AUDIO_CAST_LAYER_MIN = 1;
+export const AUDIO_CAST_LAYER_MAX = 8;
+
 /**
  * config.audio-map@1 — CLIENT audio bindings (`config/audio-map.json`):
  * scene → background-music track, and gameplay/UI event → SFX clip pool.
@@ -31,9 +36,9 @@ export const zAudioSfxEntry = z
     /** per-event gain multiplier applied on top of the SFX bus (default 1) */
     gain: z.number().min(0).max(4).optional(),
     /** minimum ms between two plays of this event (bursts are dropped) */
-    cooldownMs: z.number().min(0).optional(),
+    cooldownMs: z.number().min(AUDIO_SFX_COOLDOWN_MS_MIN).optional(),
     /** max simultaneously-playing voices for this event */
-    maxConcurrent: z.number().int().min(1).optional(),
+    maxConcurrent: z.number().int().min(AUDIO_SFX_MAX_CONCURRENT_MIN).optional(),
   })
   .strict();
 
@@ -69,7 +74,7 @@ export const zAudioCastLayerCap = z
      * 每一次調整都**只影響播放**，`content/config/vfx-families.json`（`pitch:build` 的產物）
      * ⛔ 一個位元組都不會動。
      */
-    maxLayers: z.number().int().min(1).max(8).describe(
+    maxLayers: z.number().int().min(AUDIO_CAST_LAYER_MIN).max(AUDIO_CAST_LAYER_MAX).describe(
       "@zh 一次施法最多播幾層\n" +
       "@note 層的順序是固定的：施法音 → 特效發射 → 特效命中 → 特效循環 → 特效消散。超出的從**後面**開始不播，所以被丟掉的永遠是最邊緣的那幾層，⛔ 不會是施法音本身。⚠️ 它數的是**同一次施法的整條生命週期**，⛔ 不是同一瞬間。出貨值 {{出貨值}} ＝今天一層都不夾；往下調 1 先夾掉消散音，再往下夾掉循環音。",
     ),

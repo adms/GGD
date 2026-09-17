@@ -1,0 +1,809 @@
+{
+  "schema": "ggd-palworld-character-settings-source@1",
+  "sourceClass": "community-game-data-snapshot",
+  "locale": "zh-TW",
+  "originalGameDataTablesAcquired": false,
+  "ggdHeroImplementation": false,
+  "forms": [
+    {
+      "character": "Jetragon",
+      "form": "normal",
+      "sourceUrl": "https://paldb.cc/tw/Jetragon",
+      "sourceFile": {
+        "character": "Jetragon",
+        "url": "https://paldb.cc/tw/Jetragon",
+        "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/palworld-three-character-settings/original/Jetragon.html",
+        "bytes": 90274,
+        "sha256": "17039f3aee83c6155c37c5705c73da440ce31f7e8ebb40a79a16fac9cc80cfef"
+      },
+      "selectedSourceTab": null,
+      "otherSourceTabs": [],
+      "reportedGameVersion": "v1.0.4",
+      "factualFields": {
+        "Stats": {
+          "Size": "XL",
+          "Rarity": 20,
+          "生命值": 115,
+          "食量": 600,
+          "MeleeAttack": 100,
+          "攻擊": 140,
+          "防禦": 120,
+          "工作速度": 100,
+          "Support": 100,
+          "CaptureRateCorrect": 1,
+          "MaleProbability": 50,
+          "CombiRank": 70,
+          "金幣": 4452,
+          "Egg": "巨大龍息帕魯蛋",
+          "Code": "JetDragon"
+        },
+        "Movement": {
+          "SlowWalkSpeed": 200,
+          "WalkSpeed": 800,
+          "RunSpeed": 1700,
+          "RideSprintSpeed": 3300,
+          "TransportSpeed": 1250,
+          "JumpZVelocity": 600,
+          "SwimSpeed": 510,
+          "SwimDashSpeed": 990,
+          "Stamina": 110
+        },
+        "Others": {
+          "IsPal": 1,
+          "Tribe": "JetDragon",
+          "BPClass": "JetDragon",
+          "ZukanIndex": 202,
+          "ElementType1": "Dragon",
+          "GenusCategory": "Dragon",
+          "Friendship_HP": 3.3,
+          "Friendship_ShotAttack": 1,
+          "Friendship_Defense": 1.7,
+          "Friendship_CraftSpeed": 0,
+          "EnemyMaxHPRate": 1,
+          "EnemyReceiveDamageRate": 1,
+          "EnemyInflictDamageRate": 1,
+          "EnemyWazaCoolTimeRate": 1,
+          "ExpRatio": 1,
+          "StatusResistUpRate": 1,
+          "AIResponse": "Warlike",
+          "BattleBGM": "Legend",
+          "FullStomachDecreaseRate": 1,
+          "FoodAmount": 9,
+          "ViewingDistance": 25,
+          "ViewingAngle": 90,
+          "HearingRate": 1,
+          "BiologicalGrade": 5,
+          "Edible": 1,
+          "CombiDuplicatePriority": 7000,
+          "IgnoreCombi": 1,
+          "MeshCapsuleHalfHeight": 180,
+          "MeshCapsuleRadius": 100,
+          "BestWorkSuitability": "Collection",
+          "PassiveSkill1": "Legend",
+          "PassiveSkill2": "ElementBoost_Dragon_2_PAL"
+        }
+      },
+      "partnerSkill": {
+        "name": "地毯式轟炸",
+        "tiers": [
+          {
+            "level": 1,
+            "values": {
+              "MainValue": 20.0
+            }
+          },
+          {
+            "level": 2,
+            "values": {
+              "MainValue": 22.0
+            }
+          },
+          {
+            "level": 3,
+            "values": {
+              "MainValue": 26.0
+            }
+          },
+          {
+            "level": 4,
+            "values": {
+              "MainValue": 32.0
+            }
+          },
+          {
+            "level": 5,
+            "values": {
+              "MainValue": 40.0
+            }
+          }
+        ]
+      },
+      "activeSkills": [
+        {
+          "code": "FireSeed",
+          "name": "烈焰濺射",
+          "learnedLevel": 1,
+          "power": 80,
+          "cooldownSeconds": 4.0,
+          "sourceRangeLabel": "Shot Attack Range 1000–3000",
+          "sourceUrl": "https://paldb.cc/tw/Spirit_Fire"
+        },
+        {
+          "code": "DragonWave",
+          "name": "龍之波動",
+          "learnedLevel": 7,
+          "power": 80,
+          "cooldownSeconds": 4.0,
+          "sourceRangeLabel": "Shot Attack Range 0–200",
+          "sourceUrl": "https://paldb.cc/tw/Dragon_Burst"
+        },
+        {
+          "code": "FlareTornado",
+          "name": "烈焰風暴",
+          "learnedLevel": 15,
+          "power": 200,
+          "cooldownSeconds": 12.0,
+          "sourceRangeLabel": "Shot Attack Range 700–3000",
+          "sourceUrl": "https://paldb.cc/tw/Flare_Storm"
+        },
+        {
+          "code": "DragonBreath",
+          "name": "龍息",
+          "learnedLevel": 22,
+          "power": 160,
+          "cooldownSeconds": 8.0,
+          "sourceRangeLabel": "Shot Attack Range 500–1500",
+          "sourceUrl": "https://paldb.cc/tw/Dragon_Breath"
+        },
+        {
+          "code": "Unique_JetDragon_JumpBeam",
+          "name": "光束彗星",
+          "learnedLevel": 30,
+          "power": 700,
+          "cooldownSeconds": 30.0,
+          "sourceRangeLabel": "Shot Attack Range 1000–5000",
+          "sourceUrl": "https://paldb.cc/tw/Beam_Comet"
+        },
+        {
+          "code": "FireBall",
+          "name": "烈焰球",
+          "learnedLevel": 40,
+          "power": 600,
+          "cooldownSeconds": 30.0,
+          "sourceRangeLabel": "Shot Attack Range 200–5000",
+          "sourceUrl": "https://paldb.cc/tw/Fire_Ball"
+        },
+        {
+          "code": "DragonMeteor",
+          "name": "龍彗星",
+          "learnedLevel": 50,
+          "power": 600,
+          "cooldownSeconds": 30.0,
+          "sourceRangeLabel": "Shot Attack Range 500–5000",
+          "sourceUrl": "https://paldb.cc/tw/Dragon_Meteor"
+        },
+        {
+          "code": "BeamSlicer",
+          "name": "切割龍息",
+          "learnedLevel": 55,
+          "power": 350,
+          "cooldownSeconds": 16.0,
+          "sourceRangeLabel": "Shot Attack Range 0–4000",
+          "sourceUrl": "https://paldb.cc/tw/Beam_Slicer"
+        },
+        {
+          "code": "CommetRain",
+          "name": "隕星雨",
+          "learnedLevel": 60,
+          "power": 700,
+          "cooldownSeconds": 30.0,
+          "sourceRangeLabel": "Shot Attack Range 0–5000",
+          "sourceUrl": "https://paldb.cc/tw/Meteorain"
+        },
+        {
+          "code": "StarMine",
+          "name": "詭雷繁星",
+          "learnedLevel": 70,
+          "power": 400,
+          "cooldownSeconds": 20.0,
+          "sourceRangeLabel": "Shot Attack Range 0–5000",
+          "sourceUrl": "https://paldb.cc/tw/Star_Mine"
+        }
+      ],
+      "emptyLearnsetMeansNoBossAttacks": false,
+      "note": "Normal Astralym has no level-up learnset on this page; its two tower-boss pages are retained separately. Raw movement -1 is a source sentinel, not an accepted runtime speed."
+    },
+    {
+      "character": "Cattiva",
+      "form": "normal",
+      "sourceUrl": "https://paldb.cc/tw/Cattiva",
+      "sourceFile": {
+        "character": "Cattiva",
+        "url": "https://paldb.cc/tw/Cattiva",
+        "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/palworld-three-character-settings/original/Cattiva.html",
+        "bytes": 141395,
+        "sha256": "494bf7e4cbef8b9b574911ecf974b554a882fd85d14c888079441e84976918f5"
+      },
+      "selectedSourceTab": "搗蛋貓",
+      "otherSourceTabs": [
+        "搗蛋貓cache-1"
+      ],
+      "reportedGameVersion": "v1.0.4",
+      "factualFields": {
+        "Stats": {
+          "Size": "XS",
+          "Rarity": 1,
+          "生命值": 70,
+          "食量": 100,
+          "MeleeAttack": 70,
+          "攻擊": 70,
+          "防禦": 70,
+          "工作速度": 100,
+          "Support": 100,
+          "CaptureRateCorrect": 1.5,
+          "MaleProbability": 50,
+          "CombiRank": 2760,
+          "金幣": 436,
+          "Egg": "平凡帕魯蛋",
+          "Code": "PinkCat"
+        },
+        "Movement": {
+          "SlowWalkSpeed": 30,
+          "WalkSpeed": 60,
+          "RunSpeed": 400,
+          "RideSprintSpeed": 550,
+          "TransportSpeed": 160,
+          "SwimSpeed": 50,
+          "SwimDashSpeed": 50,
+          "Stamina": 100
+        },
+        "Others": {
+          "IsPal": 1,
+          "Tribe": "PinkCat",
+          "BPClass": "PinkCat",
+          "ZukanIndex": 2,
+          "ElementType1": "Normal",
+          "GenusCategory": "Humanoid",
+          "Friendship_HP": 5.5,
+          "Friendship_ShotAttack": 3.7,
+          "Friendship_Defense": 3.7,
+          "Friendship_CraftSpeed": 0,
+          "EnemyMaxHPRate": 1,
+          "EnemyReceiveDamageRate": 2,
+          "EnemyInflictDamageRate": 1,
+          "EnemyWazaCoolTimeRate": 1,
+          "ExpRatio": 1,
+          "StatusResistUpRate": 1,
+          "AIResponse": "Escape_to_Battle",
+          "BattleBGM": "Cute",
+          "FullStomachDecreaseRate": 1,
+          "FoodAmount": 1,
+          "ViewingDistance": 25,
+          "ViewingAngle": 90,
+          "HearingRate": 1,
+          "NooseTrap": 1,
+          "Edible": 1,
+          "CombiDuplicatePriority": 276000,
+          "MeshCapsuleHalfHeight": 50,
+          "MeshCapsuleRadius": 30,
+          "BestWorkSuitability": "Handcraft",
+          "PassiveSkill1": "PAL_ALLAttack_down1"
+        }
+      },
+      "partnerSkill": {
+        "name": "跟貓借手手",
+        "tiers": [
+          {
+            "level": 1,
+            "values": {
+              "MaxInventoryWeight_up_Partnerskill_PinkCat": 100.0
+            }
+          },
+          {
+            "level": 2,
+            "values": {
+              "MaxInventoryWeight_up_Partnerskill_PinkCat": 120.0
+            }
+          },
+          {
+            "level": 3,
+            "values": {
+              "MaxInventoryWeight_up_Partnerskill_PinkCat": 140.0
+            }
+          },
+          {
+            "level": 4,
+            "values": {
+              "MaxInventoryWeight_up_Partnerskill_PinkCat": 160.0
+            }
+          },
+          {
+            "level": 5,
+            "values": {
+              "MaxInventoryWeight_up_Partnerskill_PinkCat": 200.0
+            }
+          }
+        ]
+      },
+      "activeSkills": [
+        {
+          "code": "Unique_PinkCat_CatPunch",
+          "name": "喵喵拳",
+          "learnedLevel": 1,
+          "power": 40,
+          "cooldownSeconds": 2.0,
+          "sourceRangeLabel": "Melee Attack Range 0–500",
+          "sourceUrl": "https://paldb.cc/tw/Punch_Flurry"
+        },
+        {
+          "code": "AirCanon",
+          "name": "空氣彈",
+          "learnedLevel": 7,
+          "power": 40,
+          "cooldownSeconds": 2.0,
+          "sourceRangeLabel": "Shot Attack Range 500–4000",
+          "sourceUrl": "https://paldb.cc/tw/Air_Cannon"
+        },
+        {
+          "code": "MudShot",
+          "name": "泥漿投擲",
+          "learnedLevel": 15,
+          "power": 40,
+          "cooldownSeconds": 2.0,
+          "sourceRangeLabel": "Shot Attack Range 500–5000",
+          "sourceUrl": "https://paldb.cc/tw/Bog_Blast"
+        },
+        {
+          "code": "PowerShot",
+          "name": "能量射擊",
+          "learnedLevel": 22,
+          "power": 80,
+          "cooldownSeconds": 4.0,
+          "sourceRangeLabel": "Shot Attack Range 600–3000",
+          "sourceUrl": "https://paldb.cc/tw/Power_Shot"
+        },
+        {
+          "code": "WindCutter",
+          "name": "風刃",
+          "learnedLevel": 30,
+          "power": 40,
+          "cooldownSeconds": 2.0,
+          "sourceRangeLabel": "Shot Attack Range 500–5000",
+          "sourceUrl": "https://paldb.cc/tw/Wind_Cutter"
+        },
+        {
+          "code": "SeedMachinegun",
+          "name": "種子機關槍",
+          "learnedLevel": 40,
+          "power": 80,
+          "cooldownSeconds": 4.0,
+          "sourceRangeLabel": "Shot Attack Range 0–300",
+          "sourceUrl": "https://paldb.cc/tw/Seed_Machine_Gun"
+        },
+        {
+          "code": "HyperBeam",
+          "name": "帕魯光束",
+          "learnedLevel": 50,
+          "power": 450,
+          "cooldownSeconds": 20.0,
+          "sourceRangeLabel": "Shot Attack Range 500–1800",
+          "sourceUrl": "https://paldb.cc/tw/Pal_Blast"
+        },
+        {
+          "code": "HolyBlast",
+          "name": "光擊陣",
+          "learnedLevel": 70,
+          "power": 700,
+          "cooldownSeconds": 30.0,
+          "sourceRangeLabel": "Shot Attack Range 0–5000",
+          "sourceUrl": "https://paldb.cc/tw/Holy_Burst"
+        }
+      ],
+      "emptyLearnsetMeansNoBossAttacks": false,
+      "note": "Normal Astralym has no level-up learnset on this page; its two tower-boss pages are retained separately. Raw movement -1 is a source sentinel, not an accepted runtime speed."
+    },
+    {
+      "character": "Astralym",
+      "form": "normal",
+      "sourceUrl": "https://paldb.cc/tw/Astralym",
+      "sourceFile": {
+        "character": "Astralym",
+        "url": "https://paldb.cc/tw/Astralym",
+        "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/palworld-three-character-settings/original/Astralym.html",
+        "bytes": 59273,
+        "sha256": "ed841b430604574cf2bcf416c4ca6062d8f8fea799d529c98c300e708f821892"
+      },
+      "selectedSourceTab": null,
+      "otherSourceTabs": [],
+      "reportedGameVersion": "v1.0.4",
+      "factualFields": {
+        "Stats": {
+          "Size": "XL",
+          "Rarity": 10,
+          "生命值": 200,
+          "食量": 600,
+          "MeleeAttack": 100,
+          "攻擊": 200,
+          "防禦": 200,
+          "工作速度": 100,
+          "Support": 100,
+          "CaptureRateCorrect": 1,
+          "MaleProbability": 50,
+          "CombiRank": 10,
+          "金幣": 10000,
+          "Code": "WorldTreeDragon"
+        },
+        "Movement": {
+          "SlowWalkSpeed": -1,
+          "WalkSpeed": 400,
+          "RunSpeed": -1,
+          "RideSprintSpeed": -1,
+          "TransportSpeed": -1,
+          "SwimSpeed": -1,
+          "SwimDashSpeed": -1,
+          "Stamina": 100
+        },
+        "Others": {
+          "IsPal": 1,
+          "Tribe": "WorldTreeDragon",
+          "BPClass": "WorldTreeDragon",
+          "ZukanIndex": 204,
+          "Friendship_HP": 0.1,
+          "Friendship_ShotAttack": 1,
+          "Friendship_Defense": 1,
+          "Friendship_CraftSpeed": 0,
+          "EnemyMaxHPRate": 1,
+          "EnemyReceiveDamageRate": 1,
+          "EnemyInflictDamageRate": 1,
+          "EnemyWazaCoolTimeRate": 1,
+          "ExpRatio": 1,
+          "StatusResistUpRate": 1,
+          "AIResponse": "NotInterested",
+          "BattleBGM": "Strong",
+          "FullStomachDecreaseRate": 1,
+          "FoodAmount": 9,
+          "ViewingDistance": 25,
+          "ViewingAngle": 90,
+          "HearingRate": 1,
+          "BiologicalGrade": 5,
+          "Edible": 1,
+          "CombiDuplicatePriority": 1000,
+          "IgnoreCombi": 1,
+          "MeshCapsuleHalfHeight": 600,
+          "MeshCapsuleRadius": 200,
+          "BestWorkSuitability": "EmitFlame",
+          "IsUncapturable": 1
+        }
+      },
+      "partnerSkill": {
+        "name": "-",
+        "tiers": []
+      },
+      "activeSkills": [],
+      "emptyLearnsetMeansNoBossAttacks": false,
+      "note": "Normal Astralym has no level-up learnset on this page; its two tower-boss pages are retained separately. Raw movement -1 is a source sentinel, not an accepted runtime speed."
+    },
+    {
+      "character": "Astralym",
+      "form": "Nullstar_Calamity_Zenara_%26_Astralym",
+      "sourceUrl": "https://paldb.cc/tw/Nullstar_Calamity_Zenara_%26_Astralym",
+      "sourceFile": {
+        "character": "Astralym",
+        "form": "Nullstar_Calamity_Zenara_%26_Astralym",
+        "url": "https://paldb.cc/tw/Nullstar_Calamity_Zenara_%26_Astralym",
+        "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/palworld-three-character-settings/original/Nullstar_Calamity_Zenara_%26_Astralym.html",
+        "bytes": 68024,
+        "sha256": "634ad905a0fc7b56e60c0235e6436d0ce1118083e7696c882a8faba6eccb7d42"
+      },
+      "selectedSourceTab": null,
+      "otherSourceTabs": [],
+      "reportedGameVersion": "v1.0.4",
+      "factualFields": {
+        "Stats": {
+          "Size": "XL",
+          "Rarity": 8,
+          "生命值": 240,
+          "食量": 600,
+          "MeleeAttack": 100,
+          "攻擊": 200,
+          "防禦": 200,
+          "工作速度": 100,
+          "Support": 100,
+          "CaptureRateCorrect": 1,
+          "MaleProbability": 50,
+          "CombiRank": 10,
+          "金幣": 20000,
+          "Code": "GYM_WorldTreeDragon"
+        },
+        "Movement": {
+          "SlowWalkSpeed": -1,
+          "WalkSpeed": 400,
+          "RunSpeed": -1,
+          "RideSprintSpeed": -1,
+          "TransportSpeed": -1,
+          "SwimSpeed": -1,
+          "SwimDashSpeed": -1,
+          "Stamina": 100
+        },
+        "Others": {
+          "IsPal": 1,
+          "Tribe": "WorldTreeDragon",
+          "BPClass": "GYM_WorldTreeDragon",
+          "ZukanIndex": -1,
+          "Friendship_HP": 1,
+          "Friendship_ShotAttack": 1,
+          "Friendship_Defense": 1,
+          "Friendship_CraftSpeed": 0,
+          "EnemyMaxHPRate": 40,
+          "EnemyReceiveDamageRate": 1,
+          "EnemyInflictDamageRate": 0.7,
+          "EnemyWazaCoolTimeRate": 2,
+          "ExpRatio": 30,
+          "StatusResistUpRate": 1,
+          "AIResponse": "Boss",
+          "IsBoss": 1,
+          "IsTowerBoss": 1,
+          "UseBossHPGauge": 1,
+          "BattleBGM": "WorldTreeDragon",
+          "IgnoreLeanBack": 1,
+          "IgnoreBlowAway": 1,
+          "IgnoreStun": 1,
+          "FullStomachDecreaseRate": 1,
+          "FoodAmount": 9,
+          "ViewingDistance": 25,
+          "ViewingAngle": 90,
+          "HearingRate": 1,
+          "BiologicalGrade": 9,
+          "Edible": 1,
+          "CombiDuplicatePriority": 1000,
+          "IgnoreCombi": 1,
+          "MeshCapsuleHalfHeight": 67.55,
+          "MeshCapsuleRadius": 40,
+          "BestWorkSuitability": "EmitFlame",
+          "IsUncapturable": 1
+        }
+      },
+      "partnerSkill": {
+        "name": "",
+        "tiers": []
+      },
+      "activeSkills": [
+        {
+          "code": "Unique_WorldTreeDragon_PaldiumShot",
+          "name": "Unique_WorldTreeDragon_PaldiumShot",
+          "learnedLevel": 1,
+          "power": 400,
+          "cooldownSeconds": 5.0,
+          "sourceRangeLabel": "Shot Attack Range 0–5000",
+          "sourceUrl": "https://paldb.cc/tw/Unique_WorldTreeDragon_PaldiumShot"
+        },
+        {
+          "code": "Unique_WorldTreeDragon_PaldiumCannon",
+          "name": "Unique_WorldTreeDragon_PaldiumCannon",
+          "learnedLevel": 2,
+          "power": 700,
+          "cooldownSeconds": 20.0,
+          "sourceRangeLabel": "Shot Attack Range 0–5000",
+          "sourceUrl": "https://paldb.cc/tw/Unique_WorldTreeDragon_PaldiumCannon"
+        },
+        {
+          "code": "Unique_WorldTreeDragon_PaldiumRain",
+          "name": "Unique_WorldTreeDragon_PaldiumRain",
+          "learnedLevel": 3,
+          "power": 500,
+          "cooldownSeconds": 5.0,
+          "sourceRangeLabel": "Shot Attack Range 0–9999",
+          "sourceUrl": "https://paldb.cc/tw/Unique_WorldTreeDragon_PaldiumRain"
+        },
+        {
+          "code": "Unique_WorldTreeDragon_PaldiumExplosion",
+          "name": "Unique_WorldTreeDragon_PaldiumExplosion",
+          "learnedLevel": 4,
+          "power": 800,
+          "cooldownSeconds": 60.0,
+          "sourceRangeLabel": "Shot Attack Range 0–9999",
+          "sourceUrl": "https://paldb.cc/tw/Unique_WorldTreeDragon_PaldiumExplosion"
+        },
+        {
+          "code": "RockBeat",
+          "name": "震岩",
+          "learnedLevel": 5,
+          "power": 600,
+          "cooldownSeconds": 30.0,
+          "sourceRangeLabel": "Melee Attack Range 0–5000",
+          "sourceUrl": "https://paldb.cc/tw/Rocky_Impact"
+        },
+        {
+          "code": "HolyBlast",
+          "name": "光擊陣",
+          "learnedLevel": 7,
+          "power": 700,
+          "cooldownSeconds": 30.0,
+          "sourceRangeLabel": "Shot Attack Range 0–5000",
+          "sourceUrl": "https://paldb.cc/tw/Holy_Burst"
+        },
+        {
+          "code": "DragonMeteor",
+          "name": "龍彗星",
+          "learnedLevel": 8,
+          "power": 600,
+          "cooldownSeconds": 30.0,
+          "sourceRangeLabel": "Shot Attack Range 500–5000",
+          "sourceUrl": "https://paldb.cc/tw/Dragon_Meteor"
+        },
+        {
+          "code": "CommetRain",
+          "name": "隕星雨",
+          "learnedLevel": 9,
+          "power": 700,
+          "cooldownSeconds": 30.0,
+          "sourceRangeLabel": "Shot Attack Range 0–5000",
+          "sourceUrl": "https://paldb.cc/tw/Meteorain"
+        }
+      ],
+      "emptyLearnsetMeansNoBossAttacks": false,
+      "note": "Normal Astralym has no level-up learnset on this page; its two tower-boss pages are retained separately. Raw movement -1 is a source sentinel, not an accepted runtime speed."
+    },
+    {
+      "character": "Astralym",
+      "form": "Blightstar_Calamity_Zenara_%26_Astralym",
+      "sourceUrl": "https://paldb.cc/tw/Blightstar_Calamity_Zenara_%26_Astralym",
+      "sourceFile": {
+        "character": "Astralym",
+        "form": "Blightstar_Calamity_Zenara_%26_Astralym",
+        "url": "https://paldb.cc/tw/Blightstar_Calamity_Zenara_%26_Astralym",
+        "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/palworld-three-character-settings/original/Blightstar_Calamity_Zenara_%26_Astralym.html",
+        "bytes": 69276,
+        "sha256": "b5a331b83c3906e787a1065d43d27ac8b39d361187a04622e4185cefea8eb3c4"
+      },
+      "selectedSourceTab": null,
+      "otherSourceTabs": [],
+      "reportedGameVersion": "v1.0.4",
+      "factualFields": {
+        "Stats": {
+          "Size": "XL",
+          "Rarity": 8,
+          "生命值": 288,
+          "食量": 600,
+          "MeleeAttack": 100,
+          "攻擊": 200,
+          "防禦": 200,
+          "工作速度": 100,
+          "Support": 100,
+          "CaptureRateCorrect": 1,
+          "MaleProbability": 50,
+          "CombiRank": 10,
+          "金幣": 40000,
+          "Code": "GYM_WorldTreeDragon_2"
+        },
+        "Movement": {
+          "SlowWalkSpeed": -1,
+          "WalkSpeed": 400,
+          "RunSpeed": -1,
+          "RideSprintSpeed": -1,
+          "TransportSpeed": -1,
+          "SwimSpeed": -1,
+          "SwimDashSpeed": -1,
+          "Stamina": 100
+        },
+        "Others": {
+          "IsPal": 1,
+          "Tribe": "WorldTreeDragon",
+          "BPClass": "GYM_WorldTreeDragon_2",
+          "ZukanIndex": -1,
+          "Friendship_HP": 1,
+          "Friendship_ShotAttack": 1,
+          "Friendship_Defense": 1,
+          "Friendship_CraftSpeed": 0,
+          "EnemyMaxHPRate": 405,
+          "EnemyReceiveDamageRate": 0.45,
+          "EnemyInflictDamageRate": 5,
+          "EnemyWazaCoolTimeRate": 2,
+          "ExpRatio": 30,
+          "StatusResistUpRate": 1,
+          "AIResponse": "Boss",
+          "IsBoss": 1,
+          "IsTowerBoss": 1,
+          "UseBossHPGauge": 1,
+          "BattleBGM": "WorldTreeDragon",
+          "IgnoreLeanBack": 1,
+          "IgnoreBlowAway": 1,
+          "IgnoreStun": 1,
+          "FullStomachDecreaseRate": 1,
+          "FoodAmount": 9,
+          "ViewingDistance": 25,
+          "ViewingAngle": 90,
+          "HearingRate": 1,
+          "BiologicalGrade": 9,
+          "Edible": 1,
+          "CombiDuplicatePriority": 1000,
+          "IgnoreCombi": 1,
+          "MeshCapsuleHalfHeight": 67.55,
+          "MeshCapsuleRadius": 40,
+          "BestWorkSuitability": "EmitFlame",
+          "IsUncapturable": 1
+        }
+      },
+      "partnerSkill": {
+        "name": "",
+        "tiers": []
+      },
+      "activeSkills": [
+        {
+          "code": "Unique_WorldTreeDragon_PaldiumShot",
+          "name": "Unique_WorldTreeDragon_PaldiumShot",
+          "learnedLevel": 1,
+          "power": 400,
+          "cooldownSeconds": 5.0,
+          "sourceRangeLabel": "Shot Attack Range 0–5000",
+          "sourceUrl": "https://paldb.cc/tw/Unique_WorldTreeDragon_PaldiumShot"
+        },
+        {
+          "code": "Unique_WorldTreeDragon_PaldiumCannon",
+          "name": "Unique_WorldTreeDragon_PaldiumCannon",
+          "learnedLevel": 2,
+          "power": 700,
+          "cooldownSeconds": 20.0,
+          "sourceRangeLabel": "Shot Attack Range 0–5000",
+          "sourceUrl": "https://paldb.cc/tw/Unique_WorldTreeDragon_PaldiumCannon"
+        },
+        {
+          "code": "Unique_WorldTreeDragon_PaldiumRain",
+          "name": "Unique_WorldTreeDragon_PaldiumRain",
+          "learnedLevel": 3,
+          "power": 500,
+          "cooldownSeconds": 5.0,
+          "sourceRangeLabel": "Shot Attack Range 0–9999",
+          "sourceUrl": "https://paldb.cc/tw/Unique_WorldTreeDragon_PaldiumRain"
+        },
+        {
+          "code": "Unique_WorldTreeDragon_PaldiumExplosion",
+          "name": "Unique_WorldTreeDragon_PaldiumExplosion",
+          "learnedLevel": 4,
+          "power": 800,
+          "cooldownSeconds": 60.0,
+          "sourceRangeLabel": "Shot Attack Range 0–9999",
+          "sourceUrl": "https://paldb.cc/tw/Unique_WorldTreeDragon_PaldiumExplosion"
+        },
+        {
+          "code": "RockBeat",
+          "name": "震岩",
+          "learnedLevel": 5,
+          "power": 600,
+          "cooldownSeconds": 30.0,
+          "sourceRangeLabel": "Melee Attack Range 0–5000",
+          "sourceUrl": "https://paldb.cc/tw/Rocky_Impact"
+        },
+        {
+          "code": "HolyBlast",
+          "name": "光擊陣",
+          "learnedLevel": 7,
+          "power": 700,
+          "cooldownSeconds": 30.0,
+          "sourceRangeLabel": "Shot Attack Range 0–5000",
+          "sourceUrl": "https://paldb.cc/tw/Holy_Burst"
+        },
+        {
+          "code": "Psychokinesis",
+          "name": "念動引力",
+          "learnedLevel": 8,
+          "power": 700,
+          "cooldownSeconds": 30.0,
+          "sourceRangeLabel": "Shot Attack Range 0–5000",
+          "sourceUrl": "https://paldb.cc/tw/Psycho_Gravity"
+        },
+        {
+          "code": "CommetRain",
+          "name": "隕星雨",
+          "learnedLevel": 9,
+          "power": 700,
+          "cooldownSeconds": 30.0,
+          "sourceRangeLabel": "Shot Attack Range 0–5000",
+          "sourceUrl": "https://paldb.cc/tw/Meteorain"
+        }
+      ],
+      "emptyLearnsetMeansNoBossAttacks": false,
+      "note": "Normal Astralym has no level-up learnset on this page; its two tower-boss pages are retained separately. Raw movement -1 is a source sentinel, not an accepted runtime speed."
+    }
+  ]
+}

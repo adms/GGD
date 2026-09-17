@@ -1,0 +1,131 @@
+{
+  "schema": "ggd-procedural-palette-expansion-acceptance@1",
+  "reason": "The generated proxies intentionally use an eight-colour 4x2 RGBA palette. The upload guard correctly rejects an entire texture set at 8px or smaller, so each palette was enlarged by exact nearest-neighbour replication rather than relabelled or exempted.",
+  "inputImage": {
+    "width": 4,
+    "height": 2,
+    "sha256": "f95aeb28cfb49b97a8d494e81c0c13e83a08d302d81a02f40d1aba8be7f52f25",
+    "uniqueRgbaColors": 8
+  },
+  "outputImage": {
+    "width": 16,
+    "height": 8,
+    "sha256": "1696ab48a3a9f8142aeea4219a8b9063ddc51cdf118067f5375e416850804b0a",
+    "resampling": "nearest",
+    "pixelMultisetExactExpansion": true
+  },
+  "tool": {
+    "path": "tools/w3x-import/expand_verified_palette.py",
+    "pillowVersion": "12.3.0",
+    "scale": 4,
+    "twoIndependentBuildsByteIdentical": true,
+    "freshReproductionMatchesAcceptedOutputs": true
+  },
+  "models": [
+    {
+      "id": "kirby-source",
+      "heroId": "community-review-06-20260907",
+      "sourceModelKey": "community.body.a8131f3adecfb0602a0e3fda93558497981727ce00efffd7",
+      "old": "b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03",
+      "oldBytes": 199556,
+      "new": "d51ee6e4a9918fc4271f030d91d904c68b262f6c6ffc61e92896cde81dc90ef8",
+      "newBytes": 199612,
+      "modelDocumentPath": "content/models/community.body.a8131f3adecfb0602a0e3fda93558497981727ce00efffd7.json",
+      "modelDocumentSha256": "9512b4a2ad4e9b7142a818aa0e511c82a6897161dd9f592ee7fd7a09059df035",
+      "oldGlbPath": "content/assets/models/community/b9c412523a865aa206af4f87135f5b8c74908620525b797610834b9ed291df03.glb",
+      "newGlbPath": "content/assets/models/community/d51ee6e4a9918fc4271f030d91d904c68b262f6c6ffc61e92896cde81dc90ef8.glb",
+      "versionModelKey": "version.body.339146ce17e5d0bdfcf9253458ff343acd92864bd726e5e1",
+      "versionModelSha256": "d8afd3d930d0deffc1e17effb074cb20735c5d2ed9927519b78de309e7f93b6d",
+      "versionDocumentPath": "content/models/version.body.339146ce17e5d0bdfcf9253458ff343acd92864bd726e5e1.json",
+      "versionDocumentSha256": "b732c9f0681e085cec69eccf2183cc7f13e793f31ad0148bcf109b4def3c0595",
+      "registeredAt": "2026-09-12T23:16:12.267Z",
+      "activeModelKey": "version.body.619fced60e8e80ba5e8dc0e16780642db6f18a1d5fd54cf5",
+      "active": false,
+      "selectable": true,
+      "oldPreserved": true
+    },
+    {
+      "id": "kirby-derivative",
+      "heroId": "community-review-06-20260907",
+      "sourceModelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
+      "old": "7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963",
+      "oldBytes": 199860,
+      "new": "e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5",
+      "newBytes": 199920,
+      "modelDocumentPath": "content/models/community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b.json",
+      "modelDocumentSha256": "2dc41180e7c4f3f3ba0ff1f19e80266136e2e0b51a8d534e6b1c4c8bff2eb603",
+      "oldGlbPath": "content/assets/models/community/7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963.glb",
+      "newGlbPath": "content/assets/models/community/e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5.glb",
+      "versionModelKey": "version.body.619fced60e8e80ba5e8dc0e16780642db6f18a1d5fd54cf5",
+      "versionModelSha256": "7030e8e8aaf24cb7502d4e3d89f5f0bdca4742d5a7dd84913d8a27d5db42eb46",
+      "versionDocumentPath": "content/models/version.body.619fced60e8e80ba5e8dc0e16780642db6f18a1d5fd54cf5.json",
+      "versionDocumentSha256": "5054eee382d377fddb3a6ab51b7f59f73f343a48d5fbb89c765ab192aaab0319",
+      "registeredAt": "2026-09-12T23:16:12.296Z",
+      "activeModelKey": "version.body.619fced60e8e80ba5e8dc0e16780642db6f18a1d5fd54cf5",
+      "active": true,
+      "selectable": true,
+      "oldPreserved": true
+    },
+    {
+      "id": "koro-proxy",
+      "heroId": "community-review-14-20260907",
+      "sourceModelKey": "community.body.16c143a142b9b5af5089aba88f803ac153abcec61eff153d",
+      "old": "50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a",
+      "oldBytes": 311956,
+      "new": "d54eacf82019ce83af51b6d34c31e2119da6edc390f1b71056b39cf8ade71985",
+      "newBytes": 312016,
+      "modelDocumentPath": "content/models/community.body.16c143a142b9b5af5089aba88f803ac153abcec61eff153d.json",
+      "modelDocumentSha256": "fc27900d81367670b8a304a6a5889631046eee8380e3bd4ce9b8bc7e464ad099",
+      "oldGlbPath": "content/assets/models/community/50b7fd3fbdb685b6640102ebcdfc8a6e1e02c65d8f122c40f4d83e4cbce8fc4a.glb",
+      "newGlbPath": "content/assets/models/community/d54eacf82019ce83af51b6d34c31e2119da6edc390f1b71056b39cf8ade71985.glb",
+      "versionModelKey": "version.body.a8ced1f9b0848bd41b9a17b3c11852efae047cd9d91f0f1d",
+      "versionModelSha256": "d4b5db7d3372c5c75b3ea5a02f3bb543f4b10d42876bb32a4501f59608778f7d",
+      "versionDocumentPath": "content/models/version.body.a8ced1f9b0848bd41b9a17b3c11852efae047cd9d91f0f1d.json",
+      "versionDocumentSha256": "b2a8c856650ee07b15a36e57bf59599f0a47250e8280b90e829e530ee587f068",
+      "registeredAt": "2026-09-12T23:18:17.417Z",
+      "activeModelKey": "version.body.680764d3292e9832f69adc64d54518ae2a089d9030f9a353",
+      "active": false,
+      "selectable": true,
+      "oldPreserved": true
+    }
+  ],
+  "validation": {
+    "khronos": {
+      "models": 3,
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
+      "hints": 0,
+      "truncated": false
+    },
+    "geometrySkinAnimationBinaryPrefixIdentical": true,
+    "allOldGlbsPreserved": true,
+    "allNewSourceModelsRegistered": true
+  },
+  "limitations": [
+    "These are GGD-generated procedural proxies, not original-game models.",
+    "No original source texture was missing or recovered; the tiny image is an intentional generated colour palette.",
+    "Nearest-neighbour expansion preserves palette colours but does not add visual detail.",
+    "The Koro-sensei proxy is registered as an independent option but is not the current active model.",
+    "Production deployment is not verified."
+  ],
+  "evidenceFiles": [
+    {
+      "path": "materials/hero-model-library/priority-evidence/procedural-palette-repair/reproduction.json",
+      "bytes": 2812,
+      "sha256": "77b989a92fa0d91e312f4e6f3808e11513796958e520fed9e687f636bc7329fb"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/procedural-palette-repair/khronos.json",
+      "bytes": 549,
+      "sha256": "9322ef673cda1eaf1bc6b726ba1ef720608181c35871c974f95b2e42d000c567"
+    }
+  ],
+  "status": {
+    "converted": true,
+    "validated": true,
+    "registered": true,
+    "selectable": true,
+    "productionDeployed": false
+  }
+}

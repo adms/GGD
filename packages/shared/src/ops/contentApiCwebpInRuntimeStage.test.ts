@@ -47,7 +47,16 @@ const ICON_PATH_ROOTS = [
 const BASE_IMAGE_BINS = new Set(["node", "npm", "npx", "corepack", "pnpm", "sh", "env", "which"]);
 
 /** bin → Alpine 套件名。⚠️ Alpine 上 `cwebp` 來自 `libwebp-tools`（⛔ 不是 `webp`／`cwebp`）。 */
-const APK_PACKAGE_FOR: Record<string, string> = { cwebp: "libwebp-tools" };
+//: ⭐ 2026-09-11（GH#1211）：補上 `ffmpeg`。
+//: `apps/content-api/src/resizeImage.node.ts:25` 直接 `execFileSync("ffmpeg", …)`，
+//: 而 runtime stage 只裝了 `tini libwebp-tools` ⇒ ⛔ **容器裡縮不了圖**。
+//: ⚠️ 它 fail-open（找不到 ffmpeg 回 `null`）⇒ ⭐ 症狀是「貼圖悄悄沒縮」，
+//: ⛔ 不是一個會喊的錯 —— 而那正是 256 貼圖上限那條路（`ModelVersions.prepare`）在用的。
+//: ⭐ 2026-09-15：補上 `git`（#1178，commit `0da79d14a`）。
+//: `apps/content-api/src/catalogAddressedAssets.ts` 用 `execFileSync("git", ["ls-tree", …])` 認內容定址 GLB；
+//: 沒有 git 就 fail-open 回全量複製（撞上限 ⇒ 存檔 503）。⚠️ 容器還看不到 `.git`（compose 只掛 content）——
+//: 那一半不是這條閘管得到的，記在 Dockerfile 那一段。
+const APK_PACKAGE_FOR: Record<string, string> = { cwebp: "libwebp-tools", ffmpeg: "ffmpeg", git: "git" };
 
 // ── Dockerfile 解析 ────────────────────────────────────────────────────────
 

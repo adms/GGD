@@ -1,16 +1,16 @@
 {
   "id": "community-review-37-20260907",
   "name": "吉伊卡哇",
-  "description": "吉伊卡哇 社群英雄功能驗收稿。作品：《吉伊卡哇》  \n採用：吉伊卡哇本人。  \n定位：膽怯與勇氣、短兵器、小型角色可讀性。  \n註：以下名稱與戰鬥效果為 GGD 創編。\n\n視覺方向：奶白輪廓、淡橘討伐叉線、星形勇氣提示、小點心回復光。\n以 GGD 硬輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "description": "作品：《吉伊卡哇》  \n採用：吉伊卡哇本人。  \n定位：膽怯與勇氣、短兵器、小型角色可讀性。  \n註：以下名稱與戰鬥效果為 GGD 創編。\n\n視覺方向：奶白輪廓、淡橘討伐叉線、星形勇氣提示、小點心回復光。",
   "role": "tank",
   "attackType": "melee",
   "archetype": "tank",
   "origin": "硬輔",
-  "modelKey": "version.body.a9feba2b26ffdb4a465a497b0104db5abc3944ad1aa1494f",
+  "modelKey": "version.body.9e4b7422fa7132ba5d34696e07939c21d559884e213e3cda",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 38.2761224489796,
+    "maxHealth": 100,
     "healthRegen": 0.05743673469387757,
-    "maxMana": 11.026530612244898,
+    "maxMana": 35,
     "manaRegen": 0,
     "ad": 2.9131428571428573,
     "as": 2.9226239784265093e-05,
@@ -62,10 +62,10 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -82,7 +82,7 @@
           }
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-37-20260907.q.webp",
       "template": {
@@ -93,7 +93,7 @@
             "ratios": []
           },
           "damageType": "physical",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -119,10 +119,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -158,7 +158,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-37-20260907.w.webp",
       "template": {
@@ -177,7 +177,7 @@
           "pushSpeed": 872,
           "pushFrom": "facing",
           "pushLaunchHeight": 0,
-          "castTimeSec": 1.033
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -227,7 +227,7 @@
           "applyTo": "self"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-37-20260907.e.webp",
       "template": {
@@ -235,7 +235,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -261,9 +261,9 @@
         90.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        600.0,
+        600.0,
+        600.0
       ],
       "manaCostTier": "大",
       "range": 3,
@@ -324,7 +324,7 @@
         },
         "inheritDefaults": true
       },
-      "castTimeSec": 0.533,
+      "castTimeSec": 0.5,
       "vfxKey": "fx.prim.holy.slash",
       "vfxLayers": [
         {
@@ -377,6 +377,136 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-459617-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.a011af79ef5884f8ced07c1f0d367d90d5b046aee2eb24c8",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.459617",
+      "modelSha256": "951dee6f99c70d849437e14d620330adf266aca4338b77cb04804bf31e4052c4",
+      "binarySha256": "16308c79cca82fda4eba8488abb8842d23c2486d6bb82f6f007e7fc7f01700f0",
+      "registeredAt": "2026-09-10T14:45:34.528Z",
+      "source": {
+        "kind": "previous",
+        "character": "吉伊卡哇",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.459617.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.f8153b980ede66a164411b09e6a5e765e5dbc83b3d92f419",
+      "label": "可爱小宠物chii吉伊（論壇相似模型）",
+      "sourceModelKey": "ou99.459617-standard",
+      "modelSha256": "e372ff7c98df5585e3d4a7eb72b6b3339f65f8409949e2d43c2a3e5101bd25d1",
+      "binarySha256": "94e23edd2f6b6f6423a1e0dd8f4a94d2bd851cf7f96604a5a9baaf140a8ee36b",
+      "registeredAt": "2026-09-10T14:45:34.542Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "可爱小宠物chii吉伊",
+        "work": "來源作品待核；論壇標題：可爱小宠物chii吉伊",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-459617-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.a5943deb83a8ee7899c8637d19359fb87fd2c0cd940c84af",
+      "label": "喜羊羊",
+      "sourceModelKey": "community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5",
+      "modelSha256": "67cacd00d20185d8b988fddcb02b586feb49d1a642e07ecb36fc5fe9cb632952",
+      "binarySha256": "e7f77391b2d5ab6f33cbf9040d0dc0d0bd59c1c80f4264d1b054599d7238b48c",
+      "registeredAt": "2026-09-10T14:45:34.597Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "喜羊羊",
+        "work": "喜羊羊與灰太狼",
+        "library": "300heroes",
+        "reference": "300heroes:f2f3b69f7b0f9e4884f94fff",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.61eee78779266fe60d8dcda510345093f25a3ed5c378720c",
+      "label": "可爱小宠物chii吉伊（論壇相似模型）",
+      "sourceModelKey": "ou99.459617-standard",
+      "modelSha256": "efe3356fcc982ad653efb4167185ea3278c8842f16736ff6f99c4b92467a26dc",
+      "binarySha256": "6ed4db99307c164bc9fcc7d24df6f11b4135e698ec244e58ddf8690c8e44d3be",
+      "registeredAt": "2026-09-12T23:02:37.346Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "可爱小宠物chii吉伊",
+        "work": "來源作品待核；論壇標題：可爱小宠物chii吉伊",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-459617-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.9e6e074251ce5a123abe1923b89800d395c97015007a83f4",
+      "label": "喜羊羊",
+      "sourceModelKey": "community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5",
+      "modelSha256": "a99bbb9843af7ec2437b1845b64205c55c9b12ef2234929495b8f34cde11008b",
+      "binarySha256": "ae89f7f129203e2964934c508571318b5a81c877dd172cbbe6369c652ba85d3a",
+      "registeredAt": "2026-09-12T23:02:37.442Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "喜羊羊",
+        "work": "喜羊羊與灰太狼",
+        "library": "300heroes",
+        "reference": "300heroes:f2f3b69f7b0f9e4884f94fff",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.9e4b7422fa7132ba5d34696e07939c21d559884e213e3cda",
+      "label": "可爱小宠物chii吉伊（論壇相似模型）",
+      "sourceModelKey": "ou99.459617-standard",
+      "modelSha256": "c16f92e254ac726b8ef595c6049650c24809d09907726891557739ed62856c55",
+      "binarySha256": "6ed4db99307c164bc9fcc7d24df6f11b4135e698ec244e58ddf8690c8e44d3be",
+      "registeredAt": "2026-09-13T00:08:53.155Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "可爱小宠物chii吉伊",
+        "work": "來源作品待核；論壇標題：可爱小宠物chii吉伊",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-459617-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.fa4d88f2a0f6e6ec59eb106438c3c1647a08f38dcb07a16f",
+      "label": "喜羊羊",
+      "sourceModelKey": "community.body.f6df6d5c4e533fcfc5c36bf9e275ac4f712e9b0566b067d5",
+      "modelSha256": "45b474dd62ebf04ffef06af4ef8561d2872b106e0a86960f09ce5680433f88d5",
+      "binarySha256": "ae89f7f129203e2964934c508571318b5a81c877dd172cbbe6369c652ba85d3a",
+      "registeredAt": "2026-09-13T00:08:53.266Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "喜羊羊",
+        "work": "喜羊羊與灰太狼",
+        "library": "300heroes",
+        "reference": "300heroes:f2f3b69f7b0f9e4884f94fff",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

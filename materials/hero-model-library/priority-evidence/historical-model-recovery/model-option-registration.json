@@ -1,0 +1,187 @@
+{
+  "schema": "ggd-historical-model-option-registration@1",
+  "scope": "Four current-policy-eligible recovered or validated-decimated GLBs registered as non-default Hero Forge model options. This is local authoring evidence, not Main merge or production deployment proof.",
+  "generatedFrom": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/validation-normalized-accessors-v3.json",
+      "bytes": 65157,
+      "sha256": "9d61c0c41eb044352f2b84f70e31a418a5c13867c838b9a6a748538a45cd7420"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/validation.json",
+      "bytes": 15459,
+      "sha256": "9cb196423da49d79be84fb3e4e3210a1491662cee87bac86d38103e32c534ad5"
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/current-component-policy-audit.json",
+      "bytes": 109420,
+      "sha256": "afb92e1f407aebc50b0b2357af743319cb5cae6577c754aea2f136329d2b2043"
+    },
+    {
+      "gitPath": "packages/shared/src/content/heroForge/communityAcquired.ts",
+      "bytes": 5612,
+      "sha256": "58bb29bfabb0a014e555ab6d0c1c5d699693bb3b8d1f3f040f4ba03a6076c9f3"
+    },
+    {
+      "gitPath": "tools/hero-model-library/register_historical_model_options.mts",
+      "bytes": 7876,
+      "sha256": "2b45abe59b287a6817836243f377727f54f2454479f002d2525163ccb5acb0e6"
+    }
+  ],
+  "blocked": [],
+  "registrations": [
+    {
+      "componentId": "historical-jetragon-7bc2fa3f8",
+      "validationComponentId": "historical-jetragon-7bc2fa3f8",
+      "heroId": "acquired-jetragon",
+      "modelKey": "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c",
+      "label": "空渦龍／7bc2fa3f8 歷史復原版",
+      "modelDocument": {
+        "gitPath": "content/models/community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c.json",
+        "bytes": 455,
+        "sha256": "63093713e8887e59570921aedc85e841028634dbd2c24234e58d8108d9374819"
+      },
+      "modelGlb": {
+        "gitPath": "content/assets/models/community/0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d.glb",
+        "bytes": 3222184,
+        "sha256": "0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d"
+      },
+      "selectedClips": {
+        "idle": "Idle",
+        "run": "Run",
+        "attack": "FarSkill_Action",
+        "cast": "JumpBeam_Loop",
+        "hurt": "Damage",
+        "death": "Damage"
+      },
+      "nativeClipCount": 5,
+      "metrics": {
+        "triangles": 8468,
+        "drawPrimitives": 3,
+        "maxTextureEdge": 256,
+        "maxAnimationChannels": 225,
+        "skins": 1,
+        "joints": 75
+      },
+      "deathPresentation": "native-hurt-clip-plus-authorized-runtime-fade",
+      "runtimeDropdownRegistered": true,
+      "productionDeploymentVerified": false
+    },
+    {
+      "componentId": "historical-astralym-decimated-c45f111d",
+      "validationComponentId": "historical-astralym-7bc2fa3f8",
+      "heroId": "acquired-astralym",
+      "modelKey": "community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959",
+      "label": "枯星龍／7bc2fa3f8 發光紋理保護減面版",
+      "modelDocument": {
+        "gitPath": "content/models/community.body.c45f111dfef172872db990ee8c40161bfba4a9e38f36a959.json",
+        "bytes": 456,
+        "sha256": "b74809087a19d4defba4557ec46d0c5355c9442136a0af1b249ea1032b9fc23c"
+      },
+      "modelGlb": {
+        "gitPath": "content/assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
+        "bytes": 3793672,
+        "sha256": "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f"
+      },
+      "selectedClips": {
+        "idle": "Idle",
+        "run": "Walk",
+        "attack": "FarSkill_Action",
+        "cast": "HaloBeam_Loop",
+        "hurt": "Damage",
+        "death": "Damage"
+      },
+      "nativeClipCount": 5,
+      "metrics": {
+        "triangles": 7996,
+        "drawPrimitives": 3,
+        "maxTextureEdge": 256,
+        "maxAnimationChannels": 435,
+        "skins": 1,
+        "joints": 145
+      },
+      "deathPresentation": "native-hurt-clip-plus-authorized-runtime-fade",
+      "runtimeDropdownRegistered": true,
+      "productionDeploymentVerified": false
+    },
+    {
+      "componentId": "historical-kita-kita-7bc2fa3f8",
+      "validationComponentId": "historical-kita-kita-7bc2fa3f8",
+      "heroId": "acquired-kita-kita",
+      "modelKey": "community.body.be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a9",
+      "label": "吉他吉他老伯／7bc2fa3f8 歷史復原版",
+      "modelDocument": {
+        "gitPath": "content/models/community.body.be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a9.json",
+        "bytes": 448,
+        "sha256": "361c39ebddb1cb13c8b464f869520141ea0a129d822fd88e4772c7467c95c4f0"
+      },
+      "modelGlb": {
+        "gitPath": "content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
+        "bytes": 373212,
+        "sha256": "be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e"
+      },
+      "selectedClips": {
+        "idle": "wait",
+        "run": "F-Move",
+        "attack": "attack_01",
+        "cast": "sp01_01",
+        "hurt": "Damage-1",
+        "death": "D-Down"
+      },
+      "nativeClipCount": 6,
+      "metrics": {
+        "triangles": 1202,
+        "drawPrimitives": 1,
+        "maxTextureEdge": 256,
+        "maxAnimationChannels": 54,
+        "skins": 1,
+        "joints": 17
+      },
+      "deathPresentation": "native-death-clip",
+      "runtimeDropdownRegistered": true,
+      "productionDeploymentVerified": false
+    },
+    {
+      "componentId": "historical-lord-nightmares-7bc2fa3f8",
+      "validationComponentId": "historical-lord-nightmares-7bc2fa3f8",
+      "heroId": "acquired-lord-nightmares",
+      "modelKey": "community.body.98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd",
+      "label": "惡夢之王／7bc2fa3f8 歷史復原版",
+      "modelDocument": {
+        "gitPath": "content/models/community.body.98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd.json",
+        "bytes": 452,
+        "sha256": "96cdb58fb688baae6b657dc41bfc308934a891832adb63f9f24782b9d6fdeaf6"
+      },
+      "modelGlb": {
+        "gitPath": "content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
+        "bytes": 695020,
+        "sha256": "98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c"
+      },
+      "selectedClips": {
+        "idle": "wait",
+        "run": "F-Move",
+        "attack": "maryokudan_01",
+        "cast": "sp01_01",
+        "hurt": "Damage-1",
+        "death": "D-Down"
+      },
+      "nativeClipCount": 6,
+      "metrics": {
+        "triangles": 3274,
+        "drawPrimitives": 1,
+        "maxTextureEdge": 256,
+        "maxAnimationChannels": 96,
+        "skins": 1,
+        "joints": 31
+      },
+      "deathPresentation": "native-death-clip",
+      "runtimeDropdownRegistered": true,
+      "productionDeploymentVerified": false
+    }
+  ],
+  "summary": {
+    "registered": 4,
+    "blockedPendingDecimation": 0,
+    "productionDeploymentVerified": false
+  }
+}

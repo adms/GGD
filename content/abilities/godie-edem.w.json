@@ -14,10 +14,10 @@
     45.0
   ],
   "manaCost": [
-    56.0,
-    56.0,
-    56.0,
-    56.0
+    75.0,
+    75.0,
+    75.0,
+    75.0
   ],
   "range": 0.0,
   "radiusTier": "中",
@@ -99,12 +99,13 @@
           "moveSpeedMult": 0.5
         }
       ],
-      "castTimeSec": 0.833
+      "castTimeSec": 1
     }
   },
   "icon": "assets/icons/abilities/godie-edem.w.webp",
   "vfxKey": "fx.prim.lightning.beam",
   "cooldownTier": "小",
+  "castTimeTier": "極大",
   "manaCostTier": "極小",
-  "castTimeSec": 0.833
+  "castTimeSec": 1
 }

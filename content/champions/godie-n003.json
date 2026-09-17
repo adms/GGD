@@ -6,7 +6,7 @@
   "role": "marksman",
   "attackType": "ranged",
   "origin": "法師",
-  "modelKey": "version.body.5e2e903e4c01e42cbf728251ea0dbeddfca81bd66f32ba6e",
+  "modelKey": "version.body.37495a6c82df5a85bb0a6b47b332baa584d2f0e0f16ae75b",
   "attackDamagePoint": 0.3,
   "baseStats": {
     "maxHealth": 150,
@@ -26,9 +26,9 @@
     "range": 8.2
   },
   "growth": {
-    "maxHealth": 76.9306,
+    "maxHealth": 80,
     "healthRegen": 0.1383,
-    "maxMana": 46.7908,
+    "maxMana": 50,
     "manaRegen": 0.1624,
     "ad": 1.898,
     "armor": 0.6864,
@@ -69,10 +69,10 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "template": {
@@ -90,20 +90,21 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.133,
+          "castTimeSec": 1,
           "statusId": "slow40",
           "statusDurationSec": 1.5
         }
       },
       "vfxKey": "fx.prim.ice.shockwave",
       "targetsEnemies": true,
-      "radius": 6.0,
-      "castTimeSec": 1.133,
+      "radius": 6,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
       "manaCostTier": "極小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-n003.w",
@@ -121,15 +122,15 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.blood.nova",
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "cooldownTier": "極大",
       "template": {
         "ref": "tpl-heal",
@@ -137,21 +138,22 @@
           "target": "self",
           "amount": {
             "perRank": [
-              200.0,
-              360.0,
-              520.0,
-              680.0
+              200,
+              360,
+              520,
+              680
             ],
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1.0
+                "coeff": 1
               }
             ]
           },
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
-      }
+      },
+      "castTimeTier": "小"
     },
     "E": {
       "id": "godie-n003.e",
@@ -169,14 +171,14 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.ice.nova",
-      "castTimeSec": 1.7,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "大",
@@ -189,9 +191,10 @@
             "damageTier": "大"
           },
           "damageType": "magic",
-          "castTimeSec": 1.7
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-n003.r",
@@ -209,9 +212,9 @@
       ],
       "cooldownTier": "極大",
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        600.0,
+        600.0,
+        600.0
       ],
       "manaCostTier": "大",
       "effects": [
@@ -232,7 +235,7 @@
         {
           "kind": "delayed",
           "shape": "single",
-          "delaySec": 0.35,
+          "delaySec": 0.3,
           "effects": [
             {
               "kind": "floatingText",
@@ -253,7 +256,7 @@
         {
           "kind": "delayed",
           "shape": "single",
-          "delaySec": 0.7,
+          "delaySec": 0.6,
           "effects": [
             {
               "kind": "floatingText",
@@ -274,7 +277,7 @@
         {
           "kind": "delayed",
           "shape": "single",
-          "delaySec": 1.05,
+          "delaySec": 0.9,
           "effects": [
             {
               "kind": "floatingText",
@@ -306,7 +309,7 @@
               "kind": "screenShake",
               "shape": "single",
               "amplitude": 0.8,
-              "durationSec": 1.0,
+              "durationSec": 1,
               "applyTo": "all"
             }
           ],
@@ -321,7 +324,7 @@
             {
               "kind": "applyStatus",
               "statusId": "slow50",
-              "duration": 2.0,
+              "duration": 2,
               "moveSpeedMult": 0.5
             }
           ],
@@ -330,7 +333,7 @@
         }
       ],
       "vfxKey": "fx.w3x.locust.frostnova.p01",
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "hitFeel": {
         "hitstopTicks": 5,
         "hitstunTicks": 8,
@@ -362,9 +365,10 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.633
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [
@@ -430,7 +434,7 @@
       "modelKey": "version.body.5e2e903e4c01e42cbf728251ea0dbeddfca81bd66f32ba6e",
       "label": "ou99 二次元巫女（相似造型）",
       "sourceModelKey": "ou99.470426",
-      "modelSha256": "079f897456eb198106fcd20cd362abf3ade5d914f0430625c365299ac551a21d",
+      "modelSha256": "f112af578223627ab2feae2dd975440dd7bbbf497b1c82ee66fa999833ff5ebb",
       "binarySha256": "fba8d82b18a88930248d5d593191d685f23f919d1b59e7760826685feb844310",
       "registeredAt": "2026-09-10T10:26:26.979Z",
       "source": {
@@ -440,6 +444,23 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-470426-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.37495a6c82df5a85bb0a6b47b332baa584d2f0e0f16ae75b",
+      "label": "ou99 二次元巫女（相似造型）（貼圖 256 正規化）",
+      "sourceModelKey": "ou99.470426",
+      "modelSha256": "2ece9ede23eef37197ef59eebe35a9021f3ee727cd1a707301e8c6cdff1a5af6",
+      "binarySha256": "becaad1c7979cdf85a472cd61fe33b487c76f458001b49969b24c44fd4a0a3d8",
+      "registeredAt": "2026-09-14T22:47:01.039Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "依文潔琳",
+        "work": "魔法老師 ネギま！",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-470426-1-1.html"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

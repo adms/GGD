@@ -1,0 +1,345 @@
+{
+  "schema": "ggd-mba-unused-model-conversion@1",
+  "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+  "sourceVersion": "Complete Form 1.60+",
+  "sourcePlatform": "Windows PC",
+  "selectionClass": "mba",
+  "slug": "kukuri",
+  "sourceCharacterId": "mba:Chara07_02",
+  "characterZh": "柯柯麗",
+  "characterNative": "ククリ",
+  "workZh": "魔法陣咕嚕咕嚕（魔法少女武鬥祭）",
+  "sourceRelativePath": "outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara07/KukuriMigMig.glb",
+  "identityEvidence": {
+    "characterDefinition": "CharacterDefinitions/Chara07_02.chr",
+    "mapping": "MBA character-candidates.json directly maps the character definition and native model to this GLB"
+  },
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara07/KukuriMigMig.glb",
+    "workspaceRelativePath": "outputs/game-asset-library-20260907/magical-battle-arena/models/Model/Chara07/KukuriMigMig.glb",
+    "bytes": 4824140,
+    "sha256": "bc98efe10be27cc65943a8897e7d3c498c69777e09ede50820ea5443ec13ecb1",
+    "preparationReceipt": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/prepared/kukuri/preparation.json",
+    "preparedBytes": 4653200,
+    "preparedSha256": "e9d04037a0966a33cdc436cf6aa06136dc8a224c0b91ea5a0b6f0c5a65401ee2",
+    "originalAnimationCount": 68,
+    "originalAnimationNames": [
+      "kami_03",
+      "kami_02",
+      "kami_01",
+      "burst_02_02",
+      "burst_02_01",
+      "burst_01_02",
+      "burst_01_01",
+      "sp01_miss_03",
+      "sp01_miss_02",
+      "sp01_miss_01",
+      "sp01",
+      "b_dash_attack_02",
+      "b_dash_attack_01",
+      "lose",
+      "win",
+      "kakusei",
+      "maryokudan_02",
+      "maryokudan_01",
+      "hukitobasi",
+      "utiorosi",
+      "utiage",
+      "Charge_01",
+      "attack_01_02",
+      "attack_01_01",
+      "wait",
+      "Escape",
+      "B-Dash-End",
+      "B-Dash-Start",
+      "DIM_BIND_Damage",
+      "DIM_BIND",
+      "RB_DAMAGE",
+      "RB_HIT",
+      "RB_BIND",
+      "Barel-END",
+      "Barel-Hit",
+      "D-Down-Damage",
+      "U-Down-Damage",
+      "C-Falte",
+      "D-GetUp",
+      "D-Down",
+      "U-GetUp",
+      "U-Down",
+      "F-Scatter-Stop",
+      "F-Scatter",
+      "F-Falter-Stop",
+      "F-Falter",
+      "B-Scatter-Stop",
+      "B-Scatter",
+      "B-Falter-Stop",
+      "B-Falter",
+      "Damage-5",
+      "Damage-4",
+      "Damage-3",
+      "Damage-2",
+      "Damage-1",
+      "Guard",
+      "D-Move",
+      "U-Move",
+      "Warp",
+      "Dash-Stop",
+      "Dash",
+      "B-Step",
+      "R-Step",
+      "L-Step",
+      "B-Move",
+      "R-Move",
+      "L-Move",
+      "F-Move"
+    ],
+    "preparedAnimationCount": 6
+  },
+  "transformation": {
+    "tool": "packages/shared/src/content/modelUpload/heroModel.ts::prepareUploadedHeroModel",
+    "toolchain": {
+      "node": "v25.9.0",
+      "tsx": "4.23.1",
+      "gltfValidator": "2.0.0-dev.3.10",
+      "sharedImporter": "packages/shared/src/content/modelUpload/heroModel.ts"
+    },
+    "selectedNativeClips": {
+      "idle": {
+        "name": "wait",
+        "preparedIndex": 0,
+        "originalIndex": 24,
+        "origin": "native-same-character",
+        "semanticApproval": "pending-playback-review"
+      },
+      "run": {
+        "name": "F-Move",
+        "preparedIndex": 1,
+        "originalIndex": 67,
+        "origin": "native-same-character",
+        "semanticApproval": "pending-playback-review"
+      },
+      "attack": {
+        "name": "attack_01_01",
+        "preparedIndex": 2,
+        "originalIndex": 23,
+        "origin": "native-same-character",
+        "semanticApproval": "pending-playback-review"
+      },
+      "cast": {
+        "name": "sp01",
+        "preparedIndex": 3,
+        "originalIndex": 10,
+        "origin": "native-same-character",
+        "semanticApproval": "pending-playback-review"
+      },
+      "hurt": {
+        "name": "Damage-1",
+        "preparedIndex": 4,
+        "originalIndex": 54,
+        "origin": "native-same-character",
+        "semanticApproval": "pending-playback-review"
+      },
+      "death": {
+        "name": "D-Down",
+        "preparedIndex": 5,
+        "originalIndex": 39,
+        "origin": "native-same-character",
+        "semanticApproval": "pending-death-surrogate-playback-review"
+      }
+    },
+    "normalizer": {
+      "drawCalls": {
+        "before": 1,
+        "after": 1
+      },
+      "droppedZeroClips": [],
+      "clipIndexMap": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "resizedTextures": [],
+      "texturesOverCap": [],
+      "changed": false
+    },
+    "geometryDecimation": "not-required-below-10000-triangle-adoption-trigger",
+    "textureResize": "not-required-all-embedded-textures-at-or-below-256px"
+  },
+  "output": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/build-b/kukuri/body.glb",
+    "bytes": 626792,
+    "sha256": "788d1d3e417857b4d7f8f6d723c7d06238f3c45b1b6a17a745d4321197cac69e",
+    "triangles": 3239,
+    "drawPrimitives": 1,
+    "textureCount": 1,
+    "maxTextureEdge": 256,
+    "skins": 1,
+    "skinnedPrimitives": 1,
+    "clipCount": 6,
+    "clipMap": {
+      "idle": "wait",
+      "run": "F-Move",
+      "attack": "attack_01_01",
+      "cast": "sp01",
+      "hurt": "Damage-1",
+      "death": "D-Down"
+    },
+    "maxChannelsPerClip": 81,
+    "khronos": {
+      "numErrors": 0,
+      "numWarnings": 19,
+      "numInfos": 1,
+      "numHints": 0,
+      "messages": [
+        {
+          "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "message": "Animated TRS properties will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/animations/0/channels/60/target/path"
+        },
+        {
+          "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "message": "Animated TRS properties will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/animations/0/channels/61/target/path"
+        },
+        {
+          "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "message": "Animated TRS properties will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/animations/0/channels/62/target/path"
+        },
+        {
+          "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "message": "Animated TRS properties will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/animations/1/channels/60/target/path"
+        },
+        {
+          "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "message": "Animated TRS properties will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/animations/1/channels/61/target/path"
+        },
+        {
+          "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "message": "Animated TRS properties will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/animations/1/channels/62/target/path"
+        },
+        {
+          "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "message": "Animated TRS properties will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/animations/2/channels/78/target/path"
+        },
+        {
+          "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "message": "Animated TRS properties will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/animations/2/channels/79/target/path"
+        },
+        {
+          "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "message": "Animated TRS properties will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/animations/2/channels/80/target/path"
+        },
+        {
+          "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "message": "Animated TRS properties will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/animations/3/channels/78/target/path"
+        },
+        {
+          "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "message": "Animated TRS properties will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/animations/3/channels/79/target/path"
+        },
+        {
+          "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "message": "Animated TRS properties will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/animations/3/channels/80/target/path"
+        },
+        {
+          "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "message": "Animated TRS properties will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/animations/4/channels/60/target/path"
+        },
+        {
+          "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "message": "Animated TRS properties will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/animations/4/channels/61/target/path"
+        },
+        {
+          "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "message": "Animated TRS properties will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/animations/4/channels/62/target/path"
+        },
+        {
+          "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "message": "Animated TRS properties will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/animations/5/channels/60/target/path"
+        },
+        {
+          "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "message": "Animated TRS properties will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/animations/5/channels/61/target/path"
+        },
+        {
+          "code": "ANIMATION_CHANNEL_TARGET_NODE_SKIN",
+          "message": "Animated TRS properties will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/animations/5/channels/62/target/path"
+        },
+        {
+          "code": "NODE_EMPTY",
+          "message": "Empty node encountered.",
+          "severity": 2,
+          "pointer": "/nodes/25"
+        },
+        {
+          "code": "NODE_SKINNED_MESH_NON_ROOT",
+          "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/nodes/27"
+        }
+      ],
+      "truncated": false
+    },
+    "finiteFloatValues": {
+      "accessorCount": 833,
+      "valueCount": 83905,
+      "allFinite": true
+    },
+    "budgetWarnings": [],
+    "budgetErrors": []
+  },
+  "sourcePreserved": true,
+  "deterministicRebuild": {
+    "verified": true,
+    "referencePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/mba-unused-model-batch2-v1/build-a/kukuri/body.glb",
+    "sha256": "788d1d3e417857b4d7f8f6d723c7d06238f3c45b1b6a17a745d4321197cac69e"
+  },
+  "runtimeSelectable": false,
+  "backendRegistered": false,
+  "defaultChanged": false,
+  "productionDeploymentVerified": false,
+  "limitations": [
+    "The source identity and GLB body relationship are direct, but these characters do not have a current GGD hero definition.",
+    "The six clips are same-character native MBA motions selected by exact source names; gameplay timing and playback approval remain pending.",
+    "D-Down is a native knockdown motion proposed only as a death surrogate; it is not approved as native death choreography.",
+    "Original MBA shader parity is not established by the base-color WebGL review.",
+    "No backend dropdown registration, default selection, gameplay binding, production switch test or deployment was performed."
+  ]
+}

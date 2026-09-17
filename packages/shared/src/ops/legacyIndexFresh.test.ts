@@ -17,9 +17,10 @@
  */
 import { describe, it, expect } from "vitest";
 import { execFileSync, spawnSync } from "node:child_process";
-import { existsSync, readdirSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { COMMUNITY_ACQUIRED_LEGACY } from "../content/heroForge/communityAcquiredLegacy";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const SCRIPT = join(REPO, "tools/legacy-index/build_index.py");
@@ -39,8 +40,8 @@ describe("legacy 記憶索引（owner 2026-08-13「以免真的需要的時候�
     const r = spawnSync("python3", [SCRIPT, "--check"], { cwd: REPO, encoding: "utf8" });
     expect(
       r.status,
-      "docs/legacy-index.md 過期了。⛔ 不要改這條測試，跑：\n" +
-        "  python3 tools/legacy-index/build_index.py && git add docs/legacy-index.md\n" +
+      "docs/legacy-index.md 或 docs/legacy-index-champions.json（GH#1227，同一支產生器）過期了。⛔ 不要改這條測試，跑：\n" +
+        "  pnpm legacyindex:build && git add docs/legacy-index.md docs/legacy-index-champions.json\n" +
         `腳本輸出：${(r.stdout ?? "") + (r.stderr ?? "")}`,
     ).toBe(0);
   });
@@ -58,6 +59,45 @@ describe("legacy 記憶索引（owner 2026-08-13「以免真的需要的時候�
     const body = execFileSync("cat", [SCRIPT], { cwd: REPO }).toString();
     for (const r of roots) {
       expect(body, `${r} 不在產生器的 LEGACY_ROOTS 裡`).toContain(`"${r}"`);
+    }
+  });
+
+  it("⭐ 退休英雄卡的狀態欄從來源推導 —— 對**真的 import** 的名單逐張比（C13 / GH#1227）", () => {
+    // owner 2026-09-15 02:44（docs/_daily/2026-09-15.md:13，逐字）：「你解說阿 是不是應該修一個段落 BMPNDD」
+    //   ⚠️ 那一則 `=>` 前的「C13 退休區有約 35 張英雄卡,沒有人說明它們的狀態」是貼回來的 **Claude 條目**，
+    //   ⛔ 不是 owner 的話（更正 ef326ac70：那一版把整句標成 owner 的）。
+    // ⭐ 產生器用 regex 讀 TS；這一條用 import 讀同一份陣列 ⇒ regex 讀漏、或有人把名單
+    //    抄死在產生器裡，只要 COMMUNITY_ACQUIRED_LEGACY 一動，這裡就紅。
+    // 突變紀錄（2026-09-15 審查後續重跑，⭐ 排版逐字寫出來 —— 兩種排版結果**不同**）：
+    //   Ⓐ 陣列尾端加**單行** `  { ...({} as CommunityHeroExample), id: "godie-e00v" },`、不重跑產生器
+    //     ⇒ 產生器 `--check` **回 0**（它的 regex `^\s*id:` 要 id 在行首 ⇒ 靜默少讀這一筆），
+    //       只有**這一條**紅（e00v 期望「待重上架」，索引寫「從未開放」）⇒ ⭐ 這一條補的正是 --check 的盲區。
+    //   Ⓑ 改成**多行** `  {` / `    ...({} as CommunityHeroExample),` / `    id: "godie-e00v",` / `  },`、不重跑
+    //     ⇒ 2 條紅（`--check` 過期 ＋ 這一條）；重跑產生器 ⇒ e00v 變「待重上架（#1205）」、張數 8/33 → 9/32。
+    //   ⚠️ 更正 ef326ac70 的回報：它寫的突變是Ⓐ的單行排版卻報了Ⓑ的「2 條紅」—— 實跑Ⓐ只會紅 1 條。
+    //   兩者都以 Edit 改回、重產，`--check` 回 0。
+    const retired = new Set<string>(
+      JSON.parse(readFileSync(join(REPO, "content/config/roster.json"), "utf8")).retiredChampions,
+    );
+    const reopen = new Set(COMMUNITY_ACQUIRED_LEGACY.map((h) => h.id));
+    const index = readFileSync(INDEX, "utf8");
+    const section = index.slice(index.indexOf("### `champions/`"));
+    const dir = join(REPO, "content/_legacy/champions");
+    const cards = readdirSync(dir).filter((f) => f.endsWith(".json") && !f.startsWith("_"));
+    expect(cards.length, "退休區應該有英雄卡").toBeGreaterThan(0);
+    for (const f of cards) {
+      const card = JSON.parse(readFileSync(join(dir, f), "utf8"));
+      const base = card.transform?.role === "alternate" ? card.transform.counterpartId : undefined;
+      const inSet = (s: Set<string>) => s.has(card.id) || (base !== undefined && s.has(base));
+      const want = inSet(retired) ? "| 已下架 |" : inSet(reopen) ? "| 待重上架" : "| 從未開放";
+      const row = section.split("\n").find((l) => l.startsWith(`| \`${f}\` |`));
+      expect(row, `${f} 在索引的 champions 表裡沒有列`).toBeDefined();
+      expect(
+        row,
+        `${f} 的狀態應該是「${want}」—— ⛔ 不要改這條測試，先跑 python3 tools/legacy-index/build_index.py。\n` +
+          `⚠️ 重產之後**仍然紅** ⇒ 不是索引過期，是產生器的三條規則（legacy_champion_status）與這條測試的規則不一致：` +
+          `對照兩邊，改錯的那一邊（⛔ 不要只為了變綠改這裡）`,
+      ).toContain(want);
     }
   });
 });

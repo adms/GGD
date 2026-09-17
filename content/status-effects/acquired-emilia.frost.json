@@ -1,0 +1,11 @@
+{
+  "id": "acquired-emilia.frost",
+  "schema": "status-effect@1",
+  "name": "碎霜禮節",
+  "description": "愛蜜莉雅「碎霜禮節」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-emilia.frost",
+    "debuff"
+  ]
+}

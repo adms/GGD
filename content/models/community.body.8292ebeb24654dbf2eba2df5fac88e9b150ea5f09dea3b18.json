@@ -1,0 +1,16 @@
+{
+  "id": "community.body.8292ebeb24654dbf2eba2df5fac88e9b150ea5f09dea3b18",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/4b8d7b54e8222b10765fa4e2e0e05972763cd7789d8e0094330ddf7d67c257cc.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "spear_1",
+    "run": "spear_2",
+    "attack": "spear_3",
+    "cast": "gae_bolg",
+    "hurt": "spear_5",
+    "death": "spear_5"
+  },
+  "yawOffsetDeg": 0
+}

@@ -1,0 +1,16 @@
+{
+  "id": "acquired-astralym.star-bind",
+  "schema": "status-effect@1",
+  "name": "逾期星光",
+  "description": "枯星龍「逾期星光」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-astralym.star-bind",
+    "root",
+    "immobilize",
+    "move-denied",
+    "disable",
+    "cc",
+    "debuff"
+  ]
+}

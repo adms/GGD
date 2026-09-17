@@ -20,7 +20,14 @@
  *     「隱藏角色可以隨機到 但不能選到」）
  * 所以同一個 id 同時填進兩張＝自相矛盾，{@link rosterConflicts} 把它擋在儲存之前。
  */
-import { DEFAULT_HIDDEN_CHAMPIONS_IN_MOB_POOL, DEFAULT_HIDDEN_CHAMPIONS } from "@ggd/shared/content/schema/config";
+import {
+  DEFAULT_HIDDEN_CHAMPIONS_IN_MOB_POOL,
+  DEFAULT_HIDDEN_CHAMPIONS,
+  type HiddenInValhallaMode,
+} from "@ggd/shared/content/schema/config";
+// ⭐ GH#1251 —— 「值不認得就退回出貨預設」這條規則住 shared 的讀端（客戶端英靈殿讀同一支），
+//    ⛔ 這裡不再抄一份判斷。
+import { hiddenInValhallaFromDoc } from "@ggd/shared/content/championRetirement";
 // ⚠️ 刻意**重用**免費名單那個解析器而不是抄一份：它做的事逐字相同（一個 textarea →
 // 去重排序的 id 清單 + 打錯字回報），而抄第二份就是第零守則⑨ 講的「到處改改改」——
 // 兩份會各自腐爛，而它們腐爛的症狀（打錯的 id 靜靜地不生效）長得一模一樣。
@@ -37,9 +44,19 @@ export interface RosterLists {
   hidden: string[];
   /**
    * 殭屍/小兵的外觀池要不要包含隱藏英雄（GH#348）。出貨 `false`。
-   * ⛔ 與玩家自己的 🎲 隨機無關 —— 那條路一律抽得到（owner 2026-08-17 逐字）。
+   * ⛔ 與伺服器替沒鎖英雄的座位隨機配角（逾時／bot）無關 —— 那條路一律抽得到（owner 2026-08-17「隱藏角色可以隨機到 但不能選到」）。
+   * ⚠️ 2026-09-15 更正：這一行以前寫「與玩家自己的 🎲 隨機無關 —— 那條路一律抽得到」——
+   *   ⛔ 玩家自己按的 🎲 **抽不到**隱藏英雄（`ChampSelectPanel.pickRandom` 的母體傳了隱藏清單：
+   *   伺服器分不出按 🎲 與點格子），抽得到的是伺服器自己配角那一條。
    */
   hiddenInMobPool: boolean;
+  /**
+   * 大廳英靈殿要不要展示隱藏英雄（GH#1251）。出貨 `DEFAULT_HIDDEN_IN_VALHALLA`（`"show"`）。
+   * ⭐ owner 2026-09-14「隱藏角色要顯示」（節錄）；`"exclude"` 是一鍵 rollback。
+   * ⛔ 只管英靈殿 —— 選人格子與玩家自己按的 🎲 照舊抽不到、商店照舊不賣；
+   *   伺服器替沒鎖英雄的座位隨機配角（逾時／bot）照舊抽得到（這三條都是 #336 的既有語意，這一格一條都沒動）。
+   */
+  hiddenInValhalla: HiddenInValhallaMode;
   /** 文件自己的說明。⚠️ 不編輯，但**一定要帶著走**，否則存一次就把它刪掉了。 */
   note?: string;
 }
@@ -70,6 +87,7 @@ export function extractRoster(doc: unknown): RosterLists | null {
       ? d.hiddenChampionsInMobPool
       : DEFAULT_HIDDEN_CHAMPIONS_IN_MOB_POOL,
     hidden: ids(d.hiddenChampions, DEFAULT_HIDDEN_CHAMPIONS),
+    hiddenInValhalla: hiddenInValhallaFromDoc(doc),
     ...(typeof d.note === "string" ? { note: d.note } : {}),
   };
 }
@@ -103,6 +121,8 @@ export function rosterDocFor(lists: RosterLists): Record<string, unknown> {
     //    文件，漏寫的欄位在覆蓋層裡就是「不存在」⇒ 讀端退回預設 ⇒ 使用者剛剛在
     //    畫面上打開的開關存完之後自己彈回去，而且沒有任何錯誤（GH#348）。
     hiddenChampionsInMobPool: lists.hiddenInMobPool,
+    // ⚠️ 同一條理由（GH#1251）：漏寫 ⇒ 讀端退回 "show" ⇒ 操作者切成 "exclude" 存完自己彈回去。
+    hiddenInValhalla: lists.hiddenInValhalla,
   };
 }
 

@@ -63,7 +63,7 @@ export interface RecastState {
   /** 首段解析出的落點／方向（`recast.anchor:"firstCast"` 的後段讀這兩格）。 */
   point?: { x: number; z: number };
   direction?: { x: number; z: number };
-  /** 首段命中的第一個受害者（後段「沿鉤進場」那一族要用；今天只記，不消費）。 */
+  /** 首段命中的第一個受害者 —— `recast.anchor:"firstHit"` 的後段目標（瑟雷西 Q 沿鉤進場；讀端 `liveRecastAnchor`）。 */
   anchor?: EntityId;
   /** `cooldownAt:"end"` 時暫存的冷卻 tick 數，階段結束才寫進 cooldownRemainingTicks。 */
   pendingCooldownTicks: number;
@@ -123,6 +123,30 @@ export interface CastState {
    * 解算端再問只會永遠得到 false。有它 ⇒ 解算端直接跑它，⛔ 不再增幅第二次。
    */
   effects?: EffectDef[];
+}
+
+/**
+ * 【持續引導】的執行期狀態（GH#1191）—— 效果已經開始、身體還要撐住的那一段。
+ * 缺席／null = 沒有在引導。⭐ 全部是**絕對 tick**；語意與生命週期在 `sim/abilities/channel.ts`。
+ * ⛔ 不複製 `durationSec`／`cancelOn` 這類**設定值**：每 tick 現讀 `def.channel`（一個住處）。
+ */
+export interface ChannelState {
+  slot: CastableSlot;
+  abilityId: AbilityId;
+  rank: number;
+  /** 這一次施放的身分 —— 取消時只作廢**這一次**排出去的波次。 */
+  castInstance?: import("../content/castInstance").CastInstance;
+  /** 效果開始那一 tick（`castCommitTick` 仍是按下那一刻，存在 {@link commitTick}）。 */
+  beganTick: number;
+  commitTick: number;
+  /** `world.tick >= endTick` ⇒ 完成。 */
+  endTick: number;
+  /** `cancelOn:"damage"` 的基準：開始引導那一 tick 的血量。 */
+  hpAtStart: number;
+  /** 收尾（onComplete）用的施放脈絡 —— 施放那一刻解析出來的。 */
+  targets: EntityId[];
+  point?: Vec2;
+  direction?: Vec2;
 }
 
 /**
@@ -218,6 +242,8 @@ export interface AbilitiesComp {
   unspentPoints: number;
   /** active ability cast (cast time > 0); null/undefined when not casting */
   cast?: CastState | null;
+  /** 【持續引導】（GH#1191）效果開始之後還在撐的那一段；null/undefined = 沒有在引導。見 {@link ChannelState}。 */
+  channel?: ChannelState | null;
   /** active basic-attack wind-up; null/undefined when not winding up */
   windup?: AttackWindup | null;
   /**

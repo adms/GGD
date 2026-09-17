@@ -1,0 +1,318 @@
+{
+  "method": "Actual GLB Babylon WebGL rendering with all source embedded materials and skin; two samples per procedural clip; orthographic front plus idle side/back views",
+  "babylonVersion": "7.54.3",
+  "shots": [
+    {
+      "clip": "GGD_procedural_idle",
+      "view": "front",
+      "fraction": 0,
+      "fromFrame": 0,
+      "toFrame": 144.0000057220459,
+      "file": "ggd-procedural-idle-front-start.png",
+      "bounds": {
+        "min": [
+          -0.4714068863540888,
+          -5.960464477539063e-08,
+          -0.2549944370985031
+        ],
+        "max": [
+          0.44162203930318356,
+          1.7999998927116394,
+          0.2549944669008255
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_idle",
+      "view": "front",
+      "fraction": 0.6,
+      "fromFrame": 0,
+      "toFrame": 144.0000057220459,
+      "file": "ggd-procedural-idle-front-middle.png",
+      "bounds": {
+        "min": [
+          -0.472534516826272,
+          0.021702349185943604,
+          -0.24798710644245148
+        ],
+        "max": [
+          0.44039725326001644,
+          1.8221333026885986,
+          0.2581321746110916
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_idle",
+      "view": "side",
+      "fraction": 0.6,
+      "fromFrame": 0,
+      "toFrame": 144.0000057220459,
+      "file": "ggd-procedural-idle-side-middle.png",
+      "bounds": {
+        "min": [
+          -0.472534516826272,
+          0.021702349185943604,
+          -0.24798710644245148
+        ],
+        "max": [
+          0.44039725326001644,
+          1.8221333026885986,
+          0.2581321746110916
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_idle",
+      "view": "back",
+      "fraction": 0.6,
+      "fromFrame": 0,
+      "toFrame": 144.0000057220459,
+      "file": "ggd-procedural-idle-back-middle.png",
+      "bounds": {
+        "min": [
+          -0.472534516826272,
+          0.021702349185943604,
+          -0.24798710644245148
+        ],
+        "max": [
+          0.44039725326001644,
+          1.8221333026885986,
+          0.2581321746110916
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_run",
+      "view": "front",
+      "fraction": 0,
+      "fromFrame": 0,
+      "toFrame": 48.00000071525574,
+      "file": "ggd-procedural-run-front-start.png",
+      "bounds": {
+        "min": [
+          -0.5172925982624292,
+          -5.960464477539063e-08,
+          -0.3025512546300888
+        ],
+        "max": [
+          0.49587815068662167,
+          1.7938274145126343,
+          0.26481229066848755
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_run",
+      "view": "front",
+      "fraction": 0.6,
+      "fromFrame": 0,
+      "toFrame": 48.00000071525574,
+      "file": "ggd-procedural-run-front-middle.png",
+      "bounds": {
+        "min": [
+          -0.5309522543102503,
+          0.01934671401977539,
+          -0.3496062904596329
+        ],
+        "max": [
+          0.48063074611127377,
+          1.807568371295929,
+          0.4244616776704788
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_attack",
+      "view": "front",
+      "fraction": 0,
+      "fromFrame": 0,
+      "toFrame": 60,
+      "file": "ggd-procedural-attack-front-start.png",
+      "bounds": {
+        "min": [
+          -0.4714068863540888,
+          -5.960464477539063e-08,
+          -0.2549944370985031
+        ],
+        "max": [
+          0.44162203930318356,
+          1.7999998927116394,
+          0.2549944669008255
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_attack",
+      "view": "front",
+      "fraction": 0.6,
+      "fromFrame": 0,
+      "toFrame": 60,
+      "file": "ggd-procedural-attack-front-middle.png",
+      "bounds": {
+        "min": [
+          -0.6688135657459497,
+          -5.960464477539063e-08,
+          -0.30846233665943146
+        ],
+        "max": [
+          0.5439572539180517,
+          1.7954331636428833,
+          0.3981528729200363
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_cast",
+      "view": "front",
+      "fraction": 0,
+      "fromFrame": 0,
+      "toFrame": 96.00000143051147,
+      "file": "ggd-procedural-cast-front-start.png",
+      "bounds": {
+        "min": [
+          -0.4714068863540888,
+          -5.960464477539063e-08,
+          -0.2549944370985031
+        ],
+        "max": [
+          0.44162203930318356,
+          1.7999998927116394,
+          0.2549944669008255
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_cast",
+      "view": "front",
+      "fraction": 0.6,
+      "fromFrame": 0,
+      "toFrame": 96.00000143051147,
+      "file": "ggd-procedural-cast-front-middle.png",
+      "bounds": {
+        "min": [
+          -0.7599862013012171,
+          0.022598564624786377,
+          -0.20418669283390045
+        ],
+        "max": [
+          0.7655802574008703,
+          1.8231138586997986,
+          0.23759816586971283
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_hurt",
+      "view": "front",
+      "fraction": 0,
+      "fromFrame": 0,
+      "toFrame": 33.00000071525574,
+      "file": "ggd-procedural-hurt-front-start.png",
+      "bounds": {
+        "min": [
+          -0.4714068863540888,
+          -5.960464477539063e-08,
+          -0.2549944370985031
+        ],
+        "max": [
+          0.44162203930318356,
+          1.7999998927116394,
+          0.2549944669008255
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_hurt",
+      "view": "front",
+      "fraction": 0.6,
+      "fromFrame": 0,
+      "toFrame": 33.00000071525574,
+      "file": "ggd-procedural-hurt-front-middle.png",
+      "bounds": {
+        "min": [
+          -0.5036557707935572,
+          -5.960464477539063e-08,
+          -0.3190052658319473
+        ],
+        "max": [
+          0.4956549610942602,
+          1.792043685913086,
+          0.2691753953695297
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_death",
+      "view": "front",
+      "fraction": 0,
+      "fromFrame": 0,
+      "toFrame": 75,
+      "file": "ggd-procedural-death-front-start.png",
+      "bounds": {
+        "min": [
+          -0.4714068863540888,
+          -5.960464477539063e-08,
+          -0.2549944370985031
+        ],
+        "max": [
+          0.44162203930318356,
+          1.7999998927116394,
+          0.2549944669008255
+        ]
+      }
+    },
+    {
+      "clip": "GGD_procedural_death",
+      "view": "front",
+      "fraction": 0.6,
+      "fromFrame": 0,
+      "toFrame": 75,
+      "file": "ggd-procedural-death-front-middle.png",
+      "bounds": {
+        "min": [
+          -0.8409223947674036,
+          0.06647121906280518,
+          -0.321226105093956
+        ],
+        "max": [
+          0.9232564773410559,
+          1.0883687138557434,
+          0.255766361951828
+        ]
+      }
+    }
+  ],
+  "meshCount": 4,
+  "bones": [
+    32
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true
+    },
+    {
+      "name": "",
+      "ready": true
+    },
+    {
+      "name": "naocape (Base Color)",
+      "ready": true
+    },
+    {
+      "name": "naochest (Base Color)",
+      "ready": true
+    },
+    {
+      "name": "naolegs (Base Color)",
+      "ready": true
+    },
+    {
+      "name": "naoface (Base Color)",
+      "ready": true
+    }
+  ],
+  "nativeMotion": false,
+  "gameplayAcceptance": "pending"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "acquired-cattiva.frenzy",
+  "schema": "status-effect@1",
+  "name": "連續貓貓拳",
+  "description": "搗蛋貓「連續貓貓拳」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "acquired-cattiva.frenzy",
+    "buff"
+  ]
+}

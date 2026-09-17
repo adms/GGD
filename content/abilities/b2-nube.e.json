@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.267,
+  "castTimeSec": 0.3,
   "castType": "targeted",
   "cooldown": [
     15.0,
@@ -20,10 +20,10 @@
   ],
   "id": "b2-nube.e",
   "manaCost": [
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0,
+    0,
+    0,
+    0
   ],
   "maxRank": 4,
   "name": "符咒貼上禁止聊天",
@@ -35,7 +35,7 @@
   "template": {
     "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
     "params": {
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.3,
       "status": {
         "duration": 2.5,
         "silenced": true,
@@ -51,5 +51,6 @@
       "vfxKey": "fx.prim.arcane.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/b2-nube.e.webp"
+  "icon": "assets/icons/abilities/b2-nube.e.webp",
+  "castTimeTier": "中"
 }

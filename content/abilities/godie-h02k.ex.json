@@ -247,6 +247,7 @@
   "vfxKey": "fx.prim.fire.explosion-lg",
   "sfxKey": "wc3.mortarimpact",
   "cooldownTier": "極小",
+  "castTimeTier": "中",
   "rangeTier": "中",
-  "castTimeSec": 0.233
+  "castTimeSec": 0.3
 }

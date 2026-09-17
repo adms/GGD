@@ -1,0 +1,11 @@
+{
+  "id": "acquired-beatrice.bookmark",
+  "schema": "status-effect@1",
+  "name": "借書要留押金",
+  "description": "碧翠絲「借書要留押金」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "acquired-beatrice.bookmark",
+    "buff"
+  ]
+}

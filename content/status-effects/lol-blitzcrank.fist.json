@@ -1,0 +1,11 @@
+{
+  "id": "lol-blitzcrank.fist",
+  "schema": "status-effect@1",
+  "name": "充能一擊",
+  "description": "布里姿「充能一擊」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "lol-blitzcrank.fist",
+    "buff"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "acquired-mewtwo.focus",
+  "schema": "status-effect@1",
+  "name": "念力集中中",
+  "description": "Mewtwo「念力集中中」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "acquired-mewtwo.focus",
+    "buff"
+  ]
+}

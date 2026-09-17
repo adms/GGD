@@ -1,6 +1,9 @@
 import { Worker } from "node:worker_threads";
 import { createRequire } from "node:module";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { createHash } from "node:crypto";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import type { HeroPackageTarget } from "@ggd/shared/content/import/heroPackage";
 import type { EditorImportPackage } from "@ggd/shared/content/import/packageSchema";
 import type { ValidateInput, ValidateOutput } from "@ggd/shared/content/import/validatePackage";
@@ -19,10 +22,126 @@ let bundledWorker: string | undefined;
 export function setBundledHeroPackageWorker(path: string): void { bundledWorker = path; }
 export class HeroWorkerUnavailable extends Error { readonly statusCode = 503; }
 
+/**
+ * ⭐ worker 的預算分兩段，⛔ 不是一個從 `new Worker` 起算的 20 秒。
+ *
+ * | 段 | 做什麼 | 預算 |
+ * |---|---|---|
+ * | 準備（可信） | 載入 worker、讀出貨樹、保存建包來源、overlay、模板 —— ⛔ 不碰送來的包 | `setupMs` |
+ * | 編譯（送來的包） | 圖示正規化、上傳模型、編譯／SimWorld | `compileMs`（原本那 20 秒） |
+ *
+ * ⚠️ 為什麼要拆（2026-09-15 量到，⛔ 不是推測）：單獨跑一次建包 13.5 秒裡 **12.5 秒是準備段**
+ * （tsx 載入 3.4 · 首次保存 1,168 份建包來源 7.4 · overlay 0.6 · 模板 1.2），
+ * 真正在編譯送來的包只有約 1 秒。⇒ 負載一高（`ship:check` 全包並行）準備段就把 20 秒吃完，
+ * 合法英雄回 503「英雄編譯／SimWorld 超過 20 秒」—— ⛔ 那句話在那一刻是假的。
+ *
+ * `setupMs` 的出處：私有匯入通道 90 秒 − `compileMs` 20 秒 − 10 秒回應餘裕 ⇒ 60 秒。
+ * ⚠️ 準備段的上限只防**卡死**（它不讀送來的位元組），⛔ 不是在限制送來的包。
+ *
+ * ⛔ 2026-09-15 更正（GH#1249）：這裡原本寫「兩段加起來仍在 `requestTimeout: 90000` 之內」——
+ * ⭐ 量到 `requestTimeout` 只管「**收完請求**」，⛔ 不管處理多久；真正會在 worker 算到一半切斷連線的是
+ * `connectionTimeout`（socket 閒置上限，當時 10 秒）。⇒ 通道的閒置上限改由 {@link heroImportSocketIdleMs}
+ * 從**這個預算**推導，⛔ 不再是第二個字面值。
+ */
+export const HERO_WORKER_BUDGET = Object.freeze({ setupMs: 60_000, compileMs: 20_000 });
+
+/**
+ * worker 交出結果之後，把 ZIP／結構化錯誤寫回 socket 的餘裕。
+ * 出處：2ac612f97（「英雄 worker 的 20 秒只算『送來的包』那一段」）推導 `setupMs` 時用的 10 秒回應餘裕。
+ * ⚠️ 2026-09-15 更正 f64f3c2ea 的 commit 訊息：那裡兩處寫成 `c3e0326ff` —— 那是 lane/red-contentapi 上**同標題**的 commit，
+ *   ⛔ 不是本分支的祖先（`git merge-base --is-ancestor c3e0326ff 6cfbc4104` 回 1）；本分支上對應的是 2ac612f97。
+ */
+export const HERO_IMPORT_RESPONSE_MARGIN_MS = 10_000;
+
+/**
+ * ⭐ GH#1249：私有匯入通道的 socket 閒置上限 ＝ worker 兩段預算 ＋ 回應餘裕。
+ *
+ * ⚠️ 量到的（2026-09-15，固定 artifact `d101d524…`）：預設 10,000 ms 在 10,062 ms 斷線（`UND_ERR_SOCKET`），
+ * 只把閒置上限調成 30,000 ms 就 27,922 ms 完成往返 ⇒ 是配對錯誤，⛔ 不是資料錯誤。
+ * 本機探針：handler 靜默 1.5 秒時，`connectionTimeout: 500` ⇒ 587 ms 斷線；`requestTimeout: 500` ⇒ 照樣 200。
+ *
+ * 回頭開關（只有維運會轉 ⇒ 環境變數，⛔ 不進後台）：`GGD_HERO_IMPORT_SOCKET_IDLE_MS`。
+ * ⛔ 小於等於 worker 預算的值直接擋下 —— 那正是這張票修掉的缺陷，⛔ 不靜默接受。
+ */
+export function heroImportSocketIdleMs(budget: Pick<HeroWorkerBudget, "setupMs" | "compileMs"> = HERO_WORKER_BUDGET, env: Record<string, string | undefined> = process.env): number {
+  const worker = budget.setupMs + budget.compileMs, raw = env.GGD_HERO_IMPORT_SOCKET_IDLE_MS?.trim();
+  if (!raw) return worker + HERO_IMPORT_RESPONSE_MARGIN_MS;
+  const ms = Number(raw);
+  if (!Number.isSafeInteger(ms) || ms <= worker) throw new Error(`GGD_HERO_IMPORT_SOCKET_IDLE_MS 必須是大於 worker 預算（${worker} ms）的整數，收到「${raw}」。`);
+  return ms;
+}
+
+/**
+ * ⭐ 回頭開關（只有作者／CI 會轉 ⇒ 環境變數，⛔ 不進後台）：
+ * `GGD_HERO_WORKER_BUDGET_SCOPE=whole-job` ⇒ 回到 2026-09-15 之前：一個 20 秒從起 worker 算到結果。
+ * 預設 `untrusted`（編譯預算只算送來的包那一段）。⛔ 打錯字不靜默退回預設，直接擋下並指名變數。
+ */
+export type HeroWorkerBudget = { setupMs: number; compileMs: number; scope: "untrusted" | "whole-job" };
+export function heroWorkerBudget(env: Record<string, string | undefined> = process.env): HeroWorkerBudget {
+  const raw = env.GGD_HERO_WORKER_BUDGET_SCOPE?.trim();
+  if (raw && raw !== "untrusted" && raw !== "whole-job") throw new HeroWorkerUnavailable(`GGD_HERO_WORKER_BUDGET_SCOPE 只接受 untrusted／whole-job，收到「${raw}」。`);
+  return { ...HERO_WORKER_BUDGET, scope: raw === "whole-job" ? "whole-job" : "untrusted" };
+}
+
+/**
+ * ⭐ 英雄 worker 的 tsx 轉譯快取住**自己的目錄**，⛔ 不跟整台機器共用 `$TMPDIR/tsx-<uid>`。
+ *
+ * ⚠️ 為什麼（2026-09-15 量到，⛔ 不是推測；lane nc-contentapi）：tsx 每起一個載入器就
+ * `readdirSync` **整個**快取目錄建索引（`getDiskCacheIndex`）。這台開發機的共用快取是
+ * **562,370 個檔、6.3 GB**（幾十條 worktree 各自的路徑各算一份鍵，tsx 只清 7 天以上的）⇒
+ * - 單起一個 worker：readdir 687 ms ＋ 建索引 157 ms，佔 1,650 ms 的一半以上
+ *   （專用目錄：788 ms；`TSX_DISABLE_CACHE=1`：1,566 ms ⇒ 共用快取等於沒有快取）
+ * - ⭐ **8 個同時起**（＝ship:check 併行時的樣子）：共用 **8,400–8,900 ms／個**，專用 **1,800 ms／個**
+ *   ⇒ 大目錄的 readdir 在併行時排隊。每一次建包／檢查都起一個新 worker（隔離設計，⛔ 不重用），
+ *   heroWorkRoutes 一個檔就起 20 個 ⇒ 測試在負載下撞 60 秒時鐘的主因。
+ *
+ * 目錄以**這份 checkout 的路徑**分開 ⇒ 大小＝worker 自己的模組圖（量到 546 個檔），不隨別的 worktree 長大。
+ * ⚠️ 只換「tsx 載入那一刻」的 TMPDIR（見 eval 片段）：worker 裡的程式碼（例：`encodeIconNode` 的暫存檔）看到的 tmpdir 不變。
+ *
+ * 回頭開關（只有作者／維運會轉 ⇒ 環境變數，⛔ 不進後台）：`GGD_HERO_WORKER_TSX_CACHE=shared` ⇒ 回到共用快取。
+ * ⛔ 打錯字不靜默退回預設。桌面版走編譯好的 worker（`setBundledHeroPackageWorker`），不經 tsx，這一格不影響它。
+ */
+export function heroWorkerTsxCacheParent(env: Record<string, string | undefined> = process.env): string | null {
+  const raw = env.GGD_HERO_WORKER_TSX_CACHE?.trim();
+  if (raw === "shared") return null;
+  if (raw && raw !== "dedicated") throw new HeroWorkerUnavailable(`GGD_HERO_WORKER_TSX_CACHE 只接受 dedicated／shared，收到「${raw}」。`);
+  const checkout = createHash("sha256").update(fileURLToPath(new URL(".", import.meta.url))).digest("hex").slice(0, 12);
+  return join(tmpdir(), "ggd-hero-worker-tsx", checkout);
+}
+
+type HeroWorkerMessage = { phase: "ready" } | { ok: boolean; result?: EditorImportPackage | ValidateOutput; message?: string };
+export interface HeroWorkerLike {
+  on(event: "message", listener: (message: HeroWorkerMessage) => void): unknown;
+  once(event: "error", listener: (error: Error) => void): unknown;
+  once(event: "exit", listener: (code: number) => void): unknown;
+}
+
+/** 等 worker 的結果，照 {@link HeroWorkerBudget} 分段計時。 */
+export function superviseHeroWorker(worker: HeroWorkerLike, budget: HeroWorkerBudget): Promise<EditorImportPackage | ValidateOutput> {
+  return new Promise((resolve, reject) => {
+    let timer: ReturnType<typeof setTimeout> | undefined, ready = false;
+    const arm = (ms: number, message: string) => { clearTimeout(timer); timer = setTimeout(() => reject(new HeroWorkerUnavailable(message)), ms); };
+    const compile = () => arm(budget.compileMs, `英雄編譯／SimWorld 超過 ${budget.compileMs / 1000} 秒，已中止本次檢查。`);
+    if (budget.scope === "whole-job") compile();
+    else arm(budget.setupMs, `英雄檢查準備（讀取出貨內容、保存建包來源）超過 ${budget.setupMs / 1000} 秒，已中止本次檢查。`);
+    const done = () => clearTimeout(timer);
+    worker.once("error", (error) => { done(); reject(error); });
+    worker.once("exit", (code) => { done(); reject(new HeroWorkerUnavailable(`英雄檢查程序中止（${code}）。`)); });
+    worker.on("message", (message) => {
+      if ("phase" in message) { if (!ready && budget.scope === "untrusted") compile(); ready = true; return; }
+      done();
+      // ⛔ 成功結果卻沒先回報準備完成 ⇒ 送來的包那一段根本沒被計時。擋下，⛔ 不靜默放行。
+      if (message.ok && !ready) reject(new Error("英雄檢查程序未回報準備完成就交出結果，編譯預算沒有生效。"));
+      else if (message.ok && message.result) resolve(message.result); else reject(new Error(message.message ?? "英雄檢查失敗。"));
+    });
+  });
+}
+
 export function runHeroPackageJob(root: string, job: Extract<HeroPackageJob, { kind: "build" }>, importDir?: string): Promise<EditorImportPackage>;
 export function runHeroPackageJob(root: string, job: Extract<HeroPackageJob, { kind: "validate" }>, importDir?: string): Promise<ValidateOutput>;
 export async function runHeroPackageJob(root: string, job: HeroPackageJob, importDir?: string): Promise<EditorImportPackage | ValidateOutput> {
   if (active >= 2) throw new HeroWorkerUnavailable("英雄檢查佇列已滿，請稍後重試。");
+  const budget = heroWorkerBudget();
   active += 1;
   let worker: Worker | undefined;
   try {
@@ -30,20 +149,16 @@ export async function runHeroPackageJob(root: string, job: HeroPackageJob, impor
   const limits = { maxOldGenerationSizeMb: 512, stackSizeMb: 8 };
   worker = bundledWorker ? new Worker(bundledWorker, { execArgv: [], resourceLimits: limits, workerData: { root, job, importDir } })
     : new Worker(`const { workerData, parentPort } = require("node:worker_threads");
-    import(workerData.tsxApi).then(({ tsImport }) => tsImport(workerData.moduleUrl, { parentURL: workerData.moduleUrl, tsconfig: workerData.tsconfig }))
-      .catch(error => parentPort.postMessage({ ok: false, message: String(error) }));`, {
+    // ⭐ tsx 在 import 當下從 os.tmpdir() 定下快取目錄 ⇒ 只在載入 tsx 那一刻換 TMPDIR，載完立刻換回（heroWorkerTsxCacheParent）。
+    const inherited = process.env.TMPDIR;
+    if (workerData.tsxCacheParent) { require("node:fs").mkdirSync(workerData.tsxCacheParent, { recursive: true }); process.env.TMPDIR = workerData.tsxCacheParent; }
+    import(workerData.tsxApi).then(({ tsImport }) => {
+      if (workerData.tsxCacheParent) { if (inherited === undefined) delete process.env.TMPDIR; else process.env.TMPDIR = inherited; }
+      return tsImport(workerData.moduleUrl, { parentURL: workerData.moduleUrl, tsconfig: workerData.tsconfig });
+    }).catch(error => parentPort.postMessage({ ok: false, message: String(error) }));`, {
     eval: true, execArgv: [], resourceLimits: limits,
-    workerData: { root, job, importDir, moduleUrl, tsxApi: pathToFileURL(require.resolve("tsx/esm/api")).href, tsconfig: fileURLToPath(new URL("../../../tsconfig.base.json", import.meta.url)) },
+    workerData: { root, job, importDir, moduleUrl, tsxCacheParent: heroWorkerTsxCacheParent(), tsxApi: pathToFileURL(require.resolve("tsx/esm/api")).href, tsconfig: fileURLToPath(new URL("../../../tsconfig.base.json", import.meta.url)) },
   });
-    const running = worker;
-    return await new Promise<EditorImportPackage | ValidateOutput>((resolve, reject) => {
-      const timer = setTimeout(() => reject(new HeroWorkerUnavailable("英雄編譯／SimWorld 超過 20 秒，已中止本次檢查。")), 20_000);
-      const done = () => clearTimeout(timer);
-      running.once("error", (error) => { done(); reject(error); });
-      running.once("exit", (code) => { done(); reject(new HeroWorkerUnavailable(`英雄檢查程序中止（${code}）。`)); });
-      running.once("message", (message: { ok: boolean; result?: EditorImportPackage | ValidateOutput; message?: string }) => {
-        done(); if (message.ok && message.result) resolve(message.result); else reject(new Error(message.message ?? "英雄檢查失敗。"));
-      });
-    });
+    return await superviseHeroWorker(worker, budget);
   } finally { try { await worker?.terminate(); } finally { active -= 1; } }
 }

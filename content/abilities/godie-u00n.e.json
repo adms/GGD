@@ -15,10 +15,10 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    112.0,
-    112.0,
-    112.0,
-    112.0
+    150.0,
+    150.0,
+    150.0,
+    150.0
   ],
   "manaCostTier": "小",
   "effects": [],
@@ -31,18 +31,19 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 1.0
+            "coeff": 1
           }
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 1.633
+      "castTimeSec": 1
     }
   },
   "vfxKey": "fx.prim.physical.swarm",
   "sfxKey": "wc3.demonhuntermissilehit3",
   "schema": "ability@1",
-  "castTimeSec": 1.633,
+  "castTimeSec": 1,
   "rangeTier": "大",
-  "range": 8
+  "range": 8,
+  "castTimeTier": "極大"
 }

@@ -1,0 +1,71 @@
+diff --git a/UmodelTool/Main.cpp b/UmodelTool/Main.cpp
+index 5294499..9012334 100644
+--- a/UmodelTool/Main.cpp
++++ b/UmodelTool/Main.cpp
+@@ -313,6 +313,7 @@ static void RegisterExporters()
+ 	RegisterExporter<USkeleton>([](const USkeleton* Anim) { CallExportAnimation(Anim->ConvertedAnim); });
+ 	RegisterExporter<USoundWave>(ExportSoundWave4);
+ #endif // UNREAL4
++	RegisterExporter<UTexture2D>([](const UTexture2D* Tex) { ExportTexture(Tex); });
+ 	RegisterExporter<UUnrealMaterial>(ExportMaterial);			// register this after Texture/Texture2D exporters
+ }
+ 
+diff --git a/Unreal/GameDatabase.cpp b/Unreal/GameDatabase.cpp
+index 4dbdeca..b23f880 100644
+--- a/Unreal/GameDatabase.cpp
++++ b/Unreal/GameDatabase.cpp
+@@ -383,6 +383,7 @@ const GameInfo GListOfGames[] = {
+ #	if DAUNTLESS
+ 		G("Dauntless", dauntless, GAME_Dauntless),
+ #	endif
++		G("Infinity Strash: Dragon Quest The Adventure of Dai", strash, GAME_InfinityStrash),
+ #	if PARAGON
+ 		G("Paragon", paragon, GAME_Paragon),
+ #	endif
+diff --git a/Unreal/UnCore.h b/Unreal/UnCore.h
+index 22f4678..ec5c616 100644
+--- a/Unreal/UnCore.h
++++ b/Unreal/UnCore.h
+@@ -499,6 +499,7 @@ enum EGame
+ 		GAME_UE4_25_Plus = GAME_UE4(25)+1,
+ 		// 4.26
+ 		GAME_Dauntless = GAME_UE4(26)+1,
++		GAME_InfinityStrash = GAME_UE4(26)+2,
+ 
+ 	GAME_ENGINE    = 0xFFF0000	// mask for game engine
+ };
+diff --git a/Unreal/UnrealMesh/UnMesh4.cpp b/Unreal/UnrealMesh/UnMesh4.cpp
+index 89e2119..9b4730b 100644
+--- a/Unreal/UnrealMesh/UnMesh4.cpp
++++ b/Unreal/UnrealMesh/UnMesh4.cpp
+@@ -845,6 +845,15 @@ struct FSkelMeshSection4
+ 		Ar << ClothMappingData;
+ 		S.HasClothData = (ClothMappingData.Num() > 0);
+ 
++		// Infinity Strash stores the section cumulative base vertex as uint64.
++		// Without this field, BoneMap is read eight bytes early.
++		if (Ar.Game == GAME_InfinityStrash)
++		{
++			uint64 BaseVertexIndex64;
++			Ar << BaseVertexIndex64;
++			S.BaseVertexIndex = (uint32)BaseVertexIndex64;
++		}
++
+ 		Ar << S.BoneMap;
+ 		Ar << S.NumVertices;
+ 		Ar << S.MaxBoneInfluences;
+diff --git a/common.project b/common.project
+index 3daade5..6cb4fea 100644
+--- a/common.project
++++ b/common.project
+@@ -69,6 +69,10 @@ CPP_STD = c++14				# allow modern C++ features
+ 
+ 	LIBC      = shared
+ 	OPTIONS   = -msse2									# enable SSE instructions
++	!if "$PLATFORM" eq "osx"
++		OPTIONS += -arch x86_64							# build under Rosetta on Apple Silicon
++		LINKFLAGS += -arch x86_64
++	!endif
+ 	OPTIONS   += -fno-strict-aliasing					# required for our uint_cast()-based FP hacks (check!! taken from my Quake2)
+ 	OPTIONS   += -fno-stack-protector					# this will remove GLIBC_2.4 dependency
+ 	OPTIONS   += {

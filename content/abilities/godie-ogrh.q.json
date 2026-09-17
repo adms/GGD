@@ -16,11 +16,11 @@
   ],
   "cooldownTier": "大",
   "manaCost": [
-    56.0,
-    56.0,
-    56.0,
-    56.0,
-    56.0
+    75.0,
+    75.0,
+    75.0,
+    75.0,
+    75.0
   ],
   "manaCostTier": "極小",
   "effects": [],
@@ -41,19 +41,20 @@
         "damageType": "true",
         "applyTo": "self",
         "amountPerTick": {
-          "flat": 10.0
+          "flat": 10
         },
-        "intervalSec": 1.0,
-        "durationSec": 10.0,
+        "intervalSec": 1,
+        "durationSec": 10,
         "stacking": "refresh"
       },
-      "castTimeSec": 1.7
+      "castTimeSec": 1
     }
   },
   "vfxKey": "fx.prim.holy.slash",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 1.7,
+  "castTimeSec": 1,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "極大"
 }

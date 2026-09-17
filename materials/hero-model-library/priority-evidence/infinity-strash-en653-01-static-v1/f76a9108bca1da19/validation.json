@@ -1,0 +1,237 @@
+{
+  "schema": "ggd.infinity-strash-en653-static-component-validation@1",
+  "componentId": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
+  "glb": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/en653-form-identity-review-v1/normalized-v3/component-ggd-normalized.glb",
+    "bytes": 1342948,
+    "sha256": "f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65"
+  },
+  "ggdInspection": {
+    "triangles": 13128,
+    "drawPrimitives": 3,
+    "skinnedPrimitives": 3,
+    "skinCount": 1,
+    "joints": [
+      175
+    ],
+    "textureCount": 2,
+    "textures": [
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 17018,
+        "sha256": "ff338a16f66e40acec7abcef96937c5bee8759d5a34ef0450da4e9f622dcfcc2"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 18942,
+        "sha256": "a78126892aafa3664bd4d1ca31a45b056082ed594d67b96c1e698eb0aec452b2"
+      }
+    ],
+    "clipCount": 0,
+    "clips": [],
+    "budget": {
+      "errors": [],
+      "warnings": []
+    },
+    "uploadReport": {
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 3,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "UNUSED_MESH_TANGENT",
+            "message": "Tangents are not used because the material has no normal texture.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TANGENT"
+          },
+          {
+            "code": "UNUSED_MESH_TANGENT",
+            "message": "Tangents are not used because the material has no normal texture.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/1/attributes/TANGENT"
+          },
+          {
+            "code": "UNUSED_MESH_TANGENT",
+            "message": "Tangents are not used because the material has no normal texture.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/2/attributes/TANGENT"
+          }
+        ],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "GGD prepare_en653_component.py",
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 1308904
+          },
+          {
+            "pointer": "/images/0",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/1",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          }
+        ],
+        "animationCount": 0,
+        "materialCount": 4,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": true,
+        "hasDefaultScene": true,
+        "drawCallCount": 3,
+        "totalVertexCount": 11851,
+        "totalTriangleCount": 13128,
+        "maxUVs": 2,
+        "maxInfluences": 4,
+        "maxAttributes": 8
+      }
+    }
+  },
+  "khronosIssues": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 3,
+    "numHints": 0,
+    "messages": [
+      {
+        "code": "UNUSED_MESH_TANGENT",
+        "message": "Tangents are not used because the material has no normal texture.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/0/attributes/TANGENT"
+      },
+      {
+        "code": "UNUSED_MESH_TANGENT",
+        "message": "Tangents are not used because the material has no normal texture.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/1/attributes/TANGENT"
+      },
+      {
+        "code": "UNUSED_MESH_TANGENT",
+        "message": "Tangents are not used because the material has no normal texture.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/2/attributes/TANGENT"
+      }
+    ],
+    "truncated": false
+  },
+  "finiteFloatAccessors": {
+    "passed": true,
+    "accessorCount": 26,
+    "valueCount": 227304
+  },
+  "babylon": {
+    "nullEngine": {
+      "schema": "ggd.infinity-strash-babylon-static-load@1",
+      "modelSha256": "f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65",
+      "babylonVersion": "7.54.3",
+      "meshes": [
+        {
+          "name": "SK_EN653_01_model_primitive0",
+          "vertices": 1283,
+          "positionCoordinates": 3849
+        },
+        {
+          "name": "SK_EN653_01_model_primitive1",
+          "vertices": 4185,
+          "positionCoordinates": 12555
+        },
+        {
+          "name": "SK_EN653_01_model_primitive2",
+          "vertices": 6383,
+          "positionCoordinates": 19149
+        }
+      ],
+      "skeletonBoneCounts": [
+        175
+      ],
+      "animationGroups": [],
+      "finiteRestPosePositions": true,
+      "materialsSkippedForCpuValidation": true,
+      "webglVisualReview": "pending-test-mechanism-recovery",
+      "runtimeRegistration": false,
+      "deploymentVerified": false
+    },
+    "webgl": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-en653-01-static-v1/f76a9108bca1da19/webgl-proof.json",
+      "bytes": 2514,
+      "sha256": "8c54aea5bcb48163312ed0e66d9c6be45251598b02fe3376367b28954c9e5a0e"
+    }
+  },
+  "deterministicRebuild": {
+    "conversionByteIdentical": true,
+    "normalizedGlbByteIdentical": true
+  },
+  "contractPins": [
+    {
+      "path": "tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/prepare_en653_component.py",
+      "sha256": "0d50fec57a09075740097bf3513607e63d2854ae2906c78a30e8c82363d90699"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/normalize_validate_candidate.mts",
+      "sha256": "9be7756c59a87666a24fdb2d7a9e37ae428d15a586793a899261784954ab5f60"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/render_babylon.py",
+      "sha256": "e24eb2ed7aec152ee27d7138fae29b92832b80db51e5888e665f52d2c799fbf1"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/render_babylon.mjs",
+      "sha256": "0ff58abef0acba02ceb4b46ba6df34ca92005111ece1b4c1219885f284f6fd0a"
+    },
+    {
+      "path": "tools/hero-model-library/source-workflows/infinity-strash-umodel-macos-v1/collect_en653_delivery.py",
+      "sha256": "17394ccc9719a0c579d3e594bd9b263a33da9e2370d83d1b15a44ac0d69ce1cc"
+    },
+    {
+      "path": "tools/hero-model-library/intake_infinity_strash_en653_component.py",
+      "sha256": "755c041b9c467ebd455c48df884ff6b91d5d82a2f659478d1897694f9a2e9dc1"
+    },
+    {
+      "path": "tools/hero-model-library/skinned_components.py",
+      "sha256": "d16dbce809698202d55de213ddc8aac8dabf4cdcb8fd933fc8bc48b85751917f"
+    }
+  ],
+  "structuralValidationPassed": true,
+  "visualValidationPassed": true,
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false,
+  "limitations": [
+    "The source component export contains zero native animation clips; idle, run, attack, cast, hurt and death remain missing.",
+    "No GGD hero definition or skill binding exists for MystVearn EN653/01.",
+    "No VFX, sound effect, dialogue or voice asset is accepted as part of this model component.",
+    "Original Unreal toon shader, shade, bundle and filter behavior is not reproduced by the portable base-colour PBR material.",
+    "No backend dropdown registration, runtime switching, default selection or production deployment is claimed.",
+    "This component is MystVearn; it cannot satisfy the separate post-transformation Vearn gap and cannot be identified as Baran."
+  ]
+}

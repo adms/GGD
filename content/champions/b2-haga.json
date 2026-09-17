@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -23,10 +23,10 @@
       ],
       "id": "b2-haga.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "先停止施法讓我重現",
@@ -38,7 +38,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "targeted",
           "effects": [
             {
@@ -62,10 +62,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-haga.e.webp"
+      "icon": "assets/icons/abilities/b2-haga.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -87,10 +88,10 @@
       ],
       "id": "b2-haga.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "BUG-001截圖存證",
@@ -102,7 +103,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "targeted",
           "effects": [
             {
@@ -126,10 +127,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-haga.q.webp"
+      "icon": "assets/icons/abilities/b2-haga.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 1.033,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -168,9 +170,9 @@
       ],
       "id": "b2-haga.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "測試結束回收增益與魔力",
@@ -182,7 +184,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.033,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -224,10 +226,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-haga.r.webp"
+      "icon": "assets/icons/abilities/b2-haga.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -255,10 +258,10 @@
       ],
       "id": "b2-haga.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "跳到有我截圖的當事人",
@@ -270,7 +273,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "targeted",
           "effects": [
             {
@@ -300,7 +303,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-haga.w.webp"
+      "icon": "assets/icons/abilities/b2-haga.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "fighter",
@@ -326,8 +330,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 6,
     "range": 8.2
@@ -342,13 +346,13 @@
     "as": 0,
     "healthRegen": 0.1168285714285714,
     "manaRegen": 0,
-    "maxHealth": 10.305102040816323,
-    "maxMana": 6.564285714285716,
+    "maxHealth": 60,
+    "maxMana": 35,
     "mr": 2.1118367346938776
   },
   "msGrowthTier": "極小",
   "id": "b2-haga",
-  "modelKey": "version.body.2d6bd95ce6fb76b43aef5544ed1817e443201904c15c058b",
+  "modelKey": "version.body.05b4fcfefeb5a9b7d33f1568bdd16402788a989a99a109f3",
   "name": "羽賀",
   "origin": "軟輔",
   "passiveAbility": "b2-haga.passive",
@@ -384,7 +388,7 @@
       "modelKey": "version.body.2d6bd95ce6fb76b43aef5544ed1817e443201904c15c058b",
       "label": "ou99 「海星动画人」（相似造型）",
       "sourceModelKey": "ou99.495015",
-      "modelSha256": "6f1c598c22c3027aa587d888e1b2a5533b847b7b497cc5c9a9cb79cfff0fd2c5",
+      "modelSha256": "ea246f9449e8e5a243cd845a1f4e5f5668c3f72bf3980bd1df6b293d9531757b",
       "binarySha256": "cea1b7329f3fa45947bfb508de838b1a4727ec8f450e012aa230a19a3305c724",
       "registeredAt": "2026-09-10T11:26:42.209Z",
       "source": {
@@ -394,6 +398,193 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-495015-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.2226d94021dd15a4fb18d9e3f3793f1f20f546b4d88f403b",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.495015",
+      "modelSha256": "4805522b3fd50bdad06d95fa084d227d0091c69b6b02d14a46476701663e5136",
+      "binarySha256": "981134292fed0b71c90169cf15ef258874cccb78f0eb688037e6ccb699c6ebd3",
+      "registeredAt": "2026-09-10T14:45:38.603Z",
+      "source": {
+        "kind": "previous",
+        "character": "羽賀",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.495015.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.e7f8a4540c3340628f1d59d2f1f80ef5381a4a341e6d6dbc",
+      "label": "海星动画人（論壇相似模型）",
+      "sourceModelKey": "ou99.495015-standard",
+      "modelSha256": "9de75480b8b08b4c8b545a11e0bdc13d2cb29c59fd5d3d3e7772435c1c5e8222",
+      "binarySha256": "52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d",
+      "registeredAt": "2026-09-10T14:45:38.610Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "海星动画人",
+        "work": "來源作品待核；論壇標題：海星动画人",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-495015-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.b0671ff19471beb4202efd2f4c96f51ac6096e47505e4ac7",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "d942179057d0a1e6a6cafbfc758088571f218f7196bbdd5f009ec6a5139a308e",
+      "binarySha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+      "registeredAt": "2026-09-10T14:45:38.714Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.bc727842d2a9ffe0276684ccff5c8e2d80da5bced837e99a",
+      "label": "羽賀｜海星動畫人相似模型（原生顯隱修復 v1）",
+      "sourceModelKey": "ou99.495015-native-visibility-v1",
+      "modelSha256": "e7c1f86a346b65ee44c12fcb55f5c14a0ebbade43c73436d3d6bef4f96abbea7",
+      "binarySha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515",
+      "registeredAt": "2026-09-10T15:37:39.574Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "海星动画人",
+        "work": "來源作品待核；論壇標題：海星动画人",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-495015-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.821dec405756f44c8448d28aaba5b74534c9f8e39a152ae8",
+      "label": "羽賀｜海星動畫人相似模型（原生顯隱修復 v1）",
+      "sourceModelKey": "ou99.495015-native-visibility-v1",
+      "modelSha256": "52cf845a58b444e7345ec4266bfbac08fcb722d858093a828b9d2f73ac9c9038",
+      "binarySha256": "226f31c83d149dc843be270fb79116e4ab8067516bd74139c0c0558e7b3faffb",
+      "registeredAt": "2026-09-12T23:08:08.111Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "海星动画人",
+        "work": "來源作品待核；論壇標題：海星动画人",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-495015-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.62bf4fc6be4e5be8c9f9d050d3cca3dacee6b3449fbabe1a",
+      "label": "海星动画人（論壇相似模型）",
+      "sourceModelKey": "ou99.495015-standard",
+      "modelSha256": "2c793d9225f96a1c5db7721e7bb3b48ef8d3c9fb47c56a42644070704fb80e79",
+      "binarySha256": "4c4c6b29b0a10ee3f95c2855c8417c318495a1a22ab9e924b61647d46d830702",
+      "registeredAt": "2026-09-12T23:08:08.146Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "海星动画人",
+        "work": "來源作品待核；論壇標題：海星动画人",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-495015-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.607aa79d97d336724463ef14aa4f8d16110c276daf27398a",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "b7ce0e58526376f3add67bc10456fa1319f3930de5063170d41f7852956826ac",
+      "binarySha256": "df75e87ce8691ee25b8c623ae03f54a4a786a2d5396c6bc5ef769a0849d9360f",
+      "registeredAt": "2026-09-12T23:08:08.519Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.b69a76d67bde479201fb1082753b71c102634a883af5cbb2",
+      "label": "羽賀｜海星動畫人相似模型（原生顯隱修復 v1）",
+      "sourceModelKey": "ou99.495015-native-visibility-v1",
+      "modelSha256": "412adbf8cc7312f3c15e4a2393abf57815d1d72d2de5049f3f174d8da48d62f4",
+      "binarySha256": "226f31c83d149dc843be270fb79116e4ab8067516bd74139c0c0558e7b3faffb",
+      "registeredAt": "2026-09-13T00:09:00.412Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "海星动画人",
+        "work": "來源作品待核；論壇標題：海星动画人",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-495015-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.05b4fcfefeb5a9b7d33f1568bdd16402788a989a99a109f3",
+      "label": "海星动画人（論壇相似模型）",
+      "sourceModelKey": "ou99.495015-standard",
+      "modelSha256": "4c95c2684613840057e7bf8eb00487d1380e58777d934e3635678bd2c21a9eb2",
+      "binarySha256": "4c4c6b29b0a10ee3f95c2855c8417c318495a1a22ab9e924b61647d46d830702",
+      "registeredAt": "2026-09-13T00:09:00.444Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "海星动画人",
+        "work": "來源作品待核；論壇標題：海星动画人",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-495015-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.b5e016b1d41fb497966bc0df2c40243444f9acb69268fe54",
+      "label": "坂本",
+      "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+      "modelSha256": "896cde23d4cf3070948518e60ddbe95e3bd6f7939d40f363477e24db79958a99",
+      "binarySha256": "df75e87ce8691ee25b8c623ae03f54a4a786a2d5396c6bc5ef769a0849d9360f",
+      "registeredAt": "2026-09-13T00:09:00.772Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "坂本",
+        "work": "在下坂本，有何貴幹？",
+        "library": "300heroes",
+        "reference": "300heroes:62413511bf6cb6a428c2821a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

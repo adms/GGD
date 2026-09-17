@@ -1,0 +1,26 @@
+{
+  "schema": "ggd.animated-component-acceptance@1",
+  "acceptedAt": "2026-09-13",
+  "components": [
+    {
+      "id": "ssbu-ryu-c00-procedural-six-state-v1",
+      "sha256": "97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf",
+      "accepted": true,
+      "scope": "independent-skinned-model-motion-component",
+      "native": false,
+      "retargeted": false,
+      "procedural": true,
+      "sixStateFallbackComplete": true,
+      "completeGameplayActionSet": false,
+      "reviewedMotionCount": 6,
+      "reviewedSampleCount": 60,
+      "limitationsAccepted": [
+        "The six clips are GGD-generated procedural fallback motions, not original SSBU or Street Fighter animations.",
+        "Run has no gameplay root motion or foot-contact guarantee; source hands retain their open static pose.",
+        "No Ryu GGD hero definition or skill mapping exists, so this independent component is not registered in a backend dropdown and cannot be selected at runtime.",
+        "No source VFX, SFX or voice was created or inferred by this motion conversion.",
+        "Source-game shader parity remains incomplete; five draw primitives pass the hard budget and exceed the warning threshold of three."
+      ]
+    }
+  ]
+}

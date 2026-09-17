@@ -1,0 +1,41 @@
+{
+  "schema": "ggd.palworld-approved-runtime-integration-receipt@1",
+  "status": "three-local-hero-forge-dropdowns; 18-motion-states-and-18-approved-cries-runtime-bound",
+  "summary": {
+    "characters": 3,
+    "ownerApprovedCandidates": 36,
+    "motionSemanticStatesRuntimeSelectable": 18,
+    "approvedGenericMotionBindingsReachable": 14,
+    "approvedPerSkillMotionOverlaysPendingRouter": 0,
+    "approvedPerSkillMotionOverlaysRuntimeBound": 4,
+    "approvedCryProductsInGit": 18,
+    "approvedCryRuntimeBindings": 18,
+    "backendDropdownRegisteredHeroes": 3,
+    "standaloneOriginalVfx": 0,
+    "skillSpecificOriginalSfx": 0,
+    "productionDeploymentVerifiedHeroes": 0
+  },
+  "states": {
+    "ownerApprovalApplied": true,
+    "localHeroForgeAuthoringComplete": true,
+    "backendDropdownRegistered": true,
+    "modelMotionRuntimeSelectable": true,
+    "approvedCryProductsGitPreserved": true,
+    "approvedCryRuntimeBindingCreated": true,
+    "approvedPerSkillMotionOverlayCreated": true,
+    "sourceFaithfulAudiovisualComplete": false,
+    "productionDeploymentVerified": false
+  },
+  "manifest": {
+    "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/approved-components.json",
+    "sha256": "0c18c9e16adb729eea4d986b89a15cbf315c65b7c8376617b70d002cc24a821f"
+  },
+  "runtimeBindings": {
+    "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/runtime-bindings.json",
+    "sha256": "bcddbd83461dbc4ea6cceeb98da879b11032477073ca3b185f4fc43ab2b7f73b"
+  },
+  "remaining": [
+    "Acquire and convert original standalone Palworld skill VFX and skill-specific SFX.",
+    "Verify Main merge, service content version, backend switching, and production playback after deployment."
+  ]
+}

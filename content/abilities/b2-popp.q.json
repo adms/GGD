@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 0.567,
+  "castTimeSec": 0.5,
   "castType": "targeted",
   "cooldown": [
     15.0,
@@ -27,10 +27,10 @@
   ],
   "id": "b2-popp.q",
   "manaCost": [
-    112.0,
-    112.0,
-    112.0,
-    112.0
+    150.0,
+    150.0,
+    150.0,
+    150.0
   ],
   "manaCostTier": "小",
   "maxRank": 4,
@@ -43,7 +43,7 @@
   "template": {
     "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
     "params": {
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "damage": {
         "damageTier": "小"
       },
@@ -56,12 +56,14 @@
     },
     "ref": "hero-template.00f870cec154f9b8c3c2cfa420c54bfef7d028bd98faa8a8"
   },
-  "vfxKey": "fx.prim.arcane.slash",
+  "vfxKey": "fx.strash.popp.nps-mera-firetrail-00",
   "vfxLayers": [
     {
-      "attachTo": "caster",
-      "vfxKey": "fx.prim.arcane.slash"
+      "vfxKey": "fx.strash.popp.nps-mera-firetrail-00",
+      "attachTo": "point",
+      "delayMs": 0
     }
   ],
-  "icon": "assets/icons/abilities/b2-popp.q.webp"
+  "icon": "assets/icons/abilities/b2-popp.q.webp",
+  "castTimeTier": "大"
 }

@@ -1,0 +1,740 @@
+{
+  "schema": "ggd-kaiji-webgl-proof@1",
+  "babylonVersion": "7.54.3",
+  "method": "Actual Babylon WebGL rendering with skin deformation; all embedded textures; 5 sampled times per clip",
+  "meshCount": 3,
+  "sourcePrimitiveCount": 3,
+  "bones": [
+    35
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "size": {
+        "width": 144,
+        "height": 1
+      }
+    },
+    {
+      "name": "skin, t-shirt and crocs (Base Color)",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "hair and pants (Base Color)",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "shirt (Base Color)",
+      "ready": true,
+      "size": {
+        "width": 256,
+        "height": 128
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "ggd-procedural-idle-0-0.png",
+      "clip": "GGD_procedural_idle",
+      "fraction": 0,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.37108760890669146,
+          1.0741921130374976e-08,
+          -0.13957974352697988
+        ],
+        "max": [
+          0.3705033478152018,
+          1.7999997978645297,
+          0.139579736170532
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-idle-25-0.png",
+      "clip": "GGD_procedural_idle",
+      "fraction": 0.25,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.3710875819538728,
+          1.0741921130374976e-08,
+          -0.1354776188642859
+        ],
+        "max": [
+          0.3705033747680204,
+          1.8000635143278032,
+          0.14878405635528225
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-idle-50-0.png",
+      "clip": "GGD_procedural_idle",
+      "fraction": 0.5,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.37108760890669146,
+          1.0741921130374976e-08,
+          -0.13957974352697988
+        ],
+        "max": [
+          0.3705033478152018,
+          1.7999997978645297,
+          0.139579736170532
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-idle-75-0.png",
+      "clip": "GGD_procedural_idle",
+      "fraction": 0.75,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.3710875280482355,
+          1.0741921130374976e-08,
+          -0.14360994459312337
+        ],
+        "max": [
+          0.37050340172083907,
+          1.7996611626510912,
+          0.1301283799265036
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-idle-100-0.png",
+      "clip": "GGD_procedural_idle",
+      "fraction": 1,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.37108760890669146,
+          1.0741921130374976e-08,
+          -0.13957974352697988
+        ],
+        "max": [
+          0.3705033478152018,
+          1.7999997978645297,
+          0.139579736170532
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-run-0-0.png",
+      "clip": "GGD_procedural_run",
+      "fraction": 0,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.37108760890669146,
+          1.0741921130374976e-08,
+          -0.1308699199676795
+        ],
+        "max": [
+          0.3705033478152018,
+          1.7984013879076883,
+          0.17496951477571088
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-run-25-0.png",
+      "clip": "GGD_procedural_run",
+      "fraction": 0.25,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.3710875819538728,
+          -1.4202145592889792e-07,
+          -0.46754650576633594
+        ],
+        "max": [
+          0.3705033747680204,
+          1.7379724295215055,
+          0.24899309976160566
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-run-25-1.png",
+      "clip": "GGD_procedural_run",
+      "fraction": 0.25,
+      "view": 1,
+      "bounds": {
+        "min": [
+          -0.3710875819538728,
+          -1.4202145592889792e-07,
+          -0.46754650576633594
+        ],
+        "max": [
+          0.3705033747680204,
+          1.7379724295215055,
+          0.24899309976160566
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-run-50-0.png",
+      "clip": "GGD_procedural_run",
+      "fraction": 0.5,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.37108760890669146,
+          1.0741921130374976e-08,
+          -0.1308699199676795
+        ],
+        "max": [
+          0.3705033478152018,
+          1.7984013879076883,
+          0.17496951477571088
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-run-75-0.png",
+      "clip": "GGD_procedural_run",
+      "fraction": 0.75,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.3710875819538728,
+          -3.0483182200669035e-08,
+          -0.46762647477925157
+        ],
+        "max": [
+          0.3705033478152018,
+          1.737993592895691,
+          0.25109819575612846
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-run-75-1.png",
+      "clip": "GGD_procedural_run",
+      "fraction": 0.75,
+      "view": 1,
+      "bounds": {
+        "min": [
+          -0.3710875819538728,
+          -3.0483182200669035e-08,
+          -0.46762647477925157
+        ],
+        "max": [
+          0.3705033478152018,
+          1.737993592895691,
+          0.25109819575612846
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-run-100-0.png",
+      "clip": "GGD_procedural_run",
+      "fraction": 1,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.37108760890669146,
+          1.0741921130374976e-08,
+          -0.1308699199676795
+        ],
+        "max": [
+          0.3705033478152018,
+          1.7984013879076883,
+          0.17496951477571088
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-attack-0-0.png",
+      "clip": "GGD_procedural_attack",
+      "fraction": 0,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.37108760890669146,
+          1.0741921130374976e-08,
+          -0.13957974352697988
+        ],
+        "max": [
+          0.3705033478152018,
+          1.7999997978645297,
+          0.139579736170532
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-attack-25-0.png",
+      "clip": "GGD_procedural_attack",
+      "fraction": 0.25,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.37080770388507744,
+          1.0741921130374976e-08,
+          -0.13881572545329846
+        ],
+        "max": [
+          0.3704678240002295,
+          1.8000351599625901,
+          0.14129049895188928
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-attack-50-0.png",
+      "clip": "GGD_procedural_attack",
+      "fraction": 0.5,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.2934827894312093,
+          1.0741921130374976e-08,
+          -0.12707038112348812
+        ],
+        "max": [
+          0.39560019536702384,
+          1.7987320450868083,
+          0.722084982568731
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-attack-50-1.png",
+      "clip": "GGD_procedural_attack",
+      "fraction": 0.5,
+      "view": 1,
+      "bounds": {
+        "min": [
+          -0.2934827894312093,
+          1.0741921130374976e-08,
+          -0.12707038112348812
+        ],
+        "max": [
+          0.39560019536702384,
+          1.7987320450868083,
+          0.722084982568731
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-attack-75-0.png",
+      "clip": "GGD_procedural_attack",
+      "fraction": 0.75,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.3375482760654904,
+          1.0741921130374976e-08,
+          -0.13130886683390486
+        ],
+        "max": [
+          0.3737242096431146,
+          1.7999580749012694,
+          0.40956872147069134
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-attack-100-0.png",
+      "clip": "GGD_procedural_attack",
+      "fraction": 1,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.37108760890669146,
+          1.0741921130374976e-08,
+          -0.13957974352697988
+        ],
+        "max": [
+          0.3705033478152018,
+          1.7999997978645297,
+          0.139579736170532
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-cast-0-0.png",
+      "clip": "GGD_procedural_cast",
+      "fraction": 0,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.37108760890669146,
+          1.0741921130374976e-08,
+          -0.13957974352697988
+        ],
+        "max": [
+          0.3705033478152018,
+          1.7999997978645297,
+          0.139579736170532
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-cast-25-0.png",
+      "clip": "GGD_procedural_cast",
+      "fraction": 0.25,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.6733521498110804,
+          1.0741921130374976e-08,
+          -0.14574948628987272
+        ],
+        "max": [
+          0.6729098761682053,
+          1.7993107760087241,
+          0.13117160224851432
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-cast-50-0.png",
+      "clip": "GGD_procedural_cast",
+      "fraction": 0.5,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.8641525006302118,
+          1.0741921130374976e-08,
+          -0.1517413674025363
+        ],
+        "max": [
+          0.8639328033636957,
+          1.7978634096475616,
+          0.11049110879554291
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-cast-50-1.png",
+      "clip": "GGD_procedural_cast",
+      "fraction": 0.5,
+      "view": 1,
+      "bounds": {
+        "min": [
+          -0.8641525006302118,
+          1.0741921130374976e-08,
+          -0.1517413674025363
+        ],
+        "max": [
+          0.8639328033636957,
+          1.7978634096475616,
+          0.11049110879554291
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-cast-75-0.png",
+      "clip": "GGD_procedural_cast",
+      "fraction": 0.75,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.673352257622355,
+          1.0741921130374976e-08,
+          -0.14574948628987272
+        ],
+        "max": [
+          0.6729098761682053,
+          1.7993107760087241,
+          0.13117160224851432
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-cast-100-0.png",
+      "clip": "GGD_procedural_cast",
+      "fraction": 1,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.37108760890669146,
+          1.0741921130374976e-08,
+          -0.13957974352697988
+        ],
+        "max": [
+          0.3705033478152018,
+          1.7999997978645297,
+          0.139579736170532
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-hurt-0-0.png",
+      "clip": "GGD_procedural_hurt",
+      "fraction": 0,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.37108760890669146,
+          1.0741921130374976e-08,
+          -0.13957974352697988
+        ],
+        "max": [
+          0.3705033478152018,
+          1.7999997978645297,
+          0.139579736170532
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-hurt-25-0.png",
+      "clip": "GGD_procedural_hurt",
+      "fraction": 0.25,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.34861496863646835,
+          1.0741921130374976e-08,
+          -0.12458914506838425
+        ],
+        "max": [
+          0.4014006575616804,
+          1.7882633547030764,
+          0.24008662169927675
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-hurt-50-0.png",
+      "clip": "GGD_procedural_hurt",
+      "fraction": 0.5,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.35551521364305927,
+          1.0741921130374976e-08,
+          -0.12949744875132296
+        ],
+        "max": [
+          0.3861170887026333,
+          1.7974987919169507,
+          0.19295928139067087
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-hurt-50-1.png",
+      "clip": "GGD_procedural_hurt",
+      "fraction": 0.5,
+      "view": 1,
+      "bounds": {
+        "min": [
+          -0.35551521364305927,
+          1.0741921130374976e-08,
+          -0.12949744875132296
+        ],
+        "max": [
+          0.3861170887026333,
+          1.7974987919169507,
+          0.19295928139067087
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-hurt-75-0.png",
+      "clip": "GGD_procedural_hurt",
+      "fraction": 0.75,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.36336411700744975,
+          1.0741921130374976e-08,
+          -0.1313572740961888
+        ],
+        "max": [
+          0.37801668858747917,
+          1.7999470781512628,
+          0.16643358406409448
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-hurt-100-0.png",
+      "clip": "GGD_procedural_hurt",
+      "fraction": 1,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.37108760890669146,
+          1.0741921130374976e-08,
+          -0.13957974352697988
+        ],
+        "max": [
+          0.3705033478152018,
+          1.7999997978645297,
+          0.139579736170532
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-death-0-0.png",
+      "clip": "GGD_procedural_death",
+      "fraction": 0,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.37108760890669146,
+          1.0741921130374976e-08,
+          -0.13957974352697988
+        ],
+        "max": [
+          0.3705033478152018,
+          1.7999997978645297,
+          0.139579736170532
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-death-25-0.png",
+      "clip": "GGD_procedural_death",
+      "fraction": 0.25,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.434455760904882,
+          -0.000386950782939266,
+          -0.13429267862184702
+        ],
+        "max": [
+          0.4455686457652632,
+          1.7741355396453855,
+          0.15154151837225527
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-death-50-0.png",
+      "clip": "GGD_procedural_death",
+      "fraction": 0.5,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.743688980022398,
+          -6.188193424350175e-08,
+          -0.13084829706892265
+        ],
+        "max": [
+          0.8427485886830937,
+          1.2392046541951913,
+          0.17530217993981978
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-death-75-0.png",
+      "clip": "GGD_procedural_death",
+      "fraction": 0.75,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.8731954947189706,
+          -3.886866124958033e-05,
+          -0.12951366760994176
+        ],
+        "max": [
+          0.931590092156739,
+          1.0020010558198464,
+          0.19347228786432424
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-death-100-0.png",
+      "clip": "GGD_procedural_death",
+      "fraction": 1,
+      "view": 0,
+      "bounds": {
+        "min": [
+          -0.8750819224958377,
+          2.1828327589901164e-08,
+          -0.12933860231464678
+        ],
+        "max": [
+          0.9280564698212856,
+          1.0106501859420405,
+          0.19558196583801646
+        ]
+      },
+      "finite": true
+    },
+    {
+      "name": "ggd-procedural-death-100-1.png",
+      "clip": "GGD_procedural_death",
+      "fraction": 1,
+      "view": 1,
+      "bounds": {
+        "min": [
+          -0.8750819224958377,
+          2.1828327589901164e-08,
+          -0.12933860231464678
+        ],
+        "max": [
+          0.9280564698212856,
+          1.0106501859420405,
+          0.19558196583801646
+        ]
+      },
+      "finite": true
+    }
+  ],
+  "nativeMotion": false,
+  "gameplayAcceptance": false
+}

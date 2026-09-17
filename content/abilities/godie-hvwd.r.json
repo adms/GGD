@@ -14,9 +14,9 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    112.0,
-    112.0,
-    112.0
+    150.0,
+    150.0,
+    150.0
   ],
   "manaCostTier": "小",
   "effects": [
@@ -32,9 +32,9 @@
       "modelKey": "imported.aquaspikeversion2",
       "clip": "idle",
       "soundKey": "wc3.nagabuildingcancel",
-      "scale": 3.0,
+      "scale": 3,
       "distance": 0.8,
-      "lifeSec": 6.0
+      "lifeSec": 6
     }
   ],
   "template": {
@@ -50,13 +50,14 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 1.633
+      "castTimeSec": 1
     }
   },
   "vfxKey": "fx.prim.void.swarm-lg",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 1.633,
+  "castTimeSec": 1,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "極大"
 }

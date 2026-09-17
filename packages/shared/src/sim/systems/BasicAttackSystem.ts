@@ -225,8 +225,8 @@ export function basicAttackSystem(world: SimWorld): void {
       continue;
     }
 
-    // Casting an ability animation-locks basic attacks.
-    if (ab.cast) {
+    // Casting an ability animation-locks basic attacks. 【持續引導】（GH#1191 `ab.channel`）也是。
+    if (ab.cast || ab.channel) {
       ab.windup = null;
       continue;
     }

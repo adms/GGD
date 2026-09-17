@@ -1,0 +1,599 @@
+{
+  "schema": "ggd.asset-library-pipeline@1",
+  "pipelineId": "asset-library-local-v1",
+  "scope": {
+    "sources": [
+      "jump-force",
+      "kof",
+      "fate",
+      "smash",
+      "community",
+      "lol",
+      "historical",
+      "palworld",
+      "core"
+    ],
+    "remoteLibraryReadAllowed": false,
+    "networkAccessAllowed": false,
+    "awsAccessAllowed": false,
+    "runtimeRegistrationAllowed": "mapped-qualified-candidate-only",
+    "repeatedCharacterPolicy": "source-index-only-no-conversion-or-registration",
+    "manualGates": [
+      "JUMP FORCE encrypted members require an authorized runtime AES key before extraction.",
+      "KOF proprietary model, motion and VFX containers require audited readers and authoritative material mapping.",
+      "Audio, borrowed motion and ambiguous identity mapping require owner review before runtime binding.",
+      "Runtime registration only accepts already-qualified candidates with an explicit hero mapping.",
+      "Fate candidates without a verified GGD hero identity remain Git-pinned design backlog components."
+    ]
+  },
+  "stages": [
+    {
+      "id": "jump-plan",
+      "source": "jump-force",
+      "dependsOn": [],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/build_plan.py",
+        "--repo",
+        "$REPO",
+        "--workspace",
+        "$WORKSPACE",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/build_plan.py",
+        "--repo",
+        "$REPO",
+        "--workspace",
+        "$WORKSPACE"
+      ]
+    },
+    {
+      "id": "jump-report",
+      "source": "jump-force",
+      "dependsOn": [
+        "jump-plan"
+      ],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/update_four_day_report.py",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/update_four_day_report.py",
+        "--write"
+      ]
+    },
+    {
+      "id": "jump-deep-source-verify",
+      "source": "jump-force",
+      "tier": "deep",
+      "dependsOn": [
+        "jump-plan"
+      ],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/promote_s3_receipt.py",
+        "--check",
+        "--receipt",
+        "$ASSET_ROOT/backups/jump-force-steam-full-build-8523149/latest-receipt.json",
+        "--repo",
+        "$REPO",
+        "--workspace",
+        "$WORKSPACE"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/jump-force-full-roster-v1/promote_s3_receipt.py",
+        "--write",
+        "--receipt",
+        "$ASSET_ROOT/backups/jump-force-steam-full-build-8523149/latest-receipt.json",
+        "--repo",
+        "$REPO",
+        "--workspace",
+        "$WORKSPACE"
+      ]
+    },
+    {
+      "id": "kof-local",
+      "source": "kof",
+      "dependsOn": [],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/kof-local-pipeline-v1/run.py",
+        "--repo",
+        "$REPO",
+        "--workspace",
+        "$WORKSPACE",
+        "--git-link-root",
+        "$REPO",
+        "--check",
+        "--defer-central-index"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/kof-local-pipeline-v1/run.py",
+        "--repo",
+        "$REPO",
+        "--workspace",
+        "$WORKSPACE",
+        "--git-link-root",
+        "$REPO",
+        "--apply",
+        "--defer-central-index"
+      ]
+    },
+    {
+      "id": "fate-platform-index",
+      "source": "fate",
+      "dependsOn": [],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/fate-unlimited-codes/platform-intake-v1/build_source_index.py",
+        "--repo",
+        "$REPO",
+        "--asset-root",
+        "$ASSET_ROOT",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/fate-unlimited-codes/platform-intake-v1/build_source_index.py",
+        "--repo",
+        "$REPO",
+        "--asset-root",
+        "$ASSET_ROOT"
+      ]
+    },
+    {
+      "id": "fate-psp-audit",
+      "source": "fate",
+      "dependsOn": [],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/fate-unlimited-codes/platform-intake-v1/build_psp_asset_audit.py",
+        "--repo",
+        "$REPO",
+        "--asset-root",
+        "$ASSET_ROOT",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/fate-unlimited-codes/platform-intake-v1/build_psp_asset_audit.py",
+        "--repo",
+        "$REPO",
+        "--asset-root",
+        "$ASSET_ROOT"
+      ]
+    },
+    {
+      "id": "fate-policy",
+      "source": "fate",
+      "dependsOn": [],
+      "checkCommand": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/hero-model-library/source-workflows/fate-assets-v2/audit_candidates.mts",
+        "--check"
+      ],
+      "refreshCommand": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/hero-model-library/source-workflows/fate-assets-v2/audit_candidates.mts"
+      ]
+    },
+    {
+      "id": "fate-runtime-components",
+      "source": "fate",
+      "dependsOn": [
+        "fate-policy"
+      ],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/fate-assets-v2/register_runtime_options.py",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/fate-assets-v2/register_runtime_options.py"
+      ]
+    },
+    {
+      "id": "fate-runtime-catalog",
+      "source": "fate",
+      "dependsOn": [
+        "fate-runtime-components"
+      ],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/build_priority_runtime_catalog.py",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/build_priority_runtime_catalog.py"
+      ]
+    },
+    {
+      "id": "fate-backend-options",
+      "source": "fate",
+      "dependsOn": [
+        "fate-runtime-catalog"
+      ],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/fate-assets-v2/register_backend_options.py",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/fate-assets-v2/register_backend_options.py"
+      ]
+    },
+    {
+      "id": "fate-inventory",
+      "source": "fate",
+      "dependsOn": [
+        "fate-platform-index",
+        "fate-psp-audit",
+        "fate-policy",
+        "fate-backend-options"
+      ],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/fate-assets-v2/build_inventory.py",
+        "--workspace",
+        "$WORKSPACE",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/fate-assets-v2/build_inventory.py",
+        "--workspace",
+        "$WORKSPACE"
+      ]
+    },
+    {
+      "id": "fate-report",
+      "source": "fate",
+      "dependsOn": [
+        "fate-inventory"
+      ],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/fate-assets-v2/update_four_day_report.py",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/fate-assets-v2/update_four_day_report.py"
+      ]
+    },
+    {
+      "id": "smash-ultimate-evidence",
+      "source": "smash",
+      "dependsOn": [],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/ssbu-ultimate-nsandns2-v1/publish_evidence.py",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/ssbu-ultimate-nsandns2-v1/publish_evidence.py",
+        "--build-from",
+        "$ASSET_ROOT/intake/ultimate16-nsandns2-audit-20260915-v1/reconciliation.json"
+      ]
+    },
+    {
+      "id": "smash-ultimate-local-roster",
+      "source": "smash",
+      "dependsOn": [
+        "smash-ultimate-evidence"
+      ],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/ssbu-ultimate-local-roster-v1/build_inventory.py"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/ssbu-ultimate-local-roster-v1/build_inventory.py",
+        "--write"
+      ]
+    },
+    {
+      "id": "smash-legacy",
+      "source": "smash",
+      "dependsOn": [],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/smash-legacy-sources-v1/build_inventory.py",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/smash-legacy-sources-v1/build_inventory.py"
+      ]
+    },
+    {
+      "id": "smash-cross-generation",
+      "source": "smash",
+      "dependsOn": [
+        "smash-ultimate-local-roster",
+        "smash-legacy"
+      ],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/smash-cross-generation-readiness-v1/build_inventory.py",
+        "--workspace",
+        "$WORKSPACE"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/smash-cross-generation-readiness-v1/build_inventory.py",
+        "--workspace",
+        "$WORKSPACE",
+        "--write"
+      ]
+    },
+    {
+      "id": "smash-report",
+      "source": "smash",
+      "dependsOn": [
+        "smash-cross-generation"
+      ],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/ssbu-ultimate-nsandns2-v1/update_four_day_report.py"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/ssbu-ultimate-nsandns2-v1/update_four_day_report.py",
+        "--write"
+      ]
+    },
+    {
+      "id": "community-local-verify",
+      "source": "community",
+      "dependsOn": [],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/community-unused-assets-v1/verify_local.py",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/community-unused-assets-v1/verify_local.py"
+      ]
+    },
+    {
+      "id": "community-300-mba",
+      "source": "community",
+      "dependsOn": [],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/300-mba-unused-assets-v1/build_index.py",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/300-mba-unused-assets-v1/build_index.py"
+      ]
+    },
+    {
+      "id": "community-unused",
+      "source": "community",
+      "dependsOn": [
+        "community-local-verify",
+        "community-300-mba"
+      ],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/community-unused-assets-v1/build_inventory.py",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/community-unused-assets-v1/build_inventory.py"
+      ]
+    },
+    {
+      "id": "community-report",
+      "source": "community",
+      "dependsOn": [
+        "community-unused"
+      ],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/community-unused-assets-v1/update_four_day_report.py"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/source-workflows/community-unused-assets-v1/update_four_day_report.py",
+        "--write"
+      ]
+    },
+    {
+      "id": "lol-seven-files",
+      "source": "lol",
+      "dependsOn": [],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/verify_lol_seven_voice_files.py",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/verify_lol_seven_voice_files.py"
+      ]
+    },
+    {
+      "id": "lol-seven-audio",
+      "source": "lol",
+      "dependsOn": [
+        "lol-seven-files"
+      ],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/refresh_priority_release_lol_audio.py",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/refresh_priority_release_lol_audio.py"
+      ]
+    },
+    {
+      "id": "historical-four-options",
+      "source": "historical",
+      "dependsOn": [
+        "core-component-policy"
+      ],
+      "checkCommand": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/hero-model-library/register_historical_model_options.mts",
+        "--check"
+      ],
+      "refreshCommand": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/hero-model-library/register_historical_model_options.mts"
+      ]
+    },
+    {
+      "id": "core-inventory",
+      "source": "core",
+      "dependsOn": [
+        "jump-report",
+        "kof-local",
+        "fate-report",
+        "smash-report",
+        "community-report",
+        "lol-seven-audio",
+        "historical-four-options"
+      ],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/inventory.py",
+        "--workspace",
+        "$WORKSPACE",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/inventory.py",
+        "--workspace",
+        "$WORKSPACE"
+      ]
+    },
+    {
+      "id": "core-design-backlog",
+      "source": "core",
+      "dependsOn": [
+        "core-inventory"
+      ],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/build_model_design_backlog.py",
+        "--workspace",
+        "$WORKSPACE",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/build_model_design_backlog.py",
+        "--workspace",
+        "$WORKSPACE"
+      ]
+    },
+    {
+      "id": "core-palworld",
+      "source": "palworld",
+      "dependsOn": [
+        "core-inventory"
+      ],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/build_palworld_index.py",
+        "--workspace",
+        "$WORKSPACE",
+        "--git-link-root",
+        "$REPO",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/build_palworld_index.py",
+        "--workspace",
+        "$WORKSPACE",
+        "--git-link-root",
+        "$REPO"
+      ]
+    },
+    {
+      "id": "core-component-policy",
+      "source": "core",
+      "dependsOn": [],
+      "checkCommand": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/hero-model-library/audit_current_component_policy.mts",
+        "--check"
+      ],
+      "refreshCommand": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/hero-model-library/audit_current_component_policy.mts"
+      ]
+    },
+    {
+      "id": "core-current-resources",
+      "source": "core",
+      "dependsOn": [
+        "core-design-backlog",
+        "core-palworld",
+        "core-component-policy"
+      ],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/current_resource_index.py",
+        "--git-link-root",
+        "$REPO",
+        "--check",
+        "--check-git"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/current_resource_index.py",
+        "--git-link-root",
+        "$REPO"
+      ]
+    },
+    {
+      "id": "core-dropdown-audit",
+      "source": "core",
+      "dependsOn": [
+        "core-current-resources"
+      ],
+      "checkCommand": [
+        "python3",
+        "tools/hero-model-library/audit_model_dropdown_coverage.py",
+        "--check"
+      ],
+      "refreshCommand": [
+        "python3",
+        "tools/hero-model-library/audit_model_dropdown_coverage.py"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2913 @@
+{
+  "schema": "ggd-fateubw-reserve-integrity@1",
+  "sourceId": "github-flemmli97-fateubw-07e9d79b",
+  "sourceCommit": "07e9d79b332c82b8fd10dada04cadbd84f4e6ce9",
+  "sourceVersion": "2.2.0",
+  "sourceGame": "Fate/Unlimited Block Works",
+  "platform": "Minecraft Java 1.21.1",
+  "license": "ARR",
+  "rightsStatus": "ARR per author MOD metadata; public access is not an open-source or republication license. Commercial/republication permission not inferred.",
+  "verificationScope": "local source/conversion bytes plus dedicated v2 S3 full-readback and member-SHA receipt; shared source/backlog projections may remain pending, with no runtime, rights, backend-selection or deployment claim",
+  "workspace": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT",
+  "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10",
+  "summary": {
+    "servants": 14,
+    "sourceClips": 132,
+    "convertedNativeClips": 127,
+    "unconvertedClips": 5,
+    "newlyConvertedFormulaOrPrePostClips": 15,
+    "retainedNoDurationSourcePoses": 5,
+    "centralCandidateRecords": 61,
+    "distinctS3Archives": 5,
+    "pendingV2S3Backups": 0,
+    "pendingSourceIndexSync": 0,
+    "pendingDesignBacklogSync": 0,
+    "localFileChecks": 215,
+    "failedLocalFileChecks": 0,
+    "errors": 0,
+    "runtimeSelectable": 0,
+    "defaultEligible": 0,
+    "deployed": 0
+  },
+  "licenseEvidence": [
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/fabric/src/main/resources/fabric.mod.json",
+      "bytes": 978,
+      "sha256": "f42e253ecd5309bef8eca9c8626b59c7c419c740e1f5adae325aa5ec2adf7d17",
+      "declaredLicense": "ARR"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/neoforge/src/main/resources/META-INF/neoforge.mods.toml",
+      "bytes": 929,
+      "sha256": "3c6de0135a69a6babcbf4d79bd4e1f07bb76abf8b3f77181d68c93d49af6bd39",
+      "declaredLicense": "ARR"
+    }
+  ],
+  "servants": [
+    {
+      "character": "artoria_pendragon_saber",
+      "sourceClipCount": 10,
+      "convertedNativeClipCount": 10,
+      "unconvertedClipCount": 0,
+      "sourceModel": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/artoria_pendragon_saber.geo.json",
+        "bytes": 7142,
+        "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50"
+      },
+      "sourceTexture": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/artoria_pendragon_saber.png",
+        "bytes": 2240,
+        "sha256": "7798993543371c893d8f513cd5252879759229c0eaa782affce79e65fff2a388"
+      },
+      "sourceAnimation": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/artoria_pendragon_saber.json",
+        "sha256": "359784b7df2de3a4bbb601937548572f51fd6ab9ba23728ac510a70ad5c6de72",
+        "clipCount": 10,
+        "clipsWithAllTargetsInThisSkeleton": 10,
+        "unmatchedBoneNames": []
+      },
+      "staticBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/body.glb",
+        "sha256": "a8b63e512d12dbd7ce78d4a83b86a4b480ca97b5809c6ca653fc0398f0528e58",
+        "bytes": 27964
+      },
+      "nativeMotionBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/body.glb",
+        "bytes": 245732,
+        "sha256": "661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f"
+      },
+      "runtimeSelectable": false,
+      "defaultEligible": false
+    },
+    {
+      "character": "cu_chulainn_lancer",
+      "sourceClipCount": 8,
+      "convertedNativeClipCount": 7,
+      "unconvertedClipCount": 1,
+      "sourceModel": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/cu_chulainn_lancer.geo.json",
+        "bytes": 7142,
+        "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50"
+      },
+      "sourceTexture": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/cu_chulainn_lancer.png",
+        "bytes": 4054,
+        "sha256": "0879dbc8193850319b8e3afe26d7135c6c0d34cd0afee83a020acd5a195f7f5f"
+      },
+      "sourceAnimation": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/cu_chulainn_lancer.json",
+        "sha256": "0555c797f61baff0a67a532a6de5410c30d166f10aa1af8e80885b0015461f1c",
+        "clipCount": 8,
+        "clipsWithAllTargetsInThisSkeleton": 8,
+        "unmatchedBoneNames": []
+      },
+      "staticBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-cu_chulainn_lancer/body.glb",
+        "sha256": "4735364884e1e6d21f8dc4db425e623e6699c8ce4eb187514afa991b974be501",
+        "bytes": 29748
+      },
+      "nativeMotionBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-cu_chulainn_lancer/body.glb",
+        "bytes": 195016,
+        "sha256": "4b8d7b54e8222b10765fa4e2e0e05972763cd7789d8e0094330ddf7d67c257cc"
+      },
+      "runtimeSelectable": false,
+      "defaultEligible": false
+    },
+    {
+      "character": "diarmuid_ua_duibhne_lancer",
+      "sourceClipCount": 8,
+      "convertedNativeClipCount": 7,
+      "unconvertedClipCount": 1,
+      "sourceModel": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/diarmuid_ua_duibhne_lancer.geo.json",
+        "bytes": 7142,
+        "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50"
+      },
+      "sourceTexture": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/diarmuid_ua_duibhne_lancer.png",
+        "bytes": 2138,
+        "sha256": "755f66dc8ad2ebb39fa20ba4809ce224de690fd5f7484ea08cf6ce2fdbb33f80"
+      },
+      "sourceAnimation": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/diarmuid_ua_duibhne_lancer.json",
+        "sha256": "941f7b6d17d0e07660baf123bd6a82b177c2835e3f36db1782f550718e383cd0",
+        "clipCount": 8,
+        "clipsWithAllTargetsInThisSkeleton": 8,
+        "unmatchedBoneNames": []
+      },
+      "staticBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-diarmuid_ua_duibhne_lancer/body.glb",
+        "sha256": "825f93bca2bb61f328f898c2275c038a127c9a7d7b586128c82c6e43614f539c",
+        "bytes": 27880
+      },
+      "nativeMotionBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/body.glb",
+        "bytes": 222352,
+        "sha256": "18add15f2810d04a8e609b7be802f04fcb4430047e4c768854e40d3bedcb4e80"
+      },
+      "runtimeSelectable": false,
+      "defaultEligible": false
+    },
+    {
+      "character": "emiya_archer",
+      "sourceClipCount": 11,
+      "convertedNativeClipCount": 11,
+      "unconvertedClipCount": 0,
+      "sourceModel": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/emiya_archer.geo.json",
+        "bytes": 7142,
+        "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50"
+      },
+      "sourceTexture": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/emiya_archer.png",
+        "bytes": 1603,
+        "sha256": "ab103993cb5ee13244010225237261ec77b9a547d02c8497e03c637376f8eee5"
+      },
+      "sourceAnimation": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/emiya_archer.json",
+        "sha256": "19e807e7ba54a634fdbc6a84fa78c54332780df57655acab1b0991b21e8a417a",
+        "clipCount": 11,
+        "clipsWithAllTargetsInThisSkeleton": 11,
+        "unmatchedBoneNames": []
+      },
+      "staticBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-emiya_archer/body.glb",
+        "sha256": "3073751777217a649cf58a5a58d13602b7227509c4ca870fdb139f6e9baa00ee",
+        "bytes": 27260
+      },
+      "nativeMotionBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-emiya_archer/body.glb",
+        "bytes": 296000,
+        "sha256": "0a696a71e8dbcd3848b0dfffebe36fffcd093442be81e6f8bc3261dba5380696"
+      },
+      "runtimeSelectable": false,
+      "defaultEligible": false
+    },
+    {
+      "character": "gilgamesh_archer",
+      "sourceClipCount": 9,
+      "convertedNativeClipCount": 9,
+      "unconvertedClipCount": 0,
+      "sourceModel": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/gilgamesh_archer.geo.json",
+        "bytes": 7142,
+        "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50"
+      },
+      "sourceTexture": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/gilgamesh_archer.png",
+        "bytes": 2548,
+        "sha256": "ad7cab6566a0be14edcab82ec16b5a17dbfc04e38abb23ec7866bb0ca3a6627d"
+      },
+      "sourceAnimation": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/gilgamesh_archer.json",
+        "sha256": "76ccce2382e3766096ddf6d522b99f31b9d78cf0ca97441332cb32ba2c0ae4ec",
+        "clipCount": 9,
+        "clipsWithAllTargetsInThisSkeleton": 9,
+        "unmatchedBoneNames": []
+      },
+      "staticBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-gilgamesh_archer/body.glb",
+        "sha256": "0607a865873ce6f34880759bad0f40984c2469e835e5cbc888abed69e39f68fa",
+        "bytes": 28228
+      },
+      "nativeMotionBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/body.glb",
+        "bytes": 208968,
+        "sha256": "459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a"
+      },
+      "runtimeSelectable": false,
+      "defaultEligible": false
+    },
+    {
+      "character": "gilles_de_rais_caster",
+      "sourceClipCount": 4,
+      "convertedNativeClipCount": 4,
+      "unconvertedClipCount": 0,
+      "sourceModel": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/gilles_de_rais_caster.geo.json",
+        "bytes": 7142,
+        "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50"
+      },
+      "sourceTexture": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/gilles_de_rais_caster.png",
+        "bytes": 1380,
+        "sha256": "dcabad0ba7d2dcbbd7dd39e11ff4f93b84a9cdb1e232558968fcc4b4432cf9b0"
+      },
+      "sourceAnimation": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/gilles_de_rais_caster.json",
+        "sha256": "3e61c98f483acfbf2965bf8378f7eca9e5ae6bc525e6b79b17f29b6c6e1ef97a",
+        "clipCount": 4,
+        "clipsWithAllTargetsInThisSkeleton": 4,
+        "unmatchedBoneNames": []
+      },
+      "staticBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-gilles_de_rais_caster/body.glb",
+        "sha256": "75e208d90b035e367f6155da590acbb0e8c673c847bdb4f8fec6911dfa489195",
+        "bytes": 27092
+      },
+      "nativeMotionBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilles_de_rais_caster/body.glb",
+        "bytes": 73280,
+        "sha256": "8d960ff2a55db7de8b570dfcf4f8e8732310a3eecea203a3e9025df27f469933"
+      },
+      "runtimeSelectable": false,
+      "defaultEligible": false
+    },
+    {
+      "character": "hassan-i-sabbah_assassin",
+      "sourceClipCount": 8,
+      "convertedNativeClipCount": 8,
+      "unconvertedClipCount": 0,
+      "sourceModel": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/hassan-i-sabbah_assassin.geo.json",
+        "bytes": 7142,
+        "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50"
+      },
+      "sourceTexture": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/hassan-i-sabbah_assassin.png",
+        "bytes": 1357,
+        "sha256": "b9d39638863a3faaae4137922016a4ea2a529afb22ad2fd610dd95fa76426214"
+      },
+      "sourceAnimation": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/hassan-i-sabbah_assassin.json",
+        "sha256": "f0bcc4330eb9481bef4e6fc163f54aeaa339451c3f43adda311860b19d25a0a5",
+        "clipCount": 8,
+        "clipsWithAllTargetsInThisSkeleton": 8,
+        "unmatchedBoneNames": []
+      },
+      "staticBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-hassan-i-sabbah_assassin/body.glb",
+        "sha256": "f0d64e120a48e723300e2b8a250a1402e7695c218b856613da763d31e78d1bbe",
+        "bytes": 27088
+      },
+      "nativeMotionBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-hassan-i-sabbah_assassin/body.glb",
+        "bytes": 158296,
+        "sha256": "e85bcecf1b6765e2b25fe778ef8d831a9c83fd07014eba018531fdae7bf6e2b3"
+      },
+      "runtimeSelectable": false,
+      "defaultEligible": false
+    },
+    {
+      "character": "heracles_berserker",
+      "sourceClipCount": 17,
+      "convertedNativeClipCount": 16,
+      "unconvertedClipCount": 1,
+      "sourceModel": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/heracles_berserker.geo.json",
+        "bytes": 11274,
+        "sha256": "587028d53b1ff3ef5acf1ae9bbd0b0c4f51b7500c2e37c73d233bb5a66b556a7"
+      },
+      "sourceTexture": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/heracles_berserker.png",
+        "bytes": 2657,
+        "sha256": "134dd128b9432a260ec5aa12d37edee5f65a9d203d6f1abc4406e9ee26fdb94e"
+      },
+      "sourceAnimation": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/heracles_berserker.json",
+        "sha256": "e190324ff83cfb006664a1ecd6234c8e6f97e9e4ad4f6d2f943174bc9a11ee24",
+        "clipCount": 17,
+        "clipsWithAllTargetsInThisSkeleton": 17,
+        "unmatchedBoneNames": []
+      },
+      "staticBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/body.glb",
+        "sha256": "0755d7952a8d5def6699b99783419877bc7d95a4eb13df8d090126d6408cbcc7",
+        "bytes": 38480
+      },
+      "nativeMotionBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/body.glb",
+        "bytes": 500056,
+        "sha256": "1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b"
+      },
+      "runtimeSelectable": false,
+      "defaultEligible": false
+    },
+    {
+      "character": "iskander_rider",
+      "sourceClipCount": 9,
+      "convertedNativeClipCount": 9,
+      "unconvertedClipCount": 0,
+      "sourceModel": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/iskander_rider.geo.json",
+        "bytes": 7142,
+        "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50"
+      },
+      "sourceTexture": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/iskander_rider.png",
+        "bytes": 1588,
+        "sha256": "43260383c6ce3ffece15e23a0730728f5bec419a187e1e9e8b019ee0ab4d9b90"
+      },
+      "sourceAnimation": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/iskander_rider.json",
+        "sha256": "9262f9510ff21a0e2d7a55e11b6243f717c93fe808b90667e0b6d1d4ed7c1933",
+        "clipCount": 9,
+        "clipsWithAllTargetsInThisSkeleton": 9,
+        "unmatchedBoneNames": []
+      },
+      "staticBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-iskander_rider/body.glb",
+        "sha256": "a56731b1caa431ee7962b1abe535ceaff017fe8a55426f938a53c07f9a67a34c",
+        "bytes": 27256
+      },
+      "nativeMotionBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/body.glb",
+        "bytes": 199136,
+        "sha256": "5db4fb8a6202bb8af7334025d180a22c610927c3eb531385558d83eb3f853bd3"
+      },
+      "runtimeSelectable": false,
+      "defaultEligible": false
+    },
+    {
+      "character": "lancelot_berserker",
+      "sourceClipCount": 13,
+      "convertedNativeClipCount": 13,
+      "unconvertedClipCount": 0,
+      "sourceModel": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/lancelot_berserker.geo.json",
+        "bytes": 7142,
+        "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50"
+      },
+      "sourceTexture": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/lancelot_berserker.png",
+        "bytes": 2048,
+        "sha256": "534973424b616146d6e5a188c77d1dfd2519cdc5b058c27d84b3ad1969869dd8"
+      },
+      "sourceAnimation": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/lancelot_berserker.json",
+        "sha256": "9f92bdaeded9f0d77b7c95917de67158c88cc596a111a5ba2e11772b322226d3",
+        "clipCount": 13,
+        "clipsWithAllTargetsInThisSkeleton": 13,
+        "unmatchedBoneNames": []
+      },
+      "staticBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-lancelot_berserker/body.glb",
+        "sha256": "bff9ee319e751304e8236f280556c44bfdc092a5197569dd7368684430f2871f",
+        "bytes": 27740
+      },
+      "nativeMotionBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/body.glb",
+        "bytes": 340508,
+        "sha256": "1ca1d4e3305431ddbae3d9cc23d1f4c8bfeccfd82fb3ab5d4d61795e2aeca838"
+      },
+      "runtimeSelectable": false,
+      "defaultEligible": false
+    },
+    {
+      "character": "medea_caster",
+      "sourceClipCount": 7,
+      "convertedNativeClipCount": 6,
+      "unconvertedClipCount": 1,
+      "sourceModel": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/medea_caster.geo.json",
+        "bytes": 9189,
+        "sha256": "e6b5ff01d97bed4d05448a5022e64107f6c9eb99f0d24285f6f0a8e0b6625efd"
+      },
+      "sourceTexture": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/medea_caster.png",
+        "bytes": 2892,
+        "sha256": "2a7fec4db75a7fc42d4e8c2775ad115de23dc674779fabe6d27219cbebbb1ceb"
+      },
+      "sourceAnimation": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/medea_caster.json",
+        "sha256": "f6b82558f0024f31fd6ade38ba89c8d8424d8bc06f4a2f880f5503f1a8df4b26",
+        "clipCount": 7,
+        "clipsWithAllTargetsInThisSkeleton": 7,
+        "unmatchedBoneNames": []
+      },
+      "staticBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-medea_caster/body.glb",
+        "sha256": "71bc5263fb6c32509af35430a848b752c7cda0959672002f67a8eaa83fdc63ca",
+        "bytes": 36952
+      },
+      "nativeMotionBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/body.glb",
+        "bytes": 242456,
+        "sha256": "9e13145d3682825f3d987ab5c003da92fcd334326f8a49913c668065e8025df6"
+      },
+      "runtimeSelectable": false,
+      "defaultEligible": false
+    },
+    {
+      "character": "medusa_rider",
+      "sourceClipCount": 11,
+      "convertedNativeClipCount": 11,
+      "unconvertedClipCount": 0,
+      "sourceModel": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/medusa_rider.geo.json",
+        "bytes": 7155,
+        "sha256": "1797b9f5695d51e32a0b73ddd45a656720871b8e9317529a1d2cd932cce184dc"
+      },
+      "sourceTexture": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/medusa_rider.png",
+        "bytes": 1258,
+        "sha256": "bdc7e37394a01c7a7c267e0c8afbf1743a12ccdfa09802af1ce509819d1c0c30"
+      },
+      "sourceAnimation": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/medusa_rider.json",
+        "sha256": "b05e9c70d66b9d5382052f2f61f600277cc5aed47252e4f355af2ccb5dd6c57d",
+        "clipCount": 11,
+        "clipsWithAllTargetsInThisSkeleton": 11,
+        "unmatchedBoneNames": []
+      },
+      "staticBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-medusa_rider/body.glb",
+        "sha256": "173bc3ccd7623614f8f3c897a6d9b6e05777dd6d58cda08bdbf69d11734955bd",
+        "bytes": 26916
+      },
+      "nativeMotionBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/body.glb",
+        "bytes": 227824,
+        "sha256": "5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85"
+      },
+      "runtimeSelectable": false,
+      "defaultEligible": false
+    },
+    {
+      "character": "nero_claudius_saber",
+      "sourceClipCount": 6,
+      "convertedNativeClipCount": 6,
+      "unconvertedClipCount": 0,
+      "sourceModel": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/nero_claudius_saber.geo.json",
+        "bytes": 7142,
+        "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50"
+      },
+      "sourceTexture": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/nero_claudius_saber.png",
+        "bytes": 2192,
+        "sha256": "8ece9b274a39d8dd9cc2936dd776fad3003998034ec9900e8613cff04e026299"
+      },
+      "sourceAnimation": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/nero_claudius_saber.json",
+        "sha256": "0e5a8925deb16b2539b84d2e17c544675eb99df92007c88dac327580de4e9185",
+        "clipCount": 6,
+        "clipsWithAllTargetsInThisSkeleton": 6,
+        "unmatchedBoneNames": []
+      },
+      "staticBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-nero_claudius_saber/body.glb",
+        "sha256": "59ccae000c8a340a937b10e427ab8636c1659f1ed49408fdd4679a4b943bf0a3",
+        "bytes": 27892
+      },
+      "nativeMotionBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/body.glb",
+        "bytes": 478168,
+        "sha256": "059cdf64bf7040a33ad40257a6ad0b37e82424127a72d243fee468772fe5fcad"
+      },
+      "runtimeSelectable": false,
+      "defaultEligible": false
+    },
+    {
+      "character": "sasaki_kojiro_assassin",
+      "sourceClipCount": 11,
+      "convertedNativeClipCount": 10,
+      "unconvertedClipCount": 1,
+      "sourceModel": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/sasaki_kojiro_assassin.geo.json",
+        "bytes": 7142,
+        "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50"
+      },
+      "sourceTexture": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/sasaki_kojiro_assassin.png",
+        "bytes": 1963,
+        "sha256": "7ed74d7fca9b264278cbfec07f9bf14098d94b0ee7d6b4603f47884a95576cb3"
+      },
+      "sourceAnimation": {
+        "path": "extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/sasaki_kojiro_assassin.json",
+        "sha256": "dc2e8cd51464fc8a702970f273fddb5c39eb435cb1d9b874f8566e23ce1e4914",
+        "clipCount": 11,
+        "clipsWithAllTargetsInThisSkeleton": 11,
+        "unmatchedBoneNames": []
+      },
+      "staticBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-sasaki_kojiro_assassin/body.glb",
+        "sha256": "7aae647bbcf9d6d592a4039975ba8b32f5f3d599f168f4e655711f1e586170d6",
+        "bytes": 27680
+      },
+      "nativeMotionBody": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-sasaki_kojiro_assassin/body.glb",
+        "bytes": 253132,
+        "sha256": "9d4325547f9201a56e0bfeca89acdc7c512cf6a46c9f797edaab0569c6f2f0c7"
+      },
+      "runtimeSelectable": false,
+      "defaultEligible": false
+    }
+  ],
+  "localFileChecks": [
+    {
+      "label": "artoria_pendragon_saber:0",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/artoria_pendragon_saber.geo.json",
+      "recordedBytes": 7142,
+      "recordedSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "existsLocal": true,
+      "bytes": 7142,
+      "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "artoria_pendragon_saber:1",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/artoria_pendragon_saber.png",
+      "recordedBytes": 2240,
+      "recordedSha256": "7798993543371c893d8f513cd5252879759229c0eaa782affce79e65fff2a388",
+      "existsLocal": true,
+      "bytes": 2240,
+      "sha256": "7798993543371c893d8f513cd5252879759229c0eaa782affce79e65fff2a388",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "artoria_pendragon_saber:2",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/artoria_pendragon_saber.json",
+      "recordedBytes": null,
+      "recordedSha256": "359784b7df2de3a4bbb601937548572f51fd6ab9ba23728ac510a70ad5c6de72",
+      "existsLocal": true,
+      "bytes": 32527,
+      "sha256": "359784b7df2de3a4bbb601937548572f51fd6ab9ba23728ac510a70ad5c6de72",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "artoria_pendragon_saber:3",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/body.glb",
+      "recordedBytes": 27964,
+      "recordedSha256": "a8b63e512d12dbd7ce78d4a83b86a4b480ca97b5809c6ca653fc0398f0528e58",
+      "existsLocal": true,
+      "bytes": 27964,
+      "sha256": "a8b63e512d12dbd7ce78d4a83b86a4b480ca97b5809c6ca653fc0398f0528e58",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "artoria_pendragon_saber:4",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/conversion-report.json",
+      "recordedBytes": 2136,
+      "recordedSha256": "18efbf061cda374f6dc88690c68c2202d16b39a6b32ca0c3260babcbab4e0e87",
+      "existsLocal": true,
+      "bytes": 2136,
+      "sha256": "18efbf061cda374f6dc88690c68c2202d16b39a6b32ca0c3260babcbab4e0e87",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "artoria_pendragon_saber:5",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/structural-readback.json",
+      "recordedBytes": 1573,
+      "recordedSha256": "26ba92ab0bd841df4d9cf2d8b0e00b1fa2dbf4ec04a5eba06a581cc0d76b0440",
+      "existsLocal": true,
+      "bytes": 1573,
+      "sha256": "26ba92ab0bd841df4d9cf2d8b0e00b1fa2dbf4ec04a5eba06a581cc0d76b0440",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "artoria_pendragon_saber:6",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/contract-validation.json",
+      "recordedBytes": 3234,
+      "recordedSha256": "4409a3087957b583af91bd6b2a849c33d4059bcdc847185f8c675ea0bc05b98a",
+      "existsLocal": true,
+      "bytes": 3234,
+      "sha256": "4409a3087957b583af91bd6b2a849c33d4059bcdc847185f8c675ea0bc05b98a",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "artoria_pendragon_saber:7",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/animation-reserve.json",
+      "recordedBytes": 9943,
+      "recordedSha256": "6f42eaa6d495acf00288982954251f24f0bafa9fa7976c738012daa62a70d910",
+      "existsLocal": true,
+      "bytes": 9943,
+      "sha256": "6f42eaa6d495acf00288982954251f24f0bafa9fa7976c738012daa62a70d910",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "artoria_pendragon_saber:8",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/webgl-source-material-v1/proof.json",
+      "recordedBytes": 2218,
+      "recordedSha256": "96fa6ae951e67f44ddd2420aca9f26811cfc35d47ece93f2e796a2da15e6af86",
+      "existsLocal": true,
+      "bytes": 2218,
+      "sha256": "96fa6ae951e67f44ddd2420aca9f26811cfc35d47ece93f2e796a2da15e6af86",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "artoria_pendragon_saber:9",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-artoria-static-mesh-v3/fateubw-artoria_pendragon_saber/webgl-source-material-v1/run.json",
+      "recordedBytes": 364,
+      "recordedSha256": "41ae0ba22bd2ae56ca355c21445cf30eb427905b8cb2fde371e5ac114677cb25",
+      "existsLocal": true,
+      "bytes": 364,
+      "sha256": "41ae0ba22bd2ae56ca355c21445cf30eb427905b8cb2fde371e5ac114677cb25",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "artoria_pendragon_saber:10",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/body.glb",
+      "recordedBytes": 245732,
+      "recordedSha256": "661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f",
+      "existsLocal": true,
+      "bytes": 245732,
+      "sha256": "661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "artoria_pendragon_saber:11",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/conversion-report.json",
+      "recordedBytes": 57310,
+      "recordedSha256": "2a7244644145fba13fbeca35543dafcb6c867dc10d0ca2333dcfcaf39d1f04fd",
+      "existsLocal": true,
+      "bytes": 57310,
+      "sha256": "2a7244644145fba13fbeca35543dafcb6c867dc10d0ca2333dcfcaf39d1f04fd",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "artoria_pendragon_saber:12",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/native-structural-readback.json",
+      "recordedBytes": 1651,
+      "recordedSha256": "fa865e9a2722ac752fcfbe12d91919d662400802cabf72bc6be1ddb5f0eccd23",
+      "existsLocal": true,
+      "bytes": 1651,
+      "sha256": "fa865e9a2722ac752fcfbe12d91919d662400802cabf72bc6be1ddb5f0eccd23",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "artoria_pendragon_saber:13",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/contract-validation.json",
+      "recordedBytes": 5085,
+      "recordedSha256": "87dc6a97f3b06e1780bb52e190ae59af006d378cee578eb27732d81ea66cc302",
+      "existsLocal": true,
+      "bytes": 5085,
+      "sha256": "87dc6a97f3b06e1780bb52e190ae59af006d378cee578eb27732d81ea66cc302",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "artoria_pendragon_saber:14",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/webgl-completion-v2/proof.json",
+      "recordedBytes": null,
+      "recordedSha256": "941c3660a12f652cded34d71051a0d49fd4287f02d7bd06a8a140db96466d3a0",
+      "existsLocal": true,
+      "bytes": 5753,
+      "sha256": "941c3660a12f652cded34d71051a0d49fd4287f02d7bd06a8a140db96466d3a0",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "artoria_pendragon_saber:15",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-artoria_pendragon_saber/webgl-completion-v2/run.json",
+      "recordedBytes": null,
+      "recordedSha256": "35ba8d84c00fd96af2b821ddd68e32505fe439b499a5b3b0d83d6086720add6b",
+      "existsLocal": true,
+      "bytes": 424,
+      "sha256": "35ba8d84c00fd96af2b821ddd68e32505fe439b499a5b3b0d83d6086720add6b",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "cu_chulainn_lancer:0",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/cu_chulainn_lancer.geo.json",
+      "recordedBytes": 7142,
+      "recordedSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "existsLocal": true,
+      "bytes": 7142,
+      "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "cu_chulainn_lancer:1",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/cu_chulainn_lancer.png",
+      "recordedBytes": 4054,
+      "recordedSha256": "0879dbc8193850319b8e3afe26d7135c6c0d34cd0afee83a020acd5a195f7f5f",
+      "existsLocal": true,
+      "bytes": 4054,
+      "sha256": "0879dbc8193850319b8e3afe26d7135c6c0d34cd0afee83a020acd5a195f7f5f",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "cu_chulainn_lancer:2",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/cu_chulainn_lancer.json",
+      "recordedBytes": null,
+      "recordedSha256": "0555c797f61baff0a67a532a6de5410c30d166f10aa1af8e80885b0015461f1c",
+      "existsLocal": true,
+      "bytes": 32575,
+      "sha256": "0555c797f61baff0a67a532a6de5410c30d166f10aa1af8e80885b0015461f1c",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "cu_chulainn_lancer:3",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-cu_chulainn_lancer/body.glb",
+      "recordedBytes": 29748,
+      "recordedSha256": "4735364884e1e6d21f8dc4db425e623e6699c8ce4eb187514afa991b974be501",
+      "existsLocal": true,
+      "bytes": 29748,
+      "sha256": "4735364884e1e6d21f8dc4db425e623e6699c8ce4eb187514afa991b974be501",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "cu_chulainn_lancer:4",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-cu_chulainn_lancer/conversion-report.json",
+      "recordedBytes": 2117,
+      "recordedSha256": "af1170f056cfeeaaf42b3ed9f2c89424d0de4003ff652a54174dbe12c8333139",
+      "existsLocal": true,
+      "bytes": 2117,
+      "sha256": "af1170f056cfeeaaf42b3ed9f2c89424d0de4003ff652a54174dbe12c8333139",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "cu_chulainn_lancer:5",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-cu_chulainn_lancer/structural-readback.json",
+      "recordedBytes": 1564,
+      "recordedSha256": "be0a80c0741fdd80f12353fa8e4aae71a39599866edff5c657b3e49050481dd6",
+      "existsLocal": true,
+      "bytes": 1564,
+      "sha256": "be0a80c0741fdd80f12353fa8e4aae71a39599866edff5c657b3e49050481dd6",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "cu_chulainn_lancer:6",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-cu_chulainn_lancer/contract-validation.json",
+      "recordedBytes": 3220,
+      "recordedSha256": "ba1cef87e0718afe2ca41a8d98d8752a81b5a323ee73bafb43e92324a5465efa",
+      "existsLocal": true,
+      "bytes": 3220,
+      "sha256": "ba1cef87e0718afe2ca41a8d98d8752a81b5a323ee73bafb43e92324a5465efa",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "cu_chulainn_lancer:7",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-cu_chulainn_lancer/animation-reserve.json",
+      "recordedBytes": 8153,
+      "recordedSha256": "eff3fb68aa15ec1eff7e12388dd478b1625d120f8808f899be7fe62ce82ad472",
+      "existsLocal": true,
+      "bytes": 8153,
+      "sha256": "eff3fb68aa15ec1eff7e12388dd478b1625d120f8808f899be7fe62ce82ad472",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "cu_chulainn_lancer:8",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-cu_chulainn_lancer/webgl-source-material-v1/proof.json",
+      "recordedBytes": 2198,
+      "recordedSha256": "812c90b9d0ace81d98878026a4b6b2e12ed0f6fe1e97a79b6cc06484a7136903",
+      "existsLocal": true,
+      "bytes": 2198,
+      "sha256": "812c90b9d0ace81d98878026a4b6b2e12ed0f6fe1e97a79b6cc06484a7136903",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "cu_chulainn_lancer:9",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-cu_chulainn_lancer/webgl-source-material-v1/run.json",
+      "recordedBytes": 360,
+      "recordedSha256": "cfe6c8b59b021e8b1e93f1c7aa6743d4d7a132cad993ae9678257c92803118a6",
+      "existsLocal": true,
+      "bytes": 360,
+      "sha256": "cfe6c8b59b021e8b1e93f1c7aa6743d4d7a132cad993ae9678257c92803118a6",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "cu_chulainn_lancer:10",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-cu_chulainn_lancer/body.glb",
+      "recordedBytes": 195016,
+      "recordedSha256": "4b8d7b54e8222b10765fa4e2e0e05972763cd7789d8e0094330ddf7d67c257cc",
+      "existsLocal": true,
+      "bytes": 195016,
+      "sha256": "4b8d7b54e8222b10765fa4e2e0e05972763cd7789d8e0094330ddf7d67c257cc",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "cu_chulainn_lancer:11",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-cu_chulainn_lancer/conversion-report.json",
+      "recordedBytes": 44300,
+      "recordedSha256": "acec671ccea214067d2ffe684a6e3b466c3c6e23af0629f7846fd36c9adae5ee",
+      "existsLocal": true,
+      "bytes": 44300,
+      "sha256": "acec671ccea214067d2ffe684a6e3b466c3c6e23af0629f7846fd36c9adae5ee",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "cu_chulainn_lancer:12",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-cu_chulainn_lancer/native-structural-readback.json",
+      "recordedBytes": 1640,
+      "recordedSha256": "ee2bc29d7db3338a9eacf840cc9baf7f84e29181ce30f4acb0f6516496aed793",
+      "existsLocal": true,
+      "bytes": 1640,
+      "sha256": "ee2bc29d7db3338a9eacf840cc9baf7f84e29181ce30f4acb0f6516496aed793",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "cu_chulainn_lancer:13",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-cu_chulainn_lancer/contract-validation.json",
+      "recordedBytes": 4680,
+      "recordedSha256": "e317676bb9d7c09fc5bf36f181330d66f6be4d315417dbc2054f815770084f6a",
+      "existsLocal": true,
+      "bytes": 4680,
+      "sha256": "e317676bb9d7c09fc5bf36f181330d66f6be4d315417dbc2054f815770084f6a",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "diarmuid_ua_duibhne_lancer:0",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/diarmuid_ua_duibhne_lancer.geo.json",
+      "recordedBytes": 7142,
+      "recordedSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "existsLocal": true,
+      "bytes": 7142,
+      "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "diarmuid_ua_duibhne_lancer:1",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/diarmuid_ua_duibhne_lancer.png",
+      "recordedBytes": 2138,
+      "recordedSha256": "755f66dc8ad2ebb39fa20ba4809ce224de690fd5f7484ea08cf6ce2fdbb33f80",
+      "existsLocal": true,
+      "bytes": 2138,
+      "sha256": "755f66dc8ad2ebb39fa20ba4809ce224de690fd5f7484ea08cf6ce2fdbb33f80",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "diarmuid_ua_duibhne_lancer:2",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/diarmuid_ua_duibhne_lancer.json",
+      "recordedBytes": null,
+      "recordedSha256": "941f7b6d17d0e07660baf123bd6a82b177c2835e3f36db1782f550718e383cd0",
+      "existsLocal": true,
+      "bytes": 27908,
+      "sha256": "941f7b6d17d0e07660baf123bd6a82b177c2835e3f36db1782f550718e383cd0",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "diarmuid_ua_duibhne_lancer:3",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-diarmuid_ua_duibhne_lancer/body.glb",
+      "recordedBytes": 27880,
+      "recordedSha256": "825f93bca2bb61f328f898c2275c038a127c9a7d7b586128c82c6e43614f539c",
+      "existsLocal": true,
+      "bytes": 27880,
+      "sha256": "825f93bca2bb61f328f898c2275c038a127c9a7d7b586128c82c6e43614f539c",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "diarmuid_ua_duibhne_lancer:4",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-diarmuid_ua_duibhne_lancer/conversion-report.json",
+      "recordedBytes": 2149,
+      "recordedSha256": "e99d200bd2d448f7005f339164c9aaf94e292821d4ca41ae10b2c70bfef22746",
+      "existsLocal": true,
+      "bytes": 2149,
+      "sha256": "e99d200bd2d448f7005f339164c9aaf94e292821d4ca41ae10b2c70bfef22746",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "diarmuid_ua_duibhne_lancer:5",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-diarmuid_ua_duibhne_lancer/structural-readback.json",
+      "recordedBytes": 1580,
+      "recordedSha256": "4e7da8407b0fa6d6aa12f329b21229712d641d15d6b3de5dedb05b46b9d68c07",
+      "existsLocal": true,
+      "bytes": 1580,
+      "sha256": "4e7da8407b0fa6d6aa12f329b21229712d641d15d6b3de5dedb05b46b9d68c07",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "diarmuid_ua_duibhne_lancer:6",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-diarmuid_ua_duibhne_lancer/contract-validation.json",
+      "recordedBytes": 3244,
+      "recordedSha256": "7160133d850614a21a5e16d7a8c449fc8604fa29412eddcf628161588ab347a0",
+      "existsLocal": true,
+      "bytes": 3244,
+      "sha256": "7160133d850614a21a5e16d7a8c449fc8604fa29412eddcf628161588ab347a0",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "diarmuid_ua_duibhne_lancer:7",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-diarmuid_ua_duibhne_lancer/animation-reserve.json",
+      "recordedBytes": 8205,
+      "recordedSha256": "a5fe63bb996e302f3bec6ee25c513db839617ecb200c5bb593874b2c973aabc2",
+      "existsLocal": true,
+      "bytes": 8205,
+      "sha256": "a5fe63bb996e302f3bec6ee25c513db839617ecb200c5bb593874b2c973aabc2",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "diarmuid_ua_duibhne_lancer:8",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-diarmuid_ua_duibhne_lancer/webgl-source-material-v1/proof.json",
+      "recordedBytes": 2230,
+      "recordedSha256": "371006e12463c8cedf0564025444abd090b32a432ea6c4bbc9ebb36ecd2582af",
+      "existsLocal": true,
+      "bytes": 2230,
+      "sha256": "371006e12463c8cedf0564025444abd090b32a432ea6c4bbc9ebb36ecd2582af",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "diarmuid_ua_duibhne_lancer:9",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-diarmuid_ua_duibhne_lancer/webgl-source-material-v1/run.json",
+      "recordedBytes": 368,
+      "recordedSha256": "23307a934cbff9cafeff3f08798476fe47b51159fb44c74c3eb96e51fbce7615",
+      "existsLocal": true,
+      "bytes": 368,
+      "sha256": "23307a934cbff9cafeff3f08798476fe47b51159fb44c74c3eb96e51fbce7615",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "diarmuid_ua_duibhne_lancer:10",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/body.glb",
+      "recordedBytes": 222352,
+      "recordedSha256": "18add15f2810d04a8e609b7be802f04fcb4430047e4c768854e40d3bedcb4e80",
+      "existsLocal": true,
+      "bytes": 222352,
+      "sha256": "18add15f2810d04a8e609b7be802f04fcb4430047e4c768854e40d3bedcb4e80",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "diarmuid_ua_duibhne_lancer:11",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/conversion-report.json",
+      "recordedBytes": 43481,
+      "recordedSha256": "afb863a85e7f882c31e53e9a801c6c5eb2733326f9d00367721b8a024c6b3cba",
+      "existsLocal": true,
+      "bytes": 43481,
+      "sha256": "afb863a85e7f882c31e53e9a801c6c5eb2733326f9d00367721b8a024c6b3cba",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "diarmuid_ua_duibhne_lancer:12",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/native-structural-readback.json",
+      "recordedBytes": 1656,
+      "recordedSha256": "3f050b8d6b68c805deaa2811b349f626096837c760e04d95555d69dc9f643f5a",
+      "existsLocal": true,
+      "bytes": 1656,
+      "sha256": "3f050b8d6b68c805deaa2811b349f626096837c760e04d95555d69dc9f643f5a",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "diarmuid_ua_duibhne_lancer:13",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/contract-validation.json",
+      "recordedBytes": 4703,
+      "recordedSha256": "cc4e38ad3cfae6db52a5e5124b166730444e830a81c5efb24fb25e711a174b8a",
+      "existsLocal": true,
+      "bytes": 4703,
+      "sha256": "cc4e38ad3cfae6db52a5e5124b166730444e830a81c5efb24fb25e711a174b8a",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "diarmuid_ua_duibhne_lancer:14",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/webgl-completion-v2/proof.json",
+      "recordedBytes": null,
+      "recordedSha256": "587ec17a310febc69c215829883d3c308e545cca8cce46b63a0a699a7cd204a4",
+      "existsLocal": true,
+      "bytes": 3196,
+      "sha256": "587ec17a310febc69c215829883d3c308e545cca8cce46b63a0a699a7cd204a4",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "diarmuid_ua_duibhne_lancer:15",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-diarmuid_ua_duibhne_lancer/webgl-completion-v2/run.json",
+      "recordedBytes": null,
+      "recordedSha256": "1668c147fe0fc692d6e40387d22dfa5c105722e5a1abb6434d5f9508e129a6c1",
+      "existsLocal": true,
+      "bytes": 416,
+      "sha256": "1668c147fe0fc692d6e40387d22dfa5c105722e5a1abb6434d5f9508e129a6c1",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "emiya_archer:0",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/emiya_archer.geo.json",
+      "recordedBytes": 7142,
+      "recordedSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "existsLocal": true,
+      "bytes": 7142,
+      "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "emiya_archer:1",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/emiya_archer.png",
+      "recordedBytes": 1603,
+      "recordedSha256": "ab103993cb5ee13244010225237261ec77b9a547d02c8497e03c637376f8eee5",
+      "existsLocal": true,
+      "bytes": 1603,
+      "sha256": "ab103993cb5ee13244010225237261ec77b9a547d02c8497e03c637376f8eee5",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "emiya_archer:2",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/emiya_archer.json",
+      "recordedBytes": null,
+      "recordedSha256": "19e807e7ba54a634fdbc6a84fa78c54332780df57655acab1b0991b21e8a417a",
+      "existsLocal": true,
+      "bytes": 47149,
+      "sha256": "19e807e7ba54a634fdbc6a84fa78c54332780df57655acab1b0991b21e8a417a",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "emiya_archer:3",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-emiya_archer/body.glb",
+      "recordedBytes": 27260,
+      "recordedSha256": "3073751777217a649cf58a5a58d13602b7227509c4ca870fdb139f6e9baa00ee",
+      "existsLocal": true,
+      "bytes": 27260,
+      "sha256": "3073751777217a649cf58a5a58d13602b7227509c4ca870fdb139f6e9baa00ee",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "emiya_archer:4",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-emiya_archer/conversion-report.json",
+      "recordedBytes": 2093,
+      "recordedSha256": "5a442fcf4462a27f9110d64baf1bd7dc127e06c257c0975393fa11f12e9cca58",
+      "existsLocal": true,
+      "bytes": 2093,
+      "sha256": "5a442fcf4462a27f9110d64baf1bd7dc127e06c257c0975393fa11f12e9cca58",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "emiya_archer:5",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-emiya_archer/structural-readback.json",
+      "recordedBytes": 1552,
+      "recordedSha256": "af6c4399300cc9dd348f4b75de344542fc9f6dde93921498cd6596026c411d90",
+      "existsLocal": true,
+      "bytes": 1552,
+      "sha256": "af6c4399300cc9dd348f4b75de344542fc9f6dde93921498cd6596026c411d90",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "emiya_archer:6",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-emiya_archer/contract-validation.json",
+      "recordedBytes": 3202,
+      "recordedSha256": "b94b8ae4c09f5da379d1390c431a1eaeb89115d8c0dbf4d6de7f44b322832973",
+      "existsLocal": true,
+      "bytes": 3202,
+      "sha256": "b94b8ae4c09f5da379d1390c431a1eaeb89115d8c0dbf4d6de7f44b322832973",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "emiya_archer:7",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-emiya_archer/animation-reserve.json",
+      "recordedBytes": 11144,
+      "recordedSha256": "6267a65dc667d030f728c73c87f96222cc8c2b51b5ff55f325ac97a7f653bb43",
+      "existsLocal": true,
+      "bytes": 11144,
+      "sha256": "6267a65dc667d030f728c73c87f96222cc8c2b51b5ff55f325ac97a7f653bb43",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "emiya_archer:8",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-emiya_archer/webgl-source-material-v1/proof.json",
+      "recordedBytes": 2174,
+      "recordedSha256": "2e80fa48035fe1e82c8b5534ca68694bddf1e4e50f88d5846d29b750b5479893",
+      "existsLocal": true,
+      "bytes": 2174,
+      "sha256": "2e80fa48035fe1e82c8b5534ca68694bddf1e4e50f88d5846d29b750b5479893",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "emiya_archer:9",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-emiya_archer/webgl-source-material-v1/run.json",
+      "recordedBytes": 354,
+      "recordedSha256": "e8b05fbca7b4130dac0c8cea85d29ececfdbf8cce22bd68b4ae0d95171c93e6c",
+      "existsLocal": true,
+      "bytes": 354,
+      "sha256": "e8b05fbca7b4130dac0c8cea85d29ececfdbf8cce22bd68b4ae0d95171c93e6c",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "emiya_archer:10",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-emiya_archer/body.glb",
+      "recordedBytes": 296000,
+      "recordedSha256": "0a696a71e8dbcd3848b0dfffebe36fffcd093442be81e6f8bc3261dba5380696",
+      "existsLocal": true,
+      "bytes": 296000,
+      "sha256": "0a696a71e8dbcd3848b0dfffebe36fffcd093442be81e6f8bc3261dba5380696",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "emiya_archer:11",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-emiya_archer/conversion-report.json",
+      "recordedBytes": 64134,
+      "recordedSha256": "4d2cf9b633358a78c04a9625c327bde8866d2531a7dc6dd5ba3a5061ec3d5e99",
+      "existsLocal": true,
+      "bytes": 64134,
+      "sha256": "4d2cf9b633358a78c04a9625c327bde8866d2531a7dc6dd5ba3a5061ec3d5e99",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "emiya_archer:12",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-emiya_archer/native-structural-readback.json",
+      "recordedBytes": 1629,
+      "recordedSha256": "a5f76bcb48c21d8ab0c0c69a4db2f3893abdadb8d717fb1cd303ce4caff4767e",
+      "existsLocal": true,
+      "bytes": 1629,
+      "sha256": "a5f76bcb48c21d8ab0c0c69a4db2f3893abdadb8d717fb1cd303ce4caff4767e",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "emiya_archer:13",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-emiya_archer/contract-validation.json",
+      "recordedBytes": 5189,
+      "recordedSha256": "5bad76f9a6b0c039c7ba0d67f8b6ff2e83544ac13cafecc7e9adbb148ef7be70",
+      "existsLocal": true,
+      "bytes": 5189,
+      "sha256": "5bad76f9a6b0c039c7ba0d67f8b6ff2e83544ac13cafecc7e9adbb148ef7be70",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilgamesh_archer:0",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/gilgamesh_archer.geo.json",
+      "recordedBytes": 7142,
+      "recordedSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "existsLocal": true,
+      "bytes": 7142,
+      "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilgamesh_archer:1",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/gilgamesh_archer.png",
+      "recordedBytes": 2548,
+      "recordedSha256": "ad7cab6566a0be14edcab82ec16b5a17dbfc04e38abb23ec7866bb0ca3a6627d",
+      "existsLocal": true,
+      "bytes": 2548,
+      "sha256": "ad7cab6566a0be14edcab82ec16b5a17dbfc04e38abb23ec7866bb0ca3a6627d",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilgamesh_archer:2",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/gilgamesh_archer.json",
+      "recordedBytes": null,
+      "recordedSha256": "76ccce2382e3766096ddf6d522b99f31b9d78cf0ca97441332cb32ba2c0ae4ec",
+      "existsLocal": true,
+      "bytes": 23184,
+      "sha256": "76ccce2382e3766096ddf6d522b99f31b9d78cf0ca97441332cb32ba2c0ae4ec",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilgamesh_archer:3",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-gilgamesh_archer/body.glb",
+      "recordedBytes": 28228,
+      "recordedSha256": "0607a865873ce6f34880759bad0f40984c2469e835e5cbc888abed69e39f68fa",
+      "existsLocal": true,
+      "bytes": 28228,
+      "sha256": "0607a865873ce6f34880759bad0f40984c2469e835e5cbc888abed69e39f68fa",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilgamesh_archer:4",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-gilgamesh_archer/conversion-report.json",
+      "recordedBytes": 2109,
+      "recordedSha256": "218e7c46df105d95a4d7b35dda11d0bef683240193707eddc8e355bb57cf60d6",
+      "existsLocal": true,
+      "bytes": 2109,
+      "sha256": "218e7c46df105d95a4d7b35dda11d0bef683240193707eddc8e355bb57cf60d6",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilgamesh_archer:5",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-gilgamesh_archer/structural-readback.json",
+      "recordedBytes": 1560,
+      "recordedSha256": "96b124b1732e606a01a0cf68f4330020d964c898aeb1716a3d6d281ee58cf7b3",
+      "existsLocal": true,
+      "bytes": 1560,
+      "sha256": "96b124b1732e606a01a0cf68f4330020d964c898aeb1716a3d6d281ee58cf7b3",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilgamesh_archer:6",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-gilgamesh_archer/contract-validation.json",
+      "recordedBytes": 3214,
+      "recordedSha256": "ccde5257cb64c574d2949ad85d2e1fada6e8e63243db74897b0a4694f6948a0e",
+      "existsLocal": true,
+      "bytes": 3214,
+      "sha256": "ccde5257cb64c574d2949ad85d2e1fada6e8e63243db74897b0a4694f6948a0e",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilgamesh_archer:7",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-gilgamesh_archer/animation-reserve.json",
+      "recordedBytes": 8640,
+      "recordedSha256": "bb01265afdd5071665b08684cf35e1392fde4555b0d6aba5f75f37dccf255096",
+      "existsLocal": true,
+      "bytes": 8640,
+      "sha256": "bb01265afdd5071665b08684cf35e1392fde4555b0d6aba5f75f37dccf255096",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilgamesh_archer:8",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-gilgamesh_archer/webgl-source-material-v1/proof.json",
+      "recordedBytes": 2190,
+      "recordedSha256": "77762df28e5c7e8dcc466ff1dd111e21224046491944f0995c4a77b07f054d11",
+      "existsLocal": true,
+      "bytes": 2190,
+      "sha256": "77762df28e5c7e8dcc466ff1dd111e21224046491944f0995c4a77b07f054d11",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilgamesh_archer:9",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-gilgamesh_archer/webgl-source-material-v1/run.json",
+      "recordedBytes": 358,
+      "recordedSha256": "f26c27d3c4389796eadea1320df68e2cd8b1ca810e5edb8869af1a9a1c8168c8",
+      "existsLocal": true,
+      "bytes": 358,
+      "sha256": "f26c27d3c4389796eadea1320df68e2cd8b1ca810e5edb8869af1a9a1c8168c8",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilgamesh_archer:10",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/body.glb",
+      "recordedBytes": 208968,
+      "recordedSha256": "459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a",
+      "existsLocal": true,
+      "bytes": 208968,
+      "sha256": "459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilgamesh_archer:11",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/conversion-report.json",
+      "recordedBytes": 48538,
+      "recordedSha256": "bd534cde49b44f6a6e80e16afdf5bfa25756f4867d686a748755abb4b8212f28",
+      "existsLocal": true,
+      "bytes": 48538,
+      "sha256": "bd534cde49b44f6a6e80e16afdf5bfa25756f4867d686a748755abb4b8212f28",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilgamesh_archer:12",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/native-structural-readback.json",
+      "recordedBytes": 1636,
+      "recordedSha256": "0c0ef88bccda138360def0af865fd1d6945f5f2cf1aa65f6d5531b4b7e915636",
+      "existsLocal": true,
+      "bytes": 1636,
+      "sha256": "0c0ef88bccda138360def0af865fd1d6945f5f2cf1aa65f6d5531b4b7e915636",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilgamesh_archer:13",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/contract-validation.json",
+      "recordedBytes": 4870,
+      "recordedSha256": "8fa427e5fcc35e94d989b17da013c2eef39f0c88ce4f94a7bdbdd74ef0452c9d",
+      "existsLocal": true,
+      "bytes": 4870,
+      "sha256": "8fa427e5fcc35e94d989b17da013c2eef39f0c88ce4f94a7bdbdd74ef0452c9d",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilgamesh_archer:14",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/webgl-completion-v2/proof.json",
+      "recordedBytes": null,
+      "recordedSha256": "ae5b9fe8fa1f43b0ff779a6bcd0b05c5b66e8e7e518b401c3d84781b37cdd38b",
+      "existsLocal": true,
+      "bytes": 3200,
+      "sha256": "ae5b9fe8fa1f43b0ff779a6bcd0b05c5b66e8e7e518b401c3d84781b37cdd38b",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilgamesh_archer:15",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilgamesh_archer/webgl-completion-v2/run.json",
+      "recordedBytes": null,
+      "recordedSha256": "4395ee2b75ad930cbb1f824465cae36b4dcc5faa3924528ca0505c18ec41b48b",
+      "existsLocal": true,
+      "bytes": 396,
+      "sha256": "4395ee2b75ad930cbb1f824465cae36b4dcc5faa3924528ca0505c18ec41b48b",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilles_de_rais_caster:0",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/gilles_de_rais_caster.geo.json",
+      "recordedBytes": 7142,
+      "recordedSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "existsLocal": true,
+      "bytes": 7142,
+      "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilles_de_rais_caster:1",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/gilles_de_rais_caster.png",
+      "recordedBytes": 1380,
+      "recordedSha256": "dcabad0ba7d2dcbbd7dd39e11ff4f93b84a9cdb1e232558968fcc4b4432cf9b0",
+      "existsLocal": true,
+      "bytes": 1380,
+      "sha256": "dcabad0ba7d2dcbbd7dd39e11ff4f93b84a9cdb1e232558968fcc4b4432cf9b0",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilles_de_rais_caster:2",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/gilles_de_rais_caster.json",
+      "recordedBytes": null,
+      "recordedSha256": "3e61c98f483acfbf2965bf8378f7eca9e5ae6bc525e6b79b17f29b6c6e1ef97a",
+      "existsLocal": true,
+      "bytes": 3602,
+      "sha256": "3e61c98f483acfbf2965bf8378f7eca9e5ae6bc525e6b79b17f29b6c6e1ef97a",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilles_de_rais_caster:3",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-gilles_de_rais_caster/body.glb",
+      "recordedBytes": 27092,
+      "recordedSha256": "75e208d90b035e367f6155da590acbb0e8c673c847bdb4f8fec6911dfa489195",
+      "existsLocal": true,
+      "bytes": 27092,
+      "sha256": "75e208d90b035e367f6155da590acbb0e8c673c847bdb4f8fec6911dfa489195",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilles_de_rais_caster:4",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-gilles_de_rais_caster/conversion-report.json",
+      "recordedBytes": 2129,
+      "recordedSha256": "26f779dcc0df2da6dc120cb77a669a650e6ec6c150efb0a71d14992483a70688",
+      "existsLocal": true,
+      "bytes": 2129,
+      "sha256": "26f779dcc0df2da6dc120cb77a669a650e6ec6c150efb0a71d14992483a70688",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilles_de_rais_caster:5",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-gilles_de_rais_caster/structural-readback.json",
+      "recordedBytes": 1570,
+      "recordedSha256": "db08f0f395850178cf70fa27b5013fcc7c89efc87f2747b2bc1daa02d0afddd1",
+      "existsLocal": true,
+      "bytes": 1570,
+      "sha256": "db08f0f395850178cf70fa27b5013fcc7c89efc87f2747b2bc1daa02d0afddd1",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilles_de_rais_caster:6",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-gilles_de_rais_caster/contract-validation.json",
+      "recordedBytes": 3229,
+      "recordedSha256": "78197daa4f1518611357cdeb30ec2cff20fc6f76bb78c05e7a203094284b2541",
+      "existsLocal": true,
+      "bytes": 3229,
+      "sha256": "78197daa4f1518611357cdeb30ec2cff20fc6f76bb78c05e7a203094284b2541",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilles_de_rais_caster:7",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-gilles_de_rais_caster/animation-reserve.json",
+      "recordedBytes": 3236,
+      "recordedSha256": "464ba136b2676b2000b316f3bc4b9a161a7b51f709f5631ab73bdb88c3bef95c",
+      "existsLocal": true,
+      "bytes": 3236,
+      "sha256": "464ba136b2676b2000b316f3bc4b9a161a7b51f709f5631ab73bdb88c3bef95c",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilles_de_rais_caster:8",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-gilles_de_rais_caster/webgl-source-material-v1/proof.json",
+      "recordedBytes": 2210,
+      "recordedSha256": "32fe791b1079c562d7a6e5aa81f0254dfbddc154dbdaacf187e3d93509d392c7",
+      "existsLocal": true,
+      "bytes": 2210,
+      "sha256": "32fe791b1079c562d7a6e5aa81f0254dfbddc154dbdaacf187e3d93509d392c7",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilles_de_rais_caster:9",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-gilles_de_rais_caster/webgl-source-material-v1/run.json",
+      "recordedBytes": 363,
+      "recordedSha256": "ff990e49767269cbfb81a5d4e81279c758fc8e94a5ba65565fd399eb0f99d65b",
+      "existsLocal": true,
+      "bytes": 363,
+      "sha256": "ff990e49767269cbfb81a5d4e81279c758fc8e94a5ba65565fd399eb0f99d65b",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilles_de_rais_caster:10",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilles_de_rais_caster/body.glb",
+      "recordedBytes": 73280,
+      "recordedSha256": "8d960ff2a55db7de8b570dfcf4f8e8732310a3eecea203a3e9025df27f469933",
+      "existsLocal": true,
+      "bytes": 73280,
+      "sha256": "8d960ff2a55db7de8b570dfcf4f8e8732310a3eecea203a3e9025df27f469933",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilles_de_rais_caster:11",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilles_de_rais_caster/conversion-report.json",
+      "recordedBytes": 11795,
+      "recordedSha256": "86c30f42b3a3a5532742ba2fd8375cb206d3d57bbbe65372c7b5122202e156ab",
+      "existsLocal": true,
+      "bytes": 11795,
+      "sha256": "86c30f42b3a3a5532742ba2fd8375cb206d3d57bbbe65372c7b5122202e156ab",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilles_de_rais_caster:12",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilles_de_rais_caster/native-structural-readback.json",
+      "recordedBytes": 1645,
+      "recordedSha256": "5af61a462ecb5c246baff9aa736c256539f7a9f493a357dde392ef55ded3ffaa",
+      "existsLocal": true,
+      "bytes": 1645,
+      "sha256": "5af61a462ecb5c246baff9aa736c256539f7a9f493a357dde392ef55ded3ffaa",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "gilles_de_rais_caster:13",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-gilles_de_rais_caster/contract-validation.json",
+      "recordedBytes": 4303,
+      "recordedSha256": "eaa16116a11ecb4b2bd9b38ce356760a6ca056dab7b69534319a2983080ffa88",
+      "existsLocal": true,
+      "bytes": 4303,
+      "sha256": "eaa16116a11ecb4b2bd9b38ce356760a6ca056dab7b69534319a2983080ffa88",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "hassan-i-sabbah_assassin:0",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/hassan-i-sabbah_assassin.geo.json",
+      "recordedBytes": 7142,
+      "recordedSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "existsLocal": true,
+      "bytes": 7142,
+      "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "hassan-i-sabbah_assassin:1",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/hassan-i-sabbah_assassin.png",
+      "recordedBytes": 1357,
+      "recordedSha256": "b9d39638863a3faaae4137922016a4ea2a529afb22ad2fd610dd95fa76426214",
+      "existsLocal": true,
+      "bytes": 1357,
+      "sha256": "b9d39638863a3faaae4137922016a4ea2a529afb22ad2fd610dd95fa76426214",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "hassan-i-sabbah_assassin:2",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/hassan-i-sabbah_assassin.json",
+      "recordedBytes": null,
+      "recordedSha256": "f0bcc4330eb9481bef4e6fc163f54aeaa339451c3f43adda311860b19d25a0a5",
+      "existsLocal": true,
+      "bytes": 23919,
+      "sha256": "f0bcc4330eb9481bef4e6fc163f54aeaa339451c3f43adda311860b19d25a0a5",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "hassan-i-sabbah_assassin:3",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-hassan-i-sabbah_assassin/body.glb",
+      "recordedBytes": 27088,
+      "recordedSha256": "f0d64e120a48e723300e2b8a250a1402e7695c218b856613da763d31e78d1bbe",
+      "existsLocal": true,
+      "bytes": 27088,
+      "sha256": "f0d64e120a48e723300e2b8a250a1402e7695c218b856613da763d31e78d1bbe",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "hassan-i-sabbah_assassin:4",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-hassan-i-sabbah_assassin/conversion-report.json",
+      "recordedBytes": 2141,
+      "recordedSha256": "78a2b4791af73d82b82052bca5294dee64b765f510d07172bc079d511874853a",
+      "existsLocal": true,
+      "bytes": 2141,
+      "sha256": "78a2b4791af73d82b82052bca5294dee64b765f510d07172bc079d511874853a",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "hassan-i-sabbah_assassin:5",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-hassan-i-sabbah_assassin/structural-readback.json",
+      "recordedBytes": 1576,
+      "recordedSha256": "7a35b84c1314777ad7ee895a345b81dc18cdf53f6eabd8807aab784cb9f6650f",
+      "existsLocal": true,
+      "bytes": 1576,
+      "sha256": "7a35b84c1314777ad7ee895a345b81dc18cdf53f6eabd8807aab784cb9f6650f",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "hassan-i-sabbah_assassin:6",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-hassan-i-sabbah_assassin/contract-validation.json",
+      "recordedBytes": 3238,
+      "recordedSha256": "e8d8a61ed81f2db11def1fc82eb97268f58b3ea43dae26602a506a2e5379637f",
+      "existsLocal": true,
+      "bytes": 3238,
+      "sha256": "e8d8a61ed81f2db11def1fc82eb97268f58b3ea43dae26602a506a2e5379637f",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "hassan-i-sabbah_assassin:7",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-hassan-i-sabbah_assassin/animation-reserve.json",
+      "recordedBytes": 7464,
+      "recordedSha256": "34bd12635636d66730278aaabad27887bec6f903c13a58f9b4fac9564507bb6d",
+      "existsLocal": true,
+      "bytes": 7464,
+      "sha256": "34bd12635636d66730278aaabad27887bec6f903c13a58f9b4fac9564507bb6d",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "hassan-i-sabbah_assassin:8",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-hassan-i-sabbah_assassin/webgl-source-material-v1/proof.json",
+      "recordedBytes": 2222,
+      "recordedSha256": "b2d130627f6aca963b943bfd76a652f706eef3b7e4119d4409e5ac481c9bc7ca",
+      "existsLocal": true,
+      "bytes": 2222,
+      "sha256": "b2d130627f6aca963b943bfd76a652f706eef3b7e4119d4409e5ac481c9bc7ca",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "hassan-i-sabbah_assassin:9",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-hassan-i-sabbah_assassin/webgl-source-material-v1/run.json",
+      "recordedBytes": 366,
+      "recordedSha256": "e0867bdb7dc2788485bde66beec30ffcd6435b0d693841b07220705e78b0a236",
+      "existsLocal": true,
+      "bytes": 366,
+      "sha256": "e0867bdb7dc2788485bde66beec30ffcd6435b0d693841b07220705e78b0a236",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "hassan-i-sabbah_assassin:10",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-hassan-i-sabbah_assassin/body.glb",
+      "recordedBytes": 158296,
+      "recordedSha256": "e85bcecf1b6765e2b25fe778ef8d831a9c83fd07014eba018531fdae7bf6e2b3",
+      "existsLocal": true,
+      "bytes": 158296,
+      "sha256": "e85bcecf1b6765e2b25fe778ef8d831a9c83fd07014eba018531fdae7bf6e2b3",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "hassan-i-sabbah_assassin:11",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-hassan-i-sabbah_assassin/conversion-report.json",
+      "recordedBytes": 39415,
+      "recordedSha256": "19c64027ed0248edb0f6e92a09c53100af34903d81e4752aefc80b19086d00c4",
+      "existsLocal": true,
+      "bytes": 39415,
+      "sha256": "19c64027ed0248edb0f6e92a09c53100af34903d81e4752aefc80b19086d00c4",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "hassan-i-sabbah_assassin:12",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-hassan-i-sabbah_assassin/native-structural-readback.json",
+      "recordedBytes": 1652,
+      "recordedSha256": "9f9eb94073e4c9986d2972f5eba9e54a86a8977d91d060858fecf8c95376796e",
+      "existsLocal": true,
+      "bytes": 1652,
+      "sha256": "9f9eb94073e4c9986d2972f5eba9e54a86a8977d91d060858fecf8c95376796e",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "hassan-i-sabbah_assassin:13",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-hassan-i-sabbah_assassin/contract-validation.json",
+      "recordedBytes": 4818,
+      "recordedSha256": "5f69f515da127dbc1edaff3a7551029f351a2dc1cb66f95ff9eb86f8345c2281",
+      "existsLocal": true,
+      "bytes": 4818,
+      "sha256": "5f69f515da127dbc1edaff3a7551029f351a2dc1cb66f95ff9eb86f8345c2281",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "heracles_berserker:0",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/heracles_berserker.geo.json",
+      "recordedBytes": 11274,
+      "recordedSha256": "587028d53b1ff3ef5acf1ae9bbd0b0c4f51b7500c2e37c73d233bb5a66b556a7",
+      "existsLocal": true,
+      "bytes": 11274,
+      "sha256": "587028d53b1ff3ef5acf1ae9bbd0b0c4f51b7500c2e37c73d233bb5a66b556a7",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "heracles_berserker:1",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/heracles_berserker.png",
+      "recordedBytes": 2657,
+      "recordedSha256": "134dd128b9432a260ec5aa12d37edee5f65a9d203d6f1abc4406e9ee26fdb94e",
+      "existsLocal": true,
+      "bytes": 2657,
+      "sha256": "134dd128b9432a260ec5aa12d37edee5f65a9d203d6f1abc4406e9ee26fdb94e",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "heracles_berserker:2",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/heracles_berserker.json",
+      "recordedBytes": null,
+      "recordedSha256": "e190324ff83cfb006664a1ecd6234c8e6f97e9e4ad4f6d2f943174bc9a11ee24",
+      "existsLocal": true,
+      "bytes": 68664,
+      "sha256": "e190324ff83cfb006664a1ecd6234c8e6f97e9e4ad4f6d2f943174bc9a11ee24",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "heracles_berserker:3",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/body.glb",
+      "recordedBytes": 38480,
+      "recordedSha256": "0755d7952a8d5def6699b99783419877bc7d95a4eb13df8d090126d6408cbcc7",
+      "existsLocal": true,
+      "bytes": 38480,
+      "sha256": "0755d7952a8d5def6699b99783419877bc7d95a4eb13df8d090126d6408cbcc7",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "heracles_berserker:4",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/conversion-report.json",
+      "recordedBytes": 2156,
+      "recordedSha256": "c08da141410628b030fcafb0396a6fa4bfd4483a3b0db72d3d16e2abb676a549",
+      "existsLocal": true,
+      "bytes": 2156,
+      "sha256": "c08da141410628b030fcafb0396a6fa4bfd4483a3b0db72d3d16e2abb676a549",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "heracles_berserker:5",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/structural-readback.json",
+      "recordedBytes": 1591,
+      "recordedSha256": "0d2e437492175326ecf4f146dbef1b2f6d184f952c8dcb085850f28ac49b0cfc",
+      "existsLocal": true,
+      "bytes": 1591,
+      "sha256": "0d2e437492175326ecf4f146dbef1b2f6d184f952c8dcb085850f28ac49b0cfc",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "heracles_berserker:6",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/contract-validation.json",
+      "recordedBytes": 3220,
+      "recordedSha256": "6a477616fc9a210bc230ab71cd76d5c63854dae93da8bd8dcaa6453e7282682c",
+      "existsLocal": true,
+      "bytes": 3220,
+      "sha256": "6a477616fc9a210bc230ab71cd76d5c63854dae93da8bd8dcaa6453e7282682c",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "heracles_berserker:7",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/animation-reserve.json",
+      "recordedBytes": 17487,
+      "recordedSha256": "7a998efce05d6e107c5feb4aab1ebe8c02274f2f5521b65b232796186614209f",
+      "existsLocal": true,
+      "bytes": 17487,
+      "sha256": "7a998efce05d6e107c5feb4aab1ebe8c02274f2f5521b65b232796186614209f",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "heracles_berserker:8",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/webgl-source-material-v1/proof.json",
+      "recordedBytes": 2235,
+      "recordedSha256": "12a068b07c4e1cf73061a3a9783863b9ef76fd5e475a629dfebcc66463a06a8e",
+      "existsLocal": true,
+      "bytes": 2235,
+      "sha256": "12a068b07c4e1cf73061a3a9783863b9ef76fd5e475a629dfebcc66463a06a8e",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "heracles_berserker:9",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-heracles-static-mesh-v1/fateubw-heracles_berserker/webgl-source-material-v1/run.json",
+      "recordedBytes": 360,
+      "recordedSha256": "a75f95d63451a10398f9b98d4f0e4a80fc704dfd0454ff22ba5e9f88f1750585",
+      "existsLocal": true,
+      "bytes": 360,
+      "sha256": "a75f95d63451a10398f9b98d4f0e4a80fc704dfd0454ff22ba5e9f88f1750585",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "heracles_berserker:10",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/body.glb",
+      "recordedBytes": 500056,
+      "recordedSha256": "1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b",
+      "existsLocal": true,
+      "bytes": 500056,
+      "sha256": "1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "heracles_berserker:11",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/conversion-report.json",
+      "recordedBytes": 95655,
+      "recordedSha256": "6d236b18edfe54ba8e19c9f05685fabd87b1e2fa8c029abfd400dd8759bbd4f0",
+      "existsLocal": true,
+      "bytes": 95655,
+      "sha256": "6d236b18edfe54ba8e19c9f05685fabd87b1e2fa8c029abfd400dd8759bbd4f0",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "heracles_berserker:12",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/native-structural-readback.json",
+      "recordedBytes": 1649,
+      "recordedSha256": "c53c38cdf858813ea4c0dcaeae7a6c9fbcd4d409415b4d272b6980ab653dca30",
+      "existsLocal": true,
+      "bytes": 1649,
+      "sha256": "c53c38cdf858813ea4c0dcaeae7a6c9fbcd4d409415b4d272b6980ab653dca30",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "heracles_berserker:13",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/contract-validation.json",
+      "recordedBytes": 5853,
+      "recordedSha256": "95c62240dd609449ec9315eaaf920843376b05b5810fc585d7810757e2093b96",
+      "existsLocal": true,
+      "bytes": 5853,
+      "sha256": "95c62240dd609449ec9315eaaf920843376b05b5810fc585d7810757e2093b96",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "heracles_berserker:14",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/webgl-completion-v2/proof.json",
+      "recordedBytes": null,
+      "recordedSha256": "7b90f8b368c016c7c05f57cca9bc6bc98dd9d489cba393b3f43f7bf1233ae07b",
+      "existsLocal": true,
+      "bytes": 5976,
+      "sha256": "7b90f8b368c016c7c05f57cca9bc6bc98dd9d489cba393b3f43f7bf1233ae07b",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "heracles_berserker:15",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-heracles_berserker/webgl-completion-v2/run.json",
+      "recordedBytes": null,
+      "recordedSha256": "ad124167530c892d80c3eac589fdc162f92650b5e5aafc7ae401f981a04ce9ca",
+      "existsLocal": true,
+      "bytes": 416,
+      "sha256": "ad124167530c892d80c3eac589fdc162f92650b5e5aafc7ae401f981a04ce9ca",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "iskander_rider:0",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/iskander_rider.geo.json",
+      "recordedBytes": 7142,
+      "recordedSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "existsLocal": true,
+      "bytes": 7142,
+      "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "iskander_rider:1",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/iskander_rider.png",
+      "recordedBytes": 1588,
+      "recordedSha256": "43260383c6ce3ffece15e23a0730728f5bec419a187e1e9e8b019ee0ab4d9b90",
+      "existsLocal": true,
+      "bytes": 1588,
+      "sha256": "43260383c6ce3ffece15e23a0730728f5bec419a187e1e9e8b019ee0ab4d9b90",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "iskander_rider:2",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/iskander_rider.json",
+      "recordedBytes": null,
+      "recordedSha256": "9262f9510ff21a0e2d7a55e11b6243f717c93fe808b90667e0b6d1d4ed7c1933",
+      "existsLocal": true,
+      "bytes": 27878,
+      "sha256": "9262f9510ff21a0e2d7a55e11b6243f717c93fe808b90667e0b6d1d4ed7c1933",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "iskander_rider:3",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-iskander_rider/body.glb",
+      "recordedBytes": 27256,
+      "recordedSha256": "a56731b1caa431ee7962b1abe535ceaff017fe8a55426f938a53c07f9a67a34c",
+      "existsLocal": true,
+      "bytes": 27256,
+      "sha256": "a56731b1caa431ee7962b1abe535ceaff017fe8a55426f938a53c07f9a67a34c",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "iskander_rider:4",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-iskander_rider/conversion-report.json",
+      "recordedBytes": 2101,
+      "recordedSha256": "f3dfd7b2e4069a024ccb9df5588b90718c0907250e230a3abe4c63d9731aef6b",
+      "existsLocal": true,
+      "bytes": 2101,
+      "sha256": "f3dfd7b2e4069a024ccb9df5588b90718c0907250e230a3abe4c63d9731aef6b",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "iskander_rider:5",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-iskander_rider/structural-readback.json",
+      "recordedBytes": 1556,
+      "recordedSha256": "4ffa51c2a107fd3e09df81e01a6ff7844fea8001d0fb067535c509d236f22518",
+      "existsLocal": true,
+      "bytes": 1556,
+      "sha256": "4ffa51c2a107fd3e09df81e01a6ff7844fea8001d0fb067535c509d236f22518",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "iskander_rider:6",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-iskander_rider/contract-validation.json",
+      "recordedBytes": 3208,
+      "recordedSha256": "8431069f0366abbdac7aae2f481f3e9eb045d5c801476657f8445a6fa180566f",
+      "existsLocal": true,
+      "bytes": 3208,
+      "sha256": "8431069f0366abbdac7aae2f481f3e9eb045d5c801476657f8445a6fa180566f",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "iskander_rider:7",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-iskander_rider/animation-reserve.json",
+      "recordedBytes": 8886,
+      "recordedSha256": "649f58dc88e70ae66ca05f8a0e7b6d5ff5ed212299630051600a3d2b36aff6c1",
+      "existsLocal": true,
+      "bytes": 8886,
+      "sha256": "649f58dc88e70ae66ca05f8a0e7b6d5ff5ed212299630051600a3d2b36aff6c1",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "iskander_rider:8",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-iskander_rider/webgl-source-material-v1/proof.json",
+      "recordedBytes": 2182,
+      "recordedSha256": "b9b20ed0f674246b3ad81a25bbaf30763d97caa1fa376be4ae456780a31f903a",
+      "existsLocal": true,
+      "bytes": 2182,
+      "sha256": "b9b20ed0f674246b3ad81a25bbaf30763d97caa1fa376be4ae456780a31f903a",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "iskander_rider:9",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-iskander_rider/webgl-source-material-v1/run.json",
+      "recordedBytes": 356,
+      "recordedSha256": "5eb923f1d5592129f77ff61f612544b2914d019e270c4473a3b3be6cf7858753",
+      "existsLocal": true,
+      "bytes": 356,
+      "sha256": "5eb923f1d5592129f77ff61f612544b2914d019e270c4473a3b3be6cf7858753",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "iskander_rider:10",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/body.glb",
+      "recordedBytes": 199136,
+      "recordedSha256": "5db4fb8a6202bb8af7334025d180a22c610927c3eb531385558d83eb3f853bd3",
+      "existsLocal": true,
+      "bytes": 199136,
+      "sha256": "5db4fb8a6202bb8af7334025d180a22c610927c3eb531385558d83eb3f853bd3",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "iskander_rider:11",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/conversion-report.json",
+      "recordedBytes": 48913,
+      "recordedSha256": "79ec5535c0e394b7e5597f80a6edd053ab1ced6906ad627190c22a7851b4eb5a",
+      "existsLocal": true,
+      "bytes": 48913,
+      "sha256": "79ec5535c0e394b7e5597f80a6edd053ab1ced6906ad627190c22a7851b4eb5a",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "iskander_rider:12",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/native-structural-readback.json",
+      "recordedBytes": 1632,
+      "recordedSha256": "52bd573f52ce55799cbd547c9f714a8c4a8218dac6f52751bb7e61010ce41c18",
+      "existsLocal": true,
+      "bytes": 1632,
+      "sha256": "52bd573f52ce55799cbd547c9f714a8c4a8218dac6f52751bb7e61010ce41c18",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "iskander_rider:13",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/contract-validation.json",
+      "recordedBytes": 4921,
+      "recordedSha256": "3179265b4827a95c1d448b1e0f1eb96a5d46c6b453f1632c7b3845454c7667b5",
+      "existsLocal": true,
+      "bytes": 4921,
+      "sha256": "3179265b4827a95c1d448b1e0f1eb96a5d46c6b453f1632c7b3845454c7667b5",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "iskander_rider:14",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/webgl-completion-v2/proof.json",
+      "recordedBytes": null,
+      "recordedSha256": "b829251c99c093d662bbbbec3ecd3b702996cd5b9132b593330e41a7bdbbe239",
+      "existsLocal": true,
+      "bytes": 3083,
+      "sha256": "b829251c99c093d662bbbbec3ecd3b702996cd5b9132b593330e41a7bdbbe239",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "iskander_rider:15",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-iskander_rider/webgl-completion-v2/run.json",
+      "recordedBytes": null,
+      "recordedSha256": "749c68bcf58d6af7eb721a36aed84a96f4f575a6cf62a268d03c35bceebcd77a",
+      "existsLocal": true,
+      "bytes": 398,
+      "sha256": "749c68bcf58d6af7eb721a36aed84a96f4f575a6cf62a268d03c35bceebcd77a",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "lancelot_berserker:0",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/lancelot_berserker.geo.json",
+      "recordedBytes": 7142,
+      "recordedSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "existsLocal": true,
+      "bytes": 7142,
+      "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "lancelot_berserker:1",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/lancelot_berserker.png",
+      "recordedBytes": 2048,
+      "recordedSha256": "534973424b616146d6e5a188c77d1dfd2519cdc5b058c27d84b3ad1969869dd8",
+      "existsLocal": true,
+      "bytes": 2048,
+      "sha256": "534973424b616146d6e5a188c77d1dfd2519cdc5b058c27d84b3ad1969869dd8",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "lancelot_berserker:2",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/lancelot_berserker.json",
+      "recordedBytes": null,
+      "recordedSha256": "9f92bdaeded9f0d77b7c95917de67158c88cc596a111a5ba2e11772b322226d3",
+      "existsLocal": true,
+      "bytes": 45855,
+      "sha256": "9f92bdaeded9f0d77b7c95917de67158c88cc596a111a5ba2e11772b322226d3",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "lancelot_berserker:3",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-lancelot_berserker/body.glb",
+      "recordedBytes": 27740,
+      "recordedSha256": "bff9ee319e751304e8236f280556c44bfdc092a5197569dd7368684430f2871f",
+      "existsLocal": true,
+      "bytes": 27740,
+      "sha256": "bff9ee319e751304e8236f280556c44bfdc092a5197569dd7368684430f2871f",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "lancelot_berserker:4",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-lancelot_berserker/conversion-report.json",
+      "recordedBytes": 2117,
+      "recordedSha256": "aa22e5922b02ea9cabe23cdc18bd352746fa572191b068fdbdbe55907c70248e",
+      "existsLocal": true,
+      "bytes": 2117,
+      "sha256": "aa22e5922b02ea9cabe23cdc18bd352746fa572191b068fdbdbe55907c70248e",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "lancelot_berserker:5",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-lancelot_berserker/structural-readback.json",
+      "recordedBytes": 1564,
+      "recordedSha256": "9d424ed1696d92517a3cdead98ff54a03e68560b17a6b018de077c34c16be3eb",
+      "existsLocal": true,
+      "bytes": 1564,
+      "sha256": "9d424ed1696d92517a3cdead98ff54a03e68560b17a6b018de077c34c16be3eb",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "lancelot_berserker:6",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-lancelot_berserker/contract-validation.json",
+      "recordedBytes": 3220,
+      "recordedSha256": "07bb1eae9518d41ac3e37af2f320742367f7cefd4e3888d3b98311f770507507",
+      "existsLocal": true,
+      "bytes": 3220,
+      "sha256": "07bb1eae9518d41ac3e37af2f320742367f7cefd4e3888d3b98311f770507507",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "lancelot_berserker:7",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-lancelot_berserker/animation-reserve.json",
+      "recordedBytes": 12365,
+      "recordedSha256": "df2947cce6bd332624d63388d8f5231f9e7bed937033f0e8224372574dcda1f9",
+      "existsLocal": true,
+      "bytes": 12365,
+      "sha256": "df2947cce6bd332624d63388d8f5231f9e7bed937033f0e8224372574dcda1f9",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "lancelot_berserker:8",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-lancelot_berserker/webgl-source-material-v1/proof.json",
+      "recordedBytes": 2198,
+      "recordedSha256": "0f3837cbcd06d15b6f9330570f8eefac13e0cfd5f32888884780a76b53f95aca",
+      "existsLocal": true,
+      "bytes": 2198,
+      "sha256": "0f3837cbcd06d15b6f9330570f8eefac13e0cfd5f32888884780a76b53f95aca",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "lancelot_berserker:9",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-lancelot_berserker/webgl-source-material-v1/run.json",
+      "recordedBytes": 360,
+      "recordedSha256": "b398c9a631ca8f12b5b69dd664a3e34aa42359dfe194350d0b0278d153ac14b8",
+      "existsLocal": true,
+      "bytes": 360,
+      "sha256": "b398c9a631ca8f12b5b69dd664a3e34aa42359dfe194350d0b0278d153ac14b8",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "lancelot_berserker:10",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/body.glb",
+      "recordedBytes": 340508,
+      "recordedSha256": "1ca1d4e3305431ddbae3d9cc23d1f4c8bfeccfd82fb3ab5d4d61795e2aeca838",
+      "existsLocal": true,
+      "bytes": 340508,
+      "sha256": "1ca1d4e3305431ddbae3d9cc23d1f4c8bfeccfd82fb3ab5d4d61795e2aeca838",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "lancelot_berserker:11",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/conversion-report.json",
+      "recordedBytes": 72459,
+      "recordedSha256": "04b3d64fcd9a942061419f9633d007872bbf6272769a8c6d1ec42971f1070716",
+      "existsLocal": true,
+      "bytes": 72459,
+      "sha256": "04b3d64fcd9a942061419f9633d007872bbf6272769a8c6d1ec42971f1070716",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "lancelot_berserker:12",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/native-structural-readback.json",
+      "recordedBytes": 1641,
+      "recordedSha256": "9fe7a2e7d34d6d684122c5602835de0f3f5ea25eae4c7ce6601e0b61e565f1ce",
+      "existsLocal": true,
+      "bytes": 1641,
+      "sha256": "9fe7a2e7d34d6d684122c5602835de0f3f5ea25eae4c7ce6601e0b61e565f1ce",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "lancelot_berserker:13",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/contract-validation.json",
+      "recordedBytes": 5406,
+      "recordedSha256": "d1938286c71ca63f6675c8fc088dbb8eb4fc48acb3a4847447506292439f21a4",
+      "existsLocal": true,
+      "bytes": 5406,
+      "sha256": "d1938286c71ca63f6675c8fc088dbb8eb4fc48acb3a4847447506292439f21a4",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "lancelot_berserker:14",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/webgl-completion-v2/proof.json",
+      "recordedBytes": null,
+      "recordedSha256": "8dfdf657438da85f015e55c1037d446a51108c42f02fe25cf1441a2cc59a8472",
+      "existsLocal": true,
+      "bytes": 5763,
+      "sha256": "8dfdf657438da85f015e55c1037d446a51108c42f02fe25cf1441a2cc59a8472",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "lancelot_berserker:15",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-lancelot_berserker/webgl-completion-v2/run.json",
+      "recordedBytes": null,
+      "recordedSha256": "afbb9a8a655ccca1d82ac2790ddaa7561019cc825cc148ae05d1264227859a3c",
+      "existsLocal": true,
+      "bytes": 413,
+      "sha256": "afbb9a8a655ccca1d82ac2790ddaa7561019cc825cc148ae05d1264227859a3c",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medea_caster:0",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/medea_caster.geo.json",
+      "recordedBytes": 9189,
+      "recordedSha256": "e6b5ff01d97bed4d05448a5022e64107f6c9eb99f0d24285f6f0a8e0b6625efd",
+      "existsLocal": true,
+      "bytes": 9189,
+      "sha256": "e6b5ff01d97bed4d05448a5022e64107f6c9eb99f0d24285f6f0a8e0b6625efd",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medea_caster:1",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/medea_caster.png",
+      "recordedBytes": 2892,
+      "recordedSha256": "2a7fec4db75a7fc42d4e8c2775ad115de23dc674779fabe6d27219cbebbb1ceb",
+      "existsLocal": true,
+      "bytes": 2892,
+      "sha256": "2a7fec4db75a7fc42d4e8c2775ad115de23dc674779fabe6d27219cbebbb1ceb",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medea_caster:2",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/medea_caster.json",
+      "recordedBytes": null,
+      "recordedSha256": "f6b82558f0024f31fd6ade38ba89c8d8424d8bc06f4a2f880f5503f1a8df4b26",
+      "existsLocal": true,
+      "bytes": 18186,
+      "sha256": "f6b82558f0024f31fd6ade38ba89c8d8424d8bc06f4a2f880f5503f1a8df4b26",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medea_caster:3",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-medea_caster/body.glb",
+      "recordedBytes": 36952,
+      "recordedSha256": "71bc5263fb6c32509af35430a848b752c7cda0959672002f67a8eaa83fdc63ca",
+      "existsLocal": true,
+      "bytes": 36952,
+      "sha256": "71bc5263fb6c32509af35430a848b752c7cda0959672002f67a8eaa83fdc63ca",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medea_caster:4",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-medea_caster/conversion-report.json",
+      "recordedBytes": 2093,
+      "recordedSha256": "e8960fa54b39e78f1e27bd784300aa0343b180fc185346a0af7c5c2b3293f6c8",
+      "existsLocal": true,
+      "bytes": 2093,
+      "sha256": "e8960fa54b39e78f1e27bd784300aa0343b180fc185346a0af7c5c2b3293f6c8",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medea_caster:5",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-medea_caster/structural-readback.json",
+      "recordedBytes": 1552,
+      "recordedSha256": "21ef516a3a7d4e9381572b3df151fc58ff5be00f8942a381b71447b1589dd437",
+      "existsLocal": true,
+      "bytes": 1552,
+      "sha256": "21ef516a3a7d4e9381572b3df151fc58ff5be00f8942a381b71447b1589dd437",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medea_caster:6",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-medea_caster/contract-validation.json",
+      "recordedBytes": 3202,
+      "recordedSha256": "f5152a2fc33261c928da98185584a0baeffbd36b68693234c86370cbc24ecba0",
+      "existsLocal": true,
+      "bytes": 3202,
+      "sha256": "f5152a2fc33261c928da98185584a0baeffbd36b68693234c86370cbc24ecba0",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medea_caster:7",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-medea_caster/animation-reserve.json",
+      "recordedBytes": 6920,
+      "recordedSha256": "1068f81273189aae2d3cb5a894faa3d44bfd5d1c9a6dd7a06aee3b8506207081",
+      "existsLocal": true,
+      "bytes": 6920,
+      "sha256": "1068f81273189aae2d3cb5a894faa3d44bfd5d1c9a6dd7a06aee3b8506207081",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medea_caster:8",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-medea_caster/webgl-source-material-v1/proof.json",
+      "recordedBytes": 2178,
+      "recordedSha256": "2bb0e01c3f9488a059082d6674083dc5c6c54445e00cfbb2d139f59230fecab8",
+      "existsLocal": true,
+      "bytes": 2178,
+      "sha256": "2bb0e01c3f9488a059082d6674083dc5c6c54445e00cfbb2d139f59230fecab8",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medea_caster:9",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-medea_caster/webgl-source-material-v1/run.json",
+      "recordedBytes": 354,
+      "recordedSha256": "3b3529993d65ce65d9213a0c9ce2d90e8054cc8e53f8cff279684bfc80060a0e",
+      "existsLocal": true,
+      "bytes": 354,
+      "sha256": "3b3529993d65ce65d9213a0c9ce2d90e8054cc8e53f8cff279684bfc80060a0e",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medea_caster:10",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/body.glb",
+      "recordedBytes": 242456,
+      "recordedSha256": "9e13145d3682825f3d987ab5c003da92fcd334326f8a49913c668065e8025df6",
+      "existsLocal": true,
+      "bytes": 242456,
+      "sha256": "9e13145d3682825f3d987ab5c003da92fcd334326f8a49913c668065e8025df6",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medea_caster:11",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/conversion-report.json",
+      "recordedBytes": 31937,
+      "recordedSha256": "f44fb6cdbf54aa469564dadf31207dd01ec48896f2996da59ed7d2383fe0bb1b",
+      "existsLocal": true,
+      "bytes": 31937,
+      "sha256": "f44fb6cdbf54aa469564dadf31207dd01ec48896f2996da59ed7d2383fe0bb1b",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medea_caster:12",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/native-structural-readback.json",
+      "recordedBytes": 1630,
+      "recordedSha256": "7b6c6f968150ce8af2dc5b68cff9c5a3f0e1b1d7286824a4b7e1cd00eaf056bd",
+      "existsLocal": true,
+      "bytes": 1630,
+      "sha256": "7b6c6f968150ce8af2dc5b68cff9c5a3f0e1b1d7286824a4b7e1cd00eaf056bd",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medea_caster:13",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/contract-validation.json",
+      "recordedBytes": 4528,
+      "recordedSha256": "5af01aa4a48060fa369941214be15d0c0360e35cf2acaa2470a363e26e3a82b4",
+      "existsLocal": true,
+      "bytes": 4528,
+      "sha256": "5af01aa4a48060fa369941214be15d0c0360e35cf2acaa2470a363e26e3a82b4",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medea_caster:14",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/webgl-completion-v2/proof.json",
+      "recordedBytes": null,
+      "recordedSha256": "19f1c1c1292a98c0a44f30c1ed95eb2d3902bacd763401570cbf3c605a24dacb",
+      "existsLocal": true,
+      "bytes": 5647,
+      "sha256": "19f1c1c1292a98c0a44f30c1ed95eb2d3902bacd763401570cbf3c605a24dacb",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medea_caster:15",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medea_caster/webgl-completion-v2/run.json",
+      "recordedBytes": null,
+      "recordedSha256": "231811131d34d5ced71ec373c92b3e1fc1d7fe042724513301397f6eec25bb6a",
+      "existsLocal": true,
+      "bytes": 410,
+      "sha256": "231811131d34d5ced71ec373c92b3e1fc1d7fe042724513301397f6eec25bb6a",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medusa_rider:0",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/medusa_rider.geo.json",
+      "recordedBytes": 7155,
+      "recordedSha256": "1797b9f5695d51e32a0b73ddd45a656720871b8e9317529a1d2cd932cce184dc",
+      "existsLocal": true,
+      "bytes": 7155,
+      "sha256": "1797b9f5695d51e32a0b73ddd45a656720871b8e9317529a1d2cd932cce184dc",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medusa_rider:1",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/medusa_rider.png",
+      "recordedBytes": 1258,
+      "recordedSha256": "bdc7e37394a01c7a7c267e0c8afbf1743a12ccdfa09802af1ce509819d1c0c30",
+      "existsLocal": true,
+      "bytes": 1258,
+      "sha256": "bdc7e37394a01c7a7c267e0c8afbf1743a12ccdfa09802af1ce509819d1c0c30",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medusa_rider:2",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/medusa_rider.json",
+      "recordedBytes": null,
+      "recordedSha256": "b05e9c70d66b9d5382052f2f61f600277cc5aed47252e4f355af2ccb5dd6c57d",
+      "existsLocal": true,
+      "bytes": 32318,
+      "sha256": "b05e9c70d66b9d5382052f2f61f600277cc5aed47252e4f355af2ccb5dd6c57d",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medusa_rider:3",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-medusa_rider/body.glb",
+      "recordedBytes": 26916,
+      "recordedSha256": "173bc3ccd7623614f8f3c897a6d9b6e05777dd6d58cda08bdbf69d11734955bd",
+      "existsLocal": true,
+      "bytes": 26916,
+      "sha256": "173bc3ccd7623614f8f3c897a6d9b6e05777dd6d58cda08bdbf69d11734955bd",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medusa_rider:4",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-medusa_rider/conversion-report.json",
+      "recordedBytes": 2093,
+      "recordedSha256": "5366acb656c067493552ec16caceaccba5caffa151806aaa48df9e7ab5e46347",
+      "existsLocal": true,
+      "bytes": 2093,
+      "sha256": "5366acb656c067493552ec16caceaccba5caffa151806aaa48df9e7ab5e46347",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medusa_rider:5",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-medusa_rider/structural-readback.json",
+      "recordedBytes": 1552,
+      "recordedSha256": "e29a462bcb5ed4dc26ebd383489e5e5be3ac82e78a37bde7836bc46b452a0cf5",
+      "existsLocal": true,
+      "bytes": 1552,
+      "sha256": "e29a462bcb5ed4dc26ebd383489e5e5be3ac82e78a37bde7836bc46b452a0cf5",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medusa_rider:6",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-medusa_rider/contract-validation.json",
+      "recordedBytes": 3202,
+      "recordedSha256": "9eeaecab3ced4fd782657e4388d26d1a8004453c4eb658ecc6247403b90b9701",
+      "existsLocal": true,
+      "bytes": 3202,
+      "sha256": "9eeaecab3ced4fd782657e4388d26d1a8004453c4eb658ecc6247403b90b9701",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medusa_rider:7",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-medusa_rider/animation-reserve.json",
+      "recordedBytes": 10219,
+      "recordedSha256": "ed1052170780c6e8653b7549aa1c4a549aef42cf47d93d16743fae462160101c",
+      "existsLocal": true,
+      "bytes": 10219,
+      "sha256": "ed1052170780c6e8653b7549aa1c4a549aef42cf47d93d16743fae462160101c",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medusa_rider:8",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-medusa_rider/webgl-source-material-v1/proof.json",
+      "recordedBytes": 2174,
+      "recordedSha256": "ccfb6e03cb58394ba4852e7d8f8f326127594b4580e9231d4f8e9c7290d421ee",
+      "existsLocal": true,
+      "bytes": 2174,
+      "sha256": "ccfb6e03cb58394ba4852e7d8f8f326127594b4580e9231d4f8e9c7290d421ee",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medusa_rider:9",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-medusa_rider/webgl-source-material-v1/run.json",
+      "recordedBytes": 354,
+      "recordedSha256": "6c4b152be4704d7335b236926756b67fe3cf1334edc7029e560e4dd951773ae9",
+      "existsLocal": true,
+      "bytes": 354,
+      "sha256": "6c4b152be4704d7335b236926756b67fe3cf1334edc7029e560e4dd951773ae9",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medusa_rider:10",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/body.glb",
+      "recordedBytes": 227824,
+      "recordedSha256": "5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85",
+      "existsLocal": true,
+      "bytes": 227824,
+      "sha256": "5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medusa_rider:11",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/conversion-report.json",
+      "recordedBytes": 57980,
+      "recordedSha256": "2bacfb22f33e3d96508865ff05286e2533771e647edb7e6d362c9bc6d4002b4c",
+      "existsLocal": true,
+      "bytes": 57980,
+      "sha256": "2bacfb22f33e3d96508865ff05286e2533771e647edb7e6d362c9bc6d4002b4c",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medusa_rider:12",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/native-structural-readback.json",
+      "recordedBytes": 1629,
+      "recordedSha256": "db2f0c48542d0e5fddca913c2e08c43f86bbde0de2b84481adc68774dfe065b1",
+      "existsLocal": true,
+      "bytes": 1629,
+      "sha256": "db2f0c48542d0e5fddca913c2e08c43f86bbde0de2b84481adc68774dfe065b1",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medusa_rider:13",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/contract-validation.json",
+      "recordedBytes": 5177,
+      "recordedSha256": "3123613178708ebc26ab15fe7c300d5823c3220a5bb8a5dec7033b6436575d85",
+      "existsLocal": true,
+      "bytes": 5177,
+      "sha256": "3123613178708ebc26ab15fe7c300d5823c3220a5bb8a5dec7033b6436575d85",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medusa_rider:14",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/webgl-completion-v2/proof.json",
+      "recordedBytes": null,
+      "recordedSha256": "7ef04981f25e2e1e4d6af45295db48a0b272978d548968595a03a350674c7a98",
+      "existsLocal": true,
+      "bytes": 3216,
+      "sha256": "7ef04981f25e2e1e4d6af45295db48a0b272978d548968595a03a350674c7a98",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "medusa_rider:15",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-medusa_rider/webgl-completion-v2/run.json",
+      "recordedBytes": null,
+      "recordedSha256": "6f8d57ee05b7a2b9cbc6694806751b77e76dcca54700cd4bda20386280a5d964",
+      "existsLocal": true,
+      "bytes": 396,
+      "sha256": "6f8d57ee05b7a2b9cbc6694806751b77e76dcca54700cd4bda20386280a5d964",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "nero_claudius_saber:0",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/nero_claudius_saber.geo.json",
+      "recordedBytes": 7142,
+      "recordedSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "existsLocal": true,
+      "bytes": 7142,
+      "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "nero_claudius_saber:1",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/nero_claudius_saber.png",
+      "recordedBytes": 2192,
+      "recordedSha256": "8ece9b274a39d8dd9cc2936dd776fad3003998034ec9900e8613cff04e026299",
+      "existsLocal": true,
+      "bytes": 2192,
+      "sha256": "8ece9b274a39d8dd9cc2936dd776fad3003998034ec9900e8613cff04e026299",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "nero_claudius_saber:2",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/nero_claudius_saber.json",
+      "recordedBytes": null,
+      "recordedSha256": "0e5a8925deb16b2539b84d2e17c544675eb99df92007c88dac327580de4e9185",
+      "existsLocal": true,
+      "bytes": 46005,
+      "sha256": "0e5a8925deb16b2539b84d2e17c544675eb99df92007c88dac327580de4e9185",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "nero_claudius_saber:3",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-nero_claudius_saber/body.glb",
+      "recordedBytes": 27892,
+      "recordedSha256": "59ccae000c8a340a937b10e427ab8636c1659f1ed49408fdd4679a4b943bf0a3",
+      "existsLocal": true,
+      "bytes": 27892,
+      "sha256": "59ccae000c8a340a937b10e427ab8636c1659f1ed49408fdd4679a4b943bf0a3",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "nero_claudius_saber:4",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-nero_claudius_saber/conversion-report.json",
+      "recordedBytes": 2121,
+      "recordedSha256": "41e4d7037dae68df5e2f1ed4d685e81cdd77ed28d8fa684649dea0705097a0ae",
+      "existsLocal": true,
+      "bytes": 2121,
+      "sha256": "41e4d7037dae68df5e2f1ed4d685e81cdd77ed28d8fa684649dea0705097a0ae",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "nero_claudius_saber:5",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-nero_claudius_saber/structural-readback.json",
+      "recordedBytes": 1566,
+      "recordedSha256": "b7ee0ef463a77ff620ebf2fe71871fb636bf14cd81dfe4909f400af3325565d7",
+      "existsLocal": true,
+      "bytes": 1566,
+      "sha256": "b7ee0ef463a77ff620ebf2fe71871fb636bf14cd81dfe4909f400af3325565d7",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "nero_claudius_saber:6",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-nero_claudius_saber/contract-validation.json",
+      "recordedBytes": 3223,
+      "recordedSha256": "e4cfe810138336d909c2a77c7407b55ef773659ad954d58f04a8883af6378caf",
+      "existsLocal": true,
+      "bytes": 3223,
+      "sha256": "e4cfe810138336d909c2a77c7407b55ef773659ad954d58f04a8883af6378caf",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "nero_claudius_saber:7",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-nero_claudius_saber/animation-reserve.json",
+      "recordedBytes": 7148,
+      "recordedSha256": "2371421ac8277c14eee99f85aff4cad54114da4d39eb5f9bb2cc17e3404a4b49",
+      "existsLocal": true,
+      "bytes": 7148,
+      "sha256": "2371421ac8277c14eee99f85aff4cad54114da4d39eb5f9bb2cc17e3404a4b49",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "nero_claudius_saber:8",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-nero_claudius_saber/webgl-source-material-v1/proof.json",
+      "recordedBytes": 2202,
+      "recordedSha256": "29edf9b5fcc824590d2812be87f4f01914ab3c9dbf5188865b20cb8582acc4b1",
+      "existsLocal": true,
+      "bytes": 2202,
+      "sha256": "29edf9b5fcc824590d2812be87f4f01914ab3c9dbf5188865b20cb8582acc4b1",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "nero_claudius_saber:9",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-nero_claudius_saber/webgl-source-material-v1/run.json",
+      "recordedBytes": 361,
+      "recordedSha256": "a0e6a83c86a77fc9268cb3dce6a48fd927b399b5d2a422c47d4d5d1f3c31bf01",
+      "existsLocal": true,
+      "bytes": 361,
+      "sha256": "a0e6a83c86a77fc9268cb3dce6a48fd927b399b5d2a422c47d4d5d1f3c31bf01",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "nero_claudius_saber:10",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/body.glb",
+      "recordedBytes": 478168,
+      "recordedSha256": "059cdf64bf7040a33ad40257a6ad0b37e82424127a72d243fee468772fe5fcad",
+      "existsLocal": true,
+      "bytes": 478168,
+      "sha256": "059cdf64bf7040a33ad40257a6ad0b37e82424127a72d243fee468772fe5fcad",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "nero_claudius_saber:11",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/conversion-report.json",
+      "recordedBytes": 41338,
+      "recordedSha256": "8add2f64f91565fd94a11d1bd6869a34a33555522eaf2f25835e8dd0fd95dc83",
+      "existsLocal": true,
+      "bytes": 41338,
+      "sha256": "8add2f64f91565fd94a11d1bd6869a34a33555522eaf2f25835e8dd0fd95dc83",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "nero_claudius_saber:12",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/native-structural-readback.json",
+      "recordedBytes": 1642,
+      "recordedSha256": "92a0e05cb83ccb912aa17b66d91f5f844ffb6b489353d2e2fbe66f15f0ac2472",
+      "existsLocal": true,
+      "bytes": 1642,
+      "sha256": "92a0e05cb83ccb912aa17b66d91f5f844ffb6b489353d2e2fbe66f15f0ac2472",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "nero_claudius_saber:13",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/contract-validation.json",
+      "recordedBytes": 4587,
+      "recordedSha256": "6c783636aa2cc31f35e29e53db4e7e444c8961c7e0b56fd898180fe030352e70",
+      "existsLocal": true,
+      "bytes": 4587,
+      "sha256": "6c783636aa2cc31f35e29e53db4e7e444c8961c7e0b56fd898180fe030352e70",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "nero_claudius_saber:14",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/webgl-completion-v2/proof.json",
+      "recordedBytes": null,
+      "recordedSha256": "ff8d29ac0de394869f6124320a89641fc867962665eb22ae5eabd48aba0763c6",
+      "existsLocal": true,
+      "bytes": 8265,
+      "sha256": "ff8d29ac0de394869f6124320a89641fc867962665eb22ae5eabd48aba0763c6",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "nero_claudius_saber:15",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-nero_claudius_saber/webgl-completion-v2/run.json",
+      "recordedBytes": null,
+      "recordedSha256": "f01aaf1132dddfc48d53bfcafeff1639526eb338a31afb469a3214596f8f6370",
+      "existsLocal": true,
+      "bytes": 473,
+      "sha256": "f01aaf1132dddfc48d53bfcafeff1639526eb338a31afb469a3214596f8f6370",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "sasaki_kojiro_assassin:0",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/models/servant/sasaki_kojiro_assassin.geo.json",
+      "recordedBytes": 7142,
+      "recordedSha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "existsLocal": true,
+      "bytes": 7142,
+      "sha256": "4ec46f019a105822399e4f073cb2a836025e2184d20985b8eac594a326beda50",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "sasaki_kojiro_assassin:1",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/textures/entity/servant/sasaki_kojiro_assassin.png",
+      "recordedBytes": 1963,
+      "recordedSha256": "7ed74d7fca9b264278cbfec07f9bf14098d94b0ee7d6b4603f47884a95576cb3",
+      "existsLocal": true,
+      "bytes": 1963,
+      "sha256": "7ed74d7fca9b264278cbfec07f9bf14098d94b0ee7d6b4603f47884a95576cb3",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "sasaki_kojiro_assassin:2",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/fate-bounded-batch10/extracted/FateUBW-07e9d79b332c82b8fd10dada04cadbd84f4e6ce9/common/src/main/resources/assets/fateubw/tenshilib/animations/servant/sasaki_kojiro_assassin.json",
+      "recordedBytes": null,
+      "recordedSha256": "dc2e8cd51464fc8a702970f273fddb5c39eb435cb1d9b874f8566e23ce1e4914",
+      "existsLocal": true,
+      "bytes": 37619,
+      "sha256": "dc2e8cd51464fc8a702970f273fddb5c39eb435cb1d9b874f8566e23ce1e4914",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "sasaki_kojiro_assassin:3",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-sasaki_kojiro_assassin/body.glb",
+      "recordedBytes": 27680,
+      "recordedSha256": "7aae647bbcf9d6d592a4039975ba8b32f5f3d599f168f4e655711f1e586170d6",
+      "existsLocal": true,
+      "bytes": 27680,
+      "sha256": "7aae647bbcf9d6d592a4039975ba8b32f5f3d599f168f4e655711f1e586170d6",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "sasaki_kojiro_assassin:4",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-sasaki_kojiro_assassin/conversion-report.json",
+      "recordedBytes": 2133,
+      "recordedSha256": "320c13337b40f63426bb576a3a4aed867f5d0902407169a4bb36c8868b32aa83",
+      "existsLocal": true,
+      "bytes": 2133,
+      "sha256": "320c13337b40f63426bb576a3a4aed867f5d0902407169a4bb36c8868b32aa83",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "sasaki_kojiro_assassin:5",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-sasaki_kojiro_assassin/structural-readback.json",
+      "recordedBytes": 1572,
+      "recordedSha256": "86c4e6eebf6bdee42c0a270e294ab293171f113a83fb7e8fc2746c326de9a779",
+      "existsLocal": true,
+      "bytes": 1572,
+      "sha256": "86c4e6eebf6bdee42c0a270e294ab293171f113a83fb7e8fc2746c326de9a779",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "sasaki_kojiro_assassin:6",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-sasaki_kojiro_assassin/contract-validation.json",
+      "recordedBytes": 3232,
+      "recordedSha256": "8700c10e47112e765847e727b5bd9e1ab4ae7f959018c2b546d29185eb5b2fa2",
+      "existsLocal": true,
+      "bytes": 3232,
+      "sha256": "8700c10e47112e765847e727b5bd9e1ab4ae7f959018c2b546d29185eb5b2fa2",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "sasaki_kojiro_assassin:7",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-sasaki_kojiro_assassin/animation-reserve.json",
+      "recordedBytes": 11063,
+      "recordedSha256": "66a1ae02587dfa0263bcc96be67797110bd6f53b3e61fddad0f4feb0d99170cc",
+      "existsLocal": true,
+      "bytes": 11063,
+      "sha256": "66a1ae02587dfa0263bcc96be67797110bd6f53b3e61fddad0f4feb0d99170cc",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "sasaki_kojiro_assassin:8",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-sasaki_kojiro_assassin/webgl-source-material-v1/proof.json",
+      "recordedBytes": 2214,
+      "recordedSha256": "1a61ea6d257a20bb5d638600c624635e7a0fd376d35af4d7c3847a2d8e6a7b67",
+      "existsLocal": true,
+      "bytes": 2214,
+      "sha256": "1a61ea6d257a20bb5d638600c624635e7a0fd376d35af4d7c3847a2d8e6a7b67",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "sasaki_kojiro_assassin:9",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-servant-static-batch-v6/fateubw-sasaki_kojiro_assassin/webgl-source-material-v1/run.json",
+      "recordedBytes": 364,
+      "recordedSha256": "d3de03b2340e07c87a94a6faf3ed981427aaa8af48bc0d06f2f58fb81a0e4082",
+      "existsLocal": true,
+      "bytes": 364,
+      "sha256": "d3de03b2340e07c87a94a6faf3ed981427aaa8af48bc0d06f2f58fb81a0e4082",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "sasaki_kojiro_assassin:10",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-sasaki_kojiro_assassin/body.glb",
+      "recordedBytes": 253132,
+      "recordedSha256": "9d4325547f9201a56e0bfeca89acdc7c512cf6a46c9f797edaab0569c6f2f0c7",
+      "existsLocal": true,
+      "bytes": 253132,
+      "sha256": "9d4325547f9201a56e0bfeca89acdc7c512cf6a46c9f797edaab0569c6f2f0c7",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "sasaki_kojiro_assassin:11",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-sasaki_kojiro_assassin/conversion-report.json",
+      "recordedBytes": 59874,
+      "recordedSha256": "2fcbcd03760d7a8e861ac22ce60a4a1d157eeec0239ca3b61602355ba44e586f",
+      "existsLocal": true,
+      "bytes": 59874,
+      "sha256": "2fcbcd03760d7a8e861ac22ce60a4a1d157eeec0239ca3b61602355ba44e586f",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "sasaki_kojiro_assassin:12",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-sasaki_kojiro_assassin/native-structural-readback.json",
+      "recordedBytes": 1649,
+      "recordedSha256": "6a485d326bfd0c1b6eb9470e2564da0675f803c225da19a31924a034d7b98006",
+      "existsLocal": true,
+      "bytes": 1649,
+      "sha256": "6a485d326bfd0c1b6eb9470e2564da0675f803c225da19a31924a034d7b98006",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "sasaki_kojiro_assassin:13",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-native-motion-completion-v2/fateubw-sasaki_kojiro_assassin/contract-validation.json",
+      "recordedBytes": 5080,
+      "recordedSha256": "141a7ef6266df6e747f91d96b0e07005880af54f3128d4ae93dde6831cb583b9",
+      "existsLocal": true,
+      "bytes": 5080,
+      "sha256": "141a7ef6266df6e747f91d96b0e07005880af54f3128d4ae93dde6831cb583b9",
+      "sizeMatches": true,
+      "sha256Matches": true
+    },
+    {
+      "label": "native-motion-v2:s3-backup-receipt",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/fateubw-community/native-motion-completion-v2-s3-backup.json",
+      "recordedBytes": 1472,
+      "recordedSha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+      "existsLocal": true,
+      "bytes": 1472,
+      "sha256": "8b51ebe8647fe9fba41232741104ae2cdfca56b2fd163c210b8d189aef318d6f",
+      "sizeMatches": true,
+      "sha256Matches": true
+    }
+  ],
+  "s3Archives": [
+    "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/fateubw-community-20260911/ed8f0901184071e10e6ce12df799180326a4c846486d825c915b4d7fdd860c38.tar.gz",
+    "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-artoria-static-mesh-v3/1d52bd28dab4d9f5394ea212c6894ea38d63e9e26a0f61b916895ade0fb3713a.tar.gz",
+    "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-heracles-static-mesh-v1/29cce69082a9e21bce5141e574bca107952aa96f5871d4c48da5161792237178.tar.gz",
+    "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/fateubw-servant-static-batch-v6/8f526dedc527d01aa406b298dca0ccb078a4234b1cdb9af7d8abad270a3964ea.tar.gz",
+    "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/fateubw-native-motion-completion-v2/6a520f500283b5dce3b06cf473bf595294e0c69bdddbe1c4fc19075132f54f7f.tar.gz"
+  ],
+  "errors": []
+}

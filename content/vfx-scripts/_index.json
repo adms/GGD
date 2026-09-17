@@ -1,7 +1,787 @@
 {
   "collection": "vfx-scripts",
-  "hash": "20b5e06e9013",
+  "hash": "5a5dcb1cbe14",
   "entries": [
+    {
+      "id": "acquired-alice.e",
+      "path": "vfx-scripts/acquired-alice.e.json",
+      "hash": "982b1e64e33f",
+      "size": 745
+    },
+    {
+      "id": "acquired-alice.ex",
+      "path": "vfx-scripts/acquired-alice.ex.json",
+      "hash": "5593579dafae",
+      "size": 745
+    },
+    {
+      "id": "acquired-alice.q",
+      "path": "vfx-scripts/acquired-alice.q.json",
+      "hash": "fe18bc573fd3",
+      "size": 744
+    },
+    {
+      "id": "acquired-alice.r",
+      "path": "vfx-scripts/acquired-alice.r.json",
+      "hash": "707a21f32368",
+      "size": 743
+    },
+    {
+      "id": "acquired-alice.w",
+      "path": "vfx-scripts/acquired-alice.w.json",
+      "hash": "d5b80ae1e764",
+      "size": 745
+    },
+    {
+      "id": "acquired-astralym.e",
+      "path": "vfx-scripts/acquired-astralym.e.json",
+      "hash": "ce7033ff7f4d",
+      "size": 752
+    },
+    {
+      "id": "acquired-astralym.ex",
+      "path": "vfx-scripts/acquired-astralym.ex.json",
+      "hash": "eda7eaed76a7",
+      "size": 753
+    },
+    {
+      "id": "acquired-astralym.q",
+      "path": "vfx-scripts/acquired-astralym.q.json",
+      "hash": "fef8bd3c27e7",
+      "size": 753
+    },
+    {
+      "id": "acquired-astralym.r",
+      "path": "vfx-scripts/acquired-astralym.r.json",
+      "hash": "75b3a0a4b93c",
+      "size": 752
+    },
+    {
+      "id": "acquired-astralym.w",
+      "path": "vfx-scripts/acquired-astralym.w.json",
+      "hash": "dbe54f371858",
+      "size": 752
+    },
+    {
+      "id": "acquired-asuna.e",
+      "path": "vfx-scripts/acquired-asuna.e.json",
+      "hash": "26adc889c509",
+      "size": 745
+    },
+    {
+      "id": "acquired-asuna.ex",
+      "path": "vfx-scripts/acquired-asuna.ex.json",
+      "hash": "97510dac028c",
+      "size": 745
+    },
+    {
+      "id": "acquired-asuna.q",
+      "path": "vfx-scripts/acquired-asuna.q.json",
+      "hash": "f0409bd9b490",
+      "size": 745
+    },
+    {
+      "id": "acquired-asuna.r",
+      "path": "vfx-scripts/acquired-asuna.r.json",
+      "hash": "49f09c71f329",
+      "size": 745
+    },
+    {
+      "id": "acquired-asuna.w",
+      "path": "vfx-scripts/acquired-asuna.w.json",
+      "hash": "eef19a7d5b02",
+      "size": 743
+    },
+    {
+      "id": "acquired-beatrice.e",
+      "path": "vfx-scripts/acquired-beatrice.e.json",
+      "hash": "286e8621b170",
+      "size": 755
+    },
+    {
+      "id": "acquired-beatrice.ex",
+      "path": "vfx-scripts/acquired-beatrice.ex.json",
+      "hash": "6e0ed6d8b53d",
+      "size": 757
+    },
+    {
+      "id": "acquired-beatrice.q",
+      "path": "vfx-scripts/acquired-beatrice.q.json",
+      "hash": "a30d583faf72",
+      "size": 759
+    },
+    {
+      "id": "acquired-beatrice.r",
+      "path": "vfx-scripts/acquired-beatrice.r.json",
+      "hash": "5e94b500c899",
+      "size": 756
+    },
+    {
+      "id": "acquired-beatrice.w",
+      "path": "vfx-scripts/acquired-beatrice.w.json",
+      "hash": "a0fb92da5720",
+      "size": 754
+    },
+    {
+      "id": "acquired-cattiva.e",
+      "path": "vfx-scripts/acquired-cattiva.e.json",
+      "hash": "26586dde75f0",
+      "size": 750
+    },
+    {
+      "id": "acquired-cattiva.ex",
+      "path": "vfx-scripts/acquired-cattiva.ex.json",
+      "hash": "ced01c2085f0",
+      "size": 751
+    },
+    {
+      "id": "acquired-cattiva.q",
+      "path": "vfx-scripts/acquired-cattiva.q.json",
+      "hash": "2c5316d2a738",
+      "size": 751
+    },
+    {
+      "id": "acquired-cattiva.r",
+      "path": "vfx-scripts/acquired-cattiva.r.json",
+      "hash": "0616a1105000",
+      "size": 749
+    },
+    {
+      "id": "acquired-cattiva.w",
+      "path": "vfx-scripts/acquired-cattiva.w.json",
+      "hash": "ef11529ce507",
+      "size": 751
+    },
+    {
+      "id": "acquired-dio.e",
+      "path": "vfx-scripts/acquired-dio.e.json",
+      "hash": "e9271601dd5e",
+      "size": 741
+    },
+    {
+      "id": "acquired-dio.ex",
+      "path": "vfx-scripts/acquired-dio.ex.json",
+      "hash": "2421fc97aef0",
+      "size": 741
+    },
+    {
+      "id": "acquired-dio.q",
+      "path": "vfx-scripts/acquired-dio.q.json",
+      "hash": "0b75b6c8dcf8",
+      "size": 741
+    },
+    {
+      "id": "acquired-dio.r",
+      "path": "vfx-scripts/acquired-dio.r.json",
+      "hash": "b9ce85a90cab",
+      "size": 740
+    },
+    {
+      "id": "acquired-dio.w",
+      "path": "vfx-scripts/acquired-dio.w.json",
+      "hash": "829b40443db7",
+      "size": 744
+    },
+    {
+      "id": "acquired-emilia.e",
+      "path": "vfx-scripts/acquired-emilia.e.json",
+      "hash": "d030f9191ff2",
+      "size": 751
+    },
+    {
+      "id": "acquired-emilia.ex",
+      "path": "vfx-scripts/acquired-emilia.ex.json",
+      "hash": "549e6cc96ae4",
+      "size": 752
+    },
+    {
+      "id": "acquired-emilia.q",
+      "path": "vfx-scripts/acquired-emilia.q.json",
+      "hash": "6b65c13ad69f",
+      "size": 755
+    },
+    {
+      "id": "acquired-emilia.r",
+      "path": "vfx-scripts/acquired-emilia.r.json",
+      "hash": "566a3df50dd6",
+      "size": 751
+    },
+    {
+      "id": "acquired-emilia.w",
+      "path": "vfx-scripts/acquired-emilia.w.json",
+      "hash": "fd467fa4f09d",
+      "size": 750
+    },
+    {
+      "id": "acquired-inuyasha.e",
+      "path": "vfx-scripts/acquired-inuyasha.e.json",
+      "hash": "c198b24ee870",
+      "size": 753
+    },
+    {
+      "id": "acquired-inuyasha.ex",
+      "path": "vfx-scripts/acquired-inuyasha.ex.json",
+      "hash": "e6411b421172",
+      "size": 753
+    },
+    {
+      "id": "acquired-inuyasha.q",
+      "path": "vfx-scripts/acquired-inuyasha.q.json",
+      "hash": "59642e39cae9",
+      "size": 753
+    },
+    {
+      "id": "acquired-inuyasha.r",
+      "path": "vfx-scripts/acquired-inuyasha.r.json",
+      "hash": "c14d7f887838",
+      "size": 753
+    },
+    {
+      "id": "acquired-inuyasha.w",
+      "path": "vfx-scripts/acquired-inuyasha.w.json",
+      "hash": "389ce463e143",
+      "size": 803
+    },
+    {
+      "id": "acquired-jetragon.e",
+      "path": "vfx-scripts/acquired-jetragon.e.json",
+      "hash": "ac7a5ebe5f1e",
+      "size": 755
+    },
+    {
+      "id": "acquired-jetragon.ex",
+      "path": "vfx-scripts/acquired-jetragon.ex.json",
+      "hash": "0dbcd3776cd2",
+      "size": 756
+    },
+    {
+      "id": "acquired-jetragon.q",
+      "path": "vfx-scripts/acquired-jetragon.q.json",
+      "hash": "efe569c86db7",
+      "size": 759
+    },
+    {
+      "id": "acquired-jetragon.r",
+      "path": "vfx-scripts/acquired-jetragon.r.json",
+      "hash": "b358bbf371a4",
+      "size": 755
+    },
+    {
+      "id": "acquired-jetragon.w",
+      "path": "vfx-scripts/acquired-jetragon.w.json",
+      "hash": "4f647be8c4db",
+      "size": 754
+    },
+    {
+      "id": "acquired-kita-kita.e",
+      "path": "vfx-scripts/acquired-kita-kita.e.json",
+      "hash": "15fbac8c80bd",
+      "size": 753
+    },
+    {
+      "id": "acquired-kita-kita.ex",
+      "path": "vfx-scripts/acquired-kita-kita.ex.json",
+      "hash": "5ed41a54d453",
+      "size": 755
+    },
+    {
+      "id": "acquired-kita-kita.q",
+      "path": "vfx-scripts/acquired-kita-kita.q.json",
+      "hash": "b77bda1ecf7f",
+      "size": 752
+    },
+    {
+      "id": "acquired-kita-kita.r",
+      "path": "vfx-scripts/acquired-kita-kita.r.json",
+      "hash": "badd1a6b09ed",
+      "size": 752
+    },
+    {
+      "id": "acquired-kita-kita.w",
+      "path": "vfx-scripts/acquired-kita-kita.w.json",
+      "hash": "0e105b1652d5",
+      "size": 752
+    },
+    {
+      "id": "acquired-kuroyukihime.e",
+      "path": "vfx-scripts/acquired-kuroyukihime.e.json",
+      "hash": "50d38b1b4e1c",
+      "size": 761
+    },
+    {
+      "id": "acquired-kuroyukihime.ex",
+      "path": "vfx-scripts/acquired-kuroyukihime.ex.json",
+      "hash": "582908a540be",
+      "size": 763
+    },
+    {
+      "id": "acquired-kuroyukihime.q",
+      "path": "vfx-scripts/acquired-kuroyukihime.q.json",
+      "hash": "085dca020b19",
+      "size": 761
+    },
+    {
+      "id": "acquired-kuroyukihime.r",
+      "path": "vfx-scripts/acquired-kuroyukihime.r.json",
+      "hash": "00b780cf69f5",
+      "size": 761
+    },
+    {
+      "id": "acquired-kuroyukihime.w",
+      "path": "vfx-scripts/acquired-kuroyukihime.w.json",
+      "hash": "46667f0b6258",
+      "size": 759
+    },
+    {
+      "id": "acquired-leafa.e",
+      "path": "vfx-scripts/acquired-leafa.e.json",
+      "hash": "f0f8342634a4",
+      "size": 747
+    },
+    {
+      "id": "acquired-leafa.ex",
+      "path": "vfx-scripts/acquired-leafa.ex.json",
+      "hash": "b70f7d87fcd8",
+      "size": 799
+    },
+    {
+      "id": "acquired-leafa.q",
+      "path": "vfx-scripts/acquired-leafa.q.json",
+      "hash": "dcb029119676",
+      "size": 747
+    },
+    {
+      "id": "acquired-leafa.r",
+      "path": "vfx-scripts/acquired-leafa.r.json",
+      "hash": "85789e750c23",
+      "size": 746
+    },
+    {
+      "id": "acquired-leafa.w",
+      "path": "vfx-scripts/acquired-leafa.w.json",
+      "hash": "8d4a9579fa6f",
+      "size": 747
+    },
+    {
+      "id": "acquired-lord-nightmares.e",
+      "path": "vfx-scripts/acquired-lord-nightmares.e.json",
+      "hash": "ae30375c14b1",
+      "size": 765
+    },
+    {
+      "id": "acquired-lord-nightmares.ex",
+      "path": "vfx-scripts/acquired-lord-nightmares.ex.json",
+      "hash": "958fd1c11f0c",
+      "size": 767
+    },
+    {
+      "id": "acquired-lord-nightmares.q",
+      "path": "vfx-scripts/acquired-lord-nightmares.q.json",
+      "hash": "e7e33a5ff5a4",
+      "size": 765
+    },
+    {
+      "id": "acquired-lord-nightmares.r",
+      "path": "vfx-scripts/acquired-lord-nightmares.r.json",
+      "hash": "544df3313b1b",
+      "size": 764
+    },
+    {
+      "id": "acquired-lord-nightmares.w",
+      "path": "vfx-scripts/acquired-lord-nightmares.w.json",
+      "hash": "d744282d6539",
+      "size": 764
+    },
+    {
+      "id": "acquired-mario.e",
+      "path": "vfx-scripts/acquired-mario.e.json",
+      "hash": "1396248aba5a",
+      "size": 746
+    },
+    {
+      "id": "acquired-mario.ex",
+      "path": "vfx-scripts/acquired-mario.ex.json",
+      "hash": "d29196b80d84",
+      "size": 747
+    },
+    {
+      "id": "acquired-mario.q",
+      "path": "vfx-scripts/acquired-mario.q.json",
+      "hash": "3fea88dda652",
+      "size": 750
+    },
+    {
+      "id": "acquired-mario.r",
+      "path": "vfx-scripts/acquired-mario.r.json",
+      "hash": "2fb7080c90e1",
+      "size": 745
+    },
+    {
+      "id": "acquired-mario.w",
+      "path": "vfx-scripts/acquired-mario.w.json",
+      "hash": "1de075877b2e",
+      "size": 747
+    },
+    {
+      "id": "acquired-mewtwo.e",
+      "path": "vfx-scripts/acquired-mewtwo.e.json",
+      "hash": "9acd849019ce",
+      "size": 751
+    },
+    {
+      "id": "acquired-mewtwo.ex",
+      "path": "vfx-scripts/acquired-mewtwo.ex.json",
+      "hash": "9a320a556a9c",
+      "size": 752
+    },
+    {
+      "id": "acquired-mewtwo.q",
+      "path": "vfx-scripts/acquired-mewtwo.q.json",
+      "hash": "8184a7e31804",
+      "size": 755
+    },
+    {
+      "id": "acquired-mewtwo.r",
+      "path": "vfx-scripts/acquired-mewtwo.r.json",
+      "hash": "c1b737cbcca3",
+      "size": 751
+    },
+    {
+      "id": "acquired-mewtwo.w",
+      "path": "vfx-scripts/acquired-mewtwo.w.json",
+      "hash": "ebe889efec0e",
+      "size": 750
+    },
+    {
+      "id": "acquired-minecraft.e",
+      "path": "vfx-scripts/acquired-minecraft.e.json",
+      "hash": "c8133db0c0fc",
+      "size": 753
+    },
+    {
+      "id": "acquired-minecraft.ex",
+      "path": "vfx-scripts/acquired-minecraft.ex.json",
+      "hash": "48060e0aa567",
+      "size": 754
+    },
+    {
+      "id": "acquired-minecraft.q",
+      "path": "vfx-scripts/acquired-minecraft.q.json",
+      "hash": "b6a049c0035e",
+      "size": 754
+    },
+    {
+      "id": "acquired-minecraft.r",
+      "path": "vfx-scripts/acquired-minecraft.r.json",
+      "hash": "dd912ecb7d39",
+      "size": 753
+    },
+    {
+      "id": "acquired-minecraft.w",
+      "path": "vfx-scripts/acquired-minecraft.w.json",
+      "hash": "51a0893ac37c",
+      "size": 752
+    },
+    {
+      "id": "acquired-morgiana.e",
+      "path": "vfx-scripts/acquired-morgiana.e.json",
+      "hash": "64161c5e7a9c",
+      "size": 752
+    },
+    {
+      "id": "acquired-morgiana.ex",
+      "path": "vfx-scripts/acquired-morgiana.ex.json",
+      "hash": "47333bf004ec",
+      "size": 753
+    },
+    {
+      "id": "acquired-morgiana.q",
+      "path": "vfx-scripts/acquired-morgiana.q.json",
+      "hash": "64be426a10a4",
+      "size": 753
+    },
+    {
+      "id": "acquired-morgiana.r",
+      "path": "vfx-scripts/acquired-morgiana.r.json",
+      "hash": "f6519756e2d3",
+      "size": 752
+    },
+    {
+      "id": "acquired-morgiana.w",
+      "path": "vfx-scripts/acquired-morgiana.w.json",
+      "hash": "415f8a3adf0d",
+      "size": 753
+    },
+    {
+      "id": "acquired-naruto.e",
+      "path": "vfx-scripts/acquired-naruto.e.json",
+      "hash": "6a7415db9cab",
+      "size": 752
+    },
+    {
+      "id": "acquired-naruto.ex",
+      "path": "vfx-scripts/acquired-naruto.ex.json",
+      "hash": "8e3d9e588883",
+      "size": 752
+    },
+    {
+      "id": "acquired-naruto.q",
+      "path": "vfx-scripts/acquired-naruto.q.json",
+      "hash": "f53a3549e844",
+      "size": 752
+    },
+    {
+      "id": "acquired-naruto.r",
+      "path": "vfx-scripts/acquired-naruto.r.json",
+      "hash": "642061a55191",
+      "size": 802
+    },
+    {
+      "id": "acquired-naruto.w",
+      "path": "vfx-scripts/acquired-naruto.w.json",
+      "hash": "e4733fc9331d",
+      "size": 752
+    },
+    {
+      "id": "acquired-pokemon-trainer.e",
+      "path": "vfx-scripts/acquired-pokemon-trainer.e.json",
+      "hash": "4f02cdd41af3",
+      "size": 766
+    },
+    {
+      "id": "acquired-pokemon-trainer.ex",
+      "path": "vfx-scripts/acquired-pokemon-trainer.ex.json",
+      "hash": "bf22a776ae1e",
+      "size": 767
+    },
+    {
+      "id": "acquired-pokemon-trainer.q",
+      "path": "vfx-scripts/acquired-pokemon-trainer.q.json",
+      "hash": "13330068d804",
+      "size": 770
+    },
+    {
+      "id": "acquired-pokemon-trainer.r",
+      "path": "vfx-scripts/acquired-pokemon-trainer.r.json",
+      "hash": "69774efc247a",
+      "size": 767
+    },
+    {
+      "id": "acquired-pokemon-trainer.w",
+      "path": "vfx-scripts/acquired-pokemon-trainer.w.json",
+      "hash": "0f35de6e6513",
+      "size": 765
+    },
+    {
+      "id": "acquired-ram.e",
+      "path": "vfx-scripts/acquired-ram.e.json",
+      "hash": "23c3d9a893bc",
+      "size": 742
+    },
+    {
+      "id": "acquired-ram.ex",
+      "path": "vfx-scripts/acquired-ram.ex.json",
+      "hash": "4ce98de5f1ef",
+      "size": 743
+    },
+    {
+      "id": "acquired-ram.q",
+      "path": "vfx-scripts/acquired-ram.q.json",
+      "hash": "29677862c51b",
+      "size": 741
+    },
+    {
+      "id": "acquired-ram.r",
+      "path": "vfx-scripts/acquired-ram.r.json",
+      "hash": "0877969467e5",
+      "size": 742
+    },
+    {
+      "id": "acquired-ram.w",
+      "path": "vfx-scripts/acquired-ram.w.json",
+      "hash": "78c5976bbae3",
+      "size": 743
+    },
+    {
+      "id": "acquired-rim.e",
+      "path": "vfx-scripts/acquired-rim.e.json",
+      "hash": "b36a88c8d9f2",
+      "size": 743
+    },
+    {
+      "id": "acquired-rim.ex",
+      "path": "vfx-scripts/acquired-rim.ex.json",
+      "hash": "2cf157be72cf",
+      "size": 744
+    },
+    {
+      "id": "acquired-rim.q",
+      "path": "vfx-scripts/acquired-rim.q.json",
+      "hash": "31d400c2def7",
+      "size": 743
+    },
+    {
+      "id": "acquired-rim.r",
+      "path": "vfx-scripts/acquired-rim.r.json",
+      "hash": "ad6d845375f6",
+      "size": 743
+    },
+    {
+      "id": "acquired-rim.w",
+      "path": "vfx-scripts/acquired-rim.w.json",
+      "hash": "67fd89f7abee",
+      "size": 741
+    },
+    {
+      "id": "acquired-ryu.e",
+      "path": "vfx-scripts/acquired-ryu.e.json",
+      "hash": "f31f71f3c69c",
+      "size": 742
+    },
+    {
+      "id": "acquired-ryu.ex",
+      "path": "vfx-scripts/acquired-ryu.ex.json",
+      "hash": "de0acd75f2e8",
+      "size": 743
+    },
+    {
+      "id": "acquired-ryu.q",
+      "path": "vfx-scripts/acquired-ryu.q.json",
+      "hash": "555887f72489",
+      "size": 746
+    },
+    {
+      "id": "acquired-ryu.r",
+      "path": "vfx-scripts/acquired-ryu.r.json",
+      "hash": "6ae00ceb695d",
+      "size": 743
+    },
+    {
+      "id": "acquired-ryu.w",
+      "path": "vfx-scripts/acquired-ryu.w.json",
+      "hash": "547a46b96110",
+      "size": 743
+    },
+    {
+      "id": "acquired-saya.e",
+      "path": "vfx-scripts/acquired-saya.e.json",
+      "hash": "1df5349d3b2d",
+      "size": 745
+    },
+    {
+      "id": "acquired-saya.ex",
+      "path": "vfx-scripts/acquired-saya.ex.json",
+      "hash": "972a2a78b6af",
+      "size": 746
+    },
+    {
+      "id": "acquired-saya.q",
+      "path": "vfx-scripts/acquired-saya.q.json",
+      "hash": "e0ceec83f2fc",
+      "size": 745
+    },
+    {
+      "id": "acquired-saya.r",
+      "path": "vfx-scripts/acquired-saya.r.json",
+      "hash": "903d28dd7611",
+      "size": 744
+    },
+    {
+      "id": "acquired-saya.w",
+      "path": "vfx-scripts/acquired-saya.w.json",
+      "hash": "32e7b9aba055",
+      "size": 744
+    },
+    {
+      "id": "acquired-wargreymon.e",
+      "path": "vfx-scripts/acquired-wargreymon.e.json",
+      "hash": "14ce01a87c50",
+      "size": 757
+    },
+    {
+      "id": "acquired-wargreymon.ex",
+      "path": "vfx-scripts/acquired-wargreymon.ex.json",
+      "hash": "f86c26606812",
+      "size": 809
+    },
+    {
+      "id": "acquired-wargreymon.q",
+      "path": "vfx-scripts/acquired-wargreymon.q.json",
+      "hash": "1c8a8dc08b17",
+      "size": 757
+    },
+    {
+      "id": "acquired-wargreymon.r",
+      "path": "vfx-scripts/acquired-wargreymon.r.json",
+      "hash": "17e0461eed93",
+      "size": 756
+    },
+    {
+      "id": "acquired-wargreymon.w",
+      "path": "vfx-scripts/acquired-wargreymon.w.json",
+      "hash": "9344682124b9",
+      "size": 755
+    },
+    {
+      "id": "acquired-xiaodangjia.e",
+      "path": "vfx-scripts/acquired-xiaodangjia.e.json",
+      "hash": "49a5afb0b16b",
+      "size": 756
+    },
+    {
+      "id": "acquired-xiaodangjia.ex",
+      "path": "vfx-scripts/acquired-xiaodangjia.ex.json",
+      "hash": "7856d795ca02",
+      "size": 758
+    },
+    {
+      "id": "acquired-xiaodangjia.q",
+      "path": "vfx-scripts/acquired-xiaodangjia.q.json",
+      "hash": "7a8fe46abb9f",
+      "size": 756
+    },
+    {
+      "id": "acquired-xiaodangjia.r",
+      "path": "vfx-scripts/acquired-xiaodangjia.r.json",
+      "hash": "bf3869c0492e",
+      "size": 756
+    },
+    {
+      "id": "acquired-xiaodangjia.w",
+      "path": "vfx-scripts/acquired-xiaodangjia.w.json",
+      "hash": "1bee4d6a8dd8",
+      "size": 757
+    },
+    {
+      "id": "acquired-zero.e",
+      "path": "vfx-scripts/acquired-zero.e.json",
+      "hash": "93acd71d04d5",
+      "size": 750
+    },
+    {
+      "id": "acquired-zero.ex",
+      "path": "vfx-scripts/acquired-zero.ex.json",
+      "hash": "b596d0298636",
+      "size": 751
+    },
+    {
+      "id": "acquired-zero.q",
+      "path": "vfx-scripts/acquired-zero.q.json",
+      "hash": "c496cc3056fd",
+      "size": 749
+    },
+    {
+      "id": "acquired-zero.r",
+      "path": "vfx-scripts/acquired-zero.r.json",
+      "hash": "88625e19491e",
+      "size": 751
+    },
+    {
+      "id": "acquired-zero.w",
+      "path": "vfx-scripts/acquired-zero.w.json",
+      "hash": "74e69a3475de",
+      "size": 754
+    },
     {
       "id": "godie-e002.ex",
       "path": "vfx-scripts/godie-e002.ex.json",
@@ -63,214 +843,544 @@
       "size": 1994
     },
     {
+      "id": "lol-ahri.e",
+      "path": "vfx-scripts/lol-ahri.e.json",
+      "hash": "cd73bebb26b7",
+      "size": 955
+    },
+    {
+      "id": "lol-ahri.ex",
+      "path": "vfx-scripts/lol-ahri.ex.json",
+      "hash": "5995d56b2d47",
+      "size": 710
+    },
+    {
+      "id": "lol-ahri.q",
+      "path": "vfx-scripts/lol-ahri.q.json",
+      "hash": "5ac5c3f1dd35",
+      "size": 955
+    },
+    {
+      "id": "lol-ahri.r",
+      "path": "vfx-scripts/lol-ahri.r.json",
+      "hash": "ad7e17e356f4",
+      "size": 705
+    },
+    {
+      "id": "lol-ahri.w",
+      "path": "vfx-scripts/lol-ahri.w.json",
+      "hash": "83b895d7afa7",
+      "size": 700
+    },
+    {
+      "id": "lol-ashe.e",
+      "path": "vfx-scripts/lol-ashe.e.json",
+      "hash": "1eeda137ac66",
+      "size": 707
+    },
+    {
+      "id": "lol-ashe.ex",
+      "path": "vfx-scripts/lol-ashe.ex.json",
+      "hash": "05fe61d46b51",
+      "size": 730
+    },
+    {
+      "id": "lol-ashe.q",
+      "path": "vfx-scripts/lol-ashe.q.json",
+      "hash": "8c2612c40ca6",
+      "size": 525
+    },
+    {
+      "id": "lol-ashe.r",
+      "path": "vfx-scripts/lol-ashe.r.json",
+      "hash": "7381b4a87090",
+      "size": 955
+    },
+    {
+      "id": "lol-ashe.w",
+      "path": "vfx-scripts/lol-ashe.w.json",
+      "hash": "510688ffcbcb",
+      "size": 945
+    },
+    {
+      "id": "lol-blitzcrank.e",
+      "path": "vfx-scripts/lol-blitzcrank.e.json",
+      "hash": "ee7e1a6608cd",
+      "size": 955
+    },
+    {
+      "id": "lol-blitzcrank.ex",
+      "path": "vfx-scripts/lol-blitzcrank.ex.json",
+      "hash": "f6a8612f7b88",
+      "size": 543
+    },
+    {
+      "id": "lol-blitzcrank.q",
+      "path": "vfx-scripts/lol-blitzcrank.q.json",
+      "hash": "d72271b00db0",
+      "size": 968
+    },
+    {
+      "id": "lol-blitzcrank.r",
+      "path": "vfx-scripts/lol-blitzcrank.r.json",
+      "hash": "ad8763e3dee9",
+      "size": 930
+    },
+    {
+      "id": "lol-blitzcrank.w",
+      "path": "vfx-scripts/lol-blitzcrank.w.json",
+      "hash": "984e609eb27f",
+      "size": 722
+    },
+    {
+      "id": "lol-chogath.e",
+      "path": "vfx-scripts/lol-chogath.e.json",
+      "hash": "90b7c48cf797",
+      "size": 763
+    },
+    {
+      "id": "lol-chogath.ex",
+      "path": "vfx-scripts/lol-chogath.ex.json",
+      "hash": "e64fe31c7d3d",
+      "size": 741
+    },
+    {
+      "id": "lol-chogath.q",
+      "path": "vfx-scripts/lol-chogath.q.json",
+      "hash": "9a63378bd6aa",
+      "size": 716
+    },
+    {
+      "id": "lol-chogath.r",
+      "path": "vfx-scripts/lol-chogath.r.json",
+      "hash": "81cec4a62287",
+      "size": 534
+    },
+    {
+      "id": "lol-chogath.w",
+      "path": "vfx-scripts/lol-chogath.w.json",
+      "hash": "4ea44355d26b",
+      "size": 769
+    },
+    {
+      "id": "lol-fiddlesticks.e",
+      "path": "vfx-scripts/lol-fiddlesticks.e.json",
+      "hash": "4a10133f142f",
+      "size": 960
+    },
+    {
+      "id": "lol-fiddlesticks.ex",
+      "path": "vfx-scripts/lol-fiddlesticks.ex.json",
+      "hash": "db98efdf57e1",
+      "size": 748
+    },
+    {
+      "id": "lol-fiddlesticks.q",
+      "path": "vfx-scripts/lol-fiddlesticks.q.json",
+      "hash": "34346d68b74a",
+      "size": 723
+    },
+    {
+      "id": "lol-fiddlesticks.r",
+      "path": "vfx-scripts/lol-fiddlesticks.r.json",
+      "hash": "cd6d385041d6",
+      "size": 917
+    },
+    {
+      "id": "lol-fiddlesticks.w",
+      "path": "vfx-scripts/lol-fiddlesticks.w.json",
+      "hash": "4a9cf2641458",
+      "size": 740
+    },
+    {
+      "id": "lol-garen.e",
+      "path": "vfx-scripts/lol-garen.e.json",
+      "hash": "3cebde674c16",
+      "size": 732
+    },
+    {
+      "id": "lol-garen.ex",
+      "path": "vfx-scripts/lol-garen.ex.json",
+      "hash": "f088ceeec059",
+      "size": 735
+    },
+    {
+      "id": "lol-garen.q",
+      "path": "vfx-scripts/lol-garen.q.json",
+      "hash": "ebffda4fb49c",
+      "size": 757
+    },
+    {
+      "id": "lol-garen.r",
+      "path": "vfx-scripts/lol-garen.r.json",
+      "hash": "85c6a0635205",
+      "size": 927
+    },
+    {
+      "id": "lol-garen.w",
+      "path": "vfx-scripts/lol-garen.w.json",
+      "hash": "3b2477e3ce52",
+      "size": 729
+    },
+    {
       "id": "lol-karthus.e",
       "path": "vfx-scripts/lol-karthus.e.json",
-      "hash": "c8ba32befc53",
-      "size": 403
+      "hash": "6332842dab78",
+      "size": 419
     },
     {
       "id": "lol-karthus.ex",
       "path": "vfx-scripts/lol-karthus.ex.json",
-      "hash": "adb5fc330daa",
-      "size": 405
+      "hash": "2774e1ca0547",
+      "size": 421
     },
     {
       "id": "lol-karthus.q",
       "path": "vfx-scripts/lol-karthus.q.json",
-      "hash": "02b81f74727d",
-      "size": 397
+      "hash": "9693536280d1",
+      "size": 413
     },
     {
       "id": "lol-karthus.r",
       "path": "vfx-scripts/lol-karthus.r.json",
-      "hash": "72e8bd36bd5f",
-      "size": 641
+      "hash": "ebddb0948b71",
+      "size": 657
     },
     {
       "id": "lol-karthus.w",
       "path": "vfx-scripts/lol-karthus.w.json",
-      "hash": "351353234185",
-      "size": 403
+      "hash": "dadc13884553",
+      "size": 419
     },
     {
       "id": "lol-leesin.e",
       "path": "vfx-scripts/lol-leesin.e.json",
-      "hash": "f25a95757d26",
-      "size": 401
+      "hash": "8132a27dd19a",
+      "size": 417
     },
     {
       "id": "lol-leesin.ex",
       "path": "vfx-scripts/lol-leesin.ex.json",
-      "hash": "faf8532a034b",
-      "size": 403
+      "hash": "816cd8159a9a",
+      "size": 419
     },
     {
       "id": "lol-leesin.q",
       "path": "vfx-scripts/lol-leesin.q.json",
-      "hash": "ce05bd374bbd",
-      "size": 401
+      "hash": "496d19891e02",
+      "size": 417
     },
     {
       "id": "lol-leesin.r",
       "path": "vfx-scripts/lol-leesin.r.json",
-      "hash": "32bc94e81ae3",
-      "size": 636
+      "hash": "fb9346d38477",
+      "size": 652
     },
     {
       "id": "lol-leesin.w",
       "path": "vfx-scripts/lol-leesin.w.json",
-      "hash": "b73a62e151f2",
-      "size": 401
+      "hash": "07ebdb2473cf",
+      "size": 417
     },
     {
       "id": "lol-lux.e",
       "path": "vfx-scripts/lol-lux.e.json",
-      "hash": "0842c91ee43c",
-      "size": 395
+      "hash": "a82db08e7711",
+      "size": 411
     },
     {
       "id": "lol-lux.ex",
       "path": "vfx-scripts/lol-lux.ex.json",
-      "hash": "cb15edfe3b41",
-      "size": 397
+      "hash": "e3a1c2fbb5fc",
+      "size": 413
     },
     {
       "id": "lol-lux.q",
       "path": "vfx-scripts/lol-lux.q.json",
-      "hash": "41762bb695b9",
-      "size": 395
+      "hash": "7effa10d1e11",
+      "size": 411
     },
     {
       "id": "lol-lux.r",
       "path": "vfx-scripts/lol-lux.r.json",
-      "hash": "e27a3c321382",
-      "size": 633
+      "hash": "070e2c952582",
+      "size": 649
     },
     {
       "id": "lol-lux.w",
       "path": "vfx-scripts/lol-lux.w.json",
-      "hash": "ddf36d8f4d74",
-      "size": 395
+      "hash": "678ef6f29cc0",
+      "size": 411
+    },
+    {
+      "id": "lol-malphite.e",
+      "path": "vfx-scripts/lol-malphite.e.json",
+      "hash": "ac87a649e1d7",
+      "size": 744
+    },
+    {
+      "id": "lol-malphite.ex",
+      "path": "vfx-scripts/lol-malphite.ex.json",
+      "hash": "3be135a53e26",
+      "size": 948
+    },
+    {
+      "id": "lol-malphite.q",
+      "path": "vfx-scripts/lol-malphite.q.json",
+      "hash": "1a2cb5a0ffb6",
+      "size": 719
+    },
+    {
+      "id": "lol-malphite.r",
+      "path": "vfx-scripts/lol-malphite.r.json",
+      "hash": "54e87442808d",
+      "size": 722
+    },
+    {
+      "id": "lol-malphite.w",
+      "path": "vfx-scripts/lol-malphite.w.json",
+      "hash": "795c7a3dae3e",
+      "size": 765
     },
     {
       "id": "lol-missfortune.e",
       "path": "vfx-scripts/lol-missfortune.e.json",
-      "hash": "d52ea00d595c",
-      "size": 411
+      "hash": "c6a3fafaefa4",
+      "size": 427
     },
     {
       "id": "lol-missfortune.ex",
       "path": "vfx-scripts/lol-missfortune.ex.json",
-      "hash": "fee0dfb71bac",
-      "size": 413
+      "hash": "39ee5035855c",
+      "size": 429
     },
     {
       "id": "lol-missfortune.q",
       "path": "vfx-scripts/lol-missfortune.q.json",
-      "hash": "7201d149e07a",
-      "size": 411
+      "hash": "548737dc4d6c",
+      "size": 427
     },
     {
       "id": "lol-missfortune.r",
       "path": "vfx-scripts/lol-missfortune.r.json",
-      "hash": "ae0e40557309",
-      "size": 649
+      "hash": "0cb82bbeb866",
+      "size": 665
     },
     {
       "id": "lol-missfortune.w",
       "path": "vfx-scripts/lol-missfortune.w.json",
-      "hash": "e5645295351a",
-      "size": 411
+      "hash": "5498e04ca74f",
+      "size": 427
+    },
+    {
+      "id": "lol-ornn.e",
+      "path": "vfx-scripts/lol-ornn.e.json",
+      "hash": "6bb995999905",
+      "size": 760
+    },
+    {
+      "id": "lol-ornn.ex",
+      "path": "vfx-scripts/lol-ornn.ex.json",
+      "hash": "1cd1b4869567",
+      "size": 731
+    },
+    {
+      "id": "lol-ornn.q",
+      "path": "vfx-scripts/lol-ornn.q.json",
+      "hash": "53fd2f153833",
+      "size": 969
+    },
+    {
+      "id": "lol-ornn.r",
+      "path": "vfx-scripts/lol-ornn.r.json",
+      "hash": "16f7c6831cf8",
+      "size": 937
+    },
+    {
+      "id": "lol-ornn.w",
+      "path": "vfx-scripts/lol-ornn.w.json",
+      "hash": "f7496064a3ac",
+      "size": 966
+    },
+    {
+      "id": "lol-sett.e",
+      "path": "vfx-scripts/lol-sett.e.json",
+      "hash": "768ea55979ea",
+      "size": 733
+    },
+    {
+      "id": "lol-sett.ex",
+      "path": "vfx-scripts/lol-sett.ex.json",
+      "hash": "d26e7b4f5942",
+      "size": 732
+    },
+    {
+      "id": "lol-sett.q",
+      "path": "vfx-scripts/lol-sett.q.json",
+      "hash": "9e1fdda9d94c",
+      "size": 754
+    },
+    {
+      "id": "lol-sett.r",
+      "path": "vfx-scripts/lol-sett.r.json",
+      "hash": "7f345351f183",
+      "size": 706
+    },
+    {
+      "id": "lol-sett.w",
+      "path": "vfx-scripts/lol-sett.w.json",
+      "hash": "130bb85b52a3",
+      "size": 961
+    },
+    {
+      "id": "lol-thresh.e",
+      "path": "vfx-scripts/lol-thresh.e.json",
+      "hash": "15a0731eac10",
+      "size": 950
+    },
+    {
+      "id": "lol-thresh.ex",
+      "path": "vfx-scripts/lol-thresh.ex.json",
+      "hash": "4e61c00a90fe",
+      "size": 743
+    },
+    {
+      "id": "lol-thresh.q",
+      "path": "vfx-scripts/lol-thresh.q.json",
+      "hash": "0eb550af8c4d",
+      "size": 960
+    },
+    {
+      "id": "lol-thresh.r",
+      "path": "vfx-scripts/lol-thresh.r.json",
+      "hash": "39db2d9c14dc",
+      "size": 917
+    },
+    {
+      "id": "lol-thresh.w",
+      "path": "vfx-scripts/lol-thresh.w.json",
+      "hash": "cef0e35be1bf",
+      "size": 916
+    },
+    {
+      "id": "lol-velkoz.e",
+      "path": "vfx-scripts/lol-velkoz.e.json",
+      "hash": "930cef30fcd3",
+      "size": 715
+    },
+    {
+      "id": "lol-velkoz.ex",
+      "path": "vfx-scripts/lol-velkoz.ex.json",
+      "hash": "9c60ccd856e4",
+      "size": 535
+    },
+    {
+      "id": "lol-velkoz.q",
+      "path": "vfx-scripts/lol-velkoz.q.json",
+      "hash": "7fa89280439a",
+      "size": 962
+    },
+    {
+      "id": "lol-velkoz.r",
+      "path": "vfx-scripts/lol-velkoz.r.json",
+      "hash": "1e75c22b6819",
+      "size": 971
+    },
+    {
+      "id": "lol-velkoz.w",
+      "path": "vfx-scripts/lol-velkoz.w.json",
+      "hash": "60051295bd30",
+      "size": 1000
     },
     {
       "id": "lol-warwick.e",
       "path": "vfx-scripts/lol-warwick.e.json",
-      "hash": "bf11d7084128",
-      "size": 403
+      "hash": "0a00c7a1d0b3",
+      "size": 419
     },
     {
       "id": "lol-warwick.ex",
       "path": "vfx-scripts/lol-warwick.ex.json",
-      "hash": "4f6abc99c027",
-      "size": 405
+      "hash": "31da86ce4819",
+      "size": 421
     },
     {
       "id": "lol-warwick.q",
       "path": "vfx-scripts/lol-warwick.q.json",
-      "hash": "e2e05d9f7b34",
-      "size": 397
+      "hash": "db3fea7ef3c8",
+      "size": 413
     },
     {
       "id": "lol-warwick.r",
       "path": "vfx-scripts/lol-warwick.r.json",
-      "hash": "59bc2426c12b",
-      "size": 641
+      "hash": "196d8c2f4ffe",
+      "size": 657
     },
     {
       "id": "lol-warwick.w",
       "path": "vfx-scripts/lol-warwick.w.json",
-      "hash": "0a84167a12da",
-      "size": 403
+      "hash": "1461cc83c3a4",
+      "size": 419
     },
     {
       "id": "lol-xerath.e",
       "path": "vfx-scripts/lol-xerath.e.json",
-      "hash": "b0c3ff640adf",
-      "size": 401
+      "hash": "51bb546ab4e6",
+      "size": 417
     },
     {
       "id": "lol-xerath.ex",
       "path": "vfx-scripts/lol-xerath.ex.json",
-      "hash": "8d32e51499fd",
-      "size": 403
+      "hash": "1830ba1d8b1e",
+      "size": 419
     },
     {
       "id": "lol-xerath.q",
       "path": "vfx-scripts/lol-xerath.q.json",
-      "hash": "a1793722fd9d",
-      "size": 401
+      "hash": "9fc7534130ec",
+      "size": 417
     },
     {
       "id": "lol-xerath.r",
       "path": "vfx-scripts/lol-xerath.r.json",
-      "hash": "568ddfe30aff",
-      "size": 639
+      "hash": "7b0b397cf756",
+      "size": 655
     },
     {
       "id": "lol-xerath.w",
       "path": "vfx-scripts/lol-xerath.w.json",
-      "hash": "771fde1dcacf",
-      "size": 401
+      "hash": "3245f744c411",
+      "size": 417
     },
     {
       "id": "lol-yasuo.e",
       "path": "vfx-scripts/lol-yasuo.e.json",
-      "hash": "1350a7608b11",
-      "size": 399
+      "hash": "5133e453980e",
+      "size": 415
     },
     {
       "id": "lol-yasuo.ex",
       "path": "vfx-scripts/lol-yasuo.ex.json",
-      "hash": "d2b307191d85",
-      "size": 401
+      "hash": "2efea1c0965f",
+      "size": 417
     },
     {
       "id": "lol-yasuo.q",
       "path": "vfx-scripts/lol-yasuo.q.json",
-      "hash": "93751c25c9db",
-      "size": 393
+      "hash": "02c8281830ae",
+      "size": 409
     },
     {
       "id": "lol-yasuo.r",
       "path": "vfx-scripts/lol-yasuo.r.json",
-      "hash": "dbe3c3337522",
-      "size": 637
+      "hash": "5ae3ce660431",
+      "size": 653
     },
     {
       "id": "lol-yasuo.w",
       "path": "vfx-scripts/lol-yasuo.w.json",
-      "hash": "1a281a722fcf",
-      "size": 399
+      "hash": "51d7fcf1a826",
+      "size": 415
     }
   ]
 }

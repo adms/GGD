@@ -1,0 +1,480 @@
+{
+  "id": "lol-thresh",
+  "name": "瑟雷西",
+  "description": "鉤鎖控距、燈籠救援與區域封鎖\n\n概念來源：LoL 瑟雷西\nhttps://www.leagueoflegends.com/zh-tw/champions/thresh/\n\n本遊戲改編：\n• 保留原版 QWER 的招式結構。\n• PASSIVE：重大簡化：沒有地面魂物件或附近死亡拾魂；是自身擊殺給屬性，最多20層。\n• Q：鉤中後 2 秒內可自行再按 Q 飛向同一個被鉤者（0.25 秒平飛落在他身上，不是沿鉤線拖行）；鉤空按 Q 被拒；被鉤者死亡或消失 ⇒ 後段立刻結束。\n• W：燈籠丟到地上，落點圈內的隊友獲得護盾；隊友自己點燈（interact 指令，GH#1189）才飛回瑟雷西，施法者不會強制搬人。簡化：護盾給落點圈內的隊友，不是原版「第一個碰到燈籠的隊友」；只能搭乘一人。\n• E：前後反向選擇用轉身面向代替；蓄力普攻部分暫省略。\n• R：自身周圍立起五段可穿越的邊界（半徑 3、存活 5 秒）；敵人穿過某一段時受傷並重緩速，那一段隨即消失，放下時站在圈內不挨打。同一人穿過不同段會各吃一次（原作第二道牆起傷害減半且不再緩速）；邊界不擋路。\n• EX：不召喚不可通行的燈籠物件。\n\n採用所選 GGD 模型與特效。",
+  "role": "fighter",
+  "attackType": "ranged",
+  "archetype": "fighter",
+  "origin": "軟輔",
+  "modelKey": "community.body.91bb53c74fdca5cd643260d0f197733f14068f4a79a3e488",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 8.2,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 6,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 10.305102040816323,
+    "healthRegen": 0.1168285714285714,
+    "maxMana": 6.564285714285716,
+    "manaRegen": 0,
+    "ad": 2.220326530612245,
+    "as": 0,
+    "mr": 2.1118367346938776,
+    "armor": 0.4212959183673469,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 21,
+    "agi": 20,
+    "int": 19,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "STR",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "lol-thresh.q",
+      "name": "死亡宣告",
+      "provenance": "editor-json",
+      "description": "直線鉤命中後傷害、鎖足並短拉近。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "radius": 3,
+      "rangeTier": "大",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.bolt",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "lol-thresh.hook",
+              "duration": 1.2,
+              "root": true
+            },
+            {
+              "kind": "knockback",
+              "distance": 2,
+              "speed": 12,
+              "from": "pull",
+              "subtractGap": false,
+              "launchHeight": 0
+            }
+          ]
+        }
+      ],
+      "recastEffects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0,
+          "durationSec": 0.25
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "spawnProjectile",
+              "projectileId": "imported.bolt",
+              "onHit": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-thresh.hook",
+                  "duration": 1.2,
+                  "sourceScope": "caster",
+                  "root": true
+                },
+                {
+                  "kind": "knockback",
+                  "distance": 1.5,
+                  "speed": 12,
+                  "from": "pull",
+                  "subtractGap": false,
+                  "launchHeight": 0
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "recast": {
+        "charges": 1,
+        "windowSec": 2,
+        "gate": "onHit",
+        "anchor": "firstHit"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-thresh.q.webp"
+    },
+    "W": {
+      "id": "lol-thresh.w",
+      "name": "鬼影燈籠",
+      "provenance": "editor-json",
+      "description": "朝地面丟出燈籠：落點圈內的隊友獲得護盾；隊友自己點燈才飛回瑟雷西身邊。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "大",
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 180,
+            "ratios": [],
+            "perRank": [
+              0,
+              135,
+              270,
+              405
+            ]
+          },
+          "duration": 3,
+          "absorbs": "all",
+          "stackKey": "lol-thresh.lantern",
+          "onExisting": "keepLarger"
+        },
+        {
+          "kind": "spawnInteractable",
+          "radius": 2.5,
+          "durationSec": 6,
+          "maxUses": 1,
+          "onAccept": [
+            {
+              "kind": "blink",
+              "shape": "single",
+              "to": "caster",
+              "applyTo": "target"
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "ground",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "allies",
+          "effects": [
+            {
+              "kind": "shield",
+              "amount": {
+                "flat": 180,
+                "ratios": [],
+                "perRank": [
+                  0,
+                  135,
+                  270,
+                  405
+                ]
+              },
+              "duration": 3,
+              "stackKey": "lol-thresh.lantern",
+              "onExisting": "keepLarger",
+              "absorbs": "all"
+            },
+            {
+              "kind": "spawnInteractable",
+              "radius": 2.5,
+              "durationSec": 6,
+              "maxUses": 1,
+              "onAccept": [
+                {
+                  "kind": "blink",
+                  "shape": "single",
+                  "to": "caster",
+                  "applyTo": "target"
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-thresh.w.webp"
+    },
+    "E": {
+      "id": "lol-thresh.e",
+      "name": "懾魂掃蕩",
+      "provenance": "editor-json",
+      "description": "向面向掃鏈，傷害並把命中者沿揮擊方向推移。",
+      "slot": "E",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小"
+          },
+          "length": 4,
+          "width": 2.5,
+          "aim": "facing",
+          "fromCaster": true,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "knockback",
+              "distance": 2,
+              "speed": 12,
+              "from": "facing",
+              "subtractGap": false,
+              "launchHeight": 0
+            },
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "lol-thresh.flay-slow",
+              "duration": 1,
+              "moveSpeedMult": 0.7
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damageLine",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              },
+              "length": 4,
+              "width": 2.5,
+              "aim": "facing",
+              "fromCaster": true,
+              "includeOrigin": true,
+              "onHitTargets": [
+                {
+                  "kind": "knockback",
+                  "distance": 1.5,
+                  "speed": 12,
+                  "from": "facing",
+                  "subtractGap": false,
+                  "launchHeight": 0
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-thresh.flay-slow",
+                  "duration": 1,
+                  "sourceScope": "caster",
+                  "moveSpeedMult": 0.7
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-thresh.e.webp"
+    },
+    "R": {
+      "id": "lol-thresh.r",
+      "name": "惡靈領域",
+      "provenance": "editor-json",
+      "description": "自身周圍立起五段邊界；敵人穿過任何一段時受傷並重緩速，那一段隨即消失。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 0.0,
+      "radius": 3,
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "spawnThresholds",
+          "sides": 5,
+          "radius": 3,
+          "durationSec": 5,
+          "onCross": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "中"
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "lol-thresh.box",
+              "duration": 2,
+              "moveSpeedMult": 0.3
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "spawnThresholds",
+              "sides": 5,
+              "radius": 3,
+              "durationSec": 5,
+              "onCross": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "中"
+                  }
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "lol-thresh.box",
+                  "duration": 2,
+                  "sourceScope": "caster",
+                  "moveSpeedMult": 0.3
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-thresh.r.webp"
+    }
+  },
+  "exAbility": "lol-thresh.ex",
+  "passiveAbility": "lol-thresh.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "thrown"
+  ],
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/lol-thresh.webp"
+}

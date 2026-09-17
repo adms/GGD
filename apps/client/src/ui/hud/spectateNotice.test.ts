@@ -29,6 +29,7 @@ import {
   SPECTATE_NOTICE_TEXT,
   SPECTATE_NOTICE_TOP,
   SPECTATE_OFFER_TEXT,
+  SPECTATE_WATCH_SENTENCE_W,
   SpectateNoticeView_,
   spectateNotice,
   spectateNoticeClick,
@@ -137,6 +138,27 @@ describe("it really paints", () => {
     expect(html).toContain(SPECTATE_NOTICE_TEXT);
     expect(html).toContain(SPECTATE_BACK_LABEL);
     expect(html).not.toContain(SPECTATE_GO_LABEL);
+  });
+
+  /**
+   * The owner's sentence was blanked to "" by a half-way lane snapshot
+   * (a76747ef5) and stayed blank for seven weeks, because every assertion above
+   * is `toContain(SPECTATE_NOTICE_TEXT)` — which "" satisfies for ANY markup.
+   * Mutation (2026-09-15): SPECTATE_NOTICE_TEXT = "" → this test goes red.
+   */
+  it("WATCHING really says the owner's sentence — never an empty string", () => {
+    expect(spectateNotice(0, null).text.trim(), "WATCHING 文字是空的").not.toBe("");
+    // the desktop plate is wide enough for it, so it is PAINTED, and it takes the chip's place
+    expect(RECT!.w).toBeGreaterThanOrEqual(SPECTATE_WATCH_SENTENCE_W);
+    const wide = markup(0, null);
+    expect(wide).toContain(`>${SPECTATE_NOTICE_TEXT}<`);
+    expect(wide).not.toContain("第 1 競技場");
+    // a narrower plate yields the sentence, never the way back
+    const narrow = renderToStaticMarkup(createElement(SpectateNoticeView_, {
+      view: spectateNotice(0, null), rect: { ...RECT!, w: SPECTATE_WATCH_SENTENCE_W - 1 },
+    }));
+    expect(narrow).not.toContain(SPECTATE_NOTICE_TEXT);
+    expect(narrow).toContain(SPECTATE_BACK_LABEL);
   });
 
   it("the plate is click-through but the button is NOT", () => {

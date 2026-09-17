@@ -1,0 +1,186 @@
+{
+  "schema": "ggd-library-body-ready@1",
+  "preparation": {
+    "schema": "ggd-library-model-preparation@1",
+    "asset": "ou99:456917",
+    "source": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_456917.glb",
+      "bytes": 897596,
+      "sha256": "1c95656d2842703c1b028a67db0f8530d55cbd1c81616b4230c6e6cf3b1f98c6"
+    },
+    "output": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.456917/converted/body.glb",
+      "bytes": 1262164,
+      "sha256": "4b9a5bad914ec3425d29f03105d484796acc7525f6550ec0b7516029b226d053"
+    },
+    "stateClips": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack -1",
+      "cast": "Spell One",
+      "death": "Death",
+      "hurt": "Stand"
+    },
+    "yawOffsetDeg": 0,
+    "nativeAnimation": true,
+    "nativeClipProof": "../control/standardization.json",
+    "limitations": [
+      "Merged transparent primitives can alter per-primitive depth-sort granularity; no triangles or alpha pixels discarded.",
+      "Only existing clipMap-referenced native clips are in runtime; all source clips retained in original/source.glb.",
+      "No animation channel was removed or resampled."
+    ]
+  },
+  "model": {
+    "schema": "ggd-uploaded-hero-model@1",
+    "sha256": "43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919",
+    "byteSize": 886408,
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack -1",
+      "cast": "Spell One",
+      "hurt": "Stand",
+      "death": "Death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "document": {
+    "id": "ou99.456917-standard-v2",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919.glb",
+    "scale": 1,
+    "collisionRadius": 0.55,
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack -1",
+      "cast": "Spell One",
+      "hurt": "Stand",
+      "death": "Death"
+    }
+  },
+  "uploadedDocument": {
+    "id": "community.body.8da2dfd9d2b5b6193095842a368681c24d27494db2c635ae",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/43ab12cadd5cedbf8b4ec4c1faa33a66c81a640759d5f210c7462bb65b3bb919.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "Stand",
+      "run": "Walk",
+      "attack": "Attack -1",
+      "cast": "Spell One",
+      "hurt": "Stand",
+      "death": "Death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "selectedClips": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack -1",
+    "cast": "Spell One",
+    "death": "Death",
+    "hurt": "Stand"
+  },
+  "metrics": {
+    "triangles": 7081,
+    "drawPrimitives": 1,
+    "textures": [
+      {
+        "width": 512,
+        "height": 512,
+        "bytes": 416056,
+        "sha256": "51dccc539697b623c006cc4ef779700c1295f3e25be49b834352d13837dcda51"
+      }
+    ]
+  },
+  "runtimeClips": [
+    {
+      "index": 0,
+      "name": "Stand",
+      "duration": 2,
+      "channels": 31
+    },
+    {
+      "index": 1,
+      "name": "Walk",
+      "duration": 0.800000011920929,
+      "channels": 31
+    },
+    {
+      "index": 2,
+      "name": "Attack -1",
+      "duration": 1,
+      "channels": 31
+    },
+    {
+      "index": 3,
+      "name": "Spell One",
+      "duration": 1,
+      "channels": 31
+    },
+    {
+      "index": 4,
+      "name": "Death",
+      "duration": 1,
+      "channels": 31
+    }
+  ],
+  "warnings": [],
+  "validator": {
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "ggd-w3x-import",
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 819316
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 512,
+            "height": 512,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 5,
+      "materialCount": 10,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 1,
+      "totalVertexCount": 5258,
+      "totalTriangleCount": 7081,
+      "maxUVs": 1,
+      "maxInfluences": 4,
+      "maxAttributes": 5
+    }
+  },
+  "evidence": {
+    "sharedPrepareAndVerify": true,
+    "originalModelBindingPreservedExceptIdAndPath": true,
+    "nativeMotionNotResampled": true,
+    "visualAcceptance": "pending"
+  }
+}

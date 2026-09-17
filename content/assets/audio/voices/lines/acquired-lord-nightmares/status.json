@@ -1,0 +1,133 @@
+{
+ "championId": "acquired-lord-nightmares",
+ "reference": {
+  "sha256": null,
+  "sourceKind": "none",
+  "donor": null,
+  "note": "originals only — owner excluded this hero from synthesis (COMBAT_CASTING.json.excluded)",
+  "path": null
+ },
+ "generator": "tools/voice-gen/src/build-combat-lines.mjs",
+ "lines": {
+  "skill-name.r": {
+   "takes": [],
+   "text": "（原檔）voice_dazhao_2",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:300heroes:46/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/46/00-0005-46_voice_dazhao_2.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:46",
+    "stub": false,
+    "bytes": 29719,
+    "seconds": 1.79229,
+    "lufs": null,
+    "hash": "3896fc078c6067194933afc668b42e2de03f87c3274fa2f16fa55dcae1cc5852",
+    "at": 1789575865663
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "takes": [],
+   "text": "（原檔）voice_death_1",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:300heroes:46/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/46/00-0013-46_voice_death_1.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:46",
+    "stub": false,
+    "bytes": 15508,
+    "seconds": 0.901224,
+    "lufs": null,
+    "hash": "c4ac15b662dc4204719472ce80e430432ef3255e260c17b9963ad3eaf986b966",
+    "at": 1789575865714
+   },
+   "lastError": null
+  },
+  "defeat.2": {
+   "takes": [],
+   "text": "（原檔）voice_death_2",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:300heroes:46/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/46/00-0010-46_voice_death_2.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:46",
+    "stub": false,
+    "bytes": 16762,
+    "seconds": 0.970884,
+    "lufs": null,
+    "hash": "f4a97e1709e83cb90bd14f0fe96cd23b67896ed9d5155fa70296289c8d425ab6",
+    "at": 1789575865765
+   },
+   "lastError": null
+  },
+  "defeat.3": {
+   "takes": [],
+   "text": "（原檔）voice_death_3",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:300heroes:46/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/46/00-0008-46_voice_death_3.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:46",
+    "stub": false,
+    "bytes": 25121,
+    "seconds": 1.493333,
+    "lufs": null,
+    "hash": "aae7deeff1ebf922ccae613c6aa391bb0d83f64a5bf5d85c5cb85488160c231c",
+    "at": 1789575865813
+   },
+   "lastError": null
+  },
+  "attack-light": {
+   "takes": [],
+   "text": "（原檔）voice_attack_1",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:300heroes:46/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/46/00-0016-46_voice_attack_1.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:46",
+    "stub": false,
+    "bytes": 23449,
+    "seconds": 1.394649,
+    "lufs": null,
+    "hash": "284b875b10e958f39839809258d13a652f008269343d586a53aa8e00746c223f",
+    "at": 1789575865861
+   },
+   "lastError": null
+  },
+  "attack-heavy": {
+   "takes": [],
+   "text": "（原檔）voice_attack_2",
+   "lang": "und",
+   "textSource": "original",
+   "origin": "original:300heroes:46/outputs/game-asset-library-20260907/300heroes/audio/data/audio/hero/46/00-0007-46_voice_attack_2.ogg",
+   "state": "generated",
+   "current": {
+    "take": 0,
+    "engine": "original",
+    "engineVersion": "300heroes:46",
+    "stub": false,
+    "bytes": 38078,
+    "seconds": 2.306032,
+    "lufs": null,
+    "hash": "58a17f757361e7c3da6a8409a27157eab13e755718fa207cf2ae6324476f8ccf",
+    "at": 1789575865910
+   },
+   "lastError": null
+  }
+ }
+}

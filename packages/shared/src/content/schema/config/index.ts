@@ -82,6 +82,9 @@ import { zConfigRosterDoc } from "./roster";
 import { zConfigBossIntroDoc } from "./bossIntro";
 import { zConfigMatchDoc } from "./match";
 import { zConfigStoreDoc } from "./store";
+// ⭐ GH#1177 追加 —— 造型分級售價表。⚠️ 漏掉這一行 = skin-tier-prices.json 進了 content/ 之後
+// 整份內容驗證失敗 → 骨架英雄（消費端是 Go 也一樣：擋下整份 bundle 的是這個 union）。
+import { zConfigSkinTierPricesDoc } from "./skinTierPrices";
 import { zConfigArenaRulesDoc } from "./arenaRules";
 import { zConfigCombatEnvDoc } from "./combatEnv";
 import { zConfigAmbientVfxDoc } from "./ambientVfx";
@@ -116,6 +119,7 @@ import { zConfigApDamageScalingDoc } from "./apDamageScaling";
 import { zConfigDispelDoc } from "./dispel";
 import { zConfigCooldownRulesDoc } from "./cooldownRules";
 import { zConfigCastTimeDoc } from "./castTime";
+import { zConfigBalanceAnchorsDoc } from "./balanceAnchors";
 import { zConfigCastTimeTiersDoc } from "./castTimeTiers";
 // ⭐ GH#938 —— 升級成長率（從冷卻級距推導）。
 import { zConfigRankGrowthDoc } from "./rankGrowth";
@@ -191,6 +195,7 @@ export * from "./bodyScale";
 export * from "./bossIntro";
 export * from "./camera";
 export * from "./castTime";
+export * from "./balanceAnchors";
 export * from "./castTimeTiers";
 export * from "./rankGrowth";
 export * from "./oneShotClamp";
@@ -241,6 +246,7 @@ export * from "./statCaps";
 export * from "./statNormalization";
 export * from "./stealth";
 export * from "./store";
+export * from "./skinTierPrices";
 export * from "./taunt";
 export * from "./hudLayout";
 export * from "./voxelLook";
@@ -269,6 +275,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigBossIntroDoc,
   zConfigMatchDoc,
   zConfigStoreDoc,
+  zConfigSkinTierPricesDoc,
   zConfigArenaRulesDoc,
   zConfigCombatEnvDoc,
   zConfigAmbientVfxDoc,
@@ -330,6 +337,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   // 吟唱規則（owner 2026-08-13）。⚠️ 漏掉這一行 = 一份 cast-time.json 進了
   // content/ 之後整份內容驗證失敗 → 骨架英雄（2026-08-02 事故的形狀）。
   zConfigCastTimeDoc,
+  zConfigBalanceAnchorsDoc,
   zConfigCastTimeTiersDoc,
   zConfigRankGrowthDoc,
   zConfigOneShotClampDoc,

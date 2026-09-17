@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "〔電力儲備〕",
   "provenance": "editor-json",
-  "description": "技能消耗電力；停止攻擊一段時間後逐步充電，設上限。",
+  "description": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 {{cd}} 秒。\n【目標設計】技能消耗電力；停止攻擊一段時間後逐步充電，設上限。\n【待補機制】需電力上限／脫戰充電；目前用標準魔力。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,
@@ -49,5 +49,6 @@
       "vfxKey": "fx.prim.lightning.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/community-review-24-20260907.passive.webp"
+  "icon": "assets/icons/abilities/community-review-24-20260907.passive.webp",
+  "castTimeTier": "極小"
 }

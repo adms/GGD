@@ -1,0 +1,16 @@
+{
+  "id": "acquired-pokemon-trainer.vine",
+  "schema": "status-effect@1",
+  "name": "妙蛙草・藤鞭",
+  "description": "Pokémon Trainer「妙蛙草・藤鞭」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-pokemon-trainer.vine",
+    "root",
+    "immobilize",
+    "move-denied",
+    "disable",
+    "cc",
+    "debuff"
+  ]
+}

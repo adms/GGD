@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "鬥士",
-  "modelKey": "imported.lubu",
+  "modelKey": "version.body.65625f70066c08daf27aec96a0922bfe6500b3e6bbb95574",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -26,9 +26,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 75.5224,
+    "maxHealth": 80,
     "healthRegen": 0.2017,
-    "maxMana": 47.7092,
+    "maxMana": 50,
     "manaRegen": 0.1753,
     "ad": 3.1078,
     "armor": 0.8601,
@@ -107,7 +107,8 @@
         ]
       },
       "icon": "assets/icons/abilities/godie-h01u.q.webp",
-      "vfxKey": "fx.prim.physical.shockwave"
+      "vfxKey": "fx.prim.physical.shockwave",
+      "castTimeTier": "極小"
     },
     "W": {
       "id": "godie-h01u.w",
@@ -124,10 +125,10 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "range": 0.0,
       "radiusTier": "小",
@@ -137,12 +138,7 @@
           "kind": "damageArea",
           "damageType": "physical",
           "amount": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "小",
-              "小"
-            ]
+            "damageTier": "極小"
           },
           "radius": 4.5,
           "radiusTier": "小",
@@ -195,12 +191,7 @@
           "castType": "self",
           "damageType": "physical",
           "damage": {
-            "damageTierPerRank": [
-              "極小",
-              "極小",
-              "小",
-              "小"
-            ]
+            "damageTier": "極小"
           },
           "radius": 4.5,
           "radiusTier": "小",
@@ -243,15 +234,16 @@
             "scale": 2.0,
             "distance": 4.5
           },
-          "castTimeSec": 0.667
+          "castTimeSec": 0.5
         }
       },
       "icon": "assets/icons/abilities/godie-h01u.w.webp",
       "vfxKey": "fx.prim.physical.slash",
       "sfxKey": "wc3.defendcaster",
       "cooldownTier": "中",
-      "manaCostTier": "小",
-      "castTimeSec": 0.667
+      "castTimeTier": "大",
+      "manaCostTier": "極小",
+      "castTimeSec": 0.5
     },
     "E": {
       "id": "godie-h01u.e",
@@ -268,10 +260,10 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "range": 8.0,
       "radiusTier": "中",
@@ -324,9 +316,10 @@
       "icon": "assets/icons/abilities/godie-h01u.e.webp",
       "vfxKey": "fx.prim.physical.beam",
       "cooldownTier": "中",
-      "manaCostTier": "小",
+      "castTimeTier": "小",
       "rangeTier": "大",
-      "castTimeSec": 0.067
+      "manaCostTier": "小",
+      "castTimeSec": 0.1
     },
     "R": {
       "id": "godie-h01u.r",
@@ -454,7 +447,8 @@
       "vfxKey": "fx.prim.physical.shockwave-lg",
       "sfxKey": "wc3.defendcaster",
       "cooldownTier": "極大",
-      "castTimeSec": 0.667
+      "castTimeTier": "大",
+      "castTimeSec": 0.5
     }
   },
   "skillOrder": [
@@ -499,5 +493,41 @@
     "高傷換血",
     "正面壓迫"
   ],
-  "pitch": "以高傷害逼迫敵人正面接戰，不靠複雜機制，就是用力量把對手壓下去。"
+  "pitch": "以高傷害逼迫敵人正面接戰，不靠複雜機制，就是用力量把對手壓下去。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.15b9251641e4e58615f86a092f00f34d17f6dcbd015ff28c",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.lubu",
+      "modelSha256": "cbe0e06869a8e1e55d737ae362ccd8ad3cca08d8193e4ab28db3febef39e6c53",
+      "binarySha256": "14c5c520c697e2356353e893e3002621b9f633dc8c30c988f27b7b95f4d83c67",
+      "registeredAt": "2026-09-14T22:47:00.640Z",
+      "source": {
+        "kind": "previous",
+        "character": "亂世癿王者 - 呂布奉先",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.lubu.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.65625f70066c08daf27aec96a0922bfe6500b3e6bbb95574",
+      "label": "原上線模型（貼圖 256 正規化）",
+      "sourceModelKey": "imported.lubu",
+      "modelSha256": "05d33bf34132132ce1795ecdf1cda11613bb76e8007d8fe8b0af9332485ea402",
+      "binarySha256": "bd61796f8fd7512fc674cb6f27958e21cbe65c6ebb7e49f4a27fc41db6de8ff1",
+      "registeredAt": "2026-09-14T22:47:00.642Z",
+      "source": {
+        "kind": "exact",
+        "character": "亂世癿王者 - 呂布奉先",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.lubu.json",
+        "tier": "w3x"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

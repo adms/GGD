@@ -2,7 +2,9 @@
  * GH#682/#683 —— 詠唱>1秒清單 ＋ 移速加成清單的薄守衛（體驗層，⛔ 不開對抗輪）。
  *
  * 三個方向，全部用**掃出來的動態樣本**，⛔ 不硬編任何技能 id：
- *   ① 詠唱清單非空，且含一支磁碟上就 >門檻 的技能（門檻突變 1→999 ⇒ 清單空 ⇒ 紅）
+ *   ① 詠唱清單與磁碟兩個方向一致：清單不收 ≤門檻 的列；磁碟有 >門檻 的技能時清單要收到
+ *      （門檻突變 1→999 ⇒ 清單空 ⇒ 紅）。⚠️ 吟唱五級距上界 1.0 之後清單**合法地是空的**（da508309c），
+ *      ⛔ 不再假設「非空」—— 那是一份內容快照，⭐ 不是機制
  *   ② 模板技守衛：ms 修飾**只**住在 `template.params` 裡的技能（生 JSON 掃不到）
  *      必須出現在清單裡 —— 產生器改成自己 parse 生檔（漏掉模板展開）⇒ 紅
  *   ③ speedlists:check 綠 —— 三份產物（JSON + 兩份 md）與產生器逐位元組一致
@@ -39,17 +41,29 @@ const hasPositiveMs = (node: unknown, skipTemplate: boolean): boolean => {
 };
 
 describe("技能清單（GH#682/#683）", () => {
-  it("① 詠唱清單非空，且含磁碟上就超過門檻的技能（動態樣本）", () => {
+  it("① 詠唱清單與磁碟兩個方向一致（動態樣本，⛔ 不假設今天一定有 >門檻 的技能）", () => {
     cover(TAG);
-    expect(lists.cast.length, "詠唱清單是空的 —— 門檻或掃描器壞了").toBeGreaterThan(0);
+    const rows = lists.cast as { id: string; castTimeSec: number }[];
+    // 方向一：清單不可以收**沒超過**門檻的列（`>` 突變成 `>=` ⇒ 大量 1.0 秒的極大級收進來 ⇒ 紅）
+    expect(
+      rows.filter((r) => !(r.castTimeSec > lists.castThresholdSec)).map((r) => r.id),
+      "清單收了沒超過門檻的技能 —— 門檻比較或掃描器壞了",
+    ).toEqual([]);
+    const docs = rawDocs();
+    expect(docs.some((d) => typeof d["castTimeSec"] === "number"), "磁碟上一支有 castTimeSec 的技能都讀不到 —— 讀取器壞了").toBe(true);
     const diskOver = new Set(
-      rawDocs()
+      docs
         .filter((d) => typeof d["castTimeSec"] === "number" && (d["castTimeSec"] as number) > lists.castThresholdSec)
         .map((d) => d["id"]),
     );
-    expect(diskOver.size, "磁碟上一支 >門檻 的技能都掃不到 —— 讀取器壞了").toBeGreaterThan(0);
-    const listed = lists.cast.filter((r) => diskOver.has(r.id));
-    expect(listed.length, "磁碟上明明有超過門檻的技能，清單卻一支都沒收").toBeGreaterThan(0);
+    // ⭐ 吟唱五級距上界 1.0（owner 2026-09-02「0, 0.1, 0.3, 0.5, 1」）＝ castTimeMaxSec；
+    //   da508309c 把原始值對齊級距之後，磁碟上合法地一支 >1 秒都沒有 ⇒ 清單也必須是空的。
+    if (diskOver.size === 0) {
+      expect(rows.map((r) => r.id), "磁碟上沒有任何 >門檻 的技能，清單卻收了東西").toEqual([]);
+      return;
+    }
+    // 方向二：磁碟上有 >門檻 的技能 ⇒ 清單至少收到一支（門檻突變 1→999 ⇒ 清單空 ⇒ 紅）
+    expect(rows.filter((r) => diskOver.has(r.id)).length, "磁碟上明明有超過門檻的技能，清單卻一支都沒收").toBeGreaterThan(0);
   });
 
   it("② 模板技的 ms 修飾要被算到（掃描器必須走展開後的註冊表，⛔ 不是生 JSON）", () => {

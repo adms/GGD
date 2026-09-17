@@ -8,16 +8,18 @@
 #
 #   GGD_MINI_HOST=…   目標（預設見下）
 #   GGD_MINI_USER=…   使用者名稱（⛔ 沒有預設 —— 猜錯會卡在難懂的錯誤上）
+#   GGD_MINI_CLASH_FAILOPEN=1  逃生口：未追蹤碰撞掃描失敗時照舊 checkout（⛔ 預設是停下來，GH#1156）
 #
 # ═══ ⭐ 為什麼預設用 `.local` 而不是 IP ═══
 # mini 同時有兩個位址（實測 2026-08-29）:
-#   169.254.166.33  ← 直連的網卡（RTT 0.59 ms,100 Mbps 硬上限）
-#   192.168.0.133   ← Wi-Fi（RTT 9.18 ms）
+#   169.254.x.x     ← 直連的網卡（RTT 0.59 ms,100 Mbps 硬上限）
+#   192.168.x.x     ← Wi-Fi（RTT 9.18 ms）
+#   ⛔ 實際位址不寫在這裡 —— 見 scripts/hosts.local.sh（不進 git）
 # ⭐ mDNS 會自己挑當下通的那一條 ⇒ 拔線、換網段、換 DHCP 位址都不會壞。
 # ⛔ 寫死 IP 的話,owner「有時候會把 mini 放在同一個區網」那句話就會變成一個 bug。
 #
 # ═══ ⛔ 這支腳本**永遠不碰正式站** ═══
-# GCP（34.81.104.163 / ggd.adms.ai）走 scripts/host-deploy.sh。
+# GCP 回滾機（$GGD_DEPLOY_SSH / ggd.adms.ai）走 scripts/host-deploy.sh。
 # 這一支只對 mini 說話,而且開頭會拒絕任何看起來像正式站的目標。
 set -uo pipefail
 RED=$'\033[31m'; GRN=$'\033[32m'; YEL=$'\033[33m'; BLD=$'\033[1m'; RST=$'\033[0m'
@@ -29,15 +31,31 @@ info(){ printf '    %s\n' "$*"; }
 FAIL=0; bad(){ printf '  %s✗%s %s\n' "$RED" "$RST" "$*"; FAIL=$((FAIL+1)); }
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
+# ⭐ 主機身分：環境變數 > scripts/hosts.local.sh > 主工作樹那一份（見 _hosts.sh）。
+#   ⚠️ 在此之前這支只讀環境變數 ⇒ CLAUDE.md 部署段那條（已經拿掉 USER/HOST 的）指令直接跑會死在
+#   「請設 GGD_MINI_USER」，而下面的回滾機柵欄也只在 ship-it.sh 幫忙 export 時才生效。
+# shellcheck source=/dev/null
+[ -f "$REPO/scripts/_hosts.sh" ] && . "$REPO/scripts/_hosts.sh"
 HOST="${GGD_MINI_HOST:-GenieAccelerdeMac-mini-2.local}"
 USER_="${GGD_MINI_USER:-}"
+case "$HOST$USER_" in
+  *"<"*) echo "${RED}⛔ GGD_MINI_HOST／GGD_MINI_USER 還是 .example 的 <佔位> —— 填 scripts/hosts.local.sh$RST" >&2; exit 2 ;;
+esac
 REMOTE_REPO="${GGD_MINI_REPO:-\$HOME/GGD}"
 
 # ⛔ 硬柵欄:這支腳本不可以對正式站說話
 case "$HOST" in
-  *ggd.adms.ai*|34.81.104.163|*adms.ai*)
+  *ggd.adms.ai*|*adms.ai*)
     die "⛔ $HOST 看起來是正式站 —— 這支腳本只對 mini 說話。正式站走 scripts/host-deploy.sh" ;;
 esac
+# ⭐ 回滾機的位址住 scripts/hosts.local.sh（⛔ 不進 git,因為這個 repo 是 public 的)。
+#   ⚠️ 沒設就**只剩上面那條網域柵欄** —— 這是刻意的取捨:⛔ 不因為少一個檔就擋下整次部署。
+if [ -n "${GGD_DEPLOY_SSH:-}" ]; then
+  case "$HOST" in
+    *"${GGD_DEPLOY_SSH##*@}"*)
+      die "⛔ $HOST 是回滾機 —— 這支腳本只對 mini 說話。回滾機走 scripts/host-deploy.sh" ;;
+  esac
+fi
 [ -n "$USER_" ] || { echo "${RED}⛔ 請設 GGD_MINI_USER（在 mini 上跑 whoami 就知道）$RST" >&2; exit 2; }
 # ⭐ `-A`（agent 轉發）—— mini 用**我這台的** GitHub 金鑰 clone/fetch,
 #   ⛔ 而 mini 上不需要存放任何憑證。GCP 的 `host-deploy.sh` 也是這樣做的。
@@ -169,28 +187,30 @@ redis_snapshot_before_shutdown() {
 
 roster_coverage_check() {
 head_ "4.5 ⭐ 名單覆蓋（映像宣告的官方英雄 ↔ 這台機器真的啟用的）"
-local sj wj n_star n_white n_short
+local sj wj n_star n_white n_short short_ids
 sj=$(r 'curl -fsS -m 10 http://127.0.0.1:8088/api/v1/curation/whitelist/starter' 2>/dev/null || true)
 wj=$(r 'curl -fsS -m 10 http://127.0.0.1:8088/api/v1/curation/whitelist' 2>/dev/null || true)
 if [ -z "$sj" ] || [ -z "$wj" ]; then
   warn "兩個名單端點讀不到 —— ⛔ 這一段**沒有驗到**（⛔ 不是通過）"
 else
   # ⭐ 差集算在**這裡**，⛔ 不是比兩個數字：兩邊數量相等也可能是各自缺不同的人。
-  read -r n_star n_white n_short <<<"$(
+  # ⭐ GH#1227：缺的人**逐名印出來** —— ⛔ 只印人數，讀的人得自己去兩個端點做差集。
+  read -r n_star n_white n_short short_ids <<<"$(
     python3 - "$sj" "$wj" <<'PY'
 import json, sys
 star = set(json.loads(sys.argv[1]).get("champions") or [])
 white = set((json.loads(sys.argv[2]).get("whitelist") or json.loads(sys.argv[2])).get("champions") or [])
-print(len(star), len(white), len(star - white))
+print(len(star), len(white), len(star - white), ",".join(sorted(star - white)) or "-")
 PY
   )"
   if [ "${n_short:-1}" = "0" ]; then
     ok "白名單涵蓋映像宣告的全部 ${n_star} 名官方英雄（這台啟用 ${n_white}）"
   else
     warn "⛔ **這台機器少啟用 ${n_short} 名官方英雄**（映像 ${n_star} / 啟用 ${n_white}）"
+    info "⇒ git 有、服務沒有啟用：${short_ids//,/, }"
     info "⇒ 玩家的症狀是**選人畫面少人**，⛔ 而每一個既有檢查都會是綠的。"
     info "⇒ 補它（union-only，⛔ 一個都不會被移除，有稽核）："
-    info "   cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env run --rm platform /seed -starter-union"
+    info "   cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env run --rm --entrypoint /seed platform -starter-union"
     # ⚠️ ⭐ 刻意**不自動跑** —— 它寫的是玩家資料，而「營運方把某位停用了」
     #   必須贏過「部署腳本覺得應該啟用」。⇒ 這裡的責任是**讓它不可能被忽略**。
     [ "${GGD_DEPLOY_APPLY_STARTER:-0}" = "1" ] && {
@@ -203,11 +223,86 @@ PY
       # ⇒ 走 `run_step`：它 `die`,⛔ 不往下走。⭐ 這是刻意的 ——
       #   ⚠️ 這一段是**操作者明確開旗標要求的修復**（⛔ 不是順帶的讀取），
       #   失敗還往下印綠勾就是替一個沒發生的修復背書。
+      # ⛔⛔ 2026-09-17（v0.46.0 部署實測）—— **`/seed` 被進入點吃掉**：
+      #   映像的 `ENTRYPOINT ["/platform"]`（docker/platform.Dockerfile:72）⇒
+      #   `run --rm platform /seed -starter-union` 實際執行的是 `/platform /seed -starter-union`，
+      #   ⭐ 而**伺服器不解析任何旗標**（那份 Dockerfile 檔頭逐字寫著「The server itself parses NO flags」）
+      #   ⇒ 它把 37 名要補的英雄丟掉、開起一台伺服器並**永遠不結束** ——
+      #   實測卡了 21 分鐘、白名單原封不動停在 130，⛔ 而輸出看起來只是「還在跑」。
+      # ⇒ 一定要 `--entrypoint /seed`。⚠️ 上面那一行印給人看的提示也是同一句，⭐ 兩處一起改。
       run_step "補啟用官方英雄（starter-union）" \
-        "cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env run --rm platform /seed -starter-union" 3
+        "cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env run --rm --entrypoint /seed platform -starter-union" 3
     }
   fi
 fi
+roster_publication_check
+}
+
+# ⭐⭐ GH#1227 —— **126 名文件逐群 ↔ 這台服務真的發布了的英雄作品**。
+#
+# owner 2026-09-11 給的權威文件（`社群英雄126名上架狀態.md`）逐字定義「已上架」＝
+#   「已在 Main 當下正式服務確認可選，且有目前發布版本」。
+# ⚠️ 上面那一段比的是 starterChampions ↔ 白名單 —— ⛔ 它看不到 `/hero-works/published`，
+#   ⇒ 126 名裡「git 上有、服務上沒有發布版本」的人，在此之前**沒有任何一段說得出名字**。
+# ⭐ 文件讀的是 **mini 上已 checkout 的那一版**（＝這次部署的 commit），⛔ 不是這台 Mac 的工作區。
+# ⚠️ 刻意只 warn（同上一段）：發布是營運動作，⛔ 部署腳本不替它決定。
+roster_publication_check() {
+local dj pj line rc name n_pub n_all missing
+dj=$(r "cat $REMOTE_REPO/docs/editor-contract/社群英雄126名上架狀態.md" 2>/dev/null || true)
+pj=$(r 'curl -fsS -m 10 http://127.0.0.1:8088/api/v1/hero-works/published' 2>/dev/null || true)
+if [ -z "$dj" ] || [ -z "$pj" ]; then
+  warn "126 名文件或 /hero-works/published 讀不到 —— ⛔ 逐群發布**沒有驗到**（⛔ 不是通過）"
+  return 0
+fi
+# ⚠️ 解析形狀與 packages/shared/testkit/rosterDeclaration.ts 的 parseBatchDoc 相同：`## 批次（N）` 底下的 `| # | \`id\` |` 列
+# ⭐ 發布清單的形狀**真的檢查**：陣列，或 `{items:[…]}`（同 tools/editor-acceptance/community-hero-release-check.mts:353）。
+#   ⛔ 在此之前沒檢查 ⇒ 回的是物件時迭代只拿到鍵、published 變空集合 ⇒ 五批全部「發布 0/N」的**假紅**，
+#   而不是「沒有驗到」。形狀不對 ⇒ python 印原因並 exit 3 ⇒ 下面說「沒有驗到」。
+rc=0
+line=$(python3 - "$dj" "$pj" <<'PY'
+import json, re, sys
+try:
+    data = json.loads(sys.argv[2])
+except ValueError:
+    print("發布清單不是 JSON")
+    sys.exit(3)
+rows = data.get("items") if isinstance(data, dict) else data
+if not isinstance(rows, list):
+    print("發布清單不是陣列，也不是 {items:[…]}")
+    sys.exit(3)
+published = {row.get("workId") for row in rows if isinstance(row, dict)} - {None}
+if rows and not published:
+    print("發布清單有 %d 列而沒有一列帶 workId" % len(rows))
+    sys.exit(3)
+batches, section = {}, None
+for text in sys.argv[1].split("\n"):
+    if text.startswith("## "):
+        m = re.match(r"^## (.+?)（\d+）\s*$", text)
+        section = m.group(1) if m else None
+        continue
+    # ⚠️ 反引號寫成 \x60：macOS 的 bash 3.2 會把命令替換裡 heredoc 的奇數個反引號當成語法（bash -n 就紅）
+    m = re.match(r"^\|\s*\d+\s*\|\s*\x60([^\x60]+)\x60\s*\|", text)
+    if section and m:
+        batches.setdefault(section, []).append(m.group(1))
+if not batches:
+    print("126 名文件解析出 0 批")
+    sys.exit(3)
+for name, ids in batches.items():
+    missing = [i for i in ids if i not in published]
+    print(f"{name}\t{len(ids) - len(missing)}\t{len(ids)}\t{', '.join(missing) or '-'}")
+PY
+) || rc=$?
+if [ "$rc" -ne 0 ] || [ -z "$line" ]; then
+  warn "${line:-解析失敗（exit ${rc}）} —— ⛔ 逐群發布**沒有驗到**（⛔ 不是通過，也⛔ 不是缺發布）"
+  return 0
+fi
+while IFS=$'\t' read -r name n_pub n_all missing; do
+  if [ "$n_pub" = "$n_all" ]; then
+    ok "${name}：${n_all}/${n_all} 都有發布版本"
+  else
+    warn "⛔ ${name}：發布 ${n_pub}/${n_all} —— git 有、服務沒有發布：${missing}"
+  fi
+done <<<"$line"
 }
 
 # ═══════════════════════════════════════ check
@@ -386,46 +481,27 @@ cmd_deploy() {
     #
     # ⭐ 所以在 checkout **之前**先問：目標 commit 會不會蓋到任何未追蹤檔？
     #   會 ⇒ **先備份**（⛔ 不是 `rm`、⛔ 也不是自動搬走：那是同一個動詞的兩個名字）。
-    local clash
-    # ⭐ GH#1156 —— 在此之前這裡對**每一個**追蹤檔各開一支 `git ls-files --error-unmatch`
-    #   ⇒ 26,393 次子行程、每次部署白花 4 分鐘。⭐ 問的其實是集合差：
-    #   「目標 commit 有、而 mini 現在沒追蹤、而磁碟上又存在的檔」⇒ 兩支 git ＋ 一次 comm，
-    #   只對那個（通常是空的）差集逐檔 `[ -f ]`。語意逐位元組相同。
-    clash=$(r "cd $REMOTE_REPO && comm -23 <(git ls-tree -r --name-only $deploy_sha | sort) <(git ls-files | sort) \
-               | while read -r f; do [ -f \"\$f\" ] && printf '%s\n' \"\$f\"; done" 2>/dev/null || true)
-    if [ -n "${clash// /}" ]; then
-      local n_clash bdir
-      n_clash=$(printf '%s\n' "$clash" | grep -c .)
-      bdir="~/host-overwrite-backups/overwrite_temp_$(date +%Y%m%d-%H%M%S)"
-      warn "⚠️ mini 上有 $n_clash 個**未追蹤**檔會被這次 checkout 覆蓋："
-      printf '%s\n' "$clash" | sed 's/^/     · /'
-      # ⭐ 先備份 —— ⛔ 而且用 `cp`，⛔ 不是 `mv`（owner 的規矩：
-      #   「記得要使用 cp 而不是 mv 避免用戶終端後的資料不完整」）。
-      r "mkdir -p $bdir && cd $REMOTE_REPO && printf '%s\n' '$clash' | while read -r f; do
-           [ -n \"\$f\" ] || continue
-           mkdir -p \"$bdir/\$(dirname \"\$f\")\" && cp -p \"\$f\" \"$bdir/\$f\" 2>/dev/null \
-             || printf 'UNREADABLE %s\n' \"\$f\" >> $bdir/_failed.txt
-         done" || die "⛔ 備份失敗 —— ⛔ 不在沒有退路的情況下 checkout"
-      # ⚠️ ⭐ root 所有的檔 `cp` 會失敗 ⇒ **指名它並停下來**，⛔ 不是靜默繼續。
-      local failed
-      failed=$(r "cat $bdir/_failed.txt 2>/dev/null" || true)
-      [ -z "${failed// /}" ] || die "⛔ 這幾份備份不起來（多半是 root 所有，**需要 sudo**）：
-  $failed
-     ⇒ 請在 mini 上先處理它們，⛔ 這一次不部署。"
-      ok "已備份 $n_clash 份到 ${bdir}（⭐ 帳本：`ls $bdir`）"
-    fi
-    r "cd $REMOTE_REPO && git checkout -f -q $deploy_sha" || die "checkout $deploy_sha 失敗"
-    # ⭐ **後置條件**：備份還在（⛔ 「備份了」與「備份成功了」是兩件事）。
-    if [ -n "${clash// /}" ]; then
-      local kept
-      kept=$(r "find ${bdir} -type f ! -name _failed.txt | wc -l" 2>/dev/null | tr -d ' ')
-      [ "${kept:-0}" -ge 1 ] || die "⛔ checkout 之後備份目錄是空的 —— 那幾份檔**已經沒有了**"
-      ok "備份複驗：$kept 份還在"
-    fi
+    # ⭐ GH#1156 —— 掃描本體與它的兩個洞（中文路徑、靜默失敗）見 `clash_scan_script` 的註解。
+    # ⭐ 掃描 → 備份 → checkout → 複驗 住在 `guarded_checkout`（檔尾）——
+    #   ⛔ 在此之前它們寫在 cmd_deploy 中間，測試抽不出來 ⇒ 備份那幾條只能是字串守衛，
+    #   ⇒ 備份落點從 b447128fa（2026-08-31）起就是錯的，而沒有東西紅（見 guarded_checkout 的註解）。
+    guarded_checkout "$deploy_sha"
   local remote_head; remote_head=$(r "cd $REMOTE_REPO && git rev-parse HEAD" 2>/dev/null)
   [ "$remote_head" = "$deploy_sha" ] \
     && ok "mini 對到 $(echo "$deploy_sha" | cut -c1-8)（⭐ git,有 .git ⇒ 版本戳自己算得出來）" \
     || die "⛔ 同步後版本對不上（mini=$remote_head 本機=${deploy_sha}）"
+
+  # Git carries bindings and the pinned release; approved model bytes travel separately.
+  # Fetch only missing bytes with the configured local AWS profile, then verify both hosts.
+  if [ -f "$REPO/materials/hero-model-library/release.json" ]; then
+    local model_files; model_files=$(mktemp "${TMPDIR:-/tmp}/ggd-model-files.XXXXXX") || die "建不了模型清單"
+    python3 "$REPO/tools/hero-model-library/sync.py" --content "$REPO/content" --write-file-list "$model_files" \
+      || die "模型資源與 Git 固定版本不符，停止部署"
+    rsync -a --ignore-existing -e "ssh -o BatchMode=yes -o ConnectTimeout=10" --files-from="$model_files" \
+      "$REPO/content/" "$USER_@$HOST:$REMOTE_REPO/content/" || die "模型素材同步失敗"
+    rm -f "$model_files"
+    run_step "核對正式機模型 SHA-256" "cd $REMOTE_REPO && python3 tools/hero-model-library/sync.py --verify-only"
+  fi
 
   head_ "2. build（arm64）"
   # ⛔⛔ **裸的 `docker compose build` 會掉版本戳**。
@@ -763,6 +839,135 @@ cmd_tunnel_verify() {
   fi
   echo
   info "⚠️ 這只證明**路徑通**。真的一場比賽還要玩家實際連一次。"
+}
+
+# ⭐⭐ GH#1156 —— **未追蹤碰撞掃描**：目標 commit 有、mini 的索引沒有、而磁碟上是檔案的路徑。
+#   ⭐ 判準與 GH#884 逐字相同（被 .gitignore 的也算撞 —— 集合差用的是**索引**，⛔ 不是 --others）。
+#   ⭐ 只改「怎麼跑」：26,393 次 `git ls-files --error-unmatch` ⇒ 兩支 git ＋ sort ＋ comm。
+#
+# ⛔⛔ 在此之前（b7c8aa8f1 那一版與更早的逐檔版）還有兩個**會印出「0 個碰撞」的洞**：
+#   ① `core.quotePath` 預設 true ⇒ git 把中文路徑印成 `"docs/\345…"` ⇒ `[ -f ]` 永遠假
+#      ⇒ 218+ 個非 ASCII 追蹤路徑上的碰撞**一個都抓不到**（本機設了 quotePath=false 所以本機是綠的）。
+#      ⭐ 修法用 `-z`（⛔ 不是只加 quotePath=false：那樣 `"` `\` tab 仍然被引號包起來）。
+#   ② `2>/dev/null || true` ⇒ 遠端掃描**沒跑完**與「沒有碰撞」長得一模一樣。
+#      ⭐ 修法：腳本最後一行印哨兵，⛔ 收不到（或離開碼非 0）就**不 checkout**。
+#
+# ⭐ 腳本用 quoted heredoc ＋ `ssh … sh -s` 送過去 ⇒ ⛔ 沒有一層跳脫、⛔ 不依賴遠端登入 shell 是 zsh
+#   （`<(…)` 在 dash 上不存在）；miniDeployUntracked.test.ts 抽出這一段**真的在 git repo 上跑**。
+#
+# 🔓 逃生口：`GGD_MINI_CLASH_FAILOPEN=1` ⇒ 掃描失敗時照舊放行（只備份收得到的那幾行）。
+#   ⚠️ 只有部署者會轉 ⇒ 環境變數，⛔ 不進後台。用了要在部署紀錄裡說為什麼。
+CLASH_SCAN_OK="__GGD_CLASH_SCAN_OK__"
+clash_scan_script() {
+  cat <<'SH'
+  set -u
+  sha=$1; ok=$2
+  t=$(mktemp -d) || exit 3
+  trap 'rm -rf "$t"' EXIT
+  git ls-tree -r -z --name-only "$sha" > "$t/tree0" || exit 4
+  git ls-files -z > "$t/index0" || exit 5
+  tr '\000' '\n' < "$t/tree0" | LC_ALL=C sort > "$t/tree" || exit 6
+  tr '\000' '\n' < "$t/index0" | LC_ALL=C sort > "$t/index" || exit 6
+  LC_ALL=C comm -23 "$t/tree" "$t/index" > "$t/untracked" || exit 7
+  while IFS= read -r f; do
+    if [ -f "$f" ]; then printf '%s\n' "$f" || exit 8; fi
+  done < "$t/untracked"
+  printf '%s\n' "$ok"
+SH
+}
+# clash_scan_accept <離開碼> <原始輸出> ⇒ 收得到哨兵才印碰撞清單並回 0；⛔ 否則回 1。
+clash_scan_accept() {
+  local rc=$1 raw=$2
+  [ "$rc" -eq 0 ] && [ "${raw##*$'\n'}" = "$CLASH_SCAN_OK" ] || return 1
+  printf '%s' "${raw%"$CLASH_SCAN_OK"}"
+}
+
+# ⭐⭐ GH#884 —— **備份段**（在 mini 上跑）：碰撞清單上每一個檔 `cp -p` 到 `$HOME/<相對目錄>/`，
+#   複製不了的寫進 `_failed.txt`。用法：clash_backup_script <清單> | r "cd $REMOTE_REPO && sh -s -- <相對目錄>"
+#
+# ⛔⛔ 在此之前（b447128fa 起，寫在 cmd_deploy 中間）是：
+#     bdir="~/host-overwrite-backups/…"
+#     r "mkdir -p $bdir && cd $REMOTE_REPO && printf '%s\n' '$clash' | while read -r f; do
+#          mkdir -p \"$bdir/…\" && cp -p \"\$f\" \"$bdir/\$f\" … >> $bdir/_failed.txt"
+#   ⇒ ⚠️ **包進雙引號的 `~` 不展開**，而那時已經 `cd $REMOTE_REPO`
+#   ⇒ 備份實際落在 `$REMOTE_REPO/~/host-overwrite-backups/…`（repo 裡一個叫 `~` 的未追蹤目錄）
+#   ⇒ 沒包引號的 `_failed.txt`／checkout 之後的 `find` 看的卻是 `$HOME/…` ⇒ 量到 0
+#   ⇒ ⭐ **在 `git checkout -f` 之後**才 die「那幾份檔已經沒有了」——而檔其實在 repo/~ 底下。
+#   （2026-09-15 審查者用 zsh -c 照原樣模擬抓到。GH#1156 讓中文路徑的碰撞抓得到之後，走進這條分支的部署變多。）
+#   ⚠️ 同一段還有兩個同源的洞：清單塞進 `'$clash'` ⇒ 檔名帶 `'` 整段就斷；成功訊息裡的反引號
+#     `ls $bdir` 是在**本機**執行的。
+#   ⚠️ 更正 b447128fa 訊息裡的兩句：「先備份到 `~/host-overwrite-backups/…`」（實際落在 repo/~）、
+#     「守衛驗的是那個 git 行為，⛔ 不是腳本裡的字串」（備份那三條其實是字串守衛，所以落點錯了沒有東西紅）。
+# ⭐ 修法與 clash_scan_script 同形：quoted heredoc ＋ `sh -s`，位置寫 `$HOME`（到 mini 上才展開），
+#   清單也走 quoted heredoc ⇒ ⛔ 沒有任何一層跳脫。miniDeployUntracked.test.ts 用本機假遠端真的跑。
+clash_backup_script() {
+  local list=$1 end=__GGD_CLASH_LIST_END__
+  case $'\n'"$list"$'\n' in
+    *$'\n'"$end"$'\n'*) echo "⛔ 碰撞清單裡有一行剛好是 $end —— ⛔ 不備份" >&2; return 1 ;;
+  esac
+  cat <<'SH'
+  set -u
+  bdir="$HOME/$1"
+  mkdir -p "$bdir" || exit 3
+  while IFS= read -r f; do
+    [ -n "$f" ] || continue
+    if mkdir -p "$bdir/$(dirname "./$f")" && cp -p "./$f" "$bdir/$f" 2>/dev/null; then :
+    else printf 'UNREADABLE %s\n' "$f" >> "$bdir/_failed.txt" || exit 4
+    fi
+SH
+  printf "  done <<'%s'\n%s\n%s\n" "$end" "$list" "$end"
+}
+
+# ⭐⭐ GH#884／GH#1156 —— checkout **之前**：掃碰撞 → 先備份 → checkout → 複驗備份。
+#   用法：guarded_checkout <deploy_sha>（用 r／REMOTE_REPO／die／warn／ok）。
+#   ⭐ 拆成函式是為了讓測試跑**出貨的這一段**、只換掉 r ——
+#   ⛔ 不是在測試裡另寫一份呼叫點（失敗形態⑤：那樣把下面的 die 改成 `:` 也不會紅）。
+guarded_checkout() {
+  local deploy_sha=$1
+  local clash clash_raw clash_rc=0 clash_err
+  clash_err=$(mktemp "${TMPDIR:-/tmp}/ggd-clash-err.XXXXXX") || die "建不了暫存檔 —— ⛔ 不往下走"
+  clash_raw=$(clash_scan_script | r "cd $REMOTE_REPO && sh -s -- $deploy_sha $CLASH_SCAN_OK" 2>"$clash_err") \
+    || clash_rc=$?
+  if clash=$(clash_scan_accept "$clash_rc" "$clash_raw"); then
+    :
+  elif [ "${GGD_MINI_CLASH_FAILOPEN:-}" = 1 ]; then
+    clash=$(printf '%s\n' "$clash_raw" | grep -vxF "$CLASH_SCAN_OK" || true)
+    warn "⚠️ 未追蹤碰撞掃描**沒有跑完**（exit ${clash_rc}）而你設了 GGD_MINI_CLASH_FAILOPEN=1 ⇒ 照舊放行。"
+    warn "   ⛔ 只備份收得到的 $(printf '%s\n' "$clash" | grep -c .) 行 —— 其餘未追蹤檔 checkout 時**不會被備份**。"
+  else
+    tail -20 "$clash_err" | sed 's/^/    /'
+    rm -f "$clash_err"
+    die "⛔ 未追蹤碰撞掃描沒有跑完（exit ${clash_rc}，⛔ 沒收到結束哨兵）—— ⛔ **不 checkout**。
+   ⚠️ 在此之前這裡是 \`|| true\` ⇒ 掃描失敗與「沒有碰撞」長得一模一樣，而 checkout -f 會靜靜蓋掉未追蹤檔（GH#884）。
+   ⇒ 先看上面的 stderr；確定 mini 上沒有要保的未追蹤檔才用逃生口：GGD_MINI_CLASH_FAILOPEN=1 bash scripts/mini-deploy.sh deploy"
+  fi
+  rm -f "$clash_err"
+  local n_clash=0 bdir_rel
+  bdir_rel="host-overwrite-backups/overwrite_temp_$(date +%Y%m%d-%H%M%S)"
+  if [ -n "${clash// /}" ]; then
+    n_clash=$(printf '%s\n' "$clash" | grep -c .)
+    warn "⚠️ mini 上有 $n_clash 個**未追蹤**檔會被這次 checkout 覆蓋："
+    printf '%s\n' "$clash" | sed 's/^/     · /'
+    # ⭐ 先備份 —— ⛔ 而且用 `cp`，⛔ 不是 `mv`（owner 的規矩：
+    #   「記得要使用 cp 而不是 mv 避免用戶終端後的資料不完整」）。
+    clash_backup_script "$clash" | r "cd $REMOTE_REPO && sh -s -- $bdir_rel" \
+      || die "⛔ 備份失敗 —— ⛔ 不在沒有退路的情況下 checkout"
+    # ⚠️ ⭐ root 所有的檔 `cp` 會失敗 ⇒ **指名它並停下來**，⛔ 不是靜默繼續。
+    local failed
+    failed=$(r "cat \"\$HOME/$bdir_rel/_failed.txt\" 2>/dev/null" || true)
+    [ -z "${failed// /}" ] || die "⛔ 這幾份備份不起來（多半是 root 所有，**需要 sudo**）：
+  $failed
+     ⇒ 請在 mini 上先處理它們，⛔ 這一次不部署。"
+    ok "已備份 $n_clash 份到 mini 的 ~/${bdir_rel}"
+  fi
+  r "cd $REMOTE_REPO && git checkout -f -q $deploy_sha" || die "checkout $deploy_sha 失敗"
+  # ⭐ **後置條件**：備份還在（⛔ 「備份了」與「備份成功了」是兩件事）。
+  if [ -n "${clash// /}" ]; then
+    local kept
+    kept=$(r "find \"\$HOME/$bdir_rel\" -type f ! -name _failed.txt | wc -l" 2>/dev/null | tr -d ' ')
+    [ "${kept:-0}" -ge "$n_clash" ] || die "⛔ checkout 之後備份只剩 ${kept:-0}/$n_clash 份 —— 其餘那幾份檔**已經沒有了**"
+    ok "備份複驗：$kept/$n_clash 份還在"
+  fi
 }
 
 # ⭐ GH#1184 —— **部署目標怎麼算**。⛔ 不是「本機 HEAD」。

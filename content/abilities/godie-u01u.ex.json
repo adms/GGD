@@ -12,7 +12,7 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [],
@@ -29,10 +29,11 @@
         }
       ],
       "buffDurationSec": 15,
-      "castTimeSec": 1.033
+      "castTimeSec": 1
     }
   },
   "vfxKey": "fx.prim.void.pulse-lg",
   "schema": "ability@1",
-  "castTimeSec": 1.033
+  "castTimeSec": 1,
+  "castTimeTier": "極大"
 }

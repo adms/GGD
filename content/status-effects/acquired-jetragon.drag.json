@@ -1,0 +1,15 @@
+{
+  "id": "acquired-jetragon.drag",
+  "schema": "status-effect@1",
+  "name": "龍式點射",
+  "description": "空渦龍「龍式點射」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-jetragon.drag",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

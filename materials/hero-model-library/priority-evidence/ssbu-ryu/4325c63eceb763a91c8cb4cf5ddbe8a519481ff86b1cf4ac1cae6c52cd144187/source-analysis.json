@@ -1,0 +1,673 @@
+{
+  "schema": "ggd-ssbu-blend-source-analysis@1",
+  "candidateId": "ssbu-ryu-c00-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ryu/model/body/c00/ryu-c00.blend",
+  "sourceBytes": 9508448,
+  "sourceSha256": "5fb1670818167a6728afe1664c80e6ab7fd50ea064ae6302991fdc18a4e62042",
+  "blenderVersion": "4.5.13 LTS",
+  "embeddedScriptsExecuted": false,
+  "embeddedTextBlockCount": 1,
+  "mutedDrivers": [],
+  "visibleMeshes": [
+    {
+      "name": "GamemodelShape",
+      "vertices": 1985,
+      "polygons": 3352,
+      "vertexGroups": 154,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "alp_ryu_001"
+      ]
+    },
+    {
+      "name": "GamemodelShape.001",
+      "vertices": 2095,
+      "polygons": 2959,
+      "vertexGroups": 154,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "def_ryu_001"
+      ]
+    },
+    {
+      "name": "GamemodelShape.002",
+      "vertices": 2952,
+      "polygons": 4758,
+      "vertexGroups": 154,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "skin_ryu_001"
+      ]
+    },
+    {
+      "name": "ryu_dogiup1_VIS_O_OBJShape",
+      "vertices": 1602,
+      "polygons": 2136,
+      "vertexGroups": 154,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "def_ryu_001"
+      ]
+    },
+    {
+      "name": "Ryu_Eye_VIS_O_OBJShape",
+      "vertices": 35,
+      "polygons": 54,
+      "vertexGroups": 154,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap",
+        "UVMap.001"
+      ],
+      "materials": [
+        "EyeL"
+      ]
+    },
+    {
+      "name": "Ryu_Eye_VIS_O_OBJShape.001",
+      "vertices": 35,
+      "polygons": 54,
+      "vertexGroups": 154,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap",
+        "UVMap.001"
+      ],
+      "materials": [
+        "EyeR"
+      ]
+    },
+    {
+      "name": "Ryu_Openblink_VIS_O_OBJShape",
+      "vertices": 82,
+      "polygons": 72,
+      "vertexGroups": 154,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "alp_ryu_001"
+      ]
+    },
+    {
+      "name": "Ryu_Openblink_VIS_O_OBJShape.001",
+      "vertices": 160,
+      "polygons": 286,
+      "vertexGroups": 154,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "skin_ryu_001"
+      ]
+    },
+    {
+      "name": "Ryu_faceN_Brow_VIS_O_OBJShape",
+      "vertices": 248,
+      "polygons": 288,
+      "vertexGroups": 154,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "alp_ryu_001"
+      ]
+    },
+    {
+      "name": "Ryu_faceN_Brow_VIS_O_OBJShape.001",
+      "vertices": 138,
+      "polygons": 202,
+      "vertexGroups": 154,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "skin_ryu_001"
+      ]
+    },
+    {
+      "name": "Ryu_faceN_Mouth_VIS_O_OBJShape",
+      "vertices": 280,
+      "polygons": 460,
+      "vertexGroups": 154,
+      "morphTargets": 0,
+      "uvLayers": [
+        "UVMap"
+      ],
+      "materials": [
+        "skin_ryu_001"
+      ]
+    }
+  ],
+  "hiddenOrNonrenderMeshes": [
+    "ryu_dogiup2_VIS_O_OBJShape",
+    "ryu_dogiup3_VIS_O_OBJShape2",
+    "ryu_dogiup4_VIS_O_OBJShape1",
+    "ryu_dogiup5_VIS_O_OBJShape",
+    "ryu_dogiup6_VIS_O_OBJShape",
+    "Ryu_Eye2_VIS_O_OBJShape",
+    "Ryu_Eye2_VIS_O_OBJShape.001",
+    "Ryu_Halfblink_VIS_O_OBJShape",
+    "Ryu_Halfblink_VIS_O_OBJShape.001",
+    "Ryu_Blink_VIS_O_OBJShape",
+    "Ryu_Blink_VIS_O_OBJShape.001",
+    "Ryu_Talk_Brow_VIS_O_OBJShape",
+    "Ryu_Talk_Brow_VIS_O_OBJShape.001",
+    "Ryu_HeavyAttack_Brow_VIS_O_OBJShape",
+    "Ryu_HeavyAttack_Brow_VIS_O_OBJShape.001",
+    "Ryu_Capture_Brow_VIS_O_OBJShape",
+    "Ryu_Capture_Brow_VIS_O_OBJShape.001",
+    "Ryu_Ouch_Brow_VIS_O_OBJShape",
+    "Ryu_Ouch_Brow_VIS_O_OBJShape.001",
+    "Ryu_HeavyOuch_Brow_VIS_O_OBJShape",
+    "Ryu_HeavyOuch_Brow_VIS_O_OBJShape.001",
+    "Ryu_HeavyAttack_Mouth_VIS_O_OBJShape",
+    "Ryu_HeavyAttack_Mouth_VIS_O_OBJShape.001",
+    "Ryu_Escape_Mouth_VIS_O_OBJShape",
+    "Ryu_Escape_Mouth_VIS_O_OBJShape.001",
+    "Ryu_Ouch_Mouth_VIS_O_OBJShape",
+    "Ryu_Ouch_Mouth_VIS_O_OBJShape.001",
+    "Ryu_Capture_Mouth_VIS_O_OBJShape",
+    "Ryu_Capture_Mouth_VIS_O_OBJShape.001",
+    "Ryu_Down_Mouth_VIS_O_OBJShape",
+    "Ryu_Down_Mouth_VIS_O_OBJShape.001",
+    "Ryu_VoiceC_Mouth_VIS_O_OBJShape",
+    "Ryu_VoiceC_Mouth_VIS_O_OBJShape.001",
+    "Ryu_VoiceB_Mouth_VIS_O_OBJShape",
+    "Ryu_VoiceB_Mouth_VIS_O_OBJShape.001",
+    "Ryu_PatternB_Mouth_VIS_O_OBJShape",
+    "Ryu_Result_Mouth_VIS_O_OBJShape",
+    "Ryu_Result_Mouth_VIS_O_OBJShape.001"
+  ],
+  "armatures": [
+    {
+      "name": "model-armature",
+      "bones": 154,
+      "boneNames": [
+        "Trans",
+        "Rot",
+        "Hip",
+        "Waist",
+        "Bust",
+        "Neck",
+        "Head",
+        "S_HeadbandL1",
+        "S_HeadbandL2",
+        "S_HeadbandL3",
+        "S_HeadbandL4_null",
+        "S_HeadbandR1",
+        "S_HeadbandR2",
+        "S_HeadbandR3",
+        "S_HeadbandR4_null",
+        "Face",
+        "Mouth_group",
+        "UplipR1_offset",
+        "UplipR1",
+        "UplipR2_offset",
+        "UplipR2",
+        "UplipL2_offset",
+        "UplipL2",
+        "UplipL1_offset",
+        "UplipL1",
+        "UplipC_offset",
+        "UplipC",
+        "Jaw_group",
+        "Jaw_offset",
+        "Jaw",
+        "Tongue",
+        "Tongue1",
+        "Tongue2",
+        "DownlipL_offset",
+        "DownlipL",
+        "DownlipC_offset",
+        "DownlipC",
+        "DownlipR_offset",
+        "DownlipR",
+        "ClavicleC",
+        "ClavicleL",
+        "ShoulderL",
+        "ArmL",
+        "HandL",
+        "HaveL",
+        "FingerL10",
+        "FingerL20",
+        "FingerL30",
+        "FingerL40",
+        "FingerL41",
+        "FingerL42",
+        "FingerL43",
+        "FingerL31",
+        "FingerL32",
+        "FingerL33",
+        "FingerL21",
+        "FingerL22",
+        "FingerL23",
+        "FingerL11",
+        "FingerL12",
+        "FingerL13",
+        "FingerL51",
+        "FingerL52",
+        "FingerL53",
+        "H_WristL",
+        "H_ArmtwistL",
+        "H_ElbowL",
+        "H_UparmtwistL",
+        "H_SholderL",
+        "ClavicleR",
+        "ShoulderR",
+        "ArmR",
+        "HandR",
+        "HaveR",
+        "FingerR10",
+        "FingerR20",
+        "FingerR30",
+        "FingerR40",
+        "FingerR41",
+        "FingerR42",
+        "FingerR43",
+        "FingerR31",
+        "FingerR32",
+        "FingerR33",
+        "FingerR21",
+        "FingerR22",
+        "FingerR23",
+        "FingerR11",
+        "FingerR12",
+        "FingerR13",
+        "FingerR51",
+        "FingerR52",
+        "FingerR53",
+        "H_WristR",
+        "H_ArmtwistR",
+        "H_ElbowR",
+        "H_UparmtwistR",
+        "H_SholderR",
+        "Dougiback",
+        "H_ClavicleL",
+        "H_ClavicleR",
+        "LegC",
+        "LegL",
+        "KneeL",
+        "FootL",
+        "ToeL",
+        "S_LegL1",
+        "S_LegL2_null",
+        "H_KneeL",
+        "LegR",
+        "KneeR",
+        "FootR",
+        "ToeR",
+        "S_LegR1",
+        "S_LegR2_null",
+        "H_KneeR",
+        "S_ShirttailF1",
+        "S_ShirttailF2",
+        "S_ShirttailF3_null",
+        "S_ShirttailFL1",
+        "S_ShirttailFL2",
+        "S_ShirttailFL3_null",
+        "S_ShirttailFR1",
+        "S_ShirttailFR2",
+        "S_ShirttailFR3_null",
+        "S_ShirttailLa1",
+        "S_ShirttailLa2",
+        "S_ShirttailLa3_null",
+        "S_ShirttailLb1",
+        "S_ShirttailLb2_null",
+        "S_ShirttailLc1",
+        "S_ShirttailLc2_null",
+        "S_ShirttailBL1",
+        "S_ShirttailBL2_null",
+        "S_ShirttailB1",
+        "S_ShirttailB2_null",
+        "S_ShirttailBR1",
+        "S_ShirttailBR2_null",
+        "S_ShirttailRc1",
+        "S_ShirttailRc2_null",
+        "S_ShirttailRb1",
+        "S_ShirttailRb2_null",
+        "S_ShirttailRa1",
+        "S_ShirttailRa2",
+        "S_ShirttailRa3_null",
+        "S_BeltL1",
+        "S_BeltL2",
+        "S_BeltL3_null",
+        "S_BeltR1",
+        "S_BeltR2",
+        "S_BeltR3_null",
+        "H_LegL",
+        "H_LegR",
+        "Throw"
+      ]
+    }
+  ],
+  "actions": [],
+  "usedMaterials": [
+    {
+      "name": "EyeL",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    },
+    {
+      "name": "EyeR",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    },
+    {
+      "name": "alp_ryu_001",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    },
+    {
+      "name": "def_ryu_001",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    },
+    {
+      "name": "skin_ryu_001",
+      "useNodes": true,
+      "surfaceRenderMethod": "DITHERED"
+    }
+  ],
+  "usedImages": [
+    {
+      "name": "alp_ryu_002_col.png",
+      "source": "FILE",
+      "filepath": "//alp_ryu_002_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ryu/model/body/c00/alp_ryu_002_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 1024,
+      "height": 1024,
+      "bytes": 117622,
+      "sha256": "25f9769fd89d426fdc2ba7051466aa24703f8785bb7f0f10e65093b264446afb"
+    },
+    {
+      "name": "def_ryu_002_col.png",
+      "source": "FILE",
+      "filepath": "//def_ryu_002_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ryu/model/body/c00/def_ryu_002_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 2048,
+      "height": 2048,
+      "bytes": 5342999,
+      "sha256": "3b6ca193117b074a3421f8d6ccadb40eb7693a990365684d906f9aa18418b357"
+    },
+    {
+      "name": "eye_ryu_w_001_col.png",
+      "source": "FILE",
+      "filepath": "//eye_ryu_w_001_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ryu/model/body/c00/eye_ryu_w_001_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 256,
+      "height": 256,
+      "bytes": 11292,
+      "sha256": "3a4389c726e07eb18df96b7290b060621d4d803aaa91a82cd4b881c3c0d47f0c"
+    },
+    {
+      "name": "eyel_ryu_b_001_col.png",
+      "source": "FILE",
+      "filepath": "//eyel_ryu_b_001_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ryu/model/body/c00/eyel_ryu_b_001_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 256,
+      "height": 256,
+      "bytes": 12175,
+      "sha256": "2f28557f611f4ab1631c55f7f1cd33a5cc95d02da9dd191ccd094bf7b20fb997"
+    },
+    {
+      "name": "eyer_ryu_b_001_col.png",
+      "source": "FILE",
+      "filepath": "//eyer_ryu_b_001_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ryu/model/body/c00/eyer_ryu_b_001_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 256,
+      "height": 256,
+      "bytes": 12370,
+      "sha256": "5facf0010d484085f0a484b201ff7d97ce095cb908907d93046d10c820795a74"
+    },
+    {
+      "name": "skin_ryu_002_col.png",
+      "source": "FILE",
+      "filepath": "//skin_ryu_002_col.png",
+      "resolvedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ryu/model/body/c00/skin_ryu_002_col.png",
+      "exists": true,
+      "packed": false,
+      "width": 1024,
+      "height": 1024,
+      "bytes": 879037,
+      "sha256": "9cf7df0969045a65984c3ebf1c214fa5caa190da2d35c2eb8bb682030d9517d7"
+    }
+  ],
+  "materialCompatibilityAdjustments": [
+    {
+      "material": "alp_ryu_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeL",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeR",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "skin_ryu_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "def_ryu_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    }
+  ],
+  "materialJoinAdjustments": [
+    {
+      "material": "alp_ryu_001",
+      "armature": "model-armature",
+      "sourceMeshes": [
+        {
+          "name": "GamemodelShape",
+          "vertices": 1985,
+          "polygons": 3352
+        },
+        {
+          "name": "Ryu_Openblink_VIS_O_OBJShape",
+          "vertices": 82,
+          "polygons": 72
+        },
+        {
+          "name": "Ryu_faceN_Brow_VIS_O_OBJShape",
+          "vertices": 248,
+          "polygons": 288
+        }
+      ],
+      "outputMesh": "GGD_joined_alp_ryu_001",
+      "outputVertices": 2315,
+      "outputPolygons": 3712,
+      "reason": "Reduce draw primitives without mixing materials or changing world-space source geometry."
+    },
+    {
+      "material": "def_ryu_001",
+      "armature": "model-armature",
+      "sourceMeshes": [
+        {
+          "name": "GamemodelShape.001",
+          "vertices": 2095,
+          "polygons": 2959
+        },
+        {
+          "name": "ryu_dogiup1_VIS_O_OBJShape",
+          "vertices": 1602,
+          "polygons": 2136
+        }
+      ],
+      "outputMesh": "GGD_joined_def_ryu_001",
+      "outputVertices": 3697,
+      "outputPolygons": 5095,
+      "reason": "Reduce draw primitives without mixing materials or changing world-space source geometry."
+    },
+    {
+      "material": "skin_ryu_001",
+      "armature": "model-armature",
+      "sourceMeshes": [
+        {
+          "name": "GamemodelShape.002",
+          "vertices": 2952,
+          "polygons": 4758
+        },
+        {
+          "name": "Ryu_Openblink_VIS_O_OBJShape.001",
+          "vertices": 160,
+          "polygons": 286
+        },
+        {
+          "name": "Ryu_faceN_Brow_VIS_O_OBJShape.001",
+          "vertices": 138,
+          "polygons": 202
+        },
+        {
+          "name": "Ryu_faceN_Mouth_VIS_O_OBJShape",
+          "vertices": 280,
+          "polygons": 460
+        }
+      ],
+      "outputMesh": "GGD_joined_skin_ryu_001",
+      "outputVertices": 3530,
+      "outputPolygons": 5706,
+      "reason": "Reduce draw primitives without mixing materials or changing world-space source geometry."
+    }
+  ],
+  "textureCompatibilityAdjustments": [
+    {
+      "sourceImage": "alp_ryu_002_col.png",
+      "sourceDimensions": [
+        1024,
+        1024
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-blender4513-v3/derived-textures/alp_ryu_002_col.png.ggd-256.png",
+      "derivedBytes": 17303,
+      "derivedSha256": "c34e9aad17f7f524314dad9bdbefdb43b04ff7fcde4126c176e4a993960c7e87",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "def_ryu_002_col.png",
+      "sourceDimensions": [
+        2048,
+        2048
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-blender4513-v3/derived-textures/def_ryu_002_col.png.ggd-256.png",
+      "derivedBytes": 115857,
+      "derivedSha256": "803b2cc06511983e59c652edaf39ac157b503d6506c09202b032014f5fb2fee0",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "skin_ryu_002_col.png",
+      "sourceDimensions": [
+        1024,
+        1024
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-blender4513-v3/derived-textures/skin_ryu_002_col.png.ggd-256.png",
+      "derivedBytes": 91786,
+      "derivedSha256": "116adc0b62f22c1453fc417ef7dec705ef079721f69248ad7f07bc8c1e4c61dc",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    }
+  ],
+  "hierarchyCompatibilityAdjustments": [
+    {
+      "nodeIndex": 154,
+      "nodeName": "GGD_joined_alp_ryu_001",
+      "previousParentIndex": 159,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 155,
+      "nodeName": "GGD_joined_def_ryu_001",
+      "previousParentIndex": 159,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 156,
+      "nodeName": "GGD_joined_skin_ryu_001",
+      "previousParentIndex": 159,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 157,
+      "nodeName": "Ryu_Eye_VIS_O_OBJShape",
+      "previousParentIndex": 159,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 158,
+      "nodeName": "Ryu_Eye_VIS_O_OBJShape.001",
+      "previousParentIndex": 159,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    }
+  ],
+  "sourceUnits": {
+    "system": "METRIC",
+    "scaleLength": 1.0
+  }
+}

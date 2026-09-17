@@ -8,9 +8,9 @@
   "origin": "坦克",
   "modelKey": "version.body.6c7076cb544f1812f857597fa1a58632c334a7aa3a0d13fe",
   "baseStats": {
-    "maxHealth": 100,
+    "maxHealth": 150,
     "healthRegen": 0.25,
-    "maxMana": 0,
+    "maxMana": 100,
     "manaRegen": 0.1,
     "ad": 4.2,
     "ap": 0,
@@ -25,9 +25,9 @@
     "range": 1.4
   },
   "growth": {
-    "maxHealth": 96.1173,
+    "maxHealth": 100,
     "healthRegen": 0.2005,
-    "maxMana": 23.2934,
+    "maxMana": 20,
     "manaRegen": 0.0721,
     "ad": 1.9433,
     "armor": 1.7988,
@@ -184,7 +184,8 @@
       "icon": "assets/icons/abilities/godie-hapm.q.webp",
       "vfxKey": "fx.prim.physical.pulse",
       "cooldownTier": "極大",
-      "castTimeSec": 0.067
+      "castTimeTier": "小",
+      "castTimeSec": 0.1
     },
     "W": {
       "id": "godie-hapm.w",
@@ -201,12 +202,13 @@
         45.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "range": 12.0,
+      "castTimeTier": "極大",
       "targetsEnemies": true,
       "effects": [
         {
@@ -262,9 +264,9 @@
       "icon": "assets/icons/abilities/godie-hapm.w.webp",
       "vfxKey": "fx.prim.physical.shockwave",
       "cooldownTier": "大",
-      "manaCostTier": "極小",
       "rangeTier": "極大",
-      "castTimeSec": 0.833
+      "manaCostTier": "極小",
+      "castTimeSec": 1
     },
     "E": {
       "id": "godie-hapm.e",
@@ -435,7 +437,8 @@
         ]
       },
       "icon": "assets/icons/abilities/godie-hapm.e.webp",
-      "vfxKey": "fx.prim.physical.slash"
+      "vfxKey": "fx.prim.physical.slash",
+      "castTimeTier": "極小"
     },
     "R": {
       "id": "godie-hapm.r",
@@ -451,12 +454,13 @@
         120.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        300.0,
+        300.0,
+        300.0
       ],
       "range": 0.0,
       "radiusTier": "中",
+      "castTimeTier": "極大",
       "targetsEnemies": true,
       "effects": [
         {
@@ -471,8 +475,8 @@
           "amount": {
             "damageTierPerRank": [
               "小",
-              "中",
-              "大"
+              "小",
+              "中"
             ]
           },
           "radius": 6.0,
@@ -506,8 +510,8 @@
       "icon": "assets/icons/abilities/godie-hapm.r.webp",
       "vfxKey": "fx.prim.physical.shockwave-lg",
       "cooldownTier": "極大",
-      "manaCostTier": "大",
-      "castTimeSec": 0.067
+      "manaCostTier": "中",
+      "castTimeSec": 1
     }
   },
   "skillOrder": [
@@ -566,6 +570,27 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-328403-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.23acd67134c8e186ed0ae7ea502f161a89765f7b065920fc",
+      "label": "Heracles (Berserker)｜FateUBW 社群模型＋來源動作",
+      "sourceModelKey": "community.body.4ee727bce7d1a3d2483e42069da6baf7fc9765803acaf5ca",
+      "modelSha256": "5ec552fa1178bb414aa26f5ee477e42e829c50d92ef0e56d8a7040d4bfc59b3b",
+      "binarySha256": "1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b",
+      "registeredAt": "2026-09-15T05:08:54.740Z",
+      "source": {
+        "kind": "exact",
+        "character": "Heracles (Berserker)",
+        "work": "Fate/stay night",
+        "library": "Fate/Unlimited Block Works",
+        "reference": "https://github.com/Flemmli97/FateUBW",
+        "tier": "original",
+        "selectionClass": "community-mod",
+        "sourceGame": "Fate/Unlimited Block Works",
+        "sourcePlatform": "Minecraft Java 1.21.1"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

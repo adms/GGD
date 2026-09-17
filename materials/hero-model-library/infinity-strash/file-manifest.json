@@ -1,0 +1,662 @@
+{
+  "root": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/parallel-infinity-strash-sorcerer-popp",
+  "count": 131,
+  "totalBytes": 29544393,
+  "files": [
+    {
+      "relativePath": "README.md",
+      "bytes": 2405,
+      "sha256": "e547dcc967bdb3d8c3935f3d813b1bb5b59c6284827988d3848dc7504341b834"
+    },
+    {
+      "relativePath": "animation-candidates.json",
+      "bytes": 16841,
+      "sha256": "e7c57cbce791dddf75a98c18366e4e9afc391349c76536082d586994195424ca"
+    },
+    {
+      "relativePath": "archive-manifest.json",
+      "bytes": 2061,
+      "sha256": "9792047ab709e705059a93c2c168f3b5cbf4c1adc4f76de7e7ff481557ed21e1"
+    },
+    {
+      "relativePath": "audio-file-index.json",
+      "bytes": 330,
+      "sha256": "e8d4212f2a1a03be7290a11b806890811783cfd9328a0018bd252f197b58105f"
+    },
+    {
+      "relativePath": "dependency-index.json",
+      "bytes": 5870,
+      "sha256": "c24297f36d6e79b1a878b77ffdb08f0ece6ec1bb41aa83beaf8b26899bff9eb4"
+    },
+    {
+      "relativePath": "evidence/ali213-download-target-redacted.html",
+      "bytes": 11243,
+      "sha256": "cc7e95ba15cacc8cf4e149b7f1b5c2d31bd78ee03fce3d98bfc5b61e28a4ed5d"
+    },
+    {
+      "relativePath": "evidence/ali213-normal-download-dialog.html",
+      "bytes": 2456,
+      "sha256": "86f33044eb634a9b70c91c9347ae9aa13874a1f29df893b552ed5950dcabc178"
+    },
+    {
+      "relativePath": "evidence/ali213-source-page.html",
+      "bytes": 46037,
+      "sha256": "d93f835f3cacb84eba1da73111d1390e14f23ec77754c2e45e462f0ed2acad3b"
+    },
+    {
+      "relativePath": "evidence/dark-armour-blade-steam-public-metadata.json",
+      "bytes": 907,
+      "sha256": "93716f93024ad7599121087f924cea011944c03fe43864aab52a979611be16e0"
+    },
+    {
+      "relativePath": "extracted/ALI213.txt",
+      "bytes": 5767,
+      "sha256": "2528de930be390e1002b0b0914d2d0f10e53a0d726dd17361ebe049755c4cd92"
+    },
+    {
+      "relativePath": "extracted/MasterWizardPopp.pak",
+      "bytes": 14060310,
+      "sha256": "d0b035719bf17a8ff7f72a51c82bfa250f8ab4fdfeb332706c9dd50b5a6e2a33"
+    },
+    {
+      "relativePath": "extracted/╙╬╧└═°╚╚├┼MOD▓╣╢í.url",
+      "bytes": 183,
+      "sha256": "b309f388ad3192343d775f071c46d20e2c7cfff64e757c20071f164eb46be0e5"
+    },
+    {
+      "relativePath": "extracted/╙╬╧└═°╫ε╨┬╡Ñ╗·╙╬╧╖.url",
+      "bytes": 182,
+      "sha256": "e3706b783ec5373a70044492ff4a5ec6462fe114854c3b57b55d7ea7db0ad133"
+    },
+    {
+      "relativePath": "original/AL213-Sorcerer Popp-21-0-1-1718317608-263685.zip",
+      "bytes": 877392,
+      "sha256": "66a21ce0385ae3be38167c8a8e8c44df20e0a7ed6afb1bac2725fe9e2bfc7a8b"
+    },
+    {
+      "relativePath": "other-source-leads.json",
+      "bytes": 3159,
+      "sha256": "a46da097f5fd4f7ccde7395580995221f0c40a187a399b7cfbd4aec1c8384f4f"
+    },
+    {
+      "relativePath": "pak-extracted/Localization/Common/en/Common - copia.locres",
+      "bytes": 368985,
+      "sha256": "d312f1884ec99d140940231f3f9321ce4ae0be12a37bb9ad990b36bdab6d7474"
+    },
+    {
+      "relativePath": "pak-extracted/Localization/Common/en/Common.locres",
+      "bytes": 368985,
+      "sha256": "82bf4fcbc36f570deabebea5475d2d769b78feb70e8b6ad0d9d5975d6867b4e3"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/Common/Projectile/ProjectileBP/PB_SKL_ACT_P_Common_Hyadaruko.uasset",
+      "bytes": 10677,
+      "sha256": "40a7ae7d856d1c09d2a5f0f4009bafb59c1df81f066f3ee7c13f2654803471d7"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/Common/Projectile/ProjectileBP/PB_SKL_ACT_P_Common_Hyadaruko.uexp",
+      "bytes": 7711,
+      "sha256": "268059d41dcf3dff7c7ea2ba7ff53003f751191325f5308a4568a48363253b15"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/Common/Projectile/ProjectileBP/PB_SKL_ACT_P_Common_Io.uasset",
+      "bytes": 10491,
+      "sha256": "bcdce2c7eac799ace45fd12b2fedc50ca1b501e8f00f13b2a912b12b30d717f9"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/Common/Projectile/ProjectileBP/PB_SKL_ACT_P_Common_Io.uexp",
+      "bytes": 8263,
+      "sha256": "253c7db0f843c8fa1f80150fd01fb0b72be67cb13e5b395d8f4745e859dfd2ce"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/Common/Projectile/ProjectileBP/PB_SKL_ACT_P_Common_Merami.uasset",
+      "bytes": 10076,
+      "sha256": "ddcd70e36294f5a62f221cc4d20962a15757326f2ea87060ff6cec8a46ca8346"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/Common/Projectile/ProjectileBP/PB_SKL_ACT_P_Common_Merami.uexp",
+      "bytes": 6572,
+      "sha256": "3f909871d830c067b0d341f53f9c49cc0b0261598d48de2a9f1ca14883534f74"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/Common/Projectile/ProjectileBP/Test/PB_TEST_SKL_ACT_P_Common_Io_01.uasset",
+      "bytes": 10669,
+      "sha256": "6891875a7c5ffbaf61eff26e2eb16577d6a45fb856cba3a928c9f2c1f9d7189e"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/Common/Projectile/ProjectileBP/Test/PB_TEST_SKL_ACT_P_Common_Io_01.uexp",
+      "bytes": 7711,
+      "sha256": "268059d41dcf3dff7c7ea2ba7ff53003f751191325f5308a4568a48363253b15"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/Common/Projectile/ProjectileBP/Test/PB_TEST_SKL_ACT_P_Common_Io_03.uasset",
+      "bytes": 7792,
+      "sha256": "d7b3445af0bbae70f9a95a674633d51900648d2e49da821862e36ab3227a2657"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/Common/Projectile/ProjectileBP/Test/PB_TEST_SKL_ACT_P_Common_Io_03.uexp",
+      "bytes": 4107,
+      "sha256": "4766fe8fbb37755e13e936b2356648069df95854cbc1cd30f68f1a2e4f8324eb"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/Common/Projectile/ProjectileBP/Test/PB_TEST_SKL_ACT_P_Common_Iora_01.uasset",
+      "bytes": 10675,
+      "sha256": "d6979eff0419ec4a1198e6e7c23c5030888446a18325a40c03f67e9b1ed54f9b"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/Common/Projectile/ProjectileBP/Test/PB_TEST_SKL_ACT_P_Common_Iora_01.uexp",
+      "bytes": 7711,
+      "sha256": "268059d41dcf3dff7c7ea2ba7ff53003f751191325f5308a4568a48363253b15"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/Common/Projectile/ProjectileBP/Test/PB_TEST_SKL_ACT_P_Common_Iora_03.uasset",
+      "bytes": 8250,
+      "sha256": "e45a12bb30ef9a0a51e5f91a27e0376d9595cdf0c74cc83851441b50d66d20a6"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/Common/Projectile/ProjectileBP/Test/PB_TEST_SKL_ACT_P_Common_Iora_03.uexp",
+      "bytes": 4436,
+      "sha256": "6ae7b33a116a895eb19c37550e67bacafc5a7b3237ec9e5ad60fa8b1f6403e29"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/ActiveSkill/CT_SKL_ACT_PN020_1003.uasset",
+      "bytes": 1956,
+      "sha256": "f6f002e9c5839389515a349dcd7fd2257f0024f4e9b47e7f989dff1df4bf9dbd"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/ActiveSkill/CT_SKL_ACT_PN020_1003.uexp",
+      "bytes": 638,
+      "sha256": "1db195eacc89133043797b4fe2e20c54979bc46bd0022b664f5f831cfb9a241d"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/ActiveSkill/CT_SKL_ACT_PN020_1004.uasset",
+      "bytes": 1956,
+      "sha256": "819c8c3f1d9869dc722fc925a22d176281bed6a32ea86ff8f1b58755bdd34d67"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/ActiveSkill/CT_SKL_ACT_PN020_1004.uexp",
+      "bytes": 638,
+      "sha256": "1db195eacc89133043797b4fe2e20c54979bc46bd0022b664f5f831cfb9a241d"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/ActiveSkill/CT_SKL_ACT_PN020_1006.uasset",
+      "bytes": 1934,
+      "sha256": "ab69c98e75e8dfc9bae951187cf8db387734dfaeff71a0549942f8b94df5c3fd"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/ActiveSkill/CT_SKL_ACT_PN020_1006.uexp",
+      "bytes": 609,
+      "sha256": "0134a800257178210cf65b9bc42a93bb628eb605e03ca3d431d7481823e72e67"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/ActiveSkill/CT_SKL_ACT_PN020_1007.uasset",
+      "bytes": 1934,
+      "sha256": "083aa4b0f04d14125b73941a9a4a33f24a9c1e652738f9e73c6b451716aea20d"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/ActiveSkill/CT_SKL_ACT_PN020_1007.uexp",
+      "bytes": 609,
+      "sha256": "0134a800257178210cf65b9bc42a93bb628eb605e03ca3d431d7481823e72e67"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Damage.uasset",
+      "bytes": 1097,
+      "sha256": "a461e6a20fce503aea8c51675f7f9f5afce45a8b184ea5ab5f7731e00cf0d8b4"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Damage.uexp",
+      "bytes": 92,
+      "sha256": "76e018003962b739880fbcd8986b552abd03df21d4c33b1c7dd9c178abc08e2c"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Dead.uasset",
+      "bytes": 1087,
+      "sha256": "c7a603cb7a04c6994c41bf4cb8742914a366ad6e0661e59478a17b16a983ebc4"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Dead.uexp",
+      "bytes": 92,
+      "sha256": "76e018003962b739880fbcd8986b552abd03df21d4c33b1c7dd9c178abc08e2c"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_DeadWait.uasset",
+      "bytes": 1349,
+      "sha256": "8846949240da18fc0e7702de7534e53fe929b6f66d94080ed4ac414cdd9c28e4"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_DeadWait.uexp",
+      "bytes": 121,
+      "sha256": "ec9fa3c6ae9603f46cd64ccbd9038589e118defeca29c456735f5b9c1f1c3498"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Guard.uasset",
+      "bytes": 2210,
+      "sha256": "b74e6919609d8d4215890d20796aa7f070c662c3628abf808fe8b229d77c61f7"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Guard.uexp",
+      "bytes": 884,
+      "sha256": "bf809535ac0232c76dafa845c0836219d1ab9168f3c95d51ab3fb90b1473e405"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_ItemUse.uasset",
+      "bytes": 1409,
+      "sha256": "8c5ee472f2ed62be0ce1a653d3d69add843e85bac5deb74163eb5e9170fcc19f"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_ItemUse.uexp",
+      "bytes": 207,
+      "sha256": "056448d2a136d03f5598db6283f1dc3ba606b7dee2de69f1fe4bc3e7489fe134"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Jump.uasset",
+      "bytes": 1087,
+      "sha256": "041c4c3a144029da1dd61bd1ea387f136c635899cd77b53b32fe7eb2e4b3061e"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Jump.uexp",
+      "bytes": 92,
+      "sha256": "76e018003962b739880fbcd8986b552abd03df21d4c33b1c7dd9c178abc08e2c"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Kugutu.uasset",
+      "bytes": 1392,
+      "sha256": "76e6749f35e04fabe5aaf20bb79e706c285c4474ec3b3f247293a74e761d1bdc"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Kugutu.uexp",
+      "bytes": 187,
+      "sha256": "1a69e6407aa0cee74978bc2002e9f8fd0a806ca26f3d9c9a055b00a6cbd79345"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Locomotion.uasset",
+      "bytes": 1194,
+      "sha256": "068da067f5b5109a8a311451d9aef9dd59f6bcbc7bf7f67f31fdfd44d4bde392"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Locomotion.uexp",
+      "bytes": 150,
+      "sha256": "9fe307e044f8e2588a82a0d003feed4b6088bf60a62bd7d9abf6f71801409aed"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Messai.uasset",
+      "bytes": 1392,
+      "sha256": "0e8e2761a20ec0abfbc5ce87f37b41d550c294098e7f52bb5d7d01bb1388fdc2"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Messai.uexp",
+      "bytes": 187,
+      "sha256": "1a69e6407aa0cee74978bc2002e9f8fd0a806ca26f3d9c9a055b00a6cbd79345"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Paralyze.uasset",
+      "bytes": 1404,
+      "sha256": "596277c2c954ad9120e15cd9f6702da783ff5327274c3de422a4351f7fd65e69"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Paralyze.uexp",
+      "bytes": 187,
+      "sha256": "1a69e6407aa0cee74978bc2002e9f8fd0a806ca26f3d9c9a055b00a6cbd79345"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Sleep.uasset",
+      "bytes": 1358,
+      "sha256": "9d9705b823ea877633b37b9be78af5ae1ed8d5f45cf16e127a008042373e8efc"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Sleep.uexp",
+      "bytes": 154,
+      "sha256": "2ebab2c2733fac4cdce755652ac90392eae1a9f1ba58b4540e659b7ec35af25a"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Step.uasset",
+      "bytes": 1622,
+      "sha256": "aad61273b886c66cd0653a1b39f7ec56f2544e1a6a428380d6f2aedfa05fece9"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Base/CT_PN020_Step.uexp",
+      "bytes": 231,
+      "sha256": "5cb83f4aec6f0ce2bc68aa2f5a38feed5709ef8018a77314a476f70a55b54a9e"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/CT_PN020_Charge.uasset",
+      "bytes": 1991,
+      "sha256": "37444caa21637c8e094154439857f0ce13b13f19840c8410fde9a612285b2e2e"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/CT_PN020_Charge.uexp",
+      "bytes": 263,
+      "sha256": "01d6903839b53dc10661002cc70d3afba75ba06657c6fb54ed7a382c2a79fb4a"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/CT_PN020_Charge_2.uasset",
+      "bytes": 1808,
+      "sha256": "351baadab18dbda66465e4d7317ab5177c85660161f71b286796ff5c6bc46031"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/CT_PN020_Charge_2.uexp",
+      "bytes": 234,
+      "sha256": "cd6aeaa05e89b7aac71f35bc9c47697a70e3c487fa9694fb2effc2437656f560"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Emote/CT_PN020_EventItemUse.uasset",
+      "bytes": 1455,
+      "sha256": "af7fa2619613ad25145915e8511e2d95da45c3a1e6818b5548cc15c29ad6c539"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Emote/CT_PN020_EventItemUse.uexp",
+      "bytes": 162,
+      "sha256": "c277dfda74ab683831bd64a75f2a4249551ba06f690e22334d7707513ad08ed2"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Emote/CT_PN020_Mistake.uasset",
+      "bytes": 1451,
+      "sha256": "2d35a944615ea1256d8b142320df4a906b29bfc209b76947d85c6852baf26a16"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Emote/CT_PN020_Mistake.uexp",
+      "bytes": 162,
+      "sha256": "c277dfda74ab683831bd64a75f2a4249551ba06f690e22334d7707513ad08ed2"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Emote/CT_PN020_QuestStart.uasset",
+      "bytes": 1437,
+      "sha256": "449c274d26b026ac453904ef4b74cc8b62c0255471e0931748688df0f9d9890a"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Emote/CT_PN020_QuestStart.uexp",
+      "bytes": 162,
+      "sha256": "c277dfda74ab683831bd64a75f2a4249551ba06f690e22334d7707513ad08ed2"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Emote/CT_PN020_ResetPos.uasset",
+      "bytes": 1102,
+      "sha256": "6de64370df35cfa1be52536a6882b1cd271ecf1ba305e6320c043fd697f7b3cd"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Emote/CT_PN020_ResetPos.uexp",
+      "bytes": 92,
+      "sha256": "76e018003962b739880fbcd8986b552abd03df21d4c33b1c7dd9c178abc08e2c"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Emote/CT_PN020_Victory.uasset",
+      "bytes": 1429,
+      "sha256": "46896867f9cf55f0b639f84a0e80b01e4098f8d857ac5ddcfd0e2099bf1b47aa"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Emote/CT_PN020_Victory.uexp",
+      "bytes": 162,
+      "sha256": "c277dfda74ab683831bd64a75f2a4249551ba06f690e22334d7707513ad08ed2"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Emote/CT_PN020_Victory_Idle.uasset",
+      "bytes": 1470,
+      "sha256": "c6ea0c947c897527f573715f8f7e41b7ba2428c212e224a946ec2cac6d6f77b3"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Emote/CT_PN020_Victory_Idle.uexp",
+      "bytes": 162,
+      "sha256": "c277dfda74ab683831bd64a75f2a4249551ba06f690e22334d7707513ad08ed2"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Extra/CT_SKL_ACT_PN020_1009_EX_QST_01_05_0019.uasset",
+      "bytes": 1592,
+      "sha256": "a8fcbc9e90d731e239aa85e1a45c8621070491b5177da4b320def8a12f0ace1f"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Extra/CT_SKL_ACT_PN020_1009_EX_QST_01_05_0019.uexp",
+      "bytes": 262,
+      "sha256": "87c45c1b48b67ee95577b676112d98950371b830df6ffc98f286741ae3dd1e3c"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/NormalAttack/CT_PN020_AttackNormral.uasset",
+      "bytes": 2319,
+      "sha256": "46d5e2d77635c539782e85494147230878177c62881d5855c858c7a3d30fc11d"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/NormalAttack/CT_PN020_AttackNormral.uexp",
+      "bytes": 1442,
+      "sha256": "77d0fa5d13daeaf28aff6e35aff1d019030ef2dfd3d585d518bdf3d0dd689d60"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Skill/CT_PN020_1003.uasset",
+      "bytes": 1918,
+      "sha256": "1aaa6d35f47e549db7bcb37f38b3e73b6eeb8003bd84bab8ffe7b8af253a3cbf"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Skill/CT_PN020_1003.uexp",
+      "bytes": 638,
+      "sha256": "1db195eacc89133043797b4fe2e20c54979bc46bd0022b664f5f831cfb9a241d"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Skill/CT_PN020_Betan.uasset",
+      "bytes": 2224,
+      "sha256": "a83a624aafa08e18375317d4cffcf8fe18484179281487c5887add2959979046"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Skill/CT_PN020_Betan.uexp",
+      "bytes": 667,
+      "sha256": "834772cdb1c076b616f374532ef22f6528bfefe07f525acdc3f6159e98470a63"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Skill/CT_PN020_Merazooma.uasset",
+      "bytes": 1944,
+      "sha256": "8f7e404979b8c185744e40db92474001e8aa25c6115bf5cd8d7e0ab094ac4477"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Skill/CT_PN020_Merazooma.uexp",
+      "bytes": 638,
+      "sha256": "cc752d9d360df9e85ac649014ebf7d77bab2093eb0fb84a721ef5e998bc539fa"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Skill/SpellTest/CT_PN020_SpellTest01_Frizz.uasset",
+      "bytes": 1998,
+      "sha256": "d39520248be4a4ae24e203d4a1f1dc218b9a4a2ea9e36fe7830c81421ce84b0c"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Skill/SpellTest/CT_PN020_SpellTest01_Frizz.uexp",
+      "bytes": 638,
+      "sha256": "1db195eacc89133043797b4fe2e20c54979bc46bd0022b664f5f831cfb9a241d"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Skill/SpellTest/CT_PN020_SpellTest02_Frizzle.uasset",
+      "bytes": 2008,
+      "sha256": "1aefc7305cb2face557d61f65511e671a2011dbbac553c001d592c2f03c9085e"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Skill/SpellTest/CT_PN020_SpellTest02_Frizzle.uexp",
+      "bytes": 638,
+      "sha256": "1db195eacc89133043797b4fe2e20c54979bc46bd0022b664f5f831cfb9a241d"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Skill/SpellTest/CT_PN020_SpellTest03_Kafrizzle.uasset",
+      "bytes": 2018,
+      "sha256": "5287ca7edd5ef9333bb5c691afa6fe7c6a2d52f5369ef2733c91020adf1b1bd4"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Skill/SpellTest/CT_PN020_SpellTest03_Kafrizzle.uexp",
+      "bytes": 638,
+      "sha256": "1db195eacc89133043797b4fe2e20c54979bc46bd0022b664f5f831cfb9a241d"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Skill/SpellTest/CT_PN020_SpellTest04_Begirama.uasset",
+      "bytes": 2013,
+      "sha256": "57b48d3f75817f1b3e8c212ea1e84f992de40f2dfdbecccf21150d16566b8cdf"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Skill/SpellTest/CT_PN020_SpellTest04_Begirama.uexp",
+      "bytes": 638,
+      "sha256": "1db195eacc89133043797b4fe2e20c54979bc46bd0022b664f5f831cfb9a241d"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Special/CT_SKL_ACT_PN020_2001.uasset",
+      "bytes": 3571,
+      "sha256": "7adb61c989848cd2437576585f595d2d4169ad2524b155cc25dddd55c4347b1a"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Special/CT_SKL_ACT_PN020_2001.uexp",
+      "bytes": 8798,
+      "sha256": "ad9658d7ceec3d63853336b204f485c5326051a6ab935baf02ed26f35e2a8327"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Special/CT_SKL_ACT_PN020_2002.uasset",
+      "bytes": 3578,
+      "sha256": "84e5ce0188a9dc8b3c3f1068626e1721eb2cd210c3ee6850adf3fbcc386309a2"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Special/CT_SKL_ACT_PN020_2002.uexp",
+      "bytes": 8798,
+      "sha256": "0820bfd02443e675a10201815a879f8229ccd85454ee2eecc9636a0d88fcf40a"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Special/CT_SKL_ACT_PN020_2003.uasset",
+      "bytes": 3575,
+      "sha256": "4e85b5700f01c9a801bbd858201d0268dcebb4271dbc2775c6b6bda4a88ff865"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Action/Special/CT_SKL_ACT_PN020_2003.uexp",
+      "bytes": 8798,
+      "sha256": "ca9726c83f8594705f1b958759ef9757f4714bde2bc035f49a07b5395ae144d1"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl011.uasset",
+      "bytes": 6748,
+      "sha256": "753c8a484831f4ea2583b35ebfcec122e8d381ccf47e752e496fd5d40a7b378d"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl011.uexp",
+      "bytes": 14890,
+      "sha256": "60d751eebb7085bc9ac0acb4721460355f09f155786b75b2fb433b8095c57da8"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl0111.uasset",
+      "bytes": 6754,
+      "sha256": "82620719c3e265b2c281d07cc56d72647133d7a6fdcab65fe18bef3fdab044d0"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl0111.uexp",
+      "bytes": 14890,
+      "sha256": "60d751eebb7085bc9ac0acb4721460355f09f155786b75b2fb433b8095c57da8"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl01111.uasset",
+      "bytes": 6752,
+      "sha256": "bdcd8e6426d914101c123d25fd367d4453986f3bce9d5a93bc5b9abadb502544"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl01111.uexp",
+      "bytes": 14890,
+      "sha256": "60d751eebb7085bc9ac0acb4721460355f09f155786b75b2fb433b8095c57da8"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl022.uasset",
+      "bytes": 8479,
+      "sha256": "be91d689dad007952992284a959da16b1419b787f70ad712327fb06ca6a7b06c"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl022.uexp",
+      "bytes": 18419,
+      "sha256": "2a9be1b5ac50de87e20eb08317a4e02480415cd66eb2991bb869311172f01e50"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl02222.uasset",
+      "bytes": 6756,
+      "sha256": "f24f17e36814b4983bc65028bf17e524054a20034a32e51366243b98656e4a63"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Animations/AM_PN020_00_B_Spl02222.uexp",
+      "bytes": 14890,
+      "sha256": "60d751eebb7085bc9ac0acb4721460355f09f155786b75b2fb433b8095c57da8"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Spl01.uasset",
+      "bytes": 3682,
+      "sha256": "e1eaf3b7166355bc4e5fbc060e5034ef92186bfe482ff0c3690357fe4d6763fe"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Chara/Player/PN020/Animations/AS_PN020_00_B_Spl01.uexp",
+      "bytes": 73302,
+      "sha256": "c9d33797116e0f3550c2f4925cb0f796899f0b967fcbb6d6053eeab6535b69e2"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/DB/ActiveSkillMaster/ActiveSkillMaster_ActiveSkillEffect.uasset",
+      "bytes": 8223,
+      "sha256": "6313d62f8fa88306dd331da7c1e2546d018b1223b889b02145f657dbbdd42a3d"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/DB/ActiveSkillMaster/ActiveSkillMaster_ActiveSkillEffect.uexp",
+      "bytes": 10015116,
+      "sha256": "2a74b1896d08109d2d4e4800b43787ceb581d58cb6524b9d2ab8fe9bef162c09"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/DB/ActiveSkillMaster/ActiveSkillMaster_Projectile.uasset",
+      "bytes": 2898,
+      "sha256": "01f69c6ba21934d1b7c01a20b2644da2cb97b96335265cb6820207a8071cc987"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/DB/ActiveSkillMaster/ActiveSkillMaster_Projectile.uasset.bak",
+      "bytes": 2898,
+      "sha256": "01f69c6ba21934d1b7c01a20b2644da2cb97b96335265cb6820207a8071cc987"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/DB/ActiveSkillMaster/ActiveSkillMaster_Projectile.uexp",
+      "bytes": 1229659,
+      "sha256": "c790dc9f126765e0c3deb00e69dcbfce9f89c43ff61b22eba2d224a83ec997bc"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/DB/ActiveSkillMaster/ActiveSkillMaster_Projectile.uexp.bak",
+      "bytes": 1229659,
+      "sha256": "c790dc9f126765e0c3deb00e69dcbfce9f89c43ff61b22eba2d224a83ec997bc"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/Localization/Common/en/Common.locres",
+      "bytes": 368985,
+      "sha256": "72b726dc591283f02c63820123a6b2545928a04c4ba8d39ecd6a2dde6d6fde2d"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/UI/Icon/SKL/SKL_ACT_PN020_1003_ICN_00.uasset",
+      "bytes": 864,
+      "sha256": "edbe32b9c3ee157b6b02ff14e4a3b6de83f0da279303d0831bf848494a1d2b4d"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/UI/Icon/SKL/SKL_ACT_PN020_1003_ICN_00.uexp",
+      "bytes": 16693,
+      "sha256": "56b509b052e70530abef247b37534a22dfb8fdef74e1aefacfeb4a9e14ef8da9"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/UI/Icon/SKL/SKL_ACT_PN020_1004_ICN_00.uasset",
+      "bytes": 864,
+      "sha256": "7bf44907bef634bcf9402ae420dd5c984605e2d75a6eb3f2cfcc19a2b6a76795"
+    },
+    {
+      "relativePath": "pak-extracted/Strash/UI/Icon/SKL/SKL_ACT_PN020_1004_ICN_00.uexp",
+      "bytes": 16693,
+      "sha256": "b09d2052516764a7eaca0c0db983f2e64e5c1e7f1571da294041ad8f75824aff"
+    },
+    {
+      "relativePath": "pak-extracted.manifest.json",
+      "bytes": 39130,
+      "sha256": "67f369ba9b376f3b0365c24196a1f9584b4141740c78bf1966a4f1bf398ab770"
+    },
+    {
+      "relativePath": "source.json",
+      "bytes": 3229,
+      "sha256": "a0cd4ffd97548eaf62ab10563f301fdb937c91c4e55f99a891b9d5e67458ee96"
+    },
+    {
+      "relativePath": "tools/inspect-uasset-exports-ue426.py",
+      "bytes": 2569,
+      "sha256": "c0cd54d4aa59e7583e75e2c74d684e934023af667e2c33e419416f2269a86765"
+    },
+    {
+      "relativePath": "tools/unpack-plain-pak-v3.py",
+      "bytes": 2843,
+      "sha256": "1c1533b34bb12d6081f081bdb9cc8aaf0c252c19cdfe5ed86ab0ab092c74f7d4"
+    },
+    {
+      "relativePath": "uasset-export-analysis.json",
+      "bytes": 421012,
+      "sha256": "9158248434cd8b05f22a7317e1c548283949026d2364c0bc6545c6c02925b87f"
+    }
+  ]
+}

@@ -35,7 +35,7 @@
       "damageMult": 0.25
     }
   ],
-  "castTimeSec": 0.267,
+  "castTimeSec": 0.1,
   "castTimeTier": "小",
   "icon": "assets/icons/abilities/community-review-01-20260907.w.webp",
   "template": {
@@ -52,7 +52,7 @@
       "maxAlive": 1,
       "onOwnerDeath": "despawn",
       "cleanse": "none",
-      "castTimeSec": 0.267
+      "castTimeSec": 0.1
     },
     "inheritDefaults": true
   },

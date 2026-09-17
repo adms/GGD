@@ -1,0 +1,15 @@
+{
+  "id": "lol-velkoz.review",
+  "schema": "status-effect@1",
+  "name": "論文退回重寫",
+  "description": "威寇茲「論文退回重寫」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-velkoz.review",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

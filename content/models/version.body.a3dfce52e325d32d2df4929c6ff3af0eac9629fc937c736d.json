@@ -1,0 +1,20 @@
+{
+  "id": "version.body.a3dfce52e325d32d2df4929c6ff3af0eac9629fc937c736d",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/versions/459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "summon",
+    "run": "one_hand_1",
+    "attack": "one_hand_2",
+    "cast": "ea",
+    "hurt": "guard",
+    "death": "guard"
+  },
+  "bodyVersion": {
+    "sourceModelKey": "community.body.0829b83f03e2a89eaa5aa955dfbeddc4f3cb32badcdd6ff4",
+    "legacyAppearance": false
+  },
+  "yawOffsetDeg": 0
+}

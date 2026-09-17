@@ -1,0 +1,23 @@
+{
+  "schema": "ggd.owner-asset-review@1",
+  "candidateId": "jump-force-native-dai-chr0430-decimated-256-v1",
+  "candidateSha256": "f8f3f1c025b50c76f0c31beddd2876733215bc48dc0a47238cb35c58016d1b23",
+  "reviewedAt": "2026-09-15",
+  "decision": "rejected",
+  "scope": [
+    "face-texture",
+    "eyes",
+    "visual-fidelity"
+  ],
+  "ownerFinding": "小呆的臉貼圖似乎有問題，眼睛也不正常。",
+  "supersedes": {
+    "gitPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/visual-comparison.json",
+    "field": "humanReview.result",
+    "priorValue": "accepted"
+  },
+  "states": {
+    "visualValidationPassed": false,
+    "runtimeSelectable": false,
+    "productionDeployed": false
+  }
+}

@@ -73,7 +73,7 @@
       ],
       "effects": [],
       "vfxKey": "fx.ember-bolt-cast",
-      "castTimeSec": 0.167,
+      "castTimeSec": 0.1,
       "provenance": "w3x-import",
       "rangeTier": "極大",
       "range": 12,
@@ -98,9 +98,10 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.167
+          "castTimeSec": 0.1
         }
-      }
+      },
+      "castTimeTier": "小"
     },
     "W": {
       "id": "sela.w",
@@ -158,8 +159,9 @@
         }
       ],
       "vfxKey": "fx.cinder-ward",
-      "castTimeSec": 0.067,
-      "provenance": "w3x-import"
+      "castTimeSec": 0.1,
+      "provenance": "w3x-import",
+      "castTimeTier": "小"
     },
     "E": {
       "id": "sela.e",
@@ -216,7 +218,8 @@
           "statusDurationSec": 1.5,
           "castTimeSec": 0.3
         }
-      }
+      },
+      "castTimeTier": "中"
     },
     "R": {
       "id": "sela.r",
@@ -239,7 +242,7 @@
       "targetsEnemies": true,
       "effects": [],
       "vfxKey": "fx.firestorm",
-      "castTimeSec": 0.767,
+      "castTimeSec": 1,
       "provenance": "w3x-import",
       "rangeTier": "大",
       "range": 8,
@@ -264,9 +267,10 @@
           "damageType": "magic",
           "statusId": "burnstun",
           "statusDurationSec": 0.75,
-          "castTimeSec": 0.767
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     }
   },
   "passive": {

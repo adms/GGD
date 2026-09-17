@@ -1,0 +1,196 @@
+{
+  "schema": "ggd.ssbu-sonic-ultimate14-motion-visual-review@1",
+  "componentId": "ssbu-sonic-c00-ultimate14-motion-v1",
+  "accepted": true,
+  "reviewedAt": "2026-09-14",
+  "scope": "independent-skinned-model-motion-component",
+  "reviewedSamples": [
+    {
+      "motion": "c04attacklw4",
+      "sample": "start",
+      "frame": 0,
+      "file": "c04attacklw4-start.png"
+    },
+    {
+      "motion": "c04attacklw4",
+      "sample": "middle",
+      "frame": 91.25000238418579,
+      "file": "c04attacklw4-middle.png"
+    },
+    {
+      "motion": "c04attacklw4",
+      "sample": "end",
+      "frame": 182.50000476837158,
+      "file": "c04attacklw4-end.png"
+    },
+    {
+      "motion": "c04attacklw4charge",
+      "sample": "start",
+      "frame": 0,
+      "file": "c04attacklw4charge-start.png"
+    },
+    {
+      "motion": "c04attacklw4charge",
+      "sample": "middle",
+      "frame": 76.25000238418579,
+      "file": "c04attacklw4charge-middle.png"
+    },
+    {
+      "motion": "c04attacklw4charge",
+      "sample": "end",
+      "frame": 152.50000476837158,
+      "file": "c04attacklw4charge-end.png"
+    },
+    {
+      "motion": "c05attackairf",
+      "sample": "start",
+      "frame": 0,
+      "file": "c05attackairf-start.png"
+    },
+    {
+      "motion": "c05attackairf",
+      "sample": "middle",
+      "frame": 69.99999761581421,
+      "file": "c05attackairf-middle.png"
+    },
+    {
+      "motion": "c05attackairf",
+      "sample": "end",
+      "frame": 139.99999523162842,
+      "file": "c05attackairf-end.png"
+    },
+    {
+      "motion": "c05attackairn",
+      "sample": "start",
+      "frame": 0,
+      "file": "c05attackairn-start.png"
+    },
+    {
+      "motion": "c05attackairn",
+      "sample": "middle",
+      "frame": 73.74999761581421,
+      "file": "c05attackairn-middle.png"
+    },
+    {
+      "motion": "c05attackairn",
+      "sample": "end",
+      "frame": 147.49999523162842,
+      "file": "c05attackairn-end.png"
+    },
+    {
+      "motion": "c05landingairf",
+      "sample": "start",
+      "frame": 0,
+      "file": "c05landingairf-start.png"
+    },
+    {
+      "motion": "c05landingairf",
+      "sample": "middle",
+      "frame": 38.749998807907104,
+      "file": "c05landingairf-middle.png"
+    },
+    {
+      "motion": "c05landingairf",
+      "sample": "end",
+      "frame": 77.49999761581421,
+      "file": "c05landingairf-end.png"
+    },
+    {
+      "motion": "d01specialshold",
+      "sample": "start",
+      "frame": 0,
+      "file": "d01specialshold-start.png"
+    },
+    {
+      "motion": "d01specialshold",
+      "sample": "middle",
+      "frame": 48.75,
+      "file": "d01specialshold-middle.png"
+    },
+    {
+      "motion": "d01specialshold",
+      "sample": "end",
+      "frame": 97.5,
+      "file": "d01specialshold-end.png"
+    },
+    {
+      "motion": "d01specialsstart",
+      "sample": "start",
+      "frame": 0,
+      "file": "d01specialsstart-start.png"
+    },
+    {
+      "motion": "d01specialsstart",
+      "sample": "middle",
+      "frame": 18.75,
+      "file": "d01specialsstart-middle.png"
+    },
+    {
+      "motion": "d01specialsstart",
+      "sample": "end",
+      "frame": 37.5,
+      "file": "d01specialsstart-end.png"
+    },
+    {
+      "motion": "d02specialhisquat",
+      "sample": "start",
+      "frame": 0,
+      "file": "d02specialhisquat-start.png"
+    },
+    {
+      "motion": "d02specialhisquat",
+      "sample": "middle",
+      "frame": 18.75,
+      "file": "d02specialhisquat-middle.png"
+    },
+    {
+      "motion": "d02specialhisquat",
+      "sample": "end",
+      "frame": 37.5,
+      "file": "d02specialhisquat-end.png"
+    },
+    {
+      "motion": "d03speciallwhold",
+      "sample": "start",
+      "frame": 0,
+      "file": "d03speciallwhold-start.png"
+    },
+    {
+      "motion": "d03speciallwhold",
+      "sample": "middle",
+      "frame": 76.25000238418579,
+      "file": "d03speciallwhold-middle.png"
+    },
+    {
+      "motion": "d03speciallwhold",
+      "sample": "end",
+      "frame": 152.50000476837158,
+      "file": "d03speciallwhold-end.png"
+    },
+    {
+      "motion": "d03speciallwstart",
+      "sample": "start",
+      "frame": 0,
+      "file": "d03speciallwstart-start.png"
+    },
+    {
+      "motion": "d03speciallwstart",
+      "sample": "middle",
+      "frame": 10.000000298023224,
+      "file": "d03speciallwstart-middle.png"
+    },
+    {
+      "motion": "d03speciallwstart",
+      "sample": "end",
+      "frame": 20.000000596046448,
+      "file": "d03speciallwstart-end.png"
+    }
+  ],
+  "findings": [
+    "Babylon WebGL rendered all ten clips at start, middle and end for 30 visible samples.",
+    "The sampled native spin and attack poses retain the complete body and finite skinned bounds without an opaque atlas rectangle.",
+    "Visual acceptance is limited to this independent component and does not approve GGD event mapping or runtime load."
+  ],
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

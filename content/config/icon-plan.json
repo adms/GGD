@@ -2,11 +2,11 @@
   "id": "icon-plan",
   "schema": "config.icon-plan@1",
   "templateVersion": "icon-gen/1",
-  "contentDigest": "614e25d80879318a",
+  "contentDigest": "f2ee5ffd54c72bc1",
   "counts": {
     "total": {
-      "docs": 1202,
-      "have": 1202,
+      "docs": 1461,
+      "have": 1461,
       "drop": 0,
       "blocked": 0,
       "generate": 0,
@@ -15,15 +15,15 @@
     },
     "byFamily": {
       "champions": {
-        "docs": 153,
-        "have": 153,
+        "docs": 190,
+        "have": 190,
         "drop": 0,
         "blocked": 0,
         "generate": 0
       },
       "abilities": {
-        "docs": 907,
-        "have": 907,
+        "docs": 1129,
+        "have": 1129,
         "drop": 0,
         "blocked": 0,
         "generate": 0

@@ -1,16 +1,16 @@
 {
   "id": "community-review-07-20260907",
   "name": "西索",
-  "description": "西索 社群英雄功能驗收稿。作品：《HUNTER×HUNTER》  \n定位：連線、牽引、表面偽裝。\n\n視覺方向：粉色彈性念線、撲克牌尖角、收線回彈；偽裝不能改變陣營。\n以 GGD 法刺 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "description": "作品：《HUNTER×HUNTER》  \n定位：連線、牽引、表面偽裝。\n\n視覺方向：粉色彈性念線、撲克牌尖角、收線回彈；偽裝不能改變陣營。",
   "role": "fighter",
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "法刺",
-  "modelKey": "version.body.9e2466804c757f29d6bb2c9bdf9ddca5807898852d6f39d4",
+  "modelKey": "version.body.c8395bd2baf507c8314fefd981c6695d7ad92edb3c270acc",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 31.047346938775508,
+    "maxHealth": 40,
     "healthRegen": 0.07555510204081634,
-    "maxMana": 11.026530612244898,
+    "maxMana": 35,
     "manaRegen": 0,
     "ad": 3.4382040816326525,
     "as": 0,
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 6,
@@ -86,7 +86,7 @@
           "tickOnApply": true
         }
       ],
-      "castTimeSec": 0.233,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-07-20260907.q.webp",
       "template": {
@@ -102,7 +102,7 @@
           "impactRadius": 150,
           "scatterRadius": 120,
           "payout": "perImpact",
-          "castTimeSec": 0.233
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -130,10 +130,10 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -157,7 +157,7 @@
           "root": true
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-07-20260907.w.webp",
       "template": {
@@ -168,7 +168,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -183,7 +183,7 @@
       "id": "community-review-07-20260907.e",
       "name": "〔收線〕",
       "provenance": "editor-json",
-      "description": "【目前模板可執行】拖拉指定目標後向前投擲 120 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。\n【目標設計】附著敵人時牽引敵人；附著錨點時拉動自己。兩種行為都受碰撞與最大位移限制。\n【待補機制】僅敵人抓投；需錨點拉動自己與敵人牽引的分支。",
+      "description": "【目前模板可執行】拖拉指定目標後向前投擲{{push}}距離，0.45 秒拋物線，落地{{radius}}範圍小級傷害。\n【目標設計】附著敵人時牽引敵人；附著錨點時拉動自己。兩種行為都受碰撞與最大位移限制。\n【待補機制】僅敵人抓投；需錨點拉動自己與敵人牽引的分支。",
       "slot": "E",
       "castType": "ground",
       "maxRank": 4,
@@ -194,10 +194,10 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -209,7 +209,7 @@
           "kind": "leap",
           "applyTo": "target",
           "mode": "toPoint",
-          "apexHeight": 0.005,
+          "apexHeight": 1.2,
           "durationSec": 0.45,
           "throwDistance": 2.2,
           "dragToCaster": true,
@@ -231,7 +231,7 @@
           ]
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-07-20260907.e.webp",
       "template": {
@@ -240,14 +240,14 @@
           "mode": "toPoint",
           "grabMode": "dragToCaster",
           "throwMode": "distance",
-          "apexHeight": 1.2,
+          "apexHeight": 300,
           "durationSec": 0.45,
           "throwDistance": 120,
           "landRadius": 2,
           "landDamageTier": "小",
           "landApRatio": 0,
           "damageType": "physical",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -272,9 +272,9 @@
         90.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        600.0,
+        600.0,
+        600.0
       ],
       "manaCostTier": "大",
       "range": 6,
@@ -292,7 +292,7 @@
           }
         }
       ],
-      "castTimeSec": 2.233,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-07-20260907.r.webp",
       "template": {
@@ -304,7 +304,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 2.233
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },
@@ -352,7 +352,7 @@
       "modelKey": "version.body.9e2466804c757f29d6bb2c9bdf9ddca5807898852d6f39d4",
       "label": "ou99 西索（本尊·減面版）",
       "sourceModelKey": "ou99.497211",
-      "modelSha256": "c671fb3ba1d83f9bf97c7f10292d5311c43ba949ba49beda8f0e006eaac8287a",
+      "modelSha256": "8cbcc6f12fe337e9b0dd3b632fcee6423c2e19d28e8bf23c9454d501c2ae911f",
       "binarySha256": "7992da0f1f4fdde202948e42dd0fef6dca5cb72c7e9a7e64ce154e9761393e1b",
       "registeredAt": "2026-09-10T11:48:42.545Z",
       "source": {
@@ -362,6 +362,136 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-497211-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.6fb9f6d8bbe5c0bbc7bd7f373a3b8591e3e27b7111d68b3b",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.497211",
+      "modelSha256": "28c129002e2e78270f7573922de04dc9dd4a5b2c437cdaea50939da402da49e3",
+      "binarySha256": "ec9735aa9dedcccc25e82d48cb809fbc3baf1fe6e9c3c56899204dc461dbd71d",
+      "registeredAt": "2026-09-10T14:45:28.766Z",
+      "source": {
+        "kind": "previous",
+        "character": "西索",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.497211.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.4f73010d41762bbd09643127b948ef8688b79097a51fbd2b",
+      "label": "黑羽快斗",
+      "sourceModelKey": "community.body.5266229eb0dbd3ef4d817116b31b26655eb15d256b411127",
+      "modelSha256": "04d86d34220dfcc63a74b79e6e29c2993e869054aca6d5c3e2e1ea07ad52eac3",
+      "binarySha256": "eeb903a85ee447a044d77d6bc058753bd714fe822eea335bd948fb2766c76789",
+      "registeredAt": "2026-09-10T14:45:28.774Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑羽快斗",
+        "work": "神偷怪盜／魔術快斗；名偵探柯南",
+        "library": "300heroes",
+        "reference": "300heroes:ff525e143d53b09dab32f9e0",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.a04eb275adca669162041e8a3ce9b6aa633199b93dcec159",
+      "label": "西索（論壇模型）",
+      "sourceModelKey": "ou99.497211-standard-v2",
+      "modelSha256": "c00e0db129927275dddd1272a15609c31011e067028ab409e3c504da0698bcfd",
+      "binarySha256": "a6eac7b9a3a7978ecfbe0288ed5657bcba1bf62e61258c4d7b6bbad1657b0340",
+      "registeredAt": "2026-09-10T14:48:46.653Z",
+      "source": {
+        "kind": "exact",
+        "character": "西索",
+        "work": "HUNTER×HUNTER",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-497211-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.7bf10233f8e26c4cd2bec4248f9c8dea0672f7af335e57b9",
+      "label": "黑羽快斗",
+      "sourceModelKey": "community.body.5266229eb0dbd3ef4d817116b31b26655eb15d256b411127",
+      "modelSha256": "7a09bd0fdd47ae211eca845777f691bfcc39b39be09875314ad06ead4206693d",
+      "binarySha256": "cff361d7df1cf8c17714c7f05cf3ec4934cabdba1f80eaadb9a92d1d499c7287",
+      "registeredAt": "2026-09-12T23:02:28.523Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑羽快斗",
+        "work": "神偷怪盜／魔術快斗；名偵探柯南",
+        "library": "300heroes",
+        "reference": "300heroes:ff525e143d53b09dab32f9e0",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.c8e413cef2dd43a380237f6dd055565443ddcf8278e4483c",
+      "label": "西索（論壇模型）",
+      "sourceModelKey": "ou99.497211-standard-v2",
+      "modelSha256": "b83b2d88c31683f4a077aff7676311a477fdc17b0b52efc44da620396ca9f72a",
+      "binarySha256": "b8c31fe5755371cb9e6137d6d2807943caa95f0b135f5772c9e061264ea8b56d",
+      "registeredAt": "2026-09-12T23:02:29.147Z",
+      "source": {
+        "kind": "exact",
+        "character": "西索",
+        "work": "HUNTER×HUNTER",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-497211-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.3bd13bc6bdffbd53fb0310fdabd9b97ddd8561f4616ef21a",
+      "label": "黑羽快斗",
+      "sourceModelKey": "community.body.5266229eb0dbd3ef4d817116b31b26655eb15d256b411127",
+      "modelSha256": "ce4933b536f0ae49aa9e9e47669b73188ee4b32e9e95ba3af84ab3758ddc4582",
+      "binarySha256": "cff361d7df1cf8c17714c7f05cf3ec4934cabdba1f80eaadb9a92d1d499c7287",
+      "registeredAt": "2026-09-13T00:08:44.651Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "黑羽快斗",
+        "work": "神偷怪盜／魔術快斗；名偵探柯南",
+        "library": "300heroes",
+        "reference": "300heroes:ff525e143d53b09dab32f9e0",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.c8395bd2baf507c8314fefd981c6695d7ad92edb3c270acc",
+      "label": "西索（論壇模型）",
+      "sourceModelKey": "ou99.497211-standard-v2",
+      "modelSha256": "70da681ef4bc29769e5149503714ff593e4aa3b7b24be7d7a7b87790c2acfe61",
+      "binarySha256": "b8c31fe5755371cb9e6137d6d2807943caa95f0b135f5772c9e061264ea8b56d",
+      "registeredAt": "2026-09-13T00:08:45.221Z",
+      "source": {
+        "kind": "exact",
+        "character": "西索",
+        "work": "HUNTER×HUNTER",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-497211-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

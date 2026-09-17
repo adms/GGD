@@ -1,0 +1,281 @@
+{
+  "schema": "ggd-ssbu-blend-component-conversion@1",
+  "candidateId": "ssbu-chrom-c00-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/chrom/model/body/c00/chrom-c00.blend",
+    "bytes": 6981308,
+    "sha256": "315b422197357a96d5d3bc71532a4902f4a0e58d2f3287871e8e36e9764b83ad"
+  },
+  "tool": {
+    "name": "Blender",
+    "version": "4.5.13 LTS",
+    "backgroundFactoryStartupRequired": true,
+    "embeddedScriptsExecuted": false,
+    "driversMuted": 0,
+    "visibleMeshesJoinedByMaterial": false,
+    "excludeVisibleMeshPrefixes": []
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/body.glb",
+    "bytes": 1111968,
+    "sha256": "7d67fa522372a0d1df6dc7511d104748a382c7645df60477d32ec582ef4aa134"
+  },
+  "normalization": {
+    "sourceBounds": [
+      [
+        -10.85420036315918,
+        -2.2193901538848877,
+        -0.01632086932659149
+      ],
+      [
+        10.85420036315918,
+        5.3231201171875,
+        19.940662384033203
+      ]
+    ],
+    "sourceUp": "Blender Z",
+    "glbUp": "glTF Y",
+    "targetHeightMeters": 1.8,
+    "uniformScale": 0.09019399260642096,
+    "footOrigin": true
+  },
+  "sourceRigCount": 1,
+  "sourceBoneCounts": [
+    123
+  ],
+  "sourceActionCount": 0,
+  "sourceVisibleMeshesExcludedByPrefix": [],
+  "sourceImageCountUsed": 8,
+  "materialCompatibilityAdjustments": [
+    {
+      "material": "met_chrom_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "alp_chrom_003",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "pasted__lucina_export_hair_vertexcolor_xxx_alp_snake_002",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeL",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeR",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "skin_chrom_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "alp_chrom_004",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "alp_chrom_002",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    }
+  ],
+  "materialJoinAdjustments": [],
+  "textureCompatibilityAdjustments": [
+    {
+      "sourceImage": "alp_chrom_001_col.png",
+      "sourceDimensions": [
+        1024,
+        1024
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/derived-textures/alp_chrom_001_col.png.ggd-256.png",
+      "derivedBytes": 76067,
+      "derivedSha256": "ca781cce24b15b61ee261d21c801251b32c6aab487467e31d27f871426291fa8",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "alp_chrom_003_col.png",
+      "sourceDimensions": [
+        1024,
+        1024
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/derived-textures/alp_chrom_003_col.png.ggd-256.png",
+      "derivedBytes": 127402,
+      "derivedSha256": "72c349772c7edd445832510486caf41fab2ca9bdcbe8c0235fcda19f80816833",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "met_chrom_001_col.png",
+      "sourceDimensions": [
+        256,
+        512
+      ],
+      "exportDimensions": [
+        128,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/derived-textures/met_chrom_001_col.png.ggd-256.png",
+      "derivedBytes": 49048,
+      "derivedSha256": "d58c2d7e4176d5022331e7446023a60e20d3b4431b463b38ed7acbcc2dfa8769",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "skin_chrom_001_col.png",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-alpha-fixed-batch2-v3/chrom/first/derived-textures/skin_chrom_001_col.png.ggd-256.png",
+      "derivedBytes": 118627,
+      "derivedSha256": "068ac05b58720d914d640624edfcb75d854d7faacdc4856f0e4d1928d33206dc",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    }
+  ],
+  "hierarchyCompatibilityAdjustments": [
+    {
+      "nodeIndex": 123,
+      "nodeName": "Chrom_FaceN_EyeB_VIS_O_OBJShape",
+      "previousParentIndex": 135,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 124,
+      "nodeName": "Chrom_FaceN_EyeB_VIS_O_OBJShape.001",
+      "previousParentIndex": 135,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 125,
+      "nodeName": "Chrom_Mouth_FaceN_VIS_O_OBJShape",
+      "previousParentIndex": 135,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 126,
+      "nodeName": "Chrom_Openblink_Eye_VIS_O_OBJShape",
+      "previousParentIndex": 135,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 127,
+      "nodeName": "Chrom_Openblink_Eye_VIS_O_OBJShape.001",
+      "previousParentIndex": 135,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 128,
+      "nodeName": "fal_e_VIS_O_OBJShape",
+      "previousParentIndex": 135,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 129,
+      "nodeName": "GamemodelShape",
+      "previousParentIndex": 135,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 130,
+      "nodeName": "GamemodelShape.001",
+      "previousParentIndex": 135,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 131,
+      "nodeName": "GamemodelShape.002",
+      "previousParentIndex": 135,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 132,
+      "nodeName": "hairShape",
+      "previousParentIndex": 135,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 133,
+      "nodeName": "hairShape.001",
+      "previousParentIndex": 135,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 134,
+      "nodeName": "SayaM_VIS_O_OBJShape",
+      "previousParentIndex": 135,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    }
+  ],
+  "sourceBytesUnchanged": true,
+  "runtimeReady": false,
+  "backendSelectionVerified": false,
+  "defaultEligible": false,
+  "limitations": [
+    "This is a body component with source skin and basic materials; structural and visual validation are separate.",
+    "No source actions were added, synthesized, or retargeted.",
+    "Hidden native mesh variants remain preserved in the original Blender file and are excluded from this visible-appearance export.",
+    "Source normal, PRM, emissive, and game shader parity remain unverified unless they were already connected in the source Blender material graph.",
+    "Non-default source IOR values are recorded and normalized to glTF core IOR 1.5 because current GGD does not allow KHR_materials_ior.",
+    "Source textures above 256 pixels are retained by hash and resized in a separate derived copy for the current GGD budget."
+  ]
+}

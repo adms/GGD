@@ -1,0 +1,72 @@
+{
+  "id": "acquired-asuna.w",
+  "name": "閃光趕飯",
+  "provenance": "editor-json",
+  "description": "獲得3秒極小級移速與90護盾，準備突進。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "msBonusTier": "極小"
+        }
+      ],
+      "duration": 3
+    },
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 90,
+        "ratios": [],
+        "perRank": [
+          0,
+          45,
+          90,
+          135
+        ]
+      },
+      "duration": 3,
+      "absorbs": "all",
+      "stackKey": "acquired-asuna.dinner",
+      "onExisting": "keepLarger"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.bdc30b4f4711cc9d5e3decf5c46c5956dd1456ff54ec6692",
+    "params": {
+      "duration": 3,
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "msBonusTier": "極小"
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ce3a548348b5fffc12b32626d2970ed272300c80218a25172116906c1b00d997"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/acquired-asuna.w.webp"
+}

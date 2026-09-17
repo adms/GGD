@@ -1,0 +1,171 @@
+{
+  "schema": "ggd-worldblender-c00-batch-build@1",
+  "blender": "/private/tmp/blender4513/Blender.app/Contents/MacOS/Blender",
+  "characters": [
+    {
+      "character": "link",
+      "nameZh": "林克",
+      "candidateId": "ssbu-link-c00-static-skinned-v1",
+      "sourceSha256": "1291da62c7075a847d48841d087f350cc5bc62119661acda9cd00099b85f1506",
+      "outputSha256": "ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754",
+      "outputBytes": 1035504,
+      "triangles": 7897,
+      "drawPrimitives": 6,
+      "joints": [
+        145
+      ],
+      "textures": [
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 121495,
+          "sha256": "9bdd256a49e73eb91cffe69de363b55371d5e4b9fb24e4598ac32c1938c05a86"
+        },
+        {
+          "width": 256,
+          "height": 171,
+          "bytes": 88561,
+          "sha256": "0d4e549d6c715690b34ccbaa606d93ae69979935c9c465b1315bdd7848185c78"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 98686,
+          "sha256": "caf5c4cb033100f44487008435320e5950c015ab3a62fd6ed0ab7136864fcb93"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 58773,
+          "sha256": "4c570516f911e81dc375c0ccf4ee559e80e19892eb0b944b7111f02ada970893"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 56428,
+          "sha256": "23c2bf78ee5e0158504505fc3aaf0d068792ffe391b19403abae05c2df731ea8"
+        }
+      ],
+      "finiteFloatValues": 95736,
+      "nativeAnimationCount": 0,
+      "khronosErrors": 0,
+      "khronosWarnings": 0,
+      "rebuildValidationPassed": true,
+      "byteIdenticalRebuild": true,
+      "runtimeSelectable": false,
+      "deployed": false
+    },
+    {
+      "character": "mario",
+      "nameZh": "瑪利歐",
+      "candidateId": "ssbu-mario-c00-static-skinned-v2",
+      "sourceSha256": "8af85d9accb3f13b2bc920553da2a9545cbdb980182bba15d59f23274a03c44d",
+      "outputSha256": "87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257",
+      "outputBytes": 865396,
+      "triangles": 7189,
+      "drawPrimitives": 6,
+      "joints": [
+        98
+      ],
+      "textures": [
+        {
+          "width": 256,
+          "height": 128,
+          "bytes": 54479,
+          "sha256": "309b7883590e7dd566e355a2475d80a91d6ebc0329e96a8d65105d2891b69023"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 43735,
+          "sha256": "bd07efe7e054b52dfdc10f23605d0243c2ec15262b13c133d1082ee86f0c8db7"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 32164,
+          "sha256": "01b62167fcad0b687bfb1001331d04f547ebfb15b69f15b14a19765d71195f98"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 32164,
+          "sha256": "252a96d3c6df84cddf11a4739049f067d816714cf7fbbcb1fa55a8a9f21a8dac"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 878,
+          "sha256": "6c5c9633b5e93d51bda32f90601afc5b2bcf31c53d0aded73a58c03a1b4f52b5"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 52861,
+          "sha256": "42e1d7ecf7c85836f4c2ddb6b91e5ad950c0bfedf146694b0bf713021636d02e"
+        }
+      ],
+      "finiteFloatValues": 101330,
+      "nativeAnimationCount": 0,
+      "khronosErrors": 0,
+      "khronosWarnings": 0,
+      "rebuildValidationPassed": true,
+      "byteIdenticalRebuild": true,
+      "runtimeSelectable": false,
+      "deployed": false
+    },
+    {
+      "character": "sonic",
+      "nameZh": "索尼克",
+      "candidateId": "ssbu-sonic-c00-static-skinned-v1",
+      "sourceSha256": "670fcfa00a5fedf91344c3a9dac599130f51c44c0bc655ca710efe75e054cfc5",
+      "outputSha256": "9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a",
+      "outputBytes": 936116,
+      "triangles": 8980,
+      "drawPrimitives": 5,
+      "joints": [
+        115
+      ],
+      "textures": [
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 77618,
+          "sha256": "73b6ca19d8fc89f8232aba70e3f47804befe98b94c2e067607a1265b58b217b0"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 37087,
+          "sha256": "62390137ed3cddfaea4901b6f2baa7a861ce22ab44ebc50ad60fd5fca0ca5151"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 37210,
+          "sha256": "1f24ecc7e7c4733203b2fe9b6ffe8558a5f26920f2572bd3c6c1637e74592e3d"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 4220,
+          "sha256": "4a359b6d21cd20779f32b62606c98c5e4ff158f8a061b7d44e59cdb86fd4d58c"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 70734,
+          "sha256": "b721de42ef2f8d3fc962d8f04be49d013b4418a69ab4bd9b6671f64823b41080"
+        }
+      ],
+      "finiteFloatValues": 130032,
+      "nativeAnimationCount": 0,
+      "khronosErrors": 0,
+      "khronosWarnings": 0,
+      "rebuildValidationPassed": true,
+      "byteIdenticalRebuild": true,
+      "runtimeSelectable": false,
+      "deployed": false
+    }
+  ]
+}

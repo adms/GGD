@@ -1,0 +1,295 @@
+{
+  "schema": "ggd-native-geoset-provenance@1",
+  "modelKey": "ou99.495015-standard",
+  "suspectPrimitive": 2,
+  "glbSha256": "52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d",
+  "nativeArchive": "/Users/Takuro/GGD-assets/models/495015.zip",
+  "nativeArchiveSha256": "6688d46ac59eb71e318e7ec661f10ee4595bd79b91d1c5a2deda0fcba5cb713a",
+  "nativeMember": "patrick2.mdx",
+  "nativeMdxBytes": 121436,
+  "nativeMdxSha256": "4e7418e7a104f4a5dacd43e979c84aea180aae4b6d1d315e9c4d4ebb57b1559d",
+  "nativeVersion": 800,
+  "nativeModelName": "PatrickStar2",
+  "geosetCounts": [
+    {
+      "index": 0,
+      "vertices": 428,
+      "triangles": 401
+    },
+    {
+      "index": 1,
+      "vertices": 24,
+      "triangles": 19
+    },
+    {
+      "index": 2,
+      "vertices": 49,
+      "triangles": 22
+    },
+    {
+      "index": 3,
+      "vertices": 17,
+      "triangles": 16
+    },
+    {
+      "index": 4,
+      "vertices": 24,
+      "triangles": 32
+    }
+  ],
+  "mdxGeosetMatch": {
+    "nativeGeosetIndex": 2,
+    "vertices": 49,
+    "triangles": 22,
+    "sameTriangleVertexTriples": true,
+    "affinePositionMaxError": 1.1231006435963309e-07,
+    "nativeToGlbAffineMatrix": [
+      [
+        0.013205486270397533,
+        -7.695281488031551e-12,
+        1.7948440148215477e-11
+      ],
+      [
+        -7.249510182162417e-11,
+        -1.2544781186063503e-11,
+        -0.01320548627022005
+      ],
+      [
+        -6.804731247311617e-09,
+        0.013205485912371608,
+        2.8921457242980786e-10
+      ],
+      [
+        1.0366727462687246e-08,
+        2.2925704759070575e-09,
+        -7.080660215054088e-09
+      ]
+    ],
+    "nativeMaterialIndex": 1,
+    "nativeMaterial": {
+      "layers": [
+        {
+          "filter_mode": 1,
+          "shading_flags": 0,
+          "texture_id": 1,
+          "alpha": 1.0
+        }
+      ]
+    },
+    "nativeTexturePaths": [
+      {
+        "replaceable_id": 0,
+        "path": "Textures\\gutz.blp"
+      }
+    ],
+    "nativeMatrixGroups": [
+      [
+        0
+      ]
+    ],
+    "nativeGroupBones": [
+      {
+        "name": "gutz00",
+        "object_id": 0,
+        "parent_id": -1,
+        "flags": 256,
+        "kind": "bone",
+        "translation": null,
+        "rotation": null,
+        "scaling": null,
+        "pivot": [
+          146.0659942626953,
+          -24.687700271606445,
+          2.5718801021575928
+        ],
+        "attachment_path": ""
+      }
+    ],
+    "nativeGeosetAnimation": [
+      {
+        "geoset": 2,
+        "static_alpha": 1.0,
+        "tracks": {
+          "KGAO": {
+            "interp": 0,
+            "gseq": -1,
+            "keys": [
+              [
+                333,
+                0.0
+              ],
+              [
+                901,
+                0.0
+              ],
+              [
+                1567,
+                0.0
+              ],
+              [
+                1967,
+                0.0
+              ],
+              [
+                4500,
+                0.0
+              ],
+              [
+                5233,
+                0.0
+              ],
+              [
+                7333,
+                0.0
+              ],
+              [
+                10333,
+                0.0
+              ],
+              [
+                11400,
+                0.0
+              ],
+              [
+                11833,
+                0.0
+              ],
+              [
+                13133,
+                0.0
+              ],
+              [
+                16000,
+                0.0
+              ],
+              [
+                19000,
+                0.0
+              ],
+              [
+                21867,
+                0.0
+              ],
+              [
+                24000,
+                0.0
+              ],
+              [
+                27767,
+                1.0
+              ],
+              [
+                84333,
+                1.0
+              ],
+              [
+                144333,
+                0.0
+              ],
+              [
+                145033,
+                0.0
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "sequenceVisibility": [
+      {
+        "i": 0,
+        "name": "Stand",
+        "start": 333,
+        "end": 1567,
+        "sourceAlphaPeak": 0.0
+      },
+      {
+        "i": 1,
+        "name": "Stand 2",
+        "start": 1967,
+        "end": 4500,
+        "sourceAlphaPeak": 0.0
+      },
+      {
+        "i": 2,
+        "name": "Stand 3",
+        "start": 5233,
+        "end": 6967,
+        "sourceAlphaPeak": 0.0
+      },
+      {
+        "i": 3,
+        "name": "Spell",
+        "start": 7333,
+        "end": 8500,
+        "sourceAlphaPeak": 0.0
+      },
+      {
+        "i": 4,
+        "name": "Stand Ready",
+        "start": 10333,
+        "end": 11400,
+        "sourceAlphaPeak": 0.0
+      },
+      {
+        "i": 5,
+        "name": "Attack",
+        "start": 11833,
+        "end": 12833,
+        "sourceAlphaPeak": 0.0
+      },
+      {
+        "i": 6,
+        "name": "Attack 2",
+        "start": 13133,
+        "end": 14133,
+        "sourceAlphaPeak": 0.0
+      },
+      {
+        "i": 7,
+        "name": "Spell Slam",
+        "start": 16000,
+        "end": 17200,
+        "sourceAlphaPeak": 0.0
+      },
+      {
+        "i": 8,
+        "name": "Sleep",
+        "start": 19000,
+        "end": 20667,
+        "sourceAlphaPeak": 0.0
+      },
+      {
+        "i": 9,
+        "name": "Death",
+        "start": 21867,
+        "end": 23867,
+        "sourceAlphaPeak": 0.0
+      },
+      {
+        "i": 10,
+        "name": "Decay Flesh",
+        "start": 24000,
+        "end": 84000,
+        "sourceAlphaPeak": 1.0
+      },
+      {
+        "i": 11,
+        "name": "Decay Bone",
+        "start": 84333,
+        "end": 144333,
+        "sourceAlphaPeak": 1.0
+      },
+      {
+        "i": 12,
+        "name": "Walk",
+        "start": 145033,
+        "end": 146033,
+        "sourceAlphaPeak": 0.0
+      }
+    ]
+  },
+  "unmodifiedParser": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/tools/w3x-import/geoset_alpha_report.py",
+  "parserSha256": "4980426ad202284983c074ec4e0680f70d1dc93bf91bc8c137b3791105145d21",
+  "caveat": "Visibility interpretation uses repository GEOA/KGAO parser; no WC3 game execution. Global-sequence tracks need separate interpretation if present."
+}

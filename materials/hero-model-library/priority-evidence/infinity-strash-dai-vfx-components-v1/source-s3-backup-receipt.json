@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/source-intakes/infinity-strash-dai-vfx-components-v1/2c474fe2db07552b81b1f6c0f0ac350b0203ec7a0b1f015a1589c277c9d9bda8.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/source-intakes/infinity-strash-dai-vfx-components-v1/2c474fe2db07552b81b1f6c0f0ac350b0203ec7a0b1f015a1589c277c9d9bda8.files.json",
+  "archiveSha256": "2c474fe2db07552b81b1f6c0f0ac350b0203ec7a0b1f015a1589c277c9d9bda8",
+  "archiveBytes": 2733605,
+  "fileCount": 213,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260914/infinity-strash-dai-vfx-components-v1",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-dai-vfx-components-v1-source/9bcf41ce9be0bb9237233f437721cb6ae151ab8923e75b8dea564bbf9118b810/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-dai-vfx-components-v1-source/9bcf41ce9be0bb9237233f437721cb6ae151ab8923e75b8dea564bbf9118b810/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-dai-vfx-components-v1-source/9bcf41ce9be0bb9237233f437721cb6ae151ab8923e75b8dea564bbf9118b810/manifest.json"
+}

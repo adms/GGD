@@ -1,0 +1,78 @@
+{
+  "schema": "ggd-fateubw-static-pose-derivative-evidence-receipt@1",
+  "batchRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-v2",
+  "visualRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/fateubw-static-pose-derivatives-visual-v3",
+  "outputs": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/batch-manifest.json",
+      "sha256": "5fe47f44926666457d0dc3fda2efc9d99c9bef7b2d9c626fcce3560f04c8a8e6",
+      "bytes": 2181
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/validation.json",
+      "sha256": "0e2882e153f2847a82a1751d89bee3db86c74c93aaff7ac77d16639c28b50a71",
+      "bytes": 18427
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/visual-evidence.json",
+      "sha256": "65123c5be46e3bacc2ffa43322d0818b9d0b8f565e0bcdb6d07b949f362c5b06",
+      "bytes": 23631
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/contact-sheet.png",
+      "sha256": "c8f05b71e19165153049020b08411ebec90afad62b3fdc66a269f60d8a0aede1",
+      "bytes": 162752
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/candidates/fateubw-cu_chulainn_lancer/derivative-report.json",
+      "sha256": "0c8ba2b1a36381fbdd7026f3c06d129b7bcc80c96beafa6971259c67ec7e5592",
+      "bytes": 3787
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/candidates/fateubw-diarmuid_ua_duibhne_lancer/derivative-report.json",
+      "sha256": "b014f1e9eeecf4dd56da160b2b76116ebf59c93da32cb9787a46438ee0c95ca5",
+      "bytes": 3851
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/candidates/fateubw-medea_caster/derivative-report.json",
+      "sha256": "69e734f58644531fb85360e8b2c9493fb39ecd15d659b2d06d04f4fff554e80c",
+      "bytes": 3968
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/candidates/fateubw-sasaki_kojiro_assassin/derivative-report.json",
+      "sha256": "93b5b8dc282ea532ff6d79a835a36e7a73c6d8e9ecb587aafb443e91b589a868",
+      "bytes": 3821
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-next/materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/candidates/fateubw-heracles_berserker/derivative-report.json",
+      "sha256": "4c8e96b76a9bc3a11e13ac60395418f47ea1c5ae33e2fab29c13d468d24946c9",
+      "bytes": 4124
+    }
+  ],
+  "counts": {
+    "candidates": 5,
+    "staticPoseHolds": 3,
+    "proceduralFormulaLoops": 2,
+    "nativeDurationClips": 0
+  },
+  "findings": {
+    "converted": 5,
+    "blocked": 0,
+    "numericSourcePosesConvertedToOneSecondDerivedHolds": 3,
+    "durationlessTimeFormulaSourcesConvertedToExactPeriodDerivedLoops": 2,
+    "nativeDurationClips": 0
+  },
+  "status": "derived GLB candidates structurally and visually verified; not registered or runtime ready",
+  "nativeDurationClaim": false,
+  "runtimeReady": false,
+  "backendSelectionVerified": false,
+  "rightsCleared": false,
+  "remaining": [
+    "human visual approval",
+    "GGD action/event mapping",
+    "rights clearance",
+    "backend option registration",
+    "runtime switching validation",
+    "deployment"
+  ]
+}

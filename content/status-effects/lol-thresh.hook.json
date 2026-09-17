@@ -1,0 +1,16 @@
+{
+  "id": "lol-thresh.hook",
+  "schema": "status-effect@1",
+  "name": "死亡宣告",
+  "description": "瑟雷西「死亡宣告」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-thresh.hook",
+    "root",
+    "immobilize",
+    "move-denied",
+    "disable",
+    "cc",
+    "debuff"
+  ]
+}

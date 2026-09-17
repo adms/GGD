@@ -1,0 +1,266 @@
+{
+  "schema": "ggd-ssbu-blend-component-conversion@1",
+  "candidateId": "ssbu-ryu-c00-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/ryu/model/body/c00/ryu-c00.blend",
+    "bytes": 9508448,
+    "sha256": "5fb1670818167a6728afe1664c80e6ab7fd50ea064ae6302991fdc18a4e62042"
+  },
+  "tool": {
+    "name": "Blender",
+    "version": "4.5.13 LTS",
+    "backgroundFactoryStartupRequired": true,
+    "embeddedScriptsExecuted": false,
+    "driversMuted": 0,
+    "visibleMeshesJoinedByMaterial": true
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-blender4513-v3/body.glb",
+    "bytes": 1005776,
+    "sha256": "d53057c01574141daf7cb017273e3d70e217376a59965150f8b98ad4891b9482"
+  },
+  "normalization": {
+    "sourceBounds": [
+      [
+        -10.970600128173828,
+        -2.8667502403259277,
+        0.055249426513910294
+      ],
+      [
+        10.970600128173828,
+        3.755298376083374,
+        20.025001525878906
+      ]
+    ],
+    "sourceUp": "Blender Z",
+    "glbUp": "glTF Y",
+    "targetHeightMeters": 1.8,
+    "uniformScale": 0.09013632172515737,
+    "footOrigin": true
+  },
+  "sourceRigCount": 1,
+  "sourceBoneCounts": [
+    154
+  ],
+  "sourceActionCount": 0,
+  "sourceImageCountUsed": 6,
+  "materialCompatibilityAdjustments": [
+    {
+      "material": "alp_ryu_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeL",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "EyeR",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "skin_ryu_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    },
+    {
+      "material": "def_ryu_001",
+      "node": "Principled BSDF",
+      "property": "Principled BSDF IOR",
+      "sourceValue": 1.4500000476837158,
+      "exportValue": 1.5,
+      "reason": "GGD does not allow KHR_materials_ior; 1.5 is the glTF core default."
+    }
+  ],
+  "materialJoinAdjustments": [
+    {
+      "material": "alp_ryu_001",
+      "armature": "model-armature",
+      "sourceMeshes": [
+        {
+          "name": "GamemodelShape",
+          "vertices": 1985,
+          "polygons": 3352
+        },
+        {
+          "name": "Ryu_Openblink_VIS_O_OBJShape",
+          "vertices": 82,
+          "polygons": 72
+        },
+        {
+          "name": "Ryu_faceN_Brow_VIS_O_OBJShape",
+          "vertices": 248,
+          "polygons": 288
+        }
+      ],
+      "outputMesh": "GGD_joined_alp_ryu_001",
+      "outputVertices": 2315,
+      "outputPolygons": 3712,
+      "reason": "Reduce draw primitives without mixing materials or changing world-space source geometry."
+    },
+    {
+      "material": "def_ryu_001",
+      "armature": "model-armature",
+      "sourceMeshes": [
+        {
+          "name": "GamemodelShape.001",
+          "vertices": 2095,
+          "polygons": 2959
+        },
+        {
+          "name": "ryu_dogiup1_VIS_O_OBJShape",
+          "vertices": 1602,
+          "polygons": 2136
+        }
+      ],
+      "outputMesh": "GGD_joined_def_ryu_001",
+      "outputVertices": 3697,
+      "outputPolygons": 5095,
+      "reason": "Reduce draw primitives without mixing materials or changing world-space source geometry."
+    },
+    {
+      "material": "skin_ryu_001",
+      "armature": "model-armature",
+      "sourceMeshes": [
+        {
+          "name": "GamemodelShape.002",
+          "vertices": 2952,
+          "polygons": 4758
+        },
+        {
+          "name": "Ryu_Openblink_VIS_O_OBJShape.001",
+          "vertices": 160,
+          "polygons": 286
+        },
+        {
+          "name": "Ryu_faceN_Brow_VIS_O_OBJShape.001",
+          "vertices": 138,
+          "polygons": 202
+        },
+        {
+          "name": "Ryu_faceN_Mouth_VIS_O_OBJShape",
+          "vertices": 280,
+          "polygons": 460
+        }
+      ],
+      "outputMesh": "GGD_joined_skin_ryu_001",
+      "outputVertices": 3530,
+      "outputPolygons": 5706,
+      "reason": "Reduce draw primitives without mixing materials or changing world-space source geometry."
+    }
+  ],
+  "textureCompatibilityAdjustments": [
+    {
+      "sourceImage": "alp_ryu_002_col.png",
+      "sourceDimensions": [
+        1024,
+        1024
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-blender4513-v3/derived-textures/alp_ryu_002_col.png.ggd-256.png",
+      "derivedBytes": 17303,
+      "derivedSha256": "c34e9aad17f7f524314dad9bdbefdb43b04ff7fcde4126c176e4a993960c7e87",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "def_ryu_002_col.png",
+      "sourceDimensions": [
+        2048,
+        2048
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-blender4513-v3/derived-textures/def_ryu_002_col.png.ggd-256.png",
+      "derivedBytes": 115857,
+      "derivedSha256": "803b2cc06511983e59c652edaf39ac157b503d6506c09202b032014f5fb2fee0",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    },
+    {
+      "sourceImage": "skin_ryu_002_col.png",
+      "sourceDimensions": [
+        1024,
+        1024
+      ],
+      "exportDimensions": [
+        256,
+        256
+      ],
+      "method": "Blender Image.scale preserving aspect ratio",
+      "derivedPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-blender4513-v3/derived-textures/skin_ryu_002_col.png.ggd-256.png",
+      "derivedBytes": 91786,
+      "derivedSha256": "116adc0b62f22c1453fc417ef7dec705ef079721f69248ad7f07bc8c1e4c61dc",
+      "reason": "GGD hero model texture edge limit is 256 pixels."
+    }
+  ],
+  "hierarchyCompatibilityAdjustments": [
+    {
+      "nodeIndex": 154,
+      "nodeName": "GGD_joined_alp_ryu_001",
+      "previousParentIndex": 159,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 155,
+      "nodeName": "GGD_joined_def_ryu_001",
+      "previousParentIndex": 159,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 156,
+      "nodeName": "GGD_joined_skin_ryu_001",
+      "previousParentIndex": 159,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 157,
+      "nodeName": "Ryu_Eye_VIS_O_OBJShape",
+      "previousParentIndex": 159,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    },
+    {
+      "nodeIndex": 158,
+      "nodeName": "Ryu_Eye_VIS_O_OBJShape.001",
+      "previousParentIndex": 159,
+      "previousParentName": "model-armature",
+      "reason": "Skinned mesh parent transforms are ignored by glTF; make the node a scene root to remove NODE_SKINNED_MESH_NON_ROOT without changing its local transform or binary accessors."
+    }
+  ],
+  "sourceBytesUnchanged": true,
+  "runtimeReady": false,
+  "backendSelectionVerified": false,
+  "defaultEligible": false,
+  "limitations": [
+    "This is a body component with source skin and basic materials; structural and visual validation are separate.",
+    "No source actions were added, synthesized, or retargeted.",
+    "Hidden native mesh variants remain preserved in the original Blender file and are excluded from this visible-appearance export.",
+    "Source normal, PRM, emissive, and game shader parity remain unverified unless they were already connected in the source Blender material graph.",
+    "Non-default source IOR values are recorded and normalized to glTF core IOR 1.5 because current GGD does not allow KHR_materials_ior.",
+    "Source textures above 256 pixels are retained by hash and resized in a separate derived copy for the current GGD budget."
+  ]
+}

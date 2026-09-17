@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 1.033,
+  "castTimeSec": 1,
   "castType": "targeted",
   "cooldown": [
     45.0
@@ -32,7 +32,7 @@
   ],
   "id": "b2-shadow.ex",
   "manaCost": [
-    112.0
+    150.0
   ],
   "manaCostTier": "小",
   "maxRank": 1,
@@ -45,7 +45,7 @@
   "template": {
     "contentSha256": "sha256:3bbc417d5c5a3bd9a34f58eec190ecff85b9d8f07a967a022763fe51c86d3be0",
     "params": {
-      "castTimeSec": 1.033,
+      "castTimeSec": 1,
       "damage": {
         "damageTier": "小"
       },
@@ -61,5 +61,6 @@
       "vfxKey": "fx.prim.lightning.slash"
     }
   ],
-  "icon": "assets/icons/abilities/b2-shadow.ex.webp"
+  "icon": "assets/icons/abilities/b2-shadow.ex.webp",
+  "castTimeTier": "極大"
 }

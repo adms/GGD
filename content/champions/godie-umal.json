@@ -6,7 +6,7 @@
   "role": "fighter",
   "attackType": "melee",
   "origin": "鬥士",
-  "modelKey": "champ.skin.barbarian",
+  "modelKey": "version.body.5a67646ce44f29294d86e43b6603a42cc8ffd5a9d0276675",
   "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
@@ -26,9 +26,9 @@
     "range": 1.6
   },
   "growth": {
-    "maxHealth": 76.9306,
+    "maxHealth": 80,
     "healthRegen": 0.2042,
-    "maxMana": 47.5561,
+    "maxMana": 50,
     "manaRegen": 0.1732,
     "ad": 3.0796,
     "armor": 0.8581,
@@ -71,11 +71,11 @@
         15.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "template": {
@@ -96,11 +96,12 @@
       "vfxKey": "fx.prim.physical.slash",
       "sfxKey": "wc3.peondeath",
       "targetsEnemies": true,
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "rangeTier": "極小",
       "range": 3,
       "cooldownTier": "小",
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "大"
     },
     "W": {
       "id": "godie-umal.w",
@@ -112,16 +113,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "effects": [],
       "vfxKey": "fx.prim.holy.pulse-sm",
@@ -167,7 +168,8 @@
             ]
           }
         ]
-      }
+      },
+      "castTimeTier": "極小"
     },
     "E": {
       "id": "godie-umal.e",
@@ -185,10 +187,10 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [],
       "template": {
@@ -205,18 +207,19 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 1.633
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.physical.slash",
       "targetsEnemies": true,
-      "radius": 6.0,
-      "castTimeSec": 1.633,
+      "radius": 6,
+      "castTimeSec": 1,
       "rangeTier": "極小",
       "range": 3,
       "cooldownTier": "中",
       "manaCostTier": "小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-umal.r",
@@ -233,9 +236,9 @@
         60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [
@@ -250,18 +253,19 @@
           "preset": "tpl-locust-strike",
           "modelKey": "w3x.stock.monsoonbolttarget",
           "anchor": "self",
-          "scale": 10.0,
+          "scale": 10,
           "tint": [
-            1.0,
-            0.0,
-            0.0
+            1,
+            0,
+            0
           ]
         }
       ],
       "vfxKey": "fx.prim.lightning.pulse-lg",
       "sfxKey": "wc3.nocute",
-      "castTimeSec": 0.667,
-      "cooldownTier": "中"
+      "castTimeSec": 0.5,
+      "cooldownTier": "中",
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [
@@ -312,5 +316,62 @@
     "祕孔",
     "普攻觸發"
   ],
-  "pitch": "貼住目標連續出拳，用普攻與祕孔效果一路壓制單一敵人。"
+  "pitch": "貼住目標連續出拳，用普攻與祕孔效果一路壓制單一敵人。",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.6b02edb01a1b4b7862a1bd895c17261af23e56a2e375b2d4",
+      "label": "原上線模型",
+      "sourceModelKey": "champ.skin.barbarian",
+      "modelSha256": "9fb1cc06f717a04ab2dd4203aca48cf4827e59ec33052de91904ed7c736f4dba",
+      "binarySha256": "9917f0341ef48f52d1ba521c05150e9ef598c14e053c6102cf60079f26f3af47",
+      "registeredAt": "2026-09-16T14:04:52.701Z",
+      "source": {
+        "kind": "previous",
+        "character": "北斗神拳掌門人 - 拳四郎",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/champ.skin.barbarian.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.5a67646ce44f29294d86e43b6603a42cc8ffd5a9d0276675",
+      "label": "ou99 拳四郎（本尊·減面＋逐動作顯示）",
+      "sourceModelKey": "ou99.464696",
+      "modelSha256": "12d54ed3a26c1d8e602828027f0687cb6290e881c434ae3207474d6dd2e22a71",
+      "binarySha256": "92373809c93556b7b1a82a315df51071c5a65a11ebc1d240e4e2087bdf38403a",
+      "registeredAt": "2026-09-16T14:04:52.762Z",
+      "source": {
+        "kind": "exact",
+        "character": "拳四郎",
+        "work": "北斗神拳",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-464696-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.af894d2eb5a2bb945798e69dfa71d317bedc9135e7d89c2b",
+      "label": "ou99 拳四郎（本尊／62 段原生動作／減面版）",
+      "sourceModelKey": "ou99.464696-standard-v1",
+      "modelSha256": "36d8ad96baba76da04a0692a176795edd143f63a0a0bf0dd774fd3844059ab8a",
+      "binarySha256": "9170523c733519b41bf16d758e2002109c349efea4cdd417a1bb4c52612b1b42",
+      "registeredAt": "2026-09-15T09:39:17.659Z",
+      "source": {
+        "kind": "exact",
+        "character": "拳四郎",
+        "work": "北斗神拳",
+        "library": "ou99 偶久網",
+        "reference": "https://www.ou99.com/thread-464696-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "community-mod",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

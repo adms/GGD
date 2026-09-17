@@ -1,12 +1,12 @@
 {
   "schema": "ggd-engine-atlas@1",
-  "capabilityFingerprint": "e9023124",
+  "capabilityFingerprint": "96994f3b",
   "counts": {
-    "effectKinds": 51,
+    "effectKinds": 52,
     "hookEvents": 33,
     "conditionLeafKinds": 10,
     "templateFamilies": 47,
-    "effectFields": 280,
+    "effectFields": 286,
     "stats": 23,
     "combatEnvKeys": 39
   },
@@ -63,7 +63,7 @@
   "caps": [
     {
       "key": "maxHealth",
-      "value": "預設上限 base 402129 / 解鎖 402129　·　⚙️出貨 base 402129 / 解鎖 402129　·　後台基礎加成上限 20000　·　道具欄位帶 ±2500",
+      "value": "預設上限 base 567600 / 解鎖 567600　·　⚙️出貨 base 567600 / 解鎖 567600　·　後台基礎加成上限 20000　·　道具欄位帶 ±2500",
       "from": "shipped"
     },
     {
@@ -73,7 +73,7 @@
     },
     {
       "key": "maxMana",
-      "value": "預設上限 base 240323 / 解鎖 240323　·　⚙️出貨 base 240323 / 解鎖 240323　·　後台基礎加成上限 20000　·　道具欄位帶 ±2500",
+      "value": "預設上限 base 349000 / 解鎖 349000　·　⚙️出貨 base 349000 / 解鎖 349000　·　後台基礎加成上限 20000　·　道具欄位帶 ±2500",
       "from": "shipped"
     },
     {
@@ -400,7 +400,7 @@
     "rows": [
       {
         "key": "AoE 半徑樣本（技能＋道具）",
-        "value": "631 個　最小 1.83 / 中位 3 / 最大 513.5",
+        "value": "982 個　最小 1 / 中位 3 / 最大 513.5",
         "from": "shipped"
       },
       {
@@ -414,25 +414,25 @@
       {
         "label": "小",
         "range": "< 3",
-        "count": 47
+        "count": 188
       },
       {
         "label": "中",
-        "range": "3 – 4.5",
-        "count": 337
+        "range": "3 – 3",
+        "count": 0
       },
       {
         "label": "大",
-        "range": "≥ 4.5",
-        "count": 247
+        "range": "≥ 3",
+        "count": 794
       }
     ]
   },
   "oversizedAoe": {
     "zoneRadius": 24,
-    "total": 191,
+    "total": 325,
     "over": [],
-    "note": "191 支模板技能的 AoE 半徑全部在 zone 半徑 24 之內 —— WC3 單位換算（GGD_PER_WC3 = 11/600）由 expand() 正確套用。"
+    "note": "325 支模板技能的 AoE 半徑全部在 zone 半徑 24 之內 —— WC3 單位換算（GGD_PER_WC3 = 11/600）由 expand() 正確套用。"
   },
   "geometryFields": {
     "範圍與形狀": [
@@ -529,6 +529,7 @@
       "screenShake",
       "shield",
       "shieldBreak",
+      "spawnInteractable",
       "spawnModelFx",
       "spawnObstacle",
       "spawnProjectile",

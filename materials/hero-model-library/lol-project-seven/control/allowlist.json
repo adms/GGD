@@ -1,0 +1,72 @@
+{
+  "schema": "ggd.lol-project-audio-allowlist@1",
+  "scope": "project-seven-only",
+  "enabled": true,
+  "fullRosterPipelineEnabled": false,
+  "allowedLocale": "ja_JP",
+  "englishEnabled": false,
+  "releaseId": "7CAC3C60C863BF12",
+  "patchVersion": "16.18.8159717",
+  "maxParallelDownloads": 3,
+  "maxCompressedBatchBytes": 200000000,
+  "heroes": [
+    {
+      "heroId": "example:karthus",
+      "nativeId": "Karthus",
+      "name": "卡爾瑟斯"
+    },
+    {
+      "heroId": "example:leesin",
+      "nativeId": "LeeSin",
+      "name": "李星"
+    },
+    {
+      "heroId": "example:lux",
+      "nativeId": "Lux",
+      "name": "拉克絲"
+    },
+    {
+      "heroId": "example:missfortune",
+      "nativeId": "MissFortune",
+      "name": "好運姐"
+    },
+    {
+      "heroId": "example:warwick",
+      "nativeId": "Warwick",
+      "name": "沃維克"
+    },
+    {
+      "heroId": "example:xerath",
+      "nativeId": "Xerath",
+      "name": "齊勒斯"
+    },
+    {
+      "heroId": "example:yasuo",
+      "nativeId": "Yasuo",
+      "name": "犽宿"
+    }
+  ],
+  "allowedDownloadNames": [
+    "LeeSin",
+    "Lux",
+    "Warwick",
+    "Yasuo"
+  ],
+  "allowedFreezeNames": [
+    "Karthus",
+    "LeeSin",
+    "Lux",
+    "MissFortune",
+    "Warwick",
+    "Xerath",
+    "Yasuo"
+  ],
+  "sourceLocalRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717",
+  "rules": [
+    "Only the four missing Japanese WAD packages may be fetched.",
+    "All seven native and decoded packages may be frozen.",
+    "No English until this Japanese scope is complete.",
+    "No full roster resume and no new heroes.",
+    "Preserve all previously acquired files; no central index writes."
+  ]
+}

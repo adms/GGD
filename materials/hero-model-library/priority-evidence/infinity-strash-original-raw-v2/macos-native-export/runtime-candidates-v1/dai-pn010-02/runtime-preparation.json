@@ -1,0 +1,605 @@
+{
+  "schema": "ggd.infinity-strash-runtime-candidate@1",
+  "candidateId": "dai-pn010-02",
+  "contract": {
+    "preparation": "prepareUploadedHeroModel",
+    "verification": "verifyUploadedHeroModel"
+  },
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/normalized-animated-candidates-psk-blender-dai-idle-n-v3/dai-pn010-02/dai-pn010-02-ggd-normalized.glb",
+    "bytes": 3226532,
+    "sha256": "2b7e08ef6e5c2a8a21c49ae8dbb2ac770916040bc8699339d0c48d98fd4cabe2",
+    "clips": [
+      {
+        "index": 0,
+        "name": "GGD_native_idle",
+        "duration": 2.5,
+        "channels": 199
+      },
+      {
+        "index": 1,
+        "name": "GGD_native_run",
+        "duration": 0.5833333134651184,
+        "channels": 266
+      },
+      {
+        "index": 2,
+        "name": "GGD_native_attack",
+        "duration": 1.25,
+        "channels": 239
+      },
+      {
+        "index": 3,
+        "name": "GGD_native_down",
+        "duration": 0.0416666679084301,
+        "channels": 214
+      },
+      {
+        "index": 4,
+        "name": "GGD_native_special01",
+        "duration": 2.5,
+        "channels": 193
+      },
+      {
+        "index": 5,
+        "name": "GGD_native_special02",
+        "duration": 4.166666507720947,
+        "channels": 151
+      }
+    ]
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/dai-pn010-02/body.glb",
+    "bytes": 2000480,
+    "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+    "document": {
+      "id": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
+      "schema": "model@1",
+      "glbPath": "assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special02",
+        "hurt": "GGD_native_down",
+        "death": "GGD_native_down"
+      },
+      "yawOffsetDeg": 0
+    },
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+      "byteSize": 2000480,
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special02",
+        "hurt": "GGD_native_down",
+        "death": "GGD_native_down"
+      },
+      "yawOffsetDeg": 0
+    }
+  },
+  "roleMapping": [
+    {
+      "state": "idle",
+      "sourceName": "GGD_native_idle",
+      "sourceIndex": 0,
+      "origin": "Infinity Strash native N_Idle loop"
+    },
+    {
+      "state": "run",
+      "sourceName": "GGD_native_run",
+      "sourceIndex": 1,
+      "origin": "Infinity Strash native forward run"
+    },
+    {
+      "state": "attack",
+      "sourceName": "GGD_native_attack",
+      "sourceIndex": 2,
+      "origin": "Infinity Strash native attack"
+    },
+    {
+      "state": "cast",
+      "sourceName": "GGD_native_special02",
+      "sourceIndex": 5,
+      "origin": "Infinity Strash native Special02; provisional GGD cast mapping"
+    },
+    {
+      "state": "hurt",
+      "sourceName": "GGD_native_down",
+      "sourceIndex": 3,
+      "origin": "Native down pose reused as hurt"
+    },
+    {
+      "state": "death",
+      "sourceName": "GGD_native_down",
+      "sourceIndex": 3,
+      "origin": "Native down pose reused as death; no distinct Dai death sequence acquired"
+    }
+  ],
+  "inspection": {
+    "triangles": 16035,
+    "meshes": 6,
+    "textures": [
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 7057,
+        "sha256": "2ca2785fcddc7c4c480da5248af3e3eb3e0b0a4b9cf6500df2af48887ffac489"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 13169,
+        "sha256": "62ff10bdcc7ce232b139b601b1f9bede8ac2ee89a678ebf93f2a67142c17c06a"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 11952,
+        "sha256": "d95d1df1588d0a684b06a72114e0dffce62f352334e1e919bf0da29e0d85fcf1"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 33445,
+        "sha256": "dd38676cdecd78cdbc7557d407cb12292fbfb935f7930025add396545e5a87ac"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 6985,
+        "sha256": "9dde646ae7f98f21b7d7dd92fe846cb722e3f14cb211cb1af5fba7e9e6e1298f"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 13341,
+        "sha256": "04eb3dc57bbc51cfa1ae0e708850950345cb064eaf3b3e46b34b39e1a84305af"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 35458,
+        "sha256": "cb29cd482d243688a6bcda8181f3fd7f7f2e8cdca9775d3ce3023b70378711b3"
+      },
+      {
+        "width": 8,
+        "height": 8,
+        "bytes": 79,
+        "sha256": "49b3c8029c9d698cc15576386397b1c7f5cc55fc8ea9580c2239e07e0a8e8d40"
+      }
+    ],
+    "clips": [
+      {
+        "index": 0,
+        "name": "GGD_native_idle",
+        "duration": 2.5,
+        "channels": 199
+      },
+      {
+        "index": 1,
+        "name": "GGD_native_run",
+        "duration": 0.5833333134651184,
+        "channels": 266
+      },
+      {
+        "index": 2,
+        "name": "GGD_native_attack",
+        "duration": 1.25,
+        "channels": 239
+      },
+      {
+        "index": 3,
+        "name": "GGD_native_special02",
+        "duration": 4.166666507720947,
+        "channels": 151
+      },
+      {
+        "index": 4,
+        "name": "GGD_native_down",
+        "duration": 0.0416666679084301,
+        "channels": 214
+      }
+    ],
+    "report": {
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 3,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+            "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+            "severity": 1,
+            "pointer": "/meshes/0/primitives/0/material"
+          },
+          {
+            "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+            "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+            "severity": 1,
+            "pointer": "/meshes/0/primitives/5/material"
+          },
+          {
+            "code": "NODE_SKINNED_MESH_NON_ROOT",
+            "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+            "severity": 1,
+            "pointer": "/nodes/429"
+          }
+        ],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "Khronos glTF Blender I/O v5.2.40",
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 1648672
+          },
+          {
+            "pointer": "/images/0",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgb",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/1",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/2",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/3",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/4",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/5",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgba",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/6",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 256,
+              "height": 256,
+              "format": "rgb",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          },
+          {
+            "pointer": "/images/7",
+            "mimeType": "image/png",
+            "storage": "buffer-view",
+            "image": {
+              "width": 8,
+              "height": 8,
+              "format": "rgb",
+              "primaries": "srgb",
+              "transfer": "srgb",
+              "bits": 8
+            }
+          }
+        ],
+        "animationCount": 5,
+        "materialCount": 6,
+        "hasMorphTargets": false,
+        "hasSkins": true,
+        "hasTextures": true,
+        "hasDefaultScene": true,
+        "drawCallCount": 6,
+        "totalVertexCount": 13662,
+        "totalTriangleCount": 16035,
+        "maxUVs": 2,
+        "maxInfluences": 4,
+        "maxAttributes": 8
+      }
+    }
+  },
+  "normalization": {
+    "drawCalls": {
+      "before": 6,
+      "after": 6
+    },
+    "droppedZeroClips": [],
+    "clipIndexMap": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "resizedTextures": [],
+    "texturesOverCap": [],
+    "changed": false
+  },
+  "budget": {
+    "errors": [],
+    "warnings": [
+      "三角面 16035 高於警戒值 16000，送審時需檢查演出負載。",
+      "繪製網格 6 高於警戒值 3，送審時需檢查演出負載。"
+    ]
+  },
+  "warnings": [
+    "三角面 16035 高於警戒值 16000，送審時需檢查演出負載。",
+    "繪製網格 6 高於警戒值 3，送審時需檢查演出負載。"
+  ],
+  "khronos": {
+    "uri": "body.glb",
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 3,
+      "numInfos": 6,
+      "numHints": 0,
+      "messages": [
+        {
+          "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+          "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+          "severity": 1,
+          "pointer": "/meshes/0/primitives/0/material"
+        },
+        {
+          "code": "UNUSED_OBJECT",
+          "message": "This object may be unused.",
+          "severity": 2,
+          "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_1"
+        },
+        {
+          "code": "UNUSED_OBJECT",
+          "message": "This object may be unused.",
+          "severity": 2,
+          "pointer": "/meshes/0/primitives/1/attributes/TEXCOORD_1"
+        },
+        {
+          "code": "UNUSED_OBJECT",
+          "message": "This object may be unused.",
+          "severity": 2,
+          "pointer": "/meshes/0/primitives/2/attributes/TEXCOORD_1"
+        },
+        {
+          "code": "UNUSED_OBJECT",
+          "message": "This object may be unused.",
+          "severity": 2,
+          "pointer": "/meshes/0/primitives/3/attributes/TEXCOORD_1"
+        },
+        {
+          "code": "UNUSED_OBJECT",
+          "message": "This object may be unused.",
+          "severity": 2,
+          "pointer": "/meshes/0/primitives/4/attributes/TEXCOORD_1"
+        },
+        {
+          "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+          "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+          "severity": 1,
+          "pointer": "/meshes/0/primitives/5/material"
+        },
+        {
+          "code": "UNUSED_OBJECT",
+          "message": "This object may be unused.",
+          "severity": 2,
+          "pointer": "/meshes/0/primitives/5/attributes/TEXCOORD_1"
+        },
+        {
+          "code": "NODE_SKINNED_MESH_NON_ROOT",
+          "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+          "severity": 1,
+          "pointer": "/nodes/429"
+        }
+      ],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "Khronos glTF Blender I/O v5.2.40",
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 1648672
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 256,
+            "format": "rgb",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/1",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 256,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/2",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 256,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/3",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 256,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/4",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 256,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/5",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 256,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/6",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 256,
+            "format": "rgb",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/7",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 8,
+            "height": 8,
+            "format": "rgb",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 5,
+      "materialCount": 6,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 6,
+      "totalVertexCount": 13662,
+      "totalTriangleCount": 16035,
+      "maxUVs": 2,
+      "maxInfluences": 4,
+      "maxAttributes": 8
+    }
+  },
+  "limitations": [
+    "GGD hurt and death both reuse the acquired one-frame native down pose.",
+    "Native Special01 stays in the preserved conversion/archive set but is not referenced by the six-state runtime document.",
+    "Weapon switching, animation events, original toon shader parity, gameplay acceptance and deployment remain pending."
+  ],
+  "result": {
+    "currentGgdContractAccepted": true,
+    "runtimeRegistered": false,
+    "backendSelectable": false,
+    "deployed": false
+  }
+}

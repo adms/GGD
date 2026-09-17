@@ -1,0 +1,188 @@
+{
+  "schema": "ggd-lol-gap-listening-review@1",
+  "sourceId": "lol-project-seven-ja-jp-16.18.8159717",
+  "reviewedAt": "2026-09-15T10:01:54.928Z",
+  "reviewer": "owner",
+  "scope": "Owner playback decisions for the exact ambiguous skill-callout set.",
+  "sourceQueueSha256": "38af9a77ffac60ee7689c77184324a7b0f5cafe85e0ea5625a568c638cc8efdf",
+  "decisions": [
+    {
+      "key": "Xerath:skin0:2053253391",
+      "nativeId": "Xerath",
+      "proposedTarget": "ability-Q",
+      "sourcePath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00072-2053253391.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00072-2053253391.wav",
+      "bytes": 302492,
+      "sha256": "b11038c64e36d27bf44475d856522d994d73b113d50839e56948cf438adac3b8",
+      "seconds": 1.7145578231292518,
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathArcanopulse2_cast3D",
+          "eventId": 366586445,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathBasicAttack2_cast3D",
+          "eventId": 999386420,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathBasicAttack_cast3D",
+          "eventId": 2302795652,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathCritAttack_cast3D",
+          "eventId": 4067101772,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "decision": "approve",
+      "reviewer": "owner",
+      "reviewedAt": "2026-09-15T10:01:54.928Z",
+      "language": "ja",
+      "speaker": "Xerath",
+      "gainDecision": "keep-source-gain",
+      "runtimeApproved": true
+    },
+    {
+      "key": "Xerath:skin0:76986339",
+      "nativeId": "Xerath",
+      "proposedTarget": "ability-Q",
+      "sourcePath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00006-76986339.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00006-76986339.wav",
+      "bytes": 222900,
+      "sha256": "b540d36424cc530eae247d010d7c63ed5c126d6fbd76c81d0318b3740f918a83",
+      "seconds": 1.2633560090702949,
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathArcanopulse2_cast3D",
+          "eventId": 366586445,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathBasicAttack2_cast3D",
+          "eventId": 999386420,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathBasicAttack_cast3D",
+          "eventId": 2302795652,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathCritAttack_cast3D",
+          "eventId": 4067101772,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "decision": "approve",
+      "reviewer": "owner",
+      "reviewedAt": "2026-09-15T10:01:54.928Z",
+      "language": "ja",
+      "speaker": "Xerath",
+      "gainDecision": "keep-source-gain",
+      "runtimeApproved": true
+    },
+    {
+      "key": "Xerath:skin0:820216149",
+      "nativeId": "Xerath",
+      "proposedTarget": "ability-Q",
+      "sourcePath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00034-820216149.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00034-820216149.wav",
+      "bytes": 263464,
+      "sha256": "b86c544513fedb0cbd54cad712abcdc499ad7b07c744aace55ddff9ba7ebc960",
+      "seconds": 1.493310657596372,
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathArcanopulse2_cast3D",
+          "eventId": 366586445,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathBasicAttack2_cast3D",
+          "eventId": 999386420,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathBasicAttack_cast3D",
+          "eventId": 2302795652,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathCritAttack_cast3D",
+          "eventId": 4067101772,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "decision": "approve",
+      "reviewer": "owner",
+      "reviewedAt": "2026-09-15T10:01:54.928Z",
+      "language": "ja",
+      "speaker": "Xerath",
+      "gainDecision": "keep-source-gain",
+      "runtimeApproved": true
+    },
+    {
+      "key": "Xerath:skin0:837144372",
+      "nativeId": "Xerath",
+      "proposedTarget": "ability-Q",
+      "sourcePath": "GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00035-837144372.wav",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/lol-riot-ja-jp-16.18.8159717/audio/decoded/Xerath.ja_JP/wav/a966309ae406fc2b/00035-837144372.wav",
+      "bytes": 225632,
+      "sha256": "e36a23c01fec1b9652a3e69f4e8930df3491a3caa9a049cd9a928b27d6169c8d",
+      "seconds": 1.278843537414966,
+      "eventBindings": [
+        {
+          "eventName": "Play_vo_Xerath_XerathArcanopulse2_cast3D",
+          "eventId": 366586445,
+          "category": "ability-cast",
+          "abilitySlotCandidate": "Q"
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathBasicAttack2_cast3D",
+          "eventId": 999386420,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathBasicAttack_cast3D",
+          "eventId": 2302795652,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        },
+        {
+          "eventName": "Play_vo_Xerath_XerathCritAttack_cast3D",
+          "eventId": 4067101772,
+          "category": "attack",
+          "abilitySlotCandidate": null
+        }
+      ],
+      "decision": "approve",
+      "reviewer": "owner",
+      "reviewedAt": "2026-09-15T10:01:54.928Z",
+      "language": "ja",
+      "speaker": "Xerath",
+      "gainDecision": "keep-source-gain",
+      "runtimeApproved": true
+    }
+  ],
+  "summary": {
+    "reviewed": 4,
+    "approved": 4,
+    "rejected": 0,
+    "pending": 0
+  }
+}

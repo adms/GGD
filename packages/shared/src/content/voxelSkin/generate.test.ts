@@ -204,10 +204,16 @@ describe("voxel skin — coverage over the real roster", () => {
     // 而且兩邊都不可以是空的,否則上面那個迴圈退化成單邊斷言 —— 全部 true 或
     // 全部 false 的迴圈,對「反過來也對」的實作一樣是綠的(失敗形態④)。
     // ⛔ 兩邊的**人數**不寫在這裡:那是名冊,名冊會變(見上面的區塊註解)。
+    // ⭐⭐ GH#1281（2026-09-17）—— **前提消失了，⛔ 不是迴圈壞掉**：今天站在共用替身上的
+    //   只剩「連一具模型都拿不到」的那一種（碧翠絲／Steve／Alex 等著本尊模型，
+    //   godie-zombiex 是生成替身）。⭐ 拿得到 WC3 模型的那一半**被修完了** ——
+    //   #1280／#1267 把初號機、熊貓、烏瑪⋯逐一換上自己的模型。
+    // ⇒ 這一條改成**逐位列名**：多一位「站在替身上卻拿得到模型」⇒ 紅並指名（那才是回歸）。
     expect(
-      standIns.filter((d) => reachesAModel(d.id)).length,
-      "沒有一位替身英雄拿得到 WC3 模型 —— 迴圈變成單邊斷言",
-    ).toBeGreaterThan(0);
+      standIns.filter((d) => reachesAModel(d.id)).map((d) => d.id),
+      "⛔ 有人站在共用替身上，而他其實拿得到 WC3 模型",
+    ).toEqual([]);
+    expect(standIns.length, "共用替身名冊是空的 —— 母體壞了（量尺自證）").toBeGreaterThan(0);
     expect(
       standIns.filter((d) => !reachesAModel(d.id)).length,
       "沒有一位替身英雄需要體素身體 —— 迴圈變成單邊斷言",
@@ -323,9 +329,14 @@ describe("voxel skin — budget", () => {
     const json = JSON.stringify(
       Object.fromEntries(ALL.map((r) => [r.championId, compactRecipe(r)])),
     );
-    expect(json.length).toBeLessThan(32 * 1024);
-    // and per champion it is a couple of hundred bytes, not a couple of KB
-    expect(json.length / ALL.length).toBeLessThan(260);
+    // ⭐⭐ GH#1281（2026-09-17）—— 32 KB 是一個**絕對出貨值**：它是名冊還小的時候
+    //   對「整份配方」量到的數字，⛔ 而它與名冊一起長。第四批 37 名上架之後 35,135 B。
+    //   ⭐ 真正的預算是**每一位幾個位元組**（下面那一行，260 B）—— 名冊增減它都成立，
+    //   而「有人把配方寫胖了」照樣當場紅。⇒ 總量改成從那一格推導，⛔ 不再抄第二個數字。
+    // ⚠️ 同一個數字在 `apps/admin/src/assets/voxelSkinSheet.test.ts` 也有一份，一起改。
+    const PER_CHAMPION_BUDGET = 260;
+    expect(json.length / ALL.length).toBeLessThan(PER_CHAMPION_BUDGET);
+    expect(json.length).toBeLessThan(ALL.length * PER_CHAMPION_BUDGET);
   });
 
   it("motif geometry never exceeds the triangle budget", () => {

@@ -1,0 +1,37 @@
+{
+  "id": "acquired-wargreymon.ex",
+  "schema": "vfx-script@1",
+  "abilityId": "acquired-wargreymon.ex",
+  "notes": "採用已出貨 GGD 特效與音效。施法提示不代表傷害或資源消耗成功；判定依技能資料。非原作特效與語音還原。",
+  "yields": [
+    "caster.castFx"
+  ],
+  "segments": [
+    {
+      "kind": "anim",
+      "on": "castStart",
+      "replaces": "caster.action",
+      "at": "caster",
+      "pulse": "cast"
+    },
+    {
+      "vfxId": "fx.prim.fire.beam",
+      "at": "self",
+      "kind": "vfx",
+      "on": "castEffect",
+      "offsetForwardU": 0.35,
+      "w3xScale": 0.7,
+      "tint": [
+        255,
+        140,
+        70
+      ],
+      "flyHeight": 55
+    },
+    {
+      "kind": "sound",
+      "on": "castEffect",
+      "soundKey": "hitMagic"
+    }
+  ]
+}

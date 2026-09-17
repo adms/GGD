@@ -1,0 +1,68 @@
+{
+  "id": "acquired-lord-nightmares.r",
+  "name": "退回混沌重填",
+  "provenance": "editor-json",
+  "description": "落點留下3秒傷害領域，每秒極小級魔法傷害。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    600.0,
+    600.0,
+    600.0
+  ],
+  "manaCostTier": "大",
+  "range": 6,
+  "radius": 4.5,
+  "rangeTier": "中",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "delayed",
+      "shape": "circle",
+      "radius": 4.5,
+      "radiusTier": "小",
+      "side": "enemies",
+      "delaySec": 1,
+      "count": 3,
+      "intervalSec": 1,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "極小",
+            "mult": 0.3333333333333333
+          }
+        }
+      ],
+      "targetMode": "reresolve"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.8d382489b905a2e77aac79e44ffaf19d847e9aa247a45806",
+    "params": {
+      "intervalSec": 1,
+      "durationSec": 3,
+      "radiusTier": "小",
+      "anchor": "point",
+      "applyTo": "enemies",
+      "damageTier": "極小",
+      "damageType": "magic",
+      "radius": 4.5
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:44ed9bdce3fd02c4742a91506d46d5c31ef78947271f1629700d0f5822d3e189"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/acquired-lord-nightmares.r.webp",
+  "radiusTier": "小"
+}

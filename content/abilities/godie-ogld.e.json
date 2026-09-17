@@ -14,9 +14,9 @@
   ],
   "cooldownTier": "大",
   "manaCost": [
-    56.0,
-    56.0,
-    56.0
+    75.0,
+    75.0,
+    75.0
   ],
   "manaCostTier": "極小",
   "effects": [],
@@ -33,13 +33,14 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.833
+      "castTimeSec": 1
     }
   },
   "vfxKey": "fx.prim.holy.nova",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.833,
+  "castTimeSec": 1,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "極大"
 }

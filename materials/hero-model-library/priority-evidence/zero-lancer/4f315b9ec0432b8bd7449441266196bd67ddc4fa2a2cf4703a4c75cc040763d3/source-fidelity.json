@@ -1,0 +1,990 @@
+{
+  "schema": "ggd-independent-unity-glb-skin-audit@1",
+  "sourceId": "gamebanana-zero-lancer-493444",
+  "tool": {
+    "python": "3.10.4",
+    "numpy": "2.2.6",
+    "scriptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-zero-lancer-validation-20260911-v1/tools/hero-model-library/source-workflows/zero-lancer-validation-20260911-v1/audit_skin.py"
+  },
+  "method": "Decode Unity JSON vertex streams with ast.literal_eval, source hierarchy/IBM via matrix math, compare reflected source to all GLB vertices after skinning and current normalization. No converter import.",
+  "variants": [
+    {
+      "variant": "p1",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/converted/diarmuid-p1-textured/body.glb",
+      "sha256": "01ff056d74c9457865b04a88dc69bc1a2325750ad418f7900fd831c5ed778308",
+      "receiptHashMatches": true,
+      "vertices": 3838,
+      "triangles": 4984,
+      "joints": 59,
+      "animations": 0,
+      "bounds": {
+        "positionAccessorLocal": {
+          "min": [
+            -0.9135812520980835,
+            -0.2525443732738495,
+            0.0006269803852774203
+          ],
+          "max": [
+            0.9135814309120178,
+            0.12371212989091873,
+            1.8500570058822632
+          ],
+          "extent": [
+            1.827162742614746,
+            0.3762564957141876,
+            1.8494300842285156
+          ]
+        },
+        "worldSkinnedRest": {
+          "min": [
+            -0.8892403592987379,
+            1.9873425821659296e-16,
+            -0.1831003401734695
+          ],
+          "max": [
+            0.8892403592987385,
+            1.8,
+            0.1831003401734695
+          ],
+          "extent": [
+            1.7784807185974763,
+            1.7999999999999998,
+            0.366200680346939
+          ]
+        },
+        "independentUnityWorld": {
+          "min": [
+            -0.9136605463961819,
+            0.0006264131653992078,
+            -0.12371207647022527
+          ],
+          "max": [
+            0.9136606146513238,
+            1.8500578157613075,
+            0.252545166799561
+          ],
+          "extent": [
+            1.8273211610475055,
+            1.8494314025959082,
+            0.37625724326978627
+          ]
+        },
+        "normalizedUnityExpected": {
+          "min": [
+            -0.8892403592987383,
+            -1.3986208025063007e-17,
+            -0.1831003401734695
+          ],
+          "max": [
+            0.8892403592987383,
+            1.7999999999999998,
+            0.18310034017346954
+          ],
+          "extent": [
+            1.7784807185974767,
+            1.7999999999999998,
+            0.36620068034693903
+          ]
+        }
+      },
+      "orientation": {
+        "upAxis": "Y",
+        "basis": "Full node hierarchy and inverse-bind skinning; highest point world Y=1.8 m; original mesh-local long axis Z is transformed by source skeleton",
+        "landmarks": [
+          {
+            "node": 8,
+            "name": "face",
+            "worldOrigin": [
+              3.3215412909288806e-08,
+              -0.0006096704620327909,
+              -0.06269482670925351
+            ]
+          },
+          {
+            "node": 24,
+            "name": "hip",
+            "worldOrigin": [
+              3.3215412909288806e-08,
+              1.1026198856829792,
+              -0.06269482670924811
+            ]
+          },
+          {
+            "node": 28,
+            "name": "L_toe",
+            "worldOrigin": [
+              0.08160968459574121,
+              0.0411439296462016,
+              0.058474533873819075
+            ]
+          },
+          {
+            "node": 34,
+            "name": "R_toe",
+            "worldOrigin": [
+              -0.0815795426178225,
+              0.04114244537857753,
+              0.058475271180315744
+            ]
+          },
+          {
+            "node": 52,
+            "name": "neck",
+            "worldOrigin": [
+              -8.49442326381807e-08,
+              1.5185078346736332,
+              -0.06269487096678088
+            ]
+          },
+          {
+            "node": 53,
+            "name": "head",
+            "worldOrigin": [
+              -1.0341187023347369e-07,
+              1.5840267870913716,
+              -0.05775493182328499
+            ]
+          }
+        ]
+      },
+      "skin": {
+        "finite": true,
+        "jointIndicesMin": 0,
+        "jointIndicesMax": 57,
+        "outOfRangeJointEntries": 0,
+        "negativeWeightEntries": 0,
+        "weightSumMaxAbsError": 5.960464477539063e-08,
+        "maxPositiveInfluences": 4,
+        "activeJointCount": 32,
+        "zeroTotalWeightVertices": 0,
+        "jointOrderMatchesNativeRenderer": true,
+        "nativeWeightSumMaxAbsError": 2.9802322387695312e-08,
+        "normalizedNativeWeightMaxAbsError": 2.5331973962927634e-08,
+        "jointIndicesEqualNative": true,
+        "worldPositionMaxAbsErrorVsUnity": 4.978788004095236e-08,
+        "worldPositionRmsErrorVsUnity": 6.304373659533659e-09
+      },
+      "bindMatrices": {
+        "finite": true,
+        "count": 59,
+        "minAbsLinearDeterminant": 0.9999995827674866,
+        "maxLinearConditionNumber": 1.0000004768371582,
+        "maxAbsErrorVsReflectedNative": 0.0,
+        "maxAffineBottomRowError": 0.0
+      },
+      "geometryFidelity": {
+        "positionMaxAbsErrorVsReflectedNative": 0.0,
+        "normalMaxAbsErrorVsNormalizedReflectedNative": 2.9798881251430487e-08,
+        "uvMaxAbsErrorVsNativeWithVFlip": 0.0,
+        "indicesEqualReversedNativeWinding": true,
+        "sourceTransformCountChecked": 83,
+        "allNativeTransformsPreserved": true,
+        "transformMaxAbsError": 2.220446049250313e-16
+      },
+      "normals": {
+        "localFinite": true,
+        "localZeroLengthVertices": 0,
+        "localUnitLengthMaxError": 4.477907178390694e-08,
+        "worldSkinFinite": true,
+        "worldBeforeRenormalizationLengthRange": [
+          1.0274569234857034,
+          1.0274619987108282
+        ],
+        "worldTriangleDegenerates": 0,
+        "worldTriangleVsMeanVertexNormalDotRange": [
+          -0.6610444675326199,
+          1.0000000000000002
+        ],
+        "negativeDotTriangleCount": 10,
+        "negativeDotTriangleIds": [
+          263,
+          358,
+          504,
+          506,
+          1137,
+          1285,
+          1704,
+          1799,
+          1800,
+          4511
+        ],
+        "nativeLocalNegativeDotTriangleIds": [
+          263,
+          358,
+          504,
+          506,
+          1137,
+          1285,
+          1704,
+          1799,
+          1800,
+          4511
+        ],
+        "negativeTriangleIdsMatchSource": true,
+        "interpretation": "Ten native faces have mean vertex normals opposite their geometric normal; all positions, winding, and normalized source normals are preserved. Not a new conversion defect."
+      },
+      "materials": [
+        {
+          "name": "P1",
+          "pbrMetallicRoughness": {
+            "baseColorTexture": {
+              "index": 0
+            },
+            "baseColorFactor": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "metallicFactor": 0.0,
+            "roughnessFactor": 0.5
+          },
+          "extras": {
+            "sourceMaterialPathId": "-8914944072444158247",
+            "sourceOutfitPathId": "1728952835763481955",
+            "shaderReduction": "base-color PBR; no custom toon-outline shader execution"
+          }
+        }
+      ],
+      "gaps": [
+        "No animations or morph targets are in this source model; retargeted MOD skeleton is not a proven original PSP/PS2 skeleton.",
+        "Custom Unity toon outline/shader behavior is reduced to portable material parameters.",
+        "This audit does not establish animation playback, backend selection, deployment, or visual source-engine parity."
+      ]
+    },
+    {
+      "variant": "p2",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/converted/diarmuid-p2-textured/body.glb",
+      "sha256": "112f245d85a51f772afd6339ee56783292b6cfdd04fad2a3aa9e803c623125a6",
+      "receiptHashMatches": true,
+      "vertices": 3838,
+      "triangles": 4984,
+      "joints": 59,
+      "animations": 0,
+      "bounds": {
+        "positionAccessorLocal": {
+          "min": [
+            -0.9135812520980835,
+            -0.2525443732738495,
+            0.0006269803852774203
+          ],
+          "max": [
+            0.9135814309120178,
+            0.12371212989091873,
+            1.8500570058822632
+          ],
+          "extent": [
+            1.827162742614746,
+            0.3762564957141876,
+            1.8494300842285156
+          ]
+        },
+        "worldSkinnedRest": {
+          "min": [
+            -0.8892403592987379,
+            1.9873425821659296e-16,
+            -0.1831003401734695
+          ],
+          "max": [
+            0.8892403592987385,
+            1.8,
+            0.1831003401734695
+          ],
+          "extent": [
+            1.7784807185974763,
+            1.7999999999999998,
+            0.366200680346939
+          ]
+        },
+        "independentUnityWorld": {
+          "min": [
+            -0.9136605463961819,
+            0.0006264131653992078,
+            -0.12371207647022527
+          ],
+          "max": [
+            0.9136606146513238,
+            1.8500578157613075,
+            0.252545166799561
+          ],
+          "extent": [
+            1.8273211610475055,
+            1.8494314025959082,
+            0.37625724326978627
+          ]
+        },
+        "normalizedUnityExpected": {
+          "min": [
+            -0.8892403592987383,
+            -1.3986208025063007e-17,
+            -0.1831003401734695
+          ],
+          "max": [
+            0.8892403592987383,
+            1.7999999999999998,
+            0.18310034017346954
+          ],
+          "extent": [
+            1.7784807185974767,
+            1.7999999999999998,
+            0.36620068034693903
+          ]
+        }
+      },
+      "orientation": {
+        "upAxis": "Y",
+        "basis": "Full node hierarchy and inverse-bind skinning; highest point world Y=1.8 m; original mesh-local long axis Z is transformed by source skeleton",
+        "landmarks": [
+          {
+            "node": 8,
+            "name": "face",
+            "worldOrigin": [
+              3.3215412909288806e-08,
+              -0.0006096704620327909,
+              -0.06269482670925351
+            ]
+          },
+          {
+            "node": 24,
+            "name": "hip",
+            "worldOrigin": [
+              3.3215412909288806e-08,
+              1.1026198856829792,
+              -0.06269482670924811
+            ]
+          },
+          {
+            "node": 28,
+            "name": "L_toe",
+            "worldOrigin": [
+              0.08160968459574121,
+              0.0411439296462016,
+              0.058474533873819075
+            ]
+          },
+          {
+            "node": 34,
+            "name": "R_toe",
+            "worldOrigin": [
+              -0.0815795426178225,
+              0.04114244537857753,
+              0.058475271180315744
+            ]
+          },
+          {
+            "node": 52,
+            "name": "neck",
+            "worldOrigin": [
+              -8.49442326381807e-08,
+              1.5185078346736332,
+              -0.06269487096678088
+            ]
+          },
+          {
+            "node": 53,
+            "name": "head",
+            "worldOrigin": [
+              -1.0341187023347369e-07,
+              1.5840267870913716,
+              -0.05775493182328499
+            ]
+          }
+        ]
+      },
+      "skin": {
+        "finite": true,
+        "jointIndicesMin": 0,
+        "jointIndicesMax": 57,
+        "outOfRangeJointEntries": 0,
+        "negativeWeightEntries": 0,
+        "weightSumMaxAbsError": 5.960464477539063e-08,
+        "maxPositiveInfluences": 4,
+        "activeJointCount": 32,
+        "zeroTotalWeightVertices": 0,
+        "jointOrderMatchesNativeRenderer": true,
+        "nativeWeightSumMaxAbsError": 2.9802322387695312e-08,
+        "normalizedNativeWeightMaxAbsError": 2.5331973962927634e-08,
+        "jointIndicesEqualNative": true,
+        "worldPositionMaxAbsErrorVsUnity": 4.978788004095236e-08,
+        "worldPositionRmsErrorVsUnity": 6.304373659533659e-09
+      },
+      "bindMatrices": {
+        "finite": true,
+        "count": 59,
+        "minAbsLinearDeterminant": 0.9999995827674866,
+        "maxLinearConditionNumber": 1.0000004768371582,
+        "maxAbsErrorVsReflectedNative": 0.0,
+        "maxAffineBottomRowError": 0.0
+      },
+      "geometryFidelity": {
+        "positionMaxAbsErrorVsReflectedNative": 0.0,
+        "normalMaxAbsErrorVsNormalizedReflectedNative": 2.9798881251430487e-08,
+        "uvMaxAbsErrorVsNativeWithVFlip": 0.0,
+        "indicesEqualReversedNativeWinding": true,
+        "sourceTransformCountChecked": 83,
+        "allNativeTransformsPreserved": true,
+        "transformMaxAbsError": 2.220446049250313e-16
+      },
+      "normals": {
+        "localFinite": true,
+        "localZeroLengthVertices": 0,
+        "localUnitLengthMaxError": 4.477907178390694e-08,
+        "worldSkinFinite": true,
+        "worldBeforeRenormalizationLengthRange": [
+          1.0274569234857034,
+          1.0274619987108282
+        ],
+        "worldTriangleDegenerates": 0,
+        "worldTriangleVsMeanVertexNormalDotRange": [
+          -0.6610444675326199,
+          1.0000000000000002
+        ],
+        "negativeDotTriangleCount": 10,
+        "negativeDotTriangleIds": [
+          263,
+          358,
+          504,
+          506,
+          1137,
+          1285,
+          1704,
+          1799,
+          1800,
+          4511
+        ],
+        "nativeLocalNegativeDotTriangleIds": [
+          263,
+          358,
+          504,
+          506,
+          1137,
+          1285,
+          1704,
+          1799,
+          1800,
+          4511
+        ],
+        "negativeTriangleIdsMatchSource": true,
+        "interpretation": "Ten native faces have mean vertex normals opposite their geometric normal; all positions, winding, and normalized source normals are preserved. Not a new conversion defect."
+      },
+      "materials": [
+        {
+          "name": "P2",
+          "pbrMetallicRoughness": {
+            "baseColorTexture": {
+              "index": 0
+            },
+            "baseColorFactor": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "metallicFactor": 0.0,
+            "roughnessFactor": 0.5
+          },
+          "extras": {
+            "sourceMaterialPathId": "-6531979948556094739",
+            "sourceOutfitPathId": "-1972977856875032084",
+            "shaderReduction": "base-color PBR; no custom toon-outline shader execution"
+          }
+        }
+      ],
+      "gaps": [
+        "No animations or morph targets are in this source model; retargeted MOD skeleton is not a proven original PSP/PS2 skeleton.",
+        "Custom Unity toon outline/shader behavior is reduced to portable material parameters.",
+        "This audit does not establish animation playback, backend selection, deployment, or visual source-engine parity."
+      ]
+    }
+  ],
+  "p1P2AccessorDataIdentical": true,
+  "preTexturedIntermediate": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/converted/diarmuid-p1/body.glb",
+    "actualSha256": "0fff0dcfc7b055f2a38cb686e34c46d0881bed93be8a9a78924f5ea3553f82bc",
+    "receiptSha256": "0fff0dcfc7b055f2a38cb686e34c46d0881bed93be8a9a78924f5ea3553f82bc",
+    "receiptMatches": true
+  },
+  "sourceArchive": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/original/zero_lancer.7z",
+    "bytes": 377869,
+    "sha256": "140b5934cb06f32d360c20c659c99484ce3c726ba32597d1c10ae7ddffea0e1a"
+  },
+  "sourceBundle": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/extracted/Zero Lancer/zero lancer.cbb",
+    "bytes": 377303,
+    "sha256": "760f786301c8d554cdfc117df9a427ef73850a986a1b1b23d62f3494300a3573"
+  },
+  "inputs": [
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects.json",
+      "bytes": 58752,
+      "sha256": "1ba64635f849e3fd393c3810419fa9fdc0d1e65a62e06ff82b4196510089db37"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/4912938233241089334.json",
+      "bytes": 1209219,
+      "sha256": "427de20d7d3e22c222af2a0f05ad4e1134be508a984e4a4dd50808f57c27fe4c"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-4941642568377141772.json",
+      "bytes": 5934,
+      "sha256": "179806447ae4668c1b20e5433f47e3b47e233af2678901e86e6fae0028cd833a"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-6697005590566658940.json",
+      "bytes": 1517,
+      "sha256": "5112ede2c1c1095081718783843c2c712141be0b3a522b078bd6ac311e353815"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/9056642684592947174.json",
+      "bytes": 577,
+      "sha256": "e4d942b6fcbe877fc4997f5252f4240ce87b686e46af38755b29ae8b2452757e"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/7282075300650383020.json",
+      "bytes": 960,
+      "sha256": "ed17430de93cd971278e5407d8fb35621d9a86284208959765e4fb659f2db7e7"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-3189858144105747567.json",
+      "bytes": 401,
+      "sha256": "da4168ce198573620ebb69d8752d4df304536d0f0bc2dfbd73a4b8a94672a2a6"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-9082266903355658223.json",
+      "bytes": 401,
+      "sha256": "345813a3031cc7807a6cbeebc6ba5b3e3e4c93ab007e75f3d2abe7634aeba3de"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-4801164354137066724.json",
+      "bytes": 401,
+      "sha256": "aa1d577e9405e17aabf2e3d70591a27848770026b3d898a44cc0350c9b789f59"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-5688481279562476259.json",
+      "bytes": 402,
+      "sha256": "9d967d16ea202993ec270360300fce61d288cf2f3e2a2d9044959d99bd2e5793"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/4112826449429353819.json",
+      "bytes": 401,
+      "sha256": "e9a5066f8c13d4b3deca1b30c36c5579c3614ab05a7e016ff8cc15e385f7f1f8"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/4830066275697839803.json",
+      "bytes": 402,
+      "sha256": "1703655c56d03a56ebf715914c59590e868dbc6b9a26ab14cb46b6a4ecabe255"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-5346964522160927751.json",
+      "bytes": 402,
+      "sha256": "bd763444c63bdfc2abbd804836449eab95b2403d31fb81f4105a54b1c08ed368"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-4205430570327178149.json",
+      "bytes": 402,
+      "sha256": "3ae64f949efbef8b211f7f33a25a1ca42d741cadee02225e0fe243eb7812d9f7"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/1282553022809344504.json",
+      "bytes": 402,
+      "sha256": "5279991e230441074d35dea5a900e60d1d9c719ce0881a4512d2d10d4bb70727"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/3989043965876425720.json",
+      "bytes": 401,
+      "sha256": "2d35630084cba6ca4cd5a40d813b1d9ac4a7dc2a19a2da8659dd45c4ea576b65"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/105133560321461920.json",
+      "bytes": 401,
+      "sha256": "9892c2a22defc23b9253d3ce0fb60d0d968d1d4a18bb77c9372c8d53cf574878"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-3486164212001787137.json",
+      "bytes": 401,
+      "sha256": "05a69649bab192cce31d728513b7562dd091415172b717259c1d6fa48a51d32c"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/1722454597247798279.json",
+      "bytes": 401,
+      "sha256": "4a2d1030c7812513f406c4f5627622ed771c573f48a2b3e7b9842dd5924fac23"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/7020557279431229005.json",
+      "bytes": 400,
+      "sha256": "afbdd6dcc456927ab6f5374f5dfbe79af59e11ae329cee448c1d4139b8c7cdbc"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/6336387727026280737.json",
+      "bytes": 402,
+      "sha256": "3688d3d5f831f97c087dc201915c2d5afc5ec5f6a8eefb60f98546536378ec5f"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/1837646945053534738.json",
+      "bytes": 577,
+      "sha256": "a4586849bd9adef9758d069fb1a1ec3c377854e8207caf29ca67c5887c452155"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-7741964530828014656.json",
+      "bytes": 504,
+      "sha256": "6b8f7df3e5e1a22151ae43c98e45959874b5655b15e70cf6695a3fe22e581620"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-1115674473330738891.json",
+      "bytes": 513,
+      "sha256": "05fdaa9453b5f6ee0085f492451254fb86eeef3646b28b02b33c00ccffcef714"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/4392653048541867725.json",
+      "bytes": 861,
+      "sha256": "25714eeebf7fa6b2aa6046b1923d97acdcd0c18d74e3d84e150d3e6fb51de0f4"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/3129090168735148901.json",
+      "bytes": 588,
+      "sha256": "1f83f924618e6573340a6554ad620b608fc210b05e89fd916d22b1d086665fe0"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-3904505516338191019.json",
+      "bytes": 797,
+      "sha256": "f99d8d436585c8ceeaab634c64080d16f8b6011cd72a7149e5a97e05996eb9c6"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-7223040457091010777.json",
+      "bytes": 586,
+      "sha256": "abf499f70a8dc0dd9360aab81adffc8f4ddebd96c65a5a97b88815d050c199a5"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-2069238640640457178.json",
+      "bytes": 670,
+      "sha256": "622a02a6b4b99bfbd88ec58faae1f4d88fdb846cf5649d0d4e49de7005c94e8d"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-3869546430874565606.json",
+      "bytes": 525,
+      "sha256": "5078887a68b3c6525aafb95d9f1b3e1b87801be90bc9c8c7953348ecc4481b3c"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/44531115885449264.json",
+      "bytes": 606,
+      "sha256": "c4f9820ce540bbd15fac72c4052cb931f89251d8cf59668e39e3bc77f8ac7011"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/4066274400681565988.json",
+      "bytes": 562,
+      "sha256": "f4d47b7cb5aaf9bb77dce5594da6946ba6c8c0a9d9df7110fdd96e3e83070697"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/5195076374421955265.json",
+      "bytes": 750,
+      "sha256": "38bfd42a5748e0ba425556603033431423e0b6ae86533ca3127ade0978368b9d"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-4463251693805558238.json",
+      "bytes": 612,
+      "sha256": "c9fcd06b0d771586beb20586551fe3839813d45beff3710e39d28372c7b2bf01"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-8421115726951854828.json",
+      "bytes": 614,
+      "sha256": "f2ca1158fb09e670f55352d1d6735ab70c5c3d9a10d3eab5c3533a1ee2964a85"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-8488590517857718807.json",
+      "bytes": 760,
+      "sha256": "66ddf6558fbcbee6028a422f249803fc30971f3d5353f16eeb3f57c99e2f0b37"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-7346606303201269633.json",
+      "bytes": 508,
+      "sha256": "c95715cfdda36249db8065ab0392e3118742a6f9f173ddd1e5f40e740f8deec7"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-1540337307733527665.json",
+      "bytes": 583,
+      "sha256": "05d851b9b94e93712898038459d21a7bcbb66997d33aa96a7f6efb1da69a1165"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/8928574491305057119.json",
+      "bytes": 529,
+      "sha256": "980889f1cede008b09b9d571e8842496727becdfa58172657259ef153abe1a6a"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/202568569691954756.json",
+      "bytes": 540,
+      "sha256": "ff3877b66438c62b846816b9678bdbcd79ea16634de1e53061922fa4fb71e4bd"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-393430113601843767.json",
+      "bytes": 611,
+      "sha256": "0b64d2084e0592aef4f840ad9c809d7713c83c1a92eec9ebc7bb156a1bef7b70"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/4265033243041373720.json",
+      "bytes": 611,
+      "sha256": "5e3e3fbfd23a80a589ae5e1d2a608e3e12541592f5dc5bc956f25cee6c6406b8"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-6750550097168773483.json",
+      "bytes": 612,
+      "sha256": "09d31bc2abda3906b22182d9f93e693255482c544b1e7990696b2e7cccfce295"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-8460891965873447483.json",
+      "bytes": 542,
+      "sha256": "af04b9720bce4fa2df3bd30eba1bd9a949555409340ce2db6637dccc227cf81a"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/3319056183785324556.json",
+      "bytes": 683,
+      "sha256": "6ee12c7601969c614f800e9356f6059d6b6123ed82394af6e0faa43780bf51fd"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/4934516664252444634.json",
+      "bytes": 614,
+      "sha256": "afa382aeb1cf61cca80b4970a67d606b5dc67f3fd7c1cca4d7357d60840bc367"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/747128539878868394.json",
+      "bytes": 685,
+      "sha256": "91dc6cf4df7d926e2dec5254e5984851e5f3088163fb528bc7ea7e33a1884575"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-5656035946672255073.json",
+      "bytes": 755,
+      "sha256": "c8510ea6cd8521d24c7ae963eec3cf3c0b92b34eeeba4f75c2a22d8f50fc428c"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-2215950895180568674.json",
+      "bytes": 490,
+      "sha256": "b33947d8cd7608231c657f63d0c1ff914cd98d6d7651ae31fde6a49e18068b20"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-4955710981704334224.json",
+      "bytes": 563,
+      "sha256": "f40123d24f6729e0aa472887ba36baff03ea38a615c01140357e5c9167b791f8"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/7093385337080715038.json",
+      "bytes": 528,
+      "sha256": "e9bd865d331d05e91f83400102ddbadb602e32e2774637516f09aca6952a8c84"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/8202027448275977918.json",
+      "bytes": 535,
+      "sha256": "e12148b27cd664eccef09da2df84f4328731527076345c4c6b1a0f1e57835f6d"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/605276608940364583.json",
+      "bytes": 541,
+      "sha256": "52224fc10f5c3c86fa49121d7fbdde006c914f6500900cdb95a32b80f19af4bb"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/2342371173113586050.json",
+      "bytes": 575,
+      "sha256": "adca767edd8ff0edf711b99a2922a24aec308bc3225362c962dbab89c3908f3c"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-354163008489941581.json",
+      "bytes": 584,
+      "sha256": "9ae19f2bacc3dd067d8641327765a51b135fde6b9c965f2f09df78b1365a53c4"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-8216643109803954920.json",
+      "bytes": 655,
+      "sha256": "52d7ff66dedb06cb5fb9bf32b7d1927e11770183abb280f9504f8febcb922f4c"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-4410672923667558777.json",
+      "bytes": 519,
+      "sha256": "98323925e730deae4cb6e89da2764aee67f9a3eba6214f139b731724f05f7806"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/1112068758897225878.json",
+      "bytes": 502,
+      "sha256": "bf1c6b526881b58af8db7d5ef5332b289f026469ff98d8f4350a9af9eca0e91e"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-6022813731855011919.json",
+      "bytes": 580,
+      "sha256": "18f36328fca0404e6dd9c513766ebe7a9ef7d9f9904b73cffe2b1f3de698b3b4"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-8183470480611386179.json",
+      "bytes": 583,
+      "sha256": "44b6108e3b82da3c68e6c59c03547920214d3f1aed7ce7759a00cf34284cafe7"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/3190401233789877723.json",
+      "bytes": 637,
+      "sha256": "6572006a05d09339c8dbd9f6654d7a5a28ebe591dc2a6402de294d3356fd51ce"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-4940431066020401665.json",
+      "bytes": 518,
+      "sha256": "b8b0f622474a0fb1b3be576a5a7e77f2855bec7983328990011c7c81b952d924"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/8530104238664888983.json",
+      "bytes": 486,
+      "sha256": "5abd04d3071af3c4ced0c99c353557ceb32830afaf65c3a29d441fee7bb72110"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-3641516075359989770.json",
+      "bytes": 400,
+      "sha256": "9a976cef3635e7371a2a9a2eed2e331bbb4077613c77a49a4cb43bf4d5e39a18"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/converted/diarmuid-p1-textured/conversion.json",
+      "bytes": 3757,
+      "sha256": "473fd19ec092f6f8013616a4b18d3f87d59a22c5e5d0476222241174d195a300"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/converted/diarmuid-p1-textured/body.glb",
+      "bytes": 336732,
+      "sha256": "01ff056d74c9457865b04a88dc69bc1a2325750ad418f7900fd831c5ed778308"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/7401148962385267613.json",
+      "bytes": 431,
+      "sha256": "7c233b3fca2af0d29c7faa0867c32811a4607c27bc00042c73672438d7351bae"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-1499094648911418870.json",
+      "bytes": 499,
+      "sha256": "6f8f1550a9543834cd0be3fb5699c0f74557b509e51a97fb41aa2852bf8d6090"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/6698846246913771681.json",
+      "bytes": 503,
+      "sha256": "da122f72def9aae369b94be5cbaa07d6330982fd94147b009a8eb3665e5852a4"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/4561726542428678725.json",
+      "bytes": 560,
+      "sha256": "57b8807be7c20480091982ab16d70648bbbd6dc26b60bb0db87375af8a36d804"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/4637107926223860986.json",
+      "bytes": 551,
+      "sha256": "1ad386c71856a72cffe7030f790f698d59d97b138a41f512fe5385e57f0b3b5f"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/8519915858574484867.json",
+      "bytes": 472,
+      "sha256": "f8e7e478ab353fb78a101c7d5f7d420d8df553c7832495c480b7d47e28b86ae3"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-98385319837905751.json",
+      "bytes": 471,
+      "sha256": "7fbe68edbbb9ead184fb11ca530d0b132e927cfba780576ade3123f16d4ca051"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/8698097462438307246.json",
+      "bytes": 471,
+      "sha256": "0d3044ab19224beab7631410f46b0a868c0d96ffe88b7060eebce0208b8e5f7a"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-5626952864788969414.json",
+      "bytes": 459,
+      "sha256": "17e94891d201c1e3dc0b3b52e3a9cbf59d9591476cf844ce243d32c8542572a2"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/6492533541763721769.json",
+      "bytes": 397,
+      "sha256": "ef871a5b9617233b31ebef27b22ae479ac43e6a299c76fcec0695f6c4de01c22"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/2948655484036540104.json",
+      "bytes": 618,
+      "sha256": "6e69fa5e8ea9a6834544e39f57a95be32781ada173ed8e0ac29d5a9019c35fd5"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-486326455926336614.json",
+      "bytes": 542,
+      "sha256": "e4f4b1718f9118f09394d9947f20db423dcc929fa6e8649a3c6668a8f7807fbb"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-2759640174640353.json",
+      "bytes": 397,
+      "sha256": "a7544a3a17f5d6e181aadb5e4287a5579bed82b440731ba0e1f024020b8f64f5"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/2230511237480485464.json",
+      "bytes": 398,
+      "sha256": "2eefb7b35b797d39163d61acf0cfd17bb5ac6ce73a6c81ca8c29c4b4cdf6b87a"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-4829602914633468698.json",
+      "bytes": 471,
+      "sha256": "5306f0fda22447139bee2c29eacf70037fe4ed9c802306ae42d499fc60e90b95"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/331109247767280191.json",
+      "bytes": 398,
+      "sha256": "8a04e3214fcbc3531626a04ed3bff5a6b39d6daeeab61b8910f1883a2fd1407b"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-7451106062071580822.json",
+      "bytes": 397,
+      "sha256": "f8744317005a46bf72037f0dce0b475ee81f852ba1ffff237d9a85f4761f6abb"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-7701482408365067666.json",
+      "bytes": 397,
+      "sha256": "f85cf730a7ae8e9fcce39653b904d6e094f8e5d55666872334847799bdb9dedf"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/9149465584790539954.json",
+      "bytes": 397,
+      "sha256": "29b74d7acea2c5befbfa8844d006ca4bbae1811e72e5edb7f69f45dfb712fea1"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/3130503183292861450.json",
+      "bytes": 472,
+      "sha256": "bdc56769cf8ba8e76772e63255c5b4947470854db2a6ce9502c29306772d2ab8"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/1667240825572818858.json",
+      "bytes": 398,
+      "sha256": "0a4096a31c5766c2bd6bc53c529d7624da66ac70995fce4c966922ad0bcda8f7"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/analysis/unity-objects/-4230585572811185261.json",
+      "bytes": 398,
+      "sha256": "d02185265172ca960da265af0721ca7c0b5511a9b3757527fda76e11e8c7cb4d"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/converted/diarmuid-p2-textured/conversion.json",
+      "bytes": 3758,
+      "sha256": "412779c746caf0c19e90e332cd9364c3614652cb398978ee4b2800a2a3e79fe8"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/converted/diarmuid-p2-textured/body.glb",
+      "bytes": 337856,
+      "sha256": "112f245d85a51f772afd6339ee56783292b6cfdd04fad2a3aa9e803c623125a6"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/converted/diarmuid-p1/conversion.json",
+      "bytes": 2623,
+      "sha256": "8607686b731c987b755f8a9aadbe73cb138ddaf096b78e79a8193387381918ed"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/converted/diarmuid-p1/body.glb",
+      "bytes": 299940,
+      "sha256": "0fff0dcfc7b055f2a38cb686e34c46d0881bed93be8a9a78924f5ea3553f82bc"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/original/zero_lancer.7z",
+      "bytes": 377869,
+      "sha256": "140b5934cb06f32d360c20c659c99484ce3c726ba32597d1c10ae7ddffea0e1a"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/zero-lancer-validation-20260911-v1/raw/source/extracted/Zero Lancer/zero lancer.cbb",
+      "bytes": 377303,
+      "sha256": "760f786301c8d554cdfc117df9a427ef73850a986a1b1b23d62f3494300a3573"
+    }
+  ],
+  "passedSourceFidelityChecks": true
+}

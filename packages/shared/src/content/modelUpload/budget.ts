@@ -1,4 +1,14 @@
-/** Shared with tools/model-budget/limits.ts: iPad mini A17 Pro at 30 fps, estimated. */
+/** Shared with tools/model-budget/limits.ts: current tablet target is read from model-lod.json. */
+import adoptionPolicy from "./adoptionPolicy.json" with { type: "json" };
+
+/**
+ * Formal asset-library adoption policy. This is intentionally separate from
+ * the wider scene-capacity budget below: a model can fit the renderer's
+ * absolute safety ceiling and still require decimation before it is accepted
+ * into the selectable hero library.
+ */
+export const HERO_MODEL_ADOPTION_POLICY = adoptionPolicy.hero;
+
 export const C_CHAN_MS = 2.19 / 1476;
 /**
  * ms／每個常駐 mesh —— **量到的**（task #80 的 A/B：同一個場景 279 vs 713 個
@@ -86,9 +96,10 @@ const CHAMPION_MESH_SHARE = 0.25;
  * **256² 與 512² 的平均每通道差 0.10 / 255**（192² 是 0.19）——
  * ⚠️ 而那是在實拍台的 ~300 像素，**比遊戲裡最近的 217 像素更嚴苛**。
  *
- * ⇒ 警戒 **256**（設計目標）／上限 **512**（真的需要細節的角色的硬天花板）。
+ * ⇒ 一般英雄的警戒與硬上限都採 **256**；可量測的大型場景例外只在
+ * `tools/model-budget/limits.ts::TEX_EDGE_EXEMPT` 逐路徑登記，不能由英雄自行放寬。
  *
- * ⛔⛔ 而「壓縮」對這一格**沒有用**：`emit_report.ts` 的 `vramOf` 逐字是
+ * ⛔⛔ 而「壓縮」對這一格**沒有用**：下面的 `textureVramBytes` 逐字是
  * 「RGBA8（Babylon 把每一種壓縮來源都解成 RGBA8）× 4/3 給 mip」
  * ⇒ PNG/JPEG 只縮**下載量**，VRAM 一個位元組都不會少。
  * ⭐ 真正能再省的只有 **KTX2/ASTC**（GPU 壓縮格式在 VRAM 裡保持壓縮，4–8×）。
@@ -97,6 +108,51 @@ const CHAMPION_MESH_SHARE = 0.25;
 //:    ⇒ 上限也是 256，⛔ 不再有「英雄可以到 512」的空間。
 //:    完整推導與它最緊的那個案例住 `tools/model-budget/limits.ts` 的 `SCREEN_TEXEL_EDGE`。
 const HERO_TEXTURE_EDGE = { warn: 256, limit: 256 } as const;
+
+/**
+ * ⭐ 一張貼圖在 GPU 上佔多少位元組：RGBA8（Babylon 把每一種壓縮來源都解成 RGBA8）× 4/3 給 mip。
+ *
+ * ⚠️ 量測工具 `tools/model-budget/glb.ts::vramOf`／`emit_report.ts::vramOf` 各有一份同一條公式 ——
+ * 那是**刻意的**（`glb.ts` 檔頭：量測工具零相依，「two implementations, one conformance test」）。
+ * ⇒ 匯入閘這一份一樣走對帳：`glb.test.ts` 拿出貨模型的量測值與這一支比，公式漂了就紅。
+ */
+export function textureVramBytes(width: number, height: number): number {
+  return Math.round(width * height * 4 * (4 / 3));
+}
+
+/**
+ * 同畫面貼圖 VRAM 的場景線 —— ⭐ 從 `tools/model-budget/limits.ts` 搬來（與 `C_MESH_MS` 同一個理由：
+ * `limits.ts` import 這一支，反向 import 是循環相依），`limits.ts` 改成 re-export。
+ *
+ * Texture VRAM is deliberately NOT derived from a guessed hardware ceiling.
+ * Nobody here has measured what iOS Safari will tolerate, and inventing a
+ * number would make the page lie with confidence. It is derived from the
+ * CONTENT instead: the worst combat frame needs ~12 MB of actual image
+ * information once the 25 duplicate copies of one 24-colour palette are
+ * deduplicated and right-sized (task #99 texture probe). The limit is 4× that,
+ * the warning 2.7× — i.e. "you may spend four times what the art actually
+ * needs, and no more". OVER on this axis means wasteful, not crashing, and the
+ * page says so in those words.
+ */
+export const TEX_INFO_MB = 12;
+export const TEX_LIMIT_MB = TEX_INFO_MB * 4; // 48
+export const TEX_WARN_MB = TEX_INFO_MB * 8 / 3; // 32
+
+/**
+ * ⭐ GH#1174 —— 英雄這一族分到場景 VRAM 線的**份額**。
+ *
+ * ⚠️ 這是一個**選擇**（⛔ 沒有 owner 原話）：票面寫「每支 4 MB＝場景 48 ÷ 12」⇒ 份額 **1**。
+ * 它與 `CHAMPION_MESH_SHARE`（0.25）**刻意不相等**，因為兩件事的最壞情況不同：
+ * · draw call 每一份都要付 ⇒ 12 份同一支＝12 倍，而場地／道具／特效同時在搶那 6 ms
+ * · 貼圖 VRAM 同位元組只付一次（GH#382 `textureDedup`）⇒ 最壞情況是 **12 支不同的英雄**，
+ *   而那條場景線本身是「超過美術實際需要的 4 倍」（⛔ 不是硬體上限）
+ * ⚠️ 代價（誠實）：12 支不同英雄同時頂到線 = 48 MB，場地貼圖疊在上面就超過場景線。
+ * ⇒ 收緊／rollback：把這一格改成 0.25（＝每支 1 MB，與 draw call 同份額）—— ⛔ 那會擋掉
+ *   帶 3 張以上 256² 的英雄身體（2026-09-15 量：玩家預設身體最大 3.50 MB），所以沒有挑它。
+ */
+const CHAMPION_VRAM_SHARE = 1;
+const MIB = 1024 * 1024;
+
 export const HERO_MODEL_BUDGET = {
   tris: { warn: 16_000, limit: 28_000 },
   meshes: {
@@ -107,4 +163,11 @@ export const HERO_MODEL_BUDGET = {
   // ⭐ GH#1164 —— 兩條線各自是 owner 指定的**字面值**，⛔ 不再由 `limit × 0.75` 推。
   //   ⚠️ 舊的 `0.75` 會讓警戒線變成 375 —— ⛔ 那不是他說的 300。
   channels: { warn: CHAMPION_CHANNEL_WARN, limit: CHAMPION_CHANNEL_LIMIT },
+  // ⭐ GH#1174 —— 貼圖 VRAM（位元組，`textureVramBytes` 逐張加總）。
+  //   ⚠️ 在此之前四條線沒有一條擋得住它：每張都 ≤256 的模型可以帶 20 張（≈7 MB）而全部過關
+  //   ⇒ 「貼圖邊長」與「VRAM」是兩個名詞，只驗前者的閘對後者**結構上失明**（第二守則 ⑪）。
+  vramBytes: {
+    warn: Math.floor(TEX_WARN_MB * MIB * CHAMPION_VRAM_SHARE / CHAMPION_INSTANCES),
+    limit: Math.floor(TEX_LIMIT_MB * MIB * CHAMPION_VRAM_SHARE / CHAMPION_INSTANCES),
+  },
 } as const;

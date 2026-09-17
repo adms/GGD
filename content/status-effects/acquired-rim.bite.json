@@ -1,0 +1,15 @@
+{
+  "id": "acquired-rim.bite",
+  "schema": "status-effect@1",
+  "name": "午休咬一口",
+  "description": "莉姆（Rim；粉紅魔龍）「午休咬一口」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-rim.bite",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

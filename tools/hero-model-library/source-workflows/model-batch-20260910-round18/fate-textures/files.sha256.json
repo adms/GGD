@@ -1,0 +1,22 @@
+[
+  {
+    "path": "control/tooling/ggd-fuc-batch6-author-audit.py",
+    "bytes": 1513,
+    "sha256": "df52707a53c4d5974022783fad3c665b818901e8a6f9b37dfe89b3863de164aa"
+  },
+  {
+    "path": "control/tooling/ggd-fuc-batch6-build-author-report.py",
+    "bytes": 4160,
+    "sha256": "b94f450e7d2ab328a044d07b24f6a6a470e0163baf6b9395485e1d17b6da0a80"
+  },
+  {
+    "path": "control/tooling/ggd-fuc-batch6-freeze.py",
+    "bytes": 8670,
+    "sha256": "7ef39429fe1d330277c6ae9c1ebef58f520dc46ef6cf4d5872d101f27779f3c5"
+  },
+  {
+    "path": "control/tooling/ggd-fuc-batch6-process.py",
+    "bytes": 7672,
+    "sha256": "5c18e10c11628da595c3d6efa40eb85458daec50e1949ee04875157ccd89fa00"
+  }
+]

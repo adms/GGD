@@ -33,7 +33,7 @@
  *  · 對照：在此之前（未 join roster）同一個拿掉的動作 → **exit 0，什麼都不說**。
  */
 import { describe, expect, it } from "vitest";
-import { cpSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, cpSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { dirname, join } from "node:path";
 import { tmpdir } from "node:os";
@@ -54,6 +54,18 @@ function sandbox(): string {
     join(root, "content/assets/audio/voices/quotes"),
     { recursive: true },
   );
+  // ⭐⭐ 2026-09-11（GH#1211）：**產物隔離區**（`scripts/product-quarantine.sh`）把出貨產物
+  //   chmod **444**，而 `cpSync` **連權限一起複製** ⇒ 沙盒裡那份也是唯讀
+  //   ⇒ 產生器一寫就 `EACCES`（errno -13）⇒ ⛔ 測試看到的是 `status=1`，
+  //   而訊息只有「expected 1 to be +0」—— ⭐ 完全看不出是權限。
+  //
+  // ⚠️ ⭐ 這是**沙盒的責任**，⛔ 不是產生器的：真 repo 上它走 `bash scripts/genrun.sh`
+  //   （那支會先解鎖再跑、收工重鎖）。⇒ 沙盒要自己把複製過來的那份變回可寫。
+  // ⛔ 只 chmod 這一棵**臨時樹**，⛔ 碰不到 repo 裡的隔離區。
+  for (const f of readdirSync(join(root, "content/assets/audio/voices/quotes"))) {
+    const p = join(root, "content/assets/audio/voices/quotes", f);
+    if (statSync(p).isFile()) chmodSync(p, 0o644);
+  }
   return root;
 }
 
@@ -77,7 +89,10 @@ describe("名言產生器 join 出貨 roster (champ-quotes-generator-runs)", () 
   it("⭐ 出貨 roster ⇒ EXIT 0，而涵蓋率是**算出來的**且自洽", () => {
     const root = sandbox();
     const r = run(root);
-    expect(r.status).toBe(0);
+    // ⭐ 帶上 stdout/stderr：⛔ 裸的 `toBe(0)` 只會印「expected 1 to be +0」，
+    //   而 2026-09-11 那次的真因是 `EACCES`（隔離區的 444 被 cpSync 一起複製過來）——
+    //   ⭐ 一個看不出原因的紅燈，查起來跟沒有訊息一樣貴。
+    expect(r.status, `${r.stdout}\n${r.stderr}`).toBe(0);
     const m = JSON.parse(readFileSync(join(root, "content/assets/audio/voices/quotes/quotes.json"), "utf8"));
     const c = m.coverage;
     // 分母是讀出來的出貨英雄數，⛔ 不是任何一張表的長度。

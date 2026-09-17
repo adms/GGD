@@ -23,11 +23,11 @@ owner 2026-08-13：
 測試可以跟著設計走，**知識不可以無聲消失**」。
 所以每一份都留著，而這一份是找回它們的地圖。
 
-**目前共 4032 個檔案**，分佈在 2 個隔離區。
+**目前共 4054 個檔案**，分佈在 2 個隔離區。
 
 | 隔離區 | 檔數 | 是什麼 |
 |---|---:|---|
-| [`docs/legacy/`](legacy-index.md#docslegacy) | 3592 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
+| [`docs/legacy/`](legacy-index.md#docslegacy) | 3614 | 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件） |
 | [`content/_legacy/`](legacy-index.md#contentlegacy) | 440 | **下架的內容文件** —— 英雄、技能、**道具**、config。「消失 ≠ 歸檔」：白名單移除的東西要真的躺在這裡 |
 
 ⚠️ **在這裡找到需要的東西之後**：它仍然是階梯第 3–5 層（或已被取代的同型文件）。
@@ -35,7 +35,7 @@ owner 2026-08-13：
 
 ---
 
-## `docs/legacy/` —— 3592 檔
+## `docs/legacy/` —— 3614 檔
 
 規格與文件的隔離區（第〇·六守則階梯的第 3–5 層 + 已被取代的同型文件）
 
@@ -56,6 +56,7 @@ owner 2026-08-13：
 | `_bot-build-priority-retired-20260820.md` | 退場：12 位英雄的「推薦出裝」梯子（`champion@1.buildPriority`） —— owner 2026-08-18：「66 位英雄的推薦出裝變成空的 => **不需要推薦出裝**」 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_branch-retired_temp_20260910-2236.tsv` | （.tsv 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_card-prose-superseded.md` | 被取代的卡面文案（原文另存） —— ⛔ **測試可以跟著設計走，知識不可以無聲消失**（CLAUDE.md 第一·五守則）。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_cast-time-20-step-ladder.md` | 吟唱的 20 階階梯（已退場） —— ⛔ **這一份是退休區。** 這條公式**不再出貨**，⛔ 不要拿它判斷任何一支技能的吟唱時間。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_champion-attack-range-20260731.md` | 07-31 的英雄攻擊距離快照 | 自陳「這是一份時間點快照」，而「過期了就補一行指向新檔」那一行從沒補上 |
 | `_champion-dedup-113.md` | #113 英雄去重的**舊**接手檔 | 它的接班檔自己寫「本檔取代…那份的結論方向對、**理由是錯的**」。正確版是 `docs/_audit-113-duplicate-pairs.md` |
 | `_derived-stats-248.md` | 從 w3u/UnitBalance.slk 重算全 114 位的三圍推導表 | 它寫「倍率該留在 ×8 不要動」，而出貨的 `maxHealth` 是 **4.0** —— 照它調平衡回合長度直接翻倍 |
@@ -67,6 +68,7 @@ owner 2026-08-13：
 | `_kit-fidelity-audit-247.md` | 114 位英雄技能組・描述 vs 實作對帳清單 | 同一個 w3x 保真度年代的產物 |
 | `_live-progress.md` | 即時進度看板 | 自稱「每有工作流回報就更新」，最後更新停在 **07-26**。已上線欄寫 v0.5.10（實際 v0.15.x）；「誠實覆蓋率 16.9%」今天是 100% |
 | `_outstanding-20260802.md` | 08-02 的待辦帳本 | 自稱「當下的待辦帳本，不是歷史紀錄」，標題卻釘死 08-02。用 11 天前的 T0 清單覆蓋現在的優先序 |
+| `_owner-knobs-note-2026-09-15.md` | owner-knobs.json note 全文另存 —— 2026-09-15（GH#1260 B2） —— ⚠️ `config.owner-knobs@1.note` 有 2000 字上限（Zod）。依 CLAUDE.md 第一·五守則「撞到字數上限時：另存，不是壓縮取代」，這一段全文住這裡， | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_proportionality-owner-cell-20260819.md` | 退休：owner 2026-08-19 手填的相稱性那一格（範圍・極小 →「大」） —— owner 2026-08-20（GH#465 逐字裁決）： | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_range-tier-writeback.md` | 施法距離級距寫回前的原始 `range` 值（GH#414 / GH#438） —— owner 2026-08-19：「先把已有的那軸寫回去」。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_release-note-v0.18.1-superseded.md` | v0.18.1 release note —— **被取代的原始版本** —— ⚠️ **這一份是被取代的舊 body，⛔ 不是現行的 release note。** | （未逐檔裁決 —— 補進產生器的 CURATED） |
@@ -78,6 +80,7 @@ owner 2026-08-13：
 | `_session-handover-2026-07-29.md` | session 交接（07-29） | 兩次要求「下次開機第一件事：線上打一場」—— **直接違反現行守則**（owner 2026-08-09 已退掉手動打一場） |
 | `_skill-mechanics-coverage-20260808.md` | 90 支重製技能 → 機制覆蓋矩陣 | 檔頭釘死查證 commit `8cfb22d3`，而**下一個** commit 就把 kinds 27→34、hooks 9→15。照它會判斷一堆「引擎做不到」而去繞路。現行權威是 `GET /capabilities` |
 | `_superseded-rulings.md` | 被取代的 owner 裁決（存檔，⛔ 不要刪） —— ⭐ **測試可以跟著設計走，知識不可以無聲消失**（CLAUDE.md 第〇·六守則）。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_valhalla-card-dev-notes-full.md` | 英靈殿稽核：44 張英雄卡被剝掉的開發流程樣板（原文全文） —— 由 `tools/valhalla-intro/strip_dev_notes.py` 在剝除**之前**寫下（GH#1258 ②）。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_vfx-ability-art-authoring-notes.md` | 逐技能特效綁定 —— 搬家前的作者註記（GH#384） —— ⚠️ 這一份是**知識的備份**，⛔ 不是資料。資料在 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_vfx-fidelity-w3x.md` | w3x 特效保真度對照 | 「資料來源（權威順序）」逐條是 w3a / AbilityFunc.txt / war3map.j / w3u —— 定義上就是階梯第 3–5 層 |
 | `_w3x-fidelity-superseded.md` | 被 owner 新版設計取代的原作數值 | 定義上就是「已被取代」。留著是因為知識不可以無聲消失 |
@@ -130,6 +133,24 @@ owner 2026-08-13：
 | `_ability-prose-before-placeholders_temp_2026090921502/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_ability-prose-before-placeholders_temp_2026090922225/README.md` | 技能說明改成佔位符 —— 轉檔前的原文（說明推導（票號待開）） —— · 改寫 **12** 支技能、**12** 個 JSON、**0** 處產生器規格字串。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_ability-prose-before-placeholders_temp_2026090922225/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026091115301/README.md` | 技能說明改成佔位符 —— 轉檔前的原文（說明推導（票號待開）） —— · 改寫 **13** 支技能、**13** 個 JSON、**0** 處產生器規格字串。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026091115301/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026091505064/README.md` | 技能說明改成佔位符 —— 轉檔前的原文（說明推導（票號待開）） —— · 改寫 **31** 支技能、**31** 個 JSON、**0** 處產生器規格字串。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026091505064/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026091506380/README.md` | 技能說明改成佔位符 —— 轉檔前的原文（說明推導（票號待開）） —— · 改寫 **9** 支技能、**13** 個 JSON、**0** 處產生器規格字串。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026091506380/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026091506400/README.md` | 技能說明改成佔位符 —— 轉檔前的原文（說明推導（票號待開）） —— · 改寫 **4** 支技能、**7** 個 JSON、**0** 處產生器規格字串。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026091506400/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026091608052/README.md` | 技能說明改成佔位符 —— 轉檔前的原文（說明推導（票號待開）） —— · 改寫 **14** 支技能、**14** 個 JSON、**0** 處產生器規格字串。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026091608052/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026091615283/README.md` | 技能說明改成佔位符 —— 轉檔前的原文（說明推導（票號待開）） —— · 改寫 **14** 支技能、**14** 個 JSON、**0** 處產生器規格字串。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026091615283/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026091700353/README.md` | 技能說明改成佔位符 —— 轉檔前的原文（說明推導（票號待開）） —— · 改寫 **14** 支技能、**14** 個 JSON、**0** 處產生器規格字串。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026091700353/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026091702293/README.md` | 技能說明改成佔位符 —— 轉檔前的原文（說明推導（票號待開）） —— · 改寫 **14** 支技能、**14** 個 JSON、**0** 處產生器規格字串。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026091702293/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026091702385/README.md` | 技能說明改成佔位符 —— 轉檔前的原文（說明推導（票號待開）） —— · 改寫 **14** 支技能、**14** 個 JSON、**0** 處產生器規格字串。 | （未逐檔裁決 —— 補進產生器的 CURATED） |
+| `_ability-prose-before-placeholders_temp_2026091702385/descriptions.json` | （.json 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/_vox/frieren.0_temp_20260822-0239_b5c924117e30bbe2.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/_vox/heavens-arena.0_temp_20260822-0239_64118f01b35f60d0.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
 | `_bgm-versions/_vox/infinity-castle.0_temp_20260822-0237_d2c644bff4d29776.wav` | （.wav 檔） | （未逐檔裁決 —— 補進產生器的 CURATED） |
@@ -3628,6 +3649,7 @@ owner 2026-08-13：
 | `code/apps/game-server/src/match/__autoattack_probe.test.ts` | 自動攻擊調查用的探測檔（同上） | 180 行、唯一的 expect 是夾具健檢。接班守衛 `autoAcquireWhileMoving.test.ts`（25 個 expect）已經很厚 |
 | `code/apps/game-server/src/match/__mana_probe.test.ts` | 魔力倍率調查用的探測檔（原 `apps/game-server/src/match/`） | 267 行、`expect(` **0 次**、`console.log` 8 次 —— 永遠不會紅，卻把「跑一場真比賽」掛在每次 pnpm test 上 |
 | `code/apps/game-server/src/match/__pacing_probe.test.ts` | 回合節奏 TTK 傾印（同上） | 39 行、`expect(` **0 次**。結論已寫進 docs，回合節奏改由 config 驅動 |
+| `code/packages/shared/src/content/castTimeFormula.ts` | 20 階吟唱公式（原 `packages/shared/src/content/`，commit `a12ffab93` 搬入，#1243 · #1260） | ⛔ 已被吟唱五級距（`content/config/cast-time-tiers.json`，GH#943）取代，而它的階梯仍爬到 4 秒 —— 2026-09-12 拿它比照級距寫的內容，報出 182 支假「不一致」。owner 2026-09-12：「移到 legacy 區不要再被看到了」。規則說明在 `docs/legacy/_cast-time-20-step-ladder.md` |
 | `code/tools/model-budget/optimize/_decim-test.mjs` | meshopt 減面參數探測（07-22，原 `tools/model-budget/optimize/`） | ⚠️ 它**會真的寫出一個 glb** —— 有人拿它順手減模型就會產出沒走出貨路徑的資產。出貨的是 `decimate.mjs` |
 | `code/tools/model-budget/optimize/_decim-test2.mjs` | 上一支的第二版（同上） | 同一支探測腳本留了兩代，**兩代都不是出貨的那一支** |
 | `code/tools/model-budget/optimize/_diag.mjs` | glb 統計傾印 + error 掃描（同上） | 它算三角形只認 `mode===4`，隔壁那支還處理 5/6 —— 同一個資料夾兩支對「幾個三角形」給不同答案 |
@@ -3931,56 +3953,73 @@ owner 2026-08-13：
 
 ### `champions/` （48 檔）
 
-| 檔案 | 是什麼 |
-|---|---|
-| `godie-e00j.json` | 英雄「皇者 - 騜」，4 格技能 |
-| `godie-e00k.json` | 英雄「戰國刺客Azumi - 安云」，4 格技能 |
-| `godie-e00q.json` | 英雄「英靈-亞瑟王 - 黑化Saber」，4 格技能 |
-| `godie-e00t.json` | 英雄「七夜怪談 - 貞子」，4 格技能 |
-| `godie-e00u.json` | 英雄「完全而瀟灑的女僕 - 十六夜Sakuya」，4 格技能 |
-| `godie-e00v.json` | 英雄「百畝森林的霸主 - 維尼」，4 格技能 |
-| `godie-e00z.json` | 英雄「戰國刺客Azumi - 安云」，4 格技能 |
-| `godie-e012.json` | 英雄「殺人劍客 - 佐佐木小次郎」，4 格技能 |
-| `godie-e015.json` | 英雄「夜市人生 - 金居福」，4 格技能 |
-| `godie-ecen.json` | 英雄「姜窩肯 - 約翰走路」，4 格技能 |
-| `godie-ekee.json` | 英雄「會叫的野獸 - 傳說中的大刀」，4 格技能 |
-| `godie-ewrd.json` | 英雄「天上天下 - 棗 真夜」，4 格技能 |
-| `godie-h001.json` | 英雄「地獄來襲者 - 斑剎」，4 格技能 |
-| `godie-h00w.json` | 英雄「豪洨天王 - 鄭先生」，4 格技能 |
-| `godie-h021.json` | 英雄「破銅爛鐵 - 阿強一號」，4 格技能 |
-| `godie-h022.json` | 英雄「白色之翼 - 涅吉。史普林。菲爾德」，4 格技能 |
-| `godie-h02n.json` | 英雄「腦包英雄 - 打我阿笨蛋」，4 格技能 |
-| `godie-h02s.json` | 英雄「死亡騎士」，4 格技能 |
-| `godie-h02y.json` | 英雄「幕末復仇狂者 - 志志雄真實」，4 格技能 |
-| `godie-h02z.json` | 英雄「不良少年」，4 格技能 |
-| `godie-harf.json` | 英雄「豪洨天王 - 鄭先生」，4 格技能 |
-| `godie-hblm.json` | 英雄「慈悲的王者 - 賈修貝爾」，4 格技能 |
-| `godie-hlgr.json` | 英雄「鋼彈 - 煌」，4 格技能 |
-| `godie-hpal.json` | 英雄「不死之身-無 - 藤井八雲」，4 格技能 |
-| `godie-n01b.json` | 英雄「地獄歌神 - 憤怒的胖虎」，4 格技能 |
-| `godie-n01l.json` | 英雄「學姊 - 小派」，4 格技能 |
-| `godie-naka.json` | 英雄「猿飛佐助 - 風魔小次郎」，4 格技能 |
-| `godie-nbst.json` | 英雄「變態正義 - 瘋狂假面」，4 格技能 |
-| `godie-nman.json` | 英雄「地獄歌神 - 憤怒的胖虎」，4 格技能 |
-| `godie-nplh.json` | 英雄「通靈人 - 麻倉葉」，4 格技能 |
-| `godie-ntin.json` | 英雄「時空管理局執務官 - 菲特·泰斯塔羅沙」，4 格技能 |
-| `godie-o01z.json` | 英雄「魔砲少女 - 高町奈葉」，4 格技能 |
-| `godie-o02n.json` | 英雄「曹操孟德 - 阿瞞大人」，4 格技能 |
-| `godie-o02o.json` | 英雄「曹操孟德 - 阿瞞大人」，4 格技能 |
-| `godie-o02s.json` | 英雄「憂鬱少女 - 涼宮八ㄦ匕」，4 格技能 |
-| `godie-o02v.json` | 英雄「白色惡魔 - 高町奈葉」，4 格技能 |
-| `godie-o02w.json` | 英雄「笑傲江湖 - 令狐沖」，4 格技能 |
-| `godie-obla.json` | 英雄「被剝削的勞工階級 - 牧太郎」，4 格技能 |
-| `godie-opgh.json` | 英雄「常勝將軍 - 趙子龍」，4 格技能 |
-| `godie-oshd.json` | 英雄「魔鬼筋肉人 - 鬼王達」，4 格技能 |
-| `godie-othr.json` | 英雄「X戰警 - 金鋼狼」，4 格技能 |
-| `godie-u00b.json` | 英雄「最M的魔法Jizz - 清蒸 飛鼠先生」，4 格技能 |
-| `godie-u011.json` | 英雄「死亡老二 - 克勞薩先生」，4 格技能 |
-| `godie-u012.json` | 英雄「重金屬樂團的怪物 - 克勞薩II世」，4 格技能 |
-| `godie-u01f.json` | 英雄「萬夫莫敵 - 黑化張飛」，4 格技能 |
-| `godie-u01q.json` | 英雄「測試英雄 - 索隆」，4 格技能 |
-| `godie-usyl.json` | 英雄「殺戮之牙 - 異形」，4 格技能 |
-| `godie-uwar.json` | 英雄「食神 - 撒尿牛丸」，4 格技能 |
+⭐ **每張卡的狀態由產生器照三條規則算出來**（⛔ 不是手寫，也⛔ 不抄名單）：
+
+| 順序 | 規則（變身態看卡上 `transform.counterpartId` 的本體） | 狀態 | 張數 |
+|---:|---|---|---:|
+| 1 | 它或本體在 `content/config/roster.json` 的 `retiredChampions` | 已下架 | 7 |
+| 2 | 它或本體在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` | 待重上架（#1205） | 8 |
+| 3 | 其他 | 從未開放（回收桶） | 33 |
+
+「沒開放的英雄搬進退休區」的**裁決** —— owner 2026-08-13 00:23（transcript `13aa0f88` 2026-08-12T16:23:20Z，逐字）：
+「你可不可以把沒開放的英雄資料包含技能都放到一個 leagcy 區 預設不要再被讀取到了 不然我已經重複講了好幾次 不知道浪費多少TOKEN反覆處理這些沒必要的英雄 請你徹底移除英雄名單 放到備份區就好」。
+
+「回收桶」這個**詞**取自 owner 2026-09-05 12:29（`docs/_daily/2026-09-05.md:45`，逐字）：「你應該知道我們有個 leagcy 資料夾可以運用 但留 index 可以找回就好 類似資源回收桶的概念 但暫時不會直接落入參考範圍」 —— ⚠️ 帳本那一列標的是**純討論**（legacy 索引概念），⛔ 不是裁決。
+
+⚠️ `COMMUNITY_ACQUIRED_LEGACY` 裡**沒有退休卡**的：`godie-eevi`（兩棵樹都沒有卡）。
+
+⚠️ **待重上架 ≠ 選得到**（Claude 的推論，讀碼得來）：`apps/platform/internal/curation/legacyevict.go` 只看檔名在不在 `_legacy/`，同一個 id 勾進白名單會被自動剔除 ⇒ 卡還躺在這裡時它回不來；舊卡怎麼離開退休區屬於 #1205 的範圍。
+
+| 檔案 | 是什麼 | 狀態 | 為什麼 |
+|---|---|---|---|
+| `godie-e00j.json` | 英雄「皇者 - 騜」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-e00k.json` | 英雄「戰國刺客Azumi - 安云」，4 格技能 | 已下架 | 它在 `content/config/roster.json` 的 `retiredChampions`（下架原因寫在同一份的 `note`） |
+| `godie-e00q.json` | 英雄「英靈-亞瑟王 - 黑化Saber」，4 格技能 | 待重上架（#1205） | 它在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` |
+| `godie-e00t.json` | 英雄「七夜怪談 - 貞子」，4 格技能 | 待重上架（#1205） | 它在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` |
+| `godie-e00u.json` | 英雄「完全而瀟灑的女僕 - 十六夜Sakuya」，4 格技能 | 已下架 | 它在 `content/config/roster.json` 的 `retiredChampions`（下架原因寫在同一份的 `note`） |
+| `godie-e00v.json` | 英雄「百畝森林的霸主 - 維尼」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-e00z.json` | 英雄「戰國刺客Azumi - 安云」，4 格技能 | 已下架 | 變身態，本體 `godie-e00k` 在 `content/config/roster.json` 的 `retiredChampions`（下架原因寫在同一份的 `note`） |
+| `godie-e012.json` | 英雄「殺人劍客 - 佐佐木小次郎」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-e015.json` | 英雄「夜市人生 - 金居福」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-ecen.json` | 英雄「姜窩肯 - 約翰走路」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-ekee.json` | 英雄「會叫的野獸 - 傳說中的大刀」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-ewrd.json` | 英雄「天上天下 - 棗 真夜」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-h001.json` | 英雄「地獄來襲者 - 斑剎」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-h00w.json` | 英雄「豪洨天王 - 鄭先生」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶；變身態，本體 `godie-harf` |
+| `godie-h021.json` | 英雄「破銅爛鐵 - 阿強一號」，4 格技能 | 待重上架（#1205） | 它在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` |
+| `godie-h022.json` | 英雄「白色之翼 - 涅吉。史普林。菲爾德」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-h02n.json` | 英雄「腦包英雄 - 打我阿笨蛋」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-h02s.json` | 英雄「死亡騎士」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-h02y.json` | 英雄「幕末復仇狂者 - 志志雄真實」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-h02z.json` | 英雄「不良少年」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-harf.json` | 英雄「豪洨天王 - 鄭先生」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-hblm.json` | 英雄「慈悲的王者 - 賈修貝爾」，4 格技能 | 已下架 | 它在 `content/config/roster.json` 的 `retiredChampions`（下架原因寫在同一份的 `note`） |
+| `godie-hlgr.json` | 英雄「鋼彈 - 煌」，4 格技能 | 待重上架（#1205） | 它在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` |
+| `godie-hpal.json` | 英雄「不死之身-無 - 藤井八雲」，4 格技能 | 已下架 | 它在 `content/config/roster.json` 的 `retiredChampions`（下架原因寫在同一份的 `note`） |
+| `godie-n01b.json` | 英雄「地獄歌神 - 憤怒的胖虎」，4 格技能 | 待重上架（#1205） | 變身態，本體 `godie-nman` 在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` |
+| `godie-n01l.json` | 英雄「學姊 - 小派」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-naka.json` | 英雄「猿飛佐助 - 風魔小次郎」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-nbst.json` | 英雄「變態正義 - 瘋狂假面」，4 格技能 | 待重上架（#1205） | 它在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` |
+| `godie-nman.json` | 英雄「地獄歌神 - 憤怒的胖虎」，4 格技能 | 待重上架（#1205） | 它在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` |
+| `godie-nplh.json` | 英雄「通靈人 - 麻倉葉」，4 格技能 | 已下架 | 它在 `content/config/roster.json` 的 `retiredChampions`（下架原因寫在同一份的 `note`） |
+| `godie-ntin.json` | 英雄「時空管理局執務官 - 菲特·泰斯塔羅沙」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-o01z.json` | 英雄「魔砲少女 - 高町奈葉」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-o02n.json` | 英雄「曹操孟德 - 阿瞞大人」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-o02o.json` | 英雄「曹操孟德 - 阿瞞大人」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶；變身態，本體 `godie-o02n` |
+| `godie-o02s.json` | 英雄「憂鬱少女 - 涼宮八ㄦ匕」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-o02v.json` | 英雄「白色惡魔 - 高町奈葉」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶；變身態，本體 `godie-o01z` |
+| `godie-o02w.json` | 英雄「笑傲江湖 - 令狐沖」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-obla.json` | 英雄「被剝削的勞工階級 - 牧太郎」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-opgh.json` | 英雄「常勝將軍 - 趙子龍」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-oshd.json` | 英雄「魔鬼筋肉人 - 鬼王達」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-othr.json` | 英雄「X戰警 - 金鋼狼」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-u00b.json` | 英雄「最M的魔法Jizz - 清蒸 飛鼠先生」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-u011.json` | 英雄「死亡老二 - 克勞薩先生」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶；變身態，本體 `godie-u012` |
+| `godie-u012.json` | 英雄「重金屬樂團的怪物 - 克勞薩II世」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-u01f.json` | 英雄「萬夫莫敵 - 黑化張飛」，4 格技能 | 已下架 | 它在 `content/config/roster.json` 的 `retiredChampions`（下架原因寫在同一份的 `note`） |
+| `godie-u01q.json` | 英雄「測試英雄 - 索隆」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
+| `godie-usyl.json` | 英雄「殺戮之牙 - 異形」，4 格技能 | 待重上架（#1205） | 它在 `packages/shared/src/content/heroForge/communityAcquiredLegacy.ts` 的 `COMMUNITY_ACQUIRED_LEGACY` |
+| `godie-uwar.json` | 英雄「食神 - 撒尿牛丸」，4 格技能 | 從未開放（回收桶） | 不在 `retiredChampions`、也不在 `COMMUNITY_ACQUIRED_LEGACY` ⇒ 預設歸回收桶 |
 
 ### `config/` （2 檔）
 

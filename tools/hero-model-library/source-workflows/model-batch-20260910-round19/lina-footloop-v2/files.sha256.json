@@ -1,0 +1,52 @@
+[
+  {
+    "path": "scripts/footloop_lib.py",
+    "bytes": 6228,
+    "sha256": "571332e2e74deca62e9bd8f17f7e1f0fc6896d9bbb8d0a6db9245db736a0a5db"
+  },
+  {
+    "path": "scripts/ggd-lina-footloop-audit.py",
+    "bytes": 3186,
+    "sha256": "178e26b08f4435857eaa07e9539ebed94081ba2ccf43620a9b235231408e912f"
+  },
+  {
+    "path": "scripts/ggd-lina-footloop-freeze.py",
+    "bytes": 19281,
+    "sha256": "b8ce48120cb234a8c5666f66616fd36d263fe1520985b97aa4e638500fdf2ecf"
+  },
+  {
+    "path": "scripts/ggd-lina-footloop-process.py",
+    "bytes": 10303,
+    "sha256": "499bf4d63bf40f2277ca3db797a89c07b36c00ae4b3d1af891aca0afb5aa00c9"
+  },
+  {
+    "path": "scripts/ggd-lina-footloop-render-server.py",
+    "bytes": 3511,
+    "sha256": "bd6d4642ace27847f2064f05dffd9b7ec4ee2c8ce9521a639bcd9610994e200f"
+  },
+  {
+    "path": "scripts/ggd-lina-footloop-render.mjs",
+    "bytes": 5307,
+    "sha256": "689c327b7525241dd4cee0933207a5a9d1df0d7fa950068b27253035c9d7aa65"
+  },
+  {
+    "path": "scripts/ggd-lina-footloop-video-audit.py",
+    "bytes": 1758,
+    "sha256": "3cf1818da079d8bc49ea1aa936e1b5e74c5712e95450a74e94c3b86863d99a6a"
+  },
+  {
+    "path": "scripts/glb_io.py",
+    "bytes": 6754,
+    "sha256": "f9a690b40ee69c8c1e07ec3a1fdb9afe96d443f3661f14d119e36d3a72e7309e"
+  },
+  {
+    "path": "scripts/reproduce-initial-knee-pole-audit-control.py",
+    "bytes": 10332,
+    "sha256": "660cad6a8fe16b2ccd9218c15b9269889156caaa00939c4ce358c3d6e8ab8de5"
+  },
+  {
+    "path": "scripts/retarget_math.py",
+    "bytes": 1340,
+    "sha256": "db3a6c59b6383025b0f027d0239d132f9303c486e2cb09ad01c9255cb6ef254d"
+  }
+]

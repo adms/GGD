@@ -1,0 +1,19 @@
+{
+  "schema": "ggd-worldblender-c00-visual-review@1",
+  "componentId": "ssbu-sonic-c00-static-skinned-v1",
+  "modelSha256": "9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-14",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "findings": [
+    "Sonic identity and primary body silhouette are complete in all three WebGL views.",
+    "The alpha-corrected material bake removes the prior black-background artifact; no black frame or missing base-colour material was observed."
+  ],
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

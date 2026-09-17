@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "魔力抑制",
   "provenance": "editor-json",
-  "description": "降低敵方魔力感知類技能取得的強度資訊；不等同隱形，也不隱藏基本敵我識別。",
+  "description": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 {{cd}} 秒。\n【目標設計】降低敵方魔力感知類技能取得的強度資訊；不等同隱形，也不隱藏基本敵我識別。\n【待補機制】需魔力感知的資訊層抑制，不可用隱形或傷害被動冒充。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,
@@ -49,5 +49,6 @@
       "vfxKey": "fx.prim.arcane.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/community-review-29-20260907.passive.webp"
+  "icon": "assets/icons/abilities/community-review-29-20260907.passive.webp",
+  "castTimeTier": "極小"
 }

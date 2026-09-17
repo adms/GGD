@@ -324,12 +324,19 @@ export function pruneAnimations(glb: Glb, keep: readonly string[]): Buffer {
       return q;
     }),
   }));
-  out.skins = (json.skins ?? []).map((s: any) =>
-    typeof s.inverseBindMatrices === "number" ? { ...s, inverseBindMatrices: accMap.get(s.inverseBindMatrices)! } : { ...s },
-  );
-  out.images = (json.images ?? []).map((im: any) =>
-    typeof im.bufferView === "number" ? { ...im, bufferView: bvMap.get(im.bufferView)! } : { ...im },
-  );
+  if (json.skins?.length) {
+    out.skins = json.skins.map((s: any) =>
+      typeof s.inverseBindMatrices === "number" ? { ...s, inverseBindMatrices: accMap.get(s.inverseBindMatrices)! } : { ...s },
+    );
+  } else delete out.skins;
+  // glTF optional arrays must be omitted when empty.  Writing `images: []`
+  // (or `skins: []`) is Khronos EMPTY_ENTITY and broke vertex-colour-only
+  // animated models during the otherwise no-op six-state prune.
+  if (json.images?.length) {
+    out.images = json.images.map((im: any) =>
+      typeof im.bufferView === "number" ? { ...im, bufferView: bvMap.get(im.bufferView)! } : { ...im },
+    );
+  } else delete out.images;
   out.animations = anims.map((a: any) => ({
     ...a,
     samplers: a.samplers.map((s: any) => ({ ...s, input: accMap.get(s.input)!, output: accMap.get(s.output)! })),

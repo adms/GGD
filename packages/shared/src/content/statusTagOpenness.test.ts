@@ -62,7 +62,15 @@ import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const DIR = join(HERE, "../../../..", "content", "status-effects");
-const KEBAB = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+// ⭐⭐ GH#1281（2026-09-17）—— 上面第 1 條的前提「**id 已經是小寫 kebab-case**」
+//   在英雄專屬狀態出現之後**只對了一半**：`lol-ahri.charm` 這一族的 id 是
+//   `<英雄 id>.<狀態名>`（第四批 37 名帶進 116 份，由 `tools/ship-81/batch37.py` 推導）。
+//   ⇒ 兩條規則會互相打架：第 1 條要「tag 逐字等同 id」，而這一條不收點號。
+// ⭐ 收哪一邊：**點號是 id 的一部分**，⛔ 不是混寫。`hasStatusTag` 是逐字比對，
+//   `lol-ahri.charm` 這個 tag 照樣查得到；而把它改寫成 `lol-ahri-charm` 會造出
+//   「tag 與 id 不同」的第二套約定 —— 正是這份檔頭說「會漂」的那個東西。
+//   ⇒ 形狀放行**一個**點號分段（兩段各自仍然是小寫 kebab-case），⛔ 大小寫與底線照樣紅。
+const KEBAB = /^[a-z0-9]+(?:-[a-z0-9]+)*(?:\.[a-z0-9]+(?:-[a-z0-9]+)*)?$/;
 
 const docs = readdirSync(DIR)
   .filter((f) => f.endsWith(".json") && !f.startsWith("_"))

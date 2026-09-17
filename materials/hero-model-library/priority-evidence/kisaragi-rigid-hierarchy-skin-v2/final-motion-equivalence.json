@@ -1,0 +1,868 @@
+{
+  "schema": "ggd-rigid-attachment-skin-motion-equivalence@1",
+  "before": {
+    "path": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443.glb",
+    "bytes": 78876,
+    "sha256": "4eb10bd742669b44806c7364f4e7fffbce2ec99d6d26179965d8e0ae2af3d443"
+  },
+  "after": {
+    "path": "/private/tmp/kisaragi-finalized-v3/body.glb",
+    "bytes": 129044,
+    "sha256": "8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607"
+  },
+  "method": "Babylon NullEngine glTF loader; CPU skinning plus node world matrix; every retained animation at 0%, 20%, 60%, and 100%",
+  "meshes": [
+    "TramCarriage",
+    "LeftPassengerDoor",
+    "RightPassengerDoor",
+    "RearWheelPair",
+    "FrontWheelPair"
+  ],
+  "animationCount": 6,
+  "samples": 120,
+  "maxWorldPositionDeltaMetres": 1.9234635962506765e-7,
+  "toleranceMetres": 0.0002,
+  "passed": true,
+  "rows": [
+    {
+      "mesh": "TramCarriage",
+      "clip": "idle",
+      "fraction": 0,
+      "vertices": 972,
+      "maxDeltaMetres": 0
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "idle",
+      "fraction": 0.2,
+      "vertices": 972,
+      "maxDeltaMetres": 3.5390257835388184e-8
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "idle",
+      "fraction": 0.6,
+      "vertices": 972,
+      "maxDeltaMetres": 5.4016709327697754e-8
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "idle",
+      "fraction": 1,
+      "vertices": 972,
+      "maxDeltaMetres": 0
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "run",
+      "fraction": 0,
+      "vertices": 972,
+      "maxDeltaMetres": 0
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "run",
+      "fraction": 0.2,
+      "vertices": 972,
+      "maxDeltaMetres": 6.333525578648312e-8
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "run",
+      "fraction": 0.6,
+      "vertices": 972,
+      "maxDeltaMetres": 6.358991192027657e-8
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "run",
+      "fraction": 1,
+      "vertices": 972,
+      "maxDeltaMetres": 0
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "attack",
+      "fraction": 0,
+      "vertices": 972,
+      "maxDeltaMetres": 0
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "attack",
+      "fraction": 0.2,
+      "vertices": 972,
+      "maxDeltaMetres": 4.470348358154297e-8
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "attack",
+      "fraction": 0.6,
+      "vertices": 972,
+      "maxDeltaMetres": 2.9802322387695312e-8
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "attack",
+      "fraction": 1,
+      "vertices": 972,
+      "maxDeltaMetres": 0
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "cast",
+      "fraction": 0,
+      "vertices": 972,
+      "maxDeltaMetres": 0
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "cast",
+      "fraction": 0.2,
+      "vertices": 972,
+      "maxDeltaMetres": 0
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "cast",
+      "fraction": 0.6,
+      "vertices": 972,
+      "maxDeltaMetres": 0
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "cast",
+      "fraction": 1,
+      "vertices": 972,
+      "maxDeltaMetres": 0
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "hurt",
+      "fraction": 0,
+      "vertices": 972,
+      "maxDeltaMetres": 0
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "hurt",
+      "fraction": 0.2,
+      "vertices": 972,
+      "maxDeltaMetres": 5.85856039802028e-8
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "hurt",
+      "fraction": 0.6,
+      "vertices": 972,
+      "maxDeltaMetres": 6.403548241638199e-8
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "hurt",
+      "fraction": 1,
+      "vertices": 972,
+      "maxDeltaMetres": 0
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "death",
+      "fraction": 0,
+      "vertices": 972,
+      "maxDeltaMetres": 0
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "death",
+      "fraction": 0.2,
+      "vertices": 972,
+      "maxDeltaMetres": 5.5983784536672556e-8
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "death",
+      "fraction": 0.6,
+      "vertices": 972,
+      "maxDeltaMetres": 7.081463415372645e-8
+    },
+    {
+      "mesh": "TramCarriage",
+      "clip": "death",
+      "fraction": 1,
+      "vertices": 972,
+      "maxDeltaMetres": 1.0698966439431735e-7
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "idle",
+      "fraction": 0,
+      "vertices": 108,
+      "maxDeltaMetres": 9.643119599156296e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "idle",
+      "fraction": 0.2,
+      "vertices": 108,
+      "maxDeltaMetres": 9.177041250437812e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "idle",
+      "fraction": 0.6,
+      "vertices": 108,
+      "maxDeltaMetres": 9.177041250437812e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "idle",
+      "fraction": 1,
+      "vertices": 108,
+      "maxDeltaMetres": 9.643119599156296e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "run",
+      "fraction": 0,
+      "vertices": 108,
+      "maxDeltaMetres": 5.029141902923584e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "run",
+      "fraction": 0.2,
+      "vertices": 108,
+      "maxDeltaMetres": 7.024676742112717e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "run",
+      "fraction": 0.6,
+      "vertices": 108,
+      "maxDeltaMetres": 8.131805640951525e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "run",
+      "fraction": 1,
+      "vertices": 108,
+      "maxDeltaMetres": 5.029141902923584e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "attack",
+      "fraction": 0,
+      "vertices": 108,
+      "maxDeltaMetres": 5.029141902923584e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "attack",
+      "fraction": 0.2,
+      "vertices": 108,
+      "maxDeltaMetres": 5.036896945159867e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "attack",
+      "fraction": 0.6,
+      "vertices": 108,
+      "maxDeltaMetres": 5.6073044327983144e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "attack",
+      "fraction": 1,
+      "vertices": 108,
+      "maxDeltaMetres": 5.029141902923584e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "cast",
+      "fraction": 0,
+      "vertices": 108,
+      "maxDeltaMetres": 5.029141902923584e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "cast",
+      "fraction": 0.2,
+      "vertices": 108,
+      "maxDeltaMetres": 5.1728241432453756e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "cast",
+      "fraction": 0.6,
+      "vertices": 108,
+      "maxDeltaMetres": 5.1728241432453756e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "cast",
+      "fraction": 1,
+      "vertices": 108,
+      "maxDeltaMetres": 5.029141902923584e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "hurt",
+      "fraction": 0,
+      "vertices": 108,
+      "maxDeltaMetres": 5.029141902923584e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "hurt",
+      "fraction": 0.2,
+      "vertices": 108,
+      "maxDeltaMetres": 6.528307237152358e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "hurt",
+      "fraction": 0.6,
+      "vertices": 108,
+      "maxDeltaMetres": 7.309738183472102e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "hurt",
+      "fraction": 1,
+      "vertices": 108,
+      "maxDeltaMetres": 5.029141902923584e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "death",
+      "fraction": 0,
+      "vertices": 108,
+      "maxDeltaMetres": 5.029141902923584e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "death",
+      "fraction": 0.2,
+      "vertices": 108,
+      "maxDeltaMetres": 8.161322135149117e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "death",
+      "fraction": 0.6,
+      "vertices": 108,
+      "maxDeltaMetres": 7.723385049193036e-8
+    },
+    {
+      "mesh": "LeftPassengerDoor",
+      "clip": "death",
+      "fraction": 1,
+      "vertices": 108,
+      "maxDeltaMetres": 7.33364044431572e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "idle",
+      "fraction": 0,
+      "vertices": 108,
+      "maxDeltaMetres": 6.036315122597279e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "idle",
+      "fraction": 0.2,
+      "vertices": 108,
+      "maxDeltaMetres": 6.036315122597279e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "idle",
+      "fraction": 0.6,
+      "vertices": 108,
+      "maxDeltaMetres": 6.036315122597279e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "idle",
+      "fraction": 1,
+      "vertices": 108,
+      "maxDeltaMetres": 6.036315122597279e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "run",
+      "fraction": 0,
+      "vertices": 108,
+      "maxDeltaMetres": 5.029141902923584e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "run",
+      "fraction": 0.2,
+      "vertices": 108,
+      "maxDeltaMetres": 8.19480994063131e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "run",
+      "fraction": 0.6,
+      "vertices": 108,
+      "maxDeltaMetres": 7.899771810502176e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "run",
+      "fraction": 1,
+      "vertices": 108,
+      "maxDeltaMetres": 5.029141902923584e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "attack",
+      "fraction": 0,
+      "vertices": 108,
+      "maxDeltaMetres": 5.029141902923584e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "attack",
+      "fraction": 0.2,
+      "vertices": 108,
+      "maxDeltaMetres": 5.036896945159867e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "attack",
+      "fraction": 0.6,
+      "vertices": 108,
+      "maxDeltaMetres": 5.6073044327983144e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "attack",
+      "fraction": 1,
+      "vertices": 108,
+      "maxDeltaMetres": 5.029141902923584e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "cast",
+      "fraction": 0,
+      "vertices": 108,
+      "maxDeltaMetres": 5.029141902923584e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "cast",
+      "fraction": 0.2,
+      "vertices": 108,
+      "maxDeltaMetres": 5.1728241432453756e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "cast",
+      "fraction": 0.6,
+      "vertices": 108,
+      "maxDeltaMetres": 5.1728241432453756e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "cast",
+      "fraction": 1,
+      "vertices": 108,
+      "maxDeltaMetres": 5.029141902923584e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "hurt",
+      "fraction": 0,
+      "vertices": 108,
+      "maxDeltaMetres": 5.029141902923584e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "hurt",
+      "fraction": 0.2,
+      "vertices": 108,
+      "maxDeltaMetres": 6.528307237152358e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "hurt",
+      "fraction": 0.6,
+      "vertices": 108,
+      "maxDeltaMetres": 7.309738183472102e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "hurt",
+      "fraction": 1,
+      "vertices": 108,
+      "maxDeltaMetres": 5.029141902923584e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "death",
+      "fraction": 0,
+      "vertices": 108,
+      "maxDeltaMetres": 5.029141902923584e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "death",
+      "fraction": 0.2,
+      "vertices": 108,
+      "maxDeltaMetres": 7.655054561700361e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "death",
+      "fraction": 0.6,
+      "vertices": 108,
+      "maxDeltaMetres": 8.769790078933702e-8
+    },
+    {
+      "mesh": "RightPassengerDoor",
+      "clip": "death",
+      "fraction": 1,
+      "vertices": 108,
+      "maxDeltaMetres": 1.0116230884024548e-7
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "idle",
+      "fraction": 0,
+      "vertices": 396,
+      "maxDeltaMetres": 7.015446923970882e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "idle",
+      "fraction": 0.2,
+      "vertices": 396,
+      "maxDeltaMetres": 6.824611011422725e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "idle",
+      "fraction": 0.6,
+      "vertices": 396,
+      "maxDeltaMetres": 6.845947355187524e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "idle",
+      "fraction": 1,
+      "vertices": 396,
+      "maxDeltaMetres": 7.015446923970882e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "run",
+      "fraction": 0,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "run",
+      "fraction": 0.2,
+      "vertices": 396,
+      "maxDeltaMetres": 8.780368764832096e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "run",
+      "fraction": 0.6,
+      "vertices": 396,
+      "maxDeltaMetres": 9.008316148889065e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "run",
+      "fraction": 1,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "attack",
+      "fraction": 0,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "attack",
+      "fraction": 0.2,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "attack",
+      "fraction": 0.6,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "attack",
+      "fraction": 1,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "cast",
+      "fraction": 0,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "cast",
+      "fraction": 0.2,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "cast",
+      "fraction": 0.6,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "cast",
+      "fraction": 1,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "hurt",
+      "fraction": 0,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "hurt",
+      "fraction": 0.2,
+      "vertices": 396,
+      "maxDeltaMetres": 7.153064417094234e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "hurt",
+      "fraction": 0.6,
+      "vertices": 396,
+      "maxDeltaMetres": 9.345295835194375e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "hurt",
+      "fraction": 1,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "death",
+      "fraction": 0,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "death",
+      "fraction": 0.2,
+      "vertices": 396,
+      "maxDeltaMetres": 7.480674130961809e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "death",
+      "fraction": 0.6,
+      "vertices": 396,
+      "maxDeltaMetres": 7.082517537253159e-8
+    },
+    {
+      "mesh": "RearWheelPair",
+      "clip": "death",
+      "fraction": 1,
+      "vertices": 396,
+      "maxDeltaMetres": 7.620331208756346e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "idle",
+      "fraction": 0,
+      "vertices": 396,
+      "maxDeltaMetres": 7.015446923970882e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "idle",
+      "fraction": 0.2,
+      "vertices": 396,
+      "maxDeltaMetres": 6.824611011422725e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "idle",
+      "fraction": 0.6,
+      "vertices": 396,
+      "maxDeltaMetres": 6.845947355187524e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "idle",
+      "fraction": 1,
+      "vertices": 396,
+      "maxDeltaMetres": 7.015446923970882e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "run",
+      "fraction": 0,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "run",
+      "fraction": 0.2,
+      "vertices": 396,
+      "maxDeltaMetres": 1.2142186786633795e-7
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "run",
+      "fraction": 0.6,
+      "vertices": 396,
+      "maxDeltaMetres": 1.9234635962506765e-7
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "run",
+      "fraction": 1,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "attack",
+      "fraction": 0,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "attack",
+      "fraction": 0.2,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "attack",
+      "fraction": 0.6,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "attack",
+      "fraction": 1,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "cast",
+      "fraction": 0,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "cast",
+      "fraction": 0.2,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "cast",
+      "fraction": 0.6,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "cast",
+      "fraction": 1,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "hurt",
+      "fraction": 0,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "hurt",
+      "fraction": 0.2,
+      "vertices": 396,
+      "maxDeltaMetres": 7.153064417094234e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "hurt",
+      "fraction": 0.6,
+      "vertices": 396,
+      "maxDeltaMetres": 9.345295835194375e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "hurt",
+      "fraction": 1,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "death",
+      "fraction": 0,
+      "vertices": 396,
+      "maxDeltaMetres": 6.746787680787904e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "death",
+      "fraction": 0.2,
+      "vertices": 396,
+      "maxDeltaMetres": 7.480674130961809e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "death",
+      "fraction": 0.6,
+      "vertices": 396,
+      "maxDeltaMetres": 7.082517537253159e-8
+    },
+    {
+      "mesh": "FrontWheelPair",
+      "clip": "death",
+      "fraction": 1,
+      "vertices": 396,
+      "maxDeltaMetres": 7.620331208756346e-8
+    }
+  ]
+}

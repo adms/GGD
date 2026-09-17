@@ -1,0 +1,71 @@
+{
+  "id": "acquired-lord-nightmares.ex",
+  "name": "三單一起結案",
+  "provenance": "editor-json",
+  "description": "消耗至少3層自身工單，對指定敵人造成大級魔法傷害；不足時沒有傷害。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    600.0
+  ],
+  "manaCostTier": "大",
+  "range": 6,
+  "rangeTier": "中",
+  "effects": [
+    {
+      "kind": "consumeStatus",
+      "shape": "single",
+      "statusId": "acquired-lord-nightmares.chaos",
+      "count": 3,
+      "subject": "self",
+      "onConsumed": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "大",
+            "ratios": []
+          }
+        }
+      ],
+      "onMissing": [
+        {
+          "kind": "floatingText",
+          "shape": "single",
+          "text": "工單不足三張",
+          "applyTo": "self"
+        }
+      ]
+    }
+  ],
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.3b9c31df23e1aedf3fa6b6b180d933bdf92e565f947bcf1b",
+    "params": {
+      "statusId": "acquired-lord-nightmares.chaos",
+      "minStacks": 3,
+      "castType": "targeted",
+      "effects": [
+        {
+          "kind": "damage",
+          "amount": {
+            "damageTier": "大",
+            "ratios": []
+          },
+          "damageType": "magic"
+        }
+      ],
+      "missingText": "工單不足三張"
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:297c2306b1acc7f739c89fffd6d24c407f4ea6222bfb0da19e47a27a28fd180f"
+  },
+  "schema": "ability@1",
+  "castTimeSec": 0.1,
+  "icon": "assets/icons/abilities/acquired-lord-nightmares.ex.webp"
+}

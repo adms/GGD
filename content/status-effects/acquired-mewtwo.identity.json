@@ -1,0 +1,14 @@
+{
+  "id": "acquired-mewtwo.identity",
+  "schema": "status-effect@1",
+  "name": "我究竟為何排隊",
+  "description": "Mewtwo「我究竟為何排隊」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-mewtwo.identity",
+    "silence",
+    "cast-denied",
+    "cc",
+    "debuff"
+  ]
+}

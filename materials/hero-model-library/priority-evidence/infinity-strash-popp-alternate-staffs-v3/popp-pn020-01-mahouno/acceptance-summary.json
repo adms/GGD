@@ -1,0 +1,134 @@
+{
+  "schema": "ggd.infinity-strash-single-runtime-acceptance@1",
+  "createdAt": "2026-09-13T12:58:14.043666+00:00",
+  "candidateId": "popp-pn020-01-mahouno",
+  "runtime": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-popp-mahouno-v1/popp-pn020-01-mahouno/body.glb",
+    "bytes": 2344376,
+    "sha256": "d7ed81f539a23449b244884123818a789c54eaa0a0dda4a46320cad26aa1a46c",
+    "document": {
+      "id": "community.body.81d11962afcd132185028923d44a046203de90a94154caf9",
+      "schema": "model@1",
+      "glbPath": "assets/models/community/d7ed81f539a23449b244884123818a789c54eaa0a0dda4a46320cad26aa1a46c.glb",
+      "scale": 1,
+      "collisionRadius": 0.6,
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special03",
+        "hurt": "GGD_native_down",
+        "death": "GGD_native_down"
+      },
+      "yawOffsetDeg": 0
+    },
+    "uploadedModel": {
+      "schema": "ggd-uploaded-hero-model@1",
+      "sha256": "d7ed81f539a23449b244884123818a789c54eaa0a0dda4a46320cad26aa1a46c",
+      "byteSize": 2344376,
+      "clipMap": {
+        "idle": "GGD_native_idle",
+        "run": "GGD_native_run",
+        "attack": "GGD_native_attack",
+        "cast": "GGD_native_special03",
+        "hurt": "GGD_native_down",
+        "death": "GGD_native_down"
+      },
+      "yawOffsetDeg": 0
+    }
+  },
+  "automatedValidation": {
+    "currentGgdContractAccepted": true,
+    "budget": {
+      "errors": [],
+      "warnings": [
+        "繪製網格 4 高於警戒值 3，送審時需檢查演出負載。",
+        "單段動作通道 308 高於警戒值 300，送審時需檢查演出負載。"
+      ]
+    },
+    "khronosErrors": 0,
+    "webglImages": 18,
+    "webglComplete": true
+  },
+  "manualVisualReview": {
+    "status": "accepted-with-recorded-limitations",
+    "scope": "all 18 state samples at contact-sheet scale plus idle/run/attack/cast/death selected samples at original resolution",
+    "observation": "18 張六狀態時間抽樣均可見 PN020/01 Mahouno 法杖；法杖在待機、跑步、攻擊、施法、受傷與死亡過程都跟隨右手 Weapon1_R，未見脫離、跳位或殘留。人物與法杖材質可辨識；原作 toon、金屬、Bundle 與 Shade shader 未還原，僅驗收目前簡化 PBR 顯示。",
+    "limitations": [
+      "GGD hurt and death both reuse the acquired native down loop because PN020 has no distinct death AnimSequence in the extracted package set.",
+      "Native Special01 and Special02 remain embedded and preserved but are not referenced by the six-state runtime document.",
+      "The original 8x8 hair base texture relies on game shader parameters; the runtime candidate preserves the exported texture and simplified PBR material, so toon shader and hair-colour parity require visual review.",
+      "The PN020/01 Mahouno staff is rigid-skinned to the source-configured Weapon1_R socket; the other acquired PN020 staff variants remain independent model options.",
+      "Animation events, original effects, gameplay acceptance and deployment remain pending."
+    ]
+  },
+  "registration": {
+    "heroId": "b2-popp",
+    "modelSelectionMode": "automatic",
+    "activeModelKey": "version.body.b51cdf8a1520963b9a2ad1ca52d81a82167b8ea9f25bc055",
+    "registeredVersion": {
+      "modelKey": "version.body.ff6f4a3fbbf5e1c19ef9c2278b6a0c35e7e8da26ccf172aa",
+      "label": "何布／波普｜Infinity Strash 原作 PN020/01＋Mahouno 法杖（原生動作）",
+      "sourceModelKey": "community.body.81d11962afcd132185028923d44a046203de90a94154caf9",
+      "modelSha256": "f9531198615ea1f1b0a8dc5e386e43711bd25ddbd373cef4a28c1e8fcc437979",
+      "binarySha256": "d7ed81f539a23449b244884123818a789c54eaa0a0dda4a46320cad26aa1a46c",
+      "registeredAt": "2026-09-13T12:58:00.283Z",
+      "source": {
+        "kind": "exact",
+        "character": "何布／波普（PN020/01，Mahouno）",
+        "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+        "library": "Infinity Strash Steam 原作擷取",
+        "reference": "Steam Windows build 2024-03-28; native ID PN020/01; CB_PN020_01; user-owned read-only source",
+        "tier": "original",
+        "selectionClass": "canonical-game",
+        "sourceGame": "Infinity Strash: Dragon Quest The Adventure of Dai",
+        "sourcePlatform": "Windows (Steam)"
+      },
+      "automaticEligible": true
+    },
+    "backendDropdownOptionPresentOnFeatureBranch": true,
+    "productionDeployed": false
+  },
+  "evidence": {
+    "assembly-receipt.json": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-01-mahouno/assembly-receipt.json",
+      "bytes": 16801,
+      "sha256": "98b84b30aa91f9f4976bb56a66490834767ac50d6455d9759e89e6f479cf68ce"
+    },
+    "normalization-receipt.json": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-01-mahouno/normalization-receipt.json",
+      "bytes": 12545,
+      "sha256": "5448674cf105585dc8a6642cc690e1626bd159ad5d484da4874bd6acc9cb9bed"
+    },
+    "khronos-input.json": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-01-mahouno/khronos-input.json",
+      "bytes": 549950,
+      "sha256": "ea77d6f03ccc21073da2a338929d2f8d30371168178d7ca379113b3db36f1ac4"
+    },
+    "babylon-nullengine.json": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-01-mahouno/babylon-nullengine.json",
+      "bytes": 1152,
+      "sha256": "ebbe05d300f277a4a1e65252ec5e14b54aa79603ce724b8b90c14c4212b6a308"
+    },
+    "runtime-preparation.json": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-01-mahouno/runtime-preparation.json",
+      "bytes": 14673,
+      "sha256": "98a743bcd11b63c66701abc96c5919e5bb2d3ed4170665faf9624577080da6ae"
+    },
+    "runtime-webgl-proof.json": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-01-mahouno/runtime-webgl-proof.json",
+      "bytes": 9707,
+      "sha256": "880761fb03de55dd464c458bbe27f8fcb0b2f1c87bcc42e5651e285328b6af90"
+    },
+    "runtime-webgl-run.json": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-01-mahouno/runtime-webgl-run.json",
+      "bytes": 716,
+      "sha256": "d89d9c7cc35020a997cc3f9b71482de6a6dd0399d195129583810bc02626b906"
+    },
+    "contact-sheet.png": {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-alternate-staffs-v3/popp-pn020-01-mahouno/contact-sheet.png",
+      "bytes": 233582,
+      "sha256": "94324c82781931d4c295da2fd7ffdd3bbaa8c3936e93ebb9321f59f3745abab9"
+    }
+  }
+}

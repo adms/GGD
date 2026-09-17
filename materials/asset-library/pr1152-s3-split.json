@@ -1,0 +1,2224 @@
+{
+  "schema": "ggd.pr1152-s3-preparation-split@1",
+  "decisionIssue": "https://github.com/adms/GGD/issues/1252",
+  "baseCommit": "a3a179e09940b4aed6207a2ecca30845231abdab",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+  "archiveSha256": "13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431",
+  "archiveBytes": 105046546,
+  "fullGetAndEveryFileVerified": true,
+  "localPreserved": true,
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
+  "summary": {
+    "files": 314,
+    "bytes": 140909684,
+    "unreferencedModelComponents": 40,
+    "preparationEvidenceFiles": 274
+  },
+  "gitSummary": {
+    "referencedModelComponents": 29,
+    "unreferencedModelComponents": 0
+  },
+  "files": [
+    {
+      "repoPath": "content/assets/models/community/0584ba7eebf254425705cb513b83075426b475a8d65acacd455af6b22d6ffcfa.glb",
+      "archiveMember": "content/assets/models/community/0584ba7eebf254425705cb513b83075426b475a8d65acacd455af6b22d6ffcfa.glb",
+      "bytes": 1486536,
+      "sha256": "0584ba7eebf254425705cb513b83075426b475a8d65acacd455af6b22d6ffcfa",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91.glb",
+      "archiveMember": "content/assets/models/community/07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91.glb",
+      "bytes": 1178320,
+      "sha256": "07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a.glb",
+      "archiveMember": "content/assets/models/community/22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a.glb",
+      "bytes": 846532,
+      "sha256": "22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9.glb",
+      "archiveMember": "content/assets/models/community/25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9.glb",
+      "bytes": 2000388,
+      "sha256": "25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/25f1f35e501854b3500ed075ca841009f7bc977de89dae6317448876492a37a6.glb",
+      "archiveMember": "content/assets/models/community/25f1f35e501854b3500ed075ca841009f7bc977de89dae6317448876492a37a6.glb",
+      "bytes": 800640,
+      "sha256": "25f1f35e501854b3500ed075ca841009f7bc977de89dae6317448876492a37a6",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170.glb",
+      "archiveMember": "content/assets/models/community/44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170.glb",
+      "bytes": 895472,
+      "sha256": "44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b.glb",
+      "archiveMember": "content/assets/models/community/46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b.glb",
+      "bytes": 1264104,
+      "sha256": "46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/4a09b9491a47423a0c27293419065e767e9a0dfa57fa07b33dcb14b27724e407.glb",
+      "archiveMember": "content/assets/models/community/4a09b9491a47423a0c27293419065e767e9a0dfa57fa07b33dcb14b27724e407.glb",
+      "bytes": 145472,
+      "sha256": "4a09b9491a47423a0c27293419065e767e9a0dfa57fa07b33dcb14b27724e407",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f.glb",
+      "archiveMember": "content/assets/models/community/4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f.glb",
+      "bytes": 1986068,
+      "sha256": "4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482.glb",
+      "archiveMember": "content/assets/models/community/53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482.glb",
+      "bytes": 3010392,
+      "sha256": "53606bca3df424e867d1d2bc63e105db255a061dd792228154476b625d044482",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
+      "archiveMember": "content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
+      "bytes": 916024,
+      "sha256": "5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114.glb",
+      "archiveMember": "content/assets/models/community/611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114.glb",
+      "bytes": 496028,
+      "sha256": "611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744.glb",
+      "archiveMember": "content/assets/models/community/6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744.glb",
+      "bytes": 2731060,
+      "sha256": "6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a.glb",
+      "archiveMember": "content/assets/models/community/73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a.glb",
+      "bytes": 1221592,
+      "sha256": "73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed.glb",
+      "archiveMember": "content/assets/models/community/7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed.glb",
+      "bytes": 618276,
+      "sha256": "7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/7803d2e7af5352d44f50944bc159d39cb71319ca1d123c12c6e85de405dc0d04.glb",
+      "archiveMember": "content/assets/models/community/7803d2e7af5352d44f50944bc159d39cb71319ca1d123c12c6e85de405dc0d04.glb",
+      "bytes": 1486220,
+      "sha256": "7803d2e7af5352d44f50944bc159d39cb71319ca1d123c12c6e85de405dc0d04",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/788d1d3e417857b4d7f8f6d723c7d06238f3c45b1b6a17a745d4321197cac69e.glb",
+      "archiveMember": "content/assets/models/community/788d1d3e417857b4d7f8f6d723c7d06238f3c45b1b6a17a745d4321197cac69e.glb",
+      "bytes": 626792,
+      "sha256": "788d1d3e417857b4d7f8f6d723c7d06238f3c45b1b6a17a745d4321197cac69e",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/86b49786366d05057bdb714c419aa209bb04c55acd55974d01945debe0cabbd6.glb",
+      "archiveMember": "content/assets/models/community/86b49786366d05057bdb714c419aa209bb04c55acd55974d01945debe0cabbd6.glb",
+      "bytes": 911004,
+      "sha256": "86b49786366d05057bdb714c419aa209bb04c55acd55974d01945debe0cabbd6",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb",
+      "archiveMember": "content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb",
+      "bytes": 865396,
+      "sha256": "87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/8b662728d36c9d92e1047cb83f93a549e0e60de026679f9d2b9329ced035d61f.glb",
+      "archiveMember": "content/assets/models/community/8b662728d36c9d92e1047cb83f93a549e0e60de026679f9d2b9329ced035d61f.glb",
+      "bytes": 952704,
+      "sha256": "8b662728d36c9d92e1047cb83f93a549e0e60de026679f9d2b9329ced035d61f",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/8be8b64eb20eeaeb4be1be69804dfe4486a11ce50c1ffa42849d16985775c71c.glb",
+      "archiveMember": "content/assets/models/community/8be8b64eb20eeaeb4be1be69804dfe4486a11ce50c1ffa42849d16985775c71c.glb",
+      "bytes": 3087152,
+      "sha256": "8be8b64eb20eeaeb4be1be69804dfe4486a11ce50c1ffa42849d16985775c71c",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a.glb",
+      "archiveMember": "content/assets/models/community/93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a.glb",
+      "bytes": 2192280,
+      "sha256": "93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/982a9f483f3bf953fe622dc31393079988577903bcd0eef57cc8b19937ac7cdf.glb",
+      "archiveMember": "content/assets/models/community/982a9f483f3bf953fe622dc31393079988577903bcd0eef57cc8b19937ac7cdf.glb",
+      "bytes": 707692,
+      "sha256": "982a9f483f3bf953fe622dc31393079988577903bcd0eef57cc8b19937ac7cdf",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a.glb",
+      "archiveMember": "content/assets/models/community/9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a.glb",
+      "bytes": 936116,
+      "sha256": "9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb",
+      "archiveMember": "content/assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb",
+      "bytes": 1942664,
+      "sha256": "9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882.glb",
+      "archiveMember": "content/assets/models/community/aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882.glb",
+      "bytes": 3004016,
+      "sha256": "aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754.glb",
+      "archiveMember": "content/assets/models/community/ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754.glb",
+      "bytes": 1035504,
+      "sha256": "ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d.glb",
+      "archiveMember": "content/assets/models/community/abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d.glb",
+      "bytes": 952632,
+      "sha256": "abd8b2712c0516d4e38fd5d288be2a218faa883be96a7681663146b9bee78c8d",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/b21fef58c3cc97ac9ae7bb75d9e5e96dbd3a5da5507ba285cc9f5a81124feab1.glb",
+      "archiveMember": "content/assets/models/community/b21fef58c3cc97ac9ae7bb75d9e5e96dbd3a5da5507ba285cc9f5a81124feab1.glb",
+      "bytes": 750360,
+      "sha256": "b21fef58c3cc97ac9ae7bb75d9e5e96dbd3a5da5507ba285cc9f5a81124feab1",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf.glb",
+      "archiveMember": "content/assets/models/community/b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf.glb",
+      "bytes": 932380,
+      "sha256": "b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647.glb",
+      "archiveMember": "content/assets/models/community/b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647.glb",
+      "bytes": 1486476,
+      "sha256": "b8cf7fbde00fd50dc1d582f979978c365fa4fc2cbf787fdfa76c990c75654647",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/bdd72532896ff92db3f18238771fc63e0139f845068bb78a678ca7bede9d999d.glb",
+      "archiveMember": "content/assets/models/community/bdd72532896ff92db3f18238771fc63e0139f845068bb78a678ca7bede9d999d.glb",
+      "bytes": 3010632,
+      "sha256": "bdd72532896ff92db3f18238771fc63e0139f845068bb78a678ca7bede9d999d",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47.glb",
+      "archiveMember": "content/assets/models/community/c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47.glb",
+      "bytes": 1041264,
+      "sha256": "c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/e56185d473370a975e0fbb5d077e9e266ddcc7ec3b7816ea29222a7fafad54ac.glb",
+      "archiveMember": "content/assets/models/community/e56185d473370a975e0fbb5d077e9e266ddcc7ec3b7816ea29222a7fafad54ac.glb",
+      "bytes": 642648,
+      "sha256": "e56185d473370a975e0fbb5d077e9e266ddcc7ec3b7816ea29222a7fafad54ac",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587.glb",
+      "archiveMember": "content/assets/models/community/fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587.glb",
+      "bytes": 963000,
+      "sha256": "fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540.glb",
+      "archiveMember": "content/assets/models/community/fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540.glb",
+      "bytes": 993100,
+      "sha256": "fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2.glb",
+      "archiveMember": "content/assets/models/community/ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2.glb",
+      "bytes": 1486160,
+      "sha256": "ffb4c8c492fc4dca27a36e1ad48d0d7b97736e817c1b49daccd4b7ec93cbbbd2",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/versions/4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f.glb",
+      "archiveMember": "content/assets/models/community/versions/4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f.glb",
+      "bytes": 1986068,
+      "sha256": "4d040f955d9b6f190b0a622034941d8685491670d4cfab81ea43d1fbf758e63f",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/versions/93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a.glb",
+      "archiveMember": "content/assets/models/community/versions/93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a.glb",
+      "bytes": 2192280,
+      "sha256": "93ccf92a021851f98acb28213cdc78f5349482f90f0c90cad75de01962465e7a",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "content/assets/models/community/versions/aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882.glb",
+      "archiveMember": "content/assets/models/community/versions/aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882.glb",
+      "bytes": 3004016,
+      "sha256": "aa8e1f03f69f6586befb1527178f2c7029c0f0a2c92b96b5ebdad8a1b2f32882",
+      "storageRole": "unreferenced-model-component"
+    },
+    {
+      "repoPath": "materials/hero-model-library/lol-project-seven/gap-listening-review.html",
+      "archiveMember": "materials/hero-model-library/lol-project-seven/gap-listening-review.html",
+      "bytes": 9240,
+      "sha256": "b53c5a14d33fa17b089d8bd976f9aad5a38f576c2a8545eb43a9968b657513ec",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/animation-clips.jsonl.gz",
+      "archiveMember": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/animation-clips.jsonl.gz",
+      "bytes": 2213678,
+      "sha256": "191c7d24c3655ca971e784a451414eb701b11ca7d75fc205ff35202c4fec1c34",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/files.jsonl.gz",
+      "archiveMember": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/files.jsonl.gz",
+      "bytes": 10109187,
+      "sha256": "c3fc6883512a5e3fd6ee45c2bacc4bbe07a58f6f7e3b52cc7203a37021f132d6",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+      "archiveMember": "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+      "bytes": 487157,
+      "sha256": "c7983de3796097f632ae144b07d8878526ea57ec0c2911e2e8cf59887c9406ce",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/all-model-dropdown-audit/all-model-dropdown-audit.json",
+      "archiveMember": "materials/hero-model-library/priority-evidence/all-model-dropdown-audit/all-model-dropdown-audit.json",
+      "bytes": 263032,
+      "sha256": "c1575fd43da7bce8a60f233d6df8624def9ae79560f758b05dfaf6e9f0e04cb2",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/approved-derivatives-v1/approved11-contact-sheet.jpg",
+      "archiveMember": "materials/hero-model-library/priority-evidence/approved-derivatives-v1/approved11-contact-sheet.jpg",
+      "bytes": 437741,
+      "sha256": "9c6aa4c7dd36ea2f2c7345a25164860c03196b62f5c3e02f435a0f1769e15bf6",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/approved-derivatives-v1/mai-decimation-ab.jpg",
+      "archiveMember": "materials/hero-model-library/priority-evidence/approved-derivatives-v1/mai-decimation-ab.jpg",
+      "bytes": 160610,
+      "sha256": "9dfb38469f174f788699c47ba7b60123de45e9b5b7f0629509bc6f56b510a488",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-ps2-audio-review-v1/files.jsonl.gz",
+      "archiveMember": "materials/hero-model-library/priority-evidence/fate-unlimited-codes-ps2-audio-review-v1/files.jsonl.gz",
+      "bytes": 51529,
+      "sha256": "c5425f6862e823ace3a59fb3d58fa0ca97efb99bcbf011e86925a999259286a8",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/fateubw-community/static-pose-derivatives-v1/contact-sheet.png",
+      "bytes": 162752,
+      "sha256": "c8f05b71e19165153049020b08411ebec90afad62b3fdc66a269f60d8a0aede1",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/c45f111d-back-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/c45f111d-back-contact-sheet.png",
+      "bytes": 969756,
+      "sha256": "2fd40218dec775905f836115964af9df4443597701c5cd84a9b1780e16b1032a",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/c45f111d-front-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/c45f111d-front-contact-sheet.png",
+      "bytes": 1070101,
+      "sha256": "8ecff4c3fc30804295bcb4954f49123f73aa52c487e7a0e668fc88a5f5ffe0aa",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/c45f111d-isometric-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/c45f111d-isometric-contact-sheet.png",
+      "bytes": 1122736,
+      "sha256": "766ad99ffc31c50a2018860718d175637cb431e0eadd4291054b82e253d409a8",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/c45f111d-worst-difference-overview.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/historical-model-recovery/historical-astralym-decimation-v1/c45f111d-worst-difference-overview.png",
+      "bytes": 461822,
+      "sha256": "f6f14be88972a7ce22ebaf3f6a2827bf8c31e4c649ea041075c9b8ed1761ea8d",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/06d60c9dc5094fb7d090ebdec9da8424dc9d731bf205e25f2af68fd3e72ac795.glb",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/06d60c9dc5094fb7d090ebdec9da8424dc9d731bf205e25f2af68fd3e72ac795.glb",
+      "bytes": 9652,
+      "sha256": "06d60c9dc5094fb7d090ebdec9da8424dc9d731bf205e25f2af68fd3e72ac795",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/16ad660ce7bf709ecb798f42f701e2b56477a7b84c0d07c0f6f09d7803c2fcfe.glb",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/16ad660ce7bf709ecb798f42f701e2b56477a7b84c0d07c0f6f09d7803c2fcfe.glb",
+      "bytes": 26476,
+      "sha256": "16ad660ce7bf709ecb798f42f701e2b56477a7b84c0d07c0f6f09d7803c2fcfe",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/1afaff4e7a06a0145ef1dfdb6c035d0bab7d1e134e19803ec847fee6d2233394.glb",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/1afaff4e7a06a0145ef1dfdb6c035d0bab7d1e134e19803ec847fee6d2233394.glb",
+      "bytes": 2456,
+      "sha256": "1afaff4e7a06a0145ef1dfdb6c035d0bab7d1e134e19803ec847fee6d2233394",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/1f03f74da354ee69eed6a8b2645dce7db5d4f509da5d937cbba942d31534919d.glb",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/1f03f74da354ee69eed6a8b2645dce7db5d4f509da5d937cbba942d31534919d.glb",
+      "bytes": 9116,
+      "sha256": "1f03f74da354ee69eed6a8b2645dce7db5d4f509da5d937cbba942d31534919d",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/2df98836a4fa62e2c2a00d8983ad377c361299bf5113e876de3e76372709d4ef.glb",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/2df98836a4fa62e2c2a00d8983ad377c361299bf5113e876de3e76372709d4ef.glb",
+      "bytes": 1868,
+      "sha256": "2df98836a4fa62e2c2a00d8983ad377c361299bf5113e876de3e76372709d4ef",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/3315cee29bd14dc30e95744a4bc8b535ce1b50f8f8d40a6c6fdcc636e44607a0.glb",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/3315cee29bd14dc30e95744a4bc8b535ce1b50f8f8d40a6c6fdcc636e44607a0.glb",
+      "bytes": 3792,
+      "sha256": "3315cee29bd14dc30e95744a4bc8b535ce1b50f8f8d40a6c6fdcc636e44607a0",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/ae3e9d7e829caa1c70fbc246d31bbdebb21bf58c33482064d375bef78cf70815.glb",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/ae3e9d7e829caa1c70fbc246d31bbdebb21bf58c33482064d375bef78cf70815.glb",
+      "bytes": 57140,
+      "sha256": "ae3e9d7e829caa1c70fbc246d31bbdebb21bf58c33482064d375bef78cf70815",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/b9c28ede0f0df9a08037f79cb71f86ca18010abaf86553423bcb0c63050b97a5.glb",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/meshes/b9c28ede0f0df9a08037f79cb71f86ca18010abaf86553423bcb0c63050b97a5.glb",
+      "bytes": 57148,
+      "sha256": "b9c28ede0f0df9a08037f79cb71f86ca18010abaf86553423bcb0c63050b97a5",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/1d983aca2c503769a04101709961e429e788399f23eb9c535c0b72ad51f4929e.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/1d983aca2c503769a04101709961e429e788399f23eb9c535c0b72ad51f4929e.png",
+      "bytes": 22223,
+      "sha256": "1d983aca2c503769a04101709961e429e788399f23eb9c535c0b72ad51f4929e",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/278d1511f56705cc44182d9a0335827997d611f7d2d8c7d796323c55d8a2f19e.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/278d1511f56705cc44182d9a0335827997d611f7d2d8c7d796323c55d8a2f19e.png",
+      "bytes": 6739,
+      "sha256": "278d1511f56705cc44182d9a0335827997d611f7d2d8c7d796323c55d8a2f19e",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/3334415bf1cf039f2301ece58d2288498d04d5e7a62be756b98670a1fde4f2a6.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/3334415bf1cf039f2301ece58d2288498d04d5e7a62be756b98670a1fde4f2a6.png",
+      "bytes": 316,
+      "sha256": "3334415bf1cf039f2301ece58d2288498d04d5e7a62be756b98670a1fde4f2a6",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/35027d881f177138dd484e22f3d28411ecf48d2f4b505543e8adddb2c89ebd6f.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/35027d881f177138dd484e22f3d28411ecf48d2f4b505543e8adddb2c89ebd6f.png",
+      "bytes": 43862,
+      "sha256": "35027d881f177138dd484e22f3d28411ecf48d2f4b505543e8adddb2c89ebd6f",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/5e9552e7cdb193882b8184b296229560b6ffed9fbaee72a1fed6a4e5b517f289.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/5e9552e7cdb193882b8184b296229560b6ffed9fbaee72a1fed6a4e5b517f289.png",
+      "bytes": 9797,
+      "sha256": "5e9552e7cdb193882b8184b296229560b6ffed9fbaee72a1fed6a4e5b517f289",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/71e658468dee2360944c3420850585d1ea4965f65743e86fe479160f42af986c.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/71e658468dee2360944c3420850585d1ea4965f65743e86fe479160f42af986c.png",
+      "bytes": 46838,
+      "sha256": "71e658468dee2360944c3420850585d1ea4965f65743e86fe479160f42af986c",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/723415b1eff00867e4ce9f0e12d014ed9563194d791171a4bed02c9b2805dc62.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/723415b1eff00867e4ce9f0e12d014ed9563194d791171a4bed02c9b2805dc62.png",
+      "bytes": 16309,
+      "sha256": "723415b1eff00867e4ce9f0e12d014ed9563194d791171a4bed02c9b2805dc62",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/760908689aabc58343e407745a48c277d27ca96f1d8bdb1d2ffd260adc1f8a6b.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/760908689aabc58343e407745a48c277d27ca96f1d8bdb1d2ffd260adc1f8a6b.png",
+      "bytes": 357,
+      "sha256": "760908689aabc58343e407745a48c277d27ca96f1d8bdb1d2ffd260adc1f8a6b",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/79adb82807abc2fb19e003cd85987b00fdc30148adeaf7a508f09b34bbd23f8d.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/79adb82807abc2fb19e003cd85987b00fdc30148adeaf7a508f09b34bbd23f8d.png",
+      "bytes": 28292,
+      "sha256": "79adb82807abc2fb19e003cd85987b00fdc30148adeaf7a508f09b34bbd23f8d",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/9f7867d7fa2a15a3817ae43bf76ed012abe4ae93adc3ed6b5911bb96589e25d3.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/9f7867d7fa2a15a3817ae43bf76ed012abe4ae93adc3ed6b5911bb96589e25d3.png",
+      "bytes": 17088,
+      "sha256": "9f7867d7fa2a15a3817ae43bf76ed012abe4ae93adc3ed6b5911bb96589e25d3",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/aa307baadef640e28a9416a3b9889ec3eea02e68b6929a54568d33d740f64b06.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/aa307baadef640e28a9416a3b9889ec3eea02e68b6929a54568d33d740f64b06.png",
+      "bytes": 3837,
+      "sha256": "aa307baadef640e28a9416a3b9889ec3eea02e68b6929a54568d33d740f64b06",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b3c7030884172e4c27390ca11cb010d461d194bc543526288498acad4c9292b9.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b3c7030884172e4c27390ca11cb010d461d194bc543526288498acad4c9292b9.png",
+      "bytes": 25203,
+      "sha256": "b3c7030884172e4c27390ca11cb010d461d194bc543526288498acad4c9292b9",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b4a7e4c1252be73e2c267ba3394833a6e5d13485d24ab5ec102fa888a1975572.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b4a7e4c1252be73e2c267ba3394833a6e5d13485d24ab5ec102fa888a1975572.png",
+      "bytes": 302,
+      "sha256": "b4a7e4c1252be73e2c267ba3394833a6e5d13485d24ab5ec102fa888a1975572",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b660aa73e6844abfa02347809d9ee147d1362d67f4dd0c3d7409c477208146d2.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/b660aa73e6844abfa02347809d9ee147d1362d67f4dd0c3d7409c477208146d2.png",
+      "bytes": 37723,
+      "sha256": "b660aa73e6844abfa02347809d9ee147d1362d67f4dd0c3d7409c477208146d2",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/c6d05cb7cfc8104b78aa63357f1d36747a7ec2ea5d0387125f9f649f39274b38.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/c6d05cb7cfc8104b78aa63357f1d36747a7ec2ea5d0387125f9f649f39274b38.png",
+      "bytes": 37716,
+      "sha256": "c6d05cb7cfc8104b78aa63357f1d36747a7ec2ea5d0387125f9f649f39274b38",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/caa730676994504155500df2228813205ac9304d435334e0257c04075decba44.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/caa730676994504155500df2228813205ac9304d435334e0257c04075decba44.png",
+      "bytes": 424,
+      "sha256": "caa730676994504155500df2228813205ac9304d435334e0257c04075decba44",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/d3f0cfbb0fe14bc03d4c5b9bb167810294e41ff7e313cd11f725f08e812a7b83.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/d3f0cfbb0fe14bc03d4c5b9bb167810294e41ff7e313cd11f725f08e812a7b83.png",
+      "bytes": 27825,
+      "sha256": "d3f0cfbb0fe14bc03d4c5b9bb167810294e41ff7e313cd11f725f08e812a7b83",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/e3cf25c6edcd3e4d75b452890fb2c38b9fcb228c022f69e2ae9c11175f214118.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/assets/textures/e3cf25c6edcd3e4d75b452890fb2c38b9fcb228c022f69e2ae9c11175f214118.png",
+      "bytes": 61350,
+      "sha256": "e3cf25c6edcd3e4d75b452890fb2c38b9fcb228c022f69e2ae9c11175f214118",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vfx-components-v1/contact-sheet.png",
+      "bytes": 239255,
+      "sha256": "412202b94549e5ab1cda16fae99fc43a2d6428092be38490ef70ba4ac03557e1",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/dependency-support-catalog.json",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/dependency-support-catalog.json",
+      "bytes": 867754,
+      "sha256": "9067c118a7e2ab7411fc81c930493a3e603167e033f8dc178f7fc1fe86655c4a",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/dependency-support-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/dependency-support-contact-sheet.png",
+      "bytes": 298891,
+      "sha256": "868efc07e0bb1492eef4218a7bb90785345047b85d20a01aff5008fa91f01094",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-candidate-preview.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-candidate-preview.png",
+      "bytes": 1164349,
+      "sha256": "bdf620955918b3b708af8b523b8294e9c188d501a043b5e7d213de4939a8d85c",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-candidates.json",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-candidates.json",
+      "bytes": 1311582,
+      "sha256": "b67d7657b6d451aaa8320980deeddd05e60bd7a8a47d80dbfe21895309c3f888",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-01.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-01.png",
+      "bytes": 85741,
+      "sha256": "079d6105d8b34a3eda4d79d3798d97d8957738f9fde79c147d77f8f7b90ede1c",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-02.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-02.png",
+      "bytes": 100537,
+      "sha256": "8575fd9935aa40a4ffb31d7f0cafc4b3bc6d788ddc7c3d2d15100c5660f36f59",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-03.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-03.png",
+      "bytes": 107913,
+      "sha256": "917e325bccf80207ce49c8ba2e855a0ac49143a1878896f21d6a61fc93fe43af",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-04.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-04.png",
+      "bytes": 131124,
+      "sha256": "34aa2d8d5c2b86f3b5f0425ee3999b151eef4da3cf437b229b4cb9a6d09b0403",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-05.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-05.png",
+      "bytes": 94374,
+      "sha256": "4d52236f06d5c966f051f09a20ee1a230a3c7a218d87b22bb3e05feb738d1f5a",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-06.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-06.png",
+      "bytes": 146819,
+      "sha256": "2f29c23fa82b9eb51a32309d4e525358d207e529608c6c96da10315d91fc8f3b",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-07.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-07.png",
+      "bytes": 147193,
+      "sha256": "1fbdf616746fab740bc7ed081b1c8075c791cc61c8595b4034bce2a7e2c79e2b",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-08.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-08.png",
+      "bytes": 60437,
+      "sha256": "d61759a569a6d12335df884a65355b3cc1df0bb5a20d8013d73b31b38cfdfaf8",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-09.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-09.png",
+      "bytes": 90452,
+      "sha256": "5aef1e7e009ebd9a4fb26c5cf7739eb0954fe4cb0dc3b825beb49a6e9c2ed863",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-10.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-10.png",
+      "bytes": 71644,
+      "sha256": "99dd41ec0142a92f8b3a5374d6cbcf528a19c1dfaf1269257c3a8dbf6e176baa",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-11.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-11.png",
+      "bytes": 126075,
+      "sha256": "e2d88439d50ac5904afde64abc670b23a1aa7c0617065d5d1dd2bb5ffc5f3288",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-12.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-12.png",
+      "bytes": 124232,
+      "sha256": "a76e952deabf615639286c36a57abbee585100a71565a6a0b17456e1c3021527",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-13.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-13.png",
+      "bytes": 141647,
+      "sha256": "1a56d0383e77caccd69b3cee7a395f6df8d14db63fb45e7e3d531676410c0284",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-14.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-previews/popp-vfx-candidate-14.png",
+      "bytes": 88810,
+      "sha256": "be34dd296363f551dea31f07f973e4787d6a804ed31fd4ab2569c0e58c0716e9",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-review.html",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-popp-vfx-events-v1/vfx-reconstruction-review.html",
+      "bytes": 41833,
+      "sha256": "343451b2a9995a21929f8640700d61b235bfd03b72e48e2a61ccadd747a74f16",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/all-states-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/all-states-contact-sheet.png",
+      "bytes": 982680,
+      "sha256": "cd58934d1b3ef69a5c4e39165efc471b8100caa7031558058f887bdc46f9a1bf",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/attack-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/attack-contact-sheet.png",
+      "bytes": 238909,
+      "sha256": "d57e8f9727d34d3311f9a682ede1fecee03ac80d09d27696715d7d4c67b02417",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/cast-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/cast-contact-sheet.png",
+      "bytes": 268956,
+      "sha256": "d737cea6a2d70e1a4f87ad6e5e6a7d4bdfacc61c3feb227c6a0325e3541aaea1",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/death-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/death-contact-sheet.png",
+      "bytes": 51570,
+      "sha256": "f1ddbfedb6961e65d677727590f2be8e4293200cd2de2e31b2d211b1342b7724",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/hurt-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/hurt-contact-sheet.png",
+      "bytes": 51331,
+      "sha256": "b82131e4491f5c047003b759c4a53f042c40dbf16deda5b32c8c2b9d2fed8a8f",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/idle-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/idle-contact-sheet.png",
+      "bytes": 203756,
+      "sha256": "3b01696c75716f020d2640ff7c92f41238fd91399bbe022d6f230c9e77a51936",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/run-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/run-contact-sheet.png",
+      "bytes": 214274,
+      "sha256": "f70fd5869b52dc8e4d9d4bb2c07610b420fedd73acec0027c500582b94b8682e",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/worst-difference-overview.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-02/worst-difference-overview.png",
+      "bytes": 446319,
+      "sha256": "c4b5c5ea63040b706e2cbd10363f416d4ab33a43a8b4466832a4dad3497ac163",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/all-states-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/all-states-contact-sheet.png",
+      "bytes": 1021772,
+      "sha256": "1471fdb2fee763aaaeec7ef716da440989b29b5d8c52bd41ec784d275bb6b699",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/attack-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/attack-contact-sheet.png",
+      "bytes": 232931,
+      "sha256": "d1ae7d4bfba5baf931375811995a12a0fdd079eb77002fde1367302e33568898",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/cast-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/cast-contact-sheet.png",
+      "bytes": 267596,
+      "sha256": "4664b642a0a324e9aa940be6317dc38078eda355257ad0f0380e1c64ab18017f",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/death-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/death-contact-sheet.png",
+      "bytes": 62684,
+      "sha256": "349a99884b64b1bae998941f26f2521327d841798c81c6fbbe390439f2420272",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/hurt-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/hurt-contact-sheet.png",
+      "bytes": 62449,
+      "sha256": "7da8341dbec860e9ece1c3eaa38d09ecf20fc8a6a4625f80d592d17d7349d987",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/idle-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/idle-contact-sheet.png",
+      "bytes": 222044,
+      "sha256": "4809be76f8349ef366e69e7476a52fab4c89fb4fff1c0ff9e46a15c9a9c71e03",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/run-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/run-contact-sheet.png",
+      "bytes": 230725,
+      "sha256": "e9235f7f7250e34ceb4027b4a90755efb7da784d22964e71678884868e5f24da",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/worst-difference-overview.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/dai-pn010-05-daino-tsurugi/worst-difference-overview.png",
+      "bytes": 418892,
+      "sha256": "b203d19dc54971d54d266b0795452d58919ad76e1f0b08fef41edff0014a68f1",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/all-states-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/all-states-contact-sheet.png",
+      "bytes": 1676278,
+      "sha256": "f9682b1d32b3a2f3e64b01aad4a3dd4ccc2a3068467f3bde48172d01b36924a2",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/attack-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/attack-contact-sheet.png",
+      "bytes": 295721,
+      "sha256": "d7d8e330b3d9ccf6ed0d749c66da262fb420fae4ce4f905e539c9d1f05040c48",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/cast-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/cast-contact-sheet.png",
+      "bytes": 405305,
+      "sha256": "285cb5cfae10f313876e626d43facb5b0016b83d4d59eda11a2d1b1e9528ef0e",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/death-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/death-contact-sheet.png",
+      "bytes": 369797,
+      "sha256": "c2d77bc30884cafb76799fef761d93df1c569f9860737cb27ee2ece45a3d69b0",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/hurt-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/hurt-contact-sheet.png",
+      "bytes": 369616,
+      "sha256": "5d30a46cdc56797afb89931672ea6f227d660c0886ae2822734ed0940c7e5956",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/idle-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/idle-contact-sheet.png",
+      "bytes": 277273,
+      "sha256": "bd5cbf8f56c0e8b6272b352e97432621d6cd656e419f2d0a66ec8f508774b1a2",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/run-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/run-contact-sheet.png",
+      "bytes": 301906,
+      "sha256": "e3036517b103bf7b02381f49af15c9465fda775b84fec07b585a51477d0e1ff0",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/worst-difference-overview.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-decimation-v1/vearn-en801-pre-transformation/worst-difference-overview.png",
+      "bytes": 411795,
+      "sha256": "cba3ffcf2950fd8ddb5ad06fab5c01cd10d9e51539fc5464069a892b28341f94",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-repair-v1/dai-pn010-02-visual-comparison.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-repair-v1/dai-pn010-02-visual-comparison.png",
+      "bytes": 358581,
+      "sha256": "fefd41785f18ff7ea420ae5a93ee120219986e0ed009a8ba770afe595886bc14",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-repair-v1/dai-pn010-05-daino-tsurugi-visual-comparison.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-repair-v1/dai-pn010-05-daino-tsurugi-visual-comparison.png",
+      "bytes": 390336,
+      "sha256": "4c287fe001fe3e0e2a545db684aea41922c80f50da7f473dcaba456a85eb80d4",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-repair-v1/vearn-en801-pre-transformation-visual-comparison.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/infinity-strash-texture-backdrop-repair-v1/vearn-en801-pre-transformation-visual-comparison.png",
+      "bytes": 484659,
+      "sha256": "f2715576c835ceb626ecf683b0f70aac44a87714a9e2ecf4d965d4d64e860fc1",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/ab-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/ab-contact-sheet.png",
+      "bytes": 1216259,
+      "sha256": "b7d44981723405b4ea73a8db49fa7683184424fbeec26d1063fcdc32dd9a02f9",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/worst-difference-overview.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v1/worst-difference-overview.png",
+      "bytes": 616849,
+      "sha256": "56cb47e5d17a9203b1a5b536e15cf1315839e5c9b515ac9d5615c82f58bfbad6",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/back.png",
+      "bytes": 262534,
+      "sha256": "b3b62a9a94314023c05297a9c76a9b59ec351e973c81d02d2a4c752b14484b9e",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/face-source.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/face-source.png",
+      "bytes": 522346,
+      "sha256": "d73823e531b8e2290615a0958207876005853ce76d68418099a564c545ded956",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/face-v1-rejected.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/face-v1-rejected.png",
+      "bytes": 498725,
+      "sha256": "97b9c8ee959405997bb5522f0a83ae307b650c78b8e147e75f392bfbeb35b583",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/face-v2.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/face-v2.png",
+      "bytes": 531753,
+      "sha256": "a78cd73461550f2e0206164b3d7e5cfd1e66a3054b2091ca2debdd2a9de9d561",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/front.png",
+      "bytes": 269166,
+      "sha256": "016854430836e9194ba91110bb7e2e69c8db1e8bd2f6957792de1bf066c966af",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/jump-force-dai-decimation-v2/isometric.png",
+      "bytes": 260923,
+      "sha256": "27f01de5552e2d8d1d468a38c60a30391470cda78871d3ab2238e006ca0b339b",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v3/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v3/back.png",
+      "bytes": 233517,
+      "sha256": "937d8352bad48da148ae9abf2a3cd019b6023b67744f52b074acd3fcefc83adc",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v3/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v3/front.png",
+      "bytes": 242510,
+      "sha256": "f38e9e8700cbdd4da77535dfa7f5d41989eeeeeac7ed7466accb068b3f6012f8",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v3/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v3/isometric.png",
+      "bytes": 234417,
+      "sha256": "6190c156c590bb404ab9ebd5c0956fa86464af9fd495d9944e811da123b16538",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v5/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v5/back.png",
+      "bytes": 213404,
+      "sha256": "60bddcc4b83f89a810e43c261ba2feef3b9f77650cb3e447c4dc6a6b45141742",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v5/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v5/front.png",
+      "bytes": 224041,
+      "sha256": "7ad18154287b9b94b2048fc2d0cd62adaba4162ac0c156dc4b385abc8984c0be",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v5/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v5/isometric.png",
+      "bytes": 216475,
+      "sha256": "02192d357b883e7d937370e8a83b91f008f9abd885cbcee9350e7d5e4e77d5cd",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/back.png",
+      "bytes": 213404,
+      "sha256": "60bddcc4b83f89a810e43c261ba2feef3b9f77650cb3e447c4dc6a6b45141742",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/front.png",
+      "bytes": 224041,
+      "sha256": "7ad18154287b9b94b2048fc2d0cd62adaba4162ac0c156dc4b385abc8984c0be",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/jump-force-dai-six-draw-v6/isometric.png",
+      "bytes": 216475,
+      "sha256": "02192d357b883e7d937370e8a83b91f008f9abd885cbcee9350e7d5e4e77d5cd",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-audio-review-v1/files.jsonl.gz",
+      "archiveMember": "materials/hero-model-library/priority-evidence/kof-xv-ash-audio-review-v1/files.jsonl.gz",
+      "bytes": 11137,
+      "sha256": "09998de58e7f7850c7e1b1b4d14d9203205db910a6c63a0321a22ac4fe7d70b4",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/left-hair-candidate-pre-ior-removal-face.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/left-hair-candidate-pre-ior-removal-face.png",
+      "bytes": 172813,
+      "sha256": "4418a0ac41c25e935476b2d00901637b2c0bbc4978ac8a854731c1f8d377553a",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/left-hair-candidate-pre-ior-removal-front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/left-hair-candidate-pre-ior-removal-front.png",
+      "bytes": 114998,
+      "sha256": "8fc2539313dc8daa801627f0a7c8c72c565e3d39b9177c329553b276657e3227",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/left-hair-candidate-pre-ior-removal-three-quarter.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/left-hair-candidate-pre-ior-removal-three-quarter.png",
+      "bytes": 108173,
+      "sha256": "94ae0819ad95bd8e9490e72905ad4bec6ceca1409584acd15389ec1d083d5607",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/left-hair-source-face.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/left-hair-source-face.png",
+      "bytes": 173292,
+      "sha256": "4712bbb1726f3c66a6a256800368693dafcda46adf62d487134882740df91cb7",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/left-hair-source-front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/left-hair-source-front.png",
+      "bytes": 117498,
+      "sha256": "f429ae24c3ffbae306c69ed4a35cb439cc7aefff277e87b6eae5f30e28da1f11",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/left-hair-source-three-quarter.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/left-hair-source-three-quarter.png",
+      "bytes": 110650,
+      "sha256": "bf9308be147c7007f1d298836e28761f3ab88fa356688790bb46093eebb8f131",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/right-hair-candidate-pre-ior-removal-face.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/right-hair-candidate-pre-ior-removal-face.png",
+      "bytes": 172148,
+      "sha256": "0090f4e65b49ba437c717cbc6a78c0712adb0dc9174bd700e41d587022973249",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/right-hair-candidate-pre-ior-removal-front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/right-hair-candidate-pre-ior-removal-front.png",
+      "bytes": 114928,
+      "sha256": "3ed5eb097a79d4906419f1c64456fb10f4c02a24cbc2003f7b657adec50c4ba6",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/right-hair-candidate-pre-ior-removal-three-quarter.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/right-hair-candidate-pre-ior-removal-three-quarter.png",
+      "bytes": 108669,
+      "sha256": "38cc28830bae880391e690e74eb47accea4baf3f42d35577e919e13fda80f565",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/right-hair-source-face.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/right-hair-source-face.png",
+      "bytes": 172881,
+      "sha256": "36c7d028c1f50de696aa20ee120bc08c50dcce0c2b6c34d42555d826d27ca30d",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/right-hair-source-front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/right-hair-source-front.png",
+      "bytes": 117328,
+      "sha256": "823db1cbd53ecfd52097073425a82617809c0084ea99e2917a9ca1f94b26db35",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/right-hair-source-three-quarter.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/kof-xv-ash-universal-atlas-v1/right-hair-source-three-quarter.png",
+      "bytes": 111154,
+      "sha256": "d702fc1fcd8a806411f3df8c91c017700fc2b3fc78477c1f6a3f0870837d8f63",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/final-back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/final-back.png",
+      "bytes": 70269,
+      "sha256": "d8991f2ed4987a8f4deb90e4f22515feee369d56c5fcf67837dadd33315d1a45",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/final-front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/final-front.png",
+      "bytes": 86658,
+      "sha256": "b942c3f30e387731740407b57031b6f755b6e356640a8464bd779c3540e5a4fc",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/final-isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/final-isometric.png",
+      "bytes": 82947,
+      "sha256": "2a561d983bc4fd52e8a6619ebb0404a108bfdb990e30b2855b88046c0858f2f4",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/source-back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/source-back.png",
+      "bytes": 78241,
+      "sha256": "79060d8af8d6db3d3c1e0e247cdfde3a40e9e51bee045de6933835e957243c99",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/source-front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/source-front.png",
+      "bytes": 92409,
+      "sha256": "3f05b1214b386973975ed406cfafbf135762bc95c953b560df70142c1d6ad1a3",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/source-isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/gajet1/source-isometric.png",
+      "bytes": 85814,
+      "sha256": "2af0ee5a2afb96c82f3ac41c45b845f1e8906575f27b285e11727f70fb7584ab",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/final-back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/final-back.png",
+      "bytes": 206438,
+      "sha256": "43e160f53b4d784535cad0ebfb90649c9fd2700310fa6ce417fb92b67bd385a9",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/final-front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/final-front.png",
+      "bytes": 238608,
+      "sha256": "bd4da925a7c49804617fd9f516de4eebcc6342e2ad678142dcb46902dbea5af6",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/final-isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/final-isometric.png",
+      "bytes": 271593,
+      "sha256": "d480b490978e646098b12fbcb9e09b5167e0d1118c63b00779b1895d0de19bee",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/source-back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/source-back.png",
+      "bytes": 260862,
+      "sha256": "3170730add24d01df635d5252c291171ab2537f5450b86831bdf3f62e906e5fb",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/source-front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/source-front.png",
+      "bytes": 313059,
+      "sha256": "a1b9011d52e591ffa86911586154c38612d65a706a8401ea43539e7387dd191b",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/source-isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/kukuri/source-isometric.png",
+      "bytes": 359755,
+      "sha256": "23140e2d0af5b07f1689badfe1de4f195a3f1cdb162e59aa4ded378e2952e99f",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/final-back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/final-back.png",
+      "bytes": 171042,
+      "sha256": "7d3d70833d260c5fd156001e2c2e9ba6f10323ef0d9c9c7a8eac39b0c995b397",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/final-front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/final-front.png",
+      "bytes": 193015,
+      "sha256": "b0993d6e3d219ece9f5e633b6e9571e6b68ea2fb377ff325bd2cf678e7f33d02",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/final-isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/final-isometric.png",
+      "bytes": 206708,
+      "sha256": "43fbfa17546b11aa52a9e0f89f2b48cbbcaef5fd7d220c130d9c81eb7a336e15",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/source-back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/source-back.png",
+      "bytes": 196163,
+      "sha256": "a1aeff14afb10cee785ab8cf0bf10db097f1838076223b47c1c5c46168fead7a",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/source-front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/source-front.png",
+      "bytes": 217691,
+      "sha256": "59a058c3000f3ad49bde1a224109bdc23135e71304be848f6db8ecbcd415e419",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/source-isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/naga/source-isometric.png",
+      "bytes": 236962,
+      "sha256": "37ac19573f06d803372faa9a7f8bdd124a1212ca5d51455c9532d8705ba2de1a",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/final-back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/final-back.png",
+      "bytes": 157843,
+      "sha256": "f414d367a08878121aebc902bdac44f515384ec2f568efcf741798b9969fe5ec",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/final-front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/final-front.png",
+      "bytes": 170218,
+      "sha256": "6ecf6294c49d2f06b7e78ef4e9f0d7233bb4943117a49f38cbf716e37ebd834d",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/final-isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/final-isometric.png",
+      "bytes": 183514,
+      "sha256": "a5f34338fd89617d28be534504bd01793356842cf8e997828fedd9fe2120e829",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/source-back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/source-back.png",
+      "bytes": 199080,
+      "sha256": "4ed88cde3ce64a998c29fcfc9fe24955271e475341b0d0830b374c6a6a0779f2",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/source-front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/source-front.png",
+      "bytes": 213512,
+      "sha256": "3f2e6609a810c85de41dc3f4ed9cd24b4910c8e88ac305c07608ef34b380a75e",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/source-isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/nowel/source-isometric.png",
+      "bytes": 233609,
+      "sha256": "66b82092677d0b018e63c3e8a6516b5824ab534ae9ee2a373da3db4e3df53942",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/source-final-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/source-final-contact-sheet.png",
+      "bytes": 402505,
+      "sha256": "595685feec957b2bdeaf366d2c1d8b76237813e1ede3cc7702b1d02a723ddb7f",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/hayate-rejected/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/hayate-rejected/back.png",
+      "bytes": 138109,
+      "sha256": "7efda0474a251370172c8269bbeba8346a46309063af8b9fb8cbfac15fae7e2e",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/hayate-rejected/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/hayate-rejected/front.png",
+      "bytes": 197265,
+      "sha256": "5782375917b7011323fd78aa3cd3c4b28da4ef8e5c25d61c3b0c3bfbadf28801",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/hayate-rejected/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/hayate-rejected/isometric.png",
+      "bytes": 204196,
+      "sha256": "ace4b223d4458107508e2ca84ef826eff7185dc283c4e2dad776351ca1289617",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/back.png",
+      "bytes": 214845,
+      "sha256": "30938dabacb61b968a5e4b0c0dfbf8a9846638a3927ec69baf375c47014f075d",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/front.png",
+      "bytes": 232652,
+      "sha256": "3d89ac47feb22fd60c5f2097783ebcd200a5f1768da2092adb2ba6421bee60c8",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/isometric.png",
+      "bytes": 249987,
+      "sha256": "2550cd2f8c08f3e0595c224f140cdfc1def44540806e92735d10ddc7efb74190",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/source-front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/kirara/source-front.png",
+      "bytes": 243000,
+      "sha256": "823d32d7b377f741813357e7e50a80622ca44776f6c7e2eefca37d2602683080",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/back.png",
+      "bytes": 264305,
+      "sha256": "312e4d1ee179abffcfac091bd72bdce725166ec7e83489f7f3036fbecc6fb63d",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/front.png",
+      "bytes": 266450,
+      "sha256": "53e6cb600ea102de6beaac914f103b11fad29769c1810e1268746494f41fe871",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/isometric.png",
+      "bytes": 266206,
+      "sha256": "afd654a2c25ede2141bc3422f3c7c3da72193e484f2b2d1b4a0eed4a8cdea27c",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/source-front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/ruru/source-front.png",
+      "bytes": 296775,
+      "sha256": "0f1096fe3945c722b617b0d6297a0b6a0e18636edb65f4d930257e55a60bc958",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/sarara/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/sarara/back.png",
+      "bytes": 245077,
+      "sha256": "ffb9c4c555d3e32ae0012f7226cdc62f1ee3cb5127be69a6efd306daa1c386bd",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/sarara/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/sarara/front.png",
+      "bytes": 252037,
+      "sha256": "93a85ae7644971edee8e6f5442d9d8e487c36cdbfb518fd4a5da0f64ee52ae9e",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/sarara/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/sarara/isometric.png",
+      "bytes": 217691,
+      "sha256": "0ef705b80d80830a71ebd19baea0545d9f4bcd69a49d7fd627cabe12f0a5311c",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/sarara/source-front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/sarara/source-front.png",
+      "bytes": 276330,
+      "sha256": "3c5014cc0a1833401896bb190a78a3c93b58440baea8e2c4a1a60d49e3575fcf",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/source-final-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/source-final-contact-sheet.png",
+      "bytes": 658192,
+      "sha256": "ce918dfc7709526b78ef48c4c6c017597118029e1e02e7c7ec01ef0560050872",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/vita/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/vita/back.png",
+      "bytes": 224068,
+      "sha256": "780cc03ac6c615976c9f7a66ddd9bcdd5637a777aa73b04398e35d9fb12f7b99",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/vita/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/vita/front.png",
+      "bytes": 232881,
+      "sha256": "edfa5070380205f32f12ce3e51d6ba004c2008f954459a0a09b346af792aec91",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/vita/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/vita/isometric.png",
+      "bytes": 249701,
+      "sha256": "f1977716d5abc8b19b861807a258844ad69282662d80221db93ff47f91a9e04d",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/vita/source-front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/vita/source-front.png",
+      "bytes": 269606,
+      "sha256": "06051e3adf3457b78ecb7a6090ff7139ae90e61329a7cc2cc2cf36b4d49eb430",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/astralym/anger-149239e93275.mp3",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/astralym/anger-149239e93275.mp3",
+      "bytes": 29718,
+      "sha256": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/astralym/death-814242c5ae71.mp3",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/astralym/death-814242c5ae71.mp3",
+      "bytes": 56258,
+      "sha256": "814242c5ae71523681c96a0bcd62a5b050be495ffb5987805bb0eaae6f269dab",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/astralym/joy-5da4f560d3d3.mp3",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/astralym/joy-5da4f560d3d3.mp3",
+      "bytes": 13208,
+      "sha256": "5da4f560d3d3ae02bcc295dbe25746a5af6d7ff193185a9196c171eb1f0e9bda",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/astralym/normal-f9949315b5d2.mp3",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/astralym/normal-f9949315b5d2.mp3",
+      "bytes": 25956,
+      "sha256": "f9949315b5d27e7b717237acd6d5f07a1bff7fd975fac10b5dc5e6d4f6b0fce0",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/astralym/pain-9c981c73e979.mp3",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/astralym/pain-9c981c73e979.mp3",
+      "bytes": 19687,
+      "sha256": "9c981c73e97987c781b3ac7289fa72f9d20eb1149097eb676e7b9c6d7998e7aa",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/astralym/sorrow-51bcb37280e8.mp3",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/astralym/sorrow-51bcb37280e8.mp3",
+      "bytes": 18224,
+      "sha256": "51bcb37280e8735e9061fb343d30d4adbbd78e0cdf0bbff3134f1858c15eb03a",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/cattiva/anger-3a592d5a23ab.wav",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/cattiva/anger-3a592d5a23ab.wav",
+      "bytes": 147040,
+      "sha256": "3a592d5a23ab9062697c26d3045f1f038ca5933db3f29be88b711b39dc6ed18c",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/cattiva/death-cfb643854222.wav",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/cattiva/death-cfb643854222.wav",
+      "bytes": 165196,
+      "sha256": "cfb6438542224bbbc0723e24194c9b86a43cc46152bf0202bde21d93537f2b1a",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/cattiva/joy-085d017aa8b4.wav",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/cattiva/joy-085d017aa8b4.wav",
+      "bytes": 131896,
+      "sha256": "085d017aa8b4b5de566465e3df47ca50c0445358a2d9c0907f38db987d12efa6",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/cattiva/normal-2ea4e920f9d5.wav",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/cattiva/normal-2ea4e920f9d5.wav",
+      "bytes": 103576,
+      "sha256": "2ea4e920f9d5e7a8e265db39cb9e7b83973ced2d9788883b444c6a90d8ab9aec",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/cattiva/pain-138aa3d053e7.wav",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/cattiva/pain-138aa3d053e7.wav",
+      "bytes": 107200,
+      "sha256": "138aa3d053e72df1f79574ee7d784fb1d68f878c0a670c74bf8de19e5c89285d",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/cattiva/sorrow-ea1af01924ec.wav",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/cattiva/sorrow-ea1af01924ec.wav",
+      "bytes": 223052,
+      "sha256": "ea1af01924ec05b3a977c13207f86f378aee76907cfbf79747bff4f07efbd347",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/jetragon/anger-6745afcc8c9a.mp3",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/jetragon/anger-6745afcc8c9a.mp3",
+      "bytes": 13417,
+      "sha256": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/jetragon/death-64114cec12d8.mp3",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/jetragon/death-64114cec12d8.mp3",
+      "bytes": 14462,
+      "sha256": "64114cec12d8fddd0d5530760e1fc1bcfe5babed5b8362006b51d0771da20358",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/jetragon/joy-03253d18585f.mp3",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/jetragon/joy-03253d18585f.mp3",
+      "bytes": 9447,
+      "sha256": "03253d18585f726f30ca469aab0cbc5d9587853593a48214474fbfad13e4c7ae",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/jetragon/normal-4a207cb88f48.mp3",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/jetragon/normal-4a207cb88f48.mp3",
+      "bytes": 11745,
+      "sha256": "4a207cb88f48a40068cecccfe87c0b3b551a43df475429fa4304ca02f11c5099",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/jetragon/pain-e28698306de8.mp3",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/jetragon/pain-e28698306de8.mp3",
+      "bytes": 10283,
+      "sha256": "e28698306de8f5780bf97dcad8cebd96e0c2612e439c396ed8b2e34a39c78143",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/jetragon/sorrow-5638ed8f9fe2.mp3",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/audio/jetragon/sorrow-5638ed8f9fe2.mp3",
+      "bytes": 10074,
+      "sha256": "5638ed8f9fe228dac48993592014fb0b1b01f4de2c2824d484c7944561664e4c",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/back-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/back-contact-sheet.png",
+      "bytes": 1019592,
+      "sha256": "b797718a8bb2b1b24c133092d91eb1ae5a5dca69f368e69c56b431f3b89aa8b0",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/front-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/front-contact-sheet.png",
+      "bytes": 1125882,
+      "sha256": "5e6fead1b413ae3416dfeeab68eca44399c1dcd1334f18c63b28d932184ea163",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/isometric-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/isometric-contact-sheet.png",
+      "bytes": 1187475,
+      "sha256": "4fce03a97174a1b5a351219e987136c4a5ea4fcf17182209b190429767afb606",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/worst-difference-overview.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/palworld-astralym-full58-decimation-v1/worst-difference-overview.png",
+      "bytes": 500689,
+      "sha256": "8b7ebcdf9b599438d4a0cfe869374a52d60eb5ca036fd36894034815b3430064",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/rezero-rem-formal-decimation-v1/contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/rezero-rem-formal-decimation-v1/contact-sheet.png",
+      "bytes": 370133,
+      "sha256": "b13f576a151bf710b4bb08e0b3bf40955c03de9ab2cc77a1b3fb142ecbf9d0c8",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-kirby-c00-v1/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-kirby-c00-v1/back.png",
+      "bytes": 127257,
+      "sha256": "4ca0bb94ecc6cf73d418729e64e7424847398753afbb696d4d89eced13f2d7dc",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-kirby-c00-v1/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-kirby-c00-v1/front.png",
+      "bytes": 201179,
+      "sha256": "33ac14bb0dbf97f25479db5972e9189e1b37a934d00d5de65b20caa0cc99ce8a",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-kirby-c00-v1/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-kirby-c00-v1/isometric.png",
+      "bytes": 173274,
+      "sha256": "9f30766d06712a00da6832a8107892e329c6b01dcfbc2694828f8e17332c3e7f",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer-formal-decimation-v1/female-c01/visual-ab-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-ptrainer-formal-decimation-v1/female-c01/visual-ab-contact-sheet.png",
+      "bytes": 486656,
+      "sha256": "a7a98a0a10c186fd863677deb8e0f6b989e295a926d50f2098159aed2c4b2d53",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer-formal-decimation-v1/female-c01/worst-difference-overview.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-ptrainer-formal-decimation-v1/female-c01/worst-difference-overview.png",
+      "bytes": 236681,
+      "sha256": "10d772dd0cc251830fb4625539d8146fb6ca752a011884df484e5afed2353032",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer-formal-decimation-v1/male-c00/visual-ab-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-ptrainer-formal-decimation-v1/male-c00/visual-ab-contact-sheet.png",
+      "bytes": 526293,
+      "sha256": "2f631c18b51acbfb04cdeb4f05237abcdcc6d00f1f102c935e25aaf3c8a43798",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-ptrainer-formal-decimation-v1/male-c00/worst-difference-overview.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-ptrainer-formal-decimation-v1/male-c00/worst-difference-overview.png",
+      "bytes": 236876,
+      "sha256": "2040a88a7ff866e85c38864197f107a6d0de5b7d7baf82016c5c9ce443f54268",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-static-decimation-v1/contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-ryu-static-decimation-v1/contact-sheet.png",
+      "bytes": 699567,
+      "sha256": "f913ef9d45f02811b16c7cdbebf34b068c06e89632555108d996b6132d6c5ff6",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-ryu-static-decimation-v1/difference-overview.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-ryu-static-decimation-v1/difference-overview.png",
+      "bytes": 350219,
+      "sha256": "f4ff3fa512ec329c8239093432b3a3824689642436876ea9b878d688c768327b",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/candidate-back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/candidate-back.png",
+      "bytes": 166438,
+      "sha256": "c4ab2e41b9cf40ea1a2836bdd0a15663464649350f22b710abe2b9688a2edfd8",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/candidate-front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/candidate-front.png",
+      "bytes": 183739,
+      "sha256": "081af2034ad9f2e3a2eed47399a8e5fc6ee1dbf74977a26832dd78ef0a89a0db",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/candidate-isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/candidate-isometric.png",
+      "bytes": 211214,
+      "sha256": "78e2aa727fa78e722bc1ec87838da0a9a3ba3e361138376820c1d9777cf5b525",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/source-back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/source-back.png",
+      "bytes": 166885,
+      "sha256": "9ce8959b93999ca8807c05e9b7e738186ee203d31ed96053439271f3e9ffaabf",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/source-front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/source-front.png",
+      "bytes": 183844,
+      "sha256": "c0d12ce42cf5eb5cc122ff3fac212422fb1b63e6dc29f9d4a1c78de3817aa762",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/source-isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/source-isometric.png",
+      "bytes": 211304,
+      "sha256": "a43de31eca78a142fc0af480e49d122107c029a8e45f7e4ebc1ee6265ee019ac",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/visual-ab-contact-sheet.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-c00-formal-decimation-v1/visual-ab-contact-sheet.png",
+      "bytes": 496677,
+      "sha256": "980dc0d0e1b11aa003824449360d58f84f8606169fc953a7f2744e1aa583fa48",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c04attacklw4-end.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c04attacklw4-end.png",
+      "bytes": 220067,
+      "sha256": "bc83887268d36677ca2dea253d40465be9e162f3a414f89d6d84aa8273ffe8ad",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c04attacklw4-middle.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c04attacklw4-middle.png",
+      "bytes": 217708,
+      "sha256": "c38d905cff056f61471beb458af9c51a7698565da420f7c9c5b788c93ef3c6e1",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c04attacklw4-start.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c04attacklw4-start.png",
+      "bytes": 255238,
+      "sha256": "b68c76bfc91a1ee605d489087454df626f054acf9d602bfbf26dafc754fabfd5",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c04attacklw4charge-end.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c04attacklw4charge-end.png",
+      "bytes": 224359,
+      "sha256": "f7f571983d4c20654487130e632c8010be7a0e233ffa8cab6a67ff33465347fe",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c04attacklw4charge-middle.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c04attacklw4charge-middle.png",
+      "bytes": 227854,
+      "sha256": "780afe6a771cec33329e4aef3e554a44c1b906beb88ee231f62a5c6676b7bca5",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c04attacklw4charge-start.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c04attacklw4charge-start.png",
+      "bytes": 224426,
+      "sha256": "5dded45739d9458110efb2972c2e1e8f46aa4eac64b239dad5c5aeb12ea6c0f5",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c05attackairf-end.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c05attackairf-end.png",
+      "bytes": 241020,
+      "sha256": "70119b9617cee394c64df6a047553ac96915b82d52dbe7e2779a5d6c4472a239",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c05attackairf-middle.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c05attackairf-middle.png",
+      "bytes": 140633,
+      "sha256": "295fbd376a86e4ab6a6b6a82b7562cd5d9e15808f913b8589f65f4ae6db26b48",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c05attackairf-start.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c05attackairf-start.png",
+      "bytes": 211563,
+      "sha256": "f2405597b47b2d98209946ae18c28b2fb6080393776a33ecae304b0073087dcc",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c05attackairn-end.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c05attackairn-end.png",
+      "bytes": 242203,
+      "sha256": "2f4bd46b1423375f57a7c57890eb1403035bbf23bd84019887ed2b8eb61a59d9",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c05attackairn-middle.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c05attackairn-middle.png",
+      "bytes": 285697,
+      "sha256": "7d5dd8eab3ad7a757b19496a952820a78630ddac9e3fbcb8fe98348e8224e9f7",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c05attackairn-start.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c05attackairn-start.png",
+      "bytes": 275157,
+      "sha256": "ce71ccca573ff7c48dfdbe858e7384589016b1e3f3a3ca5684fc640d5fb1c9d9",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c05landingairf-end.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c05landingairf-end.png",
+      "bytes": 216832,
+      "sha256": "af2c8c2ad6992b6c20b21c9b5f65a8fc75c6cde28eee2e5f7b6c8110886e3820",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c05landingairf-middle.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c05landingairf-middle.png",
+      "bytes": 229038,
+      "sha256": "5a0fe18765f30807dea3d7e9de4c0ba9d3496f95063f8890b5e906e73b251893",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c05landingairf-start.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/c05landingairf-start.png",
+      "bytes": 196863,
+      "sha256": "8a68021d279398ab09f774de65ef086ad122627a7dd3ce04244340c8fbde3bee",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/contact-sheet.jpg",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/contact-sheet.jpg",
+      "bytes": 441876,
+      "sha256": "df3c88c5a41e8153b89cff52b4f8b0fe4b3b5144e41cef497264eefcfa55ccb7",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d01specialshold-end.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d01specialshold-end.png",
+      "bytes": 286700,
+      "sha256": "67f3f0843626aa940d740f8344a833c9cdcba504664a6ca1d4f5cd164cec5d72",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d01specialshold-middle.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d01specialshold-middle.png",
+      "bytes": 184239,
+      "sha256": "707ba3c21b154ed8e65a006cdc68d5e438ff2ccb6962f23fddfb073b6188a2ef",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d01specialshold-start.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d01specialshold-start.png",
+      "bytes": 203828,
+      "sha256": "3da1cb3cda895f33c1f1117c5278cb974f4f439bb5ab6b55184bd001a73923ee",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d01specialsstart-end.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d01specialsstart-end.png",
+      "bytes": 311444,
+      "sha256": "72e92143d56a42826e8d3461d773bf345db0b7320bfeac94866456096d4f8311",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d01specialsstart-middle.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d01specialsstart-middle.png",
+      "bytes": 271615,
+      "sha256": "d98141c0c98aa0cd1a1e203a2b69f55130b861b6c2703c1a96cb35a59e056d2e",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d01specialsstart-start.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d01specialsstart-start.png",
+      "bytes": 259289,
+      "sha256": "72ae538c28d19c3622730fb12f84696d81f7abd687f532c53355fc68dfd4a921",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d02specialhisquat-end.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d02specialhisquat-end.png",
+      "bytes": 311351,
+      "sha256": "e3c0a809b78a61e5cdb5560ad684341438b33dd55e3dfa4a64e52e46e1fb8a4f",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d02specialhisquat-middle.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d02specialhisquat-middle.png",
+      "bytes": 234324,
+      "sha256": "cfb6ced4f8cbfcfdc88b94ae32f4d50d46352a87f265b883db2a68bcf93ff8d2",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d02specialhisquat-start.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d02specialhisquat-start.png",
+      "bytes": 226146,
+      "sha256": "b19b13e0db4c4ecdc08adee78e648d5253f0d97c28e478b1800642dfc631b31b",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d03speciallwhold-end.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d03speciallwhold-end.png",
+      "bytes": 304077,
+      "sha256": "89ae8b8886474457e0927189793b7958a323697d9c1962ee6048d92df06ad883",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d03speciallwhold-middle.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d03speciallwhold-middle.png",
+      "bytes": 259093,
+      "sha256": "88d39826594884623ec429d8d09716191fe964915ad2a5ceb89898e38769dd10",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d03speciallwhold-start.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d03speciallwhold-start.png",
+      "bytes": 260352,
+      "sha256": "eba7f82ea80465f1f2006dc9beb7acf5172bf5234ce83b363f8b54e43fec9519",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d03speciallwstart-end.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d03speciallwstart-end.png",
+      "bytes": 185470,
+      "sha256": "760775278e84c8394ddafc2c31e3c4e34ad5b72e542937308548747e9c81caf2",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d03speciallwstart-middle.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d03speciallwstart-middle.png",
+      "bytes": 253207,
+      "sha256": "f606245a275f5c608fae8973be718659bf6eecec98f16e6113e792c7462bf1d4",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d03speciallwstart-start.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-sonic-ultimate14-motion-v1/d03speciallwstart-start.png",
+      "bytes": 266135,
+      "sha256": "cd72a2dbf5bd2080ea01d273aa725495d9b813064d346ba0182f02625448e1a7",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/contact-sheet.jpg",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/chrom/contact-sheet.jpg",
+      "bytes": 317786,
+      "sha256": "1572fafaac7d84e0af5e1b8b2cd60400967ead7d6464a18c3e9a8d099818f4a6",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/lucina/contact-sheet.jpg",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-ultimate14-chrom-lucina-motion-v1/lucina/contact-sheet.jpg",
+      "bytes": 520943,
+      "sha256": "76cd921c438267826e6ba82af38cd8e3999f3e3da572081b59a90365fd026a81",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/back.png",
+      "bytes": 227412,
+      "sha256": "c07395188e44b7c282f013a4bdde0b557ce5bc97a400a8ab376214be26c3a333",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/front.png",
+      "bytes": 231010,
+      "sha256": "a1a884531fe1c58f423502604fc0cc01e4b03360b17380eef607d633ce743a42",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/link/isometric.png",
+      "bytes": 224351,
+      "sha256": "c937462a08990956a95f36a16d3e376bddb7d16ac278541db2a7a71e43ea11af",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/back.png",
+      "bytes": 204487,
+      "sha256": "b9e065115b06ed7c72e5168a19e7a9aa1ad8e0adad2ea9d89e0112862675e666",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/front.png",
+      "bytes": 245969,
+      "sha256": "16e486b96a1d9f977762b2b2b562efde514b2c1ec6e2557193be690f35591185",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/mario/isometric.png",
+      "bytes": 229165,
+      "sha256": "fc28e34667d46750759b1a98721b57d87dfee2c8d21e3f5564d67d9599f693fa",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/back.png",
+      "bytes": 166885,
+      "sha256": "9ce8959b93999ca8807c05e9b7e738186ee203d31ed96053439271f3e9ffaabf",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/front.png",
+      "bytes": 183844,
+      "sha256": "c0d12ce42cf5eb5cc122ff3fac212422fb1b63e6dc29f9d4a1c78de3817aa762",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch-v1/sonic/isometric.png",
+      "bytes": 211304,
+      "sha256": "a43de31eca78a142fc0af480e49d122107c029a8e45f7e4ebc1ee6265ee019ac",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/back.png",
+      "bytes": 234611,
+      "sha256": "e317c07f57538c781bfc551aa190f994a1ae32832c75e720e94c32668e7399a4",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/front.png",
+      "bytes": 251014,
+      "sha256": "2bc442909bf0b629e1f697cfce3f91d8ebea9ddcaf94d65a243f9ce2d820b69f",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/chrom/isometric.png",
+      "bytes": 242086,
+      "sha256": "7adc9d700db23e76aad75a1b2cdd9bf079e348f5cb086a9feff2a2b609400cc1",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/back.png",
+      "bytes": 229578,
+      "sha256": "7c525d7a536b8d2a726e8658a94fdd9f0aaefcc93acc8f9a7410cef6b2db67b0",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/front.png",
+      "bytes": 280277,
+      "sha256": "263793388b7d625d0ddb4ceb6a4cc8046af6b9cdcdc65dd743b39ad6a0ffd283",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/ganon/isometric.png",
+      "bytes": 243602,
+      "sha256": "0a1afd151bd7e9a7c256200ca83cc92c8c4fd55dfebfbf04e2b10a74893f40e9",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/back.png",
+      "bytes": 143067,
+      "sha256": "1e9bf64d0414a760c8d3f24fabe5fa49b62dd4cc25db4f136dae81bb4c0bdf3c",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/front.png",
+      "bytes": 194944,
+      "sha256": "30a4331d89f4a292fc9c4709b77de07f8e57fa22d67014e9297ee1deb8e7aded",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch2-v1/lucina/isometric.png",
+      "bytes": 199089,
+      "sha256": "7efb6f621819afc1b43d9d03547ffcb13534026841c0120c8d02ae2619773e5d",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/back.png",
+      "bytes": 278217,
+      "sha256": "f656dcc39c2e6abe6dfb9a17db1bdc9b85ca2aa200e8c6647490a8804a481a16",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/front.png",
+      "bytes": 292669,
+      "sha256": "2708beb60327648d715c828963e098f4f4adfd69357d8d28355e63c153853c11",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/daisy/isometric.png",
+      "bytes": 307466,
+      "sha256": "b17e1aa86be2d0e9f2a8b38b73402651c17d82cd7fbd083a43c627dfaa13ff05",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/back.png",
+      "bytes": 233408,
+      "sha256": "25fe5e96aac9a61833f66427d1c8d61648e0dacc66130838d266c6d84e890e2c",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/front.png",
+      "bytes": 286438,
+      "sha256": "0613c57417eacce1cd46a840614c58b8097210c250031e945482c66068728441",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/peach/isometric.png",
+      "bytes": 276358,
+      "sha256": "036ac226c2016dd0aadd0afee9319c99b4d17bc6c1d4f37d7e51f7afe9af6c2e",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/back.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/back.png",
+      "bytes": 275606,
+      "sha256": "b37bf97f85a320d4cdbbdef428cbd55c651a68a75a6ef196374306ffc1cf26c1",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/front.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/front.png",
+      "bytes": 254567,
+      "sha256": "917f7817f002db9c36ee8e667cd8fd1446b51cb398a3a6b03b9891fbb9afb8c0",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/isometric.png",
+      "archiveMember": "materials/hero-model-library/priority-evidence/ssbu-worldblender-c00-batch3-v1/toonlink/isometric.png",
+      "bytes": 258549,
+      "sha256": "6ffdfaea108d1535d9c6a8a528edf6c1e0e0724e00baee8ced5c6817376da6bc",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/priority-evidence/valhalla-37-model-options-v1/audit.json",
+      "archiveMember": "materials/hero-model-library/priority-evidence/valhalla-37-model-options-v1/audit.json",
+      "bytes": 451676,
+      "sha256": "b9be39434a38a2a6e55e86f8ed5b0701f5039b581d661a85d01cd509186ea6fd",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/review/asset-review-portal-v1/review-queue.json",
+      "archiveMember": "materials/hero-model-library/review/asset-review-portal-v1/review-queue.json",
+      "bytes": 977230,
+      "sha256": "4ce25924d2e9d510547711ee88f0633c66aafb31394d769037379aed149944a7",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/review/fate-unlimited-codes-ps2-audio-review-v1/review-queue.json",
+      "archiveMember": "materials/hero-model-library/review/fate-unlimited-codes-ps2-audio-review-v1/review-queue.json",
+      "bytes": 1127765,
+      "sha256": "480e259f81c7bedee7b91dbe8e47db8256b5c6eb38d042108b26cde2319d71d5",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/community-unused-assets-v1/inventory.json",
+      "archiveMember": "materials/hero-model-library/source-inventories/community-unused-assets-v1/inventory.json",
+      "bytes": 299179,
+      "sha256": "5a4ce974251a709cca05f8aebae25a15a2a521313e9cea49500a33fb6ff488c4",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/jstars-stpk-research-v1/analysis.json",
+      "archiveMember": "materials/hero-model-library/source-inventories/jstars-stpk-research-v1/analysis.json",
+      "bytes": 501344,
+      "sha256": "271a8eea3bd5615c4538d9e96a121bcd22fa0b9ad234f76a378f3d192d24cf65",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/selected-paths.jsonl.gz",
+      "archiveMember": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/selected-paths.jsonl.gz",
+      "bytes": 585667,
+      "sha256": "ddea313700727cf827a1d343607d03ffd587b208eb5bc779e4b583ddab50e815",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/IOR.png",
+      "archiveMember": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/IOR.png",
+      "bytes": 450816,
+      "sha256": "3431f8eea4161d98baf9d2ac36e98e520c04766963258ccc17091a1c5a5cf5c0",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/KYO.png",
+      "archiveMember": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/KYO.png",
+      "bytes": 432035,
+      "sha256": "0156c126c78784712ffae39a210f209081530a997f24505234d35805b8a66ecc",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/MAI.png",
+      "archiveMember": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-contact-sheets/MAI.png",
+      "bytes": 201924,
+      "sha256": "4497edb77c318771fe5641170dddee63c3b627110988baf825fb077c56d54796",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-mapping.json",
+      "archiveMember": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-mapping.json",
+      "bytes": 1088832,
+      "sha256": "5592185f369e2e78a12fd2787f23575b03801abd6d4d91853ea86013de623eb6",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-review.html",
+      "archiveMember": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/effect-review.html",
+      "bytes": 56067,
+      "sha256": "295e0d67101af6dc1d5bf9739bb2b9e54f1a0ff4fb5186f94e4a5858903afe6f",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/identity-map.json",
+      "archiveMember": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/identity-map.json",
+      "bytes": 556429,
+      "sha256": "86ea37571fa74492ee1a9643127a29685654f23bfc7a851ab95548a46617b2a7",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/inventory.json",
+      "archiveMember": "materials/hero-model-library/source-inventories/kof-jump-container-coverage-v1/inventory.json",
+      "bytes": 726195,
+      "sha256": "bd327f0d68fe8884ad116763941d756c76a019d47e4d0e0b5d365bdd8ef089be",
+      "storageRole": "preparation-evidence"
+    },
+    {
+      "repoPath": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/files.jsonl.gz",
+      "archiveMember": "materials/hero-model-library/source-inventories/kof-xiv-terry-path-index-v1/files.jsonl.gz",
+      "bytes": 21843,
+      "sha256": "ae0acf2c331977713df723fa7826d0f6ebef5477687242e4d9251cce56b202de",
+      "storageRole": "preparation-evidence"
+    }
+  ],
+  "restoreCommand": "python3 tools/hero-model-library/prepare_pr1152_s3_split.py restore --manifest materials/asset-library/pr1152-s3-split.json"
+}

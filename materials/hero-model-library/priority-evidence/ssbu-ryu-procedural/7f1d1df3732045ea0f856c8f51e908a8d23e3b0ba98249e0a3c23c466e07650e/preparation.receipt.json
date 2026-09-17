@@ -1,0 +1,250 @@
+{
+  "schema": "ggd-library-model-preparation@1",
+  "asset": "ssbu-ryu-c00-static-skinned-v1",
+  "source": {
+    "path": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c.glb",
+    "bytes": 1005808,
+    "sha256": "cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c"
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-procedural-six-state-v1/body.glb",
+    "bytes": 1069196,
+    "sha256": "97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf"
+  },
+  "stateClips": {
+    "idle": "GGD_procedural_idle",
+    "run": "GGD_procedural_run",
+    "attack": "GGD_procedural_attack",
+    "cast": "GGD_procedural_cast",
+    "hurt": "GGD_procedural_hurt",
+    "death": "GGD_procedural_death"
+  },
+  "yawOffsetDeg": 0,
+  "animationProvenance": {
+    "kind": "GGD generated procedural fallback",
+    "native": false,
+    "retargeted": false,
+    "nativeAnimationCount": 0,
+    "timeUnit": "seconds",
+    "authoringSampleRateHz": 30,
+    "coordinateSpace": "world-rest"
+  },
+  "clipDetails": [
+    {
+      "state": "idle",
+      "clip": "GGD_procedural_idle",
+      "seconds": 2.4,
+      "sampleKeys": 73,
+      "channels": 12,
+      "varyingChannels": 3,
+      "loopIntent": true,
+      "origin": "ggd-procedural-fallback",
+      "native": false
+    },
+    {
+      "state": "run",
+      "clip": "GGD_procedural_run",
+      "seconds": 0.8,
+      "sampleKeys": 25,
+      "channels": 12,
+      "varyingChannels": 10,
+      "loopIntent": true,
+      "origin": "ggd-procedural-fallback",
+      "native": false
+    },
+    {
+      "state": "attack",
+      "clip": "GGD_procedural_attack",
+      "seconds": 1.0,
+      "sampleKeys": 31,
+      "channels": 12,
+      "varyingChannels": 5,
+      "loopIntent": false,
+      "origin": "ggd-procedural-fallback",
+      "native": false
+    },
+    {
+      "state": "cast",
+      "clip": "GGD_procedural_cast",
+      "seconds": 1.6,
+      "sampleKeys": 49,
+      "channels": 12,
+      "varyingChannels": 6,
+      "loopIntent": false,
+      "origin": "ggd-procedural-fallback",
+      "native": false
+    },
+    {
+      "state": "hurt",
+      "clip": "GGD_procedural_hurt",
+      "seconds": 0.55,
+      "sampleKeys": 18,
+      "channels": 12,
+      "varyingChannels": 5,
+      "loopIntent": false,
+      "origin": "ggd-procedural-fallback",
+      "native": false
+    },
+    {
+      "state": "death",
+      "clip": "GGD_procedural_death",
+      "seconds": 1.25,
+      "sampleKeys": 39,
+      "channels": 12,
+      "varyingChannels": 6,
+      "loopIntent": false,
+      "origin": "ggd-procedural-fallback",
+      "native": false
+    }
+  ],
+  "boneMapping": {
+    "pelvis": "Hip",
+    "spine": "Bust",
+    "head": "Head",
+    "upperArmL": "ShoulderL",
+    "upperArmR": "ShoulderR",
+    "forearmL": "ArmL",
+    "forearmR": "ArmR",
+    "thighL": "LegL",
+    "thighR": "LegR",
+    "shinL": "KneeL",
+    "shinR": "KneeR"
+  },
+  "basePoseDegrees": {},
+  "basePoseWorldDegrees": {
+    "ShoulderL": [
+      0,
+      -15,
+      -50
+    ],
+    "ShoulderR": [
+      0,
+      15,
+      50
+    ],
+    "ArmL": [
+      0,
+      0,
+      70
+    ],
+    "ArmR": [
+      0,
+      0,
+      -70
+    ]
+  },
+  "config": {
+    "asset": "ssbu-ryu-c00-static-skinned-v1",
+    "bones": {
+      "pelvis": "Hip",
+      "spine": "Bust",
+      "head": "Head",
+      "upperArmL": "ShoulderL",
+      "upperArmR": "ShoulderR",
+      "forearmL": "ArmL",
+      "forearmR": "ArmR",
+      "thighL": "LegL",
+      "thighR": "LegR",
+      "shinL": "KneeL",
+      "shinR": "KneeR"
+    },
+    "coordinateSpace": "world-rest",
+    "basePoseWorldDegrees": {
+      "ShoulderL": [
+        0,
+        -15,
+        -50
+      ],
+      "ShoulderR": [
+        0,
+        15,
+        50
+      ],
+      "ArmL": [
+        0,
+        0,
+        70
+      ],
+      "ArmR": [
+        0,
+        0,
+        -70
+      ]
+    },
+    "roleSigns": {
+      "upperArmR": [
+        1,
+        1,
+        -1
+      ],
+      "forearmR": [
+        1,
+        1,
+        -1
+      ]
+    },
+    "roleRotationMatrices": {
+      "pelvis": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ],
+      "upperArmL": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "upperArmR": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    "unitsPerMeter": 1,
+    "deathDropMeters": 0.6,
+    "yawOffsetDeg": 0
+  },
+  "matrixToTrsMaxError": 4.440892098500626e-16,
+  "limitations": [
+    "Six clips are procedural fallback authored by GGD, not source-game motions.",
+    "Bone mapping, rest-space conversion and visual gesture quality require character-specific visual acceptance.",
+    "No source voice, SFX, VFX or gameplay timing is created or implied.",
+    "Shared upload and runtime sampling must be run separately."
+  ]
+}

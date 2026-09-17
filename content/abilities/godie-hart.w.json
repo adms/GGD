@@ -16,11 +16,11 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    56.0,
-    56.0,
-    56.0,
-    56.0,
-    56.0
+    75.0,
+    75.0,
+    75.0,
+    75.0,
+    75.0
   ],
   "manaCostTier": "極小",
   "effects": [
@@ -44,7 +44,7 @@
     "params": {
       "mode": "toPoint",
       "applyTo": "self",
-      "apexHeight": 600.0,
+      "apexHeight": 600,
       "durationSec": 0.82,
       "landRadius": 249.82,
       "damage": {
@@ -62,15 +62,16 @@
         "duration": 1.5,
         "moveSpeedMult": 0.6
       },
-      "castTimeSec": 1.133
+      "castTimeSec": 1
     }
   },
   "vfxKey": "fx.prim.fire.explosion",
   "targetsEnemies": true,
   "radius": 4.5,
   "schema": "ability@1",
-  "castTimeSec": 1.133,
+  "castTimeSec": 1,
   "rangeTier": "大",
   "range": 8,
-  "radiusTier": "小"
+  "radiusTier": "小",
+  "castTimeTier": "極大"
 }

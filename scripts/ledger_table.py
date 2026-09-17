@@ -20,8 +20,8 @@ owner 2026-08-20：
 ⇒ `ruling.sh`（裁決）與 `message-ledger.sh`（每一則訊息）**共用這一支**，
 ⛔ 不各寫一份會各自腐爛的插入邏輯（第零守則⑨：第二個只差參數就先抽模板）。
 
-    python3 scripts/ledger_table.py <帳本.md> <HH:MM> <票號>   # 逐字原話走 stdin
-    python3 scripts/ledger_table.py --map <帳本.md> <HH:MM> <票號>   # 填某一列的票號
+    python3 scripts/ledger_table.py <帳本.md> <HH:MM> <票號> [--id <身分>]   # 逐字原話走 stdin
+    python3 scripts/ledger_table.py --map <帳本.md> <HH:MM 或 身分> <票號>   # 填某一列的票號
     python3 scripts/ledger_table.py --dedupe <帳本.md>              # 併掉重複列
     python3 scripts/ledger_table.py --regen <帳本.md>               # 只重生成吃帳本的兩支產生器
 
@@ -154,14 +154,50 @@ def _unlock(path: Path) -> None:
         pass  # 唯讀檔案系統／別人的檔 —— 讓下面的 write 用它自己的錯誤說話
 
 
+# ── ⭐ 一則訊息的**身分**（GH#1255）────────────────────────────────────────────
+#
+# ⛔ 在此之前「兩列是不是同一則」有四個住處、各自用 `HH:MM`＋文字**猜**：建置去重鍵
+#   `(day, HH:MM, t[:80])`、`_find_row`、`map_ticket` 的 `c[0] != when`、存檔標題 `## HH:MM`
+#   ⇒ 同一分鐘兩則分不開（`--map` 把兩列填成同一段票欄）、同一分鐘逐字相同的兩則塌成一則。
+# ⭐ 而 transcript 早就給了唯一身分：`"type": "user"` 的 `uuid`、`queued_command` 的 `source_uuid`。
+#   ⇒ 身分＝那個 uuid 的前 8 碼；帳本列把它放在原話格尾**不渲染**的 `<!-- id:… -->`，
+#     全文存檔放在 `## HH:MM · <身分>`。⛔ 帳本與存檔只**引用**它，不另算。
+# ⚠️ 舊列（沒有身分）照舊用「同一分鐘 ＋ 同一段文字」認；建置器認到之後把身分蓋上去。
+#
+# ⚠️⚠️ 更正 b8b1009bd 的「格式與解析**只住** ledger_table.py」——那句說過頭了。量到的拼寫處（GH#1255 審查後）：
+#   | 住處 | 拼的是什麼 | 誰守 |
+#   |---|---|---|
+#   | 這裡 `ID_LEN`／`_ID_MARK`／`with_id`／`--map` 的身分判定 | 帳本列標記 `<!-- id:… -->` 的寫、讀、剝 | ⭐ Python 端的唯一住處（gen_board.py、board-roll.sh 都 import `strip_id`） |
+#   | `tools/admin-live/datasets/parallel-board.mjs` 的 `ID_MARK` | 同一個標記的剝除（JS 讀不到這裡） | `packages/shared/src/ops/ledgerIdMarkParity.test.ts`（叫這裡真的 `with_id`／`strip_id` 對照） |
+#   | `scripts/message-ledger.sh` 的 `ARCHIVE_HEAD` 與存檔寫入 | **另一種**格式：存檔段落標題 `## HH:MM · <身分>`（長度取這裡的 `ID_LEN`） | 讀寫同在那一支；`messageLedgerScript.test.ts` 斷言標題 |
+#   | `scripts/ruling.sh` 解析 `--find-time` 第一行的正則 | 身分字元集與長度 `[0-9a-f]{8}` | ⛔ 沒有專屬閘（長度一改它會對不上 ⇒ 列鍵退回執行時間；見審查報告） |
+ID_LEN = 8
+_ID_MARK = re.compile(r"\s*<!-- id:([0-9a-f]{%d}) -->" % ID_LEN)
+
+
+def short_id(uuid: str | None) -> str | None:
+    """transcript 的 uuid → 帳本用的身分（前 8 碼）；沒有 uuid 回 None。"""
+    s = re.sub(r"[^0-9a-f]", "", (uuid or "").lower())
+    return s[:ID_LEN] if len(s) >= ID_LEN else None
+
+
+def row_id(text: str) -> str | None:
+    m = _ID_MARK.search(text or "")
+    return m.group(1) if m else None
+
+
+def strip_id(text: str) -> str:
+    return _ID_MARK.sub("", text or "")
+
+
+def with_id(text: str, mid: str | None) -> str:
+    """原話格尾掛上身分（已經有就換掉）；沒有身分就原樣。"""
+    return f"{strip_id(text).rstrip()} <!-- id:{mid} -->" if mid else text
+
+
 def _norm(text: str) -> str:
     """同一句話在兩個寫入端手上可能長得不一樣（截斷位置、空白）—— 比對前先正規化。"""
-    return re.sub(r"\s+", "", text).replace(r"\|", "|").rstrip("…")
-
-
-def _minutes(hhmm: str) -> int:
-    h, m = hhmm.split(":")
-    return int(h) * 60 + int(m)
+    return re.sub(r"\s+", "", strip_id(text)).replace(r"\|", "|").rstrip("…")
 
 
 #: 文字鑰匙的視窗 —— 與 `message-ledger.sh` 判「這則有沒有列」的 `WINDOW`（24）**同一個數字**，
@@ -183,9 +219,8 @@ def _same_text(a: str, b: str) -> bool:
 
     · 太短的（「ok」）要求**全等**；
     · 截斷過的那一份是另一份的**前綴**（建置器 300 字截斷 vs `ruling.sh` 全文）；
-    · ⭐ **前 24 字相同**：2026-09-06 的 `04:03`／`04:07` —— 同一則裁決，`ruling.sh` 那一份在
-      「滿足」之後接的是**我的改述** ⇒ 前綴相容失敗、兩列並存、一列永遠 ⏸ 未對票。
-      ⚠️ 這條**還要過時間窗**（`_same_message`），⛔ 單獨拿 24 字去併會回到「ok/ok」那一次的毀損。
+    · ⭐ **前 24 字相同**：同一則訊息，一份在後面多接了字（截斷位置不同）。
+      ⚠️ 這條**只在同一分鐘裡**成立（`_same_entry`）—— ⛔ 單獨拿 24 字去併會回到「ok/ok」那一次的毀損。
     """
     x, y = _norm(a), _norm(b)
     if len(x) < 12 or len(y) < 12:
@@ -204,45 +239,37 @@ def _lead(text: str) -> str:
     return _norm(seg).rstrip("（(：:，,、")
 
 
-def _contains(a: str, b: str) -> bool:
-    """**同一分鐘**裡，一份的第一段（≥12 字）**逐字出現**在另一份裡 ⇒ 同一則。
+def _same_entry(a_when: str, a_text: str, b_when: str, b_text: str) -> bool:
+    """⭐ 「這一列已經存在」的**唯一判準** —— `_find_row`（追加）與 `dedupe`（清理）都問這一支（第〇·四守則）。
 
-    量到的形狀（2026-09-06 `12:28`）：owner 說「好吧 先開票 血量倍率4x, M=15 K=1000」，
-    我記的是「血量倍率4x, M=15 K=1000 （⇒ #1029 …）」—— 掉了他開頭三個字、接了我的註
-    ⇒ 前綴與 24 字窗都對不上 ⇒ 兩列。
-    ⚠️ ⛔ 只在 gap ≤ 3 用：`13:00` 與 `13:09` 那一對（後者逐字是前者的一段）是**兩則**訊息。
+    ⭐⭐ **只有逐字同一則**：**同一分鐘** ＋ **同一段文字**（`_same_text`）。⛔ 沒有時間窗、⛔ 沒有子字串。
+
+    owner 2026-09-12（逐字）：
+    > 「我沒說過 我的原則**一定是詳實記錄不會合併** 這應該是你自己說的
+    >  **請你要查證我說的話出處**」
+
+    ⛔ 在此之前這裡住著 `_same_message`（文字相同 ＋ 15 分鐘窗）與 `_contains`（3 分鐘內子字串）——
+    兩者來自 `9396c38d1`（GH#1028，⛔ **我自己開的票**），`asked-before.sh` 掃不到一則 owner 原話支持合併；
+    2026-09-11 它把 owner 同一句話講的三次（17:45／17:47／17:56）併成一列（GH#1238）。
+    `00e70d518` 拿掉了它們的**呼叫點**而函式、`exact_time` 旗標與 `authoritative_rows` 候選迴圈都還留著
+    ⇒ ⛔ 一段宣稱有作用而其實沒有的程式（第三守則），這裡連同本體一起拿掉（歷史在 git 裡）。
+
+    ⭐ 兩個寫入端記同一則時，**鍵要由寫入端自己對齊**，⛔ 不是靠這裡猜：
+    `ruling.sh` 在 transcript 找到那一則 ⇒ 列鍵＝**訊息時間**、文字＝**transcript 的逐字原話**
+    ⇒ 建置器補列時逐字命中，只併票號。找不到 ⇒ 各留一列（多一列無害，⭐ 少一列是把他的話弄丟）。
+
+    ⭐ GH#1255：兩邊都帶**身分**（`<!-- id:… -->`）⇒ **身分說了算** —— 同一分鐘逐字相同而 uuid 不同
+    （owner 在兩個 session 各貼一次）是兩則；任一邊沒有身分（舊列、`ruling.sh` 找不到訊息）才退回上面的判準。
     """
-    na, nb, la, lb = _norm(a), _norm(b), _lead(a), _lead(b)
-    return (len(la) >= 12 and la in nb) or (len(lb) >= 12 and lb in na)
+    ia, ib = row_id(a_text), row_id(b_text)
+    if ia and ib:
+        return ia == ib
+    return a_when == b_when and _same_text(a_text, b_text)
 
 
-def _same_message(a_text: str, a_when: str, b_text: str, b_when: str) -> bool:
-    """⭐ 「同一則訊息」＝ **文字相同 且 時間相近**，⛔ 不是文字相同就算。
-
-    ⚠️ 2026-09-06 第一版只比文字，`--dedupe` 當場把 09-05 的 `01:25 ok` 與 `01:49 ok` 併成一列 ——
-    owner 說了兩次「ok」是**兩則**訊息。⛔ 那正是第〇·六守則的形狀：拿一把會漂的鑰匙去同步，
-    同步器把單點錯誤放大成資料毀損（`skills:check` 在 commit 前抓到：「漏了 01:49」）。
-    ⭐ 時間那一半的來源：`ruling.sh` 記的是執行時間、建置器記的是訊息時間，兩者相差幾分鐘 ——
-    長句給 15 分鐘窗、短句（更容易重複出現）只給 3 分鐘。窗外 ⇒ 寧可留兩列，⛔ 不併。
-    ⭐ 第三條路（`_contains`）只給 **3 分鐘**（與短句同一個窗）：`ruling.sh` 拿得到訊息時間時 gap 是 0；
-    transcript 找不到而退回執行時間時差一兩分鐘（2026-09-06 的 12:28／12:29 就是）。
-    ⛔ 不給 15 —— 那會把 13:00／13:09 那種「owner 把其中一段再講一次」併掉。
-    """
-    try:
-        gap = abs(_minutes(a_when) - _minutes(b_when))
-    except ValueError:
-        return False
-    if _same_text(a_text, b_text):
-        short = min(len(_norm(a_text)), len(_norm(b_text))) < 12
-        return gap <= (3 if short else 15)
-    return gap <= 3 and _contains(a_text, b_text)
-
-
-def _pick_text(a_text: str, a_when: str, b_text: str, b_when: str) -> str:
-    """併兩列時**留哪一份文字**：時間早的那一份（訊息時間 ≤ 執行時間 ⇒ 它比較可能是逐字的）；
-    同一分鐘 ⇒ **包含對方第一段**的那一份（owner 的全句包著我引用的片段）；再不然取長的（截斷少）。"""
-    if a_when != b_when:
-        return a_text if a_when < b_when else b_text
+def _pick_text(a_text: str, b_text: str) -> str:
+    """同一則（`_same_entry`）的兩份文字留哪一份：**包含對方第一段**的那一份
+    （owner 的全句包著我引用的片段）；再不然取長的（截斷少）。"""
     if len(_lead(b_text)) >= 12 and _lead(b_text) in _norm(a_text):
         return a_text
     if len(_lead(a_text)) >= 12 and _lead(a_text) in _norm(b_text):
@@ -275,37 +302,21 @@ def _set_cell(ln: str, idx: int, value: str) -> str:
     return ln[:lo + 1] + f" {value} " + ln[hi:]
 
 
-def _find_row(
-    lines: list[str],
-    text: str,
-    when: str,
-    authoritative_rows: list[tuple[str, str]] | None = None,
-) -> int | None:
-    """找已存在的同一則訊息；transcript 明示為兩則時保留兩個時間。
+def _find_row(lines: list[str], text: str, when: str) -> int | None:
+    """找**逐字同一則**（`_same_entry`：同一分鐘 ＋ 同一段文字）已經在表裡的那一列；沒有回 None。
 
-    `ruling.sh` 的執行時間可能比訊息時間晚幾分鐘，所以一般插入仍用模糊時間窗。
-    但 message-ledger 同時握有當天完整 transcript：若候選列的時間本身也對應
-    另一則 transcript 訊息，就不能把本次訊息併進去。先找精確時間，也避免較早的
-    模糊候選遮住後面的精確列。
+    ⛔⛔ 【⛔ 不要合併 —— owner 2026-09-12 逐字】
+    > 「我沒說過 我的原則**一定是詳實記錄不會合併** 這應該是你自己說的」
+    ⇒ 其餘一律各留一列。判準住 `_same_entry` 一處（見那裡的來由）。
     """
-    candidates: list[tuple[int, list[str]]] = []
     for i, ln in enumerate(lines):
         if not ln.startswith("|"):
             continue
         c = cells(ln)
         if len(c) < 3 or not re.fullmatch(r"\d{1,2}:\d{2}", c[0]):
             continue
-        if c[0] == when and _same_text(c[1], text):
+        if _same_entry(c[0], c[1], when, text):
             return i
-        if _same_message(c[1], c[0], text, when):
-            candidates.append((i, c))
-    for i, c in candidates:
-        if authoritative_rows and any(
-            c[0] == row_when and _same_text(c[1], row_text)
-            for row_when, row_text in authoritative_rows
-        ):
-            continue
-        return i
     return None
 
 
@@ -319,29 +330,26 @@ def insert(
     path: Path,
     rows: list[tuple[str, str, str]],
     prefer_incoming_text: bool = False,
-    authoritative_rows: list[tuple[str, str]] | None = None,
 ) -> int:
     """把 rows 插進正規表格**最後一列之後**。回傳實際**新增**的列數。
 
-    ⭐ GH#1028：同一句話已經在表裡 ⇒ ⛔ 不新增第二列，只把票號**併**進既有那一列
-    （時間取兩者較早的 —— 建置器記的是訊息時間，ruling.sh 記的是執行時間，前者一定不晚於後者）。
-    在此之前 `ruling.sh`（執行時間）與 `message-ledger.sh`（訊息時間）各插一列，
-    每一則裁決都變成「一列對了票、一列永遠未對票」。
+    ⭐ **逐字同一則**（`_same_entry`：同一分鐘 ＋ 同一段文字）已經在表裡 ⇒ ⛔ 不新增第二列，
+    只把票號**併**進既有那一列（兩個寫入端記的是**同一則**：`ruling.sh` 找得到訊息時間時，
+    它寫的鍵與建置器逐字相同）。⛔ 其餘一律新增一列 —— owner 2026-09-12「詳實記錄不會合併」。
     ⭐ 文字那一格：`prefer_incoming_text=True`（建置器 —— 它的字**逐字**來自 transcript）⇒ 來的贏；
-    否則照 `_pick_text()`（時間早的／包著對方第一段的／長的）。⛔ 併列不可以把 owner 的原話換成我的改述。
+    否則照 `_pick_text()`（包著對方第一段的／長的）。⛔ 不可以把 owner 的原話換成我的改述。
     """
     if not rows:
         return 0
     lines = ensure(path)
     added = 0
     for when, text, tk in rows:
-        hit = _find_row(lines, text, when, authoritative_rows)
+        hit = _find_row(lines, text, when)
         if hit is not None:
             c = cells(lines[hit])
             ln = _set_cell(lines[hit], -1, cell(_merge_tickets(c[2], tk)))
-            keep = text if prefer_incoming_text else _pick_text(_raw_cell(ln, 1), c[0], text, when)
-            ln = _set_cell(ln, 1, keep)
-            lines[hit] = _set_cell(ln, 0, min(c[0], when))
+            keep = text if prefer_incoming_text else _pick_text(_raw_cell(ln, 1), text)
+            lines[hit] = _set_cell(ln, 1, with_id(keep, row_id(text) or row_id(_raw_cell(ln, 1))))
             continue
         at = _table_end(lines)
         assert at is not None  # ensure() 保證有表格
@@ -350,6 +358,22 @@ def insert(
     _unlock(path)
     path.write_text("\n".join(lines).rstrip("\n") + "\n", encoding="utf-8")
     return added
+
+
+def stamp_ids(path: Path, adopt: dict[int, str]) -> int:
+    """把身分蓋到**舊列**上（`{行號(1 起): 身分}`，由 `message-ledger.sh` 的認領算出來）。
+
+    ⭐ 只動原話那一格的**格尾**，文字與票號一個位元組都不碰（⛔ 不把手補的節錄換成 transcript 全文）。
+    """
+    if not adopt:
+        return 0
+    lines = path.read_text(encoding="utf-8").split("\n")
+    for n, mid in adopt.items():
+        ln = lines[n - 1]
+        lines[n - 1] = _set_cell(ln, 1, with_id(_raw_cell(ln, 1), mid))
+    _unlock(path)
+    path.write_text("\n".join(lines).rstrip("\n") + "\n", encoding="utf-8")
+    return len(adopt)
 
 
 def dedupe(path: Path) -> int:
@@ -367,10 +391,25 @@ def dedupe(path: Path) -> int:
             continue
         for k in kept:
             kc = cells(lines[k])
-            if _same_message(kc[1], kc[0], c[1], c[0]):
+            # ⭐⭐ 【`--dedupe` 只准併**同一分鐘**的列】（GH#1238）
+            #
+            # ⛔ 在此之前這裡用 `_same_message`（文字相同 ＋ 15 分鐘窗）——
+            # ⚠️ 而那會**主動刪掉 owner 的訊息**：2026-09-11 他同一句話講了三次
+            # （17:45 / 17:47 / 17:56），`--dedupe` 把三列併成一列
+            # ⇒ ⭐ 「他重講了三遍」這個事實**當場消失**，而那本身就是重要資訊
+            #   （代表我沒聽懂）。
+            #
+            # ⭐ 追加（`_find_row`）與這裡（`--dedupe`）問的是**同一個**判準 `_same_entry`：
+            #   同一分鐘 ＋ 同一段文字。⛔ 在此之前這裡的註解寫「`find_row` 保留時間窗」——
+            #   `00e70d518` 之後那句話就是假的（owner 2026-09-12「詳實記錄不會合併」）。
+            #
+            # ⚠️ ⭐ 而「寧可留兩列」是**安全的方向**：帳本是從 session transcript
+            # **重建**的（`message-ledger.sh` 檔頭：「唯一可靠的來源是 session
+            # transcript(它不會忘)」）⇒ ⭐ 多一列無害，⛔ 少一列要靠重建才回得來。
+            if _same_entry(kc[0], kc[1], c[0], c[1]):
                 merged = _set_cell(lines[k], -1, cell(_merge_tickets(kc[2], c[2])))
-                merged = _set_cell(merged, 1, _pick_text(_raw_cell(lines[k], 1), kc[0], _raw_cell(ln, 1), c[0]))
-                lines[k] = _set_cell(merged, 0, min(kc[0], c[0]))
+                a, b = _raw_cell(lines[k], 1), _raw_cell(ln, 1)
+                lines[k] = _set_cell(merged, 1, with_id(_pick_text(a, b), row_id(a) or row_id(b)))
                 drop.append(i)
                 break
         else:
@@ -396,7 +435,33 @@ def decided(ticket_cell: str) -> bool:
     ⛔ 仍然拒絕：留空、`⏸ 未對票`（兩者都沒有數字）。
     """
     s = ticket_cell.strip()
-    return bool(re.search(r"(?<!\d)#?\d{2,4}(?!\d)", s)) or s.startswith(("—", "–"))
+    return bool(re.search(TICKET_NO, s)) or s.startswith(("—", "–"))
+
+
+#: 票號那一格裡「一個票號」的樣子：`#877` 或 `877`（`#` 是排版 ⛔ 不是語意，見 `decided()`）。唯一住處。
+TICKET_NO = r"(?<!\d)#?(\d{2,4})(?!\d)"
+
+#: 票號那一格「**整格都是票號**」的樣子（`1157 1158`、`#1243,#1246`、`991、1024`）—— 只有這種格的裸數字算提到。
+PURE_TICKET_CELL = r"#?\d{2,4}(?:(?:\s*[,，、/]\s*|\s+)#?\d{2,4})*"
+
+
+def board_tickets(text: str) -> set[int]:
+    """一份戰情版（或帳本）**提到**的票號（GH#1256，`bmpndd.sh` 的 M 步問它）。
+
+    · 任何地方的 `#n`。
+    · 逐則對票列（第一格 `HH:MM`）的票號格**整格都是票號**時，沒寫 `#` 的也算（`| 1157 1158 |`）。
+    · ⛔ 散文裡的裸數字**不算**（「同 17:00 那一串」「117 列」「130 名」「2026」）——
+      ⭐ 算進去是**空轉綠燈的方向**：一張開著的票剛好撞到散文裡的數字 ⇒ M 靜默不報它。
+    ⚠️ 量到（a3a179e09 的 `戰情版-20260914.md`，204 列）：只認 `#n` 106 張；這一支 132 張（純票號格補回 26 張）。
+      ⛔ 上一版（96e6ede6b）寫「181 張、舊寫法誤報 75 張」是**被散文數字灌大的** ——
+      那 75 張裡 49 張來自票號格的散文（時間拆出來的 0／2、列數、年份），只有 26 張是真的沒寫 `#` 的票號（修正輪審查抓到）。
+    """
+    out = {int(n) for n in re.findall(r"#(\d{2,4})(?!\d)", text)}
+    for ln in text.split("\n"):
+        if ln.startswith("|") and len(c := cells(ln)) >= 3 and re.fullmatch(r"\d{1,2}:\d{2}", c[0]):
+            if re.fullmatch(PURE_TICKET_CELL, c[-1].strip()):
+                out.update(int(n) for n in re.findall(TICKET_NO, c[-1]))
+    return out
 
 
 def _pipes(line: str) -> list[int]:
@@ -413,7 +478,12 @@ def _pipes(line: str) -> list[int]:
 
 
 def map_ticket(path: Path, when: str, ticket: str) -> int:
-    """把某一列的**票號那一格**填掉。回傳改到的列數（0 ＝ 找不到那個時間戳）。
+    """把某一列的**票號那一格**填掉。回傳改到的列數（0 ＝ 找不到那一列）。
+
+    ⭐ GH#1255：`when` 是 `HH:MM` **或身分**（8 碼）。
+    · 身分 ⇒ 只改帶那個身分的那一列。
+    · `HH:MM` 而那一分鐘有**兩列以上** ⇒ ⛔ 拒絕並列出候選的身分 —— 在此之前它把同一分鐘的
+      **每一列**都填成同一段票欄（帳本裡 09-11 13:44／14:55、09-14 02:44 被迫寫成長句說明）。
 
     ⭐ 為什麼非有這支不可（GH#876）：帳本平時 chmod **444**，而 genguard 也擋
     Write／Edit ⇒ 在此之前 `--check` 印的那句修法指示（「再把每一列的票號填上」）
@@ -428,18 +498,21 @@ def map_ticket(path: Path, when: str, ticket: str) -> int:
             f"⛔ `{ticket}` 填了也還是「未對票」—— 票號那一格只有兩種合法值："
             f"票號（`#877` 或 `877`）或 `— <為什麼不需要開票>`")
     lines = path.read_text(encoding="utf-8").split("\n")
-    hit = 0
-    for i, ln in enumerate(lines):
-        if not ln.startswith("|"):
-            continue
-        c = cells(ln)
-        if len(c) < 3 or not re.fullmatch(r"\d{1,2}:\d{2}", c[0]) or c[0] != when:
-            continue
-        p = _pipes(ln)
-        if len(p) < 2:
-            continue
-        lines[i] = ln[:p[-2] + 1] + f" {cell(ticket)} " + ln[p[-1]:]
-        hit += 1
+    by_id = bool(re.fullmatch(r"[0-9a-f]{%d}" % ID_LEN, when))
+    targets = [
+        i for i, ln in enumerate(lines)
+        if ln.startswith("|") and len(c := cells(ln)) >= 3 and re.fullmatch(r"\d{1,2}:\d{2}", c[0])
+        and (row_id(c[1]) == when if by_id else c[0] == when) and len(_pipes(ln)) >= 2
+    ]
+    if not by_id and len(targets) > 1:
+        cands = "\n".join(
+            f"   · {row_id(cells(lines[i])[1]) or '（沒有身分 —— 先跑 `pnpm msgledger:build --date <日>` 補上）'}"
+            f"  {strip_id(cells(lines[i])[1])[:50]}…" for i in targets)
+        raise SystemExit(f"⛔ {path} 的 {when} 有 {len(targets)} 列 —— 用**身分**指定是哪一列：\n{cands}")
+    for i in targets:
+        p = _pipes(lines[i])
+        lines[i] = lines[i][:p[-2] + 1] + f" {cell(ticket)} " + lines[i][p[-1]:]
+    hit = len(targets)
     if hit:
         _unlock(path)
         path.write_text("\n".join(lines).rstrip("\n") + "\n", encoding="utf-8")
@@ -526,7 +599,7 @@ if __name__ == "__main__":
         sys.exit(0)
     if len(sys.argv) >= 2 and sys.argv[1] == "--map":
         if len(sys.argv) < 5:
-            sys.exit(f"用法: {sys.argv[0]} --map <帳本.md> <HH:MM> <票號 或 「— 理由」>")
+            sys.exit(f"用法: {sys.argv[0]} --map <帳本.md> <HH:MM 或 身分> <票號 或 「— 理由」>")
         p, when, tk = Path(sys.argv[2]), sys.argv[3], " ".join(sys.argv[4:])
         n = map_ticket(p, when, tk)
         if not n:
@@ -534,10 +607,16 @@ if __name__ == "__main__":
         print(f"  ✓ {p} {when} → `{tk}`（{n} 列）")
         regenerate_boards(p)
         sys.exit(0)
-    if len(sys.argv) < 4:
-        sys.exit(f"用法: {sys.argv[0]} <帳本.md> <HH:MM> <票號>  # 原話走 stdin\n"
-                 f"      {sys.argv[0]} --map <帳本.md> <HH:MM> <票號 或 「— 理由」>")
-    day, when, tickets = Path(sys.argv[1]), sys.argv[2], sys.argv[3]
-    body = cell(sys.stdin.read(), limit=int(sys.argv[4]) if len(sys.argv) > 4 else 0)
+    argv = sys.argv[1:]
+    mid = None
+    if "--id" in argv:                       # ⭐ GH#1255：`ruling.sh` 在 transcript 找到那一則時帶身分
+        i = argv.index("--id")
+        mid = short_id(argv[i + 1] if i + 1 < len(argv) else "")
+        del argv[i:i + 2]
+    if len(argv) < 3:
+        sys.exit(f"用法: {sys.argv[0]} <帳本.md> <HH:MM> <票號> [截斷字數] [--id <身分>]  # 原話走 stdin\n"
+                 f"      {sys.argv[0]} --map <帳本.md> <HH:MM 或 身分> <票號 或 「— 理由」>")
+    day, when, tickets = Path(argv[0]), argv[1], argv[2]
+    body = with_id(cell(sys.stdin.read(), limit=int(argv[3]) if len(argv) > 3 else 0), mid)
     insert(day, [(when, body, tickets or UNMAPPED)])
     print(f"  ✓ {day}（插進「逐則對票」表格，⛔ 不是檔尾）")

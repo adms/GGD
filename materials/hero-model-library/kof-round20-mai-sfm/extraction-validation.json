@@ -1,0 +1,236 @@
+{
+  "schema": "ggd.source-package-analysis@1",
+  "sourceId": "mai-xv-sfm",
+  "archive": {
+    "path": "raw/KOFVX_Mai_OFHXLWK.zip",
+    "bytes": 90764853,
+    "sha256": "2284c0ca7eb9b0201acb3497702154c7b1ea182f51b03072378f1e8fd2087b3e"
+  },
+  "extraction": "system libarchive entire archive read, path/type/link/duplicate/size checks before writes",
+  "files": [
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_COL_FACE.png",
+      "bytes": 8245389,
+      "sha256": "49aa5fd99aad42095fba4c3b52109cc6dd63ce40ac67b5c7dd56f0f4bfc8c0e8",
+      "format": ".png"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_COL_FACE.vmt",
+      "bytes": 629,
+      "sha256": "e26ced00b25ba77c2339662eb2267b5810118d38dfe21f5c3aca8e4d5d72abbd",
+      "format": ".vmt"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_COL_FACE.vtf",
+      "bytes": 22369856,
+      "sha256": "b51daee8c95551c4e8931ebac28df38feb8f321a3d2a57d916874d4c63228b19",
+      "format": ".vtf"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_COL_FACE_EYE.png",
+      "bytes": 8245389,
+      "sha256": "49aa5fd99aad42095fba4c3b52109cc6dd63ce40ac67b5c7dd56f0f4bfc8c0e8",
+      "format": ".png"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_COL_FACE_EYE.vmt",
+      "bytes": 87,
+      "sha256": "277d64fff145d7ec611b03f5e2b914c08531d5990ac03fa55203c12be933e9b8",
+      "format": ".vmt"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_COL_FACE_EYE.vtf",
+      "bytes": 22369856,
+      "sha256": "b51daee8c95551c4e8931ebac28df38feb8f321a3d2a57d916874d4c63228b19",
+      "format": ".vtf"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_COL_HAIR.png",
+      "bytes": 9660256,
+      "sha256": "71a507657438b1bf1490ef7798cdd34386aae92421ab97db8e770fe08fa2b808",
+      "format": ".png"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_COL_HAIR.vmt",
+      "bytes": 625,
+      "sha256": "49dab31cd3e4ff0341d74e5d866d371d3cc9d60882353a87ba54633004dc40b8",
+      "format": ".vmt"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_COL_HAIR.vtf",
+      "bytes": 11185032,
+      "sha256": "32cab8e4a6c172122b5cf30d34f8a31653a1990f432fc8d3797b02fdda20d16f",
+      "format": ".vtf"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_COL_MARK.png",
+      "bytes": 393235,
+      "sha256": "bda3b34d30f4791c5f52aa4382bd5aea9108236988a40fac8b0f3db7a56e74c0",
+      "format": ".png"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_COL_MARK.vmt",
+      "bytes": 100,
+      "sha256": "c3ceb5ddaec3ddadfabb15dcadd27423a630e0b68e1759739e11d96673f95644",
+      "format": ".vmt"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_COL_MARK.vtf",
+      "bytes": 1398336,
+      "sha256": "23ab792ba1843086073785d0d01434fc5e4ab44e8e61501ebf56318abe677108",
+      "format": ".vtf"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_COL_OTR_P0.png",
+      "bytes": 5950084,
+      "sha256": "e1dfedeeecb53f08a4de99d8adf132c04655400fccfc88912493689c1660e2e1",
+      "format": ".png"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_COL_OTR_P0.vmt",
+      "bytes": 630,
+      "sha256": "af6f04325d9e8f559e8f28e4d30125723b15b8583e52fdb087d373c0bf9055a9",
+      "format": ".vmt"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_COL_OTR_P0.vtf",
+      "bytes": 22369856,
+      "sha256": "6d33efda45af95b86c297bfbbd821095bee936f9f5f83ffc5cad4d9728d3a562",
+      "format": ".vtf"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_NOR_FACE.png",
+      "bytes": 1553261,
+      "sha256": "70f7c1144ef36d3c3b60bd7204ce26746a47f42fb390087a0a160c11156bf722",
+      "format": ".png"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_NOR_FACE.vtf",
+      "bytes": 11185032,
+      "sha256": "cad6ade6fcc2d7cf4e9f289557d148ea9c9cde897e0a5e5bed2e5437dace9cd3",
+      "format": ".vtf"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_NOR_HAIR.png",
+      "bytes": 19437641,
+      "sha256": "9b2420f2ab71857d47387c1fb83d2244c86acd7bda84ef101e05c6cd6598bfb7",
+      "format": ".png"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_NOR_HAIR.vtf",
+      "bytes": 11185032,
+      "sha256": "2a98db44f9c2e116124bec90ae3ac9fa9c507269f7c63566c9bfeb465492c7d5",
+      "format": ".vtf"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_NOR_OTR.png",
+      "bytes": 5192903,
+      "sha256": "ea45d3bb89bd13533234d3a80848307efa9c66cac22b42b397cc632adb38e711",
+      "format": ".png"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/MAI_NOR_OTR.vtf",
+      "bytes": 11185032,
+      "sha256": "30358f4d66c1a76893a54adda1c168812e30fe1cf4a04702257234e1cba06984",
+      "format": ".vtf"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/l.png",
+      "bytes": 2599,
+      "sha256": "e92dad77e30bb472e1b43e9aa089123fdf583926d95b8cfc0d87cf6d7d686346",
+      "format": ".png"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/l.vmt",
+      "bytes": 72,
+      "sha256": "61b71901cb6d3245665eb2fc99db2312aed5d422a63d3c65bb7bf662661e74ec",
+      "format": ".vmt"
+    },
+    {
+      "path": "extracted-v1/KOF15/Materials/Models/Mai/l.vtf",
+      "bytes": 904,
+      "sha256": "52855ef5e0249d60aa7407cea4023fdf75e5d33be5381e06bd78899971616f26",
+      "format": ".vtf"
+    },
+    {
+      "path": "extracted-v1/KOF15/Models/mai/KOF_XV_Mai_Body.dx90.vtx",
+      "bytes": 810116,
+      "sha256": "984db3bef0d974f6ca53633dd0ca5ad53cb2a7dd7829e2bda49c4908abd2ae01",
+      "format": ".vtx"
+    },
+    {
+      "path": "extracted-v1/KOF15/Models/mai/KOF_XV_Mai_head.dx90.vtx",
+      "bytes": 509438,
+      "sha256": "8c064a6cc91853cf180b3ccc6211ddd3a900f9da7a7801b618cc1bd14fdc672d",
+      "format": ".vtx"
+    },
+    {
+      "path": "extracted-v1/KOF15/Models/mai/kof_xv_mai_body.mdl",
+      "bytes": 65956,
+      "sha256": "b70be42299268fc85d87d237f5d1799320f90013b15d6d4757a25b239fab442e",
+      "format": ".mdl",
+      "mdlHeader": {
+        "version": 49,
+        "checksum": 1996843051,
+        "length": 65956,
+        "boneCount": 152,
+        "boneOffset": 664,
+        "localAnimCount": 1,
+        "localAnimOffset": 40732,
+        "localSequenceCount": 1,
+        "localSequenceOffset": 40848,
+        "textureCount": 1,
+        "textureOffset": 42232,
+        "bodyPartCount": 2,
+        "bodyPartOffset": 41672,
+        "name": "Mai\\KOF_XV_Mai_Body.mdl"
+      }
+    },
+    {
+      "path": "extracted-v1/KOF15/Models/mai/kof_xv_mai_body.vvd",
+      "bytes": 2691840,
+      "sha256": "9fcb2aa5490615361c84aa824aa6521392d080c58e5a3d30a2ff9f4166e985a4",
+      "format": ".vvd"
+    },
+    {
+      "path": "extracted-v1/KOF15/Models/mai/kof_xv_mai_head.mdl",
+      "bytes": 34828,
+      "sha256": "ca867448f2ceeeddaa6b8e4eb2669e67cbb68d1aa82420a50dbab587cf0c8949",
+      "format": ".mdl",
+      "mdlHeader": {
+        "version": 49,
+        "checksum": 1626031255,
+        "length": 34828,
+        "boneCount": 80,
+        "boneOffset": 664,
+        "localAnimCount": 1,
+        "localAnimOffset": 19736,
+        "localSequenceCount": 1,
+        "localSequenceOffset": 19856,
+        "textureCount": 5,
+        "textureOffset": 21880,
+        "bodyPartCount": 2,
+        "bodyPartOffset": 20392,
+        "name": "Mai\\KOF_XV_Mai_head.mdl"
+      }
+    },
+    {
+      "path": "extracted-v1/KOF15/Models/mai/kof_xv_mai_head.vvd",
+      "bytes": 1666240,
+      "sha256": "0bf41d4c571dd7cd00519ab222b835ac7af1976330681f18a881ba8e9c7d6aa0",
+      "format": ".vvd"
+    }
+  ],
+  "formatCounts": {
+    ".png": 9,
+    ".vmt": 6,
+    ".vtf": 9,
+    ".vtx": 2,
+    ".mdl": 2,
+    ".vvd": 2
+  },
+  "fileCount": 30,
+  "extractedBytes": 177710254,
+  "runtimeSelectable": false,
+  "conversion": "pending root workflow"
+}

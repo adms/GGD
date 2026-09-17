@@ -1,0 +1,37 @@
+{
+  "schema": "ggd-verified-rigid-attachment-skin@1",
+  "source": {
+    "path": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
+    "bytes": 2361292,
+    "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130"
+  },
+  "output": {
+    "path": "/private/tmp/goblin-skinned-a.glb",
+    "bytes": 2371212,
+    "sha256": "7d9906f451e2e6a0b64797b0c1a52ebd4bfe97f974d23071f25c6d4bd29a773d"
+  },
+  "bindings": [
+    {
+      "meshNode": 67,
+      "meshName": "goblin-right-small-sword",
+      "jointNode": 34,
+      "jointName": "Bip001 R Hand",
+      "skin": 0,
+      "jointSlot": 34,
+      "vertices": 108,
+      "binding": "100%-rigid-to-joint"
+    },
+    {
+      "meshNode": 68,
+      "meshName": "goblin-left-small-shield",
+      "jointNode": 15,
+      "jointName": "Bip001 L Hand",
+      "skin": 0,
+      "jointSlot": 15,
+      "vertices": 72,
+      "binding": "100%-rigid-to-joint"
+    }
+  ],
+  "originalBinaryPreservedAsExactPrefix": true,
+  "sourceModified": false
+}

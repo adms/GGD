@@ -1,0 +1,211 @@
+{
+  "schema": "ggd-library-body-ready@1",
+  "preparation": {
+    "schema": "ggd-library-model-preparation@1",
+    "asset": "ou99:457594",
+    "source": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/ou99/ou99_457594.glb",
+      "bytes": 736904,
+      "sha256": "33d292adbf1eee30a53b9e1136c65ab7e1fec61a11537a39f46f4a01e380a98b"
+    },
+    "output": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-standards-v2-20260910/ou99.457594/converted/body.glb",
+      "bytes": 912072,
+      "sha256": "5360031859f9cb861e96d07f5b0032c03b730bf85796746fcab3c216643bea0e"
+    },
+    "stateClips": {
+      "idle": "stand",
+      "run": "walk",
+      "attack": "attack 2",
+      "cast": "spell one",
+      "death": "death",
+      "hurt": "stand ready"
+    },
+    "yawOffsetDeg": 0,
+    "nativeAnimation": true,
+    "nativeClipProof": "../control/standardization.json",
+    "limitations": [
+      "Merged transparent primitives can alter per-primitive depth-sort granularity; no triangles or alpha pixels discarded.",
+      "Only existing clipMap-referenced native clips are in runtime; all source clips retained in original/source.glb.",
+      "No animation channel was removed or resampled."
+    ]
+  },
+  "model": {
+    "schema": "ggd-uploaded-hero-model@1",
+    "sha256": "4ae4473c73b393c87b422d4b74846831e7abef0ccad472b7bb7fc3d3dcd19625",
+    "byteSize": 502336,
+    "clipMap": {
+      "idle": "stand",
+      "run": "walk",
+      "attack": "attack 2",
+      "cast": "spell one",
+      "hurt": "stand ready",
+      "death": "death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "document": {
+    "id": "ou99.457594-standard-v2",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/4ae4473c73b393c87b422d4b74846831e7abef0ccad472b7bb7fc3d3dcd19625.glb",
+    "scale": 1,
+    "collisionRadius": 0.55,
+    "clipMap": {
+      "idle": "stand",
+      "run": "walk",
+      "attack": "attack 2",
+      "cast": "spell one",
+      "hurt": "stand ready",
+      "death": "death"
+    }
+  },
+  "uploadedDocument": {
+    "id": "community.body.15f446f869073f6e73a70726b29c3f1c45098757458dc4fd",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/4ae4473c73b393c87b422d4b74846831e7abef0ccad472b7bb7fc3d3dcd19625.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "stand",
+      "run": "walk",
+      "attack": "attack 2",
+      "cast": "spell one",
+      "hurt": "stand ready",
+      "death": "death"
+    },
+    "yawOffsetDeg": 0
+  },
+  "selectedClips": {
+    "idle": "stand",
+    "run": "walk",
+    "attack": "attack 2",
+    "cast": "spell one",
+    "death": "death",
+    "hurt": "stand ready"
+  },
+  "metrics": {
+    "triangles": 3912,
+    "drawPrimitives": 2,
+    "textures": [
+      {
+        "width": 128,
+        "height": 64,
+        "bytes": 5563,
+        "sha256": "5f7f9f7f762c081a18bb7768621b7d2da50b0bb7e12b6cda943a627b30bbfe77"
+      },
+      {
+        "width": 256,
+        "height": 512,
+        "bytes": 193157,
+        "sha256": "acd02ef375241436b335447c5fac735aab13c6ee2dacfe55cb70a9afbbcaf773"
+      }
+    ]
+  },
+  "runtimeClips": [
+    {
+      "index": 0,
+      "name": "stand",
+      "duration": 1.7300000190734863,
+      "channels": 27
+    },
+    {
+      "index": 1,
+      "name": "walk",
+      "duration": 0.6100000143051147,
+      "channels": 27
+    },
+    {
+      "index": 2,
+      "name": "attack 2",
+      "duration": 1.2100000381469727,
+      "channels": 27
+    },
+    {
+      "index": 3,
+      "name": "spell one",
+      "duration": 1.2100000381469727,
+      "channels": 27
+    },
+    {
+      "index": 4,
+      "name": "stand ready",
+      "duration": 1.909999966621399,
+      "channels": 27
+    },
+    {
+      "index": 5,
+      "name": "death",
+      "duration": 1.7200000286102295,
+      "channels": 27
+    }
+  ],
+  "warnings": [],
+  "validator": {
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "ggd-w3x-import",
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 435228
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 128,
+            "height": 64,
+            "format": "rgb",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/1",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 512,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 6,
+      "materialCount": 2,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 2,
+      "totalVertexCount": 3080,
+      "totalTriangleCount": 3912,
+      "maxUVs": 1,
+      "maxInfluences": 4,
+      "maxAttributes": 5
+    }
+  },
+  "evidence": {
+    "sharedPrepareAndVerify": true,
+    "originalModelBindingPreservedExceptIdAndPath": true,
+    "nativeMotionNotResampled": true,
+    "visualAcceptance": "pending"
+  }
+}

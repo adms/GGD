@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -29,10 +29,10 @@
       ],
       "id": "b2-goblin.e",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -44,7 +44,7 @@
       "template": {
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
         "params": {
-          "castTimeSec": 0.567,
+          "castTimeSec": 0.5,
           "damage": {
             "damageTier": "小"
           },
@@ -64,10 +64,11 @@
           "vfxKey": "fx.prim.arcane.slash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-goblin.e.webp"
+      "icon": "assets/icons/abilities/b2-goblin.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -95,7 +96,7 @@
           "intervalSec": 0.5,
           "kind": "delayed",
           "maxTargets": 4,
-          "radius": 3.0,
+          "radius": 3,
           "shape": "circle",
           "side": "enemies",
           "stopOnCasterDeath": true,
@@ -105,10 +106,10 @@
       ],
       "id": "b2-goblin.q",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -121,7 +122,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.667,
+          "castTimeSec": 0.5,
           "castType": "ground",
           "effects": [
             {
@@ -160,10 +161,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-goblin.q.webp"
+      "icon": "assets/icons/abilities/b2-goblin.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -172,7 +174,7 @@
       ],
       "cooldownTier": "大",
       "provenance": "editor-json",
-      "description": "「盲目亂闖請走緊急出口！」\n敵人被致盲時才追加推離 4 單位；一般情況只有小級打擊，施工流程可被對方淨化打斷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
+      "description": "「盲目亂闖請走緊急出口！」\n敵人被致盲時才追加推離{{push}}距離；一般情況只有小級打擊，施工流程可被對方淨化打斷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "amount": {
@@ -197,9 +199,9 @@
       ],
       "id": "b2-goblin.r",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -212,7 +214,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.633,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -249,10 +251,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-goblin.r.webp"
+      "icon": "assets/icons/abilities/b2-goblin.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -274,10 +277,10 @@
       ],
       "id": "b2-goblin.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "把客人拉進施工區",
@@ -289,7 +292,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "targeted",
           "effects": [
             {
@@ -313,7 +316,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-goblin.w.webp"
+      "icon": "assets/icons/abilities/b2-goblin.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "fighter",
@@ -339,8 +343,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 8,
     "range": 1.6
@@ -355,13 +359,13 @@
     "as": 0,
     "healthRegen": 0.13085306122448978,
     "manaRegen": 0,
-    "maxHealth": 35.000204081632646,
-    "maxMana": 26.357142857142858,
+    "maxHealth": 80,
+    "maxMana": 50,
     "mr": 2.639795918367347
   },
   "msGrowthTier": "極小",
   "id": "b2-goblin",
-  "modelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+  "modelKey": "version.body.060d462a0195d3dadfa7592b77ae7d86e438d6839437cffe",
   "name": "哥布林殺手",
   "origin": "鬥士",
   "passiveAbility": "b2-goblin.passive",
@@ -376,5 +380,100 @@
   "tags": [
     "sword"
   ],
-  "icon": "assets/icons/champions/b2-goblin.webp"
+  "icon": "assets/icons/champions/b2-goblin.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.1dc6560a88034ab3b2826b003dd21a2165c51b880f44aa9f",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c",
+      "modelSha256": "938dff74194e73a728f53240b7457556b8cec433bd9cadcc7872544adb910ec9",
+      "binarySha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130",
+      "registeredAt": "2026-09-12T23:02:41.738Z",
+      "source": {
+        "kind": "previous",
+        "character": "哥布林殺手",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.51176a90cab594af1cd86ce98ace7062887568ae0a76d33c.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.91ed5c47100dac10d44137ddd322c4fa3fe29f6eac346791",
+      "label": "阿尔冯斯",
+      "sourceModelKey": "community.body.5712d0b92062c818e5d072b89ef4ee83f0551aef4098c389",
+      "modelSha256": "230973e657b523c519e62b6c13ce3604e61fa54020baeaaa6f0df724a15a5bdc",
+      "binarySha256": "bacc98fb83cca034ecce74e6f0e8c6c260a16a5e2c0f6080c2f855fcac50d633",
+      "registeredAt": "2026-09-12T23:02:41.740Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "阿尔冯斯",
+        "work": "鋼之鍊金術師",
+        "library": "300heroes",
+        "reference": "300heroes:aa89b351426082f8df362c89",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.f409923dd4ac6974cd02dcbeff46acc9c198181fcdaf3422",
+      "label": "哥布林殺手（獨立副本／尤吉欧）",
+      "sourceModelKey": "community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916",
+      "modelSha256": "e8a535d0e142cd59f8bc70cb0cee50781ee4a00f380d2f922985668c6c9dc013",
+      "binarySha256": "8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7",
+      "registeredAt": "2026-09-12T23:29:01.573Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "哥布林殺手（獨立副本／尤吉欧）",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "derivative:goblin",
+        "tier": "300heroes",
+        "selectionClass": "manual"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.d0cb941e2c944f613c2b3186641bbff462bb6cf87761c86a",
+      "label": "阿尔冯斯",
+      "sourceModelKey": "community.body.5712d0b92062c818e5d072b89ef4ee83f0551aef4098c389",
+      "modelSha256": "d1c35968032510c4af4e594b62465b00a8b71628b69c18b5fad21d9eb5e3009e",
+      "binarySha256": "bacc98fb83cca034ecce74e6f0e8c6c260a16a5e2c0f6080c2f855fcac50d633",
+      "registeredAt": "2026-09-13T00:08:57.576Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "阿尔冯斯",
+        "work": "鋼之鍊金術師",
+        "library": "300heroes",
+        "reference": "300heroes:aa89b351426082f8df362c89",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.060d462a0195d3dadfa7592b77ae7d86e438d6839437cffe",
+      "label": "哥布林殺手（獨立副本／尤吉欧）",
+      "sourceModelKey": "community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916",
+      "modelSha256": "aad1afa25dbcbd9cdacf97e755fe7cfb0587ce3c7a7c15e6130045c5bca2cbc0",
+      "binarySha256": "8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7",
+      "registeredAt": "2026-09-13T00:08:57.621Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "哥布林殺手（獨立副本／尤吉欧）",
+        "work": "刀劍神域 Sword Art Online",
+        "library": "300heroes",
+        "reference": "derivative:goblin",
+        "tier": "300heroes",
+        "selectionClass": "manual",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

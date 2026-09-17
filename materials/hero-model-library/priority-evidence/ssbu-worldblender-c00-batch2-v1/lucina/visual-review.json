@@ -1,0 +1,19 @@
+{
+  "schema": "ggd-worldblender-c00-visual-review@1",
+  "componentId": "ssbu-lucina-c00-static-skinned-v1",
+  "modelSha256": "44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170",
+  "accepted": true,
+  "scope": "independent-static-skinned-model-component",
+  "reviewedAt": "2026-09-14",
+  "reviewedViews": [
+    "front",
+    "back",
+    "isometric"
+  ],
+  "findings": [
+    "Lucina identity, body silhouette, costume and sheathed sword are visible in all three WebGL views.",
+    "The alpha-corrected material bake removes the prior black-background artifact; no black frame or missing base-colour material was observed."
+  ],
+  "runtimeSelectionVerified": false,
+  "deploymentVerified": false
+}

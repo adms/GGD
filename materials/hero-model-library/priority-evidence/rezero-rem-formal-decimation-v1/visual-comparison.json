@@ -1,0 +1,58 @@
+{
+  "schema": "ggd.rezero-rem-three-view-comparison@1",
+  "thresholds": {
+    "rgbChangedChannelThreshold": 8,
+    "silhouetteDistanceFromCornerBackground": 24
+  },
+  "views": [
+    {
+      "view": "front",
+      "sourceSha256": "b466e87ff3b12aee100e9eaa2e6b2050897258d01b95313e269ad51caba1e5c3",
+      "candidateSha256": "827bcd6e60bfbd5a3f6145f005fe79bf456356c79e80fd8570cb042180523872",
+      "changedRgbPixelsAbove8": 932,
+      "changedRgbPixelPercentAbove8": 0.35552978515625,
+      "changedRgbPixelsAbove32": 260,
+      "changedRgbPixelPercentAbove32": 0.09918212890625,
+      "meanAbsoluteRgbDelta": 0.1114654541015625,
+      "silhouettePixelXor": 231,
+      "silhouettePixelXorPercent": 0.0881195068359375,
+      "silhouetteUnionPixelCount": 4865,
+      "silhouetteXorOfUnionPercent": 4.748201438848921
+    },
+    {
+      "view": "back",
+      "sourceSha256": "c12849536186c150c1914a3892c562d8e83706df35b30e13621c933c56505cb6",
+      "candidateSha256": "cac59906c6a18c322146b8c6263e44ddce0bfbb7539d120a670d9b996a0a1067",
+      "changedRgbPixelsAbove8": 2295,
+      "changedRgbPixelPercentAbove8": 0.8754730224609375,
+      "changedRgbPixelsAbove32": 618,
+      "changedRgbPixelPercentAbove32": 0.235748291015625,
+      "meanAbsoluteRgbDelta": 0.2757771809895833,
+      "silhouettePixelXor": 392,
+      "silhouettePixelXorPercent": 0.1495361328125,
+      "silhouetteUnionPixelCount": 10652,
+      "silhouetteXorOfUnionPercent": 3.680060082613594
+    },
+    {
+      "view": "isometric",
+      "sourceSha256": "1427a1e6c8f084199fd304f2e86a68b208836187c67fda92f4bcb5d13e562807",
+      "candidateSha256": "4ca1788b9d22cb8700ed4154ce43ecba13e8127d0eb4d8485648d8bf08543834",
+      "changedRgbPixelsAbove8": 918,
+      "changedRgbPixelPercentAbove8": 0.350189208984375,
+      "changedRgbPixelsAbove32": 217,
+      "changedRgbPixelPercentAbove32": 0.0827789306640625,
+      "meanAbsoluteRgbDelta": 0.09778086344401042,
+      "silhouettePixelXor": 170,
+      "silhouettePixelXorPercent": 0.064849853515625,
+      "silhouetteUnionPixelCount": 3931,
+      "silhouetteXorOfUnionPercent": 4.324599338590689
+    }
+  ],
+  "maxChangedRgbPixelPercentAbove8": 0.8754730224609375,
+  "maxSilhouetteXorOfUnionPercent": 4.748201438848921,
+  "automaticGeometryContinuityThresholdPercent": 5.0,
+  "withinAutomaticGeometryContinuityThreshold": true,
+  "notes": [
+    "Pixel differences include intended geometric simplification and lighting-normal variance. These metrics are a review aid only; visual acceptance remains a human decision."
+  ]
+}

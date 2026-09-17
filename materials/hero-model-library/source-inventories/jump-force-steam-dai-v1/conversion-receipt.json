@@ -1,0 +1,255 @@
+{
+  "schema": "ggd-python-gltf-composition-receipt@1",
+  "sourceId": "steam-jump-force-priority-original-assets-build-8523149",
+  "converter": "tools/hero-model-library/source-workflows/jump-force-steam-dai-v1/compose_glb.py",
+  "composition": [
+    "chr0430_form0.gltf",
+    "chr0430_form0_head.gltf",
+    "chr0430_damage_A.gltf",
+    "chr0430_damage_B.gltf",
+    "chr0430_damage_AB.gltf",
+    "chr0430_equipment1.gltf"
+  ],
+  "inputs": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-character-export-v2/Character/chr0430/chr0430_form0.gltf",
+      "bytes": 37617,
+      "sha256": "57e1ed285b0d8e6e99d49d9815b357336b98f9fa6dbf8270300a2bca9252e506"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-character-export-v2/Character/chr0430/chr0430_form0.bin",
+      "bytes": 399704,
+      "sha256": "86879fededc035574eb602cfc7f4e3d1b991f2130f55bc788448bf389e835aab"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-character-export-v2/Character/chr0430/chr0430_form0_head.gltf",
+      "bytes": 37692,
+      "sha256": "ce2eb948fcc5784286ab08acbc545bc7da207e591f4699d8ab2e8d3e0eccd427"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-character-export-v2/Character/chr0430/chr0430_form0_head.bin",
+      "bytes": 1190984,
+      "sha256": "cf99e6efa699f9333804f8d18adc5cc24d82047874d34b95452023eb50bf9da6"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-character-export-v2/Character/chr0430/chr0430_damage_A.gltf",
+      "bytes": 31574,
+      "sha256": "6e74c740da690fbe73f57916f40d8e7b3e54bc16637ec0eece0b5f91bd4fdffb"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-character-export-v2/Character/chr0430/chr0430_damage_A.bin",
+      "bytes": 55596,
+      "sha256": "fcd2a53c322f84a819b0fd4a80f5dd49da982166e9c5511e233d07aaf06c8d8e"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-character-export-v2/Character/chr0430/chr0430_damage_B.gltf",
+      "bytes": 33607,
+      "sha256": "3148e912e8f991d7b33396530fb33e2890a52efa2e998a8d4b257f76a3dd3d4d"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-character-export-v2/Character/chr0430/chr0430_damage_B.bin",
+      "bytes": 162844,
+      "sha256": "723b7d5f1e0eaeab782a6bca9e322e13baff9301e07f86048f3c0776785b9d80"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-character-export-v2/Character/chr0430/chr0430_damage_AB.gltf",
+      "bytes": 35642,
+      "sha256": "f0fbe85eaa4f5c1b693d713c4575b8f388ab9edd0ced36f70b53ad8ce8ec80ed"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-character-export-v2/Character/chr0430/chr0430_damage_AB.bin",
+      "bytes": 526248,
+      "sha256": "4e2784f1ff938e4328b98c2043d78d33800e5425dfdc84b36dc975e264c84b4c"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-character-export-v2/Character/chr0430/chr0430_equipment1.gltf",
+      "bytes": 29612,
+      "sha256": "53cb05562ca8aa1ccef3d405f136359f7ee5643b69e3c47606282636bf9356d6"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-character-export-v2/Character/chr0430/chr0430_equipment1.bin",
+      "bytes": 237336,
+      "sha256": "fd8680d4ec2e2f1ea347e70f4e8ce5a09cec0eaa8404b7b58ebf49a47d09f7d3"
+    }
+  ],
+  "materialBindings": [
+    {
+      "material": "MI_chr0430_lens",
+      "textureStem": "lens",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_lens_C.png"
+      }
+    },
+    {
+      "material": "MI_chr0430_eyeshadow",
+      "textureStem": "eyeshadow",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_eyeshadow_C.png"
+      }
+    },
+    {
+      "material": "MI_chr0430_pants",
+      "textureStem": "pants",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_pants_C.png",
+        "normal": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_pants_N.png",
+        "orm": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_pants_ORM.png"
+      }
+    },
+    {
+      "material": "MI_chr0430_weapon",
+      "textureStem": "weapon",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_weapon_C.png",
+        "normal": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_weapon_N.png",
+        "orm": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_weapon_ORM.png"
+      }
+    },
+    {
+      "material": "MI_chr0430_glass",
+      "textureStem": "glass",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_glass_C.png",
+        "normal": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_glass_N.png",
+        "orm": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_glass_ORM.png"
+      }
+    },
+    {
+      "material": "MI_chr0430_face",
+      "textureStem": "face",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_face_C.png",
+        "normal": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_face_N.png",
+        "orm": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_face_ORM.png"
+      }
+    },
+    {
+      "material": "MI_chr0430_hair",
+      "textureStem": "hair",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_hair_C.png",
+        "normal": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_hair_N.png",
+        "orm": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_hair_ORM.png"
+      }
+    },
+    {
+      "material": "MI_chr0430_eye",
+      "textureStem": "eye",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_eye_C.png"
+      }
+    },
+    {
+      "material": "MI_chr0430_oral",
+      "textureStem": "face",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_face_C.png",
+        "normal": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_face_N.png",
+        "orm": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_face_ORM.png"
+      }
+    },
+    {
+      "material": "MI_chr0430_damage_blood",
+      "textureStem": null,
+      "bound": {}
+    },
+    {
+      "material": "MI_chr0430_pants",
+      "textureStem": "pants",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_pants_C.png",
+        "normal": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_pants_N.png",
+        "orm": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_pants_ORM.png"
+      }
+    },
+    {
+      "material": "MI_chr0430_cloth",
+      "textureStem": "cloth",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_cloth_C.png",
+        "normal": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_cloth_N.png",
+        "orm": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_cloth_ORM.png"
+      }
+    },
+    {
+      "material": "MI_chr0430_skin",
+      "textureStem": "skin",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_skin_C.png",
+        "normal": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_skin_N.png",
+        "orm": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_skin_ORM.png"
+      }
+    },
+    {
+      "material": "MI_chr0430_cloth",
+      "textureStem": "cloth",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_cloth_C.png",
+        "normal": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_cloth_N.png",
+        "orm": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_cloth_ORM.png"
+      }
+    },
+    {
+      "material": "MI_chr0430_pants",
+      "textureStem": "pants",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_pants_C.png",
+        "normal": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_pants_N.png",
+        "orm": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_pants_ORM.png"
+      }
+    },
+    {
+      "material": "MI_chr0430_face",
+      "textureStem": "face",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_face_C.png",
+        "normal": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_face_N.png",
+        "orm": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_face_ORM.png"
+      }
+    },
+    {
+      "material": "MI_chr0430_skin",
+      "textureStem": "skin",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_skin_C.png",
+        "normal": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_skin_N.png",
+        "orm": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_skin_ORM.png"
+      }
+    },
+    {
+      "material": "MI_chr0430_cloth",
+      "textureStem": "cloth",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_cloth_C.png",
+        "normal": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_cloth_N.png",
+        "orm": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_cloth_ORM.png"
+      }
+    },
+    {
+      "material": "MI_chr0430_pants",
+      "textureStem": "pants",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_pants_C.png",
+        "normal": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_pants_N.png",
+        "orm": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_pants_ORM.png"
+      }
+    },
+    {
+      "material": "MI_chr0430_weapon",
+      "textureStem": "weapon",
+      "bound": {
+        "baseColor": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_weapon_C.png",
+        "normal": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_weapon_N.png",
+        "orm": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/extracted/jump-force-steam-original-chr0430-dai-v1/umodel-texture-export-fixed-v1/Character/chr0430/Textures/T_Chr0430_weapon_ORM.png"
+      }
+    }
+  ],
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/jump-force-steam-dai-v1/dai-chr0430-review-v4.glb",
+    "bytes": 76796608,
+    "sha256": "53b3b19eb04e2eb0e6d1827122f5b41a403c2ced188bd3042371c9dec80cd810"
+  },
+  "animationCount": 0,
+  "status": "review-glb-pending-visual-and-ggd-intake",
+  "blenderFallbackReason": "Blender 5.2.1 crashes during Metal backend discovery before Python starts on this host."
+}

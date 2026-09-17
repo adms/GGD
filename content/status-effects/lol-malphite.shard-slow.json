@@ -1,0 +1,15 @@
+{
+  "id": "lol-malphite.shard-slow",
+  "schema": "status-effect@1",
+  "name": "地震碎片",
+  "description": "墨菲特「地震碎片」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "lol-malphite.shard-slow",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

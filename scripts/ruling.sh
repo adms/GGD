@@ -35,19 +35,31 @@ TEXT="$(cat)"
 #   找不到（太短、還沒進 transcript、離線）⇒ 退回執行時間，⛔ 但要**說出來**。
 # ⚠️ 測試模式（`GGD_LEDGER_DIR` 指到暫存目錄）預設**不掃**真的 12GB transcript；
 #   守衛要驗就給 `GGD_TRANSCRIPT_DIR` 一份假的。`GGD_RULING_MSGTIME_OFF=1` 一律用執行時間（回頭的開關）。
-MSG_DAY=""; MSG_HHMM=""
+# ⭐ 鍵的**另一半是文字**：帳本 owner 2026-09-12 起「**詳實記錄不會合併**」⇒ 同一列＝**同一分鐘 ＋ 同一段文字**
+#   （`ledger_table._same_entry`）。⛔ 只對齊時間而文字仍是我貼進來的版本（掉了他開頭幾個字、接了我的註）
+#   ⇒ 建置器補列時逐字對不上 ⇒ 同一則兩列、一列永遠 ⏸ 未對票（`rulingScript.test.ts` 量到）。
+#   ⇒ 找得到那一則 ⇒ 帳本那一格寫 **transcript 的逐字原話**（欄名本來就是「owner 說了什麼（逐字）」）；
+#   票（留言／body）仍然貼 `$TEXT` 全文 —— 我接的註記只該住票裡。
+MSG_DAY=""; MSG_HHMM=""; MSG_TEXT=""; MSG_ID=""
 if [ "${GGD_RULING_MSGTIME_OFF:-0}" != "1" ] && { [ -n "${GGD_TRANSCRIPT_DIR:-}" ] || [ -z "${GGD_LEDGER_DIR:-}" ]; }; then
-  FOUND="$(bash scripts/message-ledger.sh --find-time "$TEXT" 2>/dev/null)" || FOUND=""
-  if [[ "$FOUND" =~ ^([0-9]{4}-[0-9]{2}-[0-9]{2})\ ([0-9]{2}:[0-9]{2})$ ]]; then
-    MSG_DAY="${BASH_REMATCH[1]}"; MSG_HHMM="${BASH_REMATCH[2]}"
+  FOUND="$(bash scripts/message-ledger.sh --find-time "$TEXT" --with-text 2>/dev/null)" || FOUND=""
+  FOUND_HEAD="${FOUND%%$'\n'*}"
+  # ⭐ GH#1255：第一行多一個**身分**（transcript uuid 前 8 碼）⇒ 帳本列帶著它，建置器以身分認列，⛔ 不再靠 HH:MM＋文字猜。
+  if [[ "$FOUND_HEAD" =~ ^([0-9]{4}-[0-9]{2}-[0-9]{2})\ ([0-9]{2}:[0-9]{2})(\ ([0-9a-f]{8}))?$ ]]; then
+    MSG_DAY="${BASH_REMATCH[1]}"; MSG_HHMM="${BASH_REMATCH[2]}"; MSG_ID="${BASH_REMATCH[4]}"
+    [ "$FOUND" != "$FOUND_HEAD" ] && MSG_TEXT="${FOUND#*$'\n'}"
   fi
 fi
+LEDGER_TEXT="$TEXT"
 if [ -n "$MSG_HHMM" ]; then
   NOW="$MSG_DAY $MSG_HHMM"; TODAY="$MSG_DAY"; ROW_TIME="$MSG_HHMM"
-  echo "  ⏱ 列鍵＝訊息時間 ${NOW}（transcript）"
+  [ -n "${MSG_TEXT// }" ] && LEDGER_TEXT="$MSG_TEXT"
+  echo "  ⏱ 列鍵＝訊息時間 ${NOW}（transcript）＋ 帳本那一格寫 transcript 的逐字原話"
 else
   NOW="$(date '+%Y-%m-%d %H:%M')"; TODAY="$(date '+%Y-%m-%d')"; ROW_TIME="$(date '+%H:%M')"
-  echo "  ⏱ transcript 裡找不到這句原話 ⇒ 列鍵退回**執行時間** ${NOW}（⚠️ 建置器補列時會靠 15 分鐘窗併掉）"
+  echo "  ⏱ transcript 裡找不到這句原話 ⇒ 列鍵退回**執行時間** ${NOW}"
+  echo "     ⚠️ 建置器補列時⛔ 不會併（owner 2026-09-12「詳實記錄不會合併」）⇒ 那一則會另有一列 ⏸ 未對票，"
+  echo "        用 \`python3 scripts/ledger_table.py --map <帳本.md> <HH:MM> <票號>\` 填掉"
 fi
 # ⛔⛔ **不要寫死 `/private/tmp`** —— 那是 **macOS 專屬**的路徑（`/tmp` 是它的 symlink）。
 #   在 Linux 上 `/private` 根本不存在,而且非 root **建不出來**（實測 EACCES）
@@ -117,10 +129,11 @@ done
 # `## ⏸️ 真正還卡在你身上的` 那張兩欄表底下與檔尾一段沒有表頭的孤兒表格,
 # 兩處都在 `## 逐則對票` 區段外面,`gen_board.py` 的 `section()` 一列都讀不到。
 # ⇒ 插入位置交給 `scripts/ledger_table.py`(與 message-ledger.sh 共用同一份邏輯)。
-# ⭐ 列鍵 `$ROW_TIME` ＝ 訊息時間（GH#1028 A，上面決定的）；ledger_table.py 再以「文字相同且時間相近」
-#   找既有列 —— 建置器先補過列 ⇒ 這裡只併票號，⛔ 不多一列。
-printf '%s' "$TEXT" | python3 scripts/ledger_table.py \
-  "$DAY" "$ROW_TIME" "$(echo "$ISSUES" | tr ',' ' ' | sed 's/\([0-9]\+\)/#\1/g')"
+# ⭐ 列鍵 `$ROW_TIME` ＋ `$LEDGER_TEXT` ＝ transcript 裡那一則的時間與逐字原話（GH#1028 A，上面決定的）；
+#   ledger_table.py 只認**逐字同一則**（同一分鐘 ＋ 同一段文字）—— 建置器先補過列 ⇒ 這裡只併票號，⛔ 不多一列；
+#   ⛔ 其餘一律新增一列（owner 2026-09-12「詳實記錄不會合併」）。
+printf '%s' "$LEDGER_TEXT" | python3 scripts/ledger_table.py \
+  "$DAY" "$ROW_TIME" "$(echo "$ISSUES" | tr ',' ' ' | sed 's/\([0-9]\+\)/#\1/g')" ${MSG_ID:+--id "$MSG_ID"}
 
 # ③ ⭐ 帳本是 `board:roll` 與 `board:build` 的**輸入** —— 寫入端自己重生成（GH#1026 ①）。
 #

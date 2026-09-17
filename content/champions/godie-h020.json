@@ -5,12 +5,12 @@
   "description": "故事：\n自稱天才美少女魔導士的莉娜，加入愛與和平純粹只是為了可以獲得賞金，正如同她的綽號\"盜賊殺手\"一樣，惡徒是沒有人權的。\n(出自:秀逗魔導士)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.70\n智慧 + 3.00\n基礎跑速 290\n\n可學習的技能：\n火球術、炸彈陣、龍破斬、神滅斬、重破斬(需要惡夢魔王碎片)",
   "role": "marksman",
   "attackType": "ranged",
-  "modelKey": "imported.linainvers",
+  "modelKey": "version.body.2dfcbc4ab01184f5e44b70038569f9d6008f5f930068090d",
   "missileSpeed": 18.3,
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.25,
-    "maxMana": 5000,
+    "maxMana": 100,
     "manaRegen": 1000,
     "ad": 6.0,
     "ap": 0,
@@ -25,9 +25,9 @@
     "range": 8.2
   },
   "growth": {
-    "maxHealth": 32,
+    "maxHealth": 80,
     "healthRegen": 0.08,
-    "maxMana": 36,
+    "maxMana": 50,
     "manaRegen": 0.12,
     "ad": 0.96,
     "armor": 0.5,
@@ -66,15 +66,15 @@
         15.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "小",
@@ -97,9 +97,10 @@
             "duration": 1.5,
             "stun": true
           },
-          "castTimeSec": 0.567
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "W": {
       "id": "godie-h020.w",
@@ -117,16 +118,16 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
-      "radius": 6.0,
-      "castTimeSec": 1.033,
+      "radius": 6,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
@@ -141,10 +142,11 @@
           "applyTo": "enemies",
           "damageTier": "小",
           "damageType": "magic",
-          "castTimeSec": 1.033
+          "castTimeSec": 1
         }
       },
-      "manaCostTier": "極小"
+      "manaCostTier": "極小",
+      "castTimeTier": "極大"
     },
     "E": {
       "id": "godie-h020.e",
@@ -162,10 +164,10 @@
         60.0
       ],
       "manaCost": [
-        224.0,
-        224.0,
-        224.0,
-        224.0
+        300.0,
+        300.0,
+        300.0,
+        300.0
       ],
       "effects": [
         {
@@ -298,7 +300,7 @@
                   }
                 ]
               },
-              "radius": 8.0,
+              "radius": 8,
               "radiusTier": "大",
               "includeOrigin": true,
               "onHitTargets": [
@@ -367,13 +369,14 @@
       ],
       "vfxKey": "fx.prim.fire.beam",
       "targetsEnemies": true,
-      "radius": 8.0,
-      "castTimeSec": 1.233,
+      "radius": 8,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "中",
       "manaCostTier": "中",
-      "radiusTier": "大"
+      "radiusTier": "大",
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-h020.r",
@@ -390,9 +393,9 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [
         {
@@ -402,13 +405,13 @@
           "path": "orbit",
           "count": 1,
           "distance": 0.1,
-          "speed": 1.0,
+          "speed": 1,
           "lifeSec": 2.5
         }
       ],
       "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
-      "castTimeSec": 2,
+      "castTimeSec": 1,
       "rangeTier": "小",
       "range": 4.5,
       "cooldownTier": "極大",
@@ -438,12 +441,13 @@
           "damageType": "magic",
           "status": {
             "statusId": "slow40",
-            "duration": 2.0,
+            "duration": 2,
             "moveSpeedMult": 0.6
           },
-          "castTimeSec": 2
+          "castTimeSec": 1
         }
-      }
+      },
+      "castTimeTier": "極大"
     }
   },
   "skillOrder": [
@@ -482,5 +486,90 @@
         "4": 60.0
       }
     }
-  }
+  },
+  "modelVersions": [
+    {
+      "modelKey": "version.body.3532abc61c3a2aaeb94ff49668026e6e6bd9061dd722bffb",
+      "label": "原上線模型",
+      "sourceModelKey": "imported.linainvers",
+      "modelSha256": "8615c4f74e282b51d6fc95afa6e9faaa550e0c53a8a443bcb745e827d641610c",
+      "binarySha256": "1d499008481edd3d4520219970e18cb4a05bc03a52094af5129bf7cc9c06ac31",
+      "registeredAt": "2026-09-09T07:13:26.629Z",
+      "source": {
+        "kind": "previous",
+        "character": "黑魔導士 - 莉娜因巴斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.linainvers.json",
+        "tier": "w3x"
+      }
+    },
+    {
+      "modelKey": "version.body.0a75adabf453db16048f0b8763c24cd03fb64707c0cc95b3",
+      "label": "莉娜·因巴斯",
+      "sourceModelKey": "community.body.08f7a7de95c4beb47b77a27b49e04db9eefd8192f6e5952b",
+      "modelSha256": "746e742b81e038bed8e4156b7c1fbc768042f7cf12dcf6bce0cf6deeef3f67f7",
+      "binarySha256": "df07ee9d9baf46a88033329bcba43d814580521de3d8b4b9a5deb161bd1f0628",
+      "registeredAt": "2026-09-09T07:13:26.671Z",
+      "source": {
+        "kind": "exact",
+        "character": "莉娜·因巴斯",
+        "work": "秀逗魔導士 Slayers",
+        "library": "300heroes",
+        "reference": "300heroes:e88ba3ef348e0f9bb9e7774d",
+        "tier": "300heroes"
+      }
+    },
+    {
+      "modelKey": "version.body.0caddb8f0afb4e1927224744b9b961ad853b8e954de3079a",
+      "label": "莉娜·因巴斯",
+      "sourceModelKey": "community.body.af43a6c7cc5f5a9d24de9bbff14e35867296d5e0d37063b8",
+      "modelSha256": "c311a4d3f458e2a9d8de040cd46ef7e857cff52786d5e04d5f01dbd84bde2f9a",
+      "binarySha256": "f482e093ef36bed9c840288a9a1de9649d4445d5452909f1f494f47c3fe54e54",
+      "registeredAt": "2026-09-09T07:23:46.489Z",
+      "source": {
+        "kind": "exact",
+        "character": "莉娜·因巴斯",
+        "work": "秀逗魔導士",
+        "library": "mba",
+        "reference": "mba:90e2e3fdffbbb5b1251958c6",
+        "tier": "mba"
+      }
+    },
+    {
+      "modelKey": "version.body.30121bc703f387e5569c3f92281a468237e5e67ff7625af9",
+      "label": "原上線模型（glTF 驗證修正）",
+      "sourceModelKey": "imported.linainvers",
+      "modelSha256": "001cb53ed07c71a6ee5b9aa3361b912a7555e5a0a5102a9e40e7edb04c55a30e",
+      "binarySha256": "23bb76d86885629ddaeaa0558e70a7a3d3d649358387a03c8d6949feba706146",
+      "registeredAt": "2026-09-15T03:56:35.550Z",
+      "source": {
+        "kind": "exact",
+        "character": "黑魔導士 - 莉娜因巴斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.linainvers.json",
+        "tier": "w3x"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.2dfcbc4ab01184f5e44b70038569f9d6008f5f930068090d",
+      "label": "原上線模型（glTF 驗證修正）（半透明不合併）",
+      "sourceModelKey": "imported.linainvers",
+      "modelSha256": "15ac1ccbd83b3898ab53df0c58fae19cef93f162538146e152abc5794528df45",
+      "binarySha256": "8791a3e65c3ef4063cb4b93dbe519008d44f4bcf2c4f61e575814d70460413df",
+      "registeredAt": "2026-09-15T06:32:47.665Z",
+      "source": {
+        "kind": "exact",
+        "character": "黑魔導士 - 莉娜因巴斯",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/imported.linainvers.json",
+        "tier": "w3x"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "manual"
 }

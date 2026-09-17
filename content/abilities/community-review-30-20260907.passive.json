@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "〔拖延症〕",
   "provenance": "editor-json",
-  "description": "停止移動後逐步累積拖延，上限三層；受擊時清空，施法可消耗強化。",
+  "description": "【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 {{cd}} 秒。\n【目標設計】停止移動後逐步累積拖延，上限三層；受擊時清空，施法可消耗強化。\n【待補機制】需靜止三層拖延、受擊清除與施法消耗。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,
@@ -49,5 +49,6 @@
       "vfxKey": "fx.prim.sound.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/community-review-30-20260907.passive.webp"
+  "icon": "assets/icons/abilities/community-review-30-20260907.passive.webp",
+  "castTimeTier": "極小"
 }

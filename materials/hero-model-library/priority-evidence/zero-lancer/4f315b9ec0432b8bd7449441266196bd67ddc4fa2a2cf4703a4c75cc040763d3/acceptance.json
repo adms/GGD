@@ -1,0 +1,31 @@
+{
+  "schema": "ggd.skinned-component-acceptance@1",
+  "deliverySha256": "4f315b9ec0432b8bd7449441266196bd67ddc4fa2a2cf4703a4c75cc040763d3",
+  "acceptedAt": "2026-09-11",
+  "components": [
+    {
+      "id": "zero-lancer-p1-static-skinned-v1",
+      "variant": "P1",
+      "sha256": "01ff056d74c9457865b04a88dc69bc1a2325750ad418f7900fd831c5ed778308",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "reviewedViews": ["front", "back", "isometric"],
+      "limitationsAccepted": [
+        "No native animation, morph or particle resources.",
+        "No GGD hero binding, runtime switching, default selection or deployment."
+      ]
+    },
+    {
+      "id": "zero-lancer-p2-static-skinned-v1",
+      "variant": "P2",
+      "sha256": "112f245d85a51f772afd6339ee56783292b6cfdd04fad2a3aa9e803c623125a6",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "reviewedViews": ["front", "back", "isometric"],
+      "limitationsAccepted": [
+        "No native animation, morph or particle resources.",
+        "No GGD hero binding, runtime switching, default selection or deployment."
+      ]
+    }
+  ]
+}

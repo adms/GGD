@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.267,
+      "castTimeSec": 0.3,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -22,10 +22,10 @@
       ],
       "id": "b2-keyaru.e",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "麻醉單請勿填錯",
@@ -36,7 +36,7 @@
       "template": {
         "contentSha256": "sha256:7e5f6a5e7703ef8bb4d029d51abe1008f5e74b49fb7913edc9e9ee5394b4e539",
         "params": {
-          "castTimeSec": 0.267,
+          "castTimeSec": 0.3,
           "status": {
             "duration": 2.5,
             "silenced": true,
@@ -52,10 +52,11 @@
           "vfxKey": "fx.prim.arcane.pulse-sm"
         }
       ],
-      "icon": "assets/icons/abilities/b2-keyaru.e.webp"
+      "icon": "assets/icons/abilities/b2-keyaru.e.webp",
+      "castTimeTier": "中"
     },
     "Q": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "self",
       "cooldown": [
         15.0,
@@ -82,10 +83,10 @@
       ],
       "id": "b2-keyaru.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "醫生先給自己掛號",
@@ -103,7 +104,7 @@
               180
             ]
           },
-          "castTimeSec": 0.067,
+          "castTimeSec": 0.1,
           "target": "self"
         },
         "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"
@@ -115,10 +116,11 @@
           "vfxKey": "fx.prim.wind.pulse-sm"
         }
       ],
-      "icon": "assets/icons/abilities/b2-keyaru.q.webp"
+      "icon": "assets/icons/abilities/b2-keyaru.q.webp",
+      "castTimeTier": "小"
     },
     "R": {
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -155,9 +157,9 @@
       ],
       "id": "b2-keyaru.r",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "maxRank": 3,
       "name": "門診加號先救人",
@@ -179,7 +181,7 @@
                   180
                 ]
               },
-              "castTimeSec": 0.067,
+              "castTimeSec": 0.1,
               "target": "ally"
             },
             "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6"
@@ -187,7 +189,7 @@
           {
             "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
             "params": {
-              "castTimeSec": 0.067,
+              "castTimeSec": 0.1,
               "castType": "targeted",
               "effects": [
                 {
@@ -219,10 +221,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-keyaru.r.webp"
+      "icon": "assets/icons/abilities/b2-keyaru.r.webp",
+      "castTimeTier": "小"
     },
     "W": {
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         45.0,
@@ -262,10 +265,10 @@
       ],
       "id": "b2-keyaru.w",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "病歷換職災保險",
@@ -277,7 +280,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.467,
+          "castTimeSec": 0.5,
           "castType": "targeted",
           "effects": [
             {
@@ -319,7 +322,8 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-keyaru.w.webp"
+      "icon": "assets/icons/abilities/b2-keyaru.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "mage",
@@ -345,8 +349,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 6,
     "range": 1.6
@@ -361,13 +365,13 @@
     "as": 0,
     "healthRegen": 0.08789387755102042,
     "manaRegen": 0,
-    "maxHealth": 35.000204081632646,
-    "maxMana": 0.9581632653061187,
+    "maxHealth": 80,
+    "maxMana": 50,
     "mr": 2.1118367346938776
   },
   "msGrowthTier": "極小",
   "id": "b2-keyaru",
-  "modelKey": "ou99.458777",
+  "modelKey": "version.body.10009b090c7d3728ebd4464f2941b23927408d67e5b11334",
   "name": "凱亞爾",
   "origin": "法鬥",
   "passiveAbility": "b2-keyaru.passive",
@@ -382,5 +386,101 @@
   "tags": [
     "magic"
   ],
-  "icon": "assets/icons/champions/b2-keyaru.webp"
+  "icon": "assets/icons/champions/b2-keyaru.webp",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.d7f1075b4233ade0f0eebae0b05ec169a7c15be38a9bd2ac",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.458777",
+      "modelSha256": "61c2071c2bee6ea5e2f448ff2fff444770ab8ced950f5b27fd08f50e2197ff41",
+      "binarySha256": "29b47dab36b37ac7759f1c352f8f7ecd1cecae91a7dfdf7d9b265dd4641abefa",
+      "registeredAt": "2026-09-12T23:11:57.608Z",
+      "source": {
+        "kind": "previous",
+        "character": "凱亞爾",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.458777.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.f1d5943378389229bc6c6f660d8c8742fff86e2b71608576",
+      "label": "假面绅士（論壇相似模型）",
+      "sourceModelKey": "ou99.458777-standard-v3",
+      "modelSha256": "a83d9253f3a1e9eea87c6a65da07f4646dafa33b359b49ce84c71954d85bd431",
+      "binarySha256": "dc9feac3209d03e7a1d0d180c747a7de3d6d5f1d1636cc316ac61e0f750a5ff7",
+      "registeredAt": "2026-09-12T23:11:57.614Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "假面绅士",
+        "work": "來源作品待核；論壇標題：假面绅士",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-458777-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.78d209fa79b12a8039e407aa0ce6b08f048962f5cf8c34e1",
+      "label": "李小狼",
+      "sourceModelKey": "community.body.254939f52834569ec9f6a8fd37ecb28166c863234681a8e4",
+      "modelSha256": "cf3a4841ea39ead45f22c5f8a429b119730dd96011f9e7bb35fa2157ab5802cc",
+      "binarySha256": "006c5ac88d04d71cc30e2bb7769e3e5ad0be0bf67af84ea5cdb367335a1d56dc",
+      "registeredAt": "2026-09-12T23:11:57.721Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "李小狼",
+        "work": "TSUBASA 翼／翼年代記",
+        "library": "300heroes",
+        "reference": "300heroes:f1660efeba7e0630c361c814",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.10009b090c7d3728ebd4464f2941b23927408d67e5b11334",
+      "label": "假面绅士（論壇相似模型）",
+      "sourceModelKey": "ou99.458777-standard-v3",
+      "modelSha256": "42cbabc461e9b5f3467855b94be7e8ac984ba99103bee200dff70b0bbf216f46",
+      "binarySha256": "dc9feac3209d03e7a1d0d180c747a7de3d6d5f1d1636cc316ac61e0f750a5ff7",
+      "registeredAt": "2026-09-13T00:09:01.554Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "假面绅士",
+        "work": "來源作品待核；論壇標題：假面绅士",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-458777-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.e4719d30e3ce41754cc3f6ecde045caade836529ea6c1e3f",
+      "label": "李小狼",
+      "sourceModelKey": "community.body.254939f52834569ec9f6a8fd37ecb28166c863234681a8e4",
+      "modelSha256": "2284aebc3a7d8b2ed2cf615ca9a05015da228d3047e65e23e50c1601ea473009",
+      "binarySha256": "006c5ac88d04d71cc30e2bb7769e3e5ad0be0bf67af84ea5cdb367335a1d56dc",
+      "registeredAt": "2026-09-13T00:09:01.664Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "李小狼",
+        "work": "TSUBASA 翼／翼年代記",
+        "library": "300heroes",
+        "reference": "300heroes:f1660efeba7e0630c361c814",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

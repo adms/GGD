@@ -177,19 +177,24 @@ volatile receipts and are never compiled into the Editor as constants.
 ## Contract gates
 
 The branch does not use the old `required = 546` count as a constant. Current
-generated truth is:
+generated truth is (written by `pnpm editorcov:build` in the same run as the
+coverage JSON; `pnpm editorcov:check` goes red when this block is stale — do not
+hand-edit between the markers):
 
+<!-- BEGIN GENERATED:editor-coverage-receipt -->
 ```text
-editor coverage fingerprint     270193f6df6c
-capability fingerprint          e9023124
-required cells                  5189
+editor coverage fingerprint     9879991dbf0f
+capability fingerprint          96994f3b
+required cells                  5276
+nested effect paths             462
 ```
+<!-- END GENERATED:editor-coverage-receipt -->
 
 The count includes `vfx-script@1`, the complete nested visual-document surface,
-and main's `effectFieldPath` axis: 454 nested effect paths such as
-`block.vfxId` and `amount.attrRatios.coeff`. The walker repair is tracked by
-[#888](https://github.com/adms/GGD/issues/888); do not hand-edit the generated
-coverage JSON.
+and main's `effectFieldPath` axis (the `nested effect paths` line above), with
+paths such as `block.vfxId` and `amount.attrRatios.coeff`. The walker repair is
+tracked by [#888](https://github.com/adms/GGD/issues/888); do not hand-edit the
+generated coverage JSON.
 
 Run the authoritative checks from the repository root:
 

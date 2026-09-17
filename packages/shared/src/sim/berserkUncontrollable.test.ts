@@ -130,7 +130,7 @@ describe("59-00 暴走：真的拿走方向盤 (GH#574)", () => {
     const nav2 = world.nav.get(id)!;
     expect(
       nav2.order,
-      "暴走中玩家的 order 還是被採納了 —— 方向盤沒有被拿走（OrderSystem 的 berserkDropsOrders 那一項還在嗎？）",
+      "暴走中玩家的 order 還是被採納了 —— 方向盤沒有被拿走（sim/steeringTaken.ts 的 berserkDropsOrders 那一項還在嗎？OrderSystem 還在呼叫它嗎？）",
     ).toBeNull();
     // ⚠️ 這一條讀的是**座標**，⛔ 不是旗標。GH#574 實測：`order` 是 null、
     //    `attackTarget` 是 null，而身體照樣把暴走**前**那個路點走完 ——

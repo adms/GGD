@@ -9,9 +9,9 @@
   "modelKey": "imported.pika",
   "missileSpeed": 36.7,
   "baseStats": {
-    "maxHealth": 100,
+    "maxHealth": 150,
     "healthRegen": 0.25,
-    "maxMana": 0,
+    "maxMana": 100,
     "manaRegen": 0.1,
     "ad": 6.0,
     "ap": 0,
@@ -26,9 +26,9 @@
     "range": 1.4
   },
   "growth": {
-    "maxHealth": 36.5673,
+    "maxHealth": 40,
     "healthRegen": 0.1281,
-    "maxMana": 37.7898,
+    "maxMana": 35,
     "manaRegen": 0.1234,
     "ad": 1.1828,
     "armor": 0.3985,
@@ -70,11 +70,11 @@
         30.0
       ],
       "manaCost": [
-        56.0,
-        56.0,
-        56.0,
-        56.0,
-        56.0
+        75.0,
+        75.0,
+        75.0,
+        75.0,
+        75.0
       ],
       "effects": [],
       "template": {
@@ -91,18 +91,19 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.133
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.lightning.nova",
       "targetsEnemies": true,
-      "radius": 6.0,
-      "castTimeSec": 1.133,
+      "radius": 6,
+      "castTimeSec": 1,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "極小",
       "manaCostTier": "極小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "castTimeTier": "極大"
     },
     "W": {
       "id": "godie-o00k.w",
@@ -121,24 +122,25 @@
         15.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0,
+        0
       ],
       "effects": [],
       "vfxKey": "fx.prim.lightning.beam",
-      "castTimeSec": 0.467,
+      "castTimeSec": 0.5,
       "rangeTier": "極大",
       "range": 12,
       "cooldownTier": "小",
       "template": {
         "ref": "tpl-blink",
         "params": {
-          "castTimeSec": 0.467
+          "castTimeSec": 0.5
         }
-      }
+      },
+      "castTimeTier": "大"
     },
     "E": {
       "id": "godie-o00k.e",
@@ -156,10 +158,10 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [],
       "template": {
@@ -176,18 +178,19 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 2.267
+          "castTimeSec": 1
         }
       },
       "vfxKey": "fx.prim.lightning.nova",
       "targetsEnemies": true,
-      "radius": 8.0,
-      "castTimeSec": 2.267,
+      "radius": 8,
+      "castTimeSec": 1,
       "rangeTier": "中",
       "range": 6,
       "cooldownTier": "中",
       "manaCostTier": "小",
-      "radiusTier": "大"
+      "radiusTier": "大",
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-o00k.r",
@@ -204,9 +207,9 @@
         60.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0
       ],
       "range": 0,
       "effects": [
@@ -220,14 +223,14 @@
           "kind": "chainLightning",
           "shape": "circle",
           "centre": "point",
-          "radius": 6.0,
+          "radius": 6,
           "maxSources": 20,
           "damageType": "magic",
           "amount": {
             "damageTier": "小"
           },
           "jumps": 16,
-          "jumpRange": 24.0,
+          "jumpRange": 24,
           "decay": 0.9,
           "jumpIntervalSec": 0.05,
           "radiusTier": "中"
@@ -235,11 +238,12 @@
       ],
       "vfxKey": "fx.prim.lightning.beam-lg",
       "targetsEnemies": true,
-      "radius": 6.0,
+      "radius": 6,
       "castTimeSec": 0.5,
       "cooldownTier": "中",
       "manaCostTier": "小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

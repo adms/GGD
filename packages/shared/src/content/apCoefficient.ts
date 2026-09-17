@@ -78,6 +78,17 @@ export interface ApCoefficientConfig {
    * `true` ⇒ 那 1 個節點真的有 3 個值，於是它在母體裡就是 3 列。
    */
   readonly keepAuthoredPerRankAp?: boolean;
+  /**
+   * ⭐ **係數取整的粒度**（GH#1260 B4）—— 公式算完之後，係數靠到最近的一格。
+   *
+   * owner 2026-08-13 01:35（逐字）：「我講一個影響大的，就是你計算的位數太多了，我建議最多取小數點兩位就好」
+   * ⇒ 出貨 `0.01`（＝卡面上的 `{{ap}}` 是整數 %）。
+   *
+   * ⭐ **一鍵 rollback**：填 `0.0001` ⇒ 逐位元回到取整之前（四位小數）的行為。
+   * ⚠️ 實際取的格子是 `1 ÷ round(1 ÷ 這一格)` —— 填 1 的整數分之一（0.01 · 0.05 · 0.1 · 0.0001）才會剛好是那一格。
+   * ⚠️ 缺席（還沒重打包的 bundle／舊的後台覆蓋層）⇒ 用 `DEFAULT_AP_COEFFICIENT` 的值。
+   */
+  readonly roundStep?: number;
   readonly baseTierCompensation: {
     readonly enabled: boolean;
     readonly byDamageTier: Readonly<Record<SkillTierName, number>>;
@@ -129,6 +140,8 @@ export const DEFAULT_AP_COEFFICIENT: ApCoefficientConfig = Object.freeze({
   // ⭐ GH#1105 的 B —— 出貨 `false` ＝「AP 係數是單一值」（＝今天的行為，逐位元不變）。
   //   ⭐ `true` 是 owner 的一鍵 rollback：逐階手填不一致的節點保留作者寫的階梯。
   keepAuthoredPerRankAp: false,
+  // ⭐ GH#1260 B4 —— owner 2026-08-13「最多取小數點兩位就好」。rollback：0.0001（＝取整之前的四位小數）。
+  roundStep: 0.01,
   // ⭐⭐ 觸發頻率的三把尺（GH#939）—— owner 2026-09-02 **逐字核准的 15 個數字**：
   //   「我贊同你的新三類五級距（普攻 0.10/0.16/0.33/0.70/1.00 ·
   //    技能 0.30/0.50/0.60/0.80/1.00 · 特殊條件 0.50/0.60/1.20/3.00/7.00）」
@@ -266,7 +279,19 @@ export function resolveApCoeff(
   if (!c.enabled) return null;
   const t = apCoeffTerms(i, c);
   const prod = t["cooldown"]! * t["castTime"]! * t["range"]! * t["shape"]! * t["condition"]! * t["baseComp"]! * t["multiHit"]!;
-  return Math.round(c.base * c.globalMult * prod * 10000) / 10000;
+  return roundApCoeff(c.base * c.globalMult * prod, c.roundStep ?? DEFAULT_AP_COEFFICIENT.roundStep!);
+}
+
+/**
+ * ⭐ **係數取整的唯一住處**（GH#1260 B4）—— 靠到 `1 ÷ round(1 ÷ step)` 的最近一格。
+ * ⭐ 寫成「乘 k、取整、除 k」（⛔ 不是 `round(x ÷ step) × step`）：`step = 0.0001` 時 k 剛好是 10000，
+ *   ⇒ 與取整之前的 `Math.round(x × 10000) ÷ 10000` **逐位元相同**（那就是 rollback）。
+ * ⚠️ 一個正的係數**不會被取成 0** —— 0 的意思是「不吃 AP」，那是另一件事 ⇒ 最少留一格。
+ */
+export function roundApCoeff(raw: number, step: number): number {
+  const k = Math.max(1, Math.round(1 / step));
+  const v = Math.round(raw * k) / k;
+  return raw > 0 && v <= 0 ? 1 / k : v;
 }
 
 /**

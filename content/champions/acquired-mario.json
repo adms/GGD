@@ -1,0 +1,378 @@
+{
+  "id": "acquired-mario",
+  "name": "Mario",
+  "description": "以火球牽制、跳躍踩踏與披風推移作戰的管線專家；跳躍存硬幣，EX 換一份防護午餐。這次公主不在另一張地圖。\n\n概念來源：Super Mario／超級瑪利歐 Mario／瑪利歐\nhttps://www.smashbros.com/en_US/fighter/index.html\n\n本遊戲改編：\n• 硬幣是本英雄的短效連動標記，不更動金幣經濟或額外生命。\n• 披風只推移與短時繳械，不反射投射物；跳躍不保證越牆，沒有碰觸即死或踩踏即殺。\n• R 是向前火焰判定，不生成大型火球角色或改變模型體型。\n\n採用所選 GGD 模型與特效。 目前使用已核准 GGD 替代模型 imported.linkstik；來源本尊缺六動作，之後以獨立模型版本替換，不覆寫此版。",
+  "role": "fighter",
+  "attackType": "melee",
+  "archetype": "fighter",
+  "origin": "鬥士",
+  "modelKey": "imported.linkstik",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.6,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 8,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 35.000204081632646,
+    "healthRegen": 0.13085306122448978,
+    "maxMana": 26.357142857142858,
+    "manaRegen": 0,
+    "ad": 4.289142857142858,
+    "as": 0,
+    "mr": 2.639795918367347,
+    "armor": 0.4578979591836735,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 18,
+    "agi": 29,
+    "int": 13,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "AGI",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "acquired-mario.q",
+      "name": "火球通管",
+      "provenance": "editor-json",
+      "description": "射出一發火彈，命中造成小級魔法傷害；不額外保證地面反彈。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "radius": 3,
+      "rangeTier": "大",
+      "cooldownTier": "極小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.bolt",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "skillshot",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "spawnProjectile",
+              "projectileId": "imported.bolt",
+              "onHit": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/acquired-mario.q.webp"
+    },
+    "W": {
+      "id": "acquired-mario.w",
+      "name": "披風請讓路",
+      "provenance": "editor-json",
+      "description": "推開近處指定敵人 2 單位並繳械 0.6 秒；對方仍能移動和施法。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 3,
+      "radius": 3,
+      "rangeTier": "極小",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "knockback",
+          "distance": 2,
+          "speed": 10,
+          "from": "caster",
+          "subtractGap": false,
+          "uncontrollable": false
+        },
+        {
+          "kind": "applyStatus",
+          "sourceScope": "caster",
+          "statusId": "acquired-mario.cape",
+          "duration": 0.6,
+          "applyTo": "target",
+          "disarmed": true
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "targeted",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "knockback",
+              "distance": 2,
+              "speed": 10,
+              "subtractGap": false,
+              "from": "caster",
+              "uncontrollable": false
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "acquired-mario.cape",
+              "duration": 0.6,
+              "sourceScope": "caster",
+              "applyTo": "target",
+              "disarmed": true
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/acquired-mario.w.webp"
+    },
+    "E": {
+      "id": "acquired-mario.e",
+      "name": "水管工落地章",
+      "provenance": "editor-json",
+      "description": "短躍至落點，落地造成小級物理範圍傷害；沒有踩死判定。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 4.5,
+      "radius": 3,
+      "rangeTier": "小",
+      "cooldownTier": "中",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "mode": "toPoint",
+          "apexHeight": 1.2,
+          "durationSec": 0.45,
+          "landRadius": 3,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "damageTier": "小"
+              }
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "ground",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "leap",
+              "mode": "toPoint",
+              "apexHeight": 1.2,
+              "durationSec": 0.45,
+              "landRadius": 1.5,
+              "onLand": [
+                {
+                  "kind": "damage",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "小"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "icon": "assets/icons/abilities/acquired-mario.e.webp"
+    },
+    "R": {
+      "id": "acquired-mario.r",
+      "name": "終極火焰報價",
+      "provenance": "editor-json",
+      "description": "向面前 6 單位直線噴出大級魔法火焰；命中者減速 30% 持續 1.2 秒。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        600.0,
+        600.0,
+        600.0
+      ],
+      "manaCostTier": "大",
+      "range": 0.0,
+      "radius": 3,
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "大"
+          },
+          "length": 6,
+          "width": 1,
+          "aim": "facing",
+          "fromCaster": true,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "sourceScope": "caster",
+              "statusId": "acquired-mario.hot",
+              "duration": 1.2,
+              "applyTo": "target",
+              "moveSpeedMult": 0.7
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damageLine",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "大"
+              },
+              "length": 6,
+              "width": 1,
+              "aim": "facing",
+              "fromCaster": true,
+              "includeOrigin": true,
+              "onHitTargets": [
+                {
+                  "kind": "applyStatus",
+                  "statusId": "acquired-mario.hot",
+                  "duration": 1.2,
+                  "sourceScope": "caster",
+                  "applyTo": "target",
+                  "moveSpeedMult": 0.7
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/acquired-mario.r.webp"
+    }
+  },
+  "exAbility": "acquired-mario.ex",
+  "passiveAbility": "acquired-mario.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "fist"
+  ],
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/acquired-mario.webp"
+}

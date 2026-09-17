@@ -26,9 +26,9 @@
     "range": 8.2
   },
   "growth": {
-    "maxHealth": 61.4731,
+    "maxHealth": 60,
     "healthRegen": 0.2062,
-    "maxMana": 35.0857,
+    "maxMana": 35,
     "manaRegen": 0.1926,
     "ad": 1.9592,
     "armor": 0.6926,
@@ -68,9 +68,9 @@
         15.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [
@@ -80,12 +80,12 @@
           "preset": "tpl-locust-orb",
           "modelKey": "imported.oblivionaura",
           "count": 2,
-          "distance": 1.0,
+          "distance": 1,
           "soundKey": "wc3.blademasterwhirlwind"
         }
       ],
       "vfxKey": "fx.prim.wind.nova",
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "cooldownTier": "小",
       "template": {
         "ref": "tpl-heal",
@@ -93,9 +93,9 @@
           "target": "self",
           "amount": {
             "perRank": [
-              150.0,
-              150.0,
-              150.0
+              150,
+              150,
+              150
             ],
             "ratios": [
               {
@@ -104,9 +104,10 @@
               }
             ]
           },
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         }
-      }
+      },
+      "castTimeTier": "小"
     },
     "W": {
       "id": "godie-etyr.w",
@@ -118,16 +119,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0.0,
       "effects": [],
@@ -192,7 +193,8 @@
             ]
           }
         ]
-      }
+      },
+      "castTimeTier": "極小"
     },
     "E": {
       "id": "godie-etyr.e",
@@ -210,17 +212,17 @@
         30.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.holy.explosion",
       "targetsEnemies": true,
-      "radius": 6.0,
-      "castTimeSec": 1.133,
+      "radius": 6,
+      "castTimeSec": 1,
       "template": {
         "ref": "tpl-orbit-array",
         "params": {
@@ -237,12 +239,13 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 1.133
+          "castTimeSec": 1
         }
       },
       "cooldownTier": "極小",
       "manaCostTier": "小",
-      "radiusTier": "中"
+      "radiusTier": "中",
+      "castTimeTier": "極大"
     },
     "R": {
       "id": "godie-etyr.r",
@@ -259,9 +262,9 @@
         30.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0
       ],
       "effects": [
         {
@@ -298,8 +301,9 @@
       "rangeTier": "大",
       "range": 8,
       "cooldownTier": "極小",
-      "castTimeSec": 0.667,
-      "manaCostTier": "小"
+      "castTimeSec": 0.5,
+      "manaCostTier": "小",
+      "castTimeTier": "大"
     }
   },
   "skillOrder": [

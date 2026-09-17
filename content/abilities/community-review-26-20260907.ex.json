@@ -12,17 +12,17 @@
   ],
   "cooldownTier": "大",
   "manaCost": [
-    448.0
+    600.0
   ],
   "manaCostTier": "大",
   "range": 4.5,
-  "castTimeSec": 1.633,
+  "castTimeSec": 1,
   "effects": [
     {
       "kind": "leap",
       "applyTo": "target",
       "mode": "toPoint",
-      "apexHeight": 0.005,
+      "apexHeight": 0,
       "durationSec": 0.45,
       "throwDistance": 2.2,
       "dragToCaster": true,
@@ -51,5 +51,6 @@
     }
   ],
   "icon": "assets/icons/abilities/community-review-26-20260907.ex.webp",
-  "rangeTier": "小"
+  "rangeTier": "小",
+  "castTimeTier": "極大"
 }

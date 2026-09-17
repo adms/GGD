@@ -14,10 +14,10 @@
   ],
   "cooldownTier": "極大",
   "manaCost": [
-    112.0,
-    112.0,
-    112.0,
-    112.0
+    150.0,
+    150.0,
+    150.0,
+    150.0
   ],
   "manaCostTier": "小",
   "effects": [],
@@ -34,7 +34,7 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 1.633
+      "castTimeSec": 1
     }
   },
   "vfxKey": "fx.w3x.particle.heronarutos4effect.p00",
@@ -52,7 +52,8 @@
   "targetsEnemies": true,
   "schema": "ability@1",
   "icon": "assets/icons/abilities/godie-hvwd.e.png",
-  "castTimeSec": 1.633,
+  "castTimeSec": 1,
   "rangeTier": "極大",
-  "range": 12
+  "range": 12,
+  "castTimeTier": "極大"
 }

@@ -1,0 +1,76 @@
+{
+  "schema": "ggd.rezero-rem-material-preserving-decimation-validation@1",
+  "candidate": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-rem-material-preserving-decimation-v1/candidates/rem-weighted-7990.glb",
+    "bytes": 1041264,
+    "sha256": "c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47"
+  },
+  "source": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/rezero-subaru-rem-emilia-felix-thunderstore-0.1.1-receipt-v2/final/rem/body.glb",
+    "bytes": 1173224,
+    "sha256": "5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93",
+    "triangles": 18328
+  },
+  "ggdInspection": {
+    "triangles": 7986,
+    "drawPrimitives": 1,
+    "skinnedPrimitives": 1,
+    "skinCount": 1,
+    "joints": [
+      151
+    ],
+    "textureCount": 1,
+    "textures": [
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 39807,
+        "sha256": "ae97a16848697f1adcab3fd5b93ea1cd9997b19e78b3bd512fe8018d94966911"
+      }
+    ],
+    "clipCount": 0,
+    "clips": [],
+    "budget": {
+      "errors": [],
+      "warnings": []
+    }
+  },
+  "khronosIssues": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "finiteFloatAccessors": {
+    "passed": true,
+    "accessorCount": 5,
+    "valueCount": 184720
+  },
+  "skinning": {
+    "jointAccessor": {
+      "componentType": 5123,
+      "count": 15192
+    },
+    "weightAccessor": {
+      "componentType": 5126,
+      "count": 15192
+    },
+    "minJoint": 0,
+    "maxJoint": 150,
+    "maxInfluences": 4,
+    "maxWeightSumError": 4.470348358154297e-8
+  },
+  "policy": {
+    "decimationTriggerTriangles": 10000,
+    "targetTrianglesExclusive": 8000,
+    "satisfiesFormalDecimationTarget": true
+  },
+  "structuralValidationPassed": true,
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false,
+  "deploymentVerified": false,
+  "validator": "gltf-validator@2.0.0-dev.3.10"
+}

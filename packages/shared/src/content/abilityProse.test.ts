@@ -261,6 +261,37 @@ describe("技能說明從 JSON 推導（說明推導（票號待開））", () =
     }
     expect(bad.join("\n"), `⛔ 台詞被改寫了：\n${bad.join("\n")}`).toBe("");
   });
+
+  /**
+   * ⭐ GH#1260 B3 修正輪 —— 社群 37 名的 Q/W/E/R 卡面 ＝ **匯入器上游**（recipe `effectiveHero` 卡面，
+   * `tools/ship-81/gen.py::ability_docs()` 原樣帶入）經**唯一正規化器**（`prose:build` 呼叫的同一支）。
+   * ⇒ 重跑匯入器鏈得到的就是出貨卡面。⛔ 手改匯入器產出（B3 第一版改了 5 張）會被下一次匯入打回 ——
+   *   這一條當場紅並指名。⚠️ 第二批 `b2-*` 的上游編譯稿在 repo 外 ⇒ ⛔ 不在這條的母體裡。
+   */
+  it("⑤ 社群 Q/W/E/R 卡面 ＝ recipe 上游經唯一正規化器（重跑匯入器不會打回）", () => {
+    const dir = join(CONTENT, "../materials/community-hero-forge/recipes");
+    const bad: string[] = [];
+    let n = 0;
+    let normalized = 0;
+    for (const f of readdirSync(dir).filter((x) => x.endsWith(".upload-recipe.json"))) {
+      const recipe = JSON.parse(readFileSync(join(dir, f), "utf8")) as {
+        effectiveHero?: { abilities?: Record<string, { id: string; description?: string }> };
+      };
+      for (const a of Object.values(recipe.effectiveHero?.abilities ?? {})) {
+        const def = Abilities.tryGet(a.id as never);
+        const shipped = (JSON.parse(readFileSync(join(CONTENT, "abilities", `${a.id}.json`), "utf8")) as { description?: string })
+          .description;
+        const up = a.description ?? "";
+        const next = def === undefined ? up : placeholderizeAbilityText(up, abilityQuantities(def, tables)).next;
+        n++;
+        if (next !== up) normalized++;
+        if (next !== shipped) bad.push(`  ${a.id}：正規化器給「${next}」，出貨是「${shipped}」`);
+      }
+    }
+    expect(n, "⛔ 一張 recipe 卡面都沒讀到 —— 母體塌了").toBeGreaterThan(0);
+    expect(normalized, "⛔ 沒有一張需要正規化 —— 這條量不到正規化器").toBeGreaterThan(0);
+    expect(bad.join("\n"), `⛔ 出貨卡面不是上游經正規化器的樣子 ⇒ 下一次重跑匯入器會打回：\n${bad.join("\n")}`).toBe("");
+  });
 });
 
 describe("算繪與轉檔（純函式）", () => {

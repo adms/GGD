@@ -1,0 +1,501 @@
+{
+  "schema": "ggd-backend-model-version-prepare@1",
+  "method": "Actual ModelVersions.prepare using isolated copies; writeArtifacts never called",
+  "stageRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/haga-native-visibility-20260910/backend-prepare-content",
+  "sourceHeroSha256": "f8948202d3796fcaede72e863e52c07d429d2572bd9b5781aaaa84755e43c398",
+  "command": {
+    "action": "register",
+    "expectedHash": "sha256:2c6e244749888fb2d2a129377cd5ad5d27da99c9f4cf6deee65def6e6a01765d",
+    "sourceModelKey": "ou99.495015-native-visibility-v1",
+    "label": "海星动画人（論壇相似模型）（原生顯隱修復 v1）",
+    "source": {
+      "kind": "style-proxy",
+      "character": "海星动画人",
+      "work": "來源作品待核；論壇標題：海星动画人",
+      "library": "ou99",
+      "reference": "https://www.ou99.com/thread-495015-1-1.html",
+      "tier": "w3x",
+      "selectionClass": "similar-proxy"
+    },
+    "automaticEligible": true
+  },
+  "preparedChampion": {
+    "id": "b2-haga",
+    "name": "羽賀",
+    "description": "這個世界漏洞百出｜把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，角色辨識元素與招式創編分開。",
+    "role": "fighter",
+    "attackType": "ranged",
+    "archetype": "fighter",
+    "origin": "軟輔",
+    "modelKey": "version.body.2a3da69396363bcbc722d055c9dfa326f2b22d06cb963cee",
+    "modelVersions": [
+      {
+        "modelKey": "version.body.2226d94021dd15a4fb18d9e3f3793f1f20f546b4d88f403b",
+        "label": "原上線模型",
+        "sourceModelKey": "ou99.495015",
+        "modelSha256": "3f801131b205b73083e3c263deac7f419fe31606c9715fcdae7d90033b764216",
+        "binarySha256": "981134292fed0b71c90169cf15ef258874cccb78f0eb688037e6ccb699c6ebd3",
+        "registeredAt": "2026-09-10T14:45:38.603Z",
+        "source": {
+          "kind": "previous",
+          "character": "羽賀",
+          "work": "原上線內容",
+          "library": "GGD",
+          "reference": "models/ou99.495015.json",
+          "tier": "original"
+        }
+      },
+      {
+        "modelKey": "version.body.e7f8a4540c3340628f1d59d2f1f80ef5381a4a341e6d6dbc",
+        "label": "海星动画人（論壇相似模型）",
+        "sourceModelKey": "ou99.495015-standard",
+        "modelSha256": "21aa3826a40a9f8c90adc3a397b6db801227615cb834321dd0072c18a619a9f9",
+        "binarySha256": "52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d",
+        "registeredAt": "2026-09-10T14:45:38.610Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "海星动画人",
+          "work": "來源作品待核；論壇標題：海星动画人",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-495015-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": true
+      },
+      {
+        "modelKey": "version.body.b0671ff19471beb4202efd2f4c96f51ac6096e47505e4ac7",
+        "label": "坂本",
+        "sourceModelKey": "community.body.3c2b306a339fbc0f91eb516117aeb8f86c917b5f4ac10ff2",
+        "modelSha256": "d942179057d0a1e6a6cafbfc758088571f218f7196bbdd5f009ec6a5139a308e",
+        "binarySha256": "d256da7e1533e2287deddc6ac4898407544c866c0992447042ee27de99a1432d",
+        "registeredAt": "2026-09-10T14:45:38.714Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "坂本",
+          "work": "在下坂本，有何貴幹？",
+          "library": "300heroes",
+          "reference": "300heroes:62413511bf6cb6a428c2821a",
+          "tier": "300heroes",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": false
+      },
+      {
+        "modelKey": "version.body.2a3da69396363bcbc722d055c9dfa326f2b22d06cb963cee",
+        "label": "海星动画人（論壇相似模型）（原生顯隱修復 v1）",
+        "sourceModelKey": "ou99.495015-native-visibility-v1",
+        "modelSha256": "566753e73cc97d16af0418ebf8527b7779a66907ff3f2cdfc217390d184bdcba",
+        "binarySha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515",
+        "registeredAt": "2026-09-10T15:34:44.596Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "海星动画人",
+          "work": "來源作品待核；論壇標題：海星动画人",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-495015-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": true
+      }
+    ],
+    "modelSelectionMode": "automatic",
+    "baseStats": {
+      "ad": 32,
+      "ap": 18,
+      "armor": 0,
+      "as": 0.7,
+      "cdr": 0,
+      "critChance": 0,
+      "critDamage": 1.75,
+      "healthRegen": 0.97,
+      "lifesteal": 0,
+      "manaRegen": 1.41,
+      "maxHealth": 541,
+      "maxMana": 370,
+      "mr": 0,
+      "ms": 6,
+      "range": 8.2
+    },
+    "growth": {
+      "ad": 2.220326530612245,
+      "ap": 0,
+      "armor": 0.4212959183673469,
+      "as": 0,
+      "healthRegen": 0.1168285714285714,
+      "manaRegen": 0,
+      "maxHealth": 10.305102040816323,
+      "maxMana": 6.564285714285716,
+      "mr": 2.1118367346938776
+    },
+    "msGrowthTier": "極小",
+    "attributes": {
+      "str": 21,
+      "agi": 20,
+      "int": 19,
+      "strGrowth": 1.99,
+      "agiGrowth": 1.89,
+      "intGrowth": 1.83,
+      "primary": "STR",
+      "source": "authored"
+    },
+    "abilities": {
+      "Q": {
+        "id": "b2-haga.q",
+        "name": "BUG-001截圖存證",
+        "provenance": "w3x-import",
+        "description": "「BUG-001截圖存證！」\n在敵人身上留下 camera-mark 4 秒（依施法者分開），本身不造成傷害、不取得全圖視野。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "Q",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 6,
+        "radius": 3,
+        "radiusTier": "極小",
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "applyStatus",
+            "sourceScope": "caster",
+            "statusId": "camera-mark",
+            "duration": 4,
+            "applyTo": "target"
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.467,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castTimeSec": 0.467,
+            "castType": "targeted",
+            "effects": [
+              {
+                "applyTo": "target",
+                "duration": 4,
+                "kind": "applyStatus",
+                "sourceScope": "caster",
+                "statusId": "camera-mark"
+              }
+            ],
+            "radius": 3,
+            "side": "enemies"
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "W": {
+        "id": "b2-haga.w",
+        "name": "跳到有我截圖的當事人",
+        "provenance": "w3x-import",
+        "description": "「跳到有我截圖的當事人！」\n指定自己留下 camera-mark 的當事人，才瞬移到他前 1.5 單位；未標記目標不位移。跨槽不使用只認同技能來源的 markedUnit。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "W",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 6,
+        "radius": 3,
+        "radiusTier": "極小",
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "blink",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "camera-mark",
+              "appliedBy": "self"
+            },
+            "shape": "single",
+            "to": "targetUnit",
+            "applyTo": "self",
+            "stopShortUnits": 1.5
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.467,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castTimeSec": 0.467,
+            "castType": "targeted",
+            "effects": [
+              {
+                "applyTo": "self",
+                "condition": {
+                  "appliedBy": "self",
+                  "kind": "status",
+                  "statusId": "camera-mark",
+                  "subject": "target"
+                },
+                "kind": "blink",
+                "shape": "single",
+                "stopShortUnits": 1.5,
+                "to": "targetUnit"
+              }
+            ],
+            "radius": 3,
+            "side": "enemies"
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "E": {
+        "id": "b2-haga.e",
+        "name": "先停止施法讓我重現",
+        "provenance": "w3x-import",
+        "description": "「先停止施法讓我重現！」\n先凍結重現環境：敵人 magic-break 沉默 2 秒，能走能普攻；這不是 stun。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "E",
+        "castType": "targeted",
+        "maxRank": 4,
+        "cooldown": [
+          45,
+          45,
+          45,
+          45
+        ],
+        "manaCost": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "range": 6,
+        "radius": 3,
+        "radiusTier": "極小",
+        "rangeTier": "中",
+        "cooldownTier": "小",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "applyStatus",
+            "statusId": "magic-break",
+            "duration": 2,
+            "applyTo": "target",
+            "silenced": true
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 0.467,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castTimeSec": 0.467,
+            "castType": "targeted",
+            "effects": [
+              {
+                "applyTo": "target",
+                "duration": 2,
+                "kind": "applyStatus",
+                "silenced": true,
+                "statusId": "magic-break"
+              }
+            ],
+            "radius": 3,
+            "side": "enemies"
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      },
+      "R": {
+        "id": "b2-haga.r",
+        "name": "測試結束回收增益與魔力",
+        "provenance": "w3x-import",
+        "description": "「測試結束回收增益與魔力！」\n移除敵人最多 2 項增益；若仍有 magic-break，回復自己最大魔力 10% 並消耗該標記。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：把敵人當重現步驟，把隊友當測試同事。GGD 惡搞改編，非原作招式與數值聲明。",
+        "slot": "R",
+        "castType": "targeted",
+        "maxRank": 3,
+        "cooldown": [
+          90,
+          90,
+          90
+        ],
+        "manaCost": [
+          0,
+          0,
+          0
+        ],
+        "range": 6,
+        "radius": 3,
+        "radiusTier": "極小",
+        "rangeTier": "中",
+        "cooldownTier": "大",
+        "targetsEnemies": true,
+        "effects": [
+          {
+            "kind": "dispel",
+            "shape": "single",
+            "pools": {
+              "shields": true,
+              "buffs": true
+            },
+            "polarity": "buff",
+            "count": 2,
+            "order": "newest"
+          },
+          {
+            "kind": "consumeStatus",
+            "shape": "single",
+            "statusId": "magic-break",
+            "count": "all",
+            "subject": "target",
+            "onConsumed": [
+              {
+                "kind": "restore",
+                "manaPct": 0.1,
+                "applyTo": "self"
+              }
+            ]
+          }
+        ],
+        "vfxKey": "fx.prim.arcane.pulse-sm",
+        "vfxLayers": [
+          {
+            "vfxKey": "fx.prim.arcane.pulse-sm",
+            "attachTo": "caster"
+          }
+        ],
+        "castTimeSec": 1.033,
+        "template": {
+          "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+          "params": {
+            "castTimeSec": 1.033,
+            "castType": "targeted",
+            "effects": [
+              {
+                "count": 2,
+                "kind": "dispel",
+                "order": "newest",
+                "polarity": "buff",
+                "pools": {
+                  "buffs": true,
+                  "shields": true
+                },
+                "shape": "single"
+              },
+              {
+                "count": "all",
+                "kind": "consumeStatus",
+                "onConsumed": [
+                  {
+                    "applyTo": "self",
+                    "kind": "restore",
+                    "manaPct": 0.1
+                  }
+                ],
+                "shape": "single",
+                "statusId": "magic-break",
+                "subject": "target"
+              }
+            ],
+            "radius": 3,
+            "side": "enemies"
+          },
+          "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+        }
+      }
+    },
+    "exAbility": "b2-haga.ex",
+    "passiveAbility": "b2-haga.passive",
+    "icon": "assets/icons/champions/b2-haga.webp",
+    "skillOrder": [
+      "Q",
+      "W",
+      "E",
+      "R"
+    ],
+    "buildPriority": [],
+    "tags": [],
+    "schema": "champion@1"
+  },
+  "artifacts": [
+    {
+      "document": {
+        "id": "version.body.2a3da69396363bcbc722d055c9dfa326f2b22d06cb963cee",
+        "schema": "model@1",
+        "glbPath": "assets/models/community/versions/70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515.glb",
+        "scale": 1,
+        "collisionRadius": 0.55,
+        "clipMap": {
+          "idle": "Stand",
+          "run": "Walk",
+          "attack": "Attack",
+          "cast": "Spell",
+          "hurt": "Stand Ready",
+          "death": "Death"
+        },
+        "bodyVersion": {
+          "sourceModelKey": "ou99.495015-native-visibility-v1",
+          "legacyAppearance": false
+        },
+        "yawOffsetDeg": 0
+      },
+      "version": {
+        "modelKey": "version.body.2a3da69396363bcbc722d055c9dfa326f2b22d06cb963cee",
+        "label": "海星动画人（論壇相似模型）（原生顯隱修復 v1）",
+        "sourceModelKey": "ou99.495015-native-visibility-v1",
+        "modelSha256": "566753e73cc97d16af0418ebf8527b7779a66907ff3f2cdfc217390d184bdcba",
+        "binarySha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515",
+        "registeredAt": "2026-09-10T15:34:44.596Z",
+        "source": {
+          "kind": "style-proxy",
+          "character": "海星动画人",
+          "work": "來源作品待核；論壇標題：海星动画人",
+          "library": "ou99",
+          "reference": "https://www.ou99.com/thread-495015-1-1.html",
+          "tier": "w3x",
+          "selectionClass": "similar-proxy"
+        },
+        "automaticEligible": true
+      },
+      "bytes": 658700,
+      "sha256": "70752c0f9056ee76741657630e2ef1081dee058e424fd8205a8a23cf57e2c515"
+    }
+  ],
+  "centralWrites": false
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "ggd-source-coverage-backup@1",
+  "uri": "s3://ggd-390630837668-ap-east-2-an/legacy/model-design-audits/20260911/432e8f570cc089fb47e7705ca63c3da723910817f0e0552ea4037248000f79c0.tar.gz",
+  "sha256": "432e8f570cc089fb47e7705ca63c3da723910817f0e0552ea4037248000f79c0",
+  "bytes": 290465,
+  "fileCount": 7,
+  "files": [
+    {
+      "path": "ggd-audit-dai-jump-source-coverage.py",
+      "bytes": 18598,
+      "sha256": "a0c1b785672ea116064e618caecffe220c441c0ea1fa67174c5f30cacaa4d21e"
+    },
+    {
+      "path": "ggd-audit-fate-kof-coverage.py",
+      "bytes": 23330,
+      "sha256": "e60cd64d45856e5189fd66b1ecd0539f3dc539543fe07ca5e7777242fc2bf24e"
+    },
+    {
+      "path": "ggd-backlog-resource-localization-review.json",
+      "bytes": 6966,
+      "sha256": "d50bb5ba73b9f585762331d96ffa7d54e03b31b682390dbef049f4f5e5229059"
+    },
+    {
+      "path": "ggd-dai-jump-source-coverage.json",
+      "bytes": 330322,
+      "sha256": "8b1b818e33a13bc32219ec3e2a540d11258b957608e719fbdc89982223a87067"
+    },
+    {
+      "path": "ggd-fate-kof-source-coverage.json",
+      "bytes": 1971227,
+      "sha256": "d085bdaeb9a8fd95fce42b8006fa18e528e932d9622f6e4d806255c7e15fcc1f"
+    },
+    {
+      "path": "ggd-merge-resource-coverage.py",
+      "bytes": 6672,
+      "sha256": "6009425d66e93811d9753d71b9abb021abd4ff3697ca3c4e94e385a0a15ed9da"
+    },
+    {
+      "path": "ggd-smash-palworld-source-coverage.json",
+      "bytes": 1630631,
+      "sha256": "66567f2efeb34290e1bdf6220a1d69c746433512a2d3382fc5ae38cefc92b1ac"
+    }
+  ],
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localDirectory": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/design-backlog-source-coverage-20260911",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/design-backlog-source-coverage-20260911/source-audits.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/design-backlog-source-coverage-20260911/readback.tar.gz",
+  "scope": "Source coverage audits and replay scripts only; not a new game payload or entire asset library backup."
+}

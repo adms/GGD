@@ -1,0 +1,1127 @@
+{
+  "schema": "ggd.source-fbx-analysis@1",
+  "sourceId": "iori-xv-raw",
+  "files": [
+    {
+      "sourcePath": "extracted-v1/Raw Files/Iori Yagami.fbx",
+      "sourceSha256": "a181f95de600298b443a332417c0d5db9109504cd8e2d3c60c42407629d4dbad",
+      "importResult": [
+        "FINISHED"
+      ],
+      "blenderVersion": "5.2.1 LTS",
+      "meshObjects": [
+        {
+          "name": "0000_IOR_BAS_BINDPOSE",
+          "vertices": 19097,
+          "triangles": 33696,
+          "materialSlots": [
+            "0000 MI_IOR_HAIR_P1"
+          ],
+          "vertexGroupCount": 11,
+          "weightedVertices": 19097,
+          "maxVertexInfluences": 4,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0001_IOR_BAS_BINDPOSE",
+          "vertices": 2182,
+          "triangles": 1248,
+          "materialSlots": [
+            "0001 MI_IOR_R_EYEBALL_BASE"
+          ],
+          "vertexGroupCount": 6,
+          "weightedVertices": 2182,
+          "maxVertexInfluences": 4,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0002_IOR_BAS_BINDPOSE",
+          "vertices": 2197,
+          "triangles": 1248,
+          "materialSlots": [
+            "0002 MI_IOR_L_EYEBALL_BASE"
+          ],
+          "vertexGroupCount": 2,
+          "weightedVertices": 2197,
+          "maxVertexInfluences": 1,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0003_IOR_BAS_BINDPOSE",
+          "vertices": 2182,
+          "triangles": 1248,
+          "materialSlots": [
+            "0003 MI_IOR_R_EYEBALL_RED"
+          ],
+          "vertexGroupCount": 6,
+          "weightedVertices": 2182,
+          "maxVertexInfluences": 4,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0004_IOR_BAS_BINDPOSE",
+          "vertices": 2197,
+          "triangles": 1248,
+          "materialSlots": [
+            "0004 MI_IOR_L_EYEBALL_RED"
+          ],
+          "vertexGroupCount": 2,
+          "weightedVertices": 2197,
+          "maxVertexInfluences": 1,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0005_IOR_BAS_BINDPOSE",
+          "vertices": 450,
+          "triangles": 676,
+          "materialSlots": [
+            "0005 MI_IOR_METAL_P1"
+          ],
+          "vertexGroupCount": 3,
+          "weightedVertices": 450,
+          "maxVertexInfluences": 3,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0006_IOR_BAS_BINDPOSE",
+          "vertices": 198,
+          "triangles": 288,
+          "materialSlots": [
+            "0006 MI_IOR_CORT_BELT_P1"
+          ],
+          "vertexGroupCount": 3,
+          "weightedVertices": 198,
+          "maxVertexInfluences": 3,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0007_IOR_BAS_BINDPOSE",
+          "vertices": 2572,
+          "triangles": 4240,
+          "materialSlots": [
+            "0007 MI_IOR_SHIRT_P1"
+          ],
+          "vertexGroupCount": 29,
+          "weightedVertices": 2572,
+          "maxVertexInfluences": 4,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0008_IOR_BAS_BINDPOSE",
+          "vertices": 3448,
+          "triangles": 5904,
+          "materialSlots": [
+            "0008 MI_IOR_BODY_P1"
+          ],
+          "vertexGroupCount": 45,
+          "weightedVertices": 3448,
+          "maxVertexInfluences": 4,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0009_IOR_BAS_BINDPOSE",
+          "vertices": 2271,
+          "triangles": 1176,
+          "materialSlots": [
+            "0009 MI_IOR_CORT_BUTTONS_P1"
+          ],
+          "vertexGroupCount": 17,
+          "weightedVertices": 2271,
+          "maxVertexInfluences": 4,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0010_IOR_BAS_BINDPOSE",
+          "vertices": 288,
+          "triangles": 144,
+          "materialSlots": [
+            "0010 MI_IOR_SHIRT_BUTTONS_P1"
+          ],
+          "vertexGroupCount": 4,
+          "weightedVertices": 288,
+          "maxVertexInfluences": 4,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0011_IOR_BAS_BINDPOSE",
+          "vertices": 1782,
+          "triangles": 988,
+          "materialSlots": [
+            "0011 MI_IOR_CORT_SLEEVE_P1"
+          ],
+          "vertexGroupCount": 10,
+          "weightedVertices": 1782,
+          "maxVertexInfluences": 4,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0012_IOR_BAS_BINDPOSE",
+          "vertices": 4371,
+          "triangles": 2526,
+          "materialSlots": [
+            "0012 MI_IOR_BELT_P1"
+          ],
+          "vertexGroupCount": 1,
+          "weightedVertices": 4371,
+          "maxVertexInfluences": 1,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0013_IOR_BAS_BINDPOSE",
+          "vertices": 1094,
+          "triangles": 1716,
+          "materialSlots": [
+            "0013 MI_IOR_BELT_P1"
+          ],
+          "vertexGroupCount": 5,
+          "weightedVertices": 1094,
+          "maxVertexInfluences": 4,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0014_IOR_BAS_BINDPOSE",
+          "vertices": 1193,
+          "triangles": 1792,
+          "materialSlots": [
+            "0014 MI_IOR_CORT_BELT_P1"
+          ],
+          "vertexGroupCount": 10,
+          "weightedVertices": 1193,
+          "maxVertexInfluences": 3,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0015_IOR_BAS_BINDPOSE",
+          "vertices": 790,
+          "triangles": 1188,
+          "materialSlots": [
+            "0015 MI_IOR_SHOES_P1"
+          ],
+          "vertexGroupCount": 4,
+          "weightedVertices": 790,
+          "maxVertexInfluences": 2,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0016_IOR_BAS_BINDPOSE",
+          "vertices": 2991,
+          "triangles": 5588,
+          "materialSlots": [
+            "0016 MI_IOR_PANTS_P1"
+          ],
+          "vertexGroupCount": 19,
+          "weightedVertices": 2991,
+          "maxVertexInfluences": 4,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0017_IOR_BAS_BINDPOSE",
+          "vertices": 5465,
+          "triangles": 9661,
+          "materialSlots": [
+            "0017 MI_IOR_CORT_P1"
+          ],
+          "vertexGroupCount": 43,
+          "weightedVertices": 5465,
+          "maxVertexInfluences": 4,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0018_IOR_BAS_BINDPOSE",
+          "vertices": 1734,
+          "triangles": 2638,
+          "materialSlots": [
+            "0018 MI_IOR_COAT_DMY_BASE"
+          ],
+          "vertexGroupCount": 43,
+          "weightedVertices": 1734,
+          "maxVertexInfluences": 4,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0019_IOR_BAS_BINDPOSE",
+          "vertices": 627,
+          "triangles": 1152,
+          "materialSlots": [
+            "0019 MI_IOR_METAL_P1"
+          ],
+          "vertexGroupCount": 1,
+          "weightedVertices": 627,
+          "maxVertexInfluences": 1,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0020_IOR_BAS_BINDPOSE",
+          "vertices": 733,
+          "triangles": 392,
+          "materialSlots": [
+            "0020 MI_IOR_GUMS_TONGUE_BASE"
+          ],
+          "vertexGroupCount": 5,
+          "weightedVertices": 733,
+          "maxVertexInfluences": 4,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0021_IOR_BAS_BINDPOSE",
+          "vertices": 2659,
+          "triangles": 2028,
+          "materialSlots": [
+            "0021 MI_IOR_TEETH_BASE"
+          ],
+          "vertexGroupCount": 2,
+          "weightedVertices": 2659,
+          "maxVertexInfluences": 1,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0022_IOR_BAS_BINDPOSE",
+          "vertices": 838,
+          "triangles": 1452,
+          "materialSlots": [
+            "0022 MI_IOR_HAIR_P1"
+          ],
+          "vertexGroupCount": 16,
+          "weightedVertices": 838,
+          "maxVertexInfluences": 3,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0023_IOR_BAS_BINDPOSE",
+          "vertices": 5234,
+          "triangles": 9914,
+          "materialSlots": [
+            "0023 MI_IOR_FACE_P1"
+          ],
+          "vertexGroupCount": 42,
+          "weightedVertices": 5234,
+          "maxVertexInfluences": 4,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0024_IOR_BAS_BINDPOSE",
+          "vertices": 164,
+          "triangles": 160,
+          "materialSlots": [
+            "0024 MI_IOR_BMM_EYEHIGHLIGHT_BASE"
+          ],
+          "vertexGroupCount": 1,
+          "weightedVertices": 164,
+          "maxVertexInfluences": 1,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        },
+        {
+          "name": "0025_IOR_BAS_BINDPOSE",
+          "vertices": 19095,
+          "triangles": 33696,
+          "materialSlots": [
+            "0025 MI_IOR_HAIR_P1"
+          ],
+          "vertexGroupCount": 11,
+          "weightedVertices": 19095,
+          "maxVertexInfluences": 4,
+          "shapeKeyCount": 0,
+          "armatureModifiers": [
+            "IOR_BAS_BINDPOSE"
+          ]
+        }
+      ],
+      "meshObjectCount": 26,
+      "vertices": 85852,
+      "triangles": 126007,
+      "armatures": [
+        {
+          "name": "IOR_BAS_BINDPOSE",
+          "bones": 241,
+          "boneNames": [
+            "Root",
+            "C_Base",
+            "C_Position",
+            "C_Hips",
+            "C_Spine1",
+            "C_Spine2",
+            "C_Chest",
+            "R_Collar01_Sec_Root",
+            "R_Collar02_Sec",
+            "R_Collar03_Tip_Sec",
+            "C_Necklace01_Sec_Root",
+            "C_Necklace02_Tip_Sec",
+            "L_Collar01_Sec_Root",
+            "L_Collar02_Sec",
+            "L_Collar03_Tip_Sec",
+            "L_Clavicle",
+            "L_Arm1",
+            "L_Arm2",
+            "L_Hand",
+            "L_Thumb1",
+            "L_Thumb2",
+            "L_Thumb3",
+            "L_Index1",
+            "L_Index2",
+            "L_Index3",
+            "L_Index4",
+            "L_Middle1",
+            "L_Middle2",
+            "L_Middle3",
+            "L_Middle4",
+            "L_Ring1",
+            "L_Ring2",
+            "L_Ring3",
+            "L_Ring4",
+            "L_Pinky1",
+            "L_Pinky2",
+            "L_Pinky3",
+            "L_Pinky4",
+            "L_Hand_Attach",
+            "L_Wrist",
+            "L_Arm2Helper",
+            "L_Arm2FrontHelper1",
+            "L_Arm2FrontHelper2",
+            "L_Wrist1",
+            "L_Wrist1FrontHelper",
+            "L_Wrist1BackHelper",
+            "L_Elbow",
+            "L_Elbow2",
+            "L_Arm1Helper",
+            "L_Arm1FrontHelper1",
+            "L_Arm1FrontHelper2",
+            "L_Shoulder",
+            "L_Shoulder2",
+            "R_Clavicle",
+            "R_Arm1",
+            "R_Arm2",
+            "R_Hand",
+            "R_Thumb1",
+            "R_Thumb2",
+            "R_Thumb3",
+            "R_Index1",
+            "R_Index2",
+            "R_Index3",
+            "R_Index4",
+            "R_Middle1",
+            "R_Middle2",
+            "R_Middle3",
+            "R_Middle4",
+            "R_Ring1",
+            "R_Ring2",
+            "R_Ring3",
+            "R_Ring4",
+            "R_Pinky1",
+            "R_Pinky2",
+            "R_Pinky3",
+            "R_Pinky4",
+            "R_Hand_Attach",
+            "R_Wrist",
+            "R_Arm2Helper",
+            "R_Arm2FrontHelper1",
+            "R_Arm2FrontHelper2",
+            "R_Wrist1",
+            "R_Wrist1FrontHelper",
+            "R_Wrist1BackHelper",
+            "R_Elbow",
+            "R_Elbow2",
+            "R_Arm1Helper",
+            "R_Arm1FrontHelper1",
+            "R_Arm1FrontHelper2",
+            "R_Shoulder",
+            "R_Shoulder2",
+            "C_Neck",
+            "C_Head",
+            "C_FaceRoot",
+            "L_Nose_FbU",
+            "R_Nose_FbU",
+            "C_Mouth_Upper_FbD",
+            "C_Forehead_FbU",
+            "R_Eyebrow_1_FbU",
+            "R_Eyebrow_2_FbU",
+            "R_Eyebrow_3_FbU",
+            "R_EyebrowHair_2_FbU",
+            "R_EyebrowHair_3_FbU",
+            "R_EyebrowHair_1_FbU",
+            "L_Eyebrow_1_FbU",
+            "L_Eyebrow_2_FbU",
+            "L_Eyebrow_3_FbU",
+            "L_EyebrowHair_2_FbU",
+            "L_EyebrowHair_3_FbU",
+            "L_EyebrowHair_1_FbU",
+            "L_LaughLine_Upper_FbD",
+            "R_LaughLine_Upper_FbD",
+            "L_Cheek_Upper_FbU",
+            "R_Cheek_Upper_FbU",
+            "L_EyeSocket_FbU",
+            "R_EyeSocket_FbU",
+            "L_Eyelid_Upper_FbU",
+            "L_Eyelash_Upper_FbU",
+            "R_Eyelid_Upper_FbU",
+            "R_Eyelash_Upper_FbU",
+            "L_Eyelid_Lower_FbU",
+            "L_Eyelash_Lower_FbU",
+            "R_Eyelid_Lower_FbU",
+            "R_Eyelash_Lower_FbU",
+            "R_EyeCorner_FbU",
+            "L_EyeCorner_FbU",
+            "C_Tooth_Upper_FbD",
+            "L_EyePos_FbU",
+            "L_Eye_FbU",
+            "L_Pupil_FbU",
+            "R_EyePos_FbU",
+            "R_Eye_FbU",
+            "R_Pupil_FbU",
+            "R_Mouth_Upper_1_FbD",
+            "R_Mouth_Upper_2_FbD",
+            "L_Mouth_Upper_1_FbD",
+            "L_Mouth_Upper_2_FbD",
+            "R_MouthCorner_FbD",
+            "L_MouthCorner_FbD",
+            "R_Cheek_Lower_FbD",
+            "L_Cheek_Lower_FbD",
+            "C_JawHalf_FbD",
+            "C_Tooth_Lower_FbD",
+            "C_Mouth_Lower_FbD",
+            "R_Mouth_Lower_2_FbD",
+            "L_Mouth_Lower_2_FbD",
+            "L_Mouth_Lower_1_FbD",
+            "R_Mouth_Lower_1_FbD",
+            "R_LaughLine_Lower_FbD",
+            "L_LaughLine_Lower_FbD",
+            "C_Jaw_FbD",
+            "C_Chin_FbD",
+            "C_Tongue_1_FbD",
+            "C_Tongue_2_FbD",
+            "C_Tongue_3_FbD",
+            "C_Tongue_4_FbD",
+            "C_Tongue_End_FbD",
+            "C_Head_Attach",
+            "C_Hair01_Sec_Root",
+            "C_Hair02_Sec",
+            "C_Hair03_Sec",
+            "C_Hair04_Tip_Sec",
+            "L_Hair_Sec_Root",
+            "L_Hair_Tip_Sec",
+            "R_Hair_Sec_Root",
+            "R_Hair_Tip_Sec",
+            "L_CoatF01_Sec_Root",
+            "L_CoatF02_Sec",
+            "L_CoatF03_Sec",
+            "L_CoatF04_Sec",
+            "L_CoatF05_Sec",
+            "L_CoatF06_Tip_Sec",
+            "R_CoatF01_Sec_Root",
+            "R_CoatF02_Sec",
+            "R_CoatF03_Sec",
+            "R_CoatF04_Sec",
+            "R_CoatF05_Sec",
+            "R_CoatF06_Tip_Sec",
+            "L_Coatbelt01_Sec_Root",
+            "L_Coatbelt02_Sec",
+            "L_Coatbelt03_Sec",
+            "L_Coatbelt04_Tip_Sec",
+            "R_Coatbelt01_Sec_Root",
+            "R_Coatbelt02_Sec",
+            "R_Coatbelt03_Sec",
+            "R_Coatbelt04_Tip_Sec",
+            "R_CoatB01_Sec_Root",
+            "R_CoatB02_Sec",
+            "R_CoatB03_Sec",
+            "R_CoatB04_Tip_Sec",
+            "L_CoatB01_Sec_Root",
+            "L_CoatB02_Sec",
+            "L_CoatB03_Sec",
+            "L_CoatB04_Tip_Sec",
+            "R_CoatS01_Sec_Root",
+            "R_CoatS02_Sec",
+            "R_CoatS03_Sec",
+            "R_CoatS04_Tip_Sec",
+            "L_CoatS01_Sec_Root",
+            "L_CoatS02_Sec",
+            "L_CoatS03_Sec",
+            "L_CoatS04_Tip_Sec",
+            "R_Leg1",
+            "R_Leg2",
+            "R_Foot",
+            "R_Toe",
+            "R_Foot_Attach",
+            "R_Ankle",
+            "R_Leg2Helper",
+            "R_Leg2BackHelper1",
+            "R_Leg2BackHelper2",
+            "R_Knee",
+            "R_Knee2",
+            "R_Leg1Helper",
+            "R_Leg1BackHelper1",
+            "R_Leg1BackHelper2",
+            "L_Leg1",
+            "L_Leg2",
+            "L_Foot",
+            "L_Toe",
+            "L_Foot_Attach",
+            "L_Ankle",
+            "L_Leg2Helper",
+            "L_Leg2BackHelper1",
+            "L_Leg2BackHelper2",
+            "L_Knee",
+            "L_Knee2",
+            "L_Leg1Helper",
+            "L_Leg1BackHelper1",
+            "L_Leg1BackHelper2",
+            "R_Hip",
+            "L_Hip",
+            "C_Hips_Attach",
+            "L_Hip2Helper1",
+            "L_Hip2Helper2",
+            "R_Hip2Helper1",
+            "R_Hip2Helper2",
+            "Hip_Follow",
+            "Flag_Mgr",
+            "Lnd_Position",
+            "End_Position"
+          ],
+          "parentByBone": {
+            "Root": null,
+            "C_Base": "Root",
+            "C_Position": "C_Base",
+            "C_Hips": "C_Position",
+            "C_Spine1": "C_Hips",
+            "C_Spine2": "C_Spine1",
+            "C_Chest": "C_Spine2",
+            "R_Collar01_Sec_Root": "C_Chest",
+            "R_Collar02_Sec": "R_Collar01_Sec_Root",
+            "R_Collar03_Tip_Sec": "R_Collar02_Sec",
+            "C_Necklace01_Sec_Root": "C_Chest",
+            "C_Necklace02_Tip_Sec": "C_Necklace01_Sec_Root",
+            "L_Collar01_Sec_Root": "C_Chest",
+            "L_Collar02_Sec": "L_Collar01_Sec_Root",
+            "L_Collar03_Tip_Sec": "L_Collar02_Sec",
+            "L_Clavicle": "C_Chest",
+            "L_Arm1": "L_Clavicle",
+            "L_Arm2": "L_Arm1",
+            "L_Hand": "L_Arm2",
+            "L_Thumb1": "L_Hand",
+            "L_Thumb2": "L_Thumb1",
+            "L_Thumb3": "L_Thumb2",
+            "L_Index1": "L_Hand",
+            "L_Index2": "L_Index1",
+            "L_Index3": "L_Index2",
+            "L_Index4": "L_Index3",
+            "L_Middle1": "L_Hand",
+            "L_Middle2": "L_Middle1",
+            "L_Middle3": "L_Middle2",
+            "L_Middle4": "L_Middle3",
+            "L_Ring1": "L_Hand",
+            "L_Ring2": "L_Ring1",
+            "L_Ring3": "L_Ring2",
+            "L_Ring4": "L_Ring3",
+            "L_Pinky1": "L_Hand",
+            "L_Pinky2": "L_Pinky1",
+            "L_Pinky3": "L_Pinky2",
+            "L_Pinky4": "L_Pinky3",
+            "L_Hand_Attach": "L_Hand",
+            "L_Wrist": "L_Arm2",
+            "L_Arm2Helper": "L_Arm2",
+            "L_Arm2FrontHelper1": "L_Arm2",
+            "L_Arm2FrontHelper2": "L_Arm2FrontHelper1",
+            "L_Wrist1": "L_Arm2",
+            "L_Wrist1FrontHelper": "L_Wrist1",
+            "L_Wrist1BackHelper": "L_Wrist1",
+            "L_Elbow": "L_Arm1",
+            "L_Elbow2": "L_Elbow",
+            "L_Arm1Helper": "L_Arm1",
+            "L_Arm1FrontHelper1": "L_Arm1",
+            "L_Arm1FrontHelper2": "L_Arm1FrontHelper1",
+            "L_Shoulder": "L_Clavicle",
+            "L_Shoulder2": "L_Clavicle",
+            "R_Clavicle": "C_Chest",
+            "R_Arm1": "R_Clavicle",
+            "R_Arm2": "R_Arm1",
+            "R_Hand": "R_Arm2",
+            "R_Thumb1": "R_Hand",
+            "R_Thumb2": "R_Thumb1",
+            "R_Thumb3": "R_Thumb2",
+            "R_Index1": "R_Hand",
+            "R_Index2": "R_Index1",
+            "R_Index3": "R_Index2",
+            "R_Index4": "R_Index3",
+            "R_Middle1": "R_Hand",
+            "R_Middle2": "R_Middle1",
+            "R_Middle3": "R_Middle2",
+            "R_Middle4": "R_Middle3",
+            "R_Ring1": "R_Hand",
+            "R_Ring2": "R_Ring1",
+            "R_Ring3": "R_Ring2",
+            "R_Ring4": "R_Ring3",
+            "R_Pinky1": "R_Hand",
+            "R_Pinky2": "R_Pinky1",
+            "R_Pinky3": "R_Pinky2",
+            "R_Pinky4": "R_Pinky3",
+            "R_Hand_Attach": "R_Hand",
+            "R_Wrist": "R_Arm2",
+            "R_Arm2Helper": "R_Arm2",
+            "R_Arm2FrontHelper1": "R_Arm2",
+            "R_Arm2FrontHelper2": "R_Arm2FrontHelper1",
+            "R_Wrist1": "R_Arm2",
+            "R_Wrist1FrontHelper": "R_Wrist1",
+            "R_Wrist1BackHelper": "R_Wrist1",
+            "R_Elbow": "R_Arm1",
+            "R_Elbow2": "R_Elbow",
+            "R_Arm1Helper": "R_Arm1",
+            "R_Arm1FrontHelper1": "R_Arm1",
+            "R_Arm1FrontHelper2": "R_Arm1FrontHelper1",
+            "R_Shoulder": "R_Clavicle",
+            "R_Shoulder2": "R_Clavicle",
+            "C_Neck": "C_Chest",
+            "C_Head": "C_Neck",
+            "C_FaceRoot": "C_Head",
+            "L_Nose_FbU": "C_FaceRoot",
+            "R_Nose_FbU": "C_FaceRoot",
+            "C_Mouth_Upper_FbD": "C_FaceRoot",
+            "C_Forehead_FbU": "C_FaceRoot",
+            "R_Eyebrow_1_FbU": "C_FaceRoot",
+            "R_Eyebrow_2_FbU": "R_Eyebrow_1_FbU",
+            "R_Eyebrow_3_FbU": "R_Eyebrow_2_FbU",
+            "R_EyebrowHair_2_FbU": "R_Eyebrow_2_FbU",
+            "R_EyebrowHair_3_FbU": "R_EyebrowHair_2_FbU",
+            "R_EyebrowHair_1_FbU": "R_Eyebrow_1_FbU",
+            "L_Eyebrow_1_FbU": "C_FaceRoot",
+            "L_Eyebrow_2_FbU": "L_Eyebrow_1_FbU",
+            "L_Eyebrow_3_FbU": "L_Eyebrow_2_FbU",
+            "L_EyebrowHair_2_FbU": "L_Eyebrow_2_FbU",
+            "L_EyebrowHair_3_FbU": "L_EyebrowHair_2_FbU",
+            "L_EyebrowHair_1_FbU": "L_Eyebrow_1_FbU",
+            "L_LaughLine_Upper_FbD": "C_FaceRoot",
+            "R_LaughLine_Upper_FbD": "C_FaceRoot",
+            "L_Cheek_Upper_FbU": "C_FaceRoot",
+            "R_Cheek_Upper_FbU": "C_FaceRoot",
+            "L_EyeSocket_FbU": "C_FaceRoot",
+            "R_EyeSocket_FbU": "C_FaceRoot",
+            "L_Eyelid_Upper_FbU": "C_FaceRoot",
+            "L_Eyelash_Upper_FbU": "L_Eyelid_Upper_FbU",
+            "R_Eyelid_Upper_FbU": "C_FaceRoot",
+            "R_Eyelash_Upper_FbU": "R_Eyelid_Upper_FbU",
+            "L_Eyelid_Lower_FbU": "C_FaceRoot",
+            "L_Eyelash_Lower_FbU": "L_Eyelid_Lower_FbU",
+            "R_Eyelid_Lower_FbU": "C_FaceRoot",
+            "R_Eyelash_Lower_FbU": "R_Eyelid_Lower_FbU",
+            "R_EyeCorner_FbU": "C_FaceRoot",
+            "L_EyeCorner_FbU": "C_FaceRoot",
+            "C_Tooth_Upper_FbD": "C_FaceRoot",
+            "L_EyePos_FbU": "C_FaceRoot",
+            "L_Eye_FbU": "L_EyePos_FbU",
+            "L_Pupil_FbU": "L_Eye_FbU",
+            "R_EyePos_FbU": "C_FaceRoot",
+            "R_Eye_FbU": "R_EyePos_FbU",
+            "R_Pupil_FbU": "R_Eye_FbU",
+            "R_Mouth_Upper_1_FbD": "C_FaceRoot",
+            "R_Mouth_Upper_2_FbD": "R_Mouth_Upper_1_FbD",
+            "L_Mouth_Upper_1_FbD": "C_FaceRoot",
+            "L_Mouth_Upper_2_FbD": "L_Mouth_Upper_1_FbD",
+            "R_MouthCorner_FbD": "C_FaceRoot",
+            "L_MouthCorner_FbD": "C_FaceRoot",
+            "R_Cheek_Lower_FbD": "C_FaceRoot",
+            "L_Cheek_Lower_FbD": "C_FaceRoot",
+            "C_JawHalf_FbD": "C_FaceRoot",
+            "C_Tooth_Lower_FbD": "C_JawHalf_FbD",
+            "C_Mouth_Lower_FbD": "C_JawHalf_FbD",
+            "R_Mouth_Lower_2_FbD": "C_JawHalf_FbD",
+            "L_Mouth_Lower_2_FbD": "C_JawHalf_FbD",
+            "L_Mouth_Lower_1_FbD": "C_JawHalf_FbD",
+            "R_Mouth_Lower_1_FbD": "C_JawHalf_FbD",
+            "R_LaughLine_Lower_FbD": "C_JawHalf_FbD",
+            "L_LaughLine_Lower_FbD": "C_JawHalf_FbD",
+            "C_Jaw_FbD": "C_FaceRoot",
+            "C_Chin_FbD": "C_Jaw_FbD",
+            "C_Tongue_1_FbD": "C_Jaw_FbD",
+            "C_Tongue_2_FbD": "C_Tongue_1_FbD",
+            "C_Tongue_3_FbD": "C_Tongue_2_FbD",
+            "C_Tongue_4_FbD": "C_Tongue_3_FbD",
+            "C_Tongue_End_FbD": "C_Tongue_4_FbD",
+            "C_Head_Attach": "C_Head",
+            "C_Hair01_Sec_Root": "C_Head",
+            "C_Hair02_Sec": "C_Hair01_Sec_Root",
+            "C_Hair03_Sec": "C_Hair02_Sec",
+            "C_Hair04_Tip_Sec": "C_Hair03_Sec",
+            "L_Hair_Sec_Root": "C_Head",
+            "L_Hair_Tip_Sec": "L_Hair_Sec_Root",
+            "R_Hair_Sec_Root": "C_Head",
+            "R_Hair_Tip_Sec": "R_Hair_Sec_Root",
+            "L_CoatF01_Sec_Root": "C_Chest",
+            "L_CoatF02_Sec": "L_CoatF01_Sec_Root",
+            "L_CoatF03_Sec": "L_CoatF02_Sec",
+            "L_CoatF04_Sec": "L_CoatF03_Sec",
+            "L_CoatF05_Sec": "L_CoatF04_Sec",
+            "L_CoatF06_Tip_Sec": "L_CoatF05_Sec",
+            "R_CoatF01_Sec_Root": "C_Chest",
+            "R_CoatF02_Sec": "R_CoatF01_Sec_Root",
+            "R_CoatF03_Sec": "R_CoatF02_Sec",
+            "R_CoatF04_Sec": "R_CoatF03_Sec",
+            "R_CoatF05_Sec": "R_CoatF04_Sec",
+            "R_CoatF06_Tip_Sec": "R_CoatF05_Sec",
+            "L_Coatbelt01_Sec_Root": "C_Spine1",
+            "L_Coatbelt02_Sec": "L_Coatbelt01_Sec_Root",
+            "L_Coatbelt03_Sec": "L_Coatbelt02_Sec",
+            "L_Coatbelt04_Tip_Sec": "L_Coatbelt03_Sec",
+            "R_Coatbelt01_Sec_Root": "C_Spine1",
+            "R_Coatbelt02_Sec": "R_Coatbelt01_Sec_Root",
+            "R_Coatbelt03_Sec": "R_Coatbelt02_Sec",
+            "R_Coatbelt04_Tip_Sec": "R_Coatbelt03_Sec",
+            "R_CoatB01_Sec_Root": "C_Spine1",
+            "R_CoatB02_Sec": "R_CoatB01_Sec_Root",
+            "R_CoatB03_Sec": "R_CoatB02_Sec",
+            "R_CoatB04_Tip_Sec": "R_CoatB03_Sec",
+            "L_CoatB01_Sec_Root": "C_Spine1",
+            "L_CoatB02_Sec": "L_CoatB01_Sec_Root",
+            "L_CoatB03_Sec": "L_CoatB02_Sec",
+            "L_CoatB04_Tip_Sec": "L_CoatB03_Sec",
+            "R_CoatS01_Sec_Root": "C_Spine1",
+            "R_CoatS02_Sec": "R_CoatS01_Sec_Root",
+            "R_CoatS03_Sec": "R_CoatS02_Sec",
+            "R_CoatS04_Tip_Sec": "R_CoatS03_Sec",
+            "L_CoatS01_Sec_Root": "C_Spine1",
+            "L_CoatS02_Sec": "L_CoatS01_Sec_Root",
+            "L_CoatS03_Sec": "L_CoatS02_Sec",
+            "L_CoatS04_Tip_Sec": "L_CoatS03_Sec",
+            "R_Leg1": "C_Hips",
+            "R_Leg2": "R_Leg1",
+            "R_Foot": "R_Leg2",
+            "R_Toe": "R_Foot",
+            "R_Foot_Attach": "R_Foot",
+            "R_Ankle": "R_Leg2",
+            "R_Leg2Helper": "R_Leg2",
+            "R_Leg2BackHelper1": "R_Leg2",
+            "R_Leg2BackHelper2": "R_Leg2BackHelper1",
+            "R_Knee": "R_Leg1",
+            "R_Knee2": "R_Knee",
+            "R_Leg1Helper": "R_Leg1",
+            "R_Leg1BackHelper1": "R_Leg1",
+            "R_Leg1BackHelper2": "R_Leg1BackHelper1",
+            "L_Leg1": "C_Hips",
+            "L_Leg2": "L_Leg1",
+            "L_Foot": "L_Leg2",
+            "L_Toe": "L_Foot",
+            "L_Foot_Attach": "L_Foot",
+            "L_Ankle": "L_Leg2",
+            "L_Leg2Helper": "L_Leg2",
+            "L_Leg2BackHelper1": "L_Leg2",
+            "L_Leg2BackHelper2": "L_Leg2BackHelper1",
+            "L_Knee": "L_Leg1",
+            "L_Knee2": "L_Knee",
+            "L_Leg1Helper": "L_Leg1",
+            "L_Leg1BackHelper1": "L_Leg1",
+            "L_Leg1BackHelper2": "L_Leg1BackHelper1",
+            "R_Hip": "C_Hips",
+            "L_Hip": "C_Hips",
+            "C_Hips_Attach": "C_Hips",
+            "L_Hip2Helper1": "C_Hips",
+            "L_Hip2Helper2": "L_Hip2Helper1",
+            "R_Hip2Helper1": "C_Hips",
+            "R_Hip2Helper2": "R_Hip2Helper1",
+            "Hip_Follow": "C_Base",
+            "Flag_Mgr": "C_Base",
+            "Lnd_Position": "C_Base",
+            "End_Position": "C_Base"
+          }
+        }
+      ],
+      "materialCount": 26,
+      "materials": [
+        "0000 MI_IOR_HAIR_P1",
+        "0001 MI_IOR_R_EYEBALL_BASE",
+        "0002 MI_IOR_L_EYEBALL_BASE",
+        "0003 MI_IOR_R_EYEBALL_RED",
+        "0004 MI_IOR_L_EYEBALL_RED",
+        "0005 MI_IOR_METAL_P1",
+        "0006 MI_IOR_CORT_BELT_P1",
+        "0007 MI_IOR_SHIRT_P1",
+        "0008 MI_IOR_BODY_P1",
+        "0009 MI_IOR_CORT_BUTTONS_P1",
+        "0010 MI_IOR_SHIRT_BUTTONS_P1",
+        "0011 MI_IOR_CORT_SLEEVE_P1",
+        "0012 MI_IOR_BELT_P1",
+        "0013 MI_IOR_BELT_P1",
+        "0014 MI_IOR_CORT_BELT_P1",
+        "0015 MI_IOR_SHOES_P1",
+        "0016 MI_IOR_PANTS_P1",
+        "0017 MI_IOR_CORT_P1",
+        "0018 MI_IOR_COAT_DMY_BASE",
+        "0019 MI_IOR_METAL_P1",
+        "0020 MI_IOR_GUMS_TONGUE_BASE",
+        "0021 MI_IOR_TEETH_BASE",
+        "0022 MI_IOR_HAIR_P1",
+        "0023 MI_IOR_FACE_P1",
+        "0024 MI_IOR_BMM_EYEHIGHLIGHT_BASE",
+        "0025 MI_IOR_HAIR_P1"
+      ],
+      "importedImages": [
+        {
+          "name": "Diffuse Texture",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0000 MI_IOR_HAIR_P1",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.001",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0001 MI_IOR_R_EYEBALL_BASE",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.002",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0002 MI_IOR_L_EYEBALL_BASE",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.003",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0003 MI_IOR_R_EYEBALL_RED",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.004",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0004 MI_IOR_L_EYEBALL_RED",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.005",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0005 MI_IOR_METAL_P1",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.006",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0006 MI_IOR_CORT_BELT_P1",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.007",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0007 MI_IOR_SHIRT_P1",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.008",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0008 MI_IOR_BODY_P1",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.009",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0009 MI_IOR_CORT_BUTTONS_P1",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.010",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0010 MI_IOR_SHIRT_BUTTONS_P1",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.011",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0011 MI_IOR_CORT_SLEEVE_P1",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.012",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0012 MI_IOR_BELT_P1",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.013",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0013 MI_IOR_BELT_P1",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.014",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0014 MI_IOR_CORT_BELT_P1",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.015",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0015 MI_IOR_SHOES_P1",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.016",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0016 MI_IOR_PANTS_P1",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.017",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0017 MI_IOR_CORT_P1",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.018",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0018 MI_IOR_COAT_DMY_BASE",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.019",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0019 MI_IOR_METAL_P1",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.020",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0020 MI_IOR_GUMS_TONGUE_BASE",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.021",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0021 MI_IOR_TEETH_BASE",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.022",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0022 MI_IOR_HAIR_P1",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.023",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0023 MI_IOR_FACE_P1",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.024",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0024 MI_IOR_BMM_EYEHIGHLIGHT_BASE",
+          "loaded": false
+        },
+        {
+          "name": "Diffuse Texture.025",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "0025 MI_IOR_HAIR_P1",
+          "loaded": false
+        },
+        {
+          "name": "Reflection Texture",
+          "width": 0,
+          "height": 0,
+          "filepathBasename": "sample_pbr_e3.dds",
+          "loaded": false
+        }
+      ],
+      "actionCount": 0,
+      "actions": [],
+      "limitations": [
+        "Readonly FBX parse only: no GLB conversion, texture/material repair, runtime validation or visual acceptance.",
+        "Author claims original game rig. Original game installation platform is not stated."
+      ]
+    }
+  ]
+}

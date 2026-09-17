@@ -1,0 +1,51 @@
+{
+  "schema": "ggd.voice-gap-source-mappings@1",
+  "generatedBy": "tools/hero-model-library/sync_voice_gap_source_mappings.py",
+  "purpose": "Authoritative hero-to-source-group links for the 2026-09-16 Main voice-gap review. A group link proves source identity only; it does not prove every clip's speaker, language, transcript, or battle-event meaning.",
+  "lolSecondBatch": [
+    { "heroId": "lol-sett", "name": "賽特", "nativeId": "Sett.ja_JP", "groupSlug": "sett" },
+    { "heroId": "lol-fiddlesticks", "name": "稻草人", "nativeId": "FiddleSticks.ja_JP", "groupSlug": "fiddlesticks" },
+    { "heroId": "lol-ornn", "name": "鄂爾", "nativeId": "Ornn.ja_JP", "groupSlug": "ornn" },
+    { "heroId": "lol-chogath", "name": "科加斯", "nativeId": "Chogath.ja_JP", "groupSlug": "chogath" },
+    { "heroId": "lol-ashe", "name": "艾希", "nativeId": "Ashe.ja_JP", "groupSlug": "ashe" },
+    { "heroId": "lol-blitzcrank", "name": "布里姿", "nativeId": "Blitzcrank.ja_JP", "groupSlug": "blitzcrank" },
+    { "heroId": "lol-ahri", "name": "阿璃", "nativeId": "Ahri.ja_JP", "groupSlug": "ahri" },
+    { "heroId": "lol-thresh", "name": "瑟雷西", "nativeId": "Thresh.ja_JP", "groupSlug": "thresh" },
+    { "heroId": "lol-velkoz", "name": "威寇茲", "nativeId": "Velkoz.ja_JP", "groupSlug": "velkoz" },
+    { "heroId": "lol-malphite", "name": "墨菲特", "nativeId": "Malphite.ja_JP", "groupSlug": "malphite" },
+    { "heroId": "lol-garen", "name": "蓋倫", "nativeId": "Garen.ja_JP", "groupSlug": "garen" }
+  ],
+  "heroGroupBindings": [
+    { "heroId": "acquired-dio", "groupId": "parallel-ps-jumpforce-local-final3:jumpforce-dio", "relationship": "canonical-game-character-directory", "runtimeApproved": false },
+    { "heroId": "acquired-morgiana", "groupId": "300heroes:62", "relationship": "adaptation-game-character-bank", "runtimeApproved": false },
+    { "heroId": "acquired-rim", "groupId": "300heroes:289", "relationship": "adaptation-game-character-bank", "runtimeApproved": false },
+    { "heroId": "acquired-naruto", "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-naruto", "relationship": "canonical-game-character-directory", "runtimeApproved": false },
+    { "heroId": "acquired-naruto", "groupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0120", "relationship": "canonical-installed-game-character-bank", "runtimeApproved": false },
+    { "heroId": "acquired-saya", "groupId": "300heroes:29", "relationship": "adaptation-game-character-bank", "runtimeApproved": false },
+    { "heroId": "acquired-kuroyukihime", "groupId": "300heroes:164", "relationship": "adaptation-game-character-bank", "runtimeApproved": false },
+    { "heroId": "acquired-leafa", "groupId": "300heroes:260", "relationship": "adaptation-game-character-bank", "runtimeApproved": false },
+    { "heroId": "acquired-mewtwo", "groupId": "parallel-voice-ssbu-japanese:vc_mewtwo", "relationship": "canonical-game-character-bank", "runtimeApproved": false },
+    { "heroId": "acquired-mewtwo", "groupId": "parallel-voice-melee-local-29:SSBM_Characters_Mewtwo", "relationship": "canonical-game-character-package", "runtimeApproved": false },
+    { "heroId": "acquired-mario", "groupId": "parallel-voice-melee-local-29:SSBM_Characters_Mario", "relationship": "canonical-game-character-package", "runtimeApproved": false },
+    { "heroId": "acquired-ryu", "groupId": "parallel-voice-ssbu-japanese:vc_ryu", "relationship": "canonical-game-character-bank", "runtimeApproved": false },
+    { "heroId": "acquired-jetragon", "groupId": "gamevault-palworld-jetragon-cries:jetragon-cries", "relationship": "nonverbal-creature-sfx", "runtimeApproved": false },
+    { "heroId": "acquired-astralym", "groupId": "gamevault-palworld-astralym-audio:astralym-cries", "relationship": "nonverbal-creature-sfx", "runtimeApproved": false },
+    { "heroId": "acquired-cattiva", "groupId": "palworld-cattiva-gamevault:cattiva-cries", "relationship": "nonverbal-creature-sfx", "runtimeApproved": false },
+    { "heroId": "acquired-alice", "groupId": "300heroes:249", "relationship": "adaptation-game-character-bank", "runtimeApproved": false },
+    { "heroId": "acquired-asuna", "groupId": "300heroes:76", "relationship": "adaptation-game-character-bank", "runtimeApproved": false },
+    { "heroId": "acquired-asuna", "groupId": "hive-anime-team-survival:asuna2", "relationship": "filename-candidate-only", "runtimeApproved": false },
+    { "heroId": "acquired-emilia", "groupId": "300heroes:238", "relationship": "adaptation-game-character-bank", "runtimeApproved": false },
+    { "heroId": "acquired-pokemon-trainer", "groupId": "parallel-voice-ssbu-japanese:vc_ptrainer", "relationship": "canonical-game-character-bank", "runtimeApproved": false },
+    { "heroId": "acquired-wargreymon", "groupId": "300heroes:159", "relationship": "adaptation-game-character-bank", "runtimeApproved": false }
+  ],
+  "noExactVoiceGroup": [
+    { "heroId": "acquired-kita-kita", "name": "吉他吉他老伯", "excludedMatches": [] },
+    { "heroId": "acquired-beatrice", "name": "碧翠絲", "excludedMatches": ["Re:Zero model archive contains no audio"] },
+    { "heroId": "acquired-ram", "name": "拉姆", "excludedMatches": ["300heroes:310 is Rem, a different character"] },
+    { "heroId": "acquired-inuyasha", "name": "犬夜叉", "excludedMatches": ["300heroes:35 is Kikyo", "300heroes:115 is Sesshomaru"] },
+    { "heroId": "acquired-lord-nightmares", "name": "金色魔王／惡夢之王", "excludedMatches": ["300heroes:46 and mba:Chara02 are Lina Inverse"] },
+    { "heroId": "acquired-minecraft", "name": "Steve／Alex", "excludedMatches": ["No vc_pickel group in the indexed SSBU Japanese package"] },
+    { "heroId": "acquired-xiaodangjia", "name": "小當家", "excludedMatches": [] },
+    { "heroId": "acquired-zero", "name": "Zero", "excludedMatches": ["Zero Lancer is Diarmuid", "300heroes:198 is Iskandar from Fate/Zero"] }
+  ]
+}

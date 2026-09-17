@@ -1,0 +1,286 @@
+{
+  "schema": "ggd.infinity-strash-dai-vearn-audio-review@1",
+  "sourceId": "steam-infinity-strash-popp-priority-audio-build-local-20240328",
+  "sourceInputs": [
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/audio-file-index.json",
+      "bytes": 1092492,
+      "sha256": "1748c73508796803728ac54a35acc19e7ee7ec3ba9c6827da29c486fbc646284"
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/windows-readonly-20260913/infinity-strash-popp-and-priority-audio-deps-v1/extraction-index.json",
+      "bytes": 5333911,
+      "sha256": "9093f96e47d595bd0b3b4799c78791a85a23a9c83dbba0ecb33f1c7b4a168711"
+    }
+  ],
+  "policy": {
+    "targetNativeIds": [
+      "EN801",
+      "PN010"
+    ],
+    "excludedIdentities": {
+      "EN653": "MystVearn is a separate character",
+      "EN680": "Baran is a separate character",
+      "EN681": "Baran form is a separate character"
+    },
+    "sharedOrMixedMediaExcluded": true,
+    "ownerPerFileReviewRequired": true,
+    "automaticRuntimeBindingAllowed": false
+  },
+  "summary": {
+    "candidateCount": 485,
+    "byIdentity": {
+      "PN010": {
+        "candidateCount": 355,
+        "voice": 278,
+        "soundEffect": 76,
+        "unclassified": 1,
+        "durationSeconds": 484.730578,
+        "decodedBytes": 53124892,
+        "reportedLocales": {
+          "English_US": 139,
+          "Japanese": 136,
+          "nonlocalized": 76,
+          "unreviewed": 4
+        },
+        "sharedOrMixedMediaExcluded": 4,
+        "runtimeBindingsCreated": 0
+      },
+      "EN801": {
+        "candidateCount": 130,
+        "voice": 48,
+        "soundEffect": 82,
+        "unclassified": 0,
+        "durationSeconds": 410.429458,
+        "decodedBytes": 45195010,
+        "reportedLocales": {
+          "English_US": 24,
+          "Japanese": 24,
+          "nonlocalized": 82
+        },
+        "sharedOrMixedMediaExcluded": 10,
+        "runtimeBindingsCreated": 0
+      }
+    },
+    "missingPayloadRelations": 7,
+    "listeningReviewed": 0,
+    "runtimeBindingsCreated": 0,
+    "productionDeployed": 0
+  },
+  "missingPayloadRelations": [
+    {
+      "mediaRef": "/Game/WwiseAudio/Localized/English_US_/Media/1039623561",
+      "events": [
+        {
+          "eventPath": "strash/Content/WwiseAudio/Localized/English_US_/Events/Voice_Work_Unit/VO_PN010/Play_VO_ING_PN010_09_07.uasset",
+          "nativeIds": [
+            "PN010"
+          ],
+          "language": "English_US",
+          "kind": "voice"
+        }
+      ],
+      "nativeIds": [
+        "PN010"
+      ],
+      "languages": [
+        "English_US"
+      ],
+      "kinds": [
+        "voice"
+      ],
+      "payloadState": "referenced-package-has-no-ubulk-payload"
+    },
+    {
+      "mediaRef": "/Game/WwiseAudio/Localized/English_US_/Media/244716190",
+      "events": [
+        {
+          "eventPath": "strash/Content/WwiseAudio/Localized/English_US_/Events/Voice_Work_Unit/VO_PN010/Play_VO_ING_PN010_09_12.uasset",
+          "nativeIds": [
+            "PN010"
+          ],
+          "language": "English_US",
+          "kind": "voice"
+        },
+        {
+          "eventPath": "strash/Content/WwiseAudio/Localized/Japanese/Events/Voice_Work_Unit/VO_PN010/Play_VO_ING_PN010_09_12.uasset",
+          "nativeIds": [
+            "PN010"
+          ],
+          "language": "Japanese",
+          "kind": "voice"
+        }
+      ],
+      "nativeIds": [
+        "PN010"
+      ],
+      "languages": [
+        "English_US",
+        "Japanese"
+      ],
+      "kinds": [
+        "voice"
+      ],
+      "payloadState": "referenced-package-has-no-ubulk-payload"
+    },
+    {
+      "mediaRef": "/Game/WwiseAudio/Localized/English_US_/Media/72708101",
+      "events": [
+        {
+          "eventPath": "strash/Content/WwiseAudio/Localized/English_US_/Events/Voice_Work_Unit/VO_PN010/Play_VO_ING_PN010_09_01.uasset",
+          "nativeIds": [
+            "PN010"
+          ],
+          "language": "English_US",
+          "kind": "voice"
+        }
+      ],
+      "nativeIds": [
+        "PN010"
+      ],
+      "languages": [
+        "English_US"
+      ],
+      "kinds": [
+        "voice"
+      ],
+      "payloadState": "referenced-package-has-no-ubulk-payload"
+    },
+    {
+      "mediaRef": "/Game/WwiseAudio/Localized/English_US_/Media/970468123",
+      "events": [
+        {
+          "eventPath": "strash/Content/WwiseAudio/Localized/English_US_/Events/Voice_Work_Unit/VO_PN010/Play_VO_ING_PN010_09_08.uasset",
+          "nativeIds": [
+            "PN010"
+          ],
+          "language": "English_US",
+          "kind": "voice"
+        }
+      ],
+      "nativeIds": [
+        "PN010"
+      ],
+      "languages": [
+        "English_US"
+      ],
+      "kinds": [
+        "voice"
+      ],
+      "payloadState": "referenced-package-has-no-ubulk-payload"
+    },
+    {
+      "mediaRef": "/Game/WwiseAudio/Localized/Japanese/Media/148777410",
+      "events": [
+        {
+          "eventPath": "strash/Content/WwiseAudio/Localized/Japanese/Events/Voice_Work_Unit/VO_PN010/Play_VO_ING_PN010_09_01.uasset",
+          "nativeIds": [
+            "PN010"
+          ],
+          "language": "Japanese",
+          "kind": "voice"
+        }
+      ],
+      "nativeIds": [
+        "PN010"
+      ],
+      "languages": [
+        "Japanese"
+      ],
+      "kinds": [
+        "voice"
+      ],
+      "payloadState": "referenced-package-has-no-ubulk-payload"
+    },
+    {
+      "mediaRef": "/Game/WwiseAudio/Localized/Japanese/Media/396600612",
+      "events": [
+        {
+          "eventPath": "strash/Content/WwiseAudio/Localized/Japanese/Events/Voice_Work_Unit/VO_PN010/Play_VO_ING_PN010_09_07.uasset",
+          "nativeIds": [
+            "PN010"
+          ],
+          "language": "Japanese",
+          "kind": "voice"
+        }
+      ],
+      "nativeIds": [
+        "PN010"
+      ],
+      "languages": [
+        "Japanese"
+      ],
+      "kinds": [
+        "voice"
+      ],
+      "payloadState": "referenced-package-has-no-ubulk-payload"
+    },
+    {
+      "mediaRef": "/Game/WwiseAudio/Localized/Japanese/Media/8642794",
+      "events": [
+        {
+          "eventPath": "strash/Content/WwiseAudio/Localized/Japanese/Events/Voice_Work_Unit/VO_PN010/Play_VO_ING_PN010_09_08.uasset",
+          "nativeIds": [
+            "PN010"
+          ],
+          "language": "Japanese",
+          "kind": "voice"
+        }
+      ],
+      "nativeIds": [
+        "PN010"
+      ],
+      "languages": [
+        "Japanese"
+      ],
+      "kinds": [
+        "voice"
+      ],
+      "payloadState": "referenced-package-has-no-ubulk-payload"
+    }
+  ],
+  "parts": [
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/audio-review-queue.part-001.json",
+      "bytes": 124475,
+      "sha256": "66a8dc8fc4ca2f24ba103b5cac469f20f5fe483c9c87642d0313386de5164ebd",
+      "rowCount": 70
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/audio-review-queue.part-002.json",
+      "bytes": 119464,
+      "sha256": "413d92fb8c0aa4d36fdfcde68a575b2fae5bf2010efb4c6024e5bab42dd1184f",
+      "rowCount": 70
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/audio-review-queue.part-003.json",
+      "bytes": 127151,
+      "sha256": "4044d29ecab03a062a2fbaf6f88aff08bd8474f048fe614c1b12e979a84e58ce",
+      "rowCount": 70
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/audio-review-queue.part-004.json",
+      "bytes": 126822,
+      "sha256": "8d427fad58ef54fbda39234416dc6d9f4bdd8b209d21ebc703dc367f23381aec",
+      "rowCount": 70
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/audio-review-queue.part-005.json",
+      "bytes": 126090,
+      "sha256": "a62f8e0d8fd09111f5674861390d7c2a01a53cf27921388612164e5166a13f83",
+      "rowCount": 70
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/audio-review-queue.part-006.json",
+      "bytes": 125015,
+      "sha256": "457ce5c2dbfae8caed084a1d64ea423c43cebced1747ef57817698511e6188a3",
+      "rowCount": 70
+    },
+    {
+      "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-dai-vearn-av-v1/audio-review-queue.part-007.json",
+      "bytes": 113757,
+      "sha256": "d2662d10fbebb13c5d93d44fffd61f75c73dbd1db80dd9a1952a84a456590ccd",
+      "rowCount": 65
+    }
+  ]
+}

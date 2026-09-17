@@ -14,34 +14,35 @@
   ],
   "cooldownTier": "中",
   "manaCost": [
-    0.0
+    0
   ],
   "range": 0.0,
   "effects": [],
   "template": {
     "ref": "tpl-buff-self",
     "params": {
-      "duration": 12.0,
+      "duration": 12,
       "modifiers": [
         {
           "stat": "ad",
           "op": "flat",
-          "value": 30.0
+          "value": 30
         },
         {
           "stat": "armor",
           "op": "flat",
-          "value": 8.0
+          "value": 8
         },
         {
           "stat": "healthRegen",
           "op": "flat",
-          "value": 12.0
+          "value": 12
         }
       ],
-      "castTimeSec": 0.267
+      "castTimeSec": 0.3
     }
   },
   "vfxKey": "fx.prim.earth.pulse-sm",
-  "castTimeSec": 0.267
+  "castTimeSec": 0.3,
+  "castTimeTier": "中"
 }

@@ -25,9 +25,9 @@
     "range": 8.2
   },
   "growth": {
-    "maxHealth": 78.1041,
+    "maxHealth": 80,
     "healthRegen": 0.1633,
-    "maxMana": 46.4847,
+    "maxMana": 50,
     "manaRegen": 0.1378,
     "ad": 1.9469,
     "armor": 0.6568,
@@ -73,6 +73,7 @@
         0.0
       ],
       "range": 12.0,
+      "castTimeTier": "極大",
       "targetsEnemies": true,
       "effects": [
         {
@@ -92,7 +93,7 @@
       "sfxKey": "wc3.gruntyesattack1",
       "cooldownTier": "中",
       "rangeTier": "極大",
-      "castTimeSec": 0.267
+      "castTimeSec": 1
     },
     "W": {
       "id": "godie-emns.w",
@@ -143,7 +144,8 @@
         ]
       },
       "icon": "assets/icons/abilities/godie-emns.w.webp",
-      "vfxKey": "fx.prim.void.pulse"
+      "vfxKey": "fx.prim.void.pulse",
+      "castTimeTier": "極小"
     },
     "E": {
       "id": "godie-emns.e",
@@ -160,10 +162,10 @@
         30.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "range": 12.0,
       "radiusTier": "中",
@@ -223,16 +225,17 @@
             "subject": "target",
             "statusId": "curse"
           },
-          "castTimeSec": 0.833
+          "castTimeSec": 1
         }
       },
       "icon": "assets/icons/abilities/godie-emns.e.webp",
       "vfxKey": "fx.prim.physical.shockwave",
       "sfxKey": "wc3.rokhanwhat2",
       "cooldownTier": "極小",
-      "manaCostTier": "小",
+      "castTimeTier": "極大",
       "rangeTier": "極大",
-      "castTimeSec": 0.833
+      "manaCostTier": "小",
+      "castTimeSec": 1
     },
     "R": {
       "id": "godie-emns.r",
@@ -248,9 +251,9 @@
         30.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0
       ],
       "range": 12.0,
       "targetsEnemies": true,
@@ -298,9 +301,10 @@
       "vfxKey": "fx.prim.void.nova-lg",
       "sfxKey": "wc3.gruntyesattack3",
       "cooldownTier": "中",
-      "manaCostTier": "小",
+      "castTimeTier": "極大",
       "rangeTier": "極大",
-      "castTimeSec": 1.033
+      "manaCostTier": "小",
+      "castTimeSec": 1
     }
   },
   "skillOrder": [

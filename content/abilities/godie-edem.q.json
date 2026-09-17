@@ -14,10 +14,10 @@
     45.0
   ],
   "manaCost": [
-    112.0,
-    112.0,
-    112.0,
-    112.0
+    150.0,
+    150.0,
+    150.0,
+    150.0
   ],
   "range": 12.0,
   "radiusTier": "中",
@@ -109,13 +109,14 @@
           "stacking": "refresh"
         }
       ],
-      "castTimeSec": 1.033
+      "castTimeSec": 1
     }
   },
   "icon": "assets/icons/abilities/godie-edem.q.webp",
   "vfxKey": "fx.prim.fire.explosion",
   "cooldownTier": "小",
-  "manaCostTier": "小",
+  "castTimeTier": "極大",
   "rangeTier": "極大",
-  "castTimeSec": 1.033
+  "manaCostTier": "小",
+  "castTimeSec": 1
 }

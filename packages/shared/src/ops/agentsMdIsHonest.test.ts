@@ -39,8 +39,19 @@ const SHA_TOKEN = /[`"]((?=[0-9a-f]*\d)[0-9a-f]{7,40})[`"]/g;
 
 /** ④：每一顆 sha 存在且在 HEAD 的歷史上；檔頭「記於 … `sha`」那一顆另加距離上限。 */
 function shaAudit(md: string): string[] {
-  if (git("rev-parse", "--is-shallow-repository") === "true")
-    return ["shallow clone ⇒ 祖先關係驗不到（CI 要 fetch-depth: 0），⛔ 不是跳過"];
+  // ⭐⭐ 2026-09-11（GH#1211）：這裡本來是**整支放棄**——
+  //   `--is-shallow-repository === "true"` ⇒ 直接回一句「驗不到」⇒ 這條測試必紅。
+  //
+  // ⚠️ ⭐ 而那個放棄是**過度**的：實測這棵開發樹雖然 `is-shallow` 為 true
+  //   （`.git/shallow` 只有 **2** 個邊界點），⛔ 但它有 **3,130** 個 commit，
+  //   而 AGENTS.md 點名的 **5 顆 sha 全部查得到、且全部是 HEAD 的祖先**。
+  //   ⇒ ⛔ 舊寫法在這台機器上**一顆都沒驗**，卻讓人以為「驗過而且有問題」。
+  //
+  // ⇒ ⭐ 改成：**能驗的就驗**，⛔ 只有真的落在邊界外的那幾顆才說「驗不到」——
+  //   而且**逐顆指名**，⛔ 不是一句籠統的「shallow ⇒ 放棄」。
+  //   ⭐ 「⛔ 不是跳過」那個精神保留了：查不到的 sha 仍然會出現在 `bad` 裡，
+  //   只是訊息說得出**為什麼**（邊界外 vs 真的不存在），⛔ 不會誣賴一顆好 sha。
+  const shallow = git("rev-parse", "--is-shallow-repository") === "true";
   const bad: string[] = [];
   const isCommit = (s: string): boolean => {
     try {
@@ -52,7 +63,10 @@ function shaAudit(md: string): string[] {
   };
   for (const s of new Set(caps(md, SHA_TOKEN))) {
     if (!isCommit(s)) {
-      bad.push(`\`${s}\` 不是任何 commit`);
+      // ⭐ shallow 樹上「查不到」有兩種意思 —— ⛔ 不要把它們講成同一句。
+      bad.push(shallow
+        ? `\`${s}\` 在這棵 **shallow** 樹上查不到（可能在邊界外）⇒ ⛔ 沒驗到，⛔ 不是「它不存在」。CI 要 fetch-depth: 0`
+        : `\`${s}\` 不是任何 commit`);
       continue;
     }
     try {
@@ -129,8 +143,14 @@ describe("AGENTS.md —— 引用的每一條指令與欄位都存在（GH#988�
   it("⭐ 哨兵（GH#997）：假 sha 與過期的檔頭被指名，HEAD 自己不被誤判", () => {
     const head = git("rev-parse", "--short=9", "HEAD");
     const fake = shaAudit("> 記於 2026-01-01 · `0123456789abcdef0123`\n例：`deadbeef1`");
-    expect(fake.join("\n")).toContain("`0123456789abcdef0123` 不是任何 commit");
-    expect(fake.join("\n")).toContain("`deadbeef1` 不是任何 commit");
+    // ⭐ 哨兵要證明的是「**假 sha 會被指名**」，⛔ 不是那句話的**逐字措辭** ——
+    //   shallow 樹上的措辭刻意不同（「邊界外 ⇒ 沒驗到」vs「不是任何 commit」），
+    //   ⛔ 而把措辭釘死會讓這支哨兵在 shallow 機器上紅，訊息還指向錯的方向。
+    // ⇒ 釘住**兩件真正重要的事**：那顆 sha 出現在輸出裡，而且它被當成問題。
+    for (const s of ["0123456789abcdef0123", "deadbeef1"]) {
+      expect(fake.join("\n"), `假 sha ${s} 沒有被指名`).toContain(`\`${s}\``);
+    }
+    expect(fake.length, "假 sha 一個都沒被抓到").toBeGreaterThanOrEqual(2);
     expect(shaAudit(`> 記於 今天 · \`${head}\``)).toEqual([]);
     expect(shaAudit("沒有檔頭")).toEqual(["檔頭沒有「記於 … `sha`」那一行"]);
   });

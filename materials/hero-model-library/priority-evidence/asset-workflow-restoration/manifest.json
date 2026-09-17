@@ -1,0 +1,3307 @@
+{
+  "schema": "ggd-asset-workflow-restoration@1",
+  "deletionCommit": "818566183fbb127a5730aa6115d23d600dbedcee",
+  "deletionParent": "fcb1e8dfd457f510f7a0d2a6715331c55a38a6a0",
+  "scope": "Versioned programs and dependency manifests under tools/hero-model-library only.",
+  "summary": {
+    "restoredFiles": 411,
+    "historicalByteExactFiles": 410,
+    "reviewedPostDeletionFixFiles": 1,
+    "restoredBytes": 2507122
+  },
+  "files": [
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/haga/ggd-haga-prepare.mts",
+      "bytes": 5304,
+      "sha256": "a410022ae16b710b0bfbf2faee1753a33ec3d9a9867d0c0bde6dde3f0938015b",
+      "historicalBytes": 5304,
+      "historicalSha256": "a410022ae16b710b0bfbf2faee1753a33ec3d9a9867d0c0bde6dde3f0938015b",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/haga/ggd-haga-render-server.py",
+      "bytes": 3251,
+      "sha256": "977c4e7cf502fb3fcc7188a2c520da5785b480c6f0920f6f9cbe91eb0f68c686",
+      "historicalBytes": 3251,
+      "historicalSha256": "977c4e7cf502fb3fcc7188a2c520da5785b480c6f0920f6f9cbe91eb0f68c686",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/haga/ggd-haga-render.mjs",
+      "bytes": 4256,
+      "sha256": "cb72b30f8e8d6f16982e9fbcfdbb71ff965bc733b2f063e28c7513b476ff14ff",
+      "historicalBytes": 4256,
+      "historicalSha256": "cb72b30f8e8d6f16982e9fbcfdbb71ff965bc733b2f063e28c7513b476ff14ff",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kaiji/analyze_source.py",
+      "bytes": 5268,
+      "sha256": "c1d3f7048f7530b6dee56bdf9ea65bc1258b57fe2c6fe373f8e64351d38d0d74",
+      "historicalBytes": 5268,
+      "historicalSha256": "c1d3f7048f7530b6dee56bdf9ea65bc1258b57fe2c6fe373f8e64351d38d0d74",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kaiji/animate.py",
+      "bytes": 5873,
+      "sha256": "b960f29d7d8708f7d29b85767732622e345300c9c2af28bc999199410c24ac46",
+      "historicalBytes": 5873,
+      "historicalSha256": "b960f29d7d8708f7d29b85767732622e345300c9c2af28bc999199410c24ac46",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kaiji/freeze.py",
+      "bytes": 6006,
+      "sha256": "344a6f9b9f7a2a37981473675c4f6d14ad4c42ff3e6acf8a9ee3158a3b7bcc71",
+      "historicalBytes": 6006,
+      "historicalSha256": "344a6f9b9f7a2a37981473675c4f6d14ad4c42ff3e6acf8a9ee3158a3b7bcc71",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kaiji/prepare.mts",
+      "bytes": 2733,
+      "sha256": "5f1d6edd4bbdc0555a81afe1ea78f89fbca6d14b30bef2d3939b2237c27ace76",
+      "historicalBytes": 2733,
+      "historicalSha256": "5f1d6edd4bbdc0555a81afe1ea78f89fbca6d14b30bef2d3939b2237c27ace76",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kaiji/readback.mts",
+      "bytes": 3269,
+      "sha256": "39520ee9f9c559c31b5e8c09a54fae6bb0130ae077dc726a8085f4826d0cc96c",
+      "historicalBytes": 3269,
+      "historicalSha256": "39520ee9f9c559c31b5e8c09a54fae6bb0130ae077dc726a8085f4826d0cc96c",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kaiji/render.mjs",
+      "bytes": 3660,
+      "sha256": "97fa180bedfb5da5c587caed2d2bd0799b7112a6c927853e4cd877aaf05d09c0",
+      "historicalBytes": 3660,
+      "historicalSha256": "97fa180bedfb5da5c587caed2d2bd0799b7112a6c927853e4cd877aaf05d09c0",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kaiji/render.py",
+      "bytes": 3344,
+      "sha256": "23f358e3f92801e0f692ab25b36ce634a12e4a71b8aba2117d01d7f41c0b7d34",
+      "historicalBytes": 3344,
+      "historicalSha256": "23f358e3f92801e0f692ab25b36ce634a12e4a71b8aba2117d01d7f41c0b7d34",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kof/extract_public_sources.py",
+      "bytes": 16940,
+      "sha256": "f0eecb39206b557c75a9dc5bf0d2f131bc61c00466f7fb9ab81c3d780b4a7d66",
+      "historicalBytes": 16940,
+      "historicalSha256": "f0eecb39206b557c75a9dc5bf0d2f131bc61c00466f7fb9ab81c3d780b4a7d66",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kof/ggd-kof-drive-download.py",
+      "bytes": 3038,
+      "sha256": "25d28bbac87672ec61b8776b34970830f4978ac836f62c13b28c49766e290ec0",
+      "historicalBytes": 3038,
+      "historicalSha256": "25d28bbac87672ec61b8776b34970830f4978ac836f62c13b28c49766e290ec0",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kof/ggd-kof-round20-extract.py",
+      "bytes": 2178,
+      "sha256": "992b29e6429f2c50b86e1d9112675454f2805af16d5e330ad2407bfe0ddd6e69",
+      "historicalBytes": 2178,
+      "historicalSha256": "992b29e6429f2c50b86e1d9112675454f2805af16d5e330ad2407bfe0ddd6e69",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kof/ggd-kof-round20-freeze.py",
+      "bytes": 3733,
+      "sha256": "f9d99aa8c7cb7c68c29f93eb96d27da35ae0335b9a3a7db1f5546b66fc8e3027",
+      "historicalBytes": 3733,
+      "historicalSha256": "f9d99aa8c7cb7c68c29f93eb96d27da35ae0335b9a3a7db1f5546b66fc8e3027",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kof/iori-xv-raw/extract_public_sources.py",
+      "bytes": 16940,
+      "sha256": "f0eecb39206b557c75a9dc5bf0d2f131bc61c00466f7fb9ab81c3d780b4a7d66",
+      "historicalBytes": 16940,
+      "historicalSha256": "f0eecb39206b557c75a9dc5bf0d2f131bc61c00466f7fb9ab81c3d780b4a7d66",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kof/iori-xv-raw/ggd-kof-drive-download.py",
+      "bytes": 3038,
+      "sha256": "25d28bbac87672ec61b8776b34970830f4978ac836f62c13b28c49766e290ec0",
+      "historicalBytes": 3038,
+      "historicalSha256": "25d28bbac87672ec61b8776b34970830f4978ac836f62c13b28c49766e290ec0",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kof/iori-xv-raw/ggd-kof-fbx-inspect.py",
+      "bytes": 3203,
+      "sha256": "90789cfa00e491411fc5d65787395adfbf4bd584eefb8a7d79352cea3195b6e7",
+      "historicalBytes": 3203,
+      "historicalSha256": "90789cfa00e491411fc5d65787395adfbf4bd584eefb8a7d79352cea3195b6e7",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kof/iori-xv-raw/ggd-kof-round20-extract.py",
+      "bytes": 2178,
+      "sha256": "992b29e6429f2c50b86e1d9112675454f2805af16d5e330ad2407bfe0ddd6e69",
+      "historicalBytes": 2178,
+      "historicalSha256": "992b29e6429f2c50b86e1d9112675454f2805af16d5e330ad2407bfe0ddd6e69",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kof/iori-xv-raw/ggd-kof-round20-freeze-raw.py",
+      "bytes": 8320,
+      "sha256": "efa24a3d797cedeab3cd527d037cbd230d911ce9b45c6e8474aed557df5fc14b",
+      "historicalBytes": 8320,
+      "historicalSha256": "efa24a3d797cedeab3cd527d037cbd230d911ce9b45c6e8474aed557df5fc14b",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kof/iori-xv-raw/ggd-kof-round20-textures.py",
+      "bytes": 857,
+      "sha256": "9d093c49371f7d887c231fc14c07d30890ceac21120f7c70de8a6a622e215023",
+      "historicalBytes": 857,
+      "historicalSha256": "9d093c49371f7d887c231fc14c07d30890ceac21120f7c70de8a6a622e215023",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kof/mai-xv-raw/extract_public_sources.py",
+      "bytes": 16940,
+      "sha256": "f0eecb39206b557c75a9dc5bf0d2f131bc61c00466f7fb9ab81c3d780b4a7d66",
+      "historicalBytes": 16940,
+      "historicalSha256": "f0eecb39206b557c75a9dc5bf0d2f131bc61c00466f7fb9ab81c3d780b4a7d66",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kof/mai-xv-raw/ggd-kof-drive-download.py",
+      "bytes": 3038,
+      "sha256": "25d28bbac87672ec61b8776b34970830f4978ac836f62c13b28c49766e290ec0",
+      "historicalBytes": 3038,
+      "historicalSha256": "25d28bbac87672ec61b8776b34970830f4978ac836f62c13b28c49766e290ec0",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kof/mai-xv-raw/ggd-kof-fbx-inspect.py",
+      "bytes": 3203,
+      "sha256": "90789cfa00e491411fc5d65787395adfbf4bd584eefb8a7d79352cea3195b6e7",
+      "historicalBytes": 3203,
+      "historicalSha256": "90789cfa00e491411fc5d65787395adfbf4bd584eefb8a7d79352cea3195b6e7",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kof/mai-xv-raw/ggd-kof-round20-extract.py",
+      "bytes": 2178,
+      "sha256": "992b29e6429f2c50b86e1d9112675454f2805af16d5e330ad2407bfe0ddd6e69",
+      "historicalBytes": 2178,
+      "historicalSha256": "992b29e6429f2c50b86e1d9112675454f2805af16d5e330ad2407bfe0ddd6e69",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kof/mai-xv-raw/ggd-kof-round20-freeze-raw.py",
+      "bytes": 8320,
+      "sha256": "efa24a3d797cedeab3cd527d037cbd230d911ce9b45c6e8474aed557df5fc14b",
+      "historicalBytes": 8320,
+      "historicalSha256": "efa24a3d797cedeab3cd527d037cbd230d911ce9b45c6e8474aed557df5fc14b",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kof/mai-xv-raw/ggd-kof-round20-textures.py",
+      "bytes": 857,
+      "sha256": "9d093c49371f7d887c231fc14c07d30890ceac21120f7c70de8a6a622e215023",
+      "historicalBytes": 857,
+      "historicalSha256": "9d093c49371f7d887c231fc14c07d30890ceac21120f7c70de8a6a622e215023",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kof/package-lock.json",
+      "bytes": 5365,
+      "sha256": "477fdc404ff0ae23fcba281e9ec2af7aee5426e59809766fd2ba7928be3ab8ea",
+      "historicalBytes": 5365,
+      "historicalSha256": "477fdc404ff0ae23fcba281e9ec2af7aee5426e59809766fd2ba7928be3ab8ea",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/kof/public-kof-download.mjs",
+      "bytes": 2065,
+      "sha256": "a57b5fea78bc1c84328f3490f12a461d77f1dcb08903436d9de3666325f9d10c",
+      "historicalBytes": 2065,
+      "historicalSha256": "a57b5fea78bc1c84328f3490f12a461d77f1dcb08903436d9de3666325f9d10c",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/mai/record_visual_rejection.py",
+      "bytes": 6261,
+      "sha256": "ce1e1e04e6e27181bb44f72762fe4be3a416342ce377435c9f39b63bab2488c4",
+      "historicalBytes": 6261,
+      "historicalSha256": "ce1e1e04e6e27181bb44f72762fe4be3a416342ce377435c9f39b63bab2488c4",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/mai/render_retargeted.mjs",
+      "bytes": 4496,
+      "sha256": "6406cc545003447255db77c923fb9097935aa91f5b5032d8bf20bba43a72dcdd",
+      "historicalBytes": 4496,
+      "historicalSha256": "6406cc545003447255db77c923fb9097935aa91f5b5032d8bf20bba43a72dcdd",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/mai/render_retargeted.py",
+      "bytes": 3749,
+      "sha256": "5f553c335f3ac02d9ef95a5fdb95ba56498c500ca64944729d6592b641a5a235",
+      "historicalBytes": 3749,
+      "historicalSha256": "5f553c335f3ac02d9ef95a5fdb95ba56498c500ca64944729d6592b641a5a235",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/mai/retarget_ifp.py",
+      "bytes": 10400,
+      "sha256": "3eb4a44dde807b8d0d09c0448b3e8b1d5b61bfbc471c15090f60823c30bf1e52",
+      "historicalBytes": 10400,
+      "historicalSha256": "3eb4a44dde807b8d0d09c0448b3e8b1d5b61bfbc471c15090f60823c30bf1e52",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/naofumi/audit_dragonff_modes.py",
+      "bytes": 4162,
+      "sha256": "a7ad389133326a5efcc1b5d690c0bf2b0a9d81b8175c32013dc3cdcbedbfe1e2",
+      "historicalBytes": 4162,
+      "historicalSha256": "a7ad389133326a5efcc1b5d690c0bf2b0a9d81b8175c32013dc3cdcbedbfe1e2",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/naofumi/audit_native.py",
+      "bytes": 3402,
+      "sha256": "779ada8b516b59859757764d0ace19f2ea915fe8f49c6cb50d8dd8ba2231b916",
+      "historicalBytes": 3402,
+      "historicalSha256": "779ada8b516b59859757764d0ace19f2ea915fe8f49c6cb50d8dd8ba2231b916",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/naofumi/correct_opaque_materials.py",
+      "bytes": 1417,
+      "sha256": "97435babc75781d8b3ff9ceb714c02407127ab46e5a48bbcc81179d9df31cc9c",
+      "historicalBytes": 1417,
+      "historicalSha256": "97435babc75781d8b3ff9ceb714c02407127ab46e5a48bbcc81179d9df31cc9c",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/naofumi/freeze_v2.py",
+      "bytes": 5606,
+      "sha256": "587e5128e92ade9a2e0c45d1f6ab42ab76d5d6db0faef42f9b274dd00c94c95e",
+      "historicalBytes": 5606,
+      "historicalSha256": "587e5128e92ade9a2e0c45d1f6ab42ab76d5d6db0faef42f9b274dd00c94c95e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/README.md",
+      "bytes": 7917,
+      "sha256": "cae5c8a6bd7411425b9776a52cd230499031b86182dfd6da1d869a9469246121",
+      "historicalBytes": 7917,
+      "historicalSha256": "cae5c8a6bd7411425b9776a52cd230499031b86182dfd6da1d869a9469246121",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-final-priority-integrity.mts",
+      "bytes": 14773,
+      "sha256": "bcbfe0b2b5b1bc4b69d4d8b3547db4ab07be850e3caec39ee2d5db6e55786077",
+      "historicalBytes": 14773,
+      "historicalSha256": "bcbfe0b2b5b1bc4b69d4d8b3547db4ab07be850e3caec39ee2d5db6e55786077",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-freeze-ou99-v2.py",
+      "bytes": 9044,
+      "sha256": "15bc6568f7ded41cb0985881605f2651359094141bbde2a441143f3a263443cd",
+      "historicalBytes": 9044,
+      "historicalSha256": "15bc6568f7ded41cb0985881605f2651359094141bbde2a441143f3a263443cd",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-freeze-ou99-v3.py",
+      "bytes": 6644,
+      "sha256": "622d037da2682142a5bcde7014e84f76847f7ff02df9686e4acb988acaa233f3",
+      "historicalBytes": 6644,
+      "historicalSha256": "622d037da2682142a5bcde7014e84f76847f7ff02df9686e4acb988acaa233f3",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-freeze-priority10-visual.py",
+      "bytes": 6238,
+      "sha256": "c871806304165fd97fb6fe7d569d40e32c69e8585ad46999943b53313413ac37",
+      "historicalBytes": 6238,
+      "historicalSha256": "c871806304165fd97fb6fe7d569d40e32c69e8585ad46999943b53313413ac37",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-glb-io-helper.py",
+      "bytes": 11734,
+      "sha256": "700d6a150f95f137404722771093024ea1bc3aa51d1d07404621eab6a295b180",
+      "historicalBytes": 11734,
+      "historicalSha256": "700d6a150f95f137404722771093024ea1bc3aa51d1d07404621eab6a295b180",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-atlas-alpha-v3-visual-server.py",
+      "bytes": 3407,
+      "sha256": "c14b6658634f425e8672afd58f7fa0ee079ef7de0abaa328036c2f1abf89f0d2",
+      "historicalBytes": 3407,
+      "historicalSha256": "c14b6658634f425e8672afd58f7fa0ee079ef7de0abaa328036c2f1abf89f0d2",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-atlas-alpha-v3-visual.mjs",
+      "bytes": 3289,
+      "sha256": "02af90e584e2f5b0ad73f5d3c2ed08a002455bd41e0816323d9141b4196a7c6b",
+      "historicalBytes": 3289,
+      "historicalSha256": "02af90e584e2f5b0ad73f5d3c2ed08a002455bd41e0816323d9141b4196a7c6b",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-atlas-alpha-v3.py",
+      "bytes": 4596,
+      "sha256": "d13de012308e1e35dc4da4283e5462503e8f00a186976e94ae26615c776eec21",
+      "historicalBytes": 4596,
+      "historicalSha256": "d13de012308e1e35dc4da4283e5462503e8f00a186976e94ae26615c776eec21",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-atlas-lod-review-server.py",
+      "bytes": 3446,
+      "sha256": "803a4051e75fce796dbacb02b606bf50fed3b0ff1f1e95266a8f8f44942ac3f4",
+      "historicalBytes": 3446,
+      "historicalSha256": "803a4051e75fce796dbacb02b606bf50fed3b0ff1f1e95266a8f8f44942ac3f4",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-atlas-lod-review.mjs",
+      "bytes": 3269,
+      "sha256": "74cd3d0d25813dbe01a899f59435d0c24baa4cf8051f4edbac4facb421dff625",
+      "historicalBytes": 3269,
+      "historicalSha256": "74cd3d0d25813dbe01a899f59435d0c24baa4cf8051f4edbac4facb421dff625",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-audit-v3.py",
+      "bytes": 5482,
+      "sha256": "90c7fd8552c9cd16ae34c0d3108564ff4a1103d844848fae18dcfca935e05fff",
+      "historicalBytes": 5482,
+      "historicalSha256": "90c7fd8552c9cd16ae34c0d3108564ff4a1103d844848fae18dcfca935e05fff",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-native-motion-budget-v3.mjs",
+      "bytes": 4858,
+      "sha256": "b9556601d7a203821a78c9860fe72465b34074f10dc6c5af84d551e7e7f52f6a",
+      "historicalBytes": 4858,
+      "historicalSha256": "b9556601d7a203821a78c9860fe72465b34074f10dc6c5af84d551e7e7f52f6a",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-native-motion-check.mjs",
+      "bytes": 4084,
+      "sha256": "f9cb4c909925e87c8d74b8a0fe326839b0453046e25fe6dee02299779a17e16d",
+      "historicalBytes": 4084,
+      "historicalSha256": "f9cb4c909925e87c8d74b8a0fe326839b0453046e25fe6dee02299779a17e16d",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-native-preserving-lod.py",
+      "bytes": 6199,
+      "sha256": "e0450a1e99f2719018303e656536742c3a03a1f4db7555977d55e805132cca5c",
+      "historicalBytes": 6199,
+      "historicalSha256": "e0450a1e99f2719018303e656536742c3a03a1f4db7555977d55e805132cca5c",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-priority10-front-server.py",
+      "bytes": 3585,
+      "sha256": "8d418b4ef779687733e129ad7044da1413a19102c98117808fe1fefb3108301d",
+      "historicalBytes": 3585,
+      "historicalSha256": "8d418b4ef779687733e129ad7044da1413a19102c98117808fe1fefb3108301d",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-priority10-front.mjs",
+      "bytes": 3244,
+      "sha256": "3339862c180a39bb7acf7d95ea30173c672ee22cc71ed90701b2ac690a247d10",
+      "historicalBytes": 3244,
+      "historicalSha256": "3339862c180a39bb7acf7d95ea30173c672ee22cc71ed90701b2ac690a247d10",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-priority10-visual-server.py",
+      "bytes": 3583,
+      "sha256": "1c21508661124f14db2186c3ea80e77c302be44d5fddd51907c89ba448bb4a18",
+      "historicalBytes": 3583,
+      "historicalSha256": "1c21508661124f14db2186c3ea80e77c302be44d5fddd51907c89ba448bb4a18",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-priority10-visual.mjs",
+      "bytes": 3221,
+      "sha256": "ec4858207d40695d4eb8adab9d1e0ae664c996bbaf01b538f20d0c215c885b56",
+      "historicalBytes": 3221,
+      "historicalSha256": "ec4858207d40695d4eb8adab9d1e0ae664c996bbaf01b538f20d0c215c885b56",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-standardize-v2.py",
+      "bytes": 15004,
+      "sha256": "44382a65e25cda330060aafd2ea287bd250763e5a62902ccc0643841d28f0a7f",
+      "historicalBytes": 15004,
+      "historicalSha256": "44382a65e25cda330060aafd2ea287bd250763e5a62902ccc0643841d28f0a7f",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-v3-visual-summary.py",
+      "bytes": 1441,
+      "sha256": "27bee2db5c0b8deb62a17c9c031f40d060aae0c1acf2d4d471aa4d5f488a8779",
+      "historicalBytes": 1441,
+      "historicalSha256": "27bee2db5c0b8deb62a17c9c031f40d060aae0c1acf2d4d471aa4d5f488a8779",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-verify-budget-v3.mts",
+      "bytes": 6921,
+      "sha256": "7c4de20e1543453ebb68bd96669446e391f57b474fc2fd9613f66ba0ef5c036d",
+      "historicalBytes": 6921,
+      "historicalSha256": "7c4de20e1543453ebb68bd96669446e391f57b474fc2fd9613f66ba0ef5c036d",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-verify-v2.mts",
+      "bytes": 6948,
+      "sha256": "56adff8c95321bf463e654b589c4d00a74de05dd2c2fa8c6d56d6f38ac4ef5b8",
+      "historicalBytes": 6948,
+      "historicalSha256": "56adff8c95321bf463e654b589c4d00a74de05dd2c2fa8c6d56d6f38ac4ef5b8",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/ggd-ou99-verify-v3.mts",
+      "bytes": 6948,
+      "sha256": "2846f8ce88c3f89893e6b931492429feda557bab8da8ce68ee45bdfb7abfefdd",
+      "historicalBytes": 6948,
+      "historicalSha256": "2846f8ce88c3f89893e6b931492429feda557bab8da8ce68ee45bdfb7abfefdd",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/replay-patches.json",
+      "bytes": 1549,
+      "sha256": "d3268ed35809c0f088b687c6c105df23a091e7fbf8ad7ba7c25fb004ea0f0d11",
+      "historicalBytes": 1549,
+      "historicalSha256": "d3268ed35809c0f088b687c6c105df23a091e7fbf8ad7ba7c25fb004ea0f0d11",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/residual-review/ggd-freeze-ou99-residual-audit.py",
+      "bytes": 8398,
+      "sha256": "1241a30c272c289b906a7a1b0e0b5588d3c081f7c2b606b432e9436742f42582",
+      "historicalBytes": 8398,
+      "historicalSha256": "1241a30c272c289b906a7a1b0e0b5588d3c081f7c2b606b432e9436742f42582",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/residual-review/ggd-ou99-residual-contact-sheets.py",
+      "bytes": 817,
+      "sha256": "b33c466f799c5bf2833a31bccb7a0e851f15b0e3b3aad323730af4a42c6a6a77",
+      "historicalBytes": 817,
+      "historicalSha256": "b33c466f799c5bf2833a31bccb7a0e851f15b0e3b3aad323730af4a42c6a6a77",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/residual-review/ggd-ou99-residual-geometry-audit.py",
+      "bytes": 3641,
+      "sha256": "5bf4c3028068dff4cb3b86d0479abdb4533e0221b6b3bb69625d10f58621cc28",
+      "historicalBytes": 3641,
+      "historicalSha256": "5bf4c3028068dff4cb3b86d0479abdb4533e0221b6b3bb69625d10f58621cc28",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/residual-review/ggd-ou99-residual-native-proof.py",
+      "bytes": 4105,
+      "sha256": "bb7d7d2b782c21ae8f6919f2424fd14b0d41ae6f7424ef00900367de87c8f6e0",
+      "historicalBytes": 4105,
+      "historicalSha256": "bb7d7d2b782c21ae8f6919f2424fd14b0d41ae6f7424ef00900367de87c8f6e0",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/residual-review/ggd-ou99-residual-render-server.py",
+      "bytes": 3364,
+      "sha256": "0a200e8098c449028f3fc2805a712779d07ca5b4be3f02ff1bd3710d42b173ae",
+      "historicalBytes": 3364,
+      "historicalSha256": "0a200e8098c449028f3fc2805a712779d07ca5b4be3f02ff1bd3710d42b173ae",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/ou99/residual-review/ggd-ou99-residual-render.mjs",
+      "bytes": 3757,
+      "sha256": "c83f9f3468be5d40b1d3ae3ca87e25642d5f3b836f8ce0c0a779c655ff175326",
+      "historicalBytes": 3757,
+      "historicalSha256": "c83f9f3468be5d40b1d3ae3ca87e25642d5f3b836f8ce0c0a779c655ff175326",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/shinchan/ggd-freeze-shinchan.py",
+      "bytes": 12579,
+      "sha256": "cb966fd1c1f6b65db5eebc6376c83998a88e361f8ccf864fae772531600d4386",
+      "historicalBytes": 12579,
+      "historicalSha256": "cb966fd1c1f6b65db5eebc6376c83998a88e361f8ccf864fae772531600d4386",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/shinchan/ggd-procedural-six-state.py",
+      "bytes": 11734,
+      "sha256": "700d6a150f95f137404722771093024ea1bc3aa51d1d07404621eab6a295b180",
+      "historicalBytes": 11734,
+      "historicalSha256": "700d6a150f95f137404722771093024ea1bc3aa51d1d07404621eab6a295b180",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/shinchan/ggd-shinchan-atlas.py",
+      "bytes": 3438,
+      "sha256": "5017b6cba5c9fb9f6edc635beab07d4b57cd0fc85a64134befee047e9934aeb0",
+      "historicalBytes": 3438,
+      "historicalSha256": "5017b6cba5c9fb9f6edc635beab07d4b57cd0fc85a64134befee047e9934aeb0",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/shinchan/ggd-shinchan-build-optimized.py",
+      "bytes": 2820,
+      "sha256": "67ccfab89532990fafe2bc213fc97261c1b35c240d2dc51681236bcc71a00bd8",
+      "historicalBytes": 2820,
+      "historicalSha256": "67ccfab89532990fafe2bc213fc97261c1b35c240d2dc51681236bcc71a00bd8",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/shinchan/ggd-shinchan-convert.py",
+      "bytes": 10330,
+      "sha256": "854a79f2ba64ae6b5446887160f05273d8d034e973b95c5516526a39cb6ec875",
+      "historicalBytes": 10330,
+      "historicalSha256": "854a79f2ba64ae6b5446887160f05273d8d034e973b95c5516526a39cb6ec875",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/shinchan/ggd-shinchan-decimate.py",
+      "bytes": 2816,
+      "sha256": "ca92e4330e886928fd87fff11c6e93a88eb4f2516d6b0884d0edfa748683c84e",
+      "historicalBytes": 2816,
+      "historicalSha256": "ca92e4330e886928fd87fff11c6e93a88eb4f2516d6b0884d0edfa748683c84e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/shinchan/ggd-shinchan-probe.py",
+      "bytes": 2317,
+      "sha256": "dded2d045b8a48d0326f61d3e95a9926c8052e6094da4ba3ca3fa1c1a61e5027",
+      "historicalBytes": 2317,
+      "historicalSha256": "dded2d045b8a48d0326f61d3e95a9926c8052e6094da4ba3ca3fa1c1a61e5027",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/shinchan/ggd-shinchan-render-budget.py",
+      "bytes": 2753,
+      "sha256": "b186c2c41ac37d7b31ec3f4e071d5f6752900ecb07b0cf1498d8e8c6c4f690d9",
+      "historicalBytes": 2753,
+      "historicalSha256": "b186c2c41ac37d7b31ec3f4e071d5f6752900ecb07b0cf1498d8e8c6c4f690d9",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/shinchan/ggd-shinchan-render-server.py",
+      "bytes": 2878,
+      "sha256": "3d0d782390276543ca166cf214efe6baa55a18c45de1ed3081d6d24408d75aa9",
+      "historicalBytes": 2878,
+      "historicalSha256": "3d0d782390276543ca166cf214efe6baa55a18c45de1ed3081d6d24408d75aa9",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/shinchan/ggd-shinchan-render-static.py",
+      "bytes": 2774,
+      "sha256": "2634227ac590a975905034ac3e540b9a1df05a90a4f4d2e6bc8619dae5b31c28",
+      "historicalBytes": 2774,
+      "historicalSha256": "2634227ac590a975905034ac3e540b9a1df05a90a4f4d2e6bc8619dae5b31c28",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/shinchan/ggd-shinchan-render.mjs",
+      "bytes": 3061,
+      "sha256": "fd0d23f78fdd3d8e9f4ebc0524cd4246d097bab8db6d5ce32fe6c93abc482196",
+      "historicalBytes": 3061,
+      "historicalSha256": "fd0d23f78fdd3d8e9f4ebc0524cd4246d097bab8db6d5ce32fe6c93abc482196",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/sinbad/ggd-freeze-sinbad-baal.py",
+      "bytes": 11158,
+      "sha256": "a268c1d2d4db37d540b544c88354463fed0c61faba9bb9cfcb1bd029ae4c4e02",
+      "historicalBytes": 11158,
+      "historicalSha256": "a268c1d2d4db37d540b544c88354463fed0c61faba9bb9cfcb1bd029ae4c4e02",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/sinbad/ggd-prepare-sinbad-baal.py",
+      "bytes": 5763,
+      "sha256": "3c20ea9a1e27a7ad7495107c5632d216686538a39523b8f8aa17689df797500f",
+      "historicalBytes": 5763,
+      "historicalSha256": "3c20ea9a1e27a7ad7495107c5632d216686538a39523b8f8aa17689df797500f",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/sinbad/ggd-procedural-six-state.py",
+      "bytes": 11734,
+      "sha256": "700d6a150f95f137404722771093024ea1bc3aa51d1d07404621eab6a295b180",
+      "historicalBytes": 11734,
+      "historicalSha256": "700d6a150f95f137404722771093024ea1bc3aa51d1d07404621eab6a295b180",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/sinbad/ggd-sinbad-material-compat.py",
+      "bytes": 1955,
+      "sha256": "f54eaecbddd9903183fdd8adad09732784d81293a33752de5cc4f8184c54587a",
+      "historicalBytes": 1955,
+      "historicalSha256": "f54eaecbddd9903183fdd8adad09732784d81293a33752de5cc4f8184c54587a",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/sinbad/ggd-sinbad-render-server.py",
+      "bytes": 2989,
+      "sha256": "03d3d357ef43229cb06a841f5f9b96cf1b6edf6154518bf842fdd7d2e7e528bd",
+      "historicalBytes": 2989,
+      "historicalSha256": "03d3d357ef43229cb06a841f5f9b96cf1b6edf6154518bf842fdd7d2e7e528bd",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/sinbad/ggd-sinbad-render.mjs",
+      "bytes": 3061,
+      "sha256": "fd0d23f78fdd3d8e9f4ebc0524cd4246d097bab8db6d5ce32fe6c93abc482196",
+      "historicalBytes": 3061,
+      "historicalSha256": "fd0d23f78fdd3d8e9f4ebc0524cd4246d097bab8db6d5ce32fe6c93abc482196",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/priority-conversion/sinbad/ggd-sinbad-world-pose-check.mjs",
+      "bytes": 1917,
+      "sha256": "2d44b9d66a615852a33bebde248745d3c42e789fa61cdcd2c3c59c889cd3e0a3",
+      "historicalBytes": 1917,
+      "historicalSha256": "2d44b9d66a615852a33bebde248745d3c42e789fa61cdcd2c3c59c889cd3e0a3",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/alucard-audio-20260911-v1/README.md",
+      "bytes": 2936,
+      "sha256": "f991eb9d6f124f552c106e3e85374529e9dc46cc9a587a27bf58c83a2a8bfb62",
+      "historicalBytes": 2936,
+      "historicalSha256": "f991eb9d6f124f552c106e3e85374529e9dc46cc9a587a27bf58c83a2a8bfb62",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/alucard-audio-20260911-v1/build_scoped_archive.py",
+      "bytes": 8518,
+      "sha256": "8f000fbf71349e02c7243a462347fedd42634967519b58664a415f0ab2cdbee6",
+      "historicalBytes": 8518,
+      "historicalSha256": "8f000fbf71349e02c7243a462347fedd42634967519b58664a415f0ab2cdbee6",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/alucard-audio-20260911-v1/decode.py",
+      "bytes": 11198,
+      "sha256": "327a952a3789269e2795bfd9a5a5e1ebacf15f66a567194670f811a0aeb66298",
+      "historicalBytes": 11198,
+      "historicalSha256": "327a952a3789269e2795bfd9a5a5e1ebacf15f66a567194670f811a0aeb66298",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/alucard-audio-20260911-v1/freeze.py",
+      "bytes": 4294,
+      "sha256": "60af2b340299fb21156b6a32ea8a6348dcf11e90031049b28b8f0febc910233e",
+      "historicalBytes": 4294,
+      "historicalSha256": "60af2b340299fb21156b6a32ea8a6348dcf11e90031049b28b8f0febc910233e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/alucard-audio-20260911-v1/handoff.json",
+      "bytes": 3247,
+      "sha256": "c7326f829a1946f8cda217551aa60abf5f8cc6ca6aa00d4aabccf6ddeda733af",
+      "historicalBytes": 3247,
+      "historicalSha256": "c7326f829a1946f8cda217551aa60abf5f8cc6ca6aa00d4aabccf6ddeda733af",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/alucard-audio-20260911-v1/integrate.py",
+      "bytes": 10218,
+      "sha256": "8965787eb9b9a771ebc3cf1b476399fa5199033c48b5d3291e39c16d467ee0a9",
+      "historicalBytes": 10218,
+      "historicalSha256": "8965787eb9b9a771ebc3cf1b476399fa5199033c48b5d3291e39c16d467ee0a9",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/alucard-audio-20260911-v1/source-config.json",
+      "bytes": 10480,
+      "sha256": "e885641507a8331125b6a0692f589670bf8e2775101b6fc7d431e719d70003a8",
+      "historicalBytes": 10480,
+      "historicalSha256": "e885641507a8331125b6a0692f589670bf8e2775101b6fc7d431e719d70003a8",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/build_scoped_seven_archive.py",
+      "bytes": 10038,
+      "sha256": "3157936ce64b24728886c279df764189323a4989b60a9844e9c2a5e176412836",
+      "historicalBytes": 10038,
+      "historicalSha256": "3157936ce64b24728886c279df764189323a4989b60a9844e9c2a5e176412836",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-rigid-props-20260911-v1/README.md",
+      "bytes": 4339,
+      "sha256": "8e5aefa86bd786c804b594b02c43c2584583b9d64dbe78704e45dbd2b27fca8c",
+      "historicalBytes": 4339,
+      "historicalSha256": "8e5aefa86bd786c804b594b02c43c2584583b9d64dbe78704e45dbd2b27fca8c",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-rigid-props-20260911-v1/convert.py",
+      "bytes": 13882,
+      "sha256": "aaa3415d0fae5303d85f2d1da971a4f2449ab2a3ded9c78b7acac385f73a33c6",
+      "historicalBytes": 13882,
+      "historicalSha256": "aaa3415d0fae5303d85f2d1da971a4f2449ab2a3ded9c78b7acac385f73a33c6",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-rigid-props-20260911-v1/delivery.json",
+      "bytes": 8344,
+      "sha256": "6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b",
+      "historicalBytes": 8344,
+      "historicalSha256": "6a139bfad7bd211c669d3c41262ec6c7d482563496e7d4bcd22274d47209f20b",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-rigid-props-20260911-v1/freeze_delivery.py",
+      "bytes": 6266,
+      "sha256": "20b67b7cf5fed06a37b62c8183b89b666cbc3f389dca3b5e05824af291a63a43",
+      "historicalBytes": 6266,
+      "historicalSha256": "20b67b7cf5fed06a37b62c8183b89b666cbc3f389dca3b5e05824af291a63a43",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-rigid-props-20260911-v1/normalize_validate.mts",
+      "bytes": 6184,
+      "sha256": "96e4642e4f11debc765d97e0cda2232bbd539c1fe58e1d01bb8c47d783ea98da",
+      "historicalBytes": 6184,
+      "historicalSha256": "96e4642e4f11debc765d97e0cda2232bbd539c1fe58e1d01bb8c47d783ea98da",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-rigid-props-20260911-v1/render.mjs",
+      "bytes": 3588,
+      "sha256": "00fe24a9ac4278f2669bea346afb933df02f1f992ed6e6c9c307ca0906da9b1f",
+      "historicalBytes": 3588,
+      "historicalSha256": "00fe24a9ac4278f2669bea346afb933df02f1f992ed6e6c9c307ca0906da9b1f",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-rigid-props-20260911-v1/render.py",
+      "bytes": 3419,
+      "sha256": "3f1428175ecc98436dbaf5e9696386cd98192849f4171ec23dac886f9101b380",
+      "historicalBytes": 3419,
+      "historicalSha256": "3f1428175ecc98436dbaf5e9696386cd98192849f4171ec23dac886f9101b380",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-rigid-props-20260911-v1/render_remaining.py",
+      "bytes": 609,
+      "sha256": "5c0bbf004952159245267f89766cb2cae3ae32b02ca4cc7f15b41a6f4f943052",
+      "historicalBytes": 609,
+      "historicalSha256": "5c0bbf004952159245267f89766cb2cae3ae32b02ca4cc7f15b41a6f4f943052",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-rigid-props-20260911-v1/requirements.txt",
+      "bytes": 28,
+      "sha256": "54643a9142ab8064fbcd2df1d606004dd8bc56f67e9021f64cc7dd9f3a4205e8",
+      "historicalBytes": 28,
+      "historicalSha256": "54643a9142ab8064fbcd2df1d606004dd8bc56f67e9021f64cc7dd9f3a4205e8",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-rigid-props-20260911-v1/verify_geometry.py",
+      "bytes": 3617,
+      "sha256": "c323ed438831416366905f15fd043717933c87787aedc435741943443c26d1f2",
+      "historicalBytes": 3617,
+      "historicalSha256": "c323ed438831416366905f15fd043717933c87787aedc435741943443c26d1f2",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-vearn-20260911/README.md",
+      "bytes": 1735,
+      "sha256": "bcb34b2cda90e51774d865d2fc73b84eeb944b5dcc93d18df7f9028908a5c5c2",
+      "historicalBytes": 1735,
+      "historicalSha256": "bcb34b2cda90e51774d865d2fc73b84eeb944b5dcc93d18df7f9028908a5c5c2",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-vearn-20260911/backup_main_e36_audit.py",
+      "bytes": 7469,
+      "sha256": "28cbe5dccd04030fb1b02ec378bcfb72b38d1430b6ca11d58110c130a7be1691",
+      "historicalBytes": 7469,
+      "historicalSha256": "28cbe5dccd04030fb1b02ec378bcfb72b38d1430b6ca11d58110c130a7be1691",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-vearn-20260911/backup_main_e36_merge_evidence.py",
+      "bytes": 11142,
+      "sha256": "04b77be635774009e50d24a4cb642ac13b493a7857e97854a703ae35f704db95",
+      "historicalBytes": 11142,
+      "historicalSha256": "04b77be635774009e50d24a4cb642ac13b493a7857e97854a703ae35f704db95",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-vearn-20260911/dai/tools/analyze_archive.py",
+      "bytes": 4885,
+      "sha256": "de29ba12e43a24208442eb9180c19acbfb86a2e67bd5b76cda317a1010430a70",
+      "historicalBytes": 4885,
+      "historicalSha256": "de29ba12e43a24208442eb9180c19acbfb86a2e67bd5b76cda317a1010430a70",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-vearn-20260911/dai/tools/backup_source.py",
+      "bytes": 6441,
+      "sha256": "fae7dafd5aaed469420e004fb9362afa10df97883168b25cd00f170d9e585f8e",
+      "historicalBytes": 6441,
+      "historicalSha256": "fae7dafd5aaed469420e004fb9362afa10df97883168b25cd00f170d9e585f8e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-vearn-20260911/dai/tools/freeze_delivery.py",
+      "bytes": 10652,
+      "sha256": "96355024af1e6949f415f3d6ff19f983473ee1b15cde12470ea81a6d8166c288",
+      "historicalBytes": 10652,
+      "historicalSha256": "96355024af1e6949f415f3d6ff19f983473ee1b15cde12470ea81a6d8166c288",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-vearn-20260911/finalize_validation_snapshot.py",
+      "bytes": 3779,
+      "sha256": "412f3bd7d699d992f926867a74f24628171ff38a28833de54f85486aabf57d52",
+      "historicalBytes": 3779,
+      "historicalSha256": "412f3bd7d699d992f926867a74f24628171ff38a28833de54f85486aabf57d52",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-vearn-20260911/followup-02/backup_followup_research.py",
+      "bytes": 8957,
+      "sha256": "4cb6c31e85e6623da97fe8afb42bd2930d29731ad1e17a5bb2feca214052feef",
+      "historicalBytes": 8957,
+      "historicalSha256": "4cb6c31e85e6623da97fe8afb42bd2930d29731ad1e17a5bb2feca214052feef",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-vearn-20260911/followup-02/build_readonly_followup.py",
+      "bytes": 5841,
+      "sha256": "ee483a808a42977698ba444075520290e0b02ddffa445b23024613cb7557f0f9",
+      "historicalBytes": 5841,
+      "historicalSha256": "ee483a808a42977698ba444075520290e0b02ddffa445b23024613cb7557f0f9",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-vearn-20260911/vearn/scripts/backup_vearn_research.py",
+      "bytes": 7889,
+      "sha256": "9880cca2db99fd2e01a7d50797c1d80374fa28e5806f9bd9189b87a2f857e88d",
+      "historicalBytes": 7889,
+      "historicalSha256": "9880cca2db99fd2e01a7d50797c1d80374fa28e5806f9bd9189b87a2f857e88d",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-vearn-20260911/vearn/scripts/build_report.py",
+      "bytes": 11680,
+      "sha256": "4da2dece54d380103e592d48f2e76fed8970b148b8eaea3a92881d4433e73090",
+      "historicalBytes": 11680,
+      "historicalSha256": "4da2dece54d380103e592d48f2e76fed8970b148b8eaea3a92881d4433e73090",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/dai-vearn-20260911/vearn/scripts/fetch_public_evidence.py",
+      "bytes": 1877,
+      "sha256": "02e1079d6083e1984162d683948ed68603a0436d823e1c2aa3efff11417b1c81",
+      "historicalBytes": 1877,
+      "historicalSha256": "02e1079d6083e1984162d683948ed68603a0436d823e1c2aa3efff11417b1c81",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes-community-v1/freeze_dark_sakura_review.py",
+      "bytes": 6966,
+      "sha256": "7f1e30b36df5122d66ff1c96fad8ddd9b42532eabed48d6d87d443ceaa96a7f4",
+      "historicalBytes": 6966,
+      "historicalSha256": "7f1e30b36df5122d66ff1c96fad8ddd9b42532eabed48d6d87d443ceaa96a7f4",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes-community-v1/freeze_kirei_review.py",
+      "bytes": 9039,
+      "sha256": "f5dccb9ab6fd781f746bf4eb8a77ef8066cd21ede77fcadf294e5140fecafe93",
+      "historicalBytes": 9039,
+      "historicalSha256": "f5dccb9ab6fd781f746bf4eb8a77ef8066cd21ede77fcadf294e5140fecafe93",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes-community-v1/freeze_webgl_reviews.py",
+      "bytes": 6045,
+      "sha256": "5f09377365a4dc67c11205efa4ebbaaf0cef60354f81e69c7d6f8d51553b7b8e",
+      "historicalBytes": 6045,
+      "historicalSha256": "5f09377365a4dc67c11205efa4ebbaaf0cef60354f81e69c7d6f8d51553b7b8e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes-community-v1/make_kirei_preflight.py",
+      "bytes": 11009,
+      "sha256": "35428b3cafe1c44748016a3af5acb3007bd207f1e7f715a39e54564ce65d73b6",
+      "historicalBytes": 11009,
+      "historicalSha256": "35428b3cafe1c44748016a3af5acb3007bd207f1e7f715a39e54564ce65d73b6",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes-community-v1/prepare_kirei_candidate.mts",
+      "bytes": 5480,
+      "sha256": "ed27b320e530b6d26432fddc850319c53355f2469383475e74a485af7db539a1",
+      "historicalBytes": 5480,
+      "historicalSha256": "ed27b320e530b6d26432fddc850319c53355f2469383475e74a485af7db539a1",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes-community-v1/record_dark_sakura_review.py",
+      "bytes": 7145,
+      "sha256": "acfa53e380c5eb48243a4fe99b61694e3486d70fe91bc6ab38f421ed4b19e765",
+      "historicalBytes": 7145,
+      "historicalSha256": "acfa53e380c5eb48243a4fe99b61694e3486d70fe91bc6ab38f421ed4b19e765",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes-community-v1/record_kirei_review.py",
+      "bytes": 9706,
+      "sha256": "6a026d38958deedf34a2dc11e1dc202347db40644260415bac70668b120223dc",
+      "historicalBytes": 9706,
+      "historicalSha256": "6a026d38958deedf34a2dc11e1dc202347db40644260415bac70668b120223dc",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes-community-v1/record_webgl_reviews.py",
+      "bytes": 6719,
+      "sha256": "4085818bc35e6c154f550cad19d92aae7c57d94431fbaed2a9780c235b255310",
+      "historicalBytes": 6719,
+      "historicalSha256": "4085818bc35e6c154f550cad19d92aae7c57d94431fbaed2a9780c235b255310",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes-community-v1/validate_dark_sakura.mts",
+      "bytes": 5357,
+      "sha256": "cb2bf9788842528c86629ae2529c37ef0431097f7b501d268a762ea62055a8c2",
+      "historicalBytes": 5357,
+      "historicalSha256": "cb2bf9788842528c86629ae2529c37ef0431097f7b501d268a762ea62055a8c2",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/README.md",
+      "bytes": 1112,
+      "sha256": "a448058644126fbf7c391324769e435d67e09ddd147ed8bef8efbefc8587282c",
+      "historicalBytes": 1112,
+      "historicalSha256": "a448058644126fbf7c391324769e435d67e09ddd147ed8bef8efbefc8587282c",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/files.sha256.json",
+      "bytes": 8515,
+      "sha256": "4cd37509b17937aabd77eb6e4ab6453a370b98d27ca3ac5283d7fd272913f57c",
+      "historicalBytes": 8515,
+      "historicalSha256": "4cd37509b17937aabd77eb6e4ab6453a370b98d27ca3ac5283d7fd272913f57c",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/FPKCodes-FPKUnpacker.cs",
+      "bytes": 3013,
+      "sha256": "a5fee118f64f27df2270a2084cf51f49b7a6c9e40c2154f032712e6675552595",
+      "historicalBytes": 3013,
+      "historicalSha256": "a5fee118f64f27df2270a2084cf51f49b7a6c9e40c2154f032712e6675552595",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/FPKCodes-LICENSE",
+      "bytes": 35149,
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "historicalBytes": 35149,
+      "historicalSha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/FPKCodes-PRSUncompressor.cs",
+      "bytes": 2897,
+      "sha256": "e8e2b1771dfd217b234140606875c0316ebdc36ba7b25df2da9bfad46257e9d3",
+      "historicalBytes": 2897,
+      "historicalSha256": "e8e2b1771dfd217b234140606875c0316ebdc36ba7b25df2da9bfad46257e9d3",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/FPKCodes-README.md",
+      "bytes": 3010,
+      "sha256": "a4b91d691a3e881d21e0550f1462313f25748bc23c1bbe63187be55706f5320e",
+      "historicalBytes": 3010,
+      "historicalSha256": "a4b91d691a3e881d21e0550f1462313f25748bc23c1bbe63187be55706f5320e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/README.md",
+      "bytes": 5056,
+      "sha256": "97bb5fe3d9a08347d68930ba4bf04f8a4a0ff1a6c523eb713d0c91dbe314b498",
+      "historicalBytes": 5056,
+      "historicalSha256": "97bb5fe3d9a08347d68930ba4bf04f8a4a0ff1a6c523eb713d0c91dbe314b498",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/extract_fate_fpk.py",
+      "bytes": 4462,
+      "sha256": "6678a2995cadc9a133ec41aff3b73f846bfba3b2f4ea9ca2ea168ff750440d73",
+      "historicalBytes": 4462,
+      "historicalSha256": "6678a2995cadc9a133ec41aff3b73f846bfba3b2f4ea9ca2ea168ff750440d73",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/ggd-fuc-build-handoff.py",
+      "bytes": 7948,
+      "sha256": "09ac095de17b8bae5d0b4777330a4d37675a499aeba95aec95a8c5509967aa47",
+      "historicalBytes": 7948,
+      "historicalSha256": "09ac095de17b8bae5d0b4777330a4d37675a499aeba95aec95a8c5509967aa47",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/ggd-fuc-download-hd-tree.py",
+      "bytes": 4287,
+      "sha256": "b5fe96a88cea28956708e9422d94ffeed68db367a93eb46dbacbb4ecde263826",
+      "historicalBytes": 4287,
+      "historicalSha256": "b5fe96a88cea28956708e9422d94ffeed68db367a93eb46dbacbb4ecde263826",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/ggd-fuc-fpk-synthetic-validation.json",
+      "bytes": 319,
+      "sha256": "a3a75e5778ca2168a525f7444a6ec42beb7087d5df3cdf2ef772e5b751a4a91d",
+      "historicalBytes": 319,
+      "historicalSha256": "a3a75e5778ca2168a525f7444a6ec42beb7087d5df3cdf2ef772e5b751a4a91d",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/ggd-fuc-local-source-search.json",
+      "bytes": 518,
+      "sha256": "6cc84425c06f9995ee1b71affc55ae3c87012492d73b8882fb45b626b4df81cb",
+      "historicalBytes": 518,
+      "historicalSha256": "6cc84425c06f9995ee1b71affc55ae3c87012492d73b8882fb45b626b4df81cb",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/ggd-fuc-process-bgm.py",
+      "bytes": 7567,
+      "sha256": "b1f84d759f450ee0b3facd4572f0f9a338fab78c77d18ba5c3f02afbbb669b02",
+      "historicalBytes": 7567,
+      "historicalSha256": "b1f84d759f450ee0b3facd4572f0f9a338fab78c77d18ba5c3f02afbbb669b02",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/ggd-fuc-process-ps2-audio.py",
+      "bytes": 5306,
+      "sha256": "372f30d2f4a75c713b093d77e826c44262e94cc989a57fbadcadaf40fbe9cca2",
+      "historicalBytes": 5306,
+      "historicalSha256": "372f30d2f4a75c713b093d77e826c44262e94cc989a57fbadcadaf40fbe9cca2",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/ggd-fuc-resume-public-downloads.py",
+      "bytes": 2880,
+      "sha256": "72d429c51c5255548058d771ddf15e57ac8723adba51885ea869da04b01dfa42",
+      "historicalBytes": 2880,
+      "historicalSha256": "72d429c51c5255548058d771ddf15e57ac8723adba51885ea869da04b01dfa42",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/ggd-fuc-zero-lancer-khronos-validation.json",
+      "bytes": 2733,
+      "sha256": "0f9ead7513e7d06c31f64b7f23b8e0210fd3ac78bc23611d6858f0bd38164cab",
+      "historicalBytes": 2733,
+      "historicalSha256": "0f9ead7513e7d06c31f64b7f23b8e0210fd3ac78bc23611d6858f0bd38164cab",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/ggd-fuc-zero-lancer-process.py",
+      "bytes": 9330,
+      "sha256": "34a156dbdc534acb9b84cdf840a8ecdf0bfd2f4885783de45b23add85f7828d0",
+      "historicalBytes": 9330,
+      "historicalSha256": "34a156dbdc534acb9b84cdf840a8ecdf0bfd2f4885783de45b23add85f7828d0",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/first-batch/hd-path-map-validation.json",
+      "bytes": 249,
+      "sha256": "9752fa3532e8a468e754cf854598675441c0c89c0c10125d10bc9901652c50fe",
+      "historicalBytes": 249,
+      "historicalSha256": "9752fa3532e8a468e754cf854598675441c0c89c0c10125d10bc9901652c50fe",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/second-batch/README.md",
+      "bytes": 701,
+      "sha256": "f677bfed2974f6f9838d32ed8604f6dd40266e50221d3a1b9fedf194285b53ff",
+      "historicalBytes": 701,
+      "historicalSha256": "f677bfed2974f6f9838d32ed8604f6dd40266e50221d3a1b9fedf194285b53ff",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/second-batch/ggd-fuc-convert-unity-outfit.py",
+      "bytes": 17886,
+      "sha256": "f467b1ad4847a2ebae1d25f98c383a88a8c896a4c59f2d95e1b34feeadeb46c6",
+      "historicalBytes": 17886,
+      "historicalSha256": "f467b1ad4847a2ebae1d25f98c383a88a8c896a4c59f2d95e1b34feeadeb46c6",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/second-batch/ggd-fuc-freeze-second.py",
+      "bytes": 9946,
+      "sha256": "e091f5839dd0f7c2bca5b73c1182ee776f0f03373179a6da8003fa90d0823b8e",
+      "historicalBytes": 9946,
+      "historicalSha256": "e091f5839dd0f7c2bca5b73c1182ee776f0f03373179a6da8003fa90d0823b8e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/second-batch/ggd-fuc-process-second-models.py",
+      "bytes": 7379,
+      "sha256": "b120ad6d5905bafa9aa85d671ee75d1a9911312025b8de40fe38efbd1ec81a27",
+      "historicalBytes": 7379,
+      "historicalSha256": "b120ad6d5905bafa9aa85d671ee75d1a9911312025b8de40fe38efbd1ec81a27",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fate-unlimited-codes/second-batch/ggd-fuc-validate-second-models.cjs",
+      "bytes": 1121,
+      "sha256": "69a20fb1959e48295cf5c91c11514b86b7980aec95d4a60628b67024d3b19465",
+      "historicalBytes": 1121,
+      "historicalSha256": "69a20fb1959e48295cf5c91c11514b86b7980aec95d4a60628b67024d3b19465",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/assess_native_batch_visuals.py",
+      "bytes": 5497,
+      "sha256": "74dc4107f0a001f2acb689b1c0024a23f3d7dcdc593a6a9b751ae593805f4b08",
+      "historicalBytes": 5497,
+      "historicalSha256": "74dc4107f0a001f2acb689b1c0024a23f3d7dcdc593a6a9b751ae593805f4b08",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/assess_native_model_visuals.py",
+      "bytes": 4272,
+      "sha256": "868a77c2022353afb90f822be49f3c276b595d0544928a1c0fe4501adb923909",
+      "historicalBytes": 4272,
+      "historicalSha256": "868a77c2022353afb90f822be49f3c276b595d0544928a1c0fe4501adb923909",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/compare_rest_pose.py",
+      "bytes": 3614,
+      "sha256": "d78ac46ec60a9d54c1ac528fec566e02d997df6dfc9c25553533b38cfbf8a005",
+      "historicalBytes": 3614,
+      "historicalSha256": "d78ac46ec60a9d54c1ac528fec566e02d997df6dfc9c25553533b38cfbf8a005",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/convert_bedrock_geometry.py",
+      "bytes": 14878,
+      "sha256": "ef9908e6f878b3b0ded46c386c0b02c05bd648a2bf88adb24f436e4b1c07eb72",
+      "historicalBytes": 14878,
+      "historicalSha256": "ef9908e6f878b3b0ded46c386c0b02c05bd648a2bf88adb24f436e4b1c07eb72",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/convert_bedrock_native_animation.py",
+      "bytes": 21759,
+      "sha256": "4e96bb163e8735867abc36d906f1ee46851fb6bebaaabc885c336686e49efd77",
+      "historicalBytes": 21759,
+      "historicalSha256": "4e96bb163e8735867abc36d906f1ee46851fb6bebaaabc885c336686e49efd77",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/convert_native_batch.py",
+      "bytes": 6887,
+      "sha256": "4f02e0d804644df026c34187fef305d99eb3f775bf4684118b3831426c43745e",
+      "historicalBytes": 6887,
+      "historicalSha256": "4f02e0d804644df026c34187fef305d99eb3f775bf4684118b3831426c43745e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/convert_static_batch.py",
+      "bytes": 8520,
+      "sha256": "44f66e2176633d2de365c68b8724229fca43baf44fbcbf9313d027474f51da88",
+      "historicalBytes": 8520,
+      "historicalSha256": "44f66e2176633d2de365c68b8724229fca43baf44fbcbf9313d027474f51da88",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/inspect_tenshilib_animation.py",
+      "bytes": 3693,
+      "sha256": "7d22c7d454bcafe48824ad54cc71b571174641f5c83d4fbd1056884b31a3ff20",
+      "historicalBytes": 3693,
+      "historicalSha256": "7d22c7d454bcafe48824ad54cc71b571174641f5c83d4fbd1056884b31a3ff20",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/record_heracles_native.py",
+      "bytes": 10958,
+      "sha256": "2dc11c4e51fc10bcb1062b439b9a8ede40e52484fbcb44c1d3e8d0af5277b90b",
+      "historicalBytes": 10958,
+      "historicalSha256": "2dc11c4e51fc10bcb1062b439b9a8ede40e52484fbcb44c1d3e8d0af5277b90b",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/record_manual_visual_review.py",
+      "bytes": 4729,
+      "sha256": "aa30aef33f2554e6671767205ee9a3a8cfb93b3cdaa6e51c98c79239eb7d3e41",
+      "historicalBytes": 4729,
+      "historicalSha256": "aa30aef33f2554e6671767205ee9a3a8cfb93b3cdaa6e51c98c79239eb7d3e41",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/record_native_batch.py",
+      "bytes": 14099,
+      "sha256": "59423473de64cdd3ca1346aa3bcdd295dbeccf937c15b8fd6e2eb0b7c782d1cb",
+      "historicalBytes": 14099,
+      "historicalSha256": "59423473de64cdd3ca1346aa3bcdd295dbeccf937c15b8fd6e2eb0b7c782d1cb",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/record_native_model_review.py",
+      "bytes": 3737,
+      "sha256": "073be93f7269ff09a7082cdad30456bb574bd38b983bf8aa782044813578ce71",
+      "historicalBytes": 3737,
+      "historicalSha256": "073be93f7269ff09a7082cdad30456bb574bd38b983bf8aa782044813578ce71",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/record_static_batch.py",
+      "bytes": 8668,
+      "sha256": "26eebb8e8e29e4ce92f1c428f1386b84191e0412c258dfb54200334e405507f7",
+      "historicalBytes": 8668,
+      "historicalSha256": "26eebb8e8e29e4ce92f1c428f1386b84191e0412c258dfb54200334e405507f7",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/record_static_conversion.py",
+      "bytes": 7304,
+      "sha256": "423ff8bd31fbf944129cd63431ecf9ce9f553d9806d6696fee947e53d7d51681",
+      "historicalBytes": 7304,
+      "historicalSha256": "423ff8bd31fbf944129cd63431ecf9ce9f553d9806d6696fee947e53d7d51681",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/render_native_animation.mjs",
+      "bytes": 4524,
+      "sha256": "5f0880d9d928c819f4c26fce989782d153402c2d78411c26f945361078624e3b",
+      "historicalBytes": 4524,
+      "historicalSha256": "5f0880d9d928c819f4c26fce989782d153402c2d78411c26f945361078624e3b",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/render_native_animation.py",
+      "bytes": 3632,
+      "sha256": "9690465cd6e5bc56783da3ffde2d11d8ab139a066552a72062b692a6155b273d",
+      "historicalBytes": 3632,
+      "historicalSha256": "9690465cd6e5bc56783da3ffde2d11d8ab139a066552a72062b692a6155b273d",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/render_native_batch.py",
+      "bytes": 3840,
+      "sha256": "3257e0323394f52d7f6e366f04fa9eb6661677d98dec3187aa2c80c331af937c",
+      "historicalBytes": 3840,
+      "historicalSha256": "3257e0323394f52d7f6e366f04fa9eb6661677d98dec3187aa2c80c331af937c",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/render_static_glb.mjs",
+      "bytes": 3918,
+      "sha256": "c1cccff2ae2c301a74ab079984c56b3e2b956c087ad9795504726a0f261258ef",
+      "historicalBytes": 3918,
+      "historicalSha256": "c1cccff2ae2c301a74ab079984c56b3e2b956c087ad9795504726a0f261258ef",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/render_static_glb.py",
+      "bytes": 3443,
+      "sha256": "114303512b72ed9d23e1fc0286ea102b59ae78f4c99929568d31d213bd66e6a0",
+      "historicalBytes": 3443,
+      "historicalSha256": "114303512b72ed9d23e1fc0286ea102b59ae78f4c99929568d31d213bd66e6a0",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/sync_backlog_resources.py",
+      "bytes": 6228,
+      "sha256": "5685fb874a75f46baf039f34f185ffca00a8a538c0b63818be98a7bc5f52ffee",
+      "historicalBytes": 6228,
+      "historicalSha256": "5685fb874a75f46baf039f34f185ffca00a8a538c0b63818be98a7bc5f52ffee",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/test_native_animation_conversion.py",
+      "bytes": 3814,
+      "sha256": "c0b128e05c0258d0ca0a78f1d17ecdd62a08943e1a5d4aa6cf7c5c5baadf9451",
+      "historicalBytes": 3814,
+      "historicalSha256": "c0b128e05c0258d0ca0a78f1d17ecdd62a08943e1a5d4aa6cf7c5c5baadf9451",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/validate_bedrock_static_glb.py",
+      "bytes": 9904,
+      "sha256": "83064f354582015bb0473634d35ca7d2843b6d823121d5ee20883c29b7bf71ba",
+      "historicalBytes": 9904,
+      "historicalSha256": "83064f354582015bb0473634d35ca7d2843b6d823121d5ee20883c29b7bf71ba",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/validate_native_animation.mts",
+      "bytes": 3768,
+      "sha256": "7838365c581ec1d9a19f3d4d2156b505c1a5373395a62797e51ef0de2782f038",
+      "historicalBytes": 3768,
+      "historicalSha256": "7838365c581ec1d9a19f3d4d2156b505c1a5373395a62797e51ef0de2782f038",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/fateubw-minecraft-v1/validate_static_batch.mts",
+      "bytes": 3645,
+      "sha256": "d10ad60bd78c07f2596769011577bb2b55d548f57d3a34bb18e697282abb8fcb",
+      "historicalBytes": 3645,
+      "historicalSha256": "d10ad60bd78c07f2596769011577bb2b55d548f57d3a34bb18e697282abb8fcb",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/infinity-strash-full-game-v1/acquire_s3_delivery.py",
+      "bytes": 6586,
+      "sha256": "00248cace5598cdacdd3d62387286c52ef37482c83cc64e4a35095254a0da36e",
+      "historicalBytes": 6586,
+      "historicalSha256": "00248cace5598cdacdd3d62387286c52ef37482c83cc64e4a35095254a0da36e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/infinity-strash-full-game-v1/inspect_delivery.py",
+      "bytes": 8997,
+      "sha256": "d0d4d51f72741fbd6899da79c30c068aab7374bb74a41f35a5628f03df461b0f",
+      "historicalBytes": 8997,
+      "historicalSha256": "d0d4d51f72741fbd6899da79c30c068aab7374bb74a41f35a5628f03df461b0f",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/infinity-strash-full-game-v1/test_acquire_s3_delivery.py",
+      "bytes": 1668,
+      "sha256": "f51f0e00c2458c40439497b9f7ae9d9f392c7b7daca84b97c8c9f341988aeb0b",
+      "historicalBytes": 1668,
+      "historicalSha256": "f51f0e00c2458c40439497b9f7ae9d9f392c7b7daca84b97c8c9f341988aeb0b",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/infinity-strash-full-game-v1/test_inspect_delivery.py",
+      "bytes": 3559,
+      "sha256": "3583d3636eaf3198d57777f19f988c14d60eeb3244ab7ac8bf611ee9e226a8d7",
+      "historicalBytes": 3559,
+      "historicalSha256": "3583d3636eaf3198d57777f19f988c14d60eeb3244ab7ac8bf611ee9e226a8d7",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/infinity-strash-popp-v1/build_action_reference_index.py",
+      "bytes": 6867,
+      "sha256": "389c735f3b1080eb49f25c6882d6372b43e26ab597895244bad297feb9bf5439",
+      "historicalBytes": 6867,
+      "historicalSha256": "389c735f3b1080eb49f25c6882d6372b43e26ab597895244bad297feb9bf5439",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/infinity-strash-popp-v1/record_action_reference_index.py",
+      "bytes": 4133,
+      "sha256": "b6efe0f3e47b4fb2a636ac27c76d48e815ad085e64f5d938e46935b61eb229af",
+      "historicalBytes": 4133,
+      "historicalSha256": "b6efe0f3e47b4fb2a636ac27c76d48e815ad085e64f5d938e46935b61eb229af",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/integrate_scoped_seven_audio.py",
+      "bytes": 12321,
+      "sha256": "545e0ebf8589b0986aa5abc9bf75f5dd38cae05a021fec76b66acd0dc76fd9f3",
+      "historicalBytes": 12321,
+      "historicalSha256": "545e0ebf8589b0986aa5abc9bf75f5dd38cae05a021fec76b66acd0dc76fd9f3",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jstars-009-20260911-v1/README.md",
+      "bytes": 1059,
+      "sha256": "0eb1e29db7cae49a14c7ed70c06fe9e2a0e9ec8292d0bf78181ebc567f544124",
+      "historicalBytes": 1059,
+      "historicalSha256": "0eb1e29db7cae49a14c7ed70c06fe9e2a0e9ec8292d0bf78181ebc567f544124",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jstars-009-20260911-v1/analyze.py",
+      "bytes": 8285,
+      "sha256": "0a3e25f8a6b4f1192764f7509db67f826cc002339829f9ff3fd5b9cf8be6d775",
+      "historicalBytes": 8285,
+      "historicalSha256": "0a3e25f8a6b4f1192764f7509db67f826cc002339829f9ff3fd5b9cf8be6d775",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jumpforce-local10-audio-20260911-v1/freeze.py",
+      "bytes": 5490,
+      "sha256": "1d33209ef431fdeeca354383370bc8ac4ad04abd1ba652d8ac3339d1437ece75",
+      "historicalBytes": 5490,
+      "historicalSha256": "1d33209ef431fdeeca354383370bc8ac4ad04abd1ba652d8ac3339d1437ece75",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/jumpforce-local10-audio-20260911-v1/register.py",
+      "bytes": 6889,
+      "sha256": "c2398836cf35670895f06e73af33c95d09c4275678a4f0179507489130db55aa",
+      "historicalBytes": 6889,
+      "historicalSha256": "c2398836cf35670895f06e73af33c95d09c4275678a4f0179507489130db55aa",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/kof-iori-community-v1/assimp_fbx_probe.py",
+      "bytes": 3491,
+      "sha256": "7e0bf4429c7a3d9e3b28b77f3ddeb7ead12cc7a0f991bfe398688ee5da78bfb7",
+      "historicalBytes": 3491,
+      "historicalSha256": "7e0bf4429c7a3d9e3b28b77f3ddeb7ead12cc7a0f991bfe398688ee5da78bfb7",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/kof-iori-community-v1/freeze_webgl_review.py",
+      "bytes": 5172,
+      "sha256": "77801e8cdde1a53d69901fcaaf54f423b11e20dc5b67ae9de85327a84eb4b2e4",
+      "historicalBytes": 5172,
+      "historicalSha256": "77801e8cdde1a53d69901fcaaf54f423b11e20dc5b67ae9de85327a84eb4b2e4",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/kof-iori-community-v1/record_assimp_probe.py",
+      "bytes": 3583,
+      "sha256": "ea7fdc1eb5d1e63e6711721ad042723fb293a83604c17ae055ef0886425996c1",
+      "historicalBytes": 3583,
+      "historicalSha256": "ea7fdc1eb5d1e63e6711721ad042723fb293a83604c17ae055ef0886425996c1",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/kof-iori-community-v1/record_conversion.py",
+      "bytes": 9700,
+      "sha256": "90052b875ba247ad1346165ea6a085d0c5c8aa5461beeb5d4064ffeec972766c",
+      "historicalBytes": 9700,
+      "historicalSha256": "90052b875ba247ad1346165ea6a085d0c5c8aa5461beeb5d4064ffeec972766c",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/kof-iori-community-v1/record_webgl_review.py",
+      "bytes": 6738,
+      "sha256": "dcfdc2f091bf2b7f4082d9b08a7c93d72501e2f19ed0af4cf60f2622c70776e9",
+      "historicalBytes": 6738,
+      "historicalSha256": "dcfdc2f091bf2b7f4082d9b08a7c93d72501e2f19ed0af4cf60f2622c70776e9",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/kof-round21/acquire-iori.py",
+      "bytes": 2120,
+      "sha256": "2f5525e67e8dac6aa3b7ec189fe474af6334e27618b98b6f95400eb4889fc061",
+      "historicalBytes": 2120,
+      "historicalSha256": "2f5525e67e8dac6aa3b7ec189fe474af6334e27618b98b6f95400eb4889fc061",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/kof-round21/extract_public_sources.py",
+      "bytes": 16940,
+      "sha256": "f0eecb39206b557c75a9dc5bf0d2f131bc61c00466f7fb9ab81c3d780b4a7d66",
+      "historicalBytes": 16940,
+      "historicalSha256": "f0eecb39206b557c75a9dc5bf0d2f131bc61c00466f7fb9ab81c3d780b4a7d66",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/kof-round21/validate-iori.py",
+      "bytes": 9808,
+      "sha256": "7d772df7e1771f3484c72187264eacb715a3d9bae9040fd7d0b7b2eccd05f7eb",
+      "historicalBytes": 9808,
+      "historicalSha256": "7d772df7e1771f3484c72187264eacb715a3d9bae9040fd7d0b7b2eccd05f7eb",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/kof-xv-mai-preflight-20260911-v1/README.md",
+      "bytes": 1318,
+      "sha256": "933c432a9d4b0a4930e5560bc9e729d36a0ad5711ceae1ceb2381ae9ddcce7eb",
+      "historicalBytes": 1318,
+      "historicalSha256": "933c432a9d4b0a4930e5560bc9e729d36a0ad5711ceae1ceb2381ae9ddcce7eb",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/kof-xv-mai-preflight-20260911-v1/freeze.py",
+      "bytes": 3125,
+      "sha256": "92d3c1b707fdbe8456a4c89ad31d2672077d4b90a8351611af3e9ec8b7a21f66",
+      "historicalBytes": 3125,
+      "historicalSha256": "92d3c1b707fdbe8456a4c89ad31d2672077d4b90a8351611af3e9ec8b7a21f66",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/kof-xv-mai-preflight-20260911-v1/integrate.py",
+      "bytes": 887,
+      "sha256": "408545853416fa058fd3f9875cc0571974fbfd78520322de3e7e45b2b1da9373",
+      "historicalBytes": 887,
+      "historicalSha256": "408545853416fa058fd3f9875cc0571974fbfd78520322de3e7e45b2b1da9373",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/README.md",
+      "bytes": 589,
+      "sha256": "52cf14f6a003d1cff08327ecbf234e6b1e3b81570f73236b0e5eb412d08e0e29",
+      "historicalBytes": 589,
+      "historicalSha256": "52cf14f6a003d1cff08327ecbf234e6b1e3b81570f73236b0e5eb412d08e0e29",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/fate-textures/control/tooling/ggd-fuc-batch6-author-audit.py",
+      "bytes": 1513,
+      "sha256": "df52707a53c4d5974022783fad3c665b818901e8a6f9b37dfe89b3863de164aa",
+      "historicalBytes": 1513,
+      "historicalSha256": "df52707a53c4d5974022783fad3c665b818901e8a6f9b37dfe89b3863de164aa",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/fate-textures/control/tooling/ggd-fuc-batch6-build-author-report.py",
+      "bytes": 4160,
+      "sha256": "b94f450e7d2ab328a044d07b24f6a6a470e0163baf6b9395485e1d17b6da0a80",
+      "historicalBytes": 4160,
+      "historicalSha256": "b94f450e7d2ab328a044d07b24f6a6a470e0163baf6b9395485e1d17b6da0a80",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/fate-textures/control/tooling/ggd-fuc-batch6-freeze.py",
+      "bytes": 8670,
+      "sha256": "7ef39429fe1d330277c6ae9c1ebef58f520dc46ef6cf4d5872d101f27779f3c5",
+      "historicalBytes": 8670,
+      "historicalSha256": "7ef39429fe1d330277c6ae9c1ebef58f520dc46ef6cf4d5872d101f27779f3c5",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/fate-textures/control/tooling/ggd-fuc-batch6-process.py",
+      "bytes": 7672,
+      "sha256": "5c18e10c11628da595c3d6efa40eb85458daec50e1949ee04875157ccd89fa00",
+      "historicalBytes": 7672,
+      "historicalSha256": "5c18e10c11628da595c3d6efa40eb85458daec50e1949ee04875157ccd89fa00",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/fate-textures/files.sha256.json",
+      "bytes": 683,
+      "sha256": "8155801bca6b01b3f83d40d35e6c2ce43b97fd27b8b5b51f5d9bfc0d41238ed3",
+      "historicalBytes": 683,
+      "historicalSha256": "8155801bca6b01b3f83d40d35e6c2ce43b97fd27b8b5b51f5d9bfc0d41238ed3",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/kof-ash/files.sha256.json",
+      "bytes": 971,
+      "sha256": "4e57d9b7968f9da9b76f69b82ba436c9f8f71857458353d45b8c21e6df835f8b",
+      "historicalBytes": 971,
+      "historicalSha256": "4e57d9b7968f9da9b76f69b82ba436c9f8f71857458353d45b8c21e6df835f8b",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/kof-ash/tools/ggd-kof-convert-ash-blend.py",
+      "bytes": 7139,
+      "sha256": "b00bd633f4102b1b587725c4cc3567a325107201e271a89c108bed17cfcd2733",
+      "historicalBytes": 7139,
+      "historicalSha256": "b00bd633f4102b1b587725c4cc3567a325107201e271a89c108bed17cfcd2733",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/kof-ash/tools/ggd-kof-convert-ash-deform-variants.py",
+      "bytes": 4305,
+      "sha256": "43124c6ec017034c4f60a94f04d37acead9bdb193c457a7f3c0641e93036c34b",
+      "historicalBytes": 4305,
+      "historicalSha256": "43124c6ec017034c4f60a94f04d37acead9bdb193c457a7f3c0641e93036c34b",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/kof-ash/tools/ggd-kof-freeze-model-variants.py",
+      "bytes": 5876,
+      "sha256": "2712eed620496a6e44e16ad48e8c7d053862c8efe5a560807fb614e5e41b41c6",
+      "historicalBytes": 5876,
+      "historicalSha256": "2712eed620496a6e44e16ad48e8c7d053862c8efe5a560807fb614e5e41b41c6",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/kof-ash/tools/ggd-kof-glb-validate.py",
+      "bytes": 4513,
+      "sha256": "61be0a362d7c2b65490c1925d6d49fb39a4db3697c7a692f7d289f53d7e4cd22",
+      "historicalBytes": 4513,
+      "historicalSha256": "61be0a362d7c2b65490c1925d6d49fb39a4db3697c7a692f7d289f53d7e4cd22",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/kof-ash/tools/ggd-kof-render-glb-preview.py",
+      "bytes": 3268,
+      "sha256": "b0e494d2672888acbf496255ea12ab26219ff4dadc6ef893a611a515665c3864",
+      "historicalBytes": 3268,
+      "historicalSha256": "b0e494d2672888acbf496255ea12ab26219ff4dadc6ef893a611a515665c3864",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/kof-ash/tools/ggd-kof-render-source-preview.py",
+      "bytes": 3849,
+      "sha256": "67c2cc610bd35225fbbf60185f260d7ca4e5be02dc0a153b5d5a8a533705ce53",
+      "historicalBytes": 3849,
+      "historicalSha256": "67c2cc610bd35225fbbf60185f260d7ca4e5be02dc0a153b5d5a8a533705ce53",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/lina-retarget/files.sha256.json",
+      "bytes": 1937,
+      "sha256": "4125486f7491f908f4ead401bad736e9dc97511e42b076e84baadadb05b9a852",
+      "historicalBytes": 1937,
+      "historicalSha256": "4125486f7491f908f4ead401bad736e9dc97511e42b076e84baadadb05b9a852",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/lina-retarget/scripts/ggd-lina-retarget-delivery-audit.py",
+      "bytes": 8521,
+      "sha256": "df374ec43157233d898154aa459d2ba873b5846473be3872b7494208c1951769",
+      "historicalBytes": 8521,
+      "historicalSha256": "df374ec43157233d898154aa459d2ba873b5846473be3872b7494208c1951769",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/lina-retarget/scripts/ggd-lina-retarget-foot-audit-v3.py",
+      "bytes": 3838,
+      "sha256": "071cd5f966f6c5a316c3e90f3059647d1bfa6522f2eaa8f21b5ed71ce80daf60",
+      "historicalBytes": 3838,
+      "historicalSha256": "071cd5f966f6c5a316c3e90f3059647d1bfa6522f2eaa8f21b5ed71ce80daf60",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/lina-retarget/scripts/ggd-lina-retarget-foot-audit.py",
+      "bytes": 4908,
+      "sha256": "b9d0ce1218f5220a1c04ba68d1893a8a11a69043397f38f8b52d4f878dc7fa92",
+      "historicalBytes": 4908,
+      "historicalSha256": "b9d0ce1218f5220a1c04ba68d1893a8a11a69043397f38f8b52d4f878dc7fa92",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/lina-retarget/scripts/ggd-lina-retarget-freeze.py",
+      "bytes": 15821,
+      "sha256": "2b6b9e4f0f2bc5e353df8462acfd16e125ea120024908a9dbb9d894a6dc2a548",
+      "historicalBytes": 15821,
+      "historicalSha256": "2b6b9e4f0f2bc5e353df8462acfd16e125ea120024908a9dbb9d894a6dc2a548",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/lina-retarget/scripts/ggd-lina-retarget-render-server-v3.py",
+      "bytes": 3388,
+      "sha256": "ffc267879a90356e9309b8e965fb0d7be5e991364d417e5ab67fc3b1d8e15c95",
+      "historicalBytes": 3388,
+      "historicalSha256": "ffc267879a90356e9309b8e965fb0d7be5e991364d417e5ab67fc3b1d8e15c95",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/lina-retarget/scripts/ggd-lina-retarget-render-server.py",
+      "bytes": 3525,
+      "sha256": "4cdb2aaa3a0c7efce6e5ad6590e29096c3b83e949eb9c59994002ff557f913c0",
+      "historicalBytes": 3525,
+      "historicalSha256": "4cdb2aaa3a0c7efce6e5ad6590e29096c3b83e949eb9c59994002ff557f913c0",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/lina-retarget/scripts/ggd-lina-retarget-render.mjs",
+      "bytes": 4567,
+      "sha256": "058bf9b3c0c8389a1137e22bcc186fe2aeffb3978f97a1803374ed08d3ea1227",
+      "historicalBytes": 4567,
+      "historicalSha256": "058bf9b3c0c8389a1137e22bcc186fe2aeffb3978f97a1803374ed08d3ea1227",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/lina-retarget/scripts/ggd-lina-retarget-resampled.py",
+      "bytes": 12855,
+      "sha256": "f1dc98d64751db133ae558bd620e196efa24f84b3ba7604f2214b7162d670ac4",
+      "historicalBytes": 12855,
+      "historicalSha256": "f1dc98d64751db133ae558bd620e196efa24f84b3ba7604f2214b7162d670ac4",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/lina-retarget/scripts/ggd-lina-retarget-stable-torso.py",
+      "bytes": 12567,
+      "sha256": "86d9a68790e7a7cb6e08a5334e795ede5a51e96cc2ef2e346902310c8cf537d7",
+      "historicalBytes": 12567,
+      "historicalSha256": "86d9a68790e7a7cb6e08a5334e795ede5a51e96cc2ef2e346902310c8cf537d7",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/lina-retarget/scripts/ggd-lina-retarget.py",
+      "bytes": 12325,
+      "sha256": "bc3f322509bc701633ff6961416e8137f4ba611a973824096dd0b40907512f28",
+      "historicalBytes": 12325,
+      "historicalSha256": "bc3f322509bc701633ff6961416e8137f4ba611a973824096dd0b40907512f28",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/lina-retarget/scripts/glb_io.py",
+      "bytes": 6754,
+      "sha256": "f9a690b40ee69c8c1e07ec3a1fdb9afe96d443f3661f14d119e36d3a72e7309e",
+      "historicalBytes": 6754,
+      "historicalSha256": "f9a690b40ee69c8c1e07ec3a1fdb9afe96d443f3661f14d119e36d3a72e7309e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/lina-retarget/scripts/retarget_math.py",
+      "bytes": 1340,
+      "sha256": "db3a6c59b6383025b0f027d0239d132f9303c486e2cb09ad01c9255cb6ef254d",
+      "historicalBytes": 1340,
+      "historicalSha256": "db3a6c59b6383025b0f027d0239d132f9303c486e2cb09ad01c9255cb6ef254d",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/lol-pcm16/files.sha256.json",
+      "bytes": 166,
+      "sha256": "8a05a85c4f50dd502d44be608c08050d0b4eb4919ec1f5a54d331079cc988f0b",
+      "historicalBytes": 166,
+      "historicalSha256": "8a05a85c4f50dd502d44be608c08050d0b4eb4919ec1f5a54d331079cc988f0b",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round18/lol-pcm16/tools/recover-selected-native-pcm16.py",
+      "bytes": 5936,
+      "sha256": "20d9f297520dc1474edf3581a72f1c1b59507d66dc14daf4ae0c113688168ed9",
+      "historicalBytes": 5936,
+      "historicalSha256": "20d9f297520dc1474edf3581a72f1c1b59507d66dc14daf4ae0c113688168ed9",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/README.md",
+      "bytes": 368,
+      "sha256": "f335a6ac6fc87ce0fe16ac6b3944e5019780238907936acd9c6618e85bb30f60",
+      "historicalBytes": 368,
+      "historicalSha256": "f335a6ac6fc87ce0fe16ac6b3944e5019780238907936acd9c6618e85bb30f60",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/ash-material-v2/files.sha256.json",
+      "bytes": 959,
+      "sha256": "fac8b640f92c1643299b8f7dd492217dd840c54fc8d94c54151feeaa610a51e9",
+      "historicalBytes": 959,
+      "historicalSha256": "fac8b640f92c1643299b8f7dd492217dd840c54fc8d94c54151feeaa610a51e9",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/ash-material-v2/tools/ggd-ash-material-probe-v2.py",
+      "bytes": 4184,
+      "sha256": "ddd2a4474c17ddc533d3599352ff69a464113f9e45619f0a384991d8db7c4188",
+      "historicalBytes": 4184,
+      "historicalSha256": "ddd2a4474c17ddc533d3599352ff69a464113f9e45619f0a384991d8db7c4188",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/ash-material-v2/tools/ggd-ash-material-repair-v2.py",
+      "bytes": 10124,
+      "sha256": "f7352729b351f163a5c70852e95b48319cffa7731f68b1544085c76f5551874e",
+      "historicalBytes": 10124,
+      "historicalSha256": "f7352729b351f163a5c70852e95b48319cffa7731f68b1544085c76f5551874e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/ash-material-v2/tools/ggd-ash-render-comparison-v2.py",
+      "bytes": 5729,
+      "sha256": "873c29d084401967512495acf24bfe7773aa4d2349ad53b4cfb72b06dfc697e7",
+      "historicalBytes": 5729,
+      "historicalSha256": "873c29d084401967512495acf24bfe7773aa4d2349ad53b4cfb72b06dfc697e7",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/ash-material-v2/tools/ggd-ash-v2-geometry-probe.py",
+      "bytes": 2371,
+      "sha256": "8ced93bf478dd3de4ab5983d7108e72a94aee39351644c3b45bd6fe08c36f44b",
+      "historicalBytes": 2371,
+      "historicalSha256": "8ced93bf478dd3de4ab5983d7108e72a94aee39351644c3b45bd6fe08c36f44b",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/ash-material-v2/tools/ggd-freeze-ash-material-v2.py",
+      "bytes": 10487,
+      "sha256": "42f0c47de6925a32a83b85522c4c96bb9368aa20dbc02a0861a37d8548f6b6ad",
+      "historicalBytes": 10487,
+      "historicalSha256": "42f0c47de6925a32a83b85522c4c96bb9368aa20dbc02a0861a37d8548f6b6ad",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/ash-material-v2/tools/ggd-kof-glb-validate.py",
+      "bytes": 4513,
+      "sha256": "61be0a362d7c2b65490c1925d6d49fb39a4db3697c7a692f7d289f53d7e4cd22",
+      "historicalBytes": 4513,
+      "historicalSha256": "61be0a362d7c2b65490c1925d6d49fb39a4db3697c7a692f7d289f53d7e4cd22",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/README.md",
+      "bytes": 3437,
+      "sha256": "c79037709f2812540f4c8883105e667a13fb4113d5cd529de86409d40436ebb3",
+      "historicalBytes": 3437,
+      "historicalSha256": "c79037709f2812540f4c8883105e667a13fb4113d5cd529de86409d40436ebb3",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/complete-source-files.sha256.json",
+      "bytes": 82484,
+      "sha256": "ba6186612f9c26198db86563f1da4f0894cd55f51cc7a590a1967671bac2f632",
+      "historicalBytes": 82484,
+      "historicalSha256": "ba6186612f9c26198db86563f1da4f0894cd55f51cc7a590a1967671bac2f632",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/control/handoff.json",
+      "bytes": 2333,
+      "sha256": "fbb0d61967c3e5b0df8b47a8c13461215a41028a255123005dc58b940f393447",
+      "historicalBytes": 2333,
+      "historicalSha256": "fbb0d61967c3e5b0df8b47a8c13461215a41028a255123005dc58b940f393447",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/control/spec-receipts.json",
+      "bytes": 601,
+      "sha256": "35d3e2bf858885e5b464007b1c33363fde04f6811ca04f490e6113994df852c6",
+      "historicalBytes": 601,
+      "historicalSha256": "35d3e2bf858885e5b464007b1c33363fde04f6811ca04f490e6113994df852c6",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/control/specs/HL1MDLLoader.cpp",
+      "bytes": 59126,
+      "sha256": "c91b237eb3346b007fc74a8ac62153ce424e80adaf064a7fef8e850f386bc34a",
+      "historicalBytes": 59126,
+      "historicalSha256": "c91b237eb3346b007fc74a8ac62153ce424e80adaf064a7fef8e850f386bc34a",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/control/specs/studio.h",
+      "bytes": 8052,
+      "sha256": "46eadf886bb301637a1289576f71cd45eab7593044eef29b7f080cc02af2edb5",
+      "historicalBytes": 8052,
+      "historicalSha256": "46eadf886bb301637a1289576f71cd45eab7593044eef29b7f080cc02af2edb5",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/control/tool-dependencies.json",
+      "bytes": 758,
+      "sha256": "0d9994b848f79ae0d1548e67c82386025dba2f9500e91c7da8a8a6e6b39bceb2",
+      "historicalBytes": 758,
+      "historicalSha256": "0d9994b848f79ae0d1548e67c82386025dba2f9500e91c7da8a8a6e6b39bceb2",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/control/tooling/ggd-fuc-batch7-download.py",
+      "bytes": 1644,
+      "sha256": "06c4c5f80b9dc7e98d87cfdbdac3d71db0ac025b6d4e806948e31c8de955519d",
+      "historicalBytes": 1644,
+      "historicalSha256": "06c4c5f80b9dc7e98d87cfdbdac3d71db0ac025b6d4e806948e31c8de955519d",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/control/tooling/ggd-fuc-batch7-extract.py",
+      "bytes": 1406,
+      "sha256": "1db38d9cd957bd015edf96ac85fe93f9c481657bbadcd7f93e9c7f1834aa723f",
+      "historicalBytes": 1406,
+      "historicalSha256": "1db38d9cd957bd015edf96ac85fe93f9c481657bbadcd7f93e9c7f1834aa723f",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/control/tooling/ggd-fuc-batch7-freeze.py",
+      "bytes": 14685,
+      "sha256": "ddd5bf1bcd5caa19f3c677a67abb18a0cc3806fd5541217ce04143e4f96dc383",
+      "historicalBytes": 14685,
+      "historicalSha256": "ddd5bf1bcd5caa19f3c677a67abb18a0cc3806fd5541217ce04143e4f96dc383",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/control/tooling/ggd-fuc-batch7-kirei-playback.py",
+      "bytes": 9441,
+      "sha256": "2c21b061cb051628d4208e09268632eff2e5375867bbf2a42a8f1c4cf8af142b",
+      "historicalBytes": 9441,
+      "historicalSha256": "2c21b061cb051628d4208e09268632eff2e5375867bbf2a42a8f1c4cf8af142b",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/control/tooling/ggd-fuc-batch7-kirei.py",
+      "bytes": 13607,
+      "sha256": "90efbb0d23a81a8ba7f30440f33159fc89ce174c70f1d419e2d121a8e682f89c",
+      "historicalBytes": 13607,
+      "historicalSha256": "90efbb0d23a81a8ba7f30440f33159fc89ce174c70f1d419e2d121a8e682f89c",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/control/tooling/ggd-fuc-batch7-process-sakura.py",
+      "bytes": 7433,
+      "sha256": "0cfe760bd4db80e647f5003c47c694ad08a5e7e02aaa57e8f402689d4625e7ca",
+      "historicalBytes": 7433,
+      "historicalSha256": "0cfe760bd4db80e647f5003c47c694ad08a5e7e02aaa57e8f402689d4625e7ca",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/control/tooling/ggd-fuc-batch7-sakura-preview.py",
+      "bytes": 7099,
+      "sha256": "0ffac878a27ae773ea74cc88743309d6e4017d0630ffbcdd9bc9c2a3276466bc",
+      "historicalBytes": 7099,
+      "historicalSha256": "0ffac878a27ae773ea74cc88743309d6e4017d0630ffbcdd9bc9c2a3276466bc",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/control/tooling/ggd-fuc-batch7-validate.cjs",
+      "bytes": 1196,
+      "sha256": "49de77b1fbd57075edd7b5043a24e01a5eab4febaf6d3db113442ccbf33a0680",
+      "historicalBytes": 1196,
+      "historicalSha256": "49de77b1fbd57075edd7b5043a24e01a5eab4febaf6d3db113442ccbf33a0680",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/control/tooling/ggd-fuc-convert-unity-outfit.py",
+      "bytes": 17886,
+      "sha256": "f467b1ad4847a2ebae1d25f98c383a88a8c896a4c59f2d95e1b34feeadeb46c6",
+      "historicalBytes": 17886,
+      "historicalSha256": "f467b1ad4847a2ebae1d25f98c383a88a8c896a4c59f2d95e1b34feeadeb46c6",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/files.sha256.json",
+      "bytes": 3178,
+      "sha256": "296123b6b50ff70d099e9b7d327db0862ab6f94f43aa4ebc178e07f688ba1a40",
+      "historicalBytes": 3178,
+      "historicalSha256": "296123b6b50ff70d099e9b7d327db0862ab6f94f43aa4ebc178e07f688ba1a40",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/page-receipts.json",
+      "bytes": 889,
+      "sha256": "81651df429176277d672f45aa2690810dac0b820ee71dda0940b27640199c20a",
+      "historicalBytes": 889,
+      "historicalSha256": "81651df429176277d672f45aa2690810dac0b820ee71dda0940b27640199c20a",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/receipts/dark-sakura-source-page.json",
+      "bytes": 2280,
+      "sha256": "becdd3b35db859983235ece47a248adf6b0fed3ea482beff79d94075a064c6ca",
+      "historicalBytes": 2280,
+      "historicalSha256": "becdd3b35db859983235ece47a248adf6b0fed3ea482beff79d94075a064c6ca",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/receipts/kotomine-kirei-source-page.json",
+      "bytes": 1247,
+      "sha256": "2ce3fec025197e7c9f489691920774489cab9496fb5e5c1756516fd897a21926",
+      "historicalBytes": 1247,
+      "historicalSha256": "2ce3fec025197e7c9f489691920774489cab9496fb5e5c1756516fd897a21926",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/source-manifest.json",
+      "bytes": 3685,
+      "sha256": "ac50577cfb9aa8afb82f894351632533256bcb4cedea9f530d7d6b5aa442e33e",
+      "historicalBytes": 3685,
+      "historicalSha256": "ac50577cfb9aa8afb82f894351632533256bcb4cedea9f530d7d6b5aa442e33e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/fate-mod-batch7/source-search-followup.json",
+      "bytes": 999,
+      "sha256": "658ac117ca119c87efb20ec1d120b71a4e3a062c88ee7296a2870d10bf1de4b7",
+      "historicalBytes": 999,
+      "historicalSha256": "658ac117ca119c87efb20ec1d120b71a4e3a062c88ee7296a2870d10bf1de4b7",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-footloop-v2/files.sha256.json",
+      "bytes": 1595,
+      "sha256": "e771a5054c6a49ecfc8ea217196865d9a21784f0f8926cfb3480d313d18e180f",
+      "historicalBytes": 1595,
+      "historicalSha256": "e771a5054c6a49ecfc8ea217196865d9a21784f0f8926cfb3480d313d18e180f",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-footloop-v2/scripts/footloop_lib.py",
+      "bytes": 6228,
+      "sha256": "571332e2e74deca62e9bd8f17f7e1f0fc6896d9bbb8d0a6db9245db736a0a5db",
+      "historicalBytes": 6228,
+      "historicalSha256": "571332e2e74deca62e9bd8f17f7e1f0fc6896d9bbb8d0a6db9245db736a0a5db",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-footloop-v2/scripts/ggd-lina-footloop-audit.py",
+      "bytes": 3186,
+      "sha256": "178e26b08f4435857eaa07e9539ebed94081ba2ccf43620a9b235231408e912f",
+      "historicalBytes": 3186,
+      "historicalSha256": "178e26b08f4435857eaa07e9539ebed94081ba2ccf43620a9b235231408e912f",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-footloop-v2/scripts/ggd-lina-footloop-freeze.py",
+      "bytes": 19281,
+      "sha256": "b8ce48120cb234a8c5666f66616fd36d263fe1520985b97aa4e638500fdf2ecf",
+      "historicalBytes": 19281,
+      "historicalSha256": "b8ce48120cb234a8c5666f66616fd36d263fe1520985b97aa4e638500fdf2ecf",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-footloop-v2/scripts/ggd-lina-footloop-process.py",
+      "bytes": 10303,
+      "sha256": "499bf4d63bf40f2277ca3db797a89c07b36c00ae4b3d1af891aca0afb5aa00c9",
+      "historicalBytes": 10303,
+      "historicalSha256": "499bf4d63bf40f2277ca3db797a89c07b36c00ae4b3d1af891aca0afb5aa00c9",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-footloop-v2/scripts/ggd-lina-footloop-render-server.py",
+      "bytes": 3511,
+      "sha256": "bd6d4642ace27847f2064f05dffd9b7ec4ee2c8ce9521a639bcd9610994e200f",
+      "historicalBytes": 3511,
+      "historicalSha256": "bd6d4642ace27847f2064f05dffd9b7ec4ee2c8ce9521a639bcd9610994e200f",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-footloop-v2/scripts/ggd-lina-footloop-render.mjs",
+      "bytes": 5307,
+      "sha256": "689c327b7525241dd4cee0933207a5a9d1df0d7fa950068b27253035c9d7aa65",
+      "historicalBytes": 5307,
+      "historicalSha256": "689c327b7525241dd4cee0933207a5a9d1df0d7fa950068b27253035c9d7aa65",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-footloop-v2/scripts/ggd-lina-footloop-video-audit.py",
+      "bytes": 1758,
+      "sha256": "3cf1818da079d8bc49ea1aa936e1b5e74c5712e95450a74e94c3b86863d99a6a",
+      "historicalBytes": 1758,
+      "historicalSha256": "3cf1818da079d8bc49ea1aa936e1b5e74c5712e95450a74e94c3b86863d99a6a",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-footloop-v2/scripts/glb_io.py",
+      "bytes": 6754,
+      "sha256": "f9a690b40ee69c8c1e07ec3a1fdb9afe96d443f3661f14d119e36d3a72e7309e",
+      "historicalBytes": 6754,
+      "historicalSha256": "f9a690b40ee69c8c1e07ec3a1fdb9afe96d443f3661f14d119e36d3a72e7309e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-footloop-v2/scripts/reproduce-initial-knee-pole-audit-control.py",
+      "bytes": 10332,
+      "sha256": "660cad6a8fe16b2ccd9218c15b9269889156caaa00939c4ce358c3d6e8ab8de5",
+      "historicalBytes": 10332,
+      "historicalSha256": "660cad6a8fe16b2ccd9218c15b9269889156caaa00939c4ce358c3d6e8ab8de5",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-footloop-v2/scripts/retarget_math.py",
+      "bytes": 1340,
+      "sha256": "db3a6c59b6383025b0f027d0239d132f9303c486e2cb09ad01c9255cb6ef254d",
+      "historicalBytes": 1340,
+      "historicalSha256": "db3a6c59b6383025b0f027d0239d132f9303c486e2cb09ad01c9255cb6ef254d",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-ggd-compat/files.sha256.json",
+      "bytes": 1287,
+      "sha256": "303770399c7fc31b695e1e32b970113dd0eef165d38127606fba04e64ed60ac1",
+      "historicalBytes": 1287,
+      "historicalSha256": "303770399c7fc31b695e1e32b970113dd0eef165d38127606fba04e64ed60ac1",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-ggd-compat/scripts/ggd-lina-compat-build.cjs",
+      "bytes": 910,
+      "sha256": "9507f26222c66e3771203beca2410088b6ab2421257131fb897734f18c4a2e94",
+      "historicalBytes": 910,
+      "historicalSha256": "9507f26222c66e3771203beca2410088b6ab2421257131fb897734f18c4a2e94",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-ggd-compat/scripts/ggd-lina-compat-contracts.ts",
+      "bytes": 5528,
+      "sha256": "39dd764c978a0cb71be30ad067dfe9a117ff39258b88a8c69312535decfcd5b5",
+      "historicalBytes": 5528,
+      "historicalSha256": "39dd764c978a0cb71be30ad067dfe9a117ff39258b88a8c69312535decfcd5b5",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-ggd-compat/scripts/ggd-lina-compat-foot-spike.py",
+      "bytes": 3848,
+      "sha256": "600d37175d6ec5a0bdc8328db6786167364ea46c7c62a09b83f85ffbd6acadb3",
+      "historicalBytes": 3848,
+      "historicalSha256": "600d37175d6ec5a0bdc8328db6786167364ea46c7c62a09b83f85ffbd6acadb3",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-ggd-compat/scripts/ggd-lina-compat-freeze.py",
+      "bytes": 14447,
+      "sha256": "e3bbaaeeee7da6b054d0ecd13f1cbdcc797908f46e6483616b1b9a30055d3c2c",
+      "historicalBytes": 14447,
+      "historicalSha256": "e3bbaaeeee7da6b054d0ecd13f1cbdcc797908f46e6483616b1b9a30055d3c2c",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-ggd-compat/scripts/ggd-lina-compat-provenance.py",
+      "bytes": 4054,
+      "sha256": "8fec7b1f69a7eb768514961f27299d71cc7181bdfac2362165c60b796f6a68e3",
+      "historicalBytes": 4054,
+      "historicalSha256": "8fec7b1f69a7eb768514961f27299d71cc7181bdfac2362165c60b796f6a68e3",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-ggd-compat/scripts/ggd-lina-compat-runtime-server.py",
+      "bytes": 3852,
+      "sha256": "524954d3309a6654386a2b21a41d09795b2dac56e3f7a63774d5e5f0bf6dc701",
+      "historicalBytes": 3852,
+      "historicalSha256": "524954d3309a6654386a2b21a41d09795b2dac56e3f7a63774d5e5f0bf6dc701",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-ggd-compat/scripts/ggd-lina-compat-runtime.mjs",
+      "bytes": 8317,
+      "sha256": "9e8a538f4023582b9b160b92bef9f99714ecd667bae4826c00f18741920d9c58",
+      "historicalBytes": 8317,
+      "historicalSha256": "9e8a538f4023582b9b160b92bef9f99714ecd667bae4826c00f18741920d9c58",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/model-batch-20260910-round19/lina-ggd-compat/scripts/ggd-lina-compat-setup.py",
+      "bytes": 1910,
+      "sha256": "4a78f839676362f95cd117e931175a73774f4adf05ad977b0cda10e301b03ed2",
+      "historicalBytes": 1910,
+      "historicalSha256": "4a78f839676362f95cd117e931175a73774f4adf05ad977b0cda10e301b03ed2",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/README.md",
+      "bytes": 2108,
+      "sha256": "abadca5d1df87ff1b95f375e0977c8cd2f4ac6232ff3bdf04f613269d9ed7637",
+      "historicalBytes": 2108,
+      "historicalSha256": "abadca5d1df87ff1b95f375e0977c8cd2f4ac6232ff3bdf04f613269d9ed7637",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/palworld-three-character-settings/backup.py",
+      "bytes": 5549,
+      "sha256": "8f35ee8e71d0a49501e818860c269faed10599697bb2a86304e090aa031a8b76",
+      "historicalBytes": 5549,
+      "historicalSha256": "8f35ee8e71d0a49501e818860c269faed10599697bb2a86304e090aa031a8b76",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/palworld-three-character-settings/independent_audit.py",
+      "bytes": 7993,
+      "sha256": "e31346030fa32ddd6f6fb2aa3ba74ed56d91ae880369d76ea6494df46dd3aa10",
+      "historicalBytes": 7993,
+      "historicalSha256": "e31346030fa32ddd6f6fb2aa3ba74ed56d91ae880369d76ea6494df46dd3aa10",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/palworld-three-character-settings/parse_character_settings.py",
+      "bytes": 7254,
+      "sha256": "7ed3473d62ab6469ec4d4bc77d0b04a3cc193dc9bcc49cc9c51621eeeaf37025",
+      "historicalBytes": 7254,
+      "historicalSha256": "7ed3473d62ab6469ec4d4bc77d0b04a3cc193dc9bcc49cc9c51621eeeaf37025",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-astralym/analyze-astralym.mjs",
+      "bytes": 6644,
+      "sha256": "01ad30f19f787fce36ddfd3a7b18347dd2908dd115a559048fb999bc6f2af6cd",
+      "historicalBytes": 6644,
+      "historicalSha256": "01ad30f19f787fce36ddfd3a7b18347dd2908dd115a559048fb999bc6f2af6cd",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-astralym/declare-quantization.mjs",
+      "bytes": 2458,
+      "sha256": "09d8cc3fde6aef01dcf29b80997986f247bfdbbc60ac20964c4a1e7accc797f5",
+      "historicalBytes": 2458,
+      "historicalSha256": "09d8cc3fde6aef01dcf29b80997986f247bfdbbc60ac20964c4a1e7accc797f5",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-astralym/freeze-intake.py",
+      "bytes": 2576,
+      "sha256": "0596d08a20f0218ef0484d95826a830762c9f9f0d981bb15ce96c3304541041c",
+      "historicalBytes": 2576,
+      "historicalSha256": "0596d08a20f0218ef0484d95826a830762c9f9f0d981bb15ce96c3304541041c",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-astralym/meshopt_decoder.cjs",
+      "bytes": 32869,
+      "sha256": "05e1d7b12b8fe408b07690d701328671d026c4ace808684c942f398b1f0801d5",
+      "historicalBytes": 32869,
+      "historicalSha256": "05e1d7b12b8fe408b07690d701328671d026c4ace808684c942f398b1f0801d5",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-astralym/meshoptimizer-LICENSE.md",
+      "bytes": 1079,
+      "sha256": "e4a26033e3551fb2722888949fbb41e77aee628e8e8f04dcffeee301aa7e5634",
+      "historicalBytes": 1079,
+      "historicalSha256": "e4a26033e3551fb2722888949fbb41e77aee628e8e8f04dcffeee301aa7e5634",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-astralym/write-source-receipts.py",
+      "bytes": 9181,
+      "sha256": "d9e6487d04d61615a68f667ee298652fd5beb392335439eb3298ad51fbd95c22",
+      "historicalBytes": 9181,
+      "historicalSha256": "d9e6487d04d61615a68f667ee298652fd5beb392335439eb3298ad51fbd95c22",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-atlasforge/backup.py",
+      "bytes": 5356,
+      "sha256": "9ae203fb421661d7232e5b55591b5dc1e50218285c94c63d600a5d8aeac30453",
+      "historicalBytes": 5356,
+      "historicalSha256": "9ae203fb421661d7232e5b55591b5dc1e50218285c94c63d600a5d8aeac30453",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-atlasforge/inspect_model.py",
+      "bytes": 3865,
+      "sha256": "41bb81c6aa63df4e32b474705ceef21a615dc419291467bad68aa6f8eead9aeb",
+      "historicalBytes": 3865,
+      "historicalSha256": "41bb81c6aa63df4e32b474705ceef21a615dc419291467bad68aa6f8eead9aeb",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-atlasforge/prepare-delivery.py",
+      "bytes": 8189,
+      "sha256": "4e61d5b5275daf17b729d7b9b023e6c40cbd834a1239f29cf5419d60a6bf6d12",
+      "historicalBytes": 8189,
+      "historicalSha256": "4e61d5b5275daf17b729d7b9b023e6c40cbd834a1239f29cf5419d60a6bf6d12",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-atlasforge/standardize.py",
+      "bytes": 1878,
+      "sha256": "c26dcf6bb43b8bac27a664e46d0e10df04a2a0be92f3939b4758ce486e995550",
+      "historicalBytes": 1878,
+      "historicalSha256": "c26dcf6bb43b8bac27a664e46d0e10df04a2a0be92f3939b4758ce486e995550",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-atlasforge/validate.cjs",
+      "bytes": 527,
+      "sha256": "b794c4d7312645a5429976111c499bd2a6890205faa986d7f2ddf8953bf5c95e",
+      "historicalBytes": 527,
+      "historicalSha256": "b794c4d7312645a5429976111c499bd2a6890205faa986d7f2ddf8953bf5c95e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-gamevault/acquire.py",
+      "bytes": 1303,
+      "sha256": "d7f5ebbbeee9bf7c8593f20957fd8a6d31665e286d328c9e7cb8cc6034d574e2",
+      "historicalBytes": 1303,
+      "historicalSha256": "d7f5ebbbeee9bf7c8593f20957fd8a6d31665e286d328c9e7cb8cc6034d574e2",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-gamevault/analyze_audio.py",
+      "bytes": 2416,
+      "sha256": "011a01271379bd5236451fae46fa6c2fa6f5add819b474056983ff871cfdf26a",
+      "historicalBytes": 2416,
+      "historicalSha256": "011a01271379bd5236451fae46fa6c2fa6f5add819b474056983ff871cfdf26a",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-gamevault/backup.py",
+      "bytes": 5356,
+      "sha256": "9ae203fb421661d7232e5b55591b5dc1e50218285c94c63d600a5d8aeac30453",
+      "historicalBytes": 5356,
+      "historicalSha256": "9ae203fb421661d7232e5b55591b5dc1e50218285c94c63d600a5d8aeac30453",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-gamevault/prepare-delivery.py",
+      "bytes": 8189,
+      "sha256": "4e61d5b5275daf17b729d7b9b023e6c40cbd834a1239f29cf5419d60a6bf6d12",
+      "historicalBytes": 8189,
+      "historicalSha256": "4e61d5b5275daf17b729d7b9b023e6c40cbd834a1239f29cf5419d60a6bf6d12",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-opgg/acquire.py",
+      "bytes": 1450,
+      "sha256": "39b907ad2d1d1485d16e53b9b535b8017e3e1d2278b1ec71ebfe1f5ced233e58",
+      "historicalBytes": 1450,
+      "historicalSha256": "39b907ad2d1d1485d16e53b9b535b8017e3e1d2278b1ec71ebfe1f5ced233e58",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-opgg/backup.py",
+      "bytes": 5356,
+      "sha256": "9ae203fb421661d7232e5b55591b5dc1e50218285c94c63d600a5d8aeac30453",
+      "historicalBytes": 5356,
+      "historicalSha256": "9ae203fb421661d7232e5b55591b5dc1e50218285c94c63d600a5d8aeac30453",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-opgg/declare_quantization.py",
+      "bytes": 1609,
+      "sha256": "06c5dd30f369a9aa6a3fa58707b1a8a71602bab8ce9bf9f9d8c91440d17acd69",
+      "historicalBytes": 1609,
+      "historicalSha256": "06c5dd30f369a9aa6a3fa58707b1a8a71602bab8ce9bf9f9d8c91440d17acd69",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-opgg/inspect_glb.py",
+      "bytes": 5296,
+      "sha256": "05895b064d87725d134cebc9924d9d7cc30209b643952b3216023193e2b0e8fd",
+      "historicalBytes": 5296,
+      "historicalSha256": "05895b064d87725d134cebc9924d9d7cc30209b643952b3216023193e2b0e8fd",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-opgg/prepare-delivery.py",
+      "bytes": 8189,
+      "sha256": "4e61d5b5275daf17b729d7b9b023e6c40cbd834a1239f29cf5419d60a6bf6d12",
+      "historicalBytes": 8189,
+      "historicalSha256": "4e61d5b5275daf17b729d7b9b023e6c40cbd834a1239f29cf5419d60a6bf6d12",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-opgg/validate-quantization.cjs",
+      "bytes": 557,
+      "sha256": "565a5350d86f065a3d8ecb32d1595967a340a10aafa305e1e9771aa2245d746f",
+      "historicalBytes": 557,
+      "historicalSha256": "565a5350d86f065a3d8ecb32d1595967a340a10aafa305e1e9771aa2245d746f",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-cattiva-opgg/validate.cjs",
+      "bytes": 538,
+      "sha256": "e9cb4e5df9ef73c45cb5476e487309b4ad68cab8705aedb09e087f99dd52b69e",
+      "historicalBytes": 538,
+      "historicalSha256": "e9cb4e5df9ef73c45cb5476e487309b4ad68cab8705aedb09e087f99dd52b69e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-jetragon/build-delivery.py",
+      "bytes": 17591,
+      "sha256": "85127a59da09b0e3b1c74c330cba81d834dcd9d21d5dc8038751e0dd3ed42ddd",
+      "historicalBytes": 17591,
+      "historicalSha256": "85127a59da09b0e3b1c74c330cba81d834dcd9d21d5dc8038751e0dd3ed42ddd",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-jetragon/declare_quantization.py",
+      "bytes": 1612,
+      "sha256": "8a7d89e0aafbca2c384e664af7f756c1a91ebd84951195639a64a4d6ca9c2c2c",
+      "historicalBytes": 1612,
+      "historicalSha256": "8a7d89e0aafbca2c384e664af7f756c1a91ebd84951195639a64a4d6ca9c2c2c",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-jetragon/inspect_opgg_glb.py",
+      "bytes": 6641,
+      "sha256": "9323ceb2a100b89a2e3c33e03ef0b5d22ac70c68593641aa0211b6064f4f3bf4",
+      "historicalBytes": 6641,
+      "historicalSha256": "9323ceb2a100b89a2e3c33e03ef0b5d22ac70c68593641aa0211b6064f4f3bf4",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-jetragon/prepare_fbx_reserve.py",
+      "bytes": 5912,
+      "sha256": "e477d666aa3acca24e5f06943bc3b5e9407dc6d6f2617c960938155da6f62c9a",
+      "historicalBytes": 5912,
+      "historicalSha256": "e477d666aa3acca24e5f06943bc3b5e9407dc6d6f2617c960938155da6f62c9a",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/parallel-palworld-jetragon/static-analysis.py",
+      "bytes": 8790,
+      "sha256": "1a6b145f556aaf9f61eb772799344ac957e9c9acb3ff5358dad781bc07854bdc",
+      "historicalBytes": 8790,
+      "historicalSha256": "1a6b145f556aaf9f61eb772799344ac957e9c9acb3ff5358dad781bc07854bdc",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/acquisition-replays/source-files.json",
+      "bytes": 13869,
+      "sha256": "65483ed9c5e9015449817b8f775d34b12ff3aaa1d401ec17ab6b292e1b4551b9",
+      "historicalBytes": 13869,
+      "historicalSha256": "65483ed9c5e9015449817b8f775d34b12ff3aaa1d401ec17ab6b292e1b4551b9",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/integrate_materials.py",
+      "bytes": 12878,
+      "sha256": "7129ab36f45f7d238283900c2cec1e4ca9aa9a1774cf18c766d17b930d8732df",
+      "historicalBytes": 12878,
+      "historicalSha256": "7129ab36f45f7d238283900c2cec1e4ca9aa9a1774cf18c766d17b930d8732df",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/README.md",
+      "bytes": 5405,
+      "sha256": "f22bfabdc8dec60b94a00bb2dab71ac873a1d2e82ad11ab10d418878912b2928",
+      "historicalBytes": 5405,
+      "historicalSha256": "f22bfabdc8dec60b94a00bb2dab71ac873a1d2e82ad11ab10d418878912b2928",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/tools/bind_materials.py",
+      "bytes": 10800,
+      "sha256": "3699266f1bdb1412af3cb50cdff08651d9697978dc534740ce51dc43752c42fe",
+      "historicalBytes": 10800,
+      "historicalSha256": "3699266f1bdb1412af3cb50cdff08651d9697978dc534740ce51dc43752c42fe",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/tools/check_ggd.mts",
+      "bytes": 2607,
+      "sha256": "5f3a73a979decf9e2e3132bf5f48d037b1e5af181bfae2ce8b564e94cb473dee",
+      "historicalBytes": 2607,
+      "historicalSha256": "5f3a73a979decf9e2e3132bf5f48d037b1e5af181bfae2ce8b564e94cb473dee",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/tools/check_khronos.mjs",
+      "bytes": 991,
+      "sha256": "56f693db801919da46923077ed8f51a582e307184b654e241562ca8696a2b0df",
+      "historicalBytes": 991,
+      "historicalSha256": "56f693db801919da46923077ed8f51a582e307184b654e241562ca8696a2b0df",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/tools/generate_delivery.py",
+      "bytes": 6670,
+      "sha256": "4ffdb86fa642929903682f3b249ef6870aed3353fa49fc12dc2b8b8d2db1a767",
+      "historicalBytes": 6670,
+      "historicalSha256": "4ffdb86fa642929903682f3b249ef6870aed3353fa49fc12dc2b8b8d2db1a767",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/tools/render-idle.mjs",
+      "bytes": 5458,
+      "sha256": "70768b83c27b3fa550029d1bacedb475c8337e0ba047e59a021b4cf1c15a3acf",
+      "historicalBytes": 5458,
+      "historicalSha256": "70768b83c27b3fa550029d1bacedb475c8337e0ba047e59a021b4cf1c15a3acf",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/tools/render-idle.py",
+      "bytes": 3383,
+      "sha256": "93b2f3b9f5c550ca90a5796005308c90a811e01ab588c6bb50bb40a5e934d45e",
+      "historicalBytes": 3383,
+      "historicalSha256": "93b2f3b9f5c550ca90a5796005308c90a811e01ab588c6bb50bb40a5e934d45e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/tools/render.mjs",
+      "bytes": 5414,
+      "sha256": "d99d804811bc45bea7db928f81926eddb3f7bcbe0717cb767613f1417c637956",
+      "historicalBytes": 5414,
+      "historicalSha256": "d99d804811bc45bea7db928f81926eddb3f7bcbe0717cb767613f1417c637956",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/tools/render.py",
+      "bytes": 3383,
+      "sha256": "93b2f3b9f5c550ca90a5796005308c90a811e01ab588c6bb50bb40a5e934d45e",
+      "historicalBytes": 3383,
+      "historicalSha256": "93b2f3b9f5c550ca90a5796005308c90a811e01ab588c6bb50bb40a5e934d45e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/jetragon-opgg-material-bound-v1/tools/verify_preservation.py",
+      "bytes": 2908,
+      "sha256": "41bc102447cec116ede858f71c2685f0088949554cfaa9f2f3d8151a446f629e",
+      "historicalBytes": 2908,
+      "historicalSha256": "41bc102447cec116ede858f71c2685f0088949554cfaa9f2f3d8151a446f629e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/README.md",
+      "bytes": 3367,
+      "sha256": "fcdaf7b4be943aee26c593840bb3cf5e958edee9ad4118c9607164fe1cd32812",
+      "historicalBytes": 3367,
+      "historicalSha256": "fcdaf7b4be943aee26c593840bb3cf5e958edee9ad4118c9607164fe1cd32812",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/bind_materials.py",
+      "bytes": 7753,
+      "sha256": "613422a3dc80e83fd3a61a9f5c08e8b2df0f1f4e31ecd264c2319c11749dc3a9",
+      "historicalBytes": 7753,
+      "historicalSha256": "613422a3dc80e83fd3a61a9f5c08e8b2df0f1f4e31ecd264c2319c11749dc3a9",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/bundle-render.mjs",
+      "bytes": 769,
+      "sha256": "3bb0a20759125bcca5bda8042162f4eb715f64762e9a516d66977cac909044e8",
+      "historicalBytes": 769,
+      "historicalSha256": "3bb0a20759125bcca5bda8042162f4eb715f64762e9a516d66977cac909044e8",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/finalize_delivery.py",
+      "bytes": 6189,
+      "sha256": "0c578144fe6398c4a92bf0d693cd3e9de6b2e0c263dd5f45ef5d56d7033b2c97",
+      "historicalBytes": 6189,
+      "historicalSha256": "0c578144fe6398c4a92bf0d693cd3e9de6b2e0c263dd5f45ef5d56d7033b2c97",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/freeze-intake.py",
+      "bytes": 2576,
+      "sha256": "0596d08a20f0218ef0484d95826a830762c9f9f0d981bb15ce96c3304541041c",
+      "historicalBytes": 2576,
+      "historicalSha256": "0596d08a20f0218ef0484d95826a830762c9f9f0d981bb15ce96c3304541041c",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/make_idle_walk.py",
+      "bytes": 5291,
+      "sha256": "ec345a18f684ee540ce6a0f2ff97b169ff32266411ab1a6a3bbf1e6bed787db8",
+      "historicalBytes": 5291,
+      "historicalSha256": "ec345a18f684ee540ce6a0f2ff97b169ff32266411ab1a6a3bbf1e6bed787db8",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/normalize_subset.mts",
+      "bytes": 3822,
+      "sha256": "7d69710e309e1760fc64b7015dbf60ee5a61e83b3bd2acb6fa2d98d02197d95b",
+      "historicalBytes": 3822,
+      "historicalSha256": "7d69710e309e1760fc64b7015dbf60ee5a61e83b3bd2acb6fa2d98d02197d95b",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/render.mjs",
+      "bytes": 4167,
+      "sha256": "e13ca084de5e3fa364ebb49d94d5de2c74b8a8eefeec2ae87e2524d9614d49f3",
+      "historicalBytes": 4167,
+      "historicalSha256": "e13ca084de5e3fa364ebb49d94d5de2c74b8a8eefeec2ae87e2524d9614d49f3",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/render_server.py",
+      "bytes": 3038,
+      "sha256": "5e50fe0900439c00092937524f3348d448ea52e871545efe98a6d80fe400d0b1",
+      "historicalBytes": 3038,
+      "historicalSha256": "5e50fe0900439c00092937524f3348d448ea52e871545efe98a6d80fe400d0b1",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/validate.mts",
+      "bytes": 1334,
+      "sha256": "7a7bc5db72b3b23b65085a7857e8e23a171f8e8eff1c55b8c34d63be95b27b83",
+      "historicalBytes": 1334,
+      "historicalSha256": "7a7bc5db72b3b23b65085a7857e8e23a171f8e8eff1c55b8c34d63be95b27b83",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-astralym-materials-20260911/tools/validate_subset.mts",
+      "bytes": 1792,
+      "sha256": "47429a453c9d00fbb36661747462478ec82e4998c393dd43d7f2d44f5dd2e73e",
+      "historicalBytes": 1792,
+      "historicalSha256": "47429a453c9d00fbb36661747462478ec82e4998c393dd43d7f2d44f5dd2e73e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-20260911-v1/README.md",
+      "bytes": 4055,
+      "sha256": "089b829dbf02608cac4b54ec223f8fdabceb05b2c0ff30d866170afd7bf30c68",
+      "historicalBytes": 4055,
+      "historicalSha256": "089b829dbf02608cac4b54ec223f8fdabceb05b2c0ff30d866170afd7bf30c68",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-20260911-v1/tools/bundle.cjs",
+      "bytes": 591,
+      "sha256": "f6fe328853a05a9902cd568cfdc61f74513a2a37ed30cbcd4e2c16aa25938ade",
+      "historicalBytes": 591,
+      "historicalSha256": "f6fe328853a05a9902cd568cfdc61f74513a2a37ed30cbcd4e2c16aa25938ade",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-20260911-v1/tools/contact_sheets.py",
+      "bytes": 915,
+      "sha256": "62ef1dfd69cd72251f351570995faeab98118cd145b14c09d205e801bd4fa5e7",
+      "historicalBytes": 915,
+      "historicalSha256": "62ef1dfd69cd72251f351570995faeab98118cd145b14c09d205e801bd4fa5e7",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-20260911-v1/tools/convert.py",
+      "bytes": 13494,
+      "sha256": "8c8043ed31bd117bc865b49a89c12b36449fce40686d8503d578e07c25951e2f",
+      "historicalBytes": 13494,
+      "historicalSha256": "8c8043ed31bd117bc865b49a89c12b36449fce40686d8503d578e07c25951e2f",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-20260911-v1/tools/freeze.py",
+      "bytes": 5633,
+      "sha256": "b571f37fb8e5c72117931ae30ca33794622f8a9b6ca14950e1f64245d9a6f3cf",
+      "historicalBytes": 5633,
+      "historicalSha256": "b571f37fb8e5c72117931ae30ca33794622f8a9b6ca14950e1f64245d9a6f3cf",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-20260911-v1/tools/render.mjs",
+      "bytes": 4124,
+      "sha256": "2d4a9b9989153a00655e0c43116255a1df9fe796a29213922ee76c3cc2dce765",
+      "historicalBytes": 4124,
+      "historicalSha256": "2d4a9b9989153a00655e0c43116255a1df9fe796a29213922ee76c3cc2dce765",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-20260911-v1/tools/render_server.py",
+      "bytes": 3233,
+      "sha256": "11dc1d9837da618b2a8dd8570b95f481ef9c8946befcabd1ac4107f93d5408d6",
+      "historicalBytes": 3233,
+      "historicalSha256": "11dc1d9837da618b2a8dd8570b95f481ef9c8946befcabd1ac4107f93d5408d6",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-20260911-v1/tools/validate.mjs",
+      "bytes": 5282,
+      "sha256": "c9949d3903017f0ba730cec6c1f9bb4380d53ddc25295858348aaba1bda54598",
+      "historicalBytes": 5282,
+      "historicalSha256": "c9949d3903017f0ba730cec6c1f9bb4380d53ddc25295858348aaba1bda54598",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-256-20260911-v1/README.md",
+      "bytes": 2529,
+      "sha256": "a4e49503824d16497c14fe3bbf7a4a76c0c8b117a097ed2fad7c2ffe7f76d613",
+      "historicalBytes": 2529,
+      "historicalSha256": "a4e49503824d16497c14fe3bbf7a4a76c0c8b117a097ed2fad7c2ffe7f76d613",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-256-20260911-v1/tools/backup_conversions.py",
+      "bytes": 6633,
+      "sha256": "4661887d27b2b71af127882ad51b2d06c0bb8ad72930d11feade51426b2fa85f",
+      "historicalBytes": 6633,
+      "historicalSha256": "4661887d27b2b71af127882ad51b2d06c0bb8ad72930d11feade51426b2fa85f",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-256-20260911-v1/tools/bundle.cjs",
+      "bytes": 591,
+      "sha256": "f6fe328853a05a9902cd568cfdc61f74513a2a37ed30cbcd4e2c16aa25938ade",
+      "historicalBytes": 591,
+      "historicalSha256": "f6fe328853a05a9902cd568cfdc61f74513a2a37ed30cbcd4e2c16aa25938ade",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-256-20260911-v1/tools/contact_sheets.py",
+      "bytes": 915,
+      "sha256": "62ef1dfd69cd72251f351570995faeab98118cd145b14c09d205e801bd4fa5e7",
+      "historicalBytes": 915,
+      "historicalSha256": "62ef1dfd69cd72251f351570995faeab98118cd145b14c09d205e801bd4fa5e7",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-256-20260911-v1/tools/freeze.py",
+      "bytes": 4249,
+      "sha256": "041771e5ec3e36f4159d747714e6315f0b18ed667681475d0558daba59a6f37a",
+      "historicalBytes": 4249,
+      "historicalSha256": "041771e5ec3e36f4159d747714e6315f0b18ed667681475d0558daba59a6f37a",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-256-20260911-v1/tools/normalize.mts",
+      "bytes": 6915,
+      "sha256": "8f4ac5db083cdf23874afb6dd5e8da37b42f5cb9a7475e30bc9955d0e0a2a2a5",
+      "historicalBytes": 6915,
+      "historicalSha256": "8f4ac5db083cdf23874afb6dd5e8da37b42f5cb9a7475e30bc9955d0e0a2a2a5",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-256-20260911-v1/tools/render.mjs",
+      "bytes": 4146,
+      "sha256": "62ee5d5e8e3ff2efef0229ee13f3b4b9c7d78c64bd5f1859d1891be63a7f7080",
+      "historicalBytes": 4146,
+      "historicalSha256": "62ee5d5e8e3ff2efef0229ee13f3b4b9c7d78c64bd5f1859d1891be63a7f7080",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-256-20260911-v1/tools/render_server.py",
+      "bytes": 3233,
+      "sha256": "11dc1d9837da618b2a8dd8570b95f481ef9c8946befcabd1ac4107f93d5408d6",
+      "historicalBytes": 3233,
+      "historicalSha256": "11dc1d9837da618b2a8dd8570b95f481ef9c8946befcabd1ac4107f93d5408d6",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/material-replays/palworld-cattiva-opgg-materials-256-20260911-v1/tools/validate.mjs",
+      "bytes": 5282,
+      "sha256": "c9949d3903017f0ba730cec6c1f9bb4380d53ddc25295858348aaba1bda54598",
+      "historicalBytes": 5282,
+      "historicalSha256": "c9949d3903017f0ba730cec6c1f9bb4380d53ddc25295858348aaba1bda54598",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/parse_character_settings.py",
+      "bytes": 7254,
+      "sha256": "7ed3473d62ab6469ec4d4bc77d0b04a3cc193dc9bcc49cc9c51621eeeaf37025",
+      "historicalBytes": 7254,
+      "historicalSha256": "7ed3473d62ab6469ec4d4bc77d0b04a3cc193dc9bcc49cc9c51621eeeaf37025",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/palworld/static_analysis.py",
+      "bytes": 9204,
+      "sha256": "16493a17447869270a82df9bd0e1ec1f5df684475f12ca350bc6b5e751edd1d6",
+      "historicalBytes": 9204,
+      "historicalSha256": "16493a17447869270a82df9bd0e1ec1f5df684475f12ca350bc6b5e751edd1d6",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/priority81-audio-audit/audit-main-committed.py",
+      "bytes": 9098,
+      "sha256": "e3f09376deb9e5b02703a21c461b76f161ba34c718a307fd0a7f3944d01f670e",
+      "historicalBytes": 9098,
+      "historicalSha256": "e3f09376deb9e5b02703a21c461b76f161ba34c718a307fd0a7f3944d01f670e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/priority81-audio-audit/audit.py",
+      "bytes": 18185,
+      "sha256": "1085478e3654cb9ca534205d9760efc1c5189d78d2a2e2f5d2850d347c456933",
+      "historicalBytes": 18185,
+      "historicalSha256": "1085478e3654cb9ca534205d9760efc1c5189d78d2a2e2f5d2850d347c456933",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/priority81-audio-audit/freeze.py",
+      "bytes": 5866,
+      "sha256": "0644e4ccaeedc89d6db5226a46bb0c448b91db8fd49ce736199b8963cc7fdd60",
+      "historicalBytes": 5866,
+      "historicalSha256": "0644e4ccaeedc89d6db5226a46bb0c448b91db8fd49ce736199b8963cc7fdd60",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/priority81-audio-audit/postmerge-check.py",
+      "bytes": 5934,
+      "sha256": "c2f1a51becd845f87f2ddbc591cb974682b9fba1ab1c8064eea514ee39c1d71a",
+      "historicalBytes": 5934,
+      "historicalSha256": "c2f1a51becd845f87f2ddbc591cb974682b9fba1ab1c8064eea514ee39c1d71a",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/priority81-live-recheck-20260911/audit.py",
+      "bytes": 9232,
+      "sha256": "fd925aa61973b0bbbca81c6e98a654e30e8684673bb06f15ad7f35dceca7e72a",
+      "historicalBytes": 9232,
+      "historicalSha256": "fd925aa61973b0bbbca81c6e98a654e30e8684673bb06f15ad7f35dceca7e72a",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/reconcile_dai_source_index.py",
+      "bytes": 5463,
+      "sha256": "60282e53c5c48c146628e577be2c1332bd8169e7d08b336990e3a6644aef6b62",
+      "historicalBytes": 5463,
+      "historicalSha256": "60282e53c5c48c146628e577be2c1332bd8169e7d08b336990e3a6644aef6b62",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/rezero-static-components-v1/README.md",
+      "bytes": 1068,
+      "sha256": "ec02d59596ed23db20c399456f1b1886456e060dbabc2217cd00addf157fa0cf",
+      "historicalBytes": 1068,
+      "historicalSha256": "ec02d59596ed23db20c399456f1b1886456e060dbabc2217cd00addf157fa0cf",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/rezero-static-components-v1/normalize_validate.mts",
+      "bytes": 11135,
+      "sha256": "c4b30e1b2821a5a893f7fb66937bc82dd3bb987efa241b454f496f955fe0b74f",
+      "historicalBytes": 11135,
+      "historicalSha256": "c4b30e1b2821a5a893f7fb66937bc82dd3bb987efa241b454f496f955fe0b74f",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/rezero-static-components-v1/rebuild.py",
+      "bytes": 5533,
+      "sha256": "5d3c1b86cb1848e819f0dc1466c07145b8730b117f469f63f99060f3c87b5e4c",
+      "historicalBytes": 5533,
+      "historicalSha256": "5d3c1b86cb1848e819f0dc1466c07145b8730b117f469f63f99060f3c87b5e4c",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/rezero-static-components-v2/README.md",
+      "bytes": 1203,
+      "sha256": "06dad0e495b1e257874b2798b5a564295d0f1fffb334ec065334f2cd5b66a30e",
+      "historicalBytes": 1203,
+      "historicalSha256": "06dad0e495b1e257874b2798b5a564295d0f1fffb334ec065334f2cd5b66a30e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/rezero-static-components-v2/normalize_validate.mts",
+      "bytes": 12052,
+      "sha256": "a068d6ca5be4cb35e598385479b29ce6f226f492f4f6b0c752172cb719dd972b",
+      "historicalBytes": 12052,
+      "historicalSha256": "a068d6ca5be4cb35e598385479b29ce6f226f492f4f6b0c752172cb719dd972b",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/rezero-static-components-v2/rebuild.py",
+      "bytes": 6526,
+      "sha256": "c50cfd106c0cfce9878870e8a7aed79235046692ba92f02a27f9d64c4a07c37d",
+      "historicalBytes": 6526,
+      "historicalSha256": "c50cfd106c0cfce9878870e8a7aed79235046692ba92f02a27f9d64c4a07c37d",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/README.md",
+      "bytes": 727,
+      "sha256": "80c8c7f218d6ca5c73c455d92229f3740db1d58b47c1e9d4534d07fd8af9daf9",
+      "historicalBytes": 727,
+      "historicalSha256": "80c8c7f218d6ca5c73c455d92229f3740db1d58b47c1e9d4534d07fd8af9daf9",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/cloud-native-motion/control/tooling/ggd-check-cloud-native-playback.py",
+      "bytes": 12225,
+      "sha256": "5fb68bb8bd200514fa38a8881c0e65e4435f2a8cf462104ed1209779dc620246",
+      "historicalBytes": 12225,
+      "historicalSha256": "5fb68bb8bd200514fa38a8881c0e65e4435f2a8cf462104ed1209779dc620246",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/cloud-native-motion/control/tooling/ggd-convert-cloud-native-motions.py",
+      "bytes": 16701,
+      "sha256": "4c4a5ffb82b7792dbf47fade8e4d540ee0735bca05762c6b075f89a6cdd7879f",
+      "historicalBytes": 16701,
+      "historicalSha256": "4c4a5ffb82b7792dbf47fade8e4d540ee0735bca05762c6b075f89a6cdd7879f",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/cloud-native-motion/control/tooling/ggd-freeze-cloud-native-batch4.py",
+      "bytes": 12157,
+      "sha256": "eea7b75f9a38d92f70ae4ba11bcfa6a8b25d29f2e138b499d6695bef34d2635e",
+      "historicalBytes": 12157,
+      "historicalSha256": "eea7b75f9a38d92f70ae4ba11bcfa6a8b25d29f2e138b499d6695bef34d2635e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/cloud-native-motion/control/tooling/ggd-validate-cloud-native.cjs",
+      "bytes": 1091,
+      "sha256": "373e8b670d104456814ce240f51c15e61ec32510299985cd8215886ba498c10f",
+      "historicalBytes": 1091,
+      "historicalSha256": "373e8b670d104456814ce240f51c15e61ec32510299985cd8215886ba498c10f",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/cloud-native-motion/control/tooling/ggd-verify-cloud-source-uv.py",
+      "bytes": 2746,
+      "sha256": "2a5d06ccbaa2d429b051c4b07d96ade82de58b411379586a7a9da747f54898d6",
+      "historicalBytes": 2746,
+      "historicalSha256": "2a5d06ccbaa2d429b051c4b07d96ade82de58b411379586a7a9da747f54898d6",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/cloud-native-motion/files.sha256.json",
+      "bytes": 871,
+      "sha256": "df723bd3daa3eed9e79bc734e88938fce6df926ea3e043d7056e039de3ede410",
+      "historicalBytes": 871,
+      "historicalSha256": "df723bd3daa3eed9e79bc734e88938fce6df926ea3e043d7056e039de3ede410",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/files.sha256.json",
+      "bytes": 5637,
+      "sha256": "0db5a1bdef809535a4db6a607ba79791668af434e9dbbd3e6b8cb30eb1e3bc0b",
+      "historicalBytes": 5637,
+      "historicalSha256": "0db5a1bdef809535a4db6a607ba79791668af434e9dbbd3e6b8cb30eb1e3bc0b",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/lol-pcm16-recovery/recover-lol-pcm16.py",
+      "bytes": 5829,
+      "sha256": "8d05b142ddd859f181920ea383395e11ed73703a783bc406876329d42899cb7a",
+      "historicalBytes": 5829,
+      "historicalSha256": "8d05b142ddd859f181920ea383395e11ed73703a783bc406876329d42899cb7a",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/psp-native/ggd-convert-native-smd-samples.py",
+      "bytes": 2805,
+      "sha256": "3130bfb67cb9348a3a7c18063406b5c96d426c1b8330319f2a30c4b75f431c41",
+      "historicalBytes": 2805,
+      "historicalSha256": "3130bfb67cb9348a3a7c18063406b5c96d426c1b8330319f2a30c4b75f431c41",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/psp-native/ggd-fix-native-smd-gltf.py",
+      "bytes": 3086,
+      "sha256": "6d4b2af4104740ee764b6420f0929ce561bf30b27ad955e4a2520396d067f535",
+      "historicalBytes": 3086,
+      "historicalSha256": "6d4b2af4104740ee764b6420f0929ce561bf30b27ad955e4a2520396d067f535",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/psp-native/ggd-freeze-fuc-native-batch3.py",
+      "bytes": 14527,
+      "sha256": "4fe98f38b637dca287cbed01ab239153fa8bc7cb28074f50e3c1b5ad03fa2b54",
+      "historicalBytes": 14527,
+      "historicalSha256": "4fe98f38b637dca287cbed01ab239153fa8bc7cb28074f50e3c1b5ad03fa2b54",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/psp-native/ggd-index-native-gmo.py",
+      "bytes": 5209,
+      "sha256": "13f9e338bb7a3541ae7f8019feb6100f197e98b23590ada3102b7e7206929c55",
+      "historicalBytes": 5209,
+      "historicalSha256": "13f9e338bb7a3541ae7f8019feb6100f197e98b23590ada3102b7e7206929c55",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/psp-native/ggd-inspect-psp-gmo.py",
+      "bytes": 5486,
+      "sha256": "857332fa7302f1cc1d474c549f30767048e5d3707c3c6c2138d8c311d2a02d94",
+      "historicalBytes": 5486,
+      "historicalSha256": "857332fa7302f1cc1d474c549f30767048e5d3707c3c6c2138d8c311d2a02d94",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/psp-native/ggd-validate-native-smd.cjs",
+      "bytes": 943,
+      "sha256": "98c4536a9c26550f826385688b995410c7666eefdc55d5f2b4eb106bdf77f115",
+      "historicalBytes": 943,
+      "historicalSha256": "98c4536a9c26550f826385688b995410c7666eefdc55d5f2b4eb106bdf77f115",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/slayers-hand-review/ggd-lina-hand-variants.py",
+      "bytes": 4175,
+      "sha256": "76a0683a6e7de260106ade00fe5c4f3818edca0574d54b032d16c281eaf0284a",
+      "historicalBytes": 4175,
+      "historicalSha256": "76a0683a6e7de260106ade00fe5c4f3818edca0574d54b032d16c281eaf0284a",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/slayers-hand-review/ggd-lina-render-diagnostic-server.py",
+      "bytes": 3447,
+      "sha256": "67ae1ad740c88614b10f1cae7280c2ab0efd9e0d8f3dcef71a4d4c6903fd7a4e",
+      "historicalBytes": 3447,
+      "historicalSha256": "67ae1ad740c88614b10f1cae7280c2ab0efd9e0d8f3dcef71a4d4c6903fd7a4e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/slayers-hand-review/ggd-lina-render-diagnostic.mjs",
+      "bytes": 5822,
+      "sha256": "017e1e756481176f9048541e209383c60d0801ea068ddc9af244e086effe359d",
+      "historicalBytes": 5822,
+      "historicalSha256": "017e1e756481176f9048541e209383c60d0801ea068ddc9af244e086effe359d",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/slayers-hand-review/ggd-lina-render-server.py",
+      "bytes": 3468,
+      "sha256": "959a938d4346669a08d85ae11e3a41155ae34863ab3d5b82a18f0036c7e2d50a",
+      "historicalBytes": 3468,
+      "historicalSha256": "959a938d4346669a08d85ae11e3a41155ae34863ab3d5b82a18f0036c7e2d50a",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/slayers-hand-review/ggd-lina-render.mjs",
+      "bytes": 3805,
+      "sha256": "f3d12e82848be9078fc5d40b8112d8998ca33b44b6389984474bf25a83a180f9",
+      "historicalBytes": 3805,
+      "historicalSha256": "f3d12e82848be9078fc5d40b8112d8998ca33b44b6389984474bf25a83a180f9",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/slayers-hand-review/ggd-lina-review-finalize.py",
+      "bytes": 13709,
+      "sha256": "e340b86f4e4b9884248dda8f4d75d8b183c22ea0514fcaf72e43a89135137d8c",
+      "historicalBytes": 13709,
+      "historicalSha256": "e340b86f4e4b9884248dda8f4d75d8b183c22ea0514fcaf72e43a89135137d8c",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/source-batch-20260910/slayers-hand-review/glb_io.py",
+      "bytes": 6754,
+      "sha256": "f9a690b40ee69c8c1e07ec3a1fdb9afe96d443f3661f14d119e36d3a72e7309e",
+      "historicalBytes": 6754,
+      "historicalSha256": "f9a690b40ee69c8c1e07ec3a1fdb9afe96d443f3661f14d119e36d3a72e7309e",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/README.md",
+      "bytes": 1593,
+      "sha256": "b44bc3bda67aad45d22a112d1f8e17a010c97be40e18925d131b865d8c350cf0",
+      "historicalBytes": 1593,
+      "historicalSha256": "b44bc3bda67aad45d22a112d1f8e17a010c97be40e18925d131b865d8c350cf0",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/import_nuanmb_actions.py",
+      "bytes": 8962,
+      "sha256": "7eb13e708518f0328819ea5c8c52764e05b5c12a815d142f47382b57f0982c52",
+      "historicalBytes": 8962,
+      "historicalSha256": "7eb13e708518f0328819ea5c8c52764e05b5c12a815d142f47382b57f0982c52",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/integrate.py",
+      "bytes": 16522,
+      "sha256": "a827874c5c4565633ee5a6d482bc86c18407a5e1556fe782bdcb021dd6b9a938",
+      "historicalBytes": 16522,
+      "historicalSha256": "a827874c5c4565633ee5a6d482bc86c18407a5e1556fe782bdcb021dd6b9a938",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/normalize_materials.py",
+      "bytes": 3182,
+      "sha256": "c501a09f9a13614b045bc6a2f3b6862fd4d1f4a187305d24e2f49ffd98b8d245",
+      "historicalBytes": 3182,
+      "historicalSha256": "c501a09f9a13614b045bc6a2f3b6862fd4d1f4a187305d24e2f49ffd98b8d245",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/render_motion_glb.mjs",
+      "bytes": 4256,
+      "sha256": "f70d3bb209fc11c670860745f484a7707e3e53406eaddf0269cdb6ee0c029e02",
+      "historicalBytes": 4256,
+      "historicalSha256": "f70d3bb209fc11c670860745f484a7707e3e53406eaddf0269cdb6ee0c029e02",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/render_motion_glb.py",
+      "bytes": 3424,
+      "sha256": "636a5fd8e3a62753fd6af5ed501886793feb1c2fc3db6db6c2f9abc35db35622",
+      "historicalBytes": 3424,
+      "historicalSha256": "636a5fd8e3a62753fd6af5ed501886793feb1c2fc3db6db6c2f9abc35db35622",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-mario-ultimate14-motion-v1/validate_motion_component.mts",
+      "bytes": 9000,
+      "sha256": "c944d7a3202cd053c3317f1fe3804ac6357baa8bfb14acf8ec6c0ad0b34c46af",
+      "historicalBytes": 9000,
+      "historicalSha256": "c944d7a3202cd053c3317f1fe3804ac6357baa8bfb14acf8ec6c0ad0b34c46af",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-models-v1/assimp_blend_probe.py",
+      "bytes": 5430,
+      "sha256": "6ca86dc1c94d6b2434ae73b7e97c835f458d9ee55a3224c8ad900f8033df73c5",
+      "historicalBytes": 5430,
+      "historicalSha256": "6ca86dc1c94d6b2434ae73b7e97c835f458d9ee55a3224c8ad900f8033df73c5",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-models-v1/convert_blend_component.py",
+      "bytes": 22214,
+      "sha256": "cb8e2dea1f5a9a552a8a734691eb235ad344a7261667d32eeddc1fe7da3342ea",
+      "historicalBytes": 22214,
+      "historicalSha256": "cb8e2dea1f5a9a552a8a734691eb235ad344a7261667d32eeddc1fe7da3342ea",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-models-v1/normalize_static_component.mts",
+      "bytes": 8495,
+      "sha256": "3bcd8d978034cd77013deb8e21f123056c9872ff9dfacecc1093d43747aafe34",
+      "historicalBytes": 8495,
+      "historicalSha256": "3bcd8d978034cd77013deb8e21f123056c9872ff9dfacecc1093d43747aafe34",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-models-v1/render_static_glb.mjs",
+      "bytes": 3915,
+      "sha256": "29a3daac6b06bcf13ad1d8d6f0007b42293b642666b2ba3a67eba3dfb17dd4c2",
+      "historicalBytes": 3915,
+      "historicalSha256": "29a3daac6b06bcf13ad1d8d6f0007b42293b642666b2ba3a67eba3dfb17dd4c2",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-models-v1/render_static_glb.py",
+      "bytes": 3427,
+      "sha256": "ca465944cb995b3614d5abf708d85d6e27490aec030b385fdd1e939beace8013",
+      "historicalBytes": 3427,
+      "historicalSha256": "ca465944cb995b3614d5abf708d85d6e27490aec030b385fdd1e939beace8013",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ssbu-models-v1/validate_blend_component.mts",
+      "bytes": 5847,
+      "sha256": "1cd199b1853322c882d42aba0715b8ecbffc92f50516e702d51a6aad11c25b93",
+      "historicalBytes": 5847,
+      "historicalSha256": "1cd199b1853322c882d42aba0715b8ecbffc92f50516e702d51a6aad11c25b93",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/test_integrate_scoped_seven_audio.py",
+      "bytes": 8773,
+      "sha256": "973b658bd93687a1b5f93ab5673b44aa38ca130ccc5bde55c633b93757b1777c",
+      "historicalBytes": 8773,
+      "historicalSha256": "973b658bd93687a1b5f93ab5673b44aa38ca130ccc5bde55c633b93757b1777c",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/test_scoped_seven_archive.py",
+      "bytes": 2841,
+      "sha256": "3e59a203f751d3a7812d8dad695c13cd753f1ce20ac4ac5e3c8bb2e5ab04ecb1",
+      "historicalBytes": 2841,
+      "historicalSha256": "3e59a203f751d3a7812d8dad695c13cd753f1ce20ac4ac5e3c8bb2e5ab04ecb1",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ultimate14-audio-20260911-v1/decode.py",
+      "bytes": 13351,
+      "sha256": "d144e54477d47736d535e51121c5956b52331e4f7061c6f4ac3223248edd9cef",
+      "historicalBytes": 13351,
+      "historicalSha256": "d144e54477d47736d535e51121c5956b52331e4f7061c6f4ac3223248edd9cef",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ultimate14-audio-20260911-v1/integrate.py",
+      "bytes": 10084,
+      "sha256": "a2ef6ce542013cb173c89cbb894066ef34d4b74888f78d2c2bb737c257c8ec39",
+      "historicalBytes": 10084,
+      "historicalSha256": "a2ef6ce542013cb173c89cbb894066ef34d4b74888f78d2c2bb737c257c8ec39",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ultimate14-audio-20260911-v1/verify_and_register.py",
+      "bytes": 9531,
+      "sha256": "b55b09da666a5c36181e86fd248c2adf543d3990bb9391758bb67b687b7da3a4",
+      "historicalBytes": 9531,
+      "historicalSha256": "b55b09da666a5c36181e86fd248c2adf543d3990bb9391758bb67b687b7da3a4",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ultimate14-motion-audit-20260912-v1/README.md",
+      "bytes": 1444,
+      "sha256": "495ffa0970d94dfba6ea14da8394223c16940c7f526cb8a6e441bea0e7456553",
+      "historicalBytes": 1444,
+      "historicalSha256": "495ffa0970d94dfba6ea14da8394223c16940c7f526cb8a6e441bea0e7456553",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ultimate14-motion-audit-20260912-v1/audit.py",
+      "bytes": 19808,
+      "sha256": "d2410d8a65e328d579bf9e1461d4e8fc029b989fbcfe600237ecc46496b17d9d",
+      "historicalBytes": 19808,
+      "historicalSha256": "d2410d8a65e328d579bf9e1461d4e8fc029b989fbcfe600237ecc46496b17d9d",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ultimate14-motion-audit-20260912-v1/dependencies.json",
+      "bytes": 1479,
+      "sha256": "901fb4e91c13ac9cdeb80468145ca867008a532e162d9de1fceb684992e8353d",
+      "historicalBytes": 1479,
+      "historicalSha256": "901fb4e91c13ac9cdeb80468145ca867008a532e162d9de1fceb684992e8353d",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ultimate14-motion-audit-20260912-v1/query.py",
+      "bytes": 2577,
+      "sha256": "362b4c429b6b17a4542d79b53f513c95db35f28fbb1fe10abf03d4e9375c8b31",
+      "historicalBytes": 2577,
+      "historicalSha256": "362b4c429b6b17a4542d79b53f513c95db35f28fbb1fe10abf03d4e9375c8b31",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/ultimate14-motion-audit-20260912-v1/requirements.txt",
+      "bytes": 20,
+      "sha256": "e118933e61515f50cd400512af6ded6993f7a978d751c9de6080dd992dbb2dbd",
+      "historicalBytes": 20,
+      "historicalSha256": "e118933e61515f50cd400512af6ded6993f7a978d751c9de6080dd992dbb2dbd",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/zero-lancer-validation-20260911-v1/README.md",
+      "bytes": 4568,
+      "sha256": "8b57720c1ba9aaab8b95fbfeeb34e95b5a5ed781fd1909b07dcbc2826c4297d1",
+      "historicalBytes": 4568,
+      "historicalSha256": "8b57720c1ba9aaab8b95fbfeeb34e95b5a5ed781fd1909b07dcbc2826c4297d1",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/zero-lancer-validation-20260911-v1/audit_skin.py",
+      "bytes": 14004,
+      "sha256": "3dc54055cc50263c54dfe953ca54408765c0ef412bf5f21b780a38dc6302b8a2",
+      "historicalBytes": 14004,
+      "historicalSha256": "3dc54055cc50263c54dfe953ca54408765c0ef412bf5f21b780a38dc6302b8a2",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/zero-lancer-validation-20260911-v1/backup_python_deps.py",
+      "bytes": 3153,
+      "sha256": "7f4e4eb55c368f16d1d79453db909e4ab8658d846565e6a3f7140e085ab0a29a",
+      "historicalBytes": 3153,
+      "historicalSha256": "7f4e4eb55c368f16d1d79453db909e4ab8658d846565e6a3f7140e085ab0a29a",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/zero-lancer-validation-20260911-v1/handoff.json",
+      "bytes": 2400,
+      "sha256": "c2ff2a228f699e09221d76b05922f5d13a4258f0d144269a37c5f545a7adabe6",
+      "historicalBytes": 2400,
+      "historicalSha256": "c2ff2a228f699e09221d76b05922f5d13a4258f0d144269a37c5f545a7adabe6",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/zero-lancer-validation-20260911-v1/preserve.py",
+      "bytes": 1577,
+      "sha256": "f1b8364b012f619f848e098c21289305395ecd83172c863ebdc629edd9d54d83",
+      "historicalBytes": 1577,
+      "historicalSha256": "f1b8364b012f619f848e098c21289305395ecd83172c863ebdc629edd9d54d83",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/zero-lancer-validation-20260911-v1/rebuild.py",
+      "bytes": 3059,
+      "sha256": "5209632e7593035732adcdaa2ff03474b028e89084d798391d6ac0bc604f5b90",
+      "historicalBytes": 3059,
+      "historicalSha256": "5209632e7593035732adcdaa2ff03474b028e89084d798391d6ac0bc604f5b90",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/zero-lancer-validation-20260911-v1/render.mjs",
+      "bytes": 3880,
+      "sha256": "cd9f9b01530954540596364bcf33ef9f8c13dd90a9227b6636b3d797bebb0c23",
+      "historicalBytes": 3880,
+      "historicalSha256": "cd9f9b01530954540596364bcf33ef9f8c13dd90a9227b6636b3d797bebb0c23",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/zero-lancer-validation-20260911-v1/render.py",
+      "bytes": 3427,
+      "sha256": "19868881637f84ed84249211398d3b7b70c7e402e62f367b8154f9717f5423e0",
+      "historicalBytes": 3427,
+      "historicalSha256": "19868881637f84ed84249211398d3b7b70c7e402e62f367b8154f9717f5423e0",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/zero-lancer-validation-20260911-v1/source-config.json",
+      "bytes": 1624,
+      "sha256": "ffae80eebb91cb11cf84cc2249a97f0aeb5421cc3c21aee2dc9a404785127917",
+      "historicalBytes": 1624,
+      "historicalSha256": "ffae80eebb91cb11cf84cc2249a97f0aeb5421cc3c21aee2dc9a404785127917",
+      "relationship": "historical-byte-exact"
+    },
+    {
+      "gitPath": "tools/hero-model-library/source-workflows/zero-lancer-validation-20260911-v1/validate.mts",
+      "bytes": 3762,
+      "sha256": "534f6352f3d5a537f8505caf68ba5be34fc5af62a2e918829e1b9ddf233d75a0",
+      "historicalBytes": 3728,
+      "historicalSha256": "99100d4c65b8c2e33bde504739850c1cf3653827c4eebb793946b288bca898ae",
+      "relationship": "historical-plus-reviewed-local-fix",
+      "reviewedDifference": "Preserve the local post-deletion fix that creates the evidence directory before writing validation output."
+    }
+  ],
+  "boundaries": [
+    "Generated central indexes, previews, runtime assets and Windows source inventories are outside this restoration batch.",
+    "Restoration preserves rebuild tooling; it does not claim source acquisition, conversion, runtime registration or deployment completed."
+  ]
+}

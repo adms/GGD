@@ -1,0 +1,24 @@
+{
+  "schema": "ggd-ssbu-mario-ultimate14-motion-material-normalization@1",
+  "source": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/converted-01/body.glb",
+    "bytes": 1148060,
+    "sha256": "9df1d4eba2fb3f15c4f1476037413c8671b3e9782d9b0172c5850144f7c728ef"
+  },
+  "tool": {
+    "path": "/private/tmp/ggd-pr1152-merge-audit/tools/w3x-import/repair_alpha_backdrops.py",
+    "sha256": "dcbc750871857277084c31ef9b6fbf6b581b5040b79aa48ee34970968be91a1a"
+  },
+  "changes": [
+    "mat2:EyeL transparent=81.61%",
+    "mat3:EyeR transparent=81.61%"
+  ],
+  "binaryChunkByteIdentical": true,
+  "nonMaterialJsonSemanticIdentical": true,
+  "animationJsonSemanticIdentical": true,
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-ultimate14-motion-v1/normalized-01/component.glb",
+    "bytes": 1148100,
+    "sha256": "bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526"
+  }
+}

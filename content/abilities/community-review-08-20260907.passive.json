@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "〔阿卡曼戰鬥直覺〕",
   "provenance": "editor-json",
-  "description": "成功避開攻擊後，下一次刀刃命中獲得有限增傷；有觸發間隔。",
+  "description": "【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 {{cd}} 秒。\n【目標設計】成功避開攻擊後，下一次刀刃命中獲得有限增傷；有觸發間隔。\n【待補機制】需有效閃避事件、內置冷卻與下一刀增傷。",
   "slot": "PASSIVE",
   "castType": "self",
   "maxRank": 1,
@@ -49,5 +49,6 @@
       "vfxKey": "fx.prim.physical.pulse-sm"
     }
   ],
-  "icon": "assets/icons/abilities/community-review-08-20260907.passive.webp"
+  "icon": "assets/icons/abilities/community-review-08-20260907.passive.webp",
+  "castTimeTier": "極小"
 }

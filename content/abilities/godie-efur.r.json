@@ -13,12 +13,13 @@
     120.0
   ],
   "manaCost": [
-    112.0,
-    112.0,
-    112.0
+    150.0,
+    150.0,
+    150.0
   ],
   "range": 0.0,
   "radiusTier": "極小",
+  "castTimeTier": "大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -77,5 +78,5 @@
   "recoverySec": 0.8,
   "cooldownTier": "極大",
   "manaCostTier": "小",
-  "castTimeSec": 0.833
+  "castTimeSec": 0.5
 }

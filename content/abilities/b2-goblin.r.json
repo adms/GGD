@@ -1,5 +1,5 @@
 {
-  "castTimeSec": 1.633,
+  "castTimeSec": 1,
   "castType": "targeted",
   "cooldown": [
     90.0,
@@ -8,7 +8,7 @@
   ],
   "cooldownTier": "大",
   "provenance": "editor-json",
-  "description": "「盲目亂闖請走緊急出口！」\n敵人被致盲時才追加推離 4 單位；一般情況只有小級打擊，施工流程可被對方淨化打斷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
+  "description": "「盲目亂闖請走緊急出口！」\n敵人被致盲時才追加推離{{push}}距離；一般情況只有小級打擊，施工流程可被對方淨化打斷。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：所有敵人都先填哥布林風險評估表。GGD 惡搞改編，非原作招式與數值聲明。",
   "effects": [
     {
       "amount": {
@@ -33,9 +33,9 @@
   ],
   "id": "b2-goblin.r",
   "manaCost": [
-    112.0,
-    112.0,
-    112.0
+    150.0,
+    150.0,
+    150.0
   ],
   "manaCostTier": "小",
   "maxRank": 3,
@@ -49,7 +49,7 @@
   "template": {
     "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
     "params": {
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "castType": "targeted",
       "effects": [
         {
@@ -86,5 +86,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-goblin.r.webp",
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "極大"
 }

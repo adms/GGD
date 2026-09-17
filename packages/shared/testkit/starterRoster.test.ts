@@ -35,7 +35,15 @@ describe("tracked first open roster", () => {
     const ids = readStarterRoster(ROOT);
     expect(ids.length, `${STARTER_GO_REL} must declare the pinned ${ROSTER_SIZE}`).toBe(ROSTER_SIZE);
     expect(new Set(ids).size).toBe(ROSTER_SIZE);
-    for (const id of ids) expect(id).toMatch(/^godie-[a-z0-9]+$/);
+    // ⭐⭐ 2026-09-11（GH#1211）：這裡本來是 `/^godie-[a-z0-9]+$/`。
+    // ⚠️ 那是**名單只有 w3x 匯入英雄**那個年代寫的 —— 今天名單上還有
+    // `community-review-*`（第一批社群 37）·`b2-*`（第二批 37）·`lol-*`（7）。
+    // ⇒ ⛔ 它紅不是因為名單壞了，是因為**前提消失**（世界長大了，而這一行沒跟上）。
+    //
+    // ⭐ 這一條要問的是「**id 形狀合法**」（⛔ 不是「它屬於哪一批」）：
+    //   小寫開頭 · 只有小寫字母/數字/連字號 · ⛔ 不含空白、底線、大寫、路徑分隔符。
+    // ⇒ 一個手滑貼進 `"Godie E00S"` 或 `"../x"` 仍然會紅。
+    for (const id of ids) expect(id, `${id} 不是合法的英雄 id 形狀`).toMatch(/^[a-z][a-z0-9-]*$/);
   });
 
   it("throws when the block is gone, rather than returning an empty roster", () => {

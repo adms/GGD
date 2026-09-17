@@ -1,0 +1,35 @@
+{
+  "id": "acquired-morgiana.q",
+  "schema": "vfx-script@1",
+  "abilityId": "acquired-morgiana.q",
+  "notes": "採用已出貨 GGD 特效與音效。施法提示不代表傷害或資源消耗成功；判定依技能資料。非原作特效與語音還原。",
+  "yields": [
+    "caster.castFx"
+  ],
+  "segments": [
+    {
+      "kind": "anim",
+      "on": "castStart",
+      "replaces": "caster.action",
+      "at": "caster",
+      "pulse": "cast"
+    },
+    {
+      "vfxId": "fx.prim.fire.pulse",
+      "at": "target",
+      "kind": "vfx",
+      "on": "castEffect",
+      "w3xScale": 0.7,
+      "tint": [
+        255,
+        140,
+        70
+      ]
+    },
+    {
+      "kind": "sound",
+      "on": "castEffect",
+      "soundKey": "hitMagic"
+    }
+  ]
+}

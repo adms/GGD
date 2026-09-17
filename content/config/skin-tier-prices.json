@@ -1,0 +1,43 @@
+{
+  "id": "skin-tier-prices",
+  "schema": "config.skin-tier-prices@1",
+  "crystalPerMcoin": 20,
+  "note": "GH#1177 —— owner 2026-09-15 15:13 逐字：「新模型加購參考 LOL 分級標價」。⭐ 造型文件只寫 priceTier（這張表的鍵），售價在載入時從 tiers.*.mcoin 解析（第〇·四守則）；GH#1177 之前出貨的 14 份造型的字面價 mcoinPrice ⛔ 不動。⭐ 預設 M幣＝LoL RP 1:1（主 session 挑的預設：示範造型 750 已與 LoL 一般級同尺度）；owner 在後台「造型分級售價」改價，平台下一次請求就生效。來源（LoL 可直接用 RP 購買的分級，⛔ 這一段是 LoL 的價目，GGD 售價只住 tiers.*.mcoin）：一般 390／520／750／975 · 史詩 1350 · 傳說 1820 · 終極 3250；Mythic／Prestige／Exalted／Transcendent 用 Mythic Essence 或抽獎取得，⛔ 不收。內容標準：一般＝貼圖／小幅模型調整；史詩＝新動作、音效、粒子；傳說＝全面重做含新語音與技能演出；終極＝多型態／會演化。https://happysmurf.com/lol-skins/ · https://blog.loltheory.gg/riot-points-prices/ ⭐ 藍水晶購買：owner 2026-09-15 逐字「造型也可以用 藍水晶來買 價格是 M幣*20倍 就好 (一樣後台設定)」⇒ crystalPerMcoin（藍水晶價＝M幣價 × 倍率；0＝不開放），後台「造型分級售價」可改、下一次請求生效。",
+  "tiers": {
+    "standard-1": {
+      "label": "一般",
+      "mcoin": 390,
+      "standard": "貼圖／小幅模型調整（LoL 一般級）"
+    },
+    "standard-2": {
+      "label": "一般",
+      "mcoin": 520,
+      "standard": "貼圖／小幅模型調整（LoL 一般級）"
+    },
+    "standard-3": {
+      "label": "一般",
+      "mcoin": 750,
+      "standard": "貼圖／小幅模型調整（LoL 一般級）"
+    },
+    "standard-4": {
+      "label": "一般",
+      "mcoin": 975,
+      "standard": "貼圖／小幅模型調整（LoL 一般級）"
+    },
+    "epic": {
+      "label": "史詩",
+      "mcoin": 1350,
+      "standard": "新動作、音效、粒子（LoL 史詩級）"
+    },
+    "legendary": {
+      "label": "傳說",
+      "mcoin": 1820,
+      "standard": "全面重做，含新語音與技能演出（LoL 傳說級）"
+    },
+    "ultimate": {
+      "label": "終極",
+      "mcoin": 3250,
+      "standard": "多型態／會演化（LoL 終極級）"
+    }
+  }
+}

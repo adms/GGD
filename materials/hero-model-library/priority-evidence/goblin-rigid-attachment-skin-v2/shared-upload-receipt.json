@@ -1,0 +1,283 @@
+{
+  "schema": "ggd-library-body-ready@1",
+  "preparation": {
+    "schema": "ggd-library-model-preparation@1",
+    "asset": "derivative:goblin-skinned-accessories-v2",
+    "source": {
+      "path": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130.glb",
+      "bytes": 2361292,
+      "sha256": "6a760ca676d9ec12442d8127e85f41b20bb6d09df2ebc5f2f3d2aa02b1b45130"
+    },
+    "output": {
+      "path": "/private/tmp/goblin-skinned-a.glb",
+      "bytes": 2371212,
+      "sha256": "7d9906f451e2e6a0b64797b0c1a52ebd4bfe97f974d23071f25c6d4bd29a773d"
+    },
+    "stateClips": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_attack_attcom_1",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "yawOffsetDeg": 0,
+    "limitations": [
+      "衍生外觀代理；完整複製尤吉歐並加入使用者核准的右手小劍、左手小盾。",
+      "劍盾已各自以 100% 權重綁定對應手骨；原始來源與舊衍生 GLB 保留。",
+      "部分狀態共用原生動作，非六段獨立的專屬角色動作。"
+    ],
+    "materialNormalization": {
+      "opaqueAlphaImages": [],
+      "rgbAndGeometryUnchanged": true
+    }
+  },
+  "selectedClips": {
+    "idle": "bat_idle",
+    "run": "single_run",
+    "attack": "single_attack_attcom_1",
+    "cast": "single_attack_attcom_1",
+    "hurt": "bat_idle",
+    "death": "dead"
+  },
+  "originalClipCount": 4,
+  "runtimeClips": [
+    {
+      "index": 0,
+      "name": "bat_idle",
+      "duration": 0.90625,
+      "channels": 70
+    },
+    {
+      "index": 1,
+      "name": "single_run",
+      "duration": 0.59375,
+      "channels": 70
+    },
+    {
+      "index": 2,
+      "name": "single_attack_attcom_1",
+      "duration": 0.71875,
+      "channels": 70
+    },
+    {
+      "index": 3,
+      "name": "dead",
+      "duration": 2.21875,
+      "channels": 70
+    }
+  ],
+  "model": {
+    "schema": "ggd-uploaded-hero-model@1",
+    "sha256": "8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7",
+    "byteSize": 1008048,
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_attack_attcom_1",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "yawOffsetDeg": 0
+  },
+  "document": {
+    "id": "community.body.520a9a60e3f841b4f7fb6dcd11dbbc6666168e75fdc23916",
+    "schema": "model@1",
+    "glbPath": "assets/models/community/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb",
+    "scale": 1,
+    "collisionRadius": 0.6,
+    "clipMap": {
+      "idle": "bat_idle",
+      "run": "single_run",
+      "attack": "single_attack_attcom_1",
+      "cast": "single_attack_attcom_1",
+      "hurt": "bat_idle",
+      "death": "dead"
+    },
+    "yawOffsetDeg": 0
+  },
+  "metrics": {
+    "triangles": 8515,
+    "drawPrimitives": 3,
+    "textures": [
+      {
+        "width": 256,
+        "height": 128,
+        "bytes": 70589,
+        "sha256": "34ce8f808a01c99ef6db2331a0b664bb6f99d7beb7c02daf33fd3d9654b944ae"
+      },
+      {
+        "width": 256,
+        "height": 128,
+        "bytes": 70589,
+        "sha256": "34ce8f808a01c99ef6db2331a0b664bb6f99d7beb7c02daf33fd3d9654b944ae"
+      },
+      {
+        "width": 256,
+        "height": 128,
+        "bytes": 70589,
+        "sha256": "34ce8f808a01c99ef6db2331a0b664bb6f99d7beb7c02daf33fd3d9654b944ae"
+      },
+      {
+        "width": 256,
+        "height": 128,
+        "bytes": 70589,
+        "sha256": "34ce8f808a01c99ef6db2331a0b664bb6f99d7beb7c02daf33fd3d9654b944ae"
+      }
+    ]
+  },
+  "warnings": [],
+  "validator": {
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 3,
+      "numHints": 6,
+      "messages": [
+        {
+          "code": "BUFFER_VIEW_TARGET_MISSING",
+          "message": "bufferView.target should be set for vertex or index data.",
+          "severity": 3,
+          "pointer": "/meshes/0/primitives/0/attributes/POSITION"
+        },
+        {
+          "code": "BUFFER_VIEW_TARGET_MISSING",
+          "message": "bufferView.target should be set for vertex or index data.",
+          "severity": 3,
+          "pointer": "/meshes/0/primitives/0/attributes/NORMAL"
+        },
+        {
+          "code": "BUFFER_VIEW_TARGET_MISSING",
+          "message": "bufferView.target should be set for vertex or index data.",
+          "severity": 3,
+          "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_0"
+        },
+        {
+          "code": "BUFFER_VIEW_TARGET_MISSING",
+          "message": "bufferView.target should be set for vertex or index data.",
+          "severity": 3,
+          "pointer": "/meshes/0/primitives/0/attributes/JOINTS_0"
+        },
+        {
+          "code": "BUFFER_VIEW_TARGET_MISSING",
+          "message": "bufferView.target should be set for vertex or index data.",
+          "severity": 3,
+          "pointer": "/meshes/0/primitives/0/attributes/WEIGHTS_0"
+        },
+        {
+          "code": "BUFFER_VIEW_TARGET_MISSING",
+          "message": "bufferView.target should be set for vertex or index data.",
+          "severity": 3,
+          "pointer": "/meshes/0/primitives/0/indices"
+        },
+        {
+          "code": "NODE_EMPTY",
+          "message": "Empty node encountered.",
+          "severity": 2,
+          "pointer": "/nodes/64"
+        },
+        {
+          "code": "NODE_EMPTY",
+          "message": "Empty node encountered.",
+          "severity": 2,
+          "pointer": "/nodes/65"
+        },
+        {
+          "code": "NODE_EMPTY",
+          "message": "Empty node encountered.",
+          "severity": 2,
+          "pointer": "/nodes/66"
+        }
+      ],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "GGD native JUMPX body conversion",
+      "extensionsUsed": [
+        "KHR_materials_unlit"
+      ],
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 915348
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 128,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/1",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 128,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/2",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 128,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        },
+        {
+          "pointer": "/images/3",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 256,
+            "height": 128,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 4,
+      "materialCount": 6,
+      "hasMorphTargets": false,
+      "hasSkins": true,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 3,
+      "totalVertexCount": 7485,
+      "totalTriangleCount": 8515,
+      "maxUVs": 1,
+      "maxInfluences": 4,
+      "maxAttributes": 5
+    }
+  },
+  "evidence": {
+    "pruningPreservesBody": true,
+    "sharedUploadVerification": true,
+    "visualAcceptance": "pending",
+    "heroMechanicsAcceptance": "pending"
+  }
+}

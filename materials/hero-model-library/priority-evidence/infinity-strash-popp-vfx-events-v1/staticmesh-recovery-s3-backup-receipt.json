@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/d6ff7156fea1d831abcf85e58ec367bc6d7c98a599e838dd2da1c95bb79d4141.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1/d6ff7156fea1d831abcf85e58ec367bc6d7c98a599e838dd2da1c95bb79d4141.files.json",
+  "archiveSha256": "d6ff7156fea1d831abcf85e58ec367bc6d7c98a599e838dd2da1c95bb79d4141",
+  "archiveBytes": 3402512,
+  "fileCount": 199,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/infinity-strash-popp-vfx-staticmesh-recovery-v1",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-vfx-staticmesh-recovery-v1/backup-run-ddc25b0e/ddc25b0ea227335cd637da9ce28b4a38545c5074efdf5fbf70722d331a977cad/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-vfx-staticmesh-recovery-v1/backup-run-ddc25b0e/ddc25b0ea227335cd637da9ce28b4a38545c5074efdf5fbf70722d331a977cad/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-popp-vfx-staticmesh-recovery-v1/backup-run-ddc25b0e/ddc25b0ea227335cd637da9ce28b4a38545c5074efdf5fbf70722d331a977cad/manifest.json"
+}

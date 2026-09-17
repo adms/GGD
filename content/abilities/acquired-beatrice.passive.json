@@ -1,0 +1,66 @@
+{
+  "id": "acquired-beatrice.passive",
+  "name": "借書要留押金",
+  "provenance": "editor-json",
+  "description": "施放 W 後取得一枚 6 秒書籤，供 R 消耗。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0
+  ],
+  "manaCost": [
+    0
+  ],
+  "range": 0.0,
+  "effects": [],
+  "passive": {
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onAbilityCast",
+            "abilitySlot": "W",
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "sourceScope": "caster",
+                "statusId": "acquired-beatrice.bookmark",
+                "duration": 6,
+                "applyTo": "self"
+              }
+            ],
+            "target": "self"
+          }
+        ]
+      }
+    ]
+  },
+  "castTimeTier": "極小",
+  "template": {
+    "ref": "hero-template.c33b22d340850d588b70a71ed4377ba7739117b86ce44d77",
+    "params": {
+      "hooks": [
+        {
+          "on": "onAbilityCast",
+          "abilitySlot": "W",
+          "target": "self",
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "acquired-beatrice.bookmark",
+              "duration": 6,
+              "sourceScope": "caster",
+              "applyTo": "self"
+            }
+          ]
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/acquired-beatrice.passive.webp"
+}

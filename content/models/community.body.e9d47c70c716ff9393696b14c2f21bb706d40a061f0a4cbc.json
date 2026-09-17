@@ -1,0 +1,16 @@
+{
+  "id": "community.body.e9d47c70c716ff9393696b14c2f21bb706d40a061f0a4cbc",
+  "schema": "model@1",
+  "glbPath": "assets/models/community/9d4325547f9201a56e0bfeca89acdc7c512cf6a46c9f797edaab0569c6f2f0c7.glb",
+  "scale": 1,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "one_hand_1",
+    "run": "katana_1",
+    "attack": "two_hand_1",
+    "cast": "tsubame_gaeshi",
+    "hurt": "two_hand_7",
+    "death": "two_hand_7"
+  },
+  "yawOffsetDeg": 0
+}

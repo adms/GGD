@@ -1,16 +1,16 @@
 {
   "id": "community-review-28-20260907",
   "name": "艾莉絲·伯雷亞斯·格雷拉特",
-  "description": "艾莉絲·伯雷亞斯·格雷拉特 社群英雄功能驗收稿。作品：《無職轉生》  \n採用：接受劍之聖地訓練後的劍士版本。  \n定位：先手、重斬、近身追擊。\n\n視覺方向：紅髮色輪廓、白銀重斬、光之太刀單道細亮線；避免螢幕全白。\n以 GGD 鬥士 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "description": "作品：《無職轉生》  \n採用：接受劍之聖地訓練後的劍士版本。  \n定位：先手、重斬、近身追擊。\n\n視覺方向：紅髮色輪廓、白銀重斬、光之太刀單道細亮線；避免螢幕全白。",
   "role": "fighter",
   "attackType": "melee",
   "archetype": "fighter",
   "origin": "鬥士",
-  "modelKey": "community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47",
+  "modelKey": "version.body.c5f7c4c80e1920406ade7e578458ffd8d9721f3313de4ab8",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 35.000204081632646,
+    "maxHealth": 80,
     "healthRegen": 0.08789387755102042,
-    "maxMana": 26.357142857142858,
+    "maxMana": 50,
     "manaRegen": 0,
     "ad": 4.289142857142858,
     "as": 0,
@@ -62,10 +62,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -101,7 +101,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-28-20260907.q.webp",
       "template": {
@@ -120,7 +120,7 @@
           "pushSpeed": 872,
           "pushFrom": "facing",
           "pushLaunchHeight": 0,
-          "castTimeSec": 1.033
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -173,7 +173,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-28-20260907.w.webp",
       "template": {
@@ -181,7 +181,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -208,10 +208,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -247,7 +247,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-28-20260907.e.webp",
       "template": {
@@ -266,7 +266,7 @@
           "pushSpeed": 872,
           "pushFrom": "facing",
           "pushLaunchHeight": 0,
-          "castTimeSec": 1.033
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -292,9 +292,9 @@
         90.0
       ],
       "manaCost": [
-        448.0,
-        448.0,
-        448.0
+        600.0,
+        600.0,
+        600.0
       ],
       "manaCostTier": "大",
       "range": 4.5,
@@ -330,7 +330,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.433,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-28-20260907.r.webp",
       "template": {
@@ -349,7 +349,7 @@
           "pushSpeed": 872,
           "pushFrom": "facing",
           "pushLaunchHeight": 0,
-          "castTimeSec": 1.433
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },
@@ -375,5 +375,61 @@
   "tags": [
     "sword"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.5c1abdfe173459da8dcd36330d1d4126404326c032937b66",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47",
+      "modelSha256": "8c1cacfce72f5e835dc0300f221415354f18af6f65042a3f841db0188f54e1f4",
+      "binarySha256": "d5ba2c96f3650050786c871d5aea087c743039ea6a38846c44a6534495eefe83",
+      "registeredAt": "2026-09-12T23:02:33.986Z",
+      "source": {
+        "kind": "previous",
+        "character": "艾莉絲·伯雷亞斯·格雷拉特",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.0ea1f09bce7c4380aed09c7eb57d45bd11d89894c827328c",
+      "label": "艾莉丝",
+      "sourceModelKey": "community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47",
+      "modelSha256": "c444ef78cd5d1ab5c016fc90a1d2b02a27810152f8463d4def91c43a89c64c12",
+      "binarySha256": "2c8e4b37a672a7419f74c1ed8576f2f2d183883c6553e57055df66601a8c89c9",
+      "registeredAt": "2026-09-12T23:02:33.991Z",
+      "source": {
+        "kind": "exact",
+        "character": "艾莉丝",
+        "work": "無職轉生～到了異世界就拿出真本事～",
+        "library": "300heroes",
+        "reference": "300heroes:cad6fc62e2fc00eae0234f38",
+        "tier": "300heroes"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.c5f7c4c80e1920406ade7e578458ffd8d9721f3313de4ab8",
+      "label": "艾莉丝",
+      "sourceModelKey": "community.body.44221ab16b078a550562a74cda12fd753fbd236c5c8b1c47",
+      "modelSha256": "c587bbbf1f7a8ac0d428ca24661202b9e3bedb86441d5f0b5e1d02a1b414d160",
+      "binarySha256": "2c8e4b37a672a7419f74c1ed8576f2f2d183883c6553e57055df66601a8c89c9",
+      "registeredAt": "2026-09-13T00:08:49.858Z",
+      "source": {
+        "kind": "exact",
+        "character": "艾莉丝",
+        "work": "無職轉生～到了異世界就拿出真本事～",
+        "library": "300heroes",
+        "reference": "300heroes:cad6fc62e2fc00eae0234f38",
+        "tier": "300heroes",
+        "selectionClass": "300heroes",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

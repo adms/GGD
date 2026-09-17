@@ -33,9 +33,9 @@
  *   `{{mp}}`      耗魔          ← `manaCost[]`（同上）
  *   `{{dmg}}`     基礎傷害      ← 效果樹上**第 1 個**傷害葉（`{{dmg2}}` = 第 2 個…）
  *   `{{range}}`   施法距離      ← `range` → **級距詞**
- *   `{{radius}}`  有效半徑      ← 效果樹 `radius` → **級距詞**
- *   `{{travel}}`  位移距離      ← dash/leap/blink 的距離 → **級距詞**
- *   `{{push}}`    擊退距離      ← knockback 的距離 → **級距詞**
+ *   `{{radius}}`  有效半徑      ← 效果樹 `radius`（leap 是 `landRadius`）→ **級距詞**
+ *   `{{travel}}`  位移距離      ← dash / blink / 自己飛的 leap 的距離 → **級距詞**
+ *   `{{push}}`    擊退距離      ← knockback 的距離；被拋的目標（leap `applyTo:"target"`）→ **級距詞**
  *   `{{msb}}`     移速加成%     ← 效果樹上第 1 個 `ms` 的 % modifier（GH#789
  *                                `msBonusTier` 解析後；逐階以 / 分隔；⛔ 不含 % 記號，
  *                                卡面自己寫「提昇{{msb}}%速度」）
@@ -78,8 +78,8 @@
 import { DUEL_ZONE_RADIUS_REF, SKILL_TIER_NAMES, snapToTier, type SkillTierName } from "./skillTiers";
 import { DEFAULT_DAMAGE_TIERS } from "./damageTiers";
 import { DEFAULT_RANGE_TIERS } from "./rangeTiers";
-import { DEFAULT_AOE_TIERS } from "./aoeTiers";
-import { DEFAULT_DISPLACEMENT_TIERS } from "./displacementTiers";
+import { DEFAULT_AOE_TIERS, radiusFieldOf } from "./aoeTiers";
+import { DEFAULT_DISPLACEMENT_TIERS, displacementFieldsOf } from "./displacementTiers";
 import { DEFAULT_MOVE_SPEED_TIERS, MS_BONUS_TIER_FIELD, isMsBonusNode } from "./moveSpeedTiers";
 import {
   DEFAULT_CAST_TIME_RULES,
@@ -114,9 +114,9 @@ export const PROSE_SLOT_DOC: Readonly<Record<ProseSlotKey, { zh: string; from: s
     mp: { zh: "耗魔", from: "ability@1.manaCost[]", renders: "數字（逐階以 / 分隔）" },
     dmg: { zh: "基礎傷害", from: "效果樹上的傷害葉（flat + perRank）", renders: "數字（逐階以 / 分隔）" },
     range: { zh: "施法距離", from: "ability@1.range / rangeTier", renders: "五級距詞（極小…極大／全場）" },
-    radius: { zh: "有效半徑", from: "效果樹 radius / radiusTier", renders: "五級距詞（極小…極大／全場）" },
-    travel: { zh: "位移距離", from: "dash / leap / blink 的距離", renders: "五級距詞（極小…極大／全場）" },
-    push: { zh: "擊退距離", from: "knockback 的距離", renders: "五級距詞（極小…極大／全場）" },
+    radius: { zh: "有效半徑", from: "效果樹 radius（leap 是 landRadius）/ radiusTier", renders: "五級距詞（極小…極大／全場）" },
+    travel: { zh: "位移距離", from: "dash / blink / 自己飛的 leap 的距離", renders: "五級距詞（極小…極大／全場）" },
+    push: { zh: "擊退距離", from: "knockback 的距離；被拋的目標（leap applyTo:target 的 throwDistance）", renders: "五級距詞（極小…極大／全場）" },
     msb: {
       zh: "移速加成%",
       from: "效果樹上第 1 個 `stat:ms` 的 % modifier（msBonusTier → config.move-speed-tiers@1）",
@@ -259,6 +259,15 @@ export const GEO_PATTERNS: readonly GeoPattern[] = [
     re: new RegExp(String.raw`施法距離\s*[:：]?\s*${N}(?:\s*/\s*${N})*`, "g"),
     rewrite: (_m, t, solo) => (solo ? `施法距離：${t}` : `施法距離${t}`),
   },
+  // ⭐ GH#1260 B3 修正輪 —— 匯入器（社群 recipe／第二批編譯稿）的換算寫法：
+  //   落地半徑 2 GGD 單位 / 落地半徑約 1.8 單位 ⇒ 「落地{{radius}}範圍」。
+  //   ⚠️ 必須排在下一條裸 `半徑N` 之前（否則被切成「半徑{{radius}} GGD 單位」）。
+  //   ⛔ 在此之前這種寫法**閘看不見**：B3 吸格之後 b2-ned.q 卡面「約 1.8 單位」vs 場上 3，沒有任何東西紅。
+  {
+    axis: "radius",
+    re: new RegExp(String.raw`半徑\s*約?\s*${N}\s*(?:GGD\s*)?單位`, "g"),
+    rewrite: (_m, t) => `${t}範圍`,
+  },
   // 有效半徑6.05 / 半徑 24
   {
     axis: "radius",
@@ -289,6 +298,20 @@ export const GEO_PATTERNS: readonly GeoPattern[] = [
     axis: "push",
     re: new RegExp(String.raw`擊退\s*${N}\s*(?:距離)?`, "g"),
     rewrite: (_m, t) => `擊退${t}距離`,
+  },
+  // ⭐ GH#1260 B3 修正輪 —— 匯入器的換算寫法（⛔ 在此之前閘看不見，重跑匯入器會把字面值無聲帶回來）：
+  //   推離 4 單位 / 推離自己 4 單位 ⇒ 「推離{{push}}距離」
+  {
+    axis: "push",
+    re: new RegExp(String.raw`推離(自己)?\s*${N}\s*(?:單位|距離)`, "g"),
+    rewrite: (m, t) => `推離${m[1] ?? ""}${t}距離`,
+  },
+  //   投擲 120 wc3u / 拋出 100 WC3 距離 ⇒ 「投擲{{push}}距離」—— 被拋的是**目標**，
+  //   走 push 梯（`displacementFieldsOf` 的 targetLadder，與 geometrySnap 同一張表）。
+  {
+    axis: "push",
+    re: new RegExp(String.raw`(投擲|拋出)\s*${N}\s*(?:wc3u|WC3u|WC3\s*距離)`, "g"),
+    rewrite: (m, t) => `${m[1]}${t}距離`,
   },
   // 加速移動1.5倍 ⛔ 排除；裸的 移動850
   {
@@ -345,7 +368,27 @@ export const NUM_PATTERNS: readonly NumPattern[] = [
   // 45秒冷卻 / 60/50/40/30秒冷卻時間
   { slot: "cd", re: new RegExp(`(${RANKS})(\\s*秒\\s*冷卻(?:時間)?)`, "g"), num: 1 },
   // 冷卻時間30秒 / 冷卻 30/25/20/15 秒
-  { slot: "cd", re: new RegExp(`(冷卻(?:時間)?\\s*[:：]?\\s*)(${RANKS})(\\s*秒)`, "g"), num: 2 },
+  // ⭐⭐ **「縮短 Q 的冷卻 2 秒」裡的 2 ⛔ 不是這支技能的冷卻** —— 它是 `modifyCooldown`
+  //    的**減量**（住 `effects[0].amount`）。
+  //
+  // ⚠️ 量到的（2026-09-11）：`b2-albus.w`「縮短自己 Q 剩餘冷卻 **1.5** 秒」與
+  //    `b2-orphen.w`「縮短 Q 尚未結束的冷卻 **2** 秒」都被讀成了冷卻軸
+  //    ⇒ 判成「卡面對不上 JSON（45）」⇒ ⭐ 而卡面**是對的**，讀錯軸的是這一條正則。
+  //
+  // ⛔ 這種誤報不是無害的：它會把一句**真的**宣稱推進「卡面與 JSON 不一致」的
+  //    棘輪基準線，而那條基準線的語意是「⛔ 不要綁佔位符」⇒ 正確的卡面被永久標成說謊。
+  //
+  // ⇒ ⭐ 把前面那個動詞**一起吃進比對**，交給 `reject` 擋掉（⛔ 不是事後看上下文 ——
+  //    `reject` 只看得到 `groups[0]`，所以動詞必須在比對範圍內）。
+  {
+    slot: "cd",
+    re: new RegExp(
+      `((?:縮短|減少|降低|返還|扣除|回復)?[^。，、\\n]{0,12}?冷卻(?:時間)?\\s*[:：]?\\s*)(${RANKS})(\\s*秒)`,
+      "g",
+    ),
+    num: 2,
+    reject: /縮短|減少|降低|返還|扣除|回復/,
+  },
   // 消耗MP150/250/350/450 / 耗[MP] 50
   {
     slot: "mp",
@@ -639,6 +682,30 @@ function damageRanks(v: unknown, tables?: ProseTables): number[] | undefined {
  * `{{msb}}` 裸印、閘紅）。
  * ⛔ 跳過 `template` 子樹：作者填的來源，展開後的 effects 才是出貨行為。
  */
+/**
+ * ⭐ 天生技的**內部冷卻**，逐階。
+ *
+ * ⚠️ 它住在 `passive.ranks[i].hooks[j].internalCooldown` ——
+ * ⛔ 不在 `cooldown[]`（那一格對天生技是 0）。
+ * ⚠️ ⛔ 刻意**不走** `template.params`：那是**同一個值的第二個住處**
+ * （第〇·四守則），而出貨讀的是展開後的 `passive.ranks`。
+ */
+function internalCooldownRanks(d: Record<string, unknown>): number[] {
+  const passive = d["passive"] as { ranks?: unknown[] } | undefined;
+  const ranks = Array.isArray(passive?.ranks) ? passive.ranks : [];
+  const out: number[] = [];
+  for (const r of ranks) {
+    const hooks = (r as { hooks?: unknown[] } | undefined)?.hooks;
+    if (!Array.isArray(hooks)) continue;
+    for (const h of hooks) {
+      const v = (h as { internalCooldown?: unknown }).internalCooldown;
+      if (typeof v === "number" && v > 0) { out.push(v); break; }
+    }
+  }
+  // ⭐ 逐階都有才算得出一條曲線；⛔ 只有部分階有 ⇒ 回空（⛔ 不要猜）。
+  return out.length === ranks.length ? out : [];
+}
+
 function msBonusRanks(
   d: Record<string, unknown>,
   table: Readonly<Record<SkillTierName, number>>,
@@ -750,12 +817,17 @@ export function abilityQuantities(
   let travel: number | undefined;
   let push: number | undefined;
   for (const node of walk([d["effects"], d["passive"], d["marks"], d["toggle"]])) {
-    if (radius === undefined) radius = pos(node["radius"]);
     const kind = String(node["kind"] ?? "");
-    if (travel === undefined && ["dash", "leap", "blink"].includes(kind)) {
+    // ⭐ GH#1260 B3 修正輪：「哪一格是命中半徑」「哪一格走哪一條位移梯」與 `geometrySnap.ts`
+    //   讀**同一張表**（`radiusFieldOf` / `displacementFieldsOf`）⇒ 卡面的級距詞與場上吸格的值
+    //   從同一個欄位推導。⛔ 在此之前 `leap.landRadius` 抽不到、被拋目標的 `throwDistance`
+    //   被當成 travel（卡面 15.r 會印「小」而場上是 push 梯的「極大」）。
+    if (radius === undefined) radius = pos(node[radiusFieldOf(kind)]);
+    const disp = displacementFieldsOf(node);
+    if (travel === undefined && ["dash", "leap", "blink"].includes(kind) && disp?.ladder !== "push") {
       travel = pos(node["maxDistance"]) ?? pos(node["distance"]) ?? pos(node["throwDistance"]);
     }
-    if (push === undefined && kind === "knockback") push = pos(node["distance"]);
+    if (push === undefined && disp?.ladder === "push") push = pos(node[disp.distanceField]);
   }
   for (const rs of [
     ...damageLeaves([d["effects"], d["marks"], d["toggle"]], t),
@@ -795,7 +867,27 @@ export function abilityQuantities(
   ] as const) {
     if (v !== undefined) raw[k] = v;
   }
-  const cdRanks = Array.isArray(d["cooldown"]) ? (d["cooldown"] as number[]) : [];
+  /**
+   * ⭐⭐ **天生技的「冷卻」住在 `internalCooldown`，⛔ 不在 `cooldown[]`。**
+   *
+   * ⚠️ 量到的（2026-09-11）：`b2-boxxo.passive` 卡面逐字「冷卻 4 秒」，
+   * 而 `cooldown` 是 **[0]**、`internalCooldown` 是 **4**
+   * ⇒ 在此之前這一行只讀 `cooldown[]` ⇒ 判成「卡面對不上 JSON」
+   * ⇒ ⭐ 而那是**誤報**：卡面是對的，⛔ 讀錯軸的是抽取器。
+   *
+   * ⛔ 這個誤報不是無害的 —— 它會把一句**真的**宣稱推進
+   * 「卡面與 JSON 不一致」的棘輪基準線，⭐ 而那條基準線的語意是
+   * 「⛔ 不要綁佔位符，綁了等於無聲改掉玩家看到的字」
+   * ⇒ 一個讀錯軸的抽取器，會讓**正確的卡面**被永久標記成說謊。
+   *
+   * ⭐ 主動技的 `cooldown[]` 仍然優先；只有它是空的／全 0 時才退到 ICD
+   *   （⛔ 不是無條件覆蓋 —— 一支同時有兩者的技能，卡面講的是主動那一個）。
+   */
+  const cdActive = Array.isArray(d["cooldown"]) ? (d["cooldown"] as number[]) : [];
+  const cdRanks =
+    cdActive.some((n) => n > 0) || internalCooldownRanks(d).length === 0
+      ? cdActive
+      : internalCooldownRanks(d);
   const mpRanks = Array.isArray(d["manaCost"]) ? (d["manaCost"] as number[]) : [];
   // GH#789 —— 移速加成 %。小數 → 百分比數字（0.5 → 50）。
   const msbRanks = msBonusRanks(d, t.msBonus).map((v) => v * 100);

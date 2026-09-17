@@ -1,0 +1,75 @@
+{
+  "schema": "ggd-ssbu-static-component-normalization@1",
+  "candidateId": "ssbu-pickel-steve-c00-static-skinned-v1",
+  "sourceId": "gitlab-ssbu-models",
+  "input": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/gitlab-ssbu-models/source-repository/fighter/pickel/model/body/c00/pickel-steve-c00.blend",
+    "bytes": 4211812,
+    "sha256": "2283de12a170e2e47f901001a9fb7276d4808a2ddced4e8c1384a34c5f0dd739"
+  },
+  "sourceActionCount": 0,
+  "blenderExport": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-pickel-steve-c00-blender4513-v1/blender-export.glb",
+    "bytes": 51600,
+    "sha256": "d5f47801948e67318304e2df6bcc13dfc864ef25177362431d6093d888a514ef",
+    "conversionReceipt": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-pickel-steve-c00-blender4513-v1/conversion.json",
+      "bytes": 4417,
+      "sha256": "1a71515fce776e46a0ee5faf2c37c5f9eaf19ed4577e55b280eb3ea4d05e1cc4"
+    },
+    "drawPrimitives": 3,
+    "triangles": 828,
+    "skins": 1
+  },
+  "structuralCoalescing": {
+    "meshNodesBefore": 3,
+    "meshNodesAfter": 1,
+    "primitivesBefore": 3,
+    "primitivesAfter": 3,
+    "sharedSkinIndex": 0,
+    "sourceTransformsRequired": "identity",
+    "geometryBinaryReencoded": false
+  },
+  "officialNormalization": {
+    "drawCalls": {
+      "before": 3,
+      "after": 3
+    },
+    "droppedZeroClips": [],
+    "clipIndexMap": [],
+    "resizedTextures": [],
+    "texturesOverCap": [],
+    "changed": false
+  },
+  "output": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-pickel-steve-c00-blender4513-v1/body.glb",
+    "bytes": 51664,
+    "sha256": "087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75",
+    "drawPrimitives": 3,
+    "triangles": 828,
+    "skins": 1,
+    "skinnedPrimitives": 3,
+    "textures": [
+      {
+        "width": 64,
+        "height": 64,
+        "bytes": 2048,
+        "sha256": "2638a04abff9841f416a1152dbf5411cbb1c405a121c1d8d6f4fd5def6bce5f6"
+      }
+    ],
+    "clips": [],
+    "budget": {
+      "errors": [],
+      "warnings": []
+    }
+  },
+  "sourceBytesUnchanged": true,
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false,
+  "limitations": [
+    "This applies GGD normalization to an independent static skinned component; it does not create a complete hero model.",
+    "The source and output contain zero animation clips, so six-state gameplay readiness is not established.",
+    "Hero binding, backend dropdown registration, runtime switching and deployment were not performed."
+  ]
+}

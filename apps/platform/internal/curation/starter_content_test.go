@@ -725,6 +725,17 @@ var firstOpenRoster = []string{
 	// ⭐ GH#1158 / GH#1165 —— 七名 LOL 英雄（owner 2026-09-09：「其實還有**七個LOL英雄**也要跟著上架喔」）。
 	"lol-karthus", "lol-leesin", "lol-lux", "lol-missfortune",
 	"lol-warwick", "lol-xerath", "lol-yasuo",
+	// ⭐⭐ GH#1185 / GH#1205 —— 第四批 37 名（owner 2026-09-16：「全部英雄上架是預設的 不需要我審查通過」）。
+	"acquired-alice", "acquired-astralym", "acquired-asuna", "acquired-beatrice",
+	"acquired-cattiva", "acquired-dio", "acquired-emilia", "acquired-inuyasha",
+	"acquired-jetragon", "acquired-kita-kita", "acquired-kuroyukihime", "acquired-leafa",
+	"acquired-lord-nightmares", "acquired-mario", "acquired-mewtwo", "acquired-minecraft",
+	"acquired-morgiana", "acquired-naruto", "acquired-pokemon-trainer", "acquired-ram",
+	"acquired-rim", "acquired-ryu", "acquired-saya", "acquired-wargreymon",
+	"acquired-xiaodangjia", "acquired-zero", "lol-ahri", "lol-ashe",
+	"lol-blitzcrank", "lol-chogath", "lol-fiddlesticks", "lol-garen",
+	"lol-malphite", "lol-ornn", "lol-sett", "lol-thresh",
+	"lol-velkoz",
 }
 
 // whitelist-first-open-roster: the enabled champion set the starter bundle
@@ -738,7 +749,7 @@ func TestFirstOpenRoster(t *testing.T) {
 	//    ＋ 7 名 LOL 英雄（owner 2026-09-09：「其實還有**七個LOL英雄**也要跟著上架喔」）。
 	// ⚠️ 這個字面值是**刻意**的:它擋的是「有人不小心動了名單」——
 	//   ⇒ 真的要改名單就把它一起改,⛔ 而不是讓它自己跟著 len() 走(那等於沒有閘)。
-	require.Len(t, firstOpenRoster, 130, "the first open roster is 130 champions")
+	require.Len(t, firstOpenRoster, 167, "the first open roster is 167 champions")
 	seen := map[string]struct{}{}
 	for _, id := range firstOpenRoster {
 		_, dup := seen[id]
@@ -749,7 +760,7 @@ func TestFirstOpenRoster(t *testing.T) {
 	want := append([]string(nil), firstOpenRoster...)
 	sort.Strings(want)
 	assert.Equal(t, want, curation.StarterSet().Champions,
-		"the starter bundle's enabled champion set must be EXACTLY the 130 canonical first-open-roster ids")
+		"the starter bundle's enabled champion set must be EXACTLY the 167 canonical first-open-roster ids")
 }
 
 // storeDoc is the FLAT-PRICE half of content/config/store.json — the same two
@@ -778,7 +789,10 @@ const (
 	//   那才是這條斷言真正在守的東西（「免費的比例不可以偷偷變」）。
 	// ⭐ 2026-09-10 GH#1165：第二批 37 名；GH#1158 再 +7（LOL 七名）
 	//   —— ⭐ **免費那 12 位一位都沒動**，那才是這條斷言真正在守的東西。
-	starterPricedChampions = 118
+	// ⭐ 2026-09-16 GH#1185／GH#1205：第四批 37 名（LoL 第二批 11 ＋ 已取得素材 26）
+	//   —— ⭐ **免費那 12 位一位都沒動**（owner 2026-09-16：「全部英雄上架是預設的 不需要我審查通過」
+	//   說的是上架，⛔ 不是改價；新上架照統一價 championUnlockCost）。
+	starterPricedChampions = 155
 )
 
 // clientWalletMetaPath is the champ-select module that carries the client's

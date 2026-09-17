@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-chrom-ultimate14-motion-v1/9ad2c3507da451d8a5390b4f5eed88c554e4588261f6e5978a73a3c4e362e583.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-chrom-ultimate14-motion-v1/9ad2c3507da451d8a5390b4f5eed88c554e4588261f6e5978a73a3c4e362e583.files.json",
+  "archiveSha256": "9ad2c3507da451d8a5390b4f5eed88c554e4588261f6e5978a73a3c4e362e583",
+  "archiveBytes": 40185414,
+  "fileCount": 113,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-chrom-ultimate14-motion-v1",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-chrom-ultimate14-motion-v1/e861579101b8eb4902266795d80843e1d3573a75f811eb845d3399b4db9feed6/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-chrom-ultimate14-motion-v1/e861579101b8eb4902266795d80843e1d3573a75f811eb845d3399b4db9feed6/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-chrom-ultimate14-motion-v1/e861579101b8eb4902266795d80843e1d3573a75f811eb845d3399b4db9feed6/manifest.json"
+}

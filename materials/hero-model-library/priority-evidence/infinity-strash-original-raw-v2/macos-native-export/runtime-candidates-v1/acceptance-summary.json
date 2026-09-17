@@ -1,0 +1,398 @@
+{
+  "schema": "ggd.infinity-strash-runtime-acceptance@1",
+  "createdAt": "2026-09-13T11:31:00Z",
+  "blender": "5.2.1 LTS",
+  "candidates": [
+    {
+      "candidateId": "dai-pn010-02",
+      "runtime": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/dai-pn010-02/body.glb",
+        "bytes": 2000480,
+        "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+        "document": {
+          "id": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
+          "schema": "model@1",
+          "glbPath": "assets/models/community/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+          "scale": 1,
+          "collisionRadius": 0.6,
+          "clipMap": {
+            "idle": "GGD_native_idle",
+            "run": "GGD_native_run",
+            "attack": "GGD_native_attack",
+            "cast": "GGD_native_special02",
+            "hurt": "GGD_native_down",
+            "death": "GGD_native_down"
+          },
+          "yawOffsetDeg": 0
+        },
+        "uploadedModel": {
+          "schema": "ggd-uploaded-hero-model@1",
+          "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+          "byteSize": 2000480,
+          "clipMap": {
+            "idle": "GGD_native_idle",
+            "run": "GGD_native_run",
+            "attack": "GGD_native_attack",
+            "cast": "GGD_native_special02",
+            "hurt": "GGD_native_down",
+            "death": "GGD_native_down"
+          },
+          "yawOffsetDeg": 0
+        }
+      },
+      "evidence": {
+        "assembly-receipt.json": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/dai-pn010-02/assembly-receipt.json",
+          "sha256": "d3f3fc210c9fe111ed313ea7641ecc6486dce37c030ef1952a843869fadba498",
+          "bytes": 15050
+        },
+        "normalization-receipt.json": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/dai-pn010-02/normalization-receipt.json",
+          "sha256": "ebd871ac5e5adb6fe8a85e14f8b1c6af2f9c42a674d7bdfc7ceb31d75146b36d",
+          "bytes": 15713
+        },
+        "khronos-input.json": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/dai-pn010-02/khronos-input.json",
+          "sha256": "7ab3688f6e03f8bb16981e4b8388b277176fea6b709cab70ed34f040c53e5364",
+          "bytes": 709773
+        },
+        "babylon-nullengine.json": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/dai-pn010-02/babylon-nullengine.json",
+          "sha256": "ff23e92fbde8f439b1dd4749828f2b8f8e3c0a80c5b3d24f840041181c5b3e5e",
+          "bytes": 1327
+        },
+        "runtime-preparation.json": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/dai-pn010-02/runtime-preparation.json",
+          "sha256": "e84d306353d8586b8a7d0fa003c6ed592ae05a1ddb732cd18ad5cb731c55337d",
+          "bytes": 17395
+        },
+        "runtime-webgl-proof.json": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/dai-pn010-02/runtime-webgl-proof.json",
+          "sha256": "7524d66d9775c3ad36d61231444f56e3830051c0e38010aa266619c3b3b96797",
+          "bytes": 10183
+        },
+        "runtime-webgl-run.json": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/dai-pn010-02/runtime-webgl-run.json",
+          "sha256": "295e56c787845e1441331e33d65170ade8414bc76df144680a649c60c3be375c",
+          "bytes": 672
+        },
+        "contact-sheet.png": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/dai-pn010-02/contact-sheet.png",
+          "sha256": "617c83356a8268431091422438ceda304f74ee0b996ff1420378556d62997f00",
+          "bytes": 263115
+        }
+      }
+    },
+    {
+      "candidateId": "vearn-en801-pre-transformation",
+      "runtime": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/converted/infinity-strash-umodel-macos-v1/runtime-candidates-v1/vearn-en801-pre-transformation/body.glb",
+        "bytes": 3011048,
+        "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+        "document": {
+          "id": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
+          "schema": "model@1",
+          "glbPath": "assets/models/community/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+          "scale": 1,
+          "collisionRadius": 0.6,
+          "clipMap": {
+            "idle": "GGD_native_idle",
+            "run": "GGD_native_run",
+            "attack": "GGD_native_attack",
+            "cast": "GGD_native_special01",
+            "hurt": "GGD_native_death",
+            "death": "GGD_native_death"
+          },
+          "yawOffsetDeg": 0
+        },
+        "uploadedModel": {
+          "schema": "ggd-uploaded-hero-model@1",
+          "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+          "byteSize": 3011048,
+          "clipMap": {
+            "idle": "GGD_native_idle",
+            "run": "GGD_native_run",
+            "attack": "GGD_native_attack",
+            "cast": "GGD_native_special01",
+            "hurt": "GGD_native_death",
+            "death": "GGD_native_death"
+          },
+          "yawOffsetDeg": 0
+        }
+      },
+      "evidence": {
+        "assembly-receipt.json": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/vearn-en801-pre-transformation/assembly-receipt.json",
+          "sha256": "83a79464f0dd005a5a933ee97b4000bb806e42520c59059dd2546e54e346f5ef",
+          "bytes": 15198
+        },
+        "normalization-receipt.json": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/vearn-en801-pre-transformation/normalization-receipt.json",
+          "sha256": "fb27c6bb21ac8d1b1a9c08e09df0f4db9b8083d84d3457bb4722565b29e00305",
+          "bytes": 15875
+        },
+        "khronos-input.json": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/vearn-en801-pre-transformation/khronos-input.json",
+          "sha256": "4fe8792d5cd85e200ca6efbcb17774d731477e43c0a893b867d9f3ea530e38b3",
+          "bytes": 418886
+        },
+        "babylon-nullengine.json": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/vearn-en801-pre-transformation/babylon-nullengine.json",
+          "sha256": "6de6d790f1a0d570a2e8dd621cff98d5c371d39fd8071a2c6240e986c3b21ace",
+          "bytes": 1442
+        },
+        "runtime-preparation.json": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/vearn-en801-pre-transformation/runtime-preparation.json",
+          "sha256": "cdbf4e8381c3b322e3be38f20fa8c33a6da49f0dee7da4a7227f0b7a8bfde62a",
+          "bytes": 17603
+        },
+        "runtime-webgl-proof.json": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/vearn-en801-pre-transformation/runtime-webgl-proof.json",
+          "sha256": "4f6317a737e969507d13f9bcb38c65038fb60990e8ce12907deff947b5f71685",
+          "bytes": 10189
+        },
+        "runtime-webgl-run.json": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/vearn-en801-pre-transformation/runtime-webgl-run.json",
+          "sha256": "75cb8296234bf707b1d61d318c95988b0e4b566cb5390004c78d632cf753580b",
+          "bytes": 708
+        },
+        "contact-sheet.png": {
+          "gitPath": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/vearn-en801-pre-transformation/contact-sheet.png",
+          "sha256": "fcfa19e1b0020853378c721484d2acde9fc2550b925aecc02e6d73734f78c140",
+          "bytes": 515075
+        }
+      }
+    }
+  ],
+  "registration": {
+    "localContentRegistered": true,
+    "backendDropdownOptionsPresent": true,
+    "productionDeployed": false,
+    "heroes": [
+      {
+        "heroId": "godie-nbbc",
+        "modelSelectionMode": "automatic",
+        "activeModelKey": "version.body.d3f99e8920304bdd4c07e6096ed2d22565df3c728025c020",
+        "versions": [
+          {
+            "version": {
+              "modelKey": "version.body.14352709df09b4c59702f49915dd4a4f9f4bec26b8705603",
+              "label": "原上線模型",
+              "sourceModelKey": "imported.sd2",
+              "modelSha256": "e98111ed72f73ad18066d04bad97d88310f0d2aa1c4cefba47f3b313e59edb74",
+              "binarySha256": "e8e488e9a2c71d7efcc08729aabd1e7e4af24caac015ce1f575f05d5fd9384c2",
+              "registeredAt": "2026-09-13T11:29:17.616Z",
+              "source": {
+                "kind": "previous",
+                "character": "傳說的龍騎士 - 勇者小呆",
+                "work": "原上線內容",
+                "library": "GGD",
+                "reference": "models/imported.sd2.json",
+                "tier": "w3x"
+              }
+            },
+            "modelDocument": {
+              "gitPath": "content/models/version.body.14352709df09b4c59702f49915dd4a4f9f4bec26b8705603.json",
+              "sha256": "7ab56fb81d7a0cbe5505d836aaf9b2694da3eaed06ae83bf2b42a3d1d0cfc300"
+            },
+            "binary": {
+              "gitPath": "content/assets/models/imported/versions/e8e488e9a2c71d7efcc08729aabd1e7e4af24caac015ce1f575f05d5fd9384c2.glb",
+              "sha256": "e8e488e9a2c71d7efcc08729aabd1e7e4af24caac015ce1f575f05d5fd9384c2",
+              "bytes": 264736
+            }
+          },
+          {
+            "version": {
+              "modelKey": "version.body.d3f99e8920304bdd4c07e6096ed2d22565df3c728025c020",
+              "label": "小呆／達伊｜Infinity Strash 原作 PN010/02（原生動作）",
+              "sourceModelKey": "community.body.0185ba2f70b4891fe3bba4f56a96caad566d09a83003ff6b",
+              "modelSha256": "6517526e64c3eb647a7693f768efacfe5f1f58e8b0e2ff273ffd7a8958b56f37",
+              "binarySha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+              "registeredAt": "2026-09-13T11:29:17.630Z",
+              "source": {
+                "kind": "exact",
+                "character": "小呆／達伊（PN010/02）",
+                "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+                "library": "Infinity Strash Steam 原作擷取",
+                "reference": "Steam Windows build 2024-03-28; native ID PN010; user-owned read-only source",
+                "tier": "original",
+                "selectionClass": "canonical-game",
+                "sourceGame": "Infinity Strash Steam 原作擷取",
+                "sourcePlatform": "unknown (source record does not specify platform)"
+              },
+              "automaticEligible": true
+            },
+            "modelDocument": {
+              "gitPath": "content/models/version.body.d3f99e8920304bdd4c07e6096ed2d22565df3c728025c020.json",
+              "sha256": "561d1213fa37ff75073be32906098744da551d23a0033fe8d77646dc19777e12"
+            },
+            "binary": {
+              "gitPath": "content/assets/models/community/versions/2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66.glb",
+              "sha256": "2aa1be9bad767cbc496c6dc147b708714c5e7e0781f9d9d0df02058d4cdb6d66",
+              "bytes": 2000480
+            }
+          }
+        ]
+      },
+      {
+        "heroId": "godie-ubal",
+        "modelSelectionMode": "automatic",
+        "activeModelKey": "version.body.37369175767e587335582605d4ed6d271221101d0311c82c",
+        "versions": [
+          {
+            "version": {
+              "modelKey": "version.body.2dfc74bfb0fa87e079c718d960d26744ec5812a875836399",
+              "label": "原上線模型",
+              "sourceModelKey": "champ.skin.barbarian",
+              "modelSha256": "183a35a03e6bb764532677115145d21788d0f85f7639cdfda6f7c6999dfa690f",
+              "binarySha256": "9917f0341ef48f52d1ba521c05150e9ef598c14e053c6102cf60079f26f3af47",
+              "registeredAt": "2026-09-10T11:40:33.559Z",
+              "source": {
+                "kind": "previous",
+                "character": "魔界霸主 - 巴恩大魔王",
+                "work": "原上線內容",
+                "library": "GGD",
+                "reference": "models/champ.skin.barbarian.json"
+              }
+            },
+            "modelDocument": {
+              "gitPath": "content/models/version.body.2dfc74bfb0fa87e079c718d960d26744ec5812a875836399.json",
+              "sha256": "2460e2b5deb845e503255576d2c046c989f60b01772baaf15b4139a8b728d689"
+            },
+            "binary": {
+              "gitPath": "content/assets/models/champions/versions/9917f0341ef48f52d1ba521c05150e9ef598c14e053c6102cf60079f26f3af47.glb",
+              "sha256": "9917f0341ef48f52d1ba521c05150e9ef598c14e053c6102cf60079f26f3af47",
+              "bytes": 52124
+            }
+          },
+          {
+            "version": {
+              "modelKey": "version.body.162a29331fb80ad6c5c66aa4b04a8bb93939b66e64432826",
+              "label": "ou99 「牛魔角仙人男」（相似造型）",
+              "sourceModelKey": "ou99.457883",
+              "modelSha256": "3dbc7251c499f35125e4a96d215fddd1e7caf7696fa5153a978d71e0aac65d4c",
+              "binarySha256": "6fe8e9637cf335c6d1ecceea32125c2d88747c216119fd54f52596a3ba6ae912",
+              "registeredAt": "2026-09-10T11:40:33.565Z",
+              "source": {
+                "kind": "style-proxy",
+                "character": "神龍之謎 巴恩大魔王(變身後)",
+                "work": "牛魔角仙人男",
+                "library": "ou99 偶久網",
+                "reference": "https://www.ou99.com/thread-457883-1-1.html"
+              }
+            },
+            "modelDocument": {
+              "gitPath": "content/models/version.body.162a29331fb80ad6c5c66aa4b04a8bb93939b66e64432826.json",
+              "sha256": "2f6bdb2fc0fef29df613f7f37eb9a1a350fcb354ea290d60d054aa11360b549b"
+            },
+            "binary": {
+              "gitPath": "content/assets/models/ou99/versions/6fe8e9637cf335c6d1ecceea32125c2d88747c216119fd54f52596a3ba6ae912.glb",
+              "sha256": "6fe8e9637cf335c6d1ecceea32125c2d88747c216119fd54f52596a3ba6ae912",
+              "bytes": 1265860
+            }
+          },
+          {
+            "version": {
+              "modelKey": "version.body.37369175767e587335582605d4ed6d271221101d0311c82c",
+              "label": "巴恩大魔王｜Infinity Strash 原作 EN801（變身前／老巴恩）",
+              "sourceModelKey": "community.body.124e07f8cbdfed13d28f4701a6f138e14ffe6df9391a3990",
+              "modelSha256": "3e567a65de18d2807adf9ff94bff2eefb0558c3a86e94c5370ee307dee7b6924",
+              "binarySha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+              "registeredAt": "2026-09-13T11:29:19.327Z",
+              "source": {
+                "kind": "exact",
+                "character": "巴恩大魔王（EN801，變身前／老巴恩）",
+                "work": "Infinity Strash 勇者鬥惡龍 達伊的大冒險",
+                "library": "Infinity Strash Steam 原作擷取",
+                "reference": "Steam Windows build 2024-03-28; native ID EN801; user-owned read-only source",
+                "tier": "original",
+                "selectionClass": "canonical-game",
+                "sourceGame": "Infinity Strash Steam 原作擷取",
+                "sourcePlatform": "unknown (source record does not specify platform)"
+              },
+              "automaticEligible": true
+            },
+            "modelDocument": {
+              "gitPath": "content/models/version.body.37369175767e587335582605d4ed6d271221101d0311c82c.json",
+              "sha256": "2fe3ad2afb278603dbb279340f1381da7a89515bdbb1ecb0eadbf891b3365fdd"
+            },
+            "binary": {
+              "gitPath": "content/assets/models/community/versions/c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02.glb",
+              "sha256": "c0f4ea5c363f2847d2eb9324cfb72a80c8f007a134fa4ac728d95d350ca69d02",
+              "bytes": 3011048
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "humanReview": {
+    "dai-pn010-02": "passed-18-runtime-state-samples-front-camera; distinct death absent and down pose reused",
+    "vearn-en801-pre-transformation": "passed-18-runtime-state-samples-front-camera; old Vearn only; Kaizer missing effect bones excluded"
+  },
+  "identity": {
+    "EN801": "Vearn pre-transformation",
+    "EN653": "MystVearn kept separate",
+    "EN680_EN681": "Baran kept separate",
+    "postTransformationVearnLocated": false
+  },
+  "limitations": [
+    "Registration and default selection are verified in this Git checkout only; production deployment is not claimed.",
+    "Dai and Vearn each retain five unique native clips in the runtime GLB; duplicate six-state mappings are explicit.",
+    "Full source clips, PSK/PSA, Blender project files and conversion stages remain local and are backed up separately under S3 legacy."
+  ],
+  "legacyBackups": [
+    {
+      "role": "mesh-psk",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-priority-mesh-psk-v1/894b35fd9c84ae6bc1b49ccff74b82dbb770b46a18b485620433457cff077503.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-priority-mesh-psk-v1/894b35fd9c84ae6bc1b49ccff74b82dbb770b46a18b485620433457cff077503.files.json",
+      "archiveSha256": "894b35fd9c84ae6bc1b49ccff74b82dbb770b46a18b485620433457cff077503",
+      "bytes": 1981861,
+      "fileCount": 19,
+      "readbackVerified": true,
+      "gitReceipt": {
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/s3-mesh-psk-receipt.json",
+        "sha256": "34f70666290c197129bbaea7371c374641b72cdc64f4159cdb9a28feb0853e60"
+      }
+    },
+    {
+      "role": "native-animations-v2",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-priority-native-animations-v2/3640f8a8d6ad5692fe5901444a3d6775ef1b5ebdd805dca2a8177f40792859c3.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-priority-native-animations-v2/3640f8a8d6ad5692fe5901444a3d6775ef1b5ebdd805dca2a8177f40792859c3.files.json",
+      "archiveSha256": "3640f8a8d6ad5692fe5901444a3d6775ef1b5ebdd805dca2a8177f40792859c3",
+      "bytes": 2279367,
+      "fileCount": 52,
+      "readbackVerified": true,
+      "gitReceipt": {
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/s3-native-animations-v2-receipt.json",
+        "sha256": "e6a675ba00687ce65dcdc6b6176ce2cbc649fafa911c24c93caa15aafb67ba67"
+      }
+    },
+    {
+      "role": "blender-addon",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/blender-io-scene-psk-psa-9c1c8ba6/a6b6a4f5cd931857945791066c28a575a52da9ad3b19c88917b67f289f044273.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/blender-io-scene-psk-psa-9c1c8ba6/a6b6a4f5cd931857945791066c28a575a52da9ad3b19c88917b67f289f044273.files.json",
+      "archiveSha256": "a6b6a4f5cd931857945791066c28a575a52da9ad3b19c88917b67f289f044273",
+      "bytes": 21381791,
+      "fileCount": 157,
+      "readbackVerified": true,
+      "gitReceipt": {
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/s3-blender-addon-receipt.json",
+        "sha256": "8f484c97ac729818d954359a71a7251affa2c67009edc19524fec84838e28f48"
+      }
+    },
+    {
+      "role": "final-runtime",
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-final-runtime-delivery-v1/e69ee9113047a99adc6530d155c93c82eb0a27950d4314216dc501bfcaeb9080.tar.gz",
+      "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-final-runtime-delivery-v1/e69ee9113047a99adc6530d155c93c82eb0a27950d4314216dc501bfcaeb9080.files.json",
+      "archiveSha256": "e69ee9113047a99adc6530d155c93c82eb0a27950d4314216dc501bfcaeb9080",
+      "bytes": 28708018,
+      "fileCount": 68,
+      "readbackVerified": true,
+      "gitReceipt": {
+        "path": "materials/hero-model-library/priority-evidence/infinity-strash-original-raw-v2/macos-native-export/runtime-candidates-v1/s3-final-runtime-receipt.json",
+        "sha256": "75685133479e5406180d4236a919027d3a0e2467998bdc818fe34bbd528f9283"
+      }
+    }
+  ]
+}

@@ -4,7 +4,10 @@
   "requirements": [
     {
       "id": "recast-ahri",
-      "status": "pending-main",
+      "status": "bound",
+      "boundIn": "GH#1187：ahri.R 加 abilityOverrides.recast{charges:2, windowSec:10, cooldownAt:end}；後段重跑同一個 leap（不抄第二份）",
+      "verification": "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts「recast」 —— 正常 castAbility 輸入三次各自瞄準的短衝、第四按撞冷卻、冷卻在三段衝完才開始",
+      "notVerified": "擊殺參與增加次數不做（adaptations 明示）；HUD 段數顯示與編輯器往返未實機驗收；#1185 上架前 content/ 仍無採用者",
       "issue": "https://github.com/adms/GGD/issues/1187",
       "slots": [
         "ahri.R"
@@ -16,7 +19,10 @@
     },
     {
       "id": "recast-thresh",
-      "status": "pending-main",
+      "status": "bound",
+      "boundIn": "GH#1187：thresh.Q 加 abilityOverrides.recast{charges:1, windowSec:2, gate:onHit, anchor:firstHit} ＋ recastEffects[leap toPoint]；引擎新增 recast.anchor=firstHit（後段目標＝首段命中的第一人，失效即結束階段）",
+      "verification": "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts「recast」 —— 鉤空按 Q 被拒；鉤中按 Q 飛到同一個被鉤者（按的方向刻意朝反方向）；被鉤者消失 ⇒ 階段清除且按下被拒",
+      "notVerified": "後段是 0.25 秒平飛落在被鉤者身上，不是沿鉤線拖行；畫面與編輯器往返未實機驗收；#1185 上架前 content/ 仍無採用者",
       "issue": "https://github.com/adms/GGD/issues/1187",
       "slots": [
         "thresh.Q"
@@ -28,7 +34,10 @@
     },
     {
       "id": "recast-ornn",
-      "status": "pending-main",
+      "status": "bound",
+      "boundIn": "GH#1187：ornn.R 改 spawnProjectile{launchFrom:rangeEnd, onRedirectHit:擊飛} ＋ abilityOverrides.recast{charges:1, windowSec:3} ＋ recastEffects[dash forward]；引擎新增 spawnProjectile.launchFrom／onRedirectHit 與 sim/projectileRedirect.ts（同施法者·同槽·同施放序號才改向）；規則開關 config.displacement-tiers@1.projectileRedirect.mode（contact 預設／press／off）",
+      "verification": "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts「recast」 —— 正常輸入 R→再按 R 撞到火羊 ⇒ 羊改朝衝刺方向並擊飛身後敵人；沒按 R 被羊碰到 ⇒ 後段窗口清除、同一位敵人不被擊飛",
+      "notVerified": "羊的模型與改向演出、體型／速度不隨改向成長；編輯器往返未實機驗收；#1185 上架前 content/ 仍無採用者",
       "issue": "https://github.com/adms/GGD/issues/1187",
       "slots": [
         "ornn.R"
@@ -55,7 +64,10 @@
     },
     {
       "id": "temporary-pillar-collision",
-      "status": "pending-main",
+      "status": "bound",
+      "boundIn": "GH#1190：ornn.Q 加 spawnObstacle{at:self, offsetForwardU=裂地長度}（兩格讀配方同一個常數 ORNN_Q_FISSURE_U）；ornn.E 改 tpl-effect-sequence 的 dash{distanceTier:小, onPathHit:沿途傷害, onEndOn:blocked, shatter:true, onEnd:震波＋擊飛(擊退級距極小＋拋高 1)}；修正輪新增通用機制 dash.onPathHit（沿途只打身體真的掃過的那一段，被擋停就只算到擋停點）與後台開關 config.displacement-tiers@1.dashPath.mode（sweep 預設／full 施放當下沿整條長度結算）",
+      "verification": "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts「Ornn E after Q pillar」—— 正常施放 Q→E：柱子中心＝裂地長度（讀線長，不讀柱子自己那一格）；撞柱才震波＋擊飛＋撞碎、沒柱空衝不震；站在衝刺線上、柱子後面的敵人：撞柱臂⛔ 不挨沿途傷害、空衝臂挨打",
+      "notVerified": "遊戲畫面（柱子模型、震波特效、沿途命中的演出）與編輯器往返未實機驗收；柱子在施放當下就生成（原作裂痕抵達後才冒出）；震波仍會重複打到已被沿途命中的敵人（原作不重複）；PR 與 #1185 接入記錄未完成；#1185 上架前 content/ 仍無採用者",
       "slots": [
         "ornn.Q",
         "ornn.E"
@@ -72,7 +84,10 @@
     },
     {
       "id": "interruptible-sustained-channel",
-      "status": "pending-main",
+      "status": "bound",
+      "boundIn": "GH#1191：fiddlesticks.W / velkoz.R 加 abilityOverrides.channel（onComplete 收割只在 W）；W／R 的延遲波次與引導時長從配方同一個節拍推導（channelBeat：首發延遲＝半拍、時長＝發數×間隔，修正前最後 0.4 秒只定身不打）；R castType 改 skillshot；移除自套定身狀態（引導本身定住腳）；W 每波改 damageArea＋onHitTargets perTarget 回血；修正輪：cancelOn 預設多一個 control（暴走／恐懼／魅惑／混亂，判準與 OrderSystem 丟指令同一支 sim/steeringTaken.ts；後台 config.taunt@1.overridesManualOrder 開著時嘲弄也算）",
+      "verification": "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts「channel:」 —— 正常 castAbility／移動指令：W 撐滿＝每波一命中一回血＋收割一次且受傷不打斷、打空不回血、移動／暈眩／恐懼打斷後不再落波不收割；R 引導中同一格再按轉向後改打另一側；R 的引導被夾具縮到第 2、3 發之間，撐滿之後排好的波次一發都不再射出",
+      "notVerified": "R 沒有轉速上限（再按或搖桿即時轉向）；滑鼠不串流連續瞄準（要再按 R）；搖桿推著時按技能會在下一 tick 被移動指令打斷（後台 cast-time.channelCancelOnMoveOrder 可關）；擊飛（非擊倒）不打斷；出貨預設的嘲弄（overridesManualOrder:false）不打斷；魅惑／暴走／混亂與恐懼走同一支判準，只有恐懼有正常指令守衛；吟唱條／特效／編輯器往返未實機驗收；PR 與 #1185 接入記錄未完成；#1185 上架前 content/ 仍無採用者",
       "slots": [
         "fiddlesticks.W",
         "velkoz.R"
@@ -90,57 +105,81 @@
     },
     {
       "id": "remaining-core-ahri-q",
-      "status": "pending-main",
+      "status": "bound",
+      "boundIn": "GH#1197 修正輪：ahri.Q 改 spawnProjectile{projectileId:imported.wave.arcane.return, onHit:魔法傷害}（取代 damageLine＋延遲 damageLine 的近似）",
       "issue": "https://github.com/adms/GGD/issues/1197",
       "slots": [
         "ahri.Q"
       ],
-      "requiredOriginalCore": "同一法球去程／回程與追身"
+      "requiredOriginalCore": "同一法球去程／回程與追身",
+      "contract": "spawnProjectile{projectileId:\"imported.wave.arcane.return\", onHit:[…]}（出貨 content/projectiles：穿透、returns）—— 去程穿過每人一次、射程盡頭掉頭追施法者當下位置、回程命中分開記錄再一次、回到身上消失",
+      "verification": "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts「bind: Ahri Q」—— 正常 castAbility：同一位敵人去程一下、回程一下，合計 2 次（只有 1 次＝沒有回程）；機制側 projectileReturnSplit.test.ts「returns」",
+      "notVerified": "去程與回程共用同一串命中效果（原作回程是真實傷害，現有回程彈沒有分段命中效果）；法球飛行與掉頭畫面未實機驗收；PR 與 #1185 接入記錄未完成"
     },
     {
       "id": "remaining-core-ahri-e",
-      "status": "pending-main",
+      "status": "bound",
+      "boundIn": "GH#1197 修正輪：ahri.E 的命中狀態改 applyStatus{charmed:true, moveSpeedMult:0.5, sourceScope:caster}（取代繳械＋拉扯的近似）",
       "issue": "https://github.com/adms/GGD/issues/1197",
       "slots": [
         "ahri.E"
       ],
-      "requiredOriginalCore": "迫使命中者朝來源行走"
+      "requiredOriginalCore": "迫使命中者朝來源行走",
+      "contract": "applyStatus{charmed:true, duration}（sim/charm.ts：每 tick 走向施加者、丟掉自己的指令，到期恢復）",
+      "verification": "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts「bind: Ahri E」—— 正常 castAbility：被命中的敵人（他的座位一直在下「站住」）自己朝阿璃走 0.5 格以上；機制側 sim/charm.test.ts",
+      "notVerified": "不保證打斷所有位移；魅惑中的走路動畫與特效未實機驗收；PR 與 #1185 接入記錄未完成"
     },
     {
       "id": "remaining-core-thresh-r",
-      "status": "pending-main",
+      "status": "bound",
+      "boundIn": "GH#1197 修正輪：thresh.R 改 spawnThresholds{sides:5, radius:3, durationSec:5, onCross:[中級魔法傷害, 重緩速]}（取代施放當下一圈傷害的近似）",
       "issue": "https://github.com/adms/GGD/issues/1197",
       "slots": [
         "thresh.R"
       ],
-      "requiredOriginalCore": "五段各自觸碰觸發並消失的邊界"
+      "requiredOriginalCore": "五段各自觸碰觸發並消失的邊界",
+      "contract": "spawnThresholds{sides:5, radius, durationSec, onCross:[…]}（每段被穿越那一 tick 觸發並獨立消失，到期整組清）",
+      "verification": "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts「bind: Thresh R」—— 正常 castAbility＋敵人正常移動指令：放下時站在圈內 0 次、走出去穿過一段 1 次；機制側 ThresholdSystem.test.ts",
+      "notVerified": "同一人穿過不同段會各吃一次（原作第二道牆起減半且不再緩速）；邊界不擋路；五段邊界的畫面另票 #1209；PR 與 #1185 接入記錄未完成"
     },
     {
       "id": "remaining-core-velkoz-q",
-      "status": "pending-main",
+      "status": "bound",
+      "boundIn": "GH#1197 修正輪：velkoz.Q 的 projectileId 改 imported.bolt.void.split ＋ abilityOverrides.recast{charges:1, windowSec:1} ＋ recastEffects:[]",
       "issue": "https://github.com/adms/GGD/issues/1197",
       "slots": [
         "velkoz.Q"
       ],
-      "requiredOriginalCore": "主彈當前位置左右分裂"
+      "requiredOriginalCore": "主彈當前位置左右分裂",
+      "contract": "spawnProjectile{projectileId:\"imported.bolt.void.split\", onHit:[…]} ＋ abilityOverrides.recast{charges:1, windowSec} ＋ recastEffects:[]（出貨主彈 split.on=[hit,recast]、子彈 imported.bolt.void 繼承 onHit）—— 命中或再按從主彈當下位置左右分出，子彈不再打主彈打過的人",
+      "verification": "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts「bind: Velkoz Q」—— 正常 castAbility 兩次：第二次不被拒、還在飛的主彈就地換成兩發 imported.bolt.void 子彈；機制側 projectileReturnSplit.test.ts「split」",
+      "notVerified": "主彈飛完之後窗口內再按不會有效果（窗口不跟著主彈結束）；分裂子彈畫面未實機驗收；PR 與 #1185 接入記錄未完成"
     },
     {
       "id": "remaining-core-velkoz-w",
-      "status": "pending-main",
+      "status": "bound",
+      "boundIn": "GH#1197 修正輪：velkoz.W 兩段 damageLine 都改 aim:\"cast\"（兩段共用配方同一份裂痕幾何 VELKOZ_W_RIFT）",
       "issue": "https://github.com/adms/GGD/issues/1197",
       "slots": [
         "velkoz.W"
       ],
-      "requiredOriginalCore": "固定裂痕雙段與槽位充能"
+      "requiredOriginalCore": "固定裂痕雙段與槽位充能",
+      "contract": "兩段 damageLine 都寫 aim:\"cast\"（放在 delayed 裡的第二段，起點與方向凍在施放那一刻；施法者轉身或走開後仍在原處）。⛔ 未滿足的驗收：「兩次充能」需要技能彈藥機制（ability.charges），Main 目前沒有 —— recast.charges 是後段次數，⛔ 不是彈藥；在 owner 決定前這一條驗收不算完成",
+      "verification": "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts「bind: Velkoz W」—— 正常 castAbility＋移動指令：第一段命中後橫移離開原線 2 格以上，第二段仍打原線上的人（合計 2 次）；機制側 damageLine.test.ts「延遲直線 aim:cast／facing」（橫移 6 格的夾具）",
+      "notVerified": "⛔ 未滿足的驗收：原作「兩次充能」—— Main 缺技能彈藥機制（ability.charges），這一槽仍是一般冷卻；要不要做彈藥由 owner 決定（列爭議）；延遲裂痕的畫面位置未實機驗收；PR 與 #1185 接入記錄未完成"
     },
     {
       "id": "remaining-core-garen-q",
-      "status": "pending-main",
+      "status": "bound",
+      "boundIn": "GH#1197 修正輪：garen.Q 施放時先跑 dispel{shape:single, pools:{status:true}, polarity:any, statusKinds:[slow]} 再加速強化下一次普攻",
       "issue": "https://github.com/adms/GGD/issues/1197",
       "slots": [
         "garen.Q"
       ],
-      "requiredOriginalCore": "僅清除既有減速"
+      "requiredOriginalCore": "僅清除既有減速",
+      "contract": "dispel{statusKinds:[\"slow\"]}（只清減速；帶暈眩的狀態留著）",
+      "verification": "packages/shared/src/content/heroForge/communityLolBatch2Mechanics.test.ts「bind: Garen Q」—— 走出貨 applyStatus 掛上減速與繳械（兩者都沒有狀態文件、極性是空的）後正常 castAbility：只剩繳械；機制側 dispelStatusKinds.test.ts",
+      "notVerified": "只看機制不看極性（polarity:any，配方自帶減速多半沒有狀態文件）；不給之後的減速免疫；PR 與 #1185 接入記錄未完成"
     }
   ],
   "excluded": [

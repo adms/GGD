@@ -10,7 +10,8 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, describe, expect, it } from "vitest";
-import { HERO_MODEL_BUDGET } from "../../packages/shared/src/content/modelUpload/budget";
+import { HERO_MODEL_ADOPTION_POLICY, HERO_MODEL_BUDGET } from "../../packages/shared/src/content/modelUpload/budget";
+import { readGlb, rebuildGlb } from "./glb";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "../..");
@@ -21,17 +22,34 @@ const BLOCKY = path.join(ROOT, "content/assets/models/champions/blocky-knight.gl
  * A model that STILL breaches the champion gate, so the failure path stays
  * covered now that no champion does. `guardian_skeleton.glb` reproduces the
  * retired knight.glb profile almost exactly: 1024² albedo (over the 512 warn),
- * 9 draw calls (over the limit of 5) and 123 animation channels (warning at 120).
+ * 9 draw calls (over the limit of 6) and 123 animation channels (below the current 300 warning).
  */
 const OVERSIZED = path.join(ROOT, "content/assets/models/props/guardian_skeleton.glb");
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "guard-test-"));
 afterAll(() => fs.rmSync(tmp, { recursive: true, force: true }));
 
+function triangleFixture(triangles: number): string {
+  const source = readGlb(BLOCKY);
+  const json = structuredClone(source.json);
+  const primitive = structuredClone(json.meshes[0].primitives[0]);
+  const elementAccessor = typeof primitive.indices === "number" ? primitive.indices : primitive.attributes.POSITION;
+  json.accessors[elementAccessor].count = triangles * 3;
+  json.meshes = [{ ...json.meshes[0], primitives: [primitive] }];
+  json.nodes = [{ name: `policy-${triangles}`, mesh: 0 }];
+  json.scenes = [{ nodes: [0] }];
+  json.scene = 0;
+  json.skins = [];
+  json.animations = [];
+  const out = path.join(tmp, `policy-${triangles}.glb`);
+  fs.writeFileSync(out, rebuildGlb(json, source.bin!, new Map()));
+  return out;
+}
+
 /** Run guard; return {status, stdout}. Never throws on non-zero exit. */
 function run(args: string[]): { status: number; stdout: string } {
   try {
-    const stdout = execFileSync("npx", ["tsx", GUARD, ...args], { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+    const stdout = execFileSync(process.execPath, ["--import", "tsx", GUARD, ...args], { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
     return { status: 0, stdout };
   } catch (e: any) {
     return { status: e.status ?? 1, stdout: String(e.stdout ?? "") };
@@ -39,6 +57,23 @@ function run(args: string[]): { status: number; stdout: string } {
 }
 
 describe("the import guard scores against the role gate", () => {
+  it("returns the formal champion adoption status in JSON at the exact threshold", () => {
+    const atThreshold = run([triangleFixture(10_000), "--role", "champion", "--json"]);
+    const aboveThreshold = run([triangleFixture(10_001), "--role", "champion", "--json"]);
+    expect(atThreshold.status).toBe(0);
+    expect(aboveThreshold.status).toBe(1);
+
+    const eligible = JSON.parse(atThreshold.stdout).results[0].adoption;
+    const decimate = JSON.parse(aboveThreshold.stdout).results[0].adoption;
+    expect(eligible).toEqual({
+      status: "eligible",
+      triggerTrianglesAbove: 10_000,
+      targetTrianglesMax: 8_000,
+      visualLitPixelDeltaPctMax: HERO_MODEL_ADOPTION_POLICY.visualLitPixelDeltaPctMax,
+    });
+    expect(decimate).toEqual({ ...eligible, status: "needs-decimation" });
+  });
+
   it("passes the generated blocky champion clean on every axis", () => {
     // This test used to assert knight.glb's BREACHES (1024² texture warn, draw
     // calls and animation channels over). #226 replaced that mesh with a

@@ -1,0 +1,15 @@
+{
+  "id": "acquired-cattiva.paw",
+  "schema": "status-effect@1",
+  "name": "貓拳簽收",
+  "description": "搗蛋貓「貓拳簽收」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-cattiva.paw",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "acquired-minecraft.material",
+  "schema": "status-effect@1",
+  "name": "挖礦不包加班",
+  "description": "Steve／Alex「挖礦不包加班」施加的狀態。",
+  "polarity": "buff",
+  "tags": [
+    "acquired-minecraft.material",
+    "buff"
+  ]
+}

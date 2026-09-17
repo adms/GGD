@@ -1,0 +1,42 @@
+{
+  "id": "acquired-lord-nightmares.e",
+  "name": "客服轉接",
+  "provenance": "editor-json",
+  "description": "短距離瞬步到落點，受既有落點限制；同時累積工單。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 4.5,
+  "rangeTier": "小",
+  "effects": [
+    {
+      "kind": "blink",
+      "shape": "single",
+      "to": "point",
+      "applyTo": "self"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.8ad74d5c99ca88a9cf4b5ef5ae62dd670596b201d42e78b4",
+    "params": {},
+    "inheritDefaults": true,
+    "contentSha256": "sha256:c3f995f4bfa44562d4328a29d02eea336e44a430a77792a410a3c59c09a7aa1c"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/acquired-lord-nightmares.e.webp"
+}

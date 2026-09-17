@@ -210,11 +210,19 @@ function ungatedDamageNodes(id: AbilityId): number {
     if (Array.isArray(node)) return void node.forEach((x) => walk(x, gated));
     if (node === null || typeof node !== "object") return;
     const rec = node as Record<string, unknown>;
+    // ⭐⭐ GH#1281（2026-09-17）—— **互斥的兩條分支不是「兩發」**。
+    //   `consumeStatus` 的 `onConsumed` / `onMissing`（以及 `spawnProjectile` 的
+    //   `onRedirectHit`）在執行期**只會走一條**：標記在 ⇒ 走 onConsumed，不在 ⇒ 走 onMissing。
+    //   在此之前這支普查把兩條都算成「無條件」⇒ 每一支「蓄力滿了打強的、沒滿打弱的」技能
+    //   都被判成「一發打兩次」，而那是**量尺讀錯結構**，⛔ 不是內容有缺陷。
+    //   ⇒ 這兩個鍵底下的傷害節點視為**被擋住的**（`gated`）—— 它們各自代表一條路。
+    //   ⚠️ 判準不變：同一條路上出現兩個無條件傷害節點，照樣算兩發並要求逐支寫理由。
     const g = gated || rec["condition"] !== undefined;
     if (KINDS.has(String(rec["kind"])) && !g && rec["victimCondition"] === undefined) n += 1;
     for (const [k, v] of Object.entries(rec)) {
       if (["amount", "when", "condition", "victimCondition"].includes(k)) continue;
-      if (Array.isArray(v) || (v !== null && typeof v === "object")) walk(v, CHAIN.includes(k) ? g : g);
+      const exclusiveBranch = ["onConsumed", "onMissing", "onRedirectHit"].includes(k);
+      if (Array.isArray(v) || (v !== null && typeof v === "object")) walk(v, exclusiveBranch ? true : CHAIN.includes(k) ? g : g);
     }
   };
   walk(Abilities.get(id).effects ?? [], false);

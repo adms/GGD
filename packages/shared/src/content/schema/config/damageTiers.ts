@@ -108,13 +108,13 @@ export const zConfigDamageTiersDoc = z
                     const n2 = castsToKillBase(lv, DEFAULT_DAMAGE_TIERS.damage[DAMAGE_TIER_NAMES[0]]);
                     return `LV${lv} ${n2.toFixed(1)} 發 ${n2 <= KILL_CASTS_REF ? "✅" : "❌"}`;
                   }).join(" · ")}。` +
-                  `⚠️ **玩家實際**要打幾發是另一個數字（含系統倍率）：` +
+                  `試算・照血條算要幾發（分母＝引擎最終血量，含 HP 系統倍率；⛔ 沒算 AP 加成）：` +
                   `${BALANCE_ANCHOR_LEVELS.map((lv) => {
                     const n3 = castsToKill(lv, DEFAULT_DAMAGE_TIERS.damage[DAMAGE_TIER_NAMES[0]]);
                     return `LV${lv} ${n3.toFixed(1)} 發`;
                   }).join(" · ")}。` +
-                  `⭐ 兩者**刻意不相等**，差距就是 HP 系統倍率本身 —— 那正是 owner 要的旋鈕。` +
-                  `⛔ 拿「玩家實際」那一欄去對門檻是**兩個空間混算**（2026-08-22 抓到：三個錨點全印 ❌ 而閘是綠的）。` +
+                  `只是顯示，⛔ 不是門檻、不評判（owner 2026-09-15 逐字：「頂多是後台試算後顯示 但不干涉也不警示」）。` +
+                  `它和達成率刻意不相等（差的就是 HP 系統倍率），⛔ 不拿它去對 ${KILL_CASTS_REF} 發。` +
                   `上界 ${DAMAGE_TIER_MAX} = LV${HARD_ANCHOR_LEVEL} 的**引擎最終**中位血量 ${medianFinalHp(HARD_ANCHOR_LEVEL)}：超過它的一發就是一發秒殺。`,
               ),
           ]),

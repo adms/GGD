@@ -1,0 +1,27 @@
+{
+  "schema": "ggd.skinned-component-acceptance@1",
+  "deliverySha256": "5b8c9a6e94553bf149b7c82167d0491fb8af571555d3734d0f6f2e82a20b62cf",
+  "acceptedAt": "2026-09-12",
+  "components": [
+    {
+      "id": "ssbu-ptrainer-female-c01-static-skinned-v1",
+      "variant": "c01",
+      "sha256": "8377e0a694ee456f74c111271ee05711ae2b4657028a05080a646daf73b46d46",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "reviewedViews": [
+        "front",
+        "back",
+        "isometric"
+      ],
+      "limitationsAccepted": [
+        "Source Blender contains zero actions; idle, run, attack, cast, hurt and death animations remain missing.",
+        "No GGD hero definition or skill binding exists for this exact Pokemon Trainer identity.",
+        "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+        "Original SSBU shader parity is incomplete; normal, PRM and game-specific shader behavior were not reconstructed.",
+        "27 hidden facial or costume mesh variants remain in the original Blender source and were excluded from the visible appearance.",
+        "Blender emitted NumPy transform warnings; both validations checked all exported float values as finite and Babylon WebGL rendered the body intact."
+      ]
+    }
+  ]
+}

@@ -54,6 +54,8 @@ import {
   type VoxelSkinOverridesFile,
 } from "./voxelSkin";
 import { counterpartFormId } from "./championForms";
+import { isStandInModel } from "./standInBody";
+import { readShippedModelDocs } from "../../testkit/shippedModelDocs";
 import { DOC_ARCHETYPE } from "../voxel/archetypes";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -106,102 +108,37 @@ const CENSUS = censusByModel();
  * "which champions currently fall through to a stand-in, and which stand-in".
  */
 const EXPECTED: Readonly<Record<string, readonly string[]>> = {
-  // blocky-mage.glb. #249 added two 變身 ALTERNATE bodies here, each wearing its
-  // base half's rig on purpose: godie-e010 (70 紮根, mirrors godie-e00s) and
-  // godie-o030 (30 變態紳士, mirrors godie-orkn). A transform that changed rig
-  // would read as a different character, not the same one changed — see
-  // ALTERNATE_FORM_IDS in standinRoster.test.ts. 兩對都整對留在營運名冊上。
-  // ⭐ 2026-08-20（GH#479）：godie-e00u / godie-hblm / godie-u01f 三位隨退場批次
-  // 進了 `_legacy`，所以他們離開這份**營運**普查（檔案沒有消失，見檔頭）。
-  // ⭐⭐ 2026-09-10（GH#1165）：37 名社群英雄以「預設官方角色」的身分上架，
-  // 其中 **13 名今天還沒有自己的模型**（`全角色模型盤點.md` 逐名記著「尚未取得」）
-  // ⇒ 他們**照設計**借替身：**2 名在這一格，11 名在 champ.thorne**。
-  // ⛔ 這**不是**缺陷、⛔ 也不是退步 —— 那 13 名的模型取得是另一條線；
-  // ⭐ 而把他們寫進這份普查，正是為了讓「他們拿到自己的模型了沒」**看得見**。
-  // ⭐ 2026-09-10（GH#1165）第二批 37 名：24 名的模型在 `全角色模型盤點.md` 上是
-  // **`pending-approval`** ⇒ ⛔ **不自動採用**（owner 2026-09-09 逐字：「其他相似模型
-  // 只保留候選，不自動採用」）⇒ ⭐ 他們照設計借替身：7 名 champ.sela · 17 名 champ.thorne。
-  "champ.sela": [
-    "b2-aladdin",
-    "b2-kaede",
-    "b2-keyaru",
-    "b2-makoto",
-    "b2-matthias",
-    "b2-orphen",
-    "b2-uncle",
-    "community-review-11-20260907",
-    "community-review-30-20260907",
-    "godie-e00s",
-    "godie-e010",
-    "godie-efur",
-    // ⭐ 2026-09-10（`4058d8166`）：`godie-n00b` 哆啦A夢**畢業了** ——
-    // 從方塊法師換成 `imported.doraemon-cat`，⇒ 它不再借這顆替身。
-    "godie-o030",
-    "godie-ogld",
-    "godie-orkn",
-    "godie-u00k",
-    "sela",
-  ],
-  // blocky-knight.glb
-  // ⭐ 2026-09-10（GH#1165）：11 名社群英雄借這一格（見 champ.sela 上面的說明）。
-  "champ.thorne": [
-    "b2-boxxo",
-    "b2-elma",
-    "b2-fushi",
-    "b2-guts",
-    "b2-haga",
-    "b2-kaiji",
-    "b2-klaus",
-    "b2-luckyman",
-    "b2-maomao",
-    // ⭐ 變身態（梅普露）—— ⛔ 它**不在營運白名單上**（本體變身過去，不是一張可選的卡），
-    //   ⭐ 而這份普查的母體**含變身態** ⇒ 它借的替身也要算。
-    //   ⚠️ 我第一版用白名單去算，於是漏掉它 —— ⭐ 兩個母體不一樣，⛔ 別混用。
-    "b2-maple-alt-9769eb88b85b",
-    "b2-naofumi",
-    "b2-ned",
-    "b2-noor",
-    "b2-nube",
-    "b2-shadow",
-    "b2-shinchan",
-    "b2-sinbad",
-    "b2-touka",
-    "community-review-02-20260907",
-    "community-review-05-20260907",
-    "community-review-07-20260907",
-    "community-review-09-20260907",
-    "community-review-14-20260907",
-    "community-review-15-20260907",
-    "community-review-22-20260907",
-    "community-review-33-20260907",
-    "community-review-34-20260907",
-    "community-review-36-20260907",
-    "community-review-37-20260907",
-    "godie-hapm",
-    // ⭐ 2026-09-10（`107626f90`）：`godie-ucrl` 傑・富力士**畢業了** ——
-    // 同角色的另一張卡早就有模型（`imported.herobiggon`），⇒ 不再借這顆替身。
-    "godie-udea",
-    "thorne",
-  ],
-  // blocky-barbarian.glb. godie-umal 拳四郎 is here: the #249 base-form swap
-  // moved him onto a shared mesh, a downgrade the owner already knows about,
-  // and #231's per-champion skin is what makes it survivable.
-  // ⭐ 2026-08-20（GH#479）：godie-hpal 隨退場批次進了 `_legacy`。
-  "champ.skin.barbarian": ["godie-h02k", "godie-ubal", "godie-umal"],
-  // blocky-rogue.glb. 2026-08-13 的搬遷把這一格從 8 位削到 1 位：godie-nman /
-  // godie-n01b（萬解那一對）、godie-n01l、godie-nbst、godie-obla、以及曹操
-  // godie-o02n/godie-o02o 那一對都進了 `_legacy`。**成對的一起走**，所以沒有任何
-  // 變身連結被切斷（standinRoster.test.ts 的 same-side 檢查在守這件事）。
-  // ⭐⭐ 2026-09-02（GH#933）：**這一格空了** —— `godie-e00r`（初號機）拿到了
-  // 自己的模型。⚠️ 而找到它的路徑值得記著：
-  //   · 交接文件說「repo 已有 Eva 相關 imported GLB」⇒ ⛔ 那顆是**特效**
-  //     （4,354 bytes · 幾何 1,004 bytes · 帶 `PREM` 粒子發射器）
-  //   · ⭐ w3x 原始資料逐字說它用的是
-  //     `heroes.E00R.model = units\creeps\SatyrTrickster\SatyrTrickster.mdl`
-  //   · ⇒ 從 retail MPQ 抽出來，走既有的 `convert_stock_model.py`
-  //     ⇒ `w3x.stock.satyrtrickster`（**573 頂點 · 13 個動畫**，對照 rogue 的 336）
-  // ⛔ 這一格**留著**而不是刪掉：一個空陣列說「這顆替身今天沒有人借」，
-  // ⭐ 而刪掉會讓「又有人搬回來」變成靜默。
+  // ⭐⭐ 2026-09-11（GH#1211）：**借用者歸零了** —— 兩格只剩英雄自己。
+  //
+  // ⚠️ 在此之前 `champ.sela` 借了 16 位、`champ.thorne` 借了 22 位。今天量到：
+  //   `champ.sela` → ["sela"]　·　`champ.thorne` → ["thorne"] —— ⭐ 只有它們**自己**
+  // ⇒ ⭐ **沒有任何一位英雄還在借四顆歷史替身**。
+  //
+  // ⭐ 那是 2026-09-10／11 那批模型綁定的**結果**，⛔ 不是這份普查被放寬。
+  // 前一版的名單裡那 38 位，逐位都拿到了自己的 `modelKey`。
+  //
+  // ⚠️⚠️ ⛔ **這不等於「沒有人看到體素了」** —— 兩件事刻意分開：
+  //   · **這一份**問的是 `modelKey` 有沒有指向替身（＝內容層的借用）⇒ 今天是 0
+  //   · **runtime 的體素回退**問的是 `glbPath` 指的檔案在不在磁碟上
+  //     ⇒ 今天還有 **38 位**（棘輪在 `heroModelGlbExists.test.ts`，
+  //        開機訊號在 `apps/game-server/src/heroModelHealth.ts` 的 `/healthz`）
+  // ⇒ ⭐ 兩個問題長得很像而分母不同，⛔ 不要把這一份的 0 讀成那一份的 0。
+  //
+  // ⭐ 空掉的那兩格**留著**而不是刪掉：一個空陣列說「這顆替身今天沒有人借」，
+  //   ⛔ 而刪掉會讓「又有人搬回來」變成靜默（這一條原本就寫在 rogue 那一格上）。
+  // ⭐ 2026-09-17（GH#1281）：第四批 37 名裡有**兩位沒有本尊模型**，照 owner
+  //   2026-09-16「全部英雄上架是預設的」先上架、暫時穿方塊人身體 ——
+  //   碧翠絲（`acquired-beatrice`）→ `champ.sela`、Steve／Alex（`acquired-minecraft`）→ `champ.thorne`。
+  //   ⚠️ 它們的理由逐列寫在 `tools/roster-guard/roster-sync.baseline.json` 的 skeletonPlaceholders，
+  //   模型一到位就從這兩格劃掉（⛔ 不是把這份普查放寬）。
+  "champ.sela": ["acquired-beatrice", "sela"],
+  "champ.thorne": ["acquired-minecraft", "thorne"],
+  // blocky-barbarian.glb —— `godie-h02k` 仍直接借用這顆共享 rig。
+  // `godie-umal` 已改指版本模型文件；該文件的 glb 仍是生成替身，所以在下面的
+  // 非 rig／間接替身名單逐位列出，避免把 modelKey 關係與實際 glb 身分混在一起。
+  // ⭐ 2026-09-17（GH#1281／PR #1280）：熊貓（`godie-h02k`）換上論壇模型 ⇒ 這顆 rig 也空了。
+  //   ⚠️ 空陣列**留著**（同上面兩格的理由）：刪掉會讓「又有人搬回來」變成靜默。
+  "champ.skin.barbarian": [],
   "champ.skin.rogue": [],
 };
 
@@ -229,6 +166,20 @@ describe("#226 census: who borrows a stand-in, and which one", () => {
         ...(EXPECTED[key] ?? []),
       ]);
     }
+  });
+
+  it("⭐ GH#1250：出貨的替身判準（模型文件的 glb）＝ 四具 rig 的租戶 ∪ 逐位列名的非 rig 替身", () => {
+    cover("model-standin-census");
+    // 這份普查數的是**四具歷史 rig**（`STAND_IN_MODEL_KEYS`，體素身體規則 `defaultPrefersVoxelBody` 讀它）；
+    // 替身徽章／身分排序／對外 resolved-appearance 讀的是 `standInBody`（看 glb 住在哪）。
+    // ⛔ 兩個分母在此之前沒有任何一條對起來 ⇒ `godie-zombiex`（blocky-undead.glb，不是 rig）兩邊各說各話。
+    // ⭐ 非 rig 的替身逐位列名：換成本人模型的那一位從這裡劃掉；多出一位 ⇒ 紅並指名。
+    // ⭐ 2026-09-17（GH#1281／PR #1280）：`godie-umal` 換上論壇模型 ⇒ 從這張名單劃掉。
+    const NON_RIG_STAND_INS = ["godie-zombiex"];
+    const models = readShippedModelDocs(CONTENT);
+    const derived = ROSTER.filter((c) => isStandInModel(c.modelKey, models.get(c.modelKey ?? "") ?? null)).map((c) => c.id);
+    const rigTenants = STAND_IN_MODEL_KEYS.flatMap((k) => CENSUS.get(k) ?? []);
+    expect(derived.sort()).toEqual([...rigTenants, ...NON_RIG_STAND_INS].sort());
   });
 
   it("the borrower total is exactly the census, and nobody is double counted", () => {

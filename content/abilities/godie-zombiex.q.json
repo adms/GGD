@@ -16,10 +16,10 @@
   ],
   "cooldownTier": "極小",
   "manaCost": [
-    56.0,
-    56.0,
-    56.0,
-    56.0
+    75.0,
+    75.0,
+    75.0,
+    75.0
   ],
   "manaCostTier": "極小",
   "radius": 3,
@@ -45,8 +45,9 @@
   },
   "vfxKey": "fx.prim.void.nova",
   "targetsEnemies": true,
-  "castTimeSec": 1.133,
+  "castTimeSec": 1,
   "rangeTier": "中",
   "range": 6,
-  "radiusTier": "極小"
+  "radiusTier": "極小",
+  "castTimeTier": "極大"
 }

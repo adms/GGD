@@ -1,0 +1,94 @@
+{
+  "id": "lol-blitzcrank.r",
+  "name": "靜電力場",
+  "provenance": "editor-json",
+  "description": "移除身旁敵人护盾，傷害並短暫沉默。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    150.0,
+    150.0,
+    150.0
+  ],
+  "manaCostTier": "小",
+  "range": 0.0,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "shieldBreak",
+      "shape": "circle",
+      "radius": 3,
+      "side": "enemies",
+      "radiusTier": "極小"
+    },
+    {
+      "kind": "damageArea",
+      "damageType": "magic",
+      "amount": {
+        "damageTier": "中"
+      },
+      "radius": 3,
+      "includeOrigin": true,
+      "onHitTargets": [
+        {
+          "kind": "applyStatus",
+          "sourceScope": "caster",
+          "statusId": "lol-blitzcrank.static-silence",
+          "duration": 0.7,
+          "silenced": true
+        }
+      ],
+      "radiusTier": "極小"
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+    "params": {
+      "castType": "self",
+      "castTimeSec": 0.1,
+      "radius": 2.5,
+      "side": "enemies",
+      "effects": [
+        {
+          "kind": "shieldBreak",
+          "shape": "circle",
+          "radius": 3,
+          "side": "enemies"
+        },
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "中"
+          },
+          "radius": 3,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "statusId": "lol-blitzcrank.static-silence",
+              "duration": 0.7,
+              "sourceScope": "caster",
+              "silenced": true
+            }
+          ]
+        }
+      ]
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/lol-blitzcrank.r.webp",
+  "radiusTier": "極小"
+}

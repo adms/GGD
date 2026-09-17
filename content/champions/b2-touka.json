@@ -1,7 +1,7 @@
 {
   "abilities": {
     "E": {
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "castType": "targeted",
       "cooldown": [
         15.0,
@@ -30,10 +30,10 @@
       ],
       "id": "b2-touka.e",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -45,7 +45,7 @@
       "template": {
         "contentSha256": "sha256:cba5b2f29e6ff05af1859172ba4eafd667f95e9c093df2354b73e5c25c16318e",
         "params": {
-          "castTimeSec": 0.567,
+          "castTimeSec": 0.5,
           "damage": {
             "damageTier": "小"
           },
@@ -66,10 +66,11 @@
           "vfxKey": "fx.prim.arcane.slash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-touka.e.webp"
+      "icon": "assets/icons/abilities/b2-touka.e.webp",
+      "castTimeTier": "大"
     },
     "Q": {
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "castType": "ground",
       "cooldown": [
         45.0,
@@ -95,7 +96,7 @@
           ],
           "kind": "delayed",
           "maxTargets": 4,
-          "radius": 3.0,
+          "radius": 3,
           "shape": "circle",
           "side": "enemies",
           "stopOnCasterDeath": true,
@@ -105,10 +106,10 @@
       ],
       "id": "b2-touka.q",
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "maxRank": 4,
       "name": "英雄招募延時坑",
@@ -120,7 +121,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 0.667,
+          "castTimeSec": 0.5,
           "castType": "ground",
           "effects": [
             {
@@ -157,10 +158,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-touka.q.webp"
+      "icon": "assets/icons/abilities/b2-touka.q.webp",
+      "castTimeTier": "大"
     },
     "R": {
-      "castTimeSec": 1.633,
+      "castTimeSec": 1,
       "castType": "targeted",
       "cooldown": [
         90.0,
@@ -169,7 +171,7 @@
       ],
       "cooldownTier": "大",
       "provenance": "editor-json",
-      "description": "「錄取地下室再送出口！」\n消耗目標的定身紀錄，推離 4 單位並小級物理傷害；沒中坑不額外搬人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+      "description": "「錄取地下室再送出口！」\n消耗目標的定身紀錄，推離{{push}}距離並小級物理傷害；沒中坑不額外搬人。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "amount": {
@@ -198,9 +200,9 @@
       ],
       "id": "b2-touka.r",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 3,
@@ -213,7 +215,7 @@
       "template": {
         "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850",
         "params": {
-          "castTimeSec": 1.633,
+          "castTimeSec": 1,
           "castType": "targeted",
           "effects": [
             {
@@ -254,10 +256,11 @@
         }
       ],
       "radiusTier": "極小",
-      "icon": "assets/icons/abilities/b2-touka.r.webp"
+      "icon": "assets/icons/abilities/b2-touka.r.webp",
+      "castTimeTier": "極大"
     },
     "W": {
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.5,
       "castType": "ground",
       "cooldown": [
         15.0,
@@ -267,7 +270,7 @@
       ],
       "cooldownTier": "小",
       "provenance": "editor-json",
-      "description": "「聖劍當釣竿使！」\n聖劍當釣竿：將命中敵人先拉至自己再沿方向拋出 100 WC3 距離（由現有模板換算世界單位），0.4 秒落地造成小級魔法傷害；不是無限高度坑。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
+      "description": "「聖劍當釣竿使！」\n聖劍當釣竿：將命中敵人先拉至自己再沿方向拋出{{push}}距離（由現有模板換算世界單位），0.4 秒落地造成小級魔法傷害；不是無限高度坑。\n上述數值以技能等級 1 為準；升級後採正式編譯數值表。\n角色演出：挖坑招募勇者，履歷要求不看地板。GGD 惡搞改編，非原作招式與數值聲明。",
       "effects": [
         {
           "apexHeight": 0.4,
@@ -291,10 +294,10 @@
       ],
       "id": "b2-touka.w",
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "maxRank": 4,
@@ -307,7 +310,7 @@
         "contentSha256": "sha256:b61b2a1c1ffc981faabdd966f3aeeb6676a6acb846f52b43941474cb27ce883d",
         "params": {
           "apexHeight": 100,
-          "castTimeSec": 0.567,
+          "castTimeSec": 0.5,
           "durationSec": 0.4,
           "grabMode": "dragToCaster",
           "landDamageTier": "小",
@@ -325,7 +328,8 @@
           "vfxKey": "fx.prim.arcane.dash"
         }
       ],
-      "icon": "assets/icons/abilities/b2-touka.w.webp"
+      "icon": "assets/icons/abilities/b2-touka.w.webp",
+      "castTimeTier": "大"
     }
   },
   "archetype": "fighter",
@@ -351,8 +355,8 @@
     "healthRegen": 0.97,
     "lifesteal": 0,
     "manaRegen": 1.41,
-    "maxHealth": 541,
-    "maxMana": 370,
+    "maxHealth": 150,
+    "maxMana": 100,
     "mr": 0,
     "ms": 8,
     "range": 1.6
@@ -367,13 +371,13 @@
     "as": 0,
     "healthRegen": 0.13085306122448978,
     "manaRegen": 0,
-    "maxHealth": 35.000204081632646,
-    "maxMana": 26.357142857142858,
+    "maxHealth": 80,
+    "maxMana": 50,
     "mr": 2.639795918367347
   },
   "msGrowthTier": "極小",
   "id": "b2-touka",
-  "modelKey": "version.body.557a7c4ddcf3fad32609962f3eb6f7e3389184c33b44ee81",
+  "modelKey": "version.body.27ca9ab535eab2e0a5004f08937ea938a8221a7eb3bef181",
   "name": "托卡・史考特",
   "origin": "鬥士",
   "passiveAbility": "b2-touka.passive",
@@ -409,7 +413,7 @@
       "modelKey": "version.body.557a7c4ddcf3fad32609962f3eb6f7e3389184c33b44ee81",
       "label": "ou99 「白西装七夜志贵」（相似造型）",
       "sourceModelKey": "ou99.459257",
-      "modelSha256": "16e858afd2ce2548d90a97a2fb79ad9aeca1ab9e2bc4e3dcf1be26260fb44a35",
+      "modelSha256": "f15d5cf77b211a5aecb9bee48b3f1158cb96d347a316aa23040728d45471243d",
       "binarySha256": "c83555308791d241e3c9fd47ef0d658316041769c7854307e182ebadf7688197",
       "registeredAt": "2026-09-10T11:33:24.879Z",
       "source": {
@@ -419,6 +423,136 @@
         "library": "ou99 偶久網",
         "reference": "https://www.ou99.com/thread-459257-1-1.html"
       }
+    },
+    {
+      "modelKey": "version.body.6b5d4ce5cbe20e22c9771d93f1a0424703d686a2404c935b",
+      "label": "原上線模型",
+      "sourceModelKey": "ou99.459257",
+      "modelSha256": "0e41f4d4f31bf9f228673e6e243848a9b2f5135fe7735abd1b5831141f21625b",
+      "binarySha256": "045182682cbaa3a678bde38c24f80841af27af3c5dba45f483ad2cb69ed58e32",
+      "registeredAt": "2026-09-10T14:45:38.409Z",
+      "source": {
+        "kind": "previous",
+        "character": "托卡・史考特",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/ou99.459257.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.876b9fb91549a606116b97202d8f26287c67cf7ccd331fa4",
+      "label": "绯村剑心",
+      "sourceModelKey": "community.body.38a9c2fc1e57bd94bbce9c721f5fc9f07fa3b941644525e2",
+      "modelSha256": "dc754e8b9899900b4bd237f3729d1f405e636a582d7bb742a3364a8fa3d603ef",
+      "binarySha256": "9fec10feff046ff57fa65eadf0fc91c5922e2fd351d082554f71efe12e200077",
+      "registeredAt": "2026-09-10T14:45:38.417Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "绯村剑心",
+        "work": "神劍闖江湖／浪客劍心",
+        "library": "300heroes",
+        "reference": "300heroes:4e2be7df945bb18fbf27d02a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.8e59c40da8dea0048c612763480a6a8109f5c4ea10d7b4e6",
+      "label": "白西装七夜志贵（論壇相似模型）",
+      "sourceModelKey": "ou99.459257-standard-v2",
+      "modelSha256": "382e317ab9b0b12160b0b06574438c3fda02e63bc400a13067ece1e24f505493",
+      "binarySha256": "b51d432a3d4a8ed33820750880d6c61320dec02d25176aaa4af23e3672c1f1d8",
+      "registeredAt": "2026-09-10T14:48:54.293Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "白西装七夜志贵",
+        "work": "來源作品待核；論壇標題：白西装七夜志贵",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-459257-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.6669e62fc12a89c589d1333582b62657a535f59ba18a7d47",
+      "label": "白西装七夜志贵（論壇相似模型）",
+      "sourceModelKey": "ou99.459257-standard-v2",
+      "modelSha256": "9366198f300aed4f527685f0b2250873e2d26471721ed95c19ee5db50f0a83d3",
+      "binarySha256": "686079d28d1ac9be4f39a930d232bc581907127a74b6091a2eb291fc656e9c6a",
+      "registeredAt": "2026-09-12T23:08:07.667Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "白西装七夜志贵",
+        "work": "來源作品待核；論壇標題：白西装七夜志贵",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-459257-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.d6a7e6b8aa942eeafc8da287ef880022ff45b855f391595f",
+      "label": "绯村剑心",
+      "sourceModelKey": "community.body.38a9c2fc1e57bd94bbce9c721f5fc9f07fa3b941644525e2",
+      "modelSha256": "53cd87af740cedcb5354d19610c0818c16ff66c67554cc379fa412296d9ad872",
+      "binarySha256": "80b6bf61dc158445086293a5d5c87dd37d42f08d6670fdfc3d652f98463e8dd5",
+      "registeredAt": "2026-09-12T23:08:07.967Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "绯村剑心",
+        "work": "神劍闖江湖／浪客劍心",
+        "library": "300heroes",
+        "reference": "300heroes:4e2be7df945bb18fbf27d02a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy"
+      },
+      "automaticEligible": false
+    },
+    {
+      "modelKey": "version.body.27ca9ab535eab2e0a5004f08937ea938a8221a7eb3bef181",
+      "label": "白西装七夜志贵（論壇相似模型）",
+      "sourceModelKey": "ou99.459257-standard-v2",
+      "modelSha256": "587b8b6f67c34ec693838d85a5ef95e417fa0eff5d0cb80e1001a2cd6e2e7d4a",
+      "binarySha256": "686079d28d1ac9be4f39a930d232bc581907127a74b6091a2eb291fc656e9c6a",
+      "registeredAt": "2026-09-13T00:08:59.973Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "白西装七夜志贵",
+        "work": "來源作品待核；論壇標題：白西装七夜志贵",
+        "library": "ou99",
+        "reference": "https://www.ou99.com/thread-459257-1-1.html",
+        "tier": "w3x",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "Warcraft III community model",
+        "sourcePlatform": "Windows",
+        "sourceGameReleaseReference": "https://news.blizzard.com/en-us/article/22636891/loktar-ogar-warcraft-iii-reforged-announced-at-blizzcon"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.e8b5fa2dc3853b72420fe1e2ce90152980d369903a011140",
+      "label": "绯村剑心",
+      "sourceModelKey": "community.body.38a9c2fc1e57bd94bbce9c721f5fc9f07fa3b941644525e2",
+      "modelSha256": "55a7ed2b23f104ff310d02a7f5d01ba108618d9065af381d44ea2ca23a70d0fb",
+      "binarySha256": "80b6bf61dc158445086293a5d5c87dd37d42f08d6670fdfc3d652f98463e8dd5",
+      "registeredAt": "2026-09-13T00:09:00.259Z",
+      "source": {
+        "kind": "style-proxy",
+        "character": "绯村剑心",
+        "work": "神劍闖江湖／浪客劍心",
+        "library": "300heroes",
+        "reference": "300heroes:4e2be7df945bb18fbf27d02a",
+        "tier": "300heroes",
+        "selectionClass": "similar-proxy",
+        "sourceGame": "300英雄",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": false
     }
-  ]
+  ],
+  "modelSelectionMode": "automatic"
 }

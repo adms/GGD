@@ -1,0 +1,478 @@
+{
+  "schema": "ggd-ssbu-superseded-conversion-inventory@1",
+  "sourceId": "gitlab-ssbu-models",
+  "sourceGame": "Super Smash Bros. Ultimate",
+  "platform": "Nintendo Switch",
+  "sourceGameReleasedAt": "2018-12-07",
+  "summary": {
+    "retainedLegacyConversionVersions": 9,
+    "currentCandidatesReferenced": 9,
+    "runtimeSelectable": 0,
+    "runtimeDropdownRegistered": 0,
+    "defaultEligible": 0,
+    "deploymentVerified": 0
+  },
+  "versions": [
+    {
+      "id": "ssbu-mario-c00-blender4513-v2-pre-alpha",
+      "nameZh": "瑪利歐",
+      "originalName": "Mario",
+      "nativeId": "fighter/mario/model/body/c00",
+      "sourceStage": "pre-alpha-fix",
+      "state": "retained-legacy-conversion-stage",
+      "sourceGlb": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2/body.glb",
+        "bytes": 817900,
+        "sha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881"
+      },
+      "stagingCopy": {
+        "gitPath": "content/assets/models/community/2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881.glb",
+        "bytes": 817900,
+        "sha256": "2ecf39cd1711245a4dc2d5fb8a70363dc48048479fe47ed610f34a8296aed881",
+        "state": "untracked-staging-copy-not-a-git-product"
+      },
+      "localConversionRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-mario-c00-blender4513-v2",
+      "s3Backup": {
+        "state": "uploaded-and-readback-verified",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-mario-c00-blender4513-v2/24da6db6dd0bd544f62a74c0b1e30771742ff99da763b2acf9b6867aedc58722.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-mario-c00-blender4513-v2/24da6db6dd0bd544f62a74c0b1e30771742ff99da763b2acf9b6867aedc58722.files.json",
+        "archiveSha256": "24da6db6dd0bd544f62a74c0b1e30771742ff99da763b2acf9b6867aedc58722",
+        "archiveBytes": 3894541,
+        "fileCount": 17,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true,
+        "localReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-mario-c00-blender4513-v2/latest-receipt.json",
+        "receiptSha256": "527bbb7029d60b89f7e5250527637933586984f67da913f5095e297f675c3efd"
+      },
+      "supersededBy": {
+        "candidateId": "ssbu-mario-c00-static-skinned-v2",
+        "gitPath": "content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb",
+        "sha256": "87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257",
+        "reason": "Later transparency normalization and alpha-fixed c00 candidates replace this initial Blender output."
+      },
+      "converted": true,
+      "componentReady": false,
+      "fullHeroModel": false,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "defaultEligible": false,
+      "deploymentStatus": "not-deployed",
+      "limitations": [
+        "Retained for provenance and reconstruction only; the later candidate is the current accepted conversion.",
+        "This is not a model@1 document, backend dropdown option, or complete hero.",
+        "No native animation binding is implied by this static conversion-stage record."
+      ]
+    },
+    {
+      "id": "ssbu-chrom-c00-worldblender-batch2-v1-pre-alpha",
+      "nameZh": "庫洛姆",
+      "originalName": "Chrom",
+      "nativeId": "fighter/chrom/model/body/c00",
+      "sourceStage": "pre-alpha-fix",
+      "state": "retained-legacy-conversion-stage",
+      "sourceGlb": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch2-v1/chrom/first/body.glb",
+        "bytes": 957288,
+        "sha256": "2f054f40a499c09269298af380a7240aa698fcf41ba32523b91e73706b36a527"
+      },
+      "stagingCopy": {
+        "gitPath": "content/assets/models/community/2f054f40a499c09269298af380a7240aa698fcf41ba32523b91e73706b36a527.glb",
+        "bytes": 957288,
+        "sha256": "2f054f40a499c09269298af380a7240aa698fcf41ba32523b91e73706b36a527",
+        "state": "untracked-staging-copy-not-a-git-product"
+      },
+      "localConversionRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch2-v1/chrom",
+      "s3Backup": {
+        "state": "uploaded-and-readback-verified",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch2-v1/chrom/68dae159f9f16cfb4a7cc55f44614f6c8b9db1e5a19821fe7edd1cd13cb4845f.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch2-v1/chrom/68dae159f9f16cfb4a7cc55f44614f6c8b9db1e5a19821fe7edd1cd13cb4845f.files.json",
+        "archiveSha256": "68dae159f9f16cfb4a7cc55f44614f6c8b9db1e5a19821fe7edd1cd13cb4845f",
+        "archiveBytes": 11063353,
+        "fileCount": 45,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true,
+        "localReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-batch2-v1-chrom/latest-receipt.json",
+        "receiptSha256": "67622bdc3255112e000be1a99a58dc7af9b1afab6bd50e538f8662f8ca81065f"
+      },
+      "supersededBy": {
+        "candidateId": "ssbu-chrom-c00-static-skinned-v1",
+        "gitPath": "content/assets/models/community/fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587.glb",
+        "sha256": "fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587",
+        "reason": "The v3 alpha-fixed material build replaces this pre-alpha-fix output."
+      },
+      "converted": true,
+      "componentReady": false,
+      "fullHeroModel": false,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "defaultEligible": false,
+      "deploymentStatus": "not-deployed",
+      "limitations": [
+        "Retained for provenance and reconstruction only; the later candidate is the current accepted conversion.",
+        "This is not a model@1 document, backend dropdown option, or complete hero.",
+        "No native animation binding is implied by this static conversion-stage record."
+      ]
+    },
+    {
+      "id": "ssbu-daisy-c00-worldblender-batch3-v1-pre-alpha",
+      "nameZh": "黛西",
+      "originalName": "Daisy",
+      "nativeId": "fighter/daisy/model/body/c00",
+      "sourceStage": "pre-alpha-fix",
+      "state": "retained-legacy-conversion-stage",
+      "sourceGlb": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch3-v1/daisy/first/body.glb",
+        "bytes": 840384,
+        "sha256": "4e08b72c303c6257a2c0d90a9c1bd7c2ed92355b558a3ef883c8a32aa2685860"
+      },
+      "stagingCopy": {
+        "gitPath": "content/assets/models/community/4e08b72c303c6257a2c0d90a9c1bd7c2ed92355b558a3ef883c8a32aa2685860.glb",
+        "bytes": 840384,
+        "sha256": "4e08b72c303c6257a2c0d90a9c1bd7c2ed92355b558a3ef883c8a32aa2685860",
+        "state": "untracked-staging-copy-not-a-git-product"
+      },
+      "localConversionRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch3-v1/daisy",
+      "s3Backup": {
+        "state": "uploaded-and-readback-verified",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch3-v1/daisy/838688afd3e8ec38f7d4f49f8c9c6922be4c7a7ac273f9d58215f13b75d92a56.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch3-v1/daisy/838688afd3e8ec38f7d4f49f8c9c6922be4c7a7ac273f9d58215f13b75d92a56.files.json",
+        "archiveSha256": "838688afd3e8ec38f7d4f49f8c9c6922be4c7a7ac273f9d58215f13b75d92a56",
+        "archiveBytes": 10077291,
+        "fileCount": 49,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true,
+        "localReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-batch3-v1-daisy/latest-receipt.json",
+        "receiptSha256": "a8b102c21c97d70f982c7743b4e6e0a15af2f9928a3f0abef510b527807fc718"
+      },
+      "supersededBy": {
+        "candidateId": "ssbu-daisy-c00-static-skinned-v1",
+        "gitPath": "content/assets/models/community/22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a.glb",
+        "sha256": "22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a",
+        "reason": "The v3 alpha-fixed material build replaces this pre-alpha-fix output."
+      },
+      "converted": true,
+      "componentReady": false,
+      "fullHeroModel": false,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "defaultEligible": false,
+      "deploymentStatus": "not-deployed",
+      "limitations": [
+        "Retained for provenance and reconstruction only; the later candidate is the current accepted conversion.",
+        "This is not a model@1 document, backend dropdown option, or complete hero.",
+        "No native animation binding is implied by this static conversion-stage record."
+      ]
+    },
+    {
+      "id": "ssbu-peach-c00-worldblender-batch3-v1-pre-alpha",
+      "nameZh": "碧姬公主",
+      "originalName": "Peach",
+      "nativeId": "fighter/peach/model/body/c00",
+      "sourceStage": "pre-alpha-fix",
+      "state": "retained-legacy-conversion-stage",
+      "sourceGlb": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch3-v1/peach/first/body.glb",
+        "bytes": 840920,
+        "sha256": "6ed59789afe9a09b7883fa23a3f4eb330e15e57c4f5e92c3d51c5d96c26847b0"
+      },
+      "stagingCopy": {
+        "gitPath": "content/assets/models/community/6ed59789afe9a09b7883fa23a3f4eb330e15e57c4f5e92c3d51c5d96c26847b0.glb",
+        "bytes": 840920,
+        "sha256": "6ed59789afe9a09b7883fa23a3f4eb330e15e57c4f5e92c3d51c5d96c26847b0",
+        "state": "untracked-staging-copy-not-a-git-product"
+      },
+      "localConversionRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch3-v1/peach",
+      "s3Backup": {
+        "state": "uploaded-and-readback-verified",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch3-v1/peach/89a31ec976ed8202d3fd6f29b72422b02ba2ef59728ca7e91b8113501559667c.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch3-v1/peach/89a31ec976ed8202d3fd6f29b72422b02ba2ef59728ca7e91b8113501559667c.files.json",
+        "archiveSha256": "89a31ec976ed8202d3fd6f29b72422b02ba2ef59728ca7e91b8113501559667c",
+        "archiveBytes": 9559234,
+        "fileCount": 43,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true,
+        "localReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-batch3-v1-peach/latest-receipt.json",
+        "receiptSha256": "4e18b1b181377cafafecfcad50f86e5ab4112a72e09821f26764300e7d908b77"
+      },
+      "supersededBy": {
+        "candidateId": "ssbu-peach-c00-static-skinned-v1",
+        "gitPath": "content/assets/models/community/b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf.glb",
+        "sha256": "b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf",
+        "reason": "The v3 alpha-fixed material build replaces this pre-alpha-fix output."
+      },
+      "converted": true,
+      "componentReady": false,
+      "fullHeroModel": false,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "defaultEligible": false,
+      "deploymentStatus": "not-deployed",
+      "limitations": [
+        "Retained for provenance and reconstruction only; the later candidate is the current accepted conversion.",
+        "This is not a model@1 document, backend dropdown option, or complete hero.",
+        "No native animation binding is implied by this static conversion-stage record."
+      ]
+    },
+    {
+      "id": "ssbu-lucina-c00-worldblender-batch2-v1-pre-alpha",
+      "nameZh": "露琪娜",
+      "originalName": "Lucina",
+      "nativeId": "fighter/lucina/model/body/c00",
+      "sourceStage": "pre-alpha-fix",
+      "state": "retained-legacy-conversion-stage",
+      "sourceGlb": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch2-v1/lucina/first/body.glb",
+        "bytes": 838712,
+        "sha256": "7e90a4b6ba22ee5cc2f28e06d8eca8be050db5e1e208cd03e185b6896b421fe4"
+      },
+      "stagingCopy": {
+        "gitPath": "content/assets/models/community/7e90a4b6ba22ee5cc2f28e06d8eca8be050db5e1e208cd03e185b6896b421fe4.glb",
+        "bytes": 838712,
+        "sha256": "7e90a4b6ba22ee5cc2f28e06d8eca8be050db5e1e208cd03e185b6896b421fe4",
+        "state": "untracked-staging-copy-not-a-git-product"
+      },
+      "localConversionRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch2-v1/lucina",
+      "s3Backup": {
+        "state": "uploaded-and-readback-verified",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch2-v1/lucina/ff2ee818096417de97d8ba230975db90c9ab931efa5661eeeea7b11b84d1e364.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch2-v1/lucina/ff2ee818096417de97d8ba230975db90c9ab931efa5661eeeea7b11b84d1e364.files.json",
+        "archiveSha256": "ff2ee818096417de97d8ba230975db90c9ab931efa5661eeeea7b11b84d1e364",
+        "archiveBytes": 9529383,
+        "fileCount": 43,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true,
+        "localReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-batch2-v1-lucina/latest-receipt.json",
+        "receiptSha256": "7d470397cd207e3e582fcef6f37565396edb2fb64950406c7aa62adcbf47dd95"
+      },
+      "supersededBy": {
+        "candidateId": "ssbu-lucina-c00-static-skinned-v1",
+        "gitPath": "content/assets/models/community/44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170.glb",
+        "sha256": "44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170",
+        "reason": "The v3 alpha-fixed material build replaces this pre-alpha-fix output."
+      },
+      "converted": true,
+      "componentReady": false,
+      "fullHeroModel": false,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "defaultEligible": false,
+      "deploymentStatus": "not-deployed",
+      "limitations": [
+        "Retained for provenance and reconstruction only; the later candidate is the current accepted conversion.",
+        "This is not a model@1 document, backend dropdown option, or complete hero.",
+        "No native animation binding is implied by this static conversion-stage record."
+      ]
+    },
+    {
+      "id": "ssbu-sonic-c00-blender4513-v1-pre-formal-decimation",
+      "nameZh": "索尼克",
+      "originalName": "Sonic",
+      "nativeId": "fighter/sonic/model/body/c00",
+      "sourceStage": "pre-formal-decimation",
+      "state": "retained-legacy-conversion-stage",
+      "sourceGlb": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-blender4513-v1/body.glb",
+        "bytes": 887140,
+        "sha256": "ce49f94685f5adf1554688b944b18253c46e9d1b45b6c15bf14e3084cc13bd40"
+      },
+      "stagingCopy": {
+        "gitPath": "content/assets/models/community/ce49f94685f5adf1554688b944b18253c46e9d1b45b6c15bf14e3084cc13bd40.glb",
+        "bytes": 887140,
+        "sha256": "ce49f94685f5adf1554688b944b18253c46e9d1b45b6c15bf14e3084cc13bd40",
+        "state": "untracked-staging-copy-not-a-git-product"
+      },
+      "localConversionRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-sonic-c00-blender4513-v1",
+      "s3Backup": {
+        "state": "uploaded-and-readback-verified",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-c00-blender4513-v1/f895f83591e9013e4e9a4cced14a9ed51d01cd3d36ae60aa3f94ba0c23cbcf4e.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-sonic-c00-blender4513-v1/f895f83591e9013e4e9a4cced14a9ed51d01cd3d36ae60aa3f94ba0c23cbcf4e.files.json",
+        "archiveSha256": "f895f83591e9013e4e9a4cced14a9ed51d01cd3d36ae60aa3f94ba0c23cbcf4e",
+        "archiveBytes": 3478071,
+        "fileCount": 19,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true,
+        "localReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-sonic-c00-blender4513-v1/latest-receipt.json",
+        "receiptSha256": "4c030a2d15e29b96fc76e2363d8a2c5089f42e81cf8d3d5197d12ce61ccbf210"
+      },
+      "supersededBy": {
+        "candidateId": "ssbu-sonic-c00-static-skinned-v2",
+        "gitPath": "content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
+        "sha256": "5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3",
+        "reason": "The 8,980-triangle early output is retained; the accepted 7,900-triangle formal-decimation candidate supersedes it."
+      },
+      "converted": true,
+      "componentReady": false,
+      "fullHeroModel": false,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "defaultEligible": false,
+      "deploymentStatus": "not-deployed",
+      "limitations": [
+        "Retained for provenance and reconstruction only; the later candidate is the current accepted conversion.",
+        "This is not a model@1 document, backend dropdown option, or complete hero.",
+        "No native animation binding is implied by this static conversion-stage record."
+      ]
+    },
+    {
+      "id": "ssbu-link-c00-blender4513-v2-pre-alpha",
+      "nameZh": "林克",
+      "originalName": "Link",
+      "nativeId": "fighter/link/model/body/c00",
+      "sourceStage": "pre-alpha-fix",
+      "state": "retained-legacy-conversion-stage",
+      "sourceGlb": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-link-c00-blender4513-v2/atlas-final.glb",
+        "bytes": 981540,
+        "sha256": "de07bd61fbf9b46548727a31e0e128157757fad96ef38f767cae0e158ce36d5b"
+      },
+      "stagingCopy": {
+        "gitPath": "content/assets/models/community/de07bd61fbf9b46548727a31e0e128157757fad96ef38f767cae0e158ce36d5b.glb",
+        "bytes": 981540,
+        "sha256": "de07bd61fbf9b46548727a31e0e128157757fad96ef38f767cae0e158ce36d5b",
+        "state": "untracked-staging-copy-not-a-git-product"
+      },
+      "localConversionRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-link-c00-blender4513-v2",
+      "s3Backup": {
+        "state": "uploaded-and-readback-verified",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-link-c00-blender4513-v2/4f47d8ae3a541c22153a08464df8fdbac30afc22dcb075153a8ac3dad5e1c605.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-link-c00-blender4513-v2/4f47d8ae3a541c22153a08464df8fdbac30afc22dcb075153a8ac3dad5e1c605.files.json",
+        "archiveSha256": "4f47d8ae3a541c22153a08464df8fdbac30afc22dcb075153a8ac3dad5e1c605",
+        "archiveBytes": 11091699,
+        "fileCount": 33,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true,
+        "localReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-link-c00-blender4513-v2/latest-receipt.json",
+        "receiptSha256": "5ae9aa501b367889eeffce10cebf3421927a78c99bdf36578b10283f619c8cc0"
+      },
+      "supersededBy": {
+        "candidateId": "ssbu-link-c00-static-skinned-v1",
+        "gitPath": "content/assets/models/community/ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754.glb",
+        "sha256": "ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754",
+        "reason": "The alpha-fixed c00 candidate replaces this initial atlas output."
+      },
+      "converted": true,
+      "componentReady": false,
+      "fullHeroModel": false,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "defaultEligible": false,
+      "deploymentStatus": "not-deployed",
+      "limitations": [
+        "Retained for provenance and reconstruction only; the later candidate is the current accepted conversion.",
+        "This is not a model@1 document, backend dropdown option, or complete hero.",
+        "No native animation binding is implied by this static conversion-stage record."
+      ]
+    },
+    {
+      "id": "ssbu-toonlink-c00-worldblender-batch3-v1-pre-alpha",
+      "nameZh": "卡通林克",
+      "originalName": "Toon Link",
+      "nativeId": "fighter/toonlink/model/body/c00",
+      "sourceStage": "pre-alpha-fix",
+      "state": "retained-legacy-conversion-stage",
+      "sourceGlb": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch3-v1/toonlink/first/merged.glb",
+        "bytes": 968308,
+        "sha256": "e2b90abee8f27901bac37689200cfff1bdf35057928ba3390cc07033d60e9794"
+      },
+      "stagingCopy": {
+        "gitPath": "content/assets/models/community/e2b90abee8f27901bac37689200cfff1bdf35057928ba3390cc07033d60e9794.glb",
+        "bytes": 968308,
+        "sha256": "e2b90abee8f27901bac37689200cfff1bdf35057928ba3390cc07033d60e9794",
+        "state": "untracked-staging-copy-not-a-git-product"
+      },
+      "localConversionRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch3-v1/toonlink",
+      "s3Backup": {
+        "state": "uploaded-and-readback-verified",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch3-v1/toonlink/ae042147a56a75b6f5aa225c24e92aa8edcef414a2069dee453a0028126d6f52.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch3-v1/toonlink/ae042147a56a75b6f5aa225c24e92aa8edcef414a2069dee453a0028126d6f52.files.json",
+        "archiveSha256": "ae042147a56a75b6f5aa225c24e92aa8edcef414a2069dee453a0028126d6f52",
+        "archiveBytes": 9735440,
+        "fileCount": 43,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true,
+        "localReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-batch3-v1-toonlink/latest-receipt.json",
+        "receiptSha256": "5f23d315cbc3f50e101bfc381ce5652370baa5c482bf4673d9c5f6b045e131e4"
+      },
+      "supersededBy": {
+        "candidateId": "ssbu-toonlink-c00-static-skinned-v1",
+        "gitPath": "content/assets/models/community/fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540.glb",
+        "sha256": "fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540",
+        "reason": "The v3 alpha-fixed material build replaces this pre-alpha-fix output."
+      },
+      "converted": true,
+      "componentReady": false,
+      "fullHeroModel": false,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "defaultEligible": false,
+      "deploymentStatus": "not-deployed",
+      "limitations": [
+        "Retained for provenance and reconstruction only; the later candidate is the current accepted conversion.",
+        "This is not a model@1 document, backend dropdown option, or complete hero.",
+        "No native animation binding is implied by this static conversion-stage record."
+      ]
+    },
+    {
+      "id": "ssbu-ganondorf-c00-worldblender-batch2-v1-pre-alpha",
+      "nameZh": "加儂多夫",
+      "originalName": "Ganondorf",
+      "nativeId": "fighter/ganon/model/body/c00",
+      "sourceStage": "pre-alpha-fix",
+      "state": "retained-legacy-conversion-stage",
+      "sourceGlb": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch2-v1/ganon/first/merged.glb",
+        "bytes": 1250324,
+        "sha256": "ec89a1feae9ee7f467e0cd8e6b3b76ba408a8d963131fd5746dccf2173d5098f"
+      },
+      "stagingCopy": {
+        "gitPath": "content/assets/models/community/ec89a1feae9ee7f467e0cd8e6b3b76ba408a8d963131fd5746dccf2173d5098f.glb",
+        "bytes": 1250324,
+        "sha256": "ec89a1feae9ee7f467e0cd8e6b3b76ba408a8d963131fd5746dccf2173d5098f",
+        "state": "untracked-staging-copy-not-a-git-product"
+      },
+      "localConversionRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-worldblender-c00-batch2-v1/ganon",
+      "s3Backup": {
+        "state": "uploaded-and-readback-verified",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch2-v1/ganon/e7bee74814895cf807cc5321675df138974923bf87b4dad8685d38ed6cfcdd40.tar.gz",
+        "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-worldblender-c00-batch2-v1/ganon/e7bee74814895cf807cc5321675df138974923bf87b4dad8685d38ed6cfcdd40.files.json",
+        "archiveSha256": "e7bee74814895cf807cc5321675df138974923bf87b4dad8685d38ed6cfcdd40",
+        "archiveBytes": 10259566,
+        "fileCount": 43,
+        "fullGetVerified": true,
+        "allMemberSha256Verified": true,
+        "localUnchanged": true,
+        "localReceiptPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-worldblender-c00-batch2-v1-ganon/latest-receipt.json",
+        "receiptSha256": "3e80bdbc2a65e0f405570c1d5a3ce567f30d02059984a6e21eea8c76ea5a6251"
+      },
+      "supersededBy": {
+        "candidateId": "ssbu-ganondorf-c00-static-skinned-v1",
+        "gitPath": "content/assets/models/community/46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b.glb",
+        "sha256": "46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b",
+        "reason": "The v3 alpha-fixed material build replaces this pre-alpha-fix output."
+      },
+      "converted": true,
+      "componentReady": false,
+      "fullHeroModel": false,
+      "runtimeSelectable": false,
+      "runtimeDropdownRegistered": false,
+      "defaultEligible": false,
+      "deploymentStatus": "not-deployed",
+      "limitations": [
+        "Retained for provenance and reconstruction only; the later candidate is the current accepted conversion.",
+        "This is not a model@1 document, backend dropdown option, or complete hero.",
+        "No native animation binding is implied by this static conversion-stage record."
+      ]
+    }
+  ],
+  "rebuild": "python3 tools/hero-model-library/source-workflows/ssbu-ultimate-nsandns2-v1/archive_ssbu_superseded_versions.py --write",
+  "scopeBoundary": "Retained local/S3 conversion stages only. Current accepted candidates remain separate and are the only records eligible for later hero binding."
+}

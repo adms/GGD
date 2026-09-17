@@ -422,7 +422,7 @@ function main(): void {
       `\ninvoking optimiser on ${paths.length} queued model(s) (${args.apply ? "APPLY" : "dry run"}${args.geometry ? ", +geometry" : ""})…\n`,
     );
     try {
-      execFileSync("npx", ["tsx", ...optArgs], { cwd: ROOT, stdio: "inherit" });
+      execFileSync(process.execPath, ["--import", "tsx", ...optArgs], { cwd: ROOT, stdio: "inherit" });
     } catch {
       process.stderr.write("worklist: the optimiser reported a non-zero exit — inspect the output above\n");
       process.exit(1);

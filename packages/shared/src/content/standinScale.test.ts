@@ -15,6 +15,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../testkit/cover";
+import { readShippedModelDocs } from "../../testkit/shippedModelDocs";
 import {
   GENERATED_BODY_GLB_PREFIX,
   isStandinBodyGlb,
@@ -74,9 +75,11 @@ const ROSTER = champions(join(CONTENT, "champions"));
  * 在嗎」的問題都要問兩個目錄 —— 只問營運那一份,會把歸檔誤判成孤兒。
  */
 const ARCHIVED_IDS = new Set(champions(join(CONTENT, "_legacy/champions")).map((c) => c.id));
-const STANDIN_IDS = ROSTER.filter((c) => STAND_IN_MODEL_KEYS.includes(c.modelKey ?? "")).map(
-  (c) => c.id,
-);
+const SHIPPED_MODELS = readShippedModelDocs(CONTENT);
+const STANDIN_IDS = ROSTER.filter((c) => {
+  if (STAND_IN_MODEL_KEYS.includes(c.modelKey ?? "")) return true;
+  return isStandinBodyGlb(SHIPPED_MODELS.get(c.modelKey ?? "")?.glbPath);
+}).map((c) => c.id);
 
 /**
  * 出貨值刻意跟地圖不同的四位 —— owner 依角色設定手調的,note 裡各自寫著
@@ -227,11 +230,23 @@ describe("#77 stand-in fallback scale — 資料層", () => {
       const ov = OVERRIDES[id]!;
       expect(modelRelativeScaleOf(ov), `${id} 其實就等於地圖 usca`).not.toBe(ov.usca);
       if (!ids.has(id)) continue; // 歸檔的:引擎讀不到,不會走回退,以下不適用
+      // ⭐⭐ 2026-09-11（GH#1211）：**第三種「不適用」—— 畢業**。
+      // `godie-ubal`／`godie-o030` 拿到了自己的 `version.body.*` 模型
+      // ⇒ ⛔ 它們**不再走體素回退**，這一格 override 因此**休眠**（⛔ 不是死條目）。
+      // ⚠️ ⛔ 刻意**不刪**：那些數字是 owner 調過的 lore 值（#77／#150），
+      // ⭐ 而「哪天它退回體素」時我們要的正是這個值。⇒ 休眠，⛔ 不是刪除。
+      // ⭐ 而它仍然通過上面那條「必須與地圖 usca 不同」—— 資料本身照驗。
+      if (!STANDIN_IDS.includes(id)) continue;
       liveExemptions++;
-      expect(STANDIN_IDS.includes(id), `${id} 不會走回退,不該掛在這裡`).toBe(true);
     }
     // 不是「豁免名單整份都歸檔了所以上面每一條都空過」
-    expect(liveExemptions).toBeGreaterThan(0);
+    // ⭐⭐ 2026-09-16（PR #1280）前提消失：最後兩位帶地圖 usca 的 w3x 替身（熊貓 h02k、拳四郎 umal）換上 ou99 論壇模型。
+    //   owner（逐字）：「我應該全部都有綁模型 並且不是體素orWar3 才對(除了喪標麥可本來就是體素設定)」
+    //   ⛔ 空迴圈不算通過 ⇒ 改成把「今天還穿通用身體的是誰」逐位釘住，名單一動就指名道姓：
+    //   喪標麥可（owner 指定）· sela／thorne（開機骨架）· 碧翠絲／Steve（第四批暫代，素材庫還沒有本尊模型）。
+    const STANDINS_TODAY = ["acquired-beatrice", "acquired-minecraft", "godie-zombiex", "sela", "thorne"];
+    if (liveExemptions === 0) expect([...STANDIN_IDS].sort()).toEqual(STANDINS_TODAY);
+    else expect(liveExemptions).toBeGreaterThan(0);
   });
 
   it("回退倍率永遠不會超過地圖要求的大小(除了登記在案的設定例外)", () => {
@@ -256,7 +271,13 @@ describe("#77 stand-in fallback scale — 資料層", () => {
     // 縮到 78 位、替身借用者剩 21 位的當下它就紅了,而縮小正是預期中的事。
     // 它要擋的其實是「上面那個迴圈一位都沒檢查到,所以 `invented` 空得毫無意義」
     // ——那就直接數檢查了幾位,不要去釘一個會被 owner 每週改動的名冊大小。
-    expect(examined, "上面那個迴圈一位都沒檢查到 —— 空陣列不代表通過").toBeGreaterThan(0);
+    // ⭐⭐ 2026-09-16（PR #1280）前提消失：最後兩位帶地圖 usca 的 w3x 替身（熊貓 h02k、拳四郎 umal）換上 ou99 論壇模型。
+    //   owner（逐字）：「我應該全部都有綁模型 並且不是體素orWar3 才對(除了喪標麥可本來就是體素設定)」
+    //   ⛔ 空迴圈不算通過 ⇒ 改成把「今天還穿通用身體的是誰」逐位釘住，名單一動就指名道姓：
+    //   喪標麥可（owner 指定）· sela／thorne（開機骨架）· 碧翠絲／Steve（第四批暫代，素材庫還沒有本尊模型）。
+    const STANDINS_TODAY = ["acquired-beatrice", "acquired-minecraft", "godie-zombiex", "sela", "thorne"];
+    if (examined === 0) expect([...STANDIN_IDS].sort()).toEqual(STANDINS_TODAY);
+    else expect(examined, "上面那個迴圈一位都沒檢查到 —— 空陣列不代表通過").toBeGreaterThan(0);
   });
 
   it("2× 以上的方塊人只有地圖真的寫成巨人的那一位,名單凍結", () => {
@@ -267,9 +288,13 @@ describe("#77 stand-in fallback scale — 資料層", () => {
       .filter(([, s]) => s > 2)
       .map(([id]) => id)
       .sort();
-    expect(tall, "多了一位回退時比 3.6u 還高的方塊人 —— 是地圖真的這樣寫嗎?").toEqual(
-      Object.keys(DELIBERATE_GIANTS).sort(),
-    );
+    // ⭐⭐ 2026-09-11（GH#1211）：`godie-o030` **畢業了**（拿到 `version.body.def15fb0…`）
+    // ⇒ 它不再走體素回退 ⇒ ⛔ 它不在 `STANDIN_IDS` 裡 ⇒ `tall` 今天是**空的**。
+    // ⭐ 所以比對的是「巨人名單裡**還會走回退**的那些」，⛔ 不是整份 `DELIBERATE_GIANTS`
+    // —— ⭐ 那份名單**留著**（它記的是「地圖真的把它寫成巨人」這個事實，
+    //    ⛔ 而畢業並不會讓那個事實變假；哪天它退回體素，這一條會自己醒過來）。
+    const giantsOnVoxel = Object.keys(DELIBERATE_GIANTS).filter((id) => STANDIN_IDS.includes(id)).sort();
+    expect(tall, "多了一位回退時比 3.6u 還高的方塊人 —— 是地圖真的這樣寫嗎?").toEqual(giantsOnVoxel);
     for (const [id, why] of Object.entries(DELIBERATE_GIANTS)) {
       expect(why.length).toBeGreaterThan(20);
       // 而且真的是照抄地圖,不是誰手滑打大的

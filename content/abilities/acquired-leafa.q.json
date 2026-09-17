@@ -1,0 +1,62 @@
+{
+  "id": "acquired-leafa.q",
+  "name": "精靈補給到府",
+  "provenance": "editor-json",
+  "description": "為指定隊友回復130生命。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "cooldownTier": "小",
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 6,
+  "rangeTier": "中",
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "heal",
+      "amount": {
+        "flat": 130,
+        "ratios": [],
+        "perRank": [
+          0,
+          65,
+          130,
+          195
+        ]
+      }
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+    "params": {
+      "target": "ally",
+      "amount": {
+        "flat": 130,
+        "ratios": [],
+        "perRank": [
+          0,
+          65,
+          130,
+          195
+        ]
+      }
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/acquired-leafa.q.webp"
+}

@@ -2,14 +2,14 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_6fbc4aae62ba`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
-> 資料列：**907**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-10T06:39:58.329461Z`；英雄 130 · 道具 116 · 技能 650）；即時名單 `GET /api/v1/curation/whitelist`
+> 產生自 contentVersion **`cv_c146a194de5f`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 資料列：**1129**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-10T06:39:58.329461Z`；英雄 130 · 道具 116 · 技能 650）；即時名單 `GET /api/v1/curation/whitelist`
 
-`content/abilities/*.json` 共 **907** 份，每個英雄每個 slot 一份：天生 PASSIVE 150　·　Q 152　·　W 152　·　E 152　·　R 152　·　EX 149。
+`content/abilities/*.json` 共 **1129** 份，每個英雄每個 slot 一份：天生 PASSIVE 187　·　Q 189　·　W 189　·　E 189　·　R 189　·　EX 186。
 
 > 本檔的數值是 `content/` 的**原始值**，未套用 `combat-env` 全域倍率（`content/config/combat-env.json`）。遊戲內顯示的一律是乘算後的最終值，所以畫面上的冷卻／傷害／生命與這裡不會相同 —— 那是預期行為，不是資料錯誤。
 >
-> **`slot` 有六種：`PASSIVE`（天生技）＋ Q／W／E／R／EX。** 天生技是 w3x 的 `NN-00`，**等級 1 就擁有**，doc id 是 `<championId>.passive`，由 champion doc 的 `passiveAbility` 指過來；共 **150** 份（116 份 `innateKind:passive` 純被動、34 份 `innateKind:active` 有冷卻的天生主動）。原本的匯入把這個 slot 整個漏掉了，這批是從原始地圖還原回來的。
+> **`slot` 有六種：`PASSIVE`（天生技）＋ Q／W／E／R／EX。** 天生技是 w3x 的 `NN-00`，**等級 1 就擁有**，doc id 是 `<championId>.passive`，由 champion doc 的 `passiveAbility` 指過來；共 **187** 份（153 份 `innateKind:passive` 純被動、34 份 `innateKind:active` 有冷卻的天生主動）。原本的匯入把這個 slot 整個漏掉了，這批是從原始地圖還原回來的。
 >
 > **不要跟 champion doc 上那個舊的 `passive` 區塊搞混**：那是掛在 QWER 技能上的被動型效果（`型態` 欄標「被動」的那些），跟天生技 slot 是兩回事。
 >
@@ -22,6 +22,162 @@
 | id | 名稱 | slot | 型態 | 編號 | 擁有者 | 開放 | 短效果 |
 |---|---|---|---|---|---|---|---|
 | `godie-zombieking.passive` | 殭屍王 - leap吸血 | PASSIVE | 天生·主動 | — | **（無主）** | — | [天生][主動][指定][無上限施法距離] |
+| `acquired-alice.passive` | 整合騎士查票 | PASSIVE | 天生·被動 | — | `acquired-alice` 愛麗絲·滋貝魯庫（Alice Zuberg） | — | 受到傷害時獲得110護盾3秒，內置冷卻10秒。 |
+| `acquired-alice.q` | 金木樨停車單 | Q | 主動 | — | `acquired-alice` 愛麗絲·滋貝魯庫（Alice Zuberg） | — | 落點敵人鎖足1.2秒，為花瓣陣列留下目標。 |
+| `acquired-alice.w` | 騎士擔保 | W | 主動 | — | `acquired-alice` 愛麗絲·滋貝魯庫（Alice Zuberg） | — | 為指定隊友提供130護盾，持續3秒。 |
+| `acquired-alice.e` | 騎士查勤 | E | 主動 | — | `acquired-alice` 愛麗絲·滋貝魯庫（Alice Zuberg） | — | 跳至指定落點造成極小級物理傷害。 |
+| `acquired-alice.r` | 花瓣罰單連發 | R | 主動 | — | `acquired-alice` 愛麗絲·滋貝魯庫（Alice Zuberg） | — | 周圍向內依序發出6道射線，每道極小級魔法傷害；在Q鎖足後施放。 |
+| `acquired-alice.ex` | 今天不准加班受傷 | EX | 主動 | — | `acquired-alice` 愛麗絲·滋貝魯庫（Alice Zuberg） | — | 自身獲得3秒180護盾，抵擋被集火。 |
+| `acquired-astralym.passive` | 星蝕欠款 | PASSIVE | 天生·被動 | — | `acquired-astralym` 枯星龍 | — | 普攻給目標留下 4 秒星蝕，內置冷卻 2 秒；Q 可消耗自己施加的星蝕。 |
+| `acquired-astralym.q` | 逾期星光 | Q | 主動 | — | `acquired-astralym` 枯星龍 | — | 消耗目標星蝕時造成中級魔法傷害並鎖足 0.7 秒；無標記時只造成小級傷害。 |
+| `acquired-astralym.w` | 失重通知 | W | 主動 | — | `acquired-astralym` 枯星龍 | — | 在落點造成小級範圍傷害，命中者減速 30% 持續 1.5 秒。 |
+| `acquired-astralym.e` | 星間挪位 | E | 主動 | — | `acquired-astralym` 枯星龍 | — | 瞬移到施法距離內的指定地點；不產生傳送門或跨場移動。 |
+| `acquired-astralym.r` | 枯星下班鐘 | R | 主動 | — | `acquired-astralym` 枯星龍 | — | 在落點持續三輪星震，每輪造成小級魔法傷害；走出範圍可避開後續震波。 |
+| `acquired-astralym.ex` | 末日也要蓋章 | EX | 主動 | — | `acquired-astralym` 枯星龍 | — | 自身取得 120 護盾與 2 秒移速增益；用於為下一次普攻標記找角度。 |
+| `acquired-asuna.passive` | 開飯倒數 | PASSIVE | 天生·被動 | — | `acquired-asuna` 亞絲娜／結城明日奈 | — | 技能命中後獲得20%攻速3秒，內置冷卻5秒。 |
+| `acquired-asuna.q` | 細劍取餐號 | Q | 主動 | — | `acquired-asuna` 亞絲娜／結城明日奈 | — | 近戰小級物理傷害并減速25%，持續1.2秒。 |
+| `acquired-asuna.w` | 閃光趕飯 | W | 主動 | — | `acquired-asuna` 亞絲娜／結城明日奈 | — | 獲得3秒極小級移速與90護盾，準備突進。 |
+| `acquired-asuna.e` | 插入隊伍最前面 | E | 主動 | — | `acquired-asuna` 亞絲娜／結城明日奈 | — | 短距離突進指定敵人旁造成小級物理傷害，落點保留距離。 |
+| `acquired-asuna.r` | 星屑飛濺別灑到湯 | R | 主動 | — | `acquired-asuna` 亞絲娜／結城明日奈 | — | 近戰鎖足後四次連刺与收尾，施法者没有無敵。 |
+| `acquired-asuna.ex` | 晚餐預約成功 | EX | 主動 | — | `acquired-asuna` 亞絲娜／結城明日奈 | — | 自行回復110生命，作為貼身戰後補給。 |
+| `acquired-beatrice.passive` | 借書要留押金 | PASSIVE | 天生·被動 | — | `acquired-beatrice` 碧翠絲 | — | 施放 W 後取得一枚 6 秒書籤，供 R 消耗。 |
+| `acquired-beatrice.q` | 陰影退件章 | Q | 主動 | — | `acquired-beatrice` 碧翠絲 | — | 射出虛空彈，命中造成小級魔法傷害。 |
+| `acquired-beatrice.w` | 禁書封皮 | W | 主動 | — | `acquired-beatrice` 碧翠絲 | — | 取得 130 護盾，持續 3 秒；同時透過被動保留一枚書籤。 |
+| `acquired-beatrice.e` | 門在這一邊 | E | 主動 | — | `acquired-beatrice` 碧翠絲 | — | 瞬移至指定近處落點，不留下隊友可通行的門。 |
+| `acquired-beatrice.r` | 逾期罰款・陰 | R | 主動 | — | `acquired-beatrice` 碧翠絲 | — | 消耗書籤時對指定敵人造成大級魔法傷害；無書籤時為中級。兩種情況都沉默目標 0.7 秒。 |
+| `acquired-beatrice.ex` | 圖書館請安靜 | EX | 主動 | — | `acquired-beatrice` 碧翠絲 | — | 近處指定落點小圈造成極小級魔法傷害，命中者沉默 0.6 秒；不會同時暈眩或定身。 |
+| `acquired-cattiva.passive` | 不是我打破的 | PASSIVE | 天生·被動 | — | `acquired-cattiva` 搗蛋貓 | — | 受傷後取得 2 秒極小級移速加成，內置冷卻 4 秒。 |
+| `acquired-cattiva.q` | 貓拳簽收 | Q | 主動 | — | `acquired-cattiva` 搗蛋貓 | — | 近身造成小級物理傷害，並減速 20% 持續 1 秒。 |
+| `acquired-cattiva.w` | 你追不到我 | W | 主動 | — | `acquired-cattiva` 搗蛋貓 | — | 嘲諷指定敵人 0.7 秒，讓受擊加速有機會觸發；沒有無敵。 |
+| `acquired-cattiva.e` | 紙箱撤離 | E | 主動 | — | `acquired-cattiva` 搗蛋貓 | — | 朝指定地點短躍，落地後取得 60 護盾；不留下障礙箱。 |
+| `acquired-cattiva.r` | 連續貓貓拳 | R | 主動 | — | `acquired-cattiva` 搗蛋貓 | — | 4 秒內的接下來三次普攻各追加極小級物理傷害；第三次後移除這份增益。 |
+| `acquired-cattiva.ex` | 罐頭優先權 | EX | 主動 | — | `acquired-cattiva` 搗蛋貓 | — | 回復自身 100 生命，但吃罐頭時繳械 1 秒；仍可移動與施法。 |
+| `acquired-dio.passive` | 吸血鬼加班制 | PASSIVE | 天生·被動 | — | `acquired-dio` DIO | — | 普攻命中自己 E 留下的停格狀態時回復自身 35 生命，內置冷卻 2 秒。 |
+| `acquired-dio.q` | 無馱連打 | Q | 主動 | — | `acquired-dio` DIO | — | 近距鎖足目標後連打四次並收尾；施法者仍可被攻擊。 |
+| `acquired-dio.w` | 飛刀考勤 | W | 主動 | — | `acquired-dio` DIO | — | 以既有穿透物理彈呈現飛刀，命中造成小級傷害並減速 25% 持續 1 秒。 |
+| `acquired-dio.e` | 世界・半秒鐘 | E | 主動 | — | `acquired-dio` DIO | — | 指定近處敵人暈眩 0.7 秒；這是普通可抵抗的控制，也提供被動回血窗口。 |
+| `acquired-dio.r` | 壓路機停車費 | R | 主動 | — | `acquired-dio` DIO | — | 短暫準備後在落點造成大級物理傷害，命中者鎖足 0.8 秒；不留下壓路機。 |
+| `acquired-dio.ex` | 輪到我的台詞 | EX | 主動 | — | `acquired-dio` DIO | — | 回復自身 100 生命，但台詞期間自身沉默及繳械 0.8 秒，仍可移動。 |
+| `acquired-emilia.passive` | 碎霜禮節 | PASSIVE | 天生·被動 | — | `acquired-emilia` 愛蜜莉雅 | — | 普攻消耗目標身上自己的寒霜，追加極小級魔法傷害並鎖足 0.5 秒；內置冷卻 2 秒。 |
+| `acquired-emilia.q` | 冰槍請簽收 | Q | 主動 | — | `acquired-emilia` 愛蜜莉雅 | — | 穿透冰彈命中造成小級傷害、減速 25% 持續 1.5 秒，並留下 4 秒寒霜供普攻消耗。 |
+| `acquired-emilia.w` | 精靈雪衣 | W | 主動 | — | `acquired-emilia` 愛蜜莉雅 | — | 自身取得 120 護盾，持續 3 秒；不召喚可獨立操作的精靈。 |
+| `acquired-emilia.e` | 冰花開席 | E | 主動 | — | `acquired-emilia` 愛蜜莉雅 | — | 落點造成小級魔法傷害，命中者減速 40% 持續 1 秒。 |
+| `acquired-emilia.r` | 永凍・試用版 | R | 主動 | — | `acquired-emilia` 愛蜜莉雅 | — | 落點三輪冰震，每輪小級魔法傷害；只有當輪仍在圈內的敵人受擊，並非永久凍結。 |
+| `acquired-emilia.ex` | 熱茶先不要冰 | EX | 主動 | — | `acquired-emilia` 愛蜜莉雅 | — | 回復自身 100 生命；喝茶期間沉默 0.8 秒，仍能移動與普攻。 |
+| `acquired-inuyasha.passive` | 半妖起床氣 | PASSIVE | 天生·被動 | — | `acquired-inuyasha` 犬夜叉 | — | 生命低於40%時受到傷害，回復60生命；內置冷卻8秒。 |
+| `acquired-inuyasha.q` | 鐵碎牙拆門 | Q | 主動 | — | `acquired-inuyasha` 犬夜叉 | — | 小級物理傷害並減速30%，持續1.5秒。 |
+| `acquired-inuyasha.w` | 風之傷清走廊 | W | 主動 | — | `acquired-inuyasha` 犬夜叉 | — | 向前推出風刃，小級物理傷害，行進段同一敵人只命中一次。 |
+| `acquired-inuyasha.e` | 半妖跨欄 | E | 主動 | — | `acquired-inuyasha` 犬夜叉 | — | 跳向落點造成極小級物理傷害。 |
+| `acquired-inuyasha.r` | 鐵碎牙不是開罐器 | R | 主動 | — | `acquired-inuyasha` 犬夜叉 | — | 近距離鎖足敵人後三連擊與收尾；施法者沒有無敵。 |
+| `acquired-inuyasha.ex` | 爆流破先擋一下 | EX | 主動 | — | `acquired-inuyasha` 犬夜叉 | — | 获得3秒150護盾及極小級移速，用來扛住反擊再換位。 |
+| `acquired-jetragon.passive` | 航電預熱 | PASSIVE | 天生·被動 | — | `acquired-jetragon` 空渦龍 | — | 施放 E 時取得一層 5 秒蓄能；重複取得只刷新，供 R 消耗。 |
+| `acquired-jetragon.q` | 龍式點射 | Q | 主動 | — | `acquired-jetragon` 空渦龍 | — | 射出一發奧術彈，命中造成小級魔法傷害並減速 25% 持續 1 秒。 |
+| `acquired-jetragon.w` | 尾流加班 | W | 主動 | — | `acquired-jetragon` 空渦龍 | — | 獲得 3 秒極小級移速加成；用來選擇 E 的衝刺角度。 |
+| `acquired-jetragon.e` | 貼地起飛 | E | 主動 | — | `acquired-jetragon` 空渦龍 | — | 朝指定方向固定衝刺 4 單位；落點不額外造成傷害。 |
+| `acquired-jetragon.r` | 本航班不供餐 | R | 主動 | — | `acquired-jetragon` 空渦龍 | — | 落點連炸三輪；有航電蓄能時消耗並改為四輪，每輪極小級傷害且重新選取圈內敵人。 |
+| `acquired-jetragon.ex` | 登機口改號 | EX | 主動 | — | `acquired-jetragon` 空渦龍 | — | 取得 130 護盾持續 3 秒，但驗票期間自身繳械 0.8 秒；不阻擋移動或施法。 |
+| `acquired-kita-kita.passive` | 越挨打越想跳 | PASSIVE | 天生·被動 | — | `acquired-kita-kita` 吉他吉他老伯（阿德巴古·艾魯多魯） | — | 受到傷害時獲得90護盾，持續3秒，內置冷卻8秒。 |
+| `acquired-kita-kita.q` | 別看下半身 | Q | 主動 | — | `acquired-kita-kita` 吉他吉他老伯（阿德巴古·艾魯多魯） | — | 指定區域敵人失手率50%，持續1.2秒。 |
+| `acquired-kita-kita.w` | 觀眾席安全距離 | W | 主動 | — | `acquired-kita-kita` 吉他吉他老伯（阿德巴古·艾魯多魯） | — | 給落點附近友軍與自己130護盾，持續3秒。 |
+| `acquired-kita-kita.e` | 舞步巡迴 | E | 主動 | — | `acquired-kita-kita` 吉他吉他老伯（阿德巴古·艾魯多魯） | — | 跳向落點造成極小級物理傷害，換位擋在隊友前方。 |
+| `acquired-kita-kita.r` | 全員原地學舞 | R | 主動 | — | `acquired-kita-kita` 吉他吉他老伯（阿德巴古·艾魯多魯） | — | 地面區域敵人鎖足1.2秒；先Q遮眼，再留人讓隊友輸出。 |
+| `acquired-kita-kita.ex` | 跳累了先喝水 | EX | 主動 | — | `acquired-kita-kita` 吉他吉他老伯（阿德巴古·艾魯多魯） | — | 回復指定隊友120生命；不是對敵傷害。 |
+| `acquired-kuroyukihime.passive` | 延遲斬殺 | PASSIVE | 天生·被動 | — | `acquired-kuroyukihime` 黑雪姬 | — | 普攻低於40%生命目標追加極小級物理傷害，內置冷卻3秒。 |
+| `acquired-kuroyukihime.q` | 你的連線已中斷 | Q | 主動 | — | `acquired-kuroyukihime` 黑雪姬 | — | 小級物理傷害并鎖足0.8秒，保留後續連擊窗口。 |
+| `acquired-kuroyukihime.w` | 先加速再解釋 | W | 主動 | — | `acquired-kuroyukihime` 黑雪姬 | — | 自身3秒20%攻速與極小級移速。 |
+| `acquired-kuroyukihime.e` | 黑蓮快速登入 | E | 主動 | — | `acquired-kuroyukihime` 黑雪姬 | — | 短距離突進敵人旁並造成小級物理傷害。 |
+| `acquired-kuroyukihime.r` | 死亡穿刺強制登出 | R | 主動 | — | `acquired-kuroyukihime` 黑雪姬 | — | 近距離小級物理傷害；目標生命低於40%追加小級傷害。 |
+| `acquired-kuroyukihime.ex` | 撤回上一則位置 | EX | 主動 | — | `acquired-kuroyukihime` 黑雪姬 | — | 短距離瞬步到落點，用於進場後撤離；受地形與邊界限制。 |
+| `acquired-leafa.passive` | 順風不用跑腿費 | PASSIVE | 天生·被動 | — | `acquired-leafa` 莉法 | — | 施放技能後獲得極小級移速2秒，內置冷卻5秒。 |
+| `acquired-leafa.q` | 精靈補給到府 | Q | 主動 | — | `acquired-leafa` 莉法 | — | 為指定隊友回復130生命。 |
+| `acquired-leafa.w` | 外送區禁止停車 | W | 主動 | — | `acquired-leafa` 莉法 | — | 向前短衝并推開命中的敵人，造成極小級魔法傷害。 |
+| `acquired-leafa.e` | 精靈抄近路 | E | 主動 | — | `acquired-leafa` 莉法 | — | 跳到指定落點造成極小級魔法傷害，靠近需要幫助的隊友。 |
+| `acquired-leafa.r` | 風精靈團購保險 | R | 主動 | — | `acquired-leafa` 莉法 | — | 落點友軍與自己獲得130護盾3秒。 |
+| `acquired-leafa.ex` | 風刃催單 | EX | 主動 | — | `acquired-leafa` 莉法 | — | 直線風刃造成小級魔法傷害，給撤退隊友爭取空間。 |
+| `acquired-lord-nightmares.passive` | 混沌客服工單 | PASSIVE | 天生·被動 | — | `acquired-lord-nightmares` 金色魔王／惡夢之王 | — | 每次施法累積1層自身工單，上限3，持續15秒，供EX消耗。 |
+| `acquired-lord-nightmares.q` | 金色退件章 | Q | 主動 | — | `acquired-lord-nightmares` 金色魔王／惡夢之王 | — | 對指定敵人造成小級魔法傷害。 |
+| `acquired-lord-nightmares.w` | 宇宙暫停受理 | W | 主動 | — | `acquired-lord-nightmares` 金色魔王／惡夢之王 | — | 指定區域敵人鎖足1.2秒，準備後續區域技能。 |
+| `acquired-lord-nightmares.e` | 客服轉接 | E | 主動 | — | `acquired-lord-nightmares` 金色魔王／惡夢之王 | — | 短距離瞬步到落點，受既有落點限制；同時累積工單。 |
+| `acquired-lord-nightmares.r` | 退回混沌重填 | R | 主動 | — | `acquired-lord-nightmares` 金色魔王／惡夢之王 | — | 落點留下3秒傷害領域，每秒極小級魔法傷害。 |
+| `acquired-lord-nightmares.ex` | 三單一起結案 | EX | 主動 | — | `acquired-lord-nightmares` 金色魔王／惡夢之王 | — | 消耗至少3層自身工單，對指定敵人造成大級魔法傷害；不足時沒有傷害。 |
+| `acquired-mario.passive` | 叮！不是薪水 | PASSIVE | 天生·被動 | — | `acquired-mario` Mario | — | 施放 E 後取得 6 秒硬幣標記，供 EX 換取較多回復與護盾。 |
+| `acquired-mario.q` | 火球通管 | Q | 主動 | — | `acquired-mario` Mario | — | 射出一發火彈，命中造成小級魔法傷害；不額外保證地面反彈。 |
+| `acquired-mario.w` | 披風請讓路 | W | 主動 | — | `acquired-mario` Mario | — | 推開近處指定敵人 2 單位並繳械 0.6 秒；對方仍能移動和施法。 |
+| `acquired-mario.e` | 水管工落地章 | E | 主動 | — | `acquired-mario` Mario | — | 短躍至落點，落地造成小級物理範圍傷害；沒有踩死判定。 |
+| `acquired-mario.r` | 終極火焰報價 | R | 主動 | — | `acquired-mario` Mario | — | 向面前 6 單位直線噴出大級魔法火焰；命中者減速 30% 持續 1.2 秒。 |
+| `acquired-mario.ex` | 一枚硬幣套餐 | EX | 主動 | — | `acquired-mario` Mario | — | 消耗硬幣時回復 100 生命並取得 80 護盾；無硬幣只回復 40 生命，不生成金幣。 |
+| `acquired-mewtwo.passive` | 念力集中中 | PASSIVE | 天生·被動 | — | `acquired-mewtwo` Mewtwo | — | 施放 W 取得 5 秒專注，下一次 Q 可消耗；無法無限累積。 |
+| `acquired-mewtwo.q` | 暗影球・已充電 | Q | 主動 | — | `acquired-mewtwo` Mewtwo | — | 消耗專注時射出大級魔法傷害球；無專注時為小級，傷害只在投射物命中時結算。 |
+| `acquired-mewtwo.w` | 念力保護殼 | W | 主動 | — | `acquired-mewtwo` Mewtwo | — | 自身取得 100 護盾持續 3 秒，並透過被動為下一發 Q 蓄力。 |
+| `acquired-mewtwo.e` | 瞬間移動・區內 | E | 主動 | — | `acquired-mewtwo` Mewtwo | — | 瞬移至指定近處地點；不帶走其他單位。 |
+| `acquired-mewtwo.r` | 精神強念投訴 | R | 主動 | — | `acquired-mewtwo` Mewtwo | — | 落點造成中級魔法範圍傷害，命中者暈眩 0.8 秒。 |
+| `acquired-mewtwo.ex` | 我究竟為何排隊 | EX | 主動 | — | `acquired-mewtwo` Mewtwo | — | 回復 110 生命，但思考期間自身沉默 1 秒；仍能移動與普攻。 |
+| `acquired-minecraft.passive` | 挖礦不包加班 | PASSIVE | 天生·被動 | — | `acquired-minecraft` Steve／Alex | — | 普攻每 1 秒最多取得一層材料，最多三層，每次取得刷新為 8 秒；供 Q、W、R 消耗。 |
+| `acquired-minecraft.q` | 鑽石鎬・租的 | Q | 主動 | — | `acquired-minecraft` Steve／Alex | — | 消耗一層材料時造成中級物理傷害；不足時只造成小級傷害。 |
+| `acquired-minecraft.w` | 一面不擋路的牆 | W | 主動 | — | `acquired-minecraft` Steve／Alex | — | 消耗兩層材料時取得 180 護盾；不足時不扣材料並只取得 70 護盾，均持續 3 秒。 |
+| `acquired-minecraft.e` | 礦車單程票 | E | 主動 | — | `acquired-minecraft` Steve／Alex | — | 朝指定方向固定衝刺 3 單位，結束後才造成極小級物理範圍傷害；不生成載具。 |
+| `acquired-minecraft.r` | TNT 結算日 | R | 主動 | — | `acquired-minecraft` Steve／Alex | — | 消耗三層材料時在落點延遲 0.8 秒造成大級物理傷害；不足不扣材料，改為小級。爆炸時重解目標，走出圈可避開。 |
+| `acquired-minecraft.ex` | 工作台便當 | EX | 主動 | — | `acquired-minecraft` Steve／Alex | — | 回復自身 110 生命，但用餐時自身鎖足 0.8 秒；仍可普攻及施法，不是眩暈。 |
+| `acquired-morgiana.passive` | 腳力留一手 | PASSIVE | 天生·被動 | — | `acquired-morgiana` 摩尔迦娜 | — | 施放 E 時取得 4 秒踏勢；下一次 Q 可消耗它強化踢擊。 |
+| `acquired-morgiana.q` | 赤腳催辦 | Q | 主動 | — | `acquired-morgiana` 摩尔迦娜 | — | 普通踢擊造成小級物理傷害；有踏勢時消耗並改為中級傷害，附帶 0.6 秒鎖足。 |
+| `acquired-morgiana.w` | 鎖鏈請回來 | W | 主動 | — | `acquired-morgiana` 摩尔迦娜 | — | 對指定敵人造成極小級魔法傷害並向自己拉近 2 單位；受場地與位移規則限制。 |
+| `acquired-morgiana.e` | 法納利斯跨步 | E | 主動 | — | `acquired-morgiana` 摩尔迦娜 | — | 短躍至近處落點，落地對附近敵人造成極小級物理傷害。 |
+| `acquired-morgiana.r` | 炎鎖舞步 | R | 主動 | — | `acquired-morgiana` 摩尔迦娜 | — | 在落點連續三輪炎震，每輪小級魔法傷害；敵人離開範圍即可躲掉後續。 |
+| `acquired-morgiana.ex` | 女僕式清場 | EX | 主動 | — | `acquired-morgiana` 摩尔迦娜 | — | 取得 120 護盾並嘲諷身邊 2 單位內的敵人 0.6 秒；沒有傷害免疫。 |
+| `acquired-naruto.passive` | 打架前先吃麵 | PASSIVE | 天生·被動 | — | `acquired-naruto` 漩渦鳴人 | — | 施放技能後回復自身20生命，內置冷卻3秒。 |
+| `acquired-naruto.q` | 螺旋丸加麵 | Q | 主動 | — | `acquired-naruto` 漩渦鳴人 | — | 近距離小級魔法傷害並減速25%，持續1.2秒。 |
+| `acquired-naruto.w` | 影分身代排 | W | 主動 | — | `acquired-naruto` 漩渦鳴人 | — | 召喚2個同體分身，存在6秒、傷害20%、生命25%，最多2個，本體死亡消失。 |
+| `acquired-naruto.e` | 忍者插隊術 | E | 主動 | — | `acquired-naruto` 漩渦鳴人 | — | 快速移向指定敵人，抵達造成極小級物理傷害；落點仍受地形限制。 |
+| `acquired-naruto.r` | 螺旋手裡麵 | R | 主動 | — | `acquired-naruto` 漩渦鳴人 | — | 直線行進波造成小級魔法傷害，末端爆破；對手可側向避開。 |
+| `acquired-naruto.ex` | 拉麵要趁熱 | EX | 主動 | — | `acquired-naruto` 漩渦鳴人 | — | 獲得3秒極小級移速與20%攻速，接近或退場。 |
+| `acquired-pokemon-trainer.passive` | 徽章集點卡 | PASSIVE | 天生·被動 | — | `acquired-pokemon-trainer` Pokémon Trainer | — | 施放 Q、W、E 分別取得水、草、火徽記，各持續 6 秒且只保留一層，供 R 分別消耗。 |
+| `acquired-pokemon-trainer.q` | 傑尼龜・水槍 | Q | 主動 | — | `acquired-pokemon-trainer` Pokémon Trainer | — | 以 GGD 奧術彈呈現水槍，命中造成小級魔法傷害並減速 20% 持續 1 秒。 |
+| `acquired-pokemon-trainer.w` | 妙蛙草・藤鞭 | W | 主動 | — | `acquired-pokemon-trainer` Pokémon Trainer | — | 直線草刃造成小級魔法傷害，命中者鎖足 0.5 秒。 |
+| `acquired-pokemon-trainer.e` | 噴火龍・熱身 | E | 主動 | — | `acquired-pokemon-trainer` Pokémon Trainer | — | 朝指定方向固定衝刺 3 單位，結束後對近處造成極小級魔法傷害；不切換模型或飛行。 |
+| `acquired-pokemon-trainer.r` | 三重指令結帳 | R | 主動 | — | `acquired-pokemon-trainer` Pokémon Trainer | — | 先對指定敵人造成中級魔法傷害，再分別消耗水徽記減速、草徽記鎖足、火徽記追加小級傷害。缺哪一枚就少哪一項。 |
+| `acquired-pokemon-trainer.ex` | 包包裡有傷藥 | EX | 主動 | — | `acquired-pokemon-trainer` Pokémon Trainer | — | 回復自身 80 生命並取得 2 秒移速增益；不消耗或新增正式背包道具。 |
+| `acquired-ram.passive` | 掃除前先開窗 | PASSIVE | 天生·被動 | — | `acquired-ram` 拉姆 | — | 施放 E 後取得 4 秒風勢，下一次 Q 可消耗。 |
+| `acquired-ram.q` | 風刃催你走 | Q | 主動 | — | `acquired-ram` 拉姆 | — | 先斬出小級魔法風刃；持有風勢時消耗，再補一道極小級風刃。 |
+| `acquired-ram.w` | 毒舌逆風 | W | 主動 | — | `acquired-ram` 拉姆 | — | 指定敵人受到極小級魔法傷害並減速 35% 持續 1.5 秒；沒有強制改變其施法方向。 |
+| `acquired-ram.e` | 不想走樓梯 | E | 主動 | — | `acquired-ram` 拉姆 | — | 朝指定方向固定短衝 2.5 單位；不具穿牆或無敵保證。 |
+| `acquired-ram.r` | 風暴大掃除 | R | 主動 | — | `acquired-ram` 拉姆 | — | 落點造成大級魔法傷害並向施法者拉近命中敵人 2 單位；不是持續吸附龍捲。 |
+| `acquired-ram.ex` | 今天也辛苦別人 | EX | 主動 | — | `acquired-ram` 拉姆 | — | 取得 3 秒移速增益並回復 60 生命；保留自己退場整備的空間。 |
+| `acquired-rim.passive` | 這個快熟了 | PASSIVE | 天生·被動 | — | `acquired-rim` 莉姆（Rim；粉紅魔龍） | — | 普攻生命低於40%的目標追加極小級物理傷害，內置冷卻2秒。 |
+| `acquired-rim.q` | 午休咬一口 | Q | 主動 | — | `acquired-rim` 莉姆（Rim；粉紅魔龍） | — | 近戰小級物理傷害並減速30%，持續1.5秒。 |
+| `acquired-rim.w` | 加班費先預支 | W | 主動 | — | `acquired-rim` 莉姆（Rim；粉紅魔龍） | — | 3秒提高20%攻速並回復自身80生命。 |
+| `acquired-rim.e` | 便當在那邊 | E | 主動 | — | `acquired-rim` 莉姆（Rim；粉紅魔龍） | — | 撲向指定落點造成極小級物理傷害。 |
+| `acquired-rim.r` | 整份都我的 | R | 主動 | — | `acquired-rim` 莉姆（Rim；粉紅魔龍） | — | 近距離造成小級物理傷害並回復120生命；目標生命低於40%再追加小級傷害。 |
+| `acquired-rim.ex` | 沒吃飽不准下班 | EX | 主動 | — | `acquired-rim` 莉姆（Rim；粉紅魔龍） | — | 指定區域敌人減速40%，持續1.2秒，方便繼續追餐。 |
+| `acquired-ryu.passive` | 波升基本功 | PASSIVE | 天生·被動 | — | `acquired-ryu` Ryu | — | 施放 Q 後取得 3 秒架勢，W 可消耗增加傷害；不是命中確認或普攻重置。 |
+| `acquired-ryu.q` | 波動拳 | Q | 主動 | — | `acquired-ryu` Ryu | — | 射出氣彈，命中造成小級魔法傷害。 |
+| `acquired-ryu.w` | 升龍拳・有付費 | W | 主動 | — | `acquired-ryu` Ryu | — | 近身造成小級物理傷害；消耗架勢時改為中級。命中敵人再受到短距推移與 0.5 秒鎖足，施法者沒有無敵。 |
+| `acquired-ryu.e` | 龍捲旋風腿 | E | 主動 | — | `acquired-ryu` Ryu | — | 朝指定方向固定衝刺 3 單位，結束後對近處敵人造成小級物理傷害。 |
+| `acquired-ryu.r` | 真・升龍加班 | R | 主動 | — | `acquired-ryu` Ryu | — | 近距鎖足目標並完成五次短連擊與收尾；不具無敵或即死。 |
+| `acquired-ryu.ex` | 無薪修行 | EX | 主動 | — | `acquired-ryu` Ryu | — | 取得 130 護盾，但專注架勢讓自己繳械 0.8 秒；仍可移動和施法。 |
+| `acquired-saya.passive` | 吃一口就好 | PASSIVE | 天生·被動 | — | `acquired-saya` 沙耶 | — | 技能命中後回復自己25生命，內置冷卻3秒。 |
+| `acquired-saya.q` | 不明食材試吃 | Q | 主動 | — | `acquired-saya` 沙耶 | — | 給指定敵人3秒持續魔法傷害，施放時回復自己50生命。 |
+| `acquired-saya.w` | 餐桌黏黏的 | W | 主動 | — | `acquired-saya` 沙耶 | — | 區域敌人減速40%，持續1.2秒。 |
+| `acquired-saya.e` | 看見真實菜單 | E | 主動 | — | `acquired-saya` 沙耶 | — | 小級魔法傷害，並使敵人恐懼0.8秒。 |
+| `acquired-saya.r` | 今晚全席開放 | R | 主動 | — | `acquired-saya` 沙耶 | — | 落點留下3秒領域，每秒極小級魔法傷害；W留客後使用。 |
+| `acquired-saya.ex` | 閉眼比較好吃 | EX | 主動 | — | `acquired-saya` 沙耶 | — | 附近落點敵人失手率45%，持續1.2秒，用來抵擋追擊。 |
+| `acquired-wargreymon.passive` | 鍋蓋還沒掀 | PASSIVE | 天生·被動 | — | `acquired-wargreymon` 戰鬥暴龍獸 | — | 受到傷害後獲得120護盾，持續3秒，內置冷卻9秒。 |
+| `acquired-wargreymon.q` | 龍獸拆箱爪 | Q | 主動 | — | `acquired-wargreymon` 戰鬥暴龍獸 | — | 爪擊造成小級物理傷害並減速30%，持續1.5秒。 |
+| `acquired-wargreymon.w` | 勇氣鍋蓋 | W | 主動 | — | `acquired-wargreymon` 戰鬥暴龍獸 | — | 獲得3秒140護盾，準備承受貼身反擊。 |
+| `acquired-wargreymon.e` | 勇者快遞 | E | 主動 | — | `acquired-wargreymon` 戰鬥暴龍獸 | — | 跳至落點造成極小級物理傷害，接近收件人。 |
+| `acquired-wargreymon.r` | 蓋亞能量到付 | R | 主動 | — | `acquired-wargreymon` 戰鬥暴龍獸 | — | 指定區域爆發大級魔法傷害；延長前搖給對手走位空間。 |
+| `acquired-wargreymon.ex` | 恐龍火氣很大 | EX | 主動 | — | `acquired-wargreymon` 戰鬥暴龍獸 | — | 推出逐段火浪，小級魔法傷害，同一敵人行進段只命中一次。 |
+| `acquired-xiaodangjia.passive` | 試味不用錢 | PASSIVE | 天生·被動 | — | `acquired-xiaodangjia` 小當家 | — | 施放技能後回復自己20生命，內置冷卻4秒。 |
+| `acquired-xiaodangjia.q` | 料理怎麼又發光 | Q | 主動 | — | `acquired-xiaodangjia` 小當家 | — | 區域敵人失手率60%，持續1.2秒。 |
+| `acquired-xiaodangjia.w` | 趁熱吃 | W | 主動 | — | `acquired-xiaodangjia` 小當家 | — | 指定隊友回復140生命。 |
+| `acquired-xiaodangjia.e` | 猛火快炒 | E | 主動 | — | `acquired-xiaodangjia` 小當家 | — | 指定落點小級魔法爆破，用來阻擋追近廚房的敵人。 |
+| `acquired-xiaodangjia.r` | 麻婆豆腐流水席 | R | 主動 | — | `acquired-xiaodangjia` 小當家 | — | 留下3秒燙口區域，每秒極小級魔法傷害；先Q降低反擊風險。 |
+| `acquired-xiaodangjia.ex` | 鍋蓋全席 | EX | 主動 | — | `acquired-xiaodangjia` 小當家 | — | 落點友軍與自己獲得130護盾，持續3秒。 |
+| `acquired-zero.passive` | 劍砲交班 | PASSIVE | 天生·被動 | — | `acquired-zero` Zero | — | 施放 Q 時取得 5 秒能源；W 可消耗後射出較強的蓄力彈。 |
+| `acquired-zero.q` | Z-Saber 簽核 | Q | 主動 | — | `acquired-zero` Zero | — | 沿面向斬出短直線，對命中敵人造成小級物理傷害。 |
+| `acquired-zero.w` | 蓄力離線砲 | W | 主動 | — | `acquired-zero` Zero | — | 有能源時消耗並射出中級魔法傷害彈；無能源時射出極小級彈。傷害在投射物命中時結算。 |
+| `acquired-zero.e` | 衝刺斬 | E | 主動 | — | `acquired-zero` Zero | — | 朝指定方向固定衝刺 3 單位，結束後才對身邊造成小級物理傷害。 |
+| `acquired-zero.r` | 零式連段 | R | 主動 | — | `acquired-zero` Zero | — | 近距鎖足後三連斬與收尾；仍受敵方傷害與控制影響。 |
+| `acquired-zero.ex` | 更新稍後提醒 | EX | 主動 | — | `acquired-zero` Zero | — | 取得 120 護盾並回復 40 生命；是戰術整備，不是死亡後復活。 |
 | `b2-aladdin.passive` | 吹錯音先喘口氣 | PASSIVE | 天生·被動 | — | `b2-aladdin` 阿拉丁 | — | 「吹錯音先喘口氣！」 |
 | `b2-aladdin.q` | 烏戈代班先派一位 | Q | 主動 | — | `b2-aladdin` 阿拉丁 | ✅ | 「烏戈代班先派一位！」 |
 | `b2-aladdin.w` | 樂團加演再請一位 | W | 主動 | — | `b2-aladdin` 阿拉丁 | ✅ | 「樂團加演再請一位！」 |
@@ -244,61 +400,61 @@
 | `b2-zenitsu.e` | 鼾聲大到握不住武器 | E | 主動 | — | `b2-zenitsu` 我妻善逸 | ✅ | 「鼾聲大到握不住武器！」 |
 | `b2-zenitsu.r` | 霹靂三閃・已讀亂回 | R | 主動 | — | `b2-zenitsu` 我妻善逸 | ✅ | 「霹靂三閃・已讀亂回！」 |
 | `b2-zenitsu.ex` | 下班電梯不等人 | EX | 主動 | — | `b2-zenitsu` 我妻善逸 | ✅ | 「下班電梯不等人！」 |
-| `community-review-01-20260907.passive` | 〔決鬥者的布局〕 | PASSIVE | 天生·被動 | — | `community-review-01-20260907` 武藤遊戲 | — | 召喚物命中與陷阱成功觸發，各累積布局；每次施法最多增加一層，上限三層，供 EX 消耗。 |
+| `community-review-01-20260907.passive` | 〔決鬥者的布局〕 | PASSIVE | 天生·被動 | — | `community-review-01-20260907` 武藤遊戲 | — | 【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。 |
 | `community-review-01-20260907.q` | 黑魔導 | Q | 主動 | — | `community-review-01-20260907` 武藤遊戲 | ✅ | 【目前模板可執行】召喚 1 名 sela 樣板代理，6 秒、25% 傷害、30% 生命，同類上限 1、主人死亡清除。 |
 | `community-review-01-20260907.w` | 黑魔導女孩 | W | 主動 | — | `community-review-01-20260907` 武藤遊戲 | ✅ | 【目前模板可執行】召喚 1 名 sela 樣板代理，6 秒、25% 傷害、30% 生命，同類上限 1、主人死亡清除。 |
 | `community-review-01-20260907.e` | 神聖彗星・反射力量 | E | 主動 | — | `community-review-01-20260907` 武藤遊戲 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-01-20260907.r` | 歐西里斯的天空龍 | R | 主動 | — | `community-review-01-20260907` 武藤遊戲 | ✅ | 【目前模板可執行】指定落點半徑中 wc3u 的一次大級範圍傷害。 |
 | `community-review-01-20260907.ex` | 黑・魔・導 | EX | 主動 | — | `community-review-01-20260907` 武藤遊戲 | ✅ | 消耗布局，由存活的黑魔導射出強化直線魔法；缺少黑魔導時顯示使用條件。 |
-| `community-review-02-20260907.passive` | 〔八神之炎〕 | PASSIVE | 天生·被動 | — | `community-review-02-20260907` 八神庵 | — | 不同主動技能連續命中同一敵人，累積最多三層紫炎；下一次終結技消耗層數增傷。 |
+| `community-review-02-20260907.passive` | 〔八神之炎〕 | PASSIVE | 天生·被動 | — | `community-review-02-20260907` 八神庵 | — | 【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。 |
 | `community-review-02-20260907.q` | 百八式・闇拂 | Q | 主動 | — | `community-review-02-20260907` 八神庵 | ✅ | 【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。 |
 | `community-review-02-20260907.w` | 百式・鬼燒 | W | 主動 | — | `community-review-02-20260907` 八神庵 | ✅ | 【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。 |
 | `community-review-02-20260907.e` | 百二十七式・葵花 | E | 主動 | — | `community-review-02-20260907` 八神庵 | ✅ | 【目前模板可執行】3 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。 |
 | `community-review-02-20260907.r` | 禁千二百十一式・八稚女 | R | 主動 | — | `community-review-02-20260907` 八神庵 | ✅ | 【目前模板可執行】8 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。 |
 | `community-review-02-20260907.ex` | 裏三百十六式・豺華 | EX | 主動 | — | `community-review-02-20260907` 八神庵 | ✅ | 可獨立使用；在八稚女完成後的短窗口內使用，改為接續追擊並消耗自己的冷卻。 |
-| `community-review-03-20260907.passive` | 〔不知火流身法〕 | PASSIVE | 天生·被動 | — | `community-review-03-20260907` 不知火舞 | — | 完成位移後獲得一次短效普攻強化；刷新不疊加。 |
+| `community-review-03-20260907.passive` | 〔不知火流身法〕 | PASSIVE | 天生·被動 | — | `community-review-03-20260907` 不知火舞 | — | 【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。 |
 | `community-review-03-20260907.q` | 花蝶扇 | Q | 主動 | — | `community-review-03-20260907` 不知火舞 | ✅ | 【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。 |
 | `community-review-03-20260907.w` | 龍炎舞 | W | 主動 | — | `community-review-03-20260907` 不知火舞 | ✅ | 【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。 |
 | `community-review-03-20260907.e` | 必殺忍蜂 | E | 主動 | — | `community-review-03-20260907` 不知火舞 | ✅ | 【目前模板可執行】向指定方向突進 300 wc3u，造成極小級碰撞範圍傷害與推移。 |
 | `community-review-03-20260907.r` | 超必殺忍蜂 | R | 主動 | — | `community-review-03-20260907` 不知火舞 | ✅ | 【目前模板可執行】4 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。 |
 | `community-review-03-20260907.ex` | 陽炎之舞 | EX | 主動 | — | `community-review-03-20260907` 不知火舞 | ✅ | 短時間產生跟隨施法的火焰殘像；追加傷害有次數上限，殘像不獨立尋敵。 |
-| `community-review-04-20260907.passive` | 〔白金之星・精密動作〕 | PASSIVE | 天生·被動 | — | `community-review-04-20260907` 空條承太郎 | — | 近距離命中累積精密層數；滿層後強化下一次 Q 的末擊。 |
+| `community-review-04-20260907.passive` | 〔白金之星・精密動作〕 | PASSIVE | 天生·被動 | — | `community-review-04-20260907` 空條承太郎 | — | 【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。 |
 | `community-review-04-20260907.q` | 歐拉連打 | Q | 主動 | — | `community-review-04-20260907` 空條承太郎 | ✅ | 【目前模板可執行】6 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。 |
 | `community-review-04-20260907.w` | 流星指刺 | W | 主動 | — | `community-review-04-20260907` 空條承太郎 | ✅ | 【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。 |
 | `community-review-04-20260907.e` | 〔替身護衛〕 | E | 主動 | — | `community-review-04-20260907` 空條承太郎 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-04-20260907.r` | 白金之星・世界 | R | 主動 | — | `community-review-04-20260907` 空條承太郎 | ✅ | 【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{"kind":"applyStatus","statusI… |
 | `community-review-04-20260907.ex` | 〔歐拉終結拳〕 | EX | 主動 | — | `community-review-04-20260907` 空條承太郎 | ✅ | 有起手動作的重拳；時停期間使用時，加入同一套待結算命中佇列。 |
-| `community-review-05-20260907.passive` | 〔武器能源管理〕 | PASSIVE | 天生·被動 | — | `community-review-05-20260907` 洛克人 | — | 特殊武器共用有限能源；能源隨時間恢復，切換武器不補滿。 |
+| `community-review-05-20260907.passive` | 〔武器能源管理〕 | PASSIVE | 天生·被動 | — | `community-review-05-20260907` 洛克人 | — | 【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。 |
 | `community-review-05-20260907.q` | 洛克砲 | Q | 主動 | — | `community-review-05-20260907` 洛克人 | ✅ | 【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。 |
 | `community-review-05-20260907.w` | Metal Blade | W | 主動 | — | `community-review-05-20260907` 洛克人 | ✅ | 【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。 |
 | `community-review-05-20260907.e` | Leaf Shield | E | 主動 | — | `community-review-05-20260907` 洛克人 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-05-20260907.r` | 〔全武裝齊射〕 | R | 主動 | — | `community-review-05-20260907` 洛克人 | ✅ | 【目前模板可執行】在指定區域依序落下 6 發；每發間隔 0.35 秒、半徑小 wc3u、極小級傷害，可多次命中。 |
 | `community-review-05-20260907.ex` | 〔特殊武器切換〕 | EX | 主動 | — | `community-review-05-20260907` 洛克人 | ✅ | 讓 Q 在洛克砲與已核准的特殊武器版本間切換；保留各自冷卻與共用能源。 |
 | `community-review-06-20260907.passive` | 〔圓滾滾的韌性〕 | PASSIVE | 天生·被動 | — | `community-review-06-20260907` 卡比 | — | 脫離戰鬥後逐步恢復少量生命；受擊即中斷。 |
-| `community-review-06-20260907.q` | 吸入 | Q | 主動 | — | `community-review-06-20260907` 卡比 | ✅ | 【目前模板可執行】拖拉指定目標後向前投擲 120 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。 |
+| `community-review-06-20260907.q` | 吸入 | Q | 主動 | — | `community-review-06-20260907` 卡比 | ✅ | 【目前模板可執行】拖拉指定目標後向前投擲極小距離，0.45 秒拋物線，落地極小範圍小級傷害。 |
 | `community-review-06-20260907.w` | 吐出 | W | 主動 | — | `community-review-06-20260907` 卡比 | ✅ | 【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。 |
 | `community-review-06-20260907.e` | 石頭 | E | 主動 | — | `community-review-06-20260907` 卡比 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-06-20260907.r` | 超級巨劍 | R | 主動 | — | `community-review-06-20260907` 卡比 | ✅ | 【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。 |
 | `community-review-06-20260907.ex` | 複製能力 | EX | 主動 | — | `community-review-06-20260907` 卡比 | ✅ | 從最近成功吸入的英雄取得一個核准的 Q 技能版本，替換自己的 Q，限時或用盡次數後還原。首批白名單：八神庵闇拂、不知火舞花… |
-| `community-review-07-20260907.passive` | 〔魔術師的節奏〕 | PASSIVE | 天生·被動 | — | `community-review-07-20260907` 西索 | — | 以不同技能命中同一目標，強化下一次撲克牌攻擊；最多保存一次。 |
+| `community-review-07-20260907.passive` | 〔魔術師的節奏〕 | PASSIVE | 天生·被動 | — | `community-review-07-20260907` 西索 | — | 【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。 |
 | `community-review-07-20260907.q` | 〔撲克牌連射〕 | Q | 主動 | — | `community-review-07-20260907` 西索 | ✅ | 【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.12 秒、半徑小 wc3u、極小級傷害，可多次命中。 |
 | `community-review-07-20260907.w` | 伸縮自在的愛 | W | 主動 | — | `community-review-07-20260907` 西索 | ✅ | 【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{"kind":"applyStatus","statusI… |
-| `community-review-07-20260907.e` | 〔收線〕 | E | 主動 | — | `community-review-07-20260907` 西索 | ✅ | 【目前模板可執行】拖拉指定目標後向前投擲 120 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。 |
+| `community-review-07-20260907.e` | 〔收線〕 | E | 主動 | — | `community-review-07-20260907` 西索 | ✅ | 【目前模板可執行】拖拉指定目標後向前投擲極小距離，0.45 秒拋物線，落地極小範圍小級傷害。 |
 | `community-review-07-20260907.r` | 〔彈性殺陣〕 | R | 主動 | — | `community-review-07-20260907` 西索 | ✅ | 【目前模板可執行】指定落點半徑中 wc3u 的一次小級範圍傷害。 |
 | `community-review-07-20260907.ex` | 輕薄的假象 | EX | 主動 | — | `community-review-07-20260907` 西索 | ✅ | 在地面製作一個假的陷阱外觀，或改變自身表面外觀。偽裝不改變真實陣營、碰撞與伺服器身分。 |
-| `community-review-08-20260907.passive` | 〔阿卡曼戰鬥直覺〕 | PASSIVE | 天生·被動 | — | `community-review-08-20260907` 米卡莎 | — | 成功避開攻擊後，下一次刀刃命中獲得有限增傷；有觸發間隔。 |
+| `community-review-08-20260907.passive` | 〔阿卡曼戰鬥直覺〕 | PASSIVE | 天生·被動 | — | `community-review-08-20260907` 米卡莎 | — | 【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。 |
 | `community-review-08-20260907.q` | 〔雙刃斬擊〕 | Q | 主動 | — | `community-review-08-20260907` 米卡莎 | ✅ | 【目前模板可執行】2 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。 |
 | `community-review-08-20260907.w` | 立體機動裝置 | W | 主動 | — | `community-review-08-20260907` 米卡莎 | ✅ | 【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。 |
 | `community-review-08-20260907.e` | 〔補給與換刃〕 | E | 主動 | — | `community-review-08-20260907` 米卡莎 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-08-20260907.r` | 雷槍 | R | 主動 | — | `community-review-08-20260907` 米卡莎 | ✅ | 【目前模板可執行】在指定區域依序落下 2 發；每發間隔 0.4 秒、半徑小 wc3u、極小級傷害，可多次命中。 |
 | `community-review-08-20260907.ex` | 〔立體機動・迴旋斬〕 | EX | 主動 | — | `community-review-08-20260907` 米卡莎 | ✅ | 選定錨點與敵人後，沿限定弧線移動斬擊；路線失效時安全停止。 |
-| `community-review-09-20260907.passive` | 〔賢狼的眼光〕 | PASSIVE | 天生·被動 | — | `community-review-09-20260907` 赫蘿 | — | 參與有效助攻獲得交易籌碼，上限三枚；同一擊殺事件只結算一次。 |
+| `community-review-09-20260907.passive` | 〔賢狼的眼光〕 | PASSIVE | 天生·被動 | — | `community-review-09-20260907` 赫蘿 | — | 【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。 |
 | `community-review-09-20260907.q` | 〔狼牙警告〕 | Q | 主動 | — | `community-review-09-20260907` 赫蘿 | ✅ | 【目前模板可執行】指定單一敵人造成小級物理傷害。 附加效果：[{"kind":"applyStatus","statusI… |
 | `community-review-09-20260907.w` | 〔行商議價〕 | W | 主動 | — | `community-review-09-20260907` 赫蘿 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-09-20260907.e` | 〔麥穗庇護〕 | E | 主動 | — | `community-review-09-20260907` 赫蘿 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-09-20260907.r` | 賢狼真身 | R | 主動 | — | `community-review-09-20260907` 赫蘿 | ✅ | 【目前模板可執行】自身取得 4 秒增益：ad +15%、極小級移速。 |
 | `community-review-09-20260907.ex` | 〔豐收的約定〕 | EX | 主動 | — | `community-review-09-20260907` 赫蘿 | ✅ | 消耗剩餘籌碼，按消耗量強化附近友軍的護盾；不另外產生金幣。 |
-| `community-review-10-20260907.passive` | 〔戰局推演〕 | PASSIVE | 天生·被動 | — | `community-review-10-20260907` 魯路修 | — | 友軍命中自己的戰術標記時累積指揮層數，同一技能多段命中只計一次。 |
+| `community-review-10-20260907.passive` | 〔戰局推演〕 | PASSIVE | 天生·被動 | — | `community-review-10-20260907` 魯路修 | — | 【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。 |
 | `community-review-10-20260907.q` | 〔戰術射擊〕 | Q | 主動 | — | `community-review-10-20260907` 魯路修 | ✅ | 【目前模板可執行】指定單一敵人造成小級物理傷害。 |
 | `community-review-10-20260907.w` | 〔集中火力〕 | W | 主動 | — | `community-review-10-20260907` 魯路修 | ✅ | 【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{"kind":"applyStatus","statusI… |
 | `community-review-10-20260907.e` | 〔撤退指令〕 | E | 主動 | — | `community-review-10-20260907` 魯路修 | ✅ | 【目前模板可執行】自身取得 3 秒增益：極小級移速。 |
@@ -310,13 +466,13 @@
 | `community-review-11-20260907.e` | 擬態 | E | 主動 | — | `community-review-11-20260907` 利姆路 | ✅ | 【目前模板可執行】自身取得 3 秒增益：極小級移速。 |
 | `community-review-11-20260907.r` | 黑炎 | R | 主動 | — | `community-review-11-20260907` 利姆路 | ✅ | 【目前模板可執行】指定落點維持 3 秒的小級半徑傷害區，每秒一跳極小級傷害。 |
 | `community-review-11-20260907.ex` | 〔解析完成・能力再現〕 | EX | 主動 | — | `community-review-11-20260907` 利姆路 | ✅ | 消耗 W 的樣本，以自己的屬性施放一次核准的技能副本；使用後清空樣本。 |
-| `community-review-12-20260907.passive` | 〔武器解析〕 | PASSIVE | 天生·被動 | — | `community-review-12-20260907` 衛宮士郎 | — | 近戰交鋒累積解析層數，降低下一次投影的資源消耗；有最低消耗限制。 |
+| `community-review-12-20260907.passive` | 〔武器解析〕 | PASSIVE | 天生·被動 | — | `community-review-12-20260907` 衛宮士郎 | — | 【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。 |
 | `community-review-12-20260907.q` | 干將・莫邪 | Q | 主動 | — | `community-review-12-20260907` 衛宮士郎 | ✅ | 【目前模板可執行】2 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。 |
 | `community-review-12-20260907.w` | 〔投影・飛劍〕 | W | 主動 | — | `community-review-12-20260907` 衛宮士郎 | ✅ | 【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.15 秒、半徑小 wc3u、極小級傷害，可多次命中。 |
 | `community-review-12-20260907.e` | 〔強化・踏步〕 | E | 主動 | — | `community-review-12-20260907` 衛宮士郎 | ✅ | 【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。 |
 | `community-review-12-20260907.r` | 無限劍製 | R | 主動 | — | `community-review-12-20260907` 衛宮士郎 | ✅ | 【目前模板可執行】指定落點維持 3 秒的小級半徑傷害區，每秒一跳極小級傷害。 |
 | `community-review-12-20260907.ex` | 〔投影・迎擊〕 | EX | 主動 | — | `community-review-12-20260907` 衛宮士郎 | ✅ | 投影武器攔截一次正面攻擊，成功後開啟一次反擊。 |
-| `community-review-13-20260907.passive` | 〔狙擊專注〕 | PASSIVE | 天生·被動 | — | `community-review-13-20260907` 朝田詩乃 | — | 保持穩定姿勢累積瞄準，移動或受擊降低；效果有上限。 |
+| `community-review-13-20260907.passive` | 〔狙擊專注〕 | PASSIVE | 天生·被動 | — | `community-review-13-20260907` 朝田詩乃 | — | 【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。 |
 | `community-review-13-20260907.q` | 〔Hecate II・精準射擊〕 | Q | 主動 | — | `community-review-13-20260907` 朝田詩乃 | ✅ | 【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。 |
 | `community-review-13-20260907.w` | 〔觀測射界〕 | W | 主動 | — | `community-review-13-20260907` 朝田詩乃 | ✅ | 【目前模板可執行】自身取得 3 秒增益：as +20%。 |
 | `community-review-13-20260907.e` | 〔戰術翻滾〕 | E | 主動 | — | `community-review-13-20260907` 朝田詩乃 | ✅ | 【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。 |
@@ -328,13 +484,13 @@
 | `community-review-14-20260907.e` | 〔觸手再生〕 | E | 主動 | — | `community-review-14-20260907` 殺老師 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-14-20260907.r` | 完全防禦形態 | R | 主動 | — | `community-review-14-20260907` 殺老師 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-14-20260907.ex` | 〔分身式教學〕 | EX | 主動 | — | `community-review-14-20260907` 殺老師 | ✅ | 以高速殘像演出三處依序打擊，實際由同一本體按時序結算。 |
-| `community-review-15-20260907.passive` | 〔兄貴的氣勢〕 | PASSIVE | 天生·被動 | — | `community-review-15-20260907` 比利海靈頓 | — | 成功抓取或保護友軍累積氣勢，上限三層。 |
+| `community-review-15-20260907.passive` | 〔兄貴的氣勢〕 | PASSIVE | 天生·被動 | — | `community-review-15-20260907` 比利海靈頓 | — | 【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。 |
 | `community-review-15-20260907.q` | 〔正面擒抱〕 | Q | 主動 | — | `community-review-15-20260907` 比利海靈頓 | ✅ | 【目前模板可執行】指定單一敵人造成小級物理傷害。 |
-| `community-review-15-20260907.w` | 〔肌肉防線〕 | W | 主動 | — | `community-review-15-20260907` 比利海靈頓 | ✅ | 【目前模板可執行】拖拉指定目標後向前投擲 200 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。 |
+| `community-review-15-20260907.w` | 〔肌肉防線〕 | W | 主動 | — | `community-review-15-20260907` 比利海靈頓 | ✅ | 【目前模板可執行】拖拉指定目標後向前投擲小距離，0.45 秒拋物線，落地極小範圍小級傷害。 |
 | `community-review-15-20260907.e` | 〔肩膀衝撞〕 | E | 主動 | — | `community-review-15-20260907` 比利海靈頓 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
-| `community-review-15-20260907.r` | 〔兄貴背摔〕 | R | 主動 | — | `community-review-15-20260907` 比利海靈頓 | ✅ | 【目前模板可執行】拖拉指定目標後向前投擲 400 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。 |
+| `community-review-15-20260907.r` | 〔兄貴背摔〕 | R | 主動 | — | `community-review-15-20260907` 比利海靈頓 | ✅ | 【目前模板可執行】拖拉指定目標後向前投擲極大距離，0.45 秒拋物線，落地極小範圍小級傷害。 |
 | `community-review-15-20260907.ex` | 〔兄弟站起來〕 | EX | 主動 | — | `community-review-15-20260907` 比利海靈頓 | ✅ | 為附近友軍提供護盾與短效韌性，以振奮及健美姿勢演出。 |
-| `community-review-16-20260907.passive` | 〔紅寶石的支援〕 | PASSIVE | 天生·被動 | — | `community-review-16-20260907` 魔法少女☆伊莉雅 | — | 不同魔法技能連續施放後，強化下一次防禦或攻擊，不能由同一次多段命中快速疊滿。 |
+| `community-review-16-20260907.passive` | 〔紅寶石的支援〕 | PASSIVE | 天生·被動 | — | `community-review-16-20260907` 魔法少女☆伊莉雅 | — | 【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。 |
 | `community-review-16-20260907.q` | 〔魔力砲擊〕 | Q | 主動 | — | `community-review-16-20260907` 魔法少女☆伊莉雅 | ✅ | 【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。 |
 | `community-review-16-20260907.w` | 〔魔力防壁〕 | W | 主動 | — | `community-review-16-20260907` 魔法少女☆伊莉雅 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-16-20260907.e` | 〔魔法少女飛行〕 | E | 主動 | — | `community-review-16-20260907` 魔法少女☆伊莉雅 | ✅ | 【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。 |
@@ -346,25 +502,25 @@
 | `community-review-17-20260907.e` | 高階傳送 | E | 主動 | — | `community-review-17-20260907` 安茲·烏爾·恭 | ✅ | 【目前模板可執行】傳送到指定落點，抵達後小範圍極小級傷害。 |
 | `community-review-17-20260907.r` | 墜落天空 | R | 主動 | — | `community-review-17-20260907` 安茲·烏爾·恭 | ✅ | 【目前模板可執行】指定落點半徑中 wc3u 的一次大級範圍傷害。 |
 | `community-review-17-20260907.ex` | 死亡是所有生命的終點 | EX | 主動 | — | `community-review-17-20260907` 安茲·烏爾·恭 | ✅ | 對範圍內敵人施加倒數詛咒。到期後，低於生命門檻者進入標準處決結算，其餘受到有限傷害。可依 GGD 規則以離開有效條件、淨化… |
-| `community-review-18-20260907.passive` | 〔王的財庫〕 | PASSIVE | 天生·被動 | — | `community-review-18-20260907` 吉爾伽美什 | — | 技能按次累積財庫能量，供 EX 消耗；命中段數不等於獲得次數。 |
+| `community-review-18-20260907.passive` | 〔王的財庫〕 | PASSIVE | 天生·被動 | — | `community-review-18-20260907` 吉爾伽美什 | — | 【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。 |
 | `community-review-18-20260907.q` | 王之財寶 | Q | 主動 | — | `community-review-18-20260907` 吉爾伽美什 | ✅ | 【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.18 秒、半徑小 wc3u、極小級傷害，可多次命中。 |
 | `community-review-18-20260907.w` | 天之鎖 | W | 主動 | — | `community-review-18-20260907` 吉爾伽美什 | ✅ | 【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{"kind":"applyStatus","statusI… |
 | `community-review-18-20260907.e` | 〔黃金甲冑〕 | E | 主動 | — | `community-review-18-20260907` 吉爾伽美什 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-18-20260907.r` | 天地乖離開闢之星 | R | 主動 | — | `community-review-18-20260907` 吉爾伽美什 | ✅ | 【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。 |
 | `community-review-18-20260907.ex` | 〔王之財寶・齊射〕 | EX | 主動 | — | `community-review-18-20260907` 吉爾伽美什 | ✅ | 消耗財庫能量，分波發射最多十二件武器；各波有固定間隔。 |
-| `community-review-19-20260907.passive` | 二刀流 | PASSIVE | 天生·被動 | — | `community-review-19-20260907` 桐谷和人 | — | 交替命中累積連擊節奏，停止交鋒後衰退；提供有限攻速加成。 |
+| `community-review-19-20260907.passive` | 二刀流 | PASSIVE | 天生·被動 | — | `community-review-19-20260907` 桐谷和人 | — | 【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。 |
 | `community-review-19-20260907.q` | 〔雙劍交叉斬〕 | Q | 主動 | — | `community-review-19-20260907` 桐谷和人 | ✅ | 【目前模板可執行】2 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。 |
 | `community-review-19-20260907.w` | 〔劍技招架〕 | W | 主動 | — | `community-review-19-20260907` 桐谷和人 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-19-20260907.e` | Sonic Leap | E | 主動 | — | `community-review-19-20260907` 桐谷和人 | ✅ | 【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。 |
 | `community-review-19-20260907.r` | Starburst Stream | R | 主動 | — | `community-review-19-20260907` 桐谷和人 | ✅ | 【目前模板可執行】16 段連擊，間隔 0.1 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。 |
 | `community-review-19-20260907.ex` | The Eclipse | EX | 主動 | — | `community-review-19-20260907` 桐谷和人 | ✅ | 更長起手的二十七連擊終結技；具有更高的暴露時間與中斷風險。 |
-| `community-review-20-20260907.passive` | 〔電荷累積〕 | PASSIVE | 天生·被動 | — | `community-review-20-20260907` 御坂美琴 | — | 不同技能命中累積電荷，上限三層；下一次強化技消耗。 |
+| `community-review-20-20260907.passive` | 〔電荷累積〕 | PASSIVE | 天生·被動 | — | `community-review-20-20260907` 御坂美琴 | — | 【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。 |
 | `community-review-20-20260907.q` | 電擊之槍 | Q | 主動 | — | `community-review-20-20260907` 御坂美琴 | ✅ | 【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。 |
 | `community-review-20-20260907.w` | 〔連鎖放電〕 | W | 主動 | — | `community-review-20-20260907` 御坂美琴 | ✅ | 【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{"kind":"chainLightning","shap… |
 | `community-review-20-20260907.e` | 〔鐵砂防壁〕 | E | 主動 | — | `community-review-20-20260907` 御坂美琴 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-20-20260907.r` | 超電磁砲 | R | 主動 | — | `community-review-20-20260907` 御坂美琴 | ✅ | 【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。 |
 | `community-review-20-20260907.ex` | 〔電磁過載〕 | EX | 主動 | — | `community-review-20-20260907` 御坂美琴 | ✅ | 消耗電荷，強化下一次 Q 的範圍或 W 的跳躍數；使用時明示強化結果。 |
-| `community-review-21-20260907.passive` | 〔希望的連結〕 | PASSIVE | 天生·被動 | — | `community-review-21-20260907` 鹿目圓 | — | 有效保護友軍時累積希望，上限三層；溢出治療與無效護盾不提供資源。 |
+| `community-review-21-20260907.passive` | 〔希望的連結〕 | PASSIVE | 天生·被動 | — | `community-review-21-20260907` 鹿目圓 | — | 【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。 |
 | `community-review-21-20260907.q` | 〔光之箭〕 | Q | 主動 | — | `community-review-21-20260907` 鹿目圓 | ✅ | 【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。 |
 | `community-review-21-20260907.w` | 〔希望之弓〕 | W | 主動 | — | `community-review-21-20260907` 鹿目圓 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-21-20260907.e` | 〔淨化之願〕 | E | 主動 | — | `community-review-21-20260907` 鹿目圓 | ✅ | 【目前模板可執行】自身取得 3 秒增益：極小級移速。 |
@@ -372,65 +528,65 @@
 | `community-review-21-20260907.ex` | 圓環之理 | EX | 主動 | — | `community-review-21-20260907` 鹿目圓 | ✅ | 對一名友軍施加短期保命印記。首次受到致死傷害時消耗印記，保留少量生命並短暫保護。同一目標每回合限一次。 |
 | `community-review-22-20260907.passive` | 〔記住這次失敗〕 | PASSIVE | 天生·被動 | — | `community-review-22-20260907` 菜月昴 | — | 完成一次死亡回歸後，短暫標記造成致死傷害的敵人；只顯示當前合法可見資訊。 |
 | `community-review-22-20260907.q` | Shamac | Q | 主動 | — | `community-review-22-20260907` 菜月昴 | ✅ | 【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{"kind":"applyStatus","statusI… |
-| `community-review-22-20260907.w` | 〔鞭繩牽制〕 | W | 主動 | — | `community-review-22-20260907` 菜月昴 | ✅ | 【目前模板可執行】拖拉指定目標後向前投擲 100 wc3u，0.45 秒拋物線，落地半徑 2 GGD 單位小級傷害。 |
+| `community-review-22-20260907.w` | 〔鞭繩牽制〕 | W | 主動 | — | `community-review-22-20260907` 菜月昴 | ✅ | 【目前模板可執行】拖拉指定目標後向前投擲極小距離，0.45 秒拋物線，落地極小範圍小級傷害。 |
 | `community-review-22-20260907.e` | 〔重新振作〕 | E | 主動 | — | `community-review-22-20260907` 菜月昴 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-22-20260907.r` | 死亡回歸 | R | 主動 | — | `community-review-22-20260907` 菜月昴 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-22-20260907.ex` | 〔重新選擇〕 | EX | 主動 | — | `community-review-22-20260907` 菜月昴 | ✅ | R 存檔有效且自己仍存活時，主動消耗同一存檔，回復位置與受上限限制的生命。使用後該存檔不再攔截致死傷害。 |
-| `community-review-23-20260907.passive` | 〔糖分補給〕 | PASSIVE | 天生·被動 | — | `community-review-23-20260907` 坂田銀時 | — | 脫戰後累積一份補給，供 W 消耗；最多保存一份。 |
+| `community-review-23-20260907.passive` | 〔糖分補給〕 | PASSIVE | 天生·被動 | — | `community-review-23-20260907` 坂田銀時 | — | 【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。 |
 | `community-review-23-20260907.q` | 〔洞爺湖・橫斬〕 | Q | 主動 | — | `community-review-23-20260907` 坂田銀時 | ✅ | 【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。 |
 | `community-review-23-20260907.w` | 〔草莓牛奶休息時間〕 | W | 主動 | — | `community-review-23-20260907` 坂田銀時 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-23-20260907.e` | 〔萬事屋式反擊〕 | E | 主動 | — | `community-review-23-20260907` 坂田銀時 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-23-20260907.r` | 〔白夜叉〕 | R | 主動 | — | `community-review-23-20260907` 坂田銀時 | ✅ | 【目前模板可執行】自身取得 4 秒增益：ad +15%、極小級移速。 |
 | `community-review-23-20260907.ex` | 〔吐槽也是武器〕 | EX | 主動 | — | `community-review-23-20260907` 坂田銀時 | ✅ | 近身重擊打斷一個可中斷的施法，以吐槽文字及誇張表情演出。 |
-| `community-review-24-20260907.passive` | 〔電力儲備〕 | PASSIVE | 天生·被動 | — | `community-review-24-20260907` 奇犽 | — | 技能消耗電力；停止攻擊一段時間後逐步充電，設上限。 |
+| `community-review-24-20260907.passive` | 〔電力儲備〕 | PASSIVE | 天生·被動 | — | `community-review-24-20260907` 奇犽 | — | 【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。 |
 | `community-review-24-20260907.q` | 落雷 | Q | 主動 | — | `community-review-24-20260907` 奇犽 | ✅ | 【目前模板可執行】指定落點半徑中 wc3u 的一次小級範圍傷害。 |
 | `community-review-24-20260907.w` | 肢曲 | W | 主動 | — | `community-review-24-20260907` 奇犽 | ✅ | 【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。 |
 | `community-review-24-20260907.e` | 電光石火 | E | 主動 | — | `community-review-24-20260907` 奇犽 | ✅ | 【目前模板可執行】自身取得 3 秒增益：極小級移速。 |
 | `community-review-24-20260907.r` | 神速・疾風迅雷 | R | 主動 | — | `community-review-24-20260907` 奇犽 | ✅ | 【目前模板可執行】自身取得 3 秒增益：as +20%、極小級移速。 |
 | `community-review-24-20260907.ex` | 〔充電釋放〕 | EX | 主動 | — | `community-review-24-20260907` 奇犽 | ✅ | 消耗剩餘電力進行近身爆發，之後進入低電力狀態。 |
-| `community-review-25-20260907.passive` | 〔興趣使然的英雄〕 | PASSIVE | 天生·被動 | — | `community-review-25-20260907` 一拳超人 | — | 一段時間未攻擊後，下一次普通拳獲得有限強化。 |
+| `community-review-25-20260907.passive` | 〔興趣使然的英雄〕 | PASSIVE | 天生·被動 | — | `community-review-25-20260907` 一拳超人 | — | 【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。 |
 | `community-review-25-20260907.q` | 普通拳 | Q | 主動 | — | `community-review-25-20260907` 一拳超人 | ✅ | 【目前模板可執行】指定單一敵人造成小級物理傷害。 |
 | `community-review-25-20260907.w` | 連續普通拳 | W | 主動 | — | `community-review-25-20260907` 一拳超人 | ✅ | 【目前模板可執行】5 段連擊，間隔 0.18 秒；各段極小級、末段小級，不附帶鎖足或施法者無敵。 |
 | `community-review-25-20260907.e` | 〔趕上特賣〕 | E | 主動 | — | `community-review-25-20260907` 一拳超人 | ✅ | 【目前模板可執行】向指定方向突進 450 wc3u，造成極小級碰撞範圍傷害與推移。 |
 | `community-review-25-20260907.r` | 認真系列・認真一拳 | R | 主動 | — | `community-review-25-20260907` 一拳超人 | ✅ | 【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。 |
 | `community-review-25-20260907.ex` | 認真系列・認真反覆橫跳 | EX | 主動 | — | `community-review-25-20260907` 一拳超人 | ✅ | 短期快速左右移動並產生殘像，提供有限迴避機會。 |
-| `community-review-26-20260907.passive` | 〔線索整理〕 | PASSIVE | 天生·被動 | — | `community-review-26-20260907` 名偵探柯南 | — | 對已觀察敵人收集最多三條線索，每種有效戰鬥事件只計一次。 |
+| `community-review-26-20260907.passive` | 〔線索整理〕 | PASSIVE | 天生·被動 | — | `community-review-26-20260907` 名偵探柯南 | — | 【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。 |
 | `community-review-26-20260907.q` | 足球射擊 | Q | 主動 | — | `community-review-26-20260907` 名偵探柯南 | ✅ | 【目前模板可執行】四段沿直線推進的波，每 0.12 秒向前 100 wc3u；各段獨立區域傷害。 |
 | `community-review-26-20260907.w` | 手錶型麻醉槍 | W | 主動 | — | `community-review-26-20260907` 名偵探柯南 | ✅ | 【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{"kind":"applyStatus","statusI… |
 | `community-review-26-20260907.e` | 渦輪引擎滑板 | E | 主動 | — | `community-review-26-20260907` 名偵探柯南 | ✅ | 【目前模板可執行】自身取得 3 秒增益：極小級移速。 |
 | `community-review-26-20260907.r` | 〔真相只有一個〕 | R | 主動 | — | `community-review-26-20260907` 名偵探柯南 | ✅ | 【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{"kind":"applyStatus","statusI… |
 | `community-review-26-20260907.ex` | 伸縮吊帶 | EX | 主動 | — | `community-review-26-20260907` 名偵探柯南 | ✅ | 連接合法目標或錨點，完成一次有限拉動；超距與碰撞時中止。 |
-| `community-review-27-20260907.passive` | 〔卡牌連結〕 | PASSIVE | 天生·被動 | — | `community-review-27-20260907` 庫洛魔法使 | — | 依序使用不同卡牌累積連結，上限三層，強化下一次護盾。 |
+| `community-review-27-20260907.passive` | 〔卡牌連結〕 | PASSIVE | 天生·被動 | — | `community-review-27-20260907` 庫洛魔法使 | — | 【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。 |
 | `community-review-27-20260907.q` | 風牌 | Q | 主動 | — | `community-review-27-20260907` 庫洛魔法使 | ✅ | 【目前模板可執行】指定單一敵人造成小級魔法傷害。 |
 | `community-review-27-20260907.w` | 盾牌 | W | 主動 | — | `community-review-27-20260907` 庫洛魔法使 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-27-20260907.e` | 翔牌 | E | 主動 | — | `community-review-27-20260907` 庫洛魔法使 | ✅ | 【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。 |
 | `community-review-27-20260907.r` | 劍牌 | R | 主動 | — | `community-review-27-20260907` 庫洛魔法使 | ✅ | 【目前模板可執行】自身取得 4 秒增益：ad +15%、as +20%。 |
 | `community-review-27-20260907.ex` | 〔換牌：風與樹〕 | EX | 主動 | — | `community-review-27-20260907` 庫洛魔法使 | ✅ | 將 Q 在風牌推動與樹牌束縛之間切換；兩者共享 Q 的冷卻與資源。 |
-| `community-review-28-20260907.passive` | 〔劍神流・先發制人〕 | PASSIVE | 天生·被動 | — | `community-review-28-20260907` 艾莉絲·伯雷亞斯·格雷拉特 | — | 對剛進入交鋒的目標，首次近戰命中獲得有限強化；同一目標有冷卻。 |
+| `community-review-28-20260907.passive` | 〔劍神流・先發制人〕 | PASSIVE | 天生·被動 | — | `community-review-28-20260907` 艾莉絲·伯雷亞斯·格雷拉特 | — | 【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。 |
 | `community-review-28-20260907.q` | 〔猛進斬〕 | Q | 主動 | — | `community-review-28-20260907` 艾莉絲·伯雷亞斯·格雷拉特 | ✅ | 【目前模板可執行】向指定方向突進 180 wc3u，造成極小級碰撞範圍傷害與推移。 |
 | `community-review-28-20260907.w` | 〔鬥氣護身〕 | W | 主動 | — | `community-review-28-20260907` 艾莉絲·伯雷亞斯·格雷拉特 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-28-20260907.e` | 〔逼近步〕 | E | 主動 | — | `community-review-28-20260907` 艾莉絲·伯雷亞斯·格雷拉特 | ✅ | 【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。 |
 | `community-review-28-20260907.r` | 光之太刀 | R | 主動 | — | `community-review-28-20260907` 艾莉絲·伯雷亞斯·格雷拉特 | ✅ | 【目前模板可執行】向指定方向突進 450 wc3u，造成極小級碰撞範圍傷害與推移。 |
 | `community-review-28-20260907.ex` | 〔狂劍追擊〕 | EX | 主動 | — | `community-review-28-20260907` 艾莉絲·伯雷亞斯·格雷拉特 | ✅ | 對剛被自己擊中的近身目標進行一次額外追擊，超距時不能使用。 |
-| `community-review-29-20260907.passive` | 魔力抑制 | PASSIVE | 天生·被動 | — | `community-review-29-20260907` 芙莉蓮 | — | 降低敵方魔力感知類技能取得的強度資訊；不等同隱形，也不隱藏基本敵我識別。 |
+| `community-review-29-20260907.passive` | 魔力抑制 | PASSIVE | 天生·被動 | — | `community-review-29-20260907` 芙莉蓮 | — | 【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。 |
 | `community-review-29-20260907.q` | 一般攻擊魔法・Zoltraak | Q | 主動 | — | `community-review-29-20260907` 芙莉蓮 | ✅ | 【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。 |
 | `community-review-29-20260907.w` | 防禦魔法 | W | 主動 | — | `community-review-29-20260907` 芙莉蓮 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-29-20260907.e` | 飛行魔法 | E | 主動 | — | `community-review-29-20260907` 芙莉蓮 | ✅ | 【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。 |
 | `community-review-29-20260907.r` | 〔葬送連射〕 | R | 主動 | — | `community-review-29-20260907` 芙莉蓮 | ✅ | 【目前模板可執行】在指定區域依序落下 6 發；每發間隔 0.35 秒、半徑小 wc3u、極小級傷害，可多次命中。 |
 | `community-review-29-20260907.ex` | 變出花田的魔法 | EX | 主動 | — | `community-review-29-20260907` 芙莉蓮 | ✅ | 生成短期花田；GGD 改編效果為友軍首次進入時解除恐懼並取得小額護盾。 |
-| `community-review-30-20260907.passive` | 〔拖延症〕 | PASSIVE | 天生·被動 | — | `community-review-30-20260907` 尼古貓貓 | — | 停止移動後逐步累積拖延，上限三層；受擊時清空，施法可消耗強化。 |
+| `community-review-30-20260907.passive` | 〔拖延症〕 | PASSIVE | 天生·被動 | — | `community-review-30-20260907` 尼古貓貓 | — | 【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。 |
 | `community-review-30-20260907.q` | 〔菸灰缸飛過去〕 | Q | 主動 | — | `community-review-30-20260907` 尼古貓貓 | ✅ | 【目前模板可執行】指定落點半徑中 wc3u 的一次小級範圍傷害。 |
 | `community-review-30-20260907.w` | 〔煙霧瀰漫〕 | W | 主動 | — | `community-review-30-20260907` 尼古貓貓 | ✅ | 【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{"kind":"applyStatus","statusI… |
 | `community-review-30-20260907.e` | 〔先溜再說〕 | E | 主動 | — | `community-review-30-20260907` 尼古貓貓 | ✅ | 【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。 |
 | `community-review-30-20260907.r` | 〔房間大崩壞〕 | R | 主動 | — | `community-review-30-20260907` 尼古貓貓 | ✅ | 【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.5 秒、半徑小 wc3u、極小級傷害，可多次命中。 |
 | `community-review-30-20260907.ex` | 〔今天真的不想動〕 | EX | 主動 | — | `community-review-30-20260907` 尼古貓貓 | ✅ | 消耗拖延層數，原地取得護盾；移動後提前結束。 |
-| `community-review-31-20260907.passive` | 〔糞作獵人的讀招〕 | PASSIVE | 天生·被動 | — | `community-review-31-20260907` SUN樂 | — | 成功以位移避開有效攻擊後，獲得一層讀招，上限三層。單純空按移動不增加。 |
+| `community-review-31-20260907.passive` | 〔糞作獵人的讀招〕 | PASSIVE | 天生·被動 | — | `community-review-31-20260907` SUN樂 | — | 【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。 |
 | `community-review-31-20260907.q` | Spiral Edge | Q | 主動 | — | `community-review-31-20260907` SUN樂 | ✅ | 【目前模板可執行】指定單一敵人造成小級物理傷害。 |
 | `community-review-31-20260907.w` | Slide Move | W | 主動 | — | `community-review-31-20260907` SUN樂 | ✅ | 【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。 |
 | `community-review-31-20260907.e` | Repel Counter | E | 主動 | — | `community-review-31-20260907` SUN樂 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-31-20260907.r` | Accel | R | 主動 | — | `community-review-31-20260907` SUN樂 | ✅ | 【目前模板可執行】自身取得 3 秒增益：極小級移速、as +20%。 |
 | `community-review-31-20260907.ex` | 〔攻略完成〕 | EX | 主動 | — | `community-review-31-20260907` SUN樂 | ✅ | 消耗三層讀招，對近期交鋒目標進行一次有方向的高傷害短劍終結。 |
-| `community-review-32-20260907.passive` | 淫奔 | PASSIVE | 天生·被動 | — | `community-review-32-20260907` 阿薩謝爾 | — | 轉譯為「負面能量」資源。對敵人造成有效技能傷害時累積，最多三層，每次施法最多一層。自傷、反傷及持續傷害的每跳不重複增加。 |
+| `community-review-32-20260907.passive` | 淫奔 | PASSIVE | 天生·被動 | — | `community-review-32-20260907` 阿薩謝爾 | — | 【目前模板可執行】普攻追加極小級魔法傷害，內置冷卻 3 秒。 |
 | `community-review-32-20260907.q` | 肩パンチ | Q | 主動 | — | `community-review-32-20260907` 阿薩謝爾 | ✅ | 【目前模板可執行】指定單一敵人造成小級物理傷害。 |
 | `community-review-32-20260907.w` | 流精群（ホワイトレイン） | W | 主動 | — | `community-review-32-20260907` 阿薩謝爾 | ✅ | 【目前模板可執行】在指定區域依序落下 3 發；每發間隔 0.45 秒、半徑小 wc3u、極小級傷害，可多次命中。 |
 | `community-review-32-20260907.e` | 闇ぱんち | E | 主動 | — | `community-review-32-20260907` 阿薩謝爾 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
@@ -442,25 +598,25 @@
 | `community-review-33-20260907.e` | 〔踏地突進〕 | E | 主動 | — | `community-review-33-20260907` 近衛刀太 | ✅ | 【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。 |
 | `community-review-33-20260907.r` | 〔不死者的再起〕 | R | 主動 | — | `community-review-33-20260907` 近衛刀太 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-33-20260907.ex` | 〔重力劍・壓潰〕 | EX | 主動 | — | `community-review-33-20260907` 近衛刀太 | ✅ | 固定為重劍模式的蓄力重擊，完成後短暫降低移速。 |
-| `community-review-34-20260907.passive` | 〔追上你了〕 | PASSIVE | 天生·被動 | — | `community-review-34-20260907` 高速婆婆 | — | 持續追逐同一可見目標時累積速度，轉換目標、失去視線或停止追逐後衰退。 |
+| `community-review-34-20260907.passive` | 〔追上你了〕 | PASSIVE | 天生·被動 | — | `community-review-34-20260907` 高速婆婆 | — | 【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。 |
 | `community-review-34-20260907.q` | 〔疾走爪擊〕 | Q | 主動 | — | `community-review-34-20260907` 高速婆婆 | ✅ | 【目前模板可執行】向指定方向突進 250 wc3u，造成極小級碰撞範圍傷害與推移。 |
 | `community-review-34-20260907.w` | 〔急轉彎〕 | W | 主動 | — | `community-review-34-20260907` 高速婆婆 | ✅ | 【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。 |
 | `community-review-34-20260907.e` | 〔妖怪的咒印〕 | E | 主動 | — | `community-review-34-20260907` 高速婆婆 | ✅ | 【目前模板可執行】指定單一敵人造成小級魔法傷害。 附加效果：[{"kind":"applyStatus","statusI… |
 | `community-review-34-20260907.r` | 〔全速追獵〕 | R | 主動 | — | `community-review-34-20260907` 高速婆婆 | ✅ | 【目前模板可執行】自身取得 3 秒增益：極小級移速。 |
 | `community-review-34-20260907.ex` | 〔百公里衝撞〕 | EX | 主動 | — | `community-review-34-20260907` 高速婆婆 | ✅ | 蓄勢後沿長直線衝撞，命中第一名英雄或障礙物時停止。 |
-| `community-review-35-20260907.passive` | 〔嗅覺・破綻辨識〕 | PASSIVE | 天生·被動 | — | `community-review-35-20260907` 炭治郎 | — | 成功閃過敵人攻擊後，短暫顯示該敵人的近身破綻；下一次刀技命中消耗。 |
+| `community-review-35-20260907.passive` | 〔嗅覺・破綻辨識〕 | PASSIVE | 天生·被動 | — | `community-review-35-20260907` 炭治郎 | — | 【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。 |
 | `community-review-35-20260907.q` | 水之呼吸・水面斬 | Q | 主動 | — | `community-review-35-20260907` 炭治郎 | ✅ | 【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。 |
 | `community-review-35-20260907.w` | 水之呼吸・水車 | W | 主動 | — | `community-review-35-20260907` 炭治郎 | ✅ | 【目前模板可執行】朝落點進行 0.5 秒跳躍，著地小範圍極小級傷害。 |
 | `community-review-35-20260907.e` | 〔呼吸調整〕 | E | 主動 | — | `community-review-35-20260907` 炭治郎 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-35-20260907.r` | 火之神神樂・圓舞 | R | 主動 | — | `community-review-35-20260907` 炭治郎 | ✅ | 【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。 |
 | `community-review-35-20260907.ex` | 〔呼吸切換〕 | EX | 主動 | — | `community-review-35-20260907` 炭治郎 | ✅ | 讓 Q 在水面斬與火之神神樂的強化斬版本間切換。共用 Q 冷卻；火之神版本消耗較高並增加自身負擔。 |
-| `community-review-36-20260907.passive` | 〔自信過剩〕 | PASSIVE | 天生·被動 | — | `community-review-36-20260907` 鬼畜王蘭斯 | — | 參與擊殺獲得當回合戰意，上限五層，提升有限近戰能力。 |
+| `community-review-36-20260907.passive` | 〔自信過剩〕 | PASSIVE | 天生·被動 | — | `community-review-36-20260907` 鬼畜王蘭斯 | — | 【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。 |
 | `community-review-36-20260907.q` | 〔蠻力斬擊〕 | Q | 主動 | — | `community-review-36-20260907` 鬼畜王蘭斯 | ✅ | 【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。 |
 | `community-review-36-20260907.w` | 〔本大爺還沒認真〕 | W | 主動 | — | `community-review-36-20260907` 鬼畜王蘭斯 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
 | `community-review-36-20260907.e` | 〔霸王突進〕 | E | 主動 | — | `community-review-36-20260907` 鬼畜王蘭斯 | ✅ | 【目前模板可執行】向指定方向突進 350 wc3u，造成極小級碰撞範圍傷害與推移。 |
 | `community-review-36-20260907.r` | Rance Attack／蘭斯攻擊 | R | 主動 | — | `community-review-36-20260907` 鬼畜王蘭斯 | ✅ | 【目前模板可執行】向前依序展開四個窄區域判定，各段極小級傷害；交疊段可重複命中。 |
 | `community-review-36-20260907.ex` | 〔跟著本大爺衝〕 | EX | 主動 | — | `community-review-36-20260907` 鬼畜王蘭斯 | ✅ | 消耗戰意，為附近友軍提供短效移速與一次普攻強化。 |
-| `community-review-37-20260907.passive` | 〔雖然害怕還是努力〕 | PASSIVE | 天生·被動 | — | `community-review-37-20260907` 吉伊卡哇 | — | 附近友軍交戰時累積勇氣，上限三層；以時間間隔累積，避免多段傷害快速疊滿。 |
+| `community-review-37-20260907.passive` | 〔雖然害怕還是努力〕 | PASSIVE | 天生·被動 | — | `community-review-37-20260907` 吉伊卡哇 | — | 【目前模板可執行】普攻追加極小級物理傷害，內置冷卻 3 秒。 |
 | `community-review-37-20260907.q` | 〔討伐叉刺擊〕 | Q | 主動 | — | `community-review-37-20260907` 吉伊卡哇 | ✅ | 【目前模板可執行】指定單一敵人造成小級物理傷害。 |
 | `community-review-37-20260907.w` | 〔哇啊啊撤退〕 | W | 主動 | — | `community-review-37-20260907` 吉伊卡哇 | ✅ | 【目前模板可執行】向指定方向突進 220 wc3u，造成極小級碰撞範圍傷害與推移。 |
 | `community-review-37-20260907.e` | 〔點心時間〕 | E | 主動 | — | `community-review-37-20260907` 吉伊卡哇 | ✅ | 【目前模板可執行】自身取得 3 秒增益：無屬性加成；另結算下列護盾／回復等 effects。 附加效果：[{"kind":… |
@@ -469,7 +625,7 @@
 | `godie-e001.passive` | 22-00 嗚鎖打! | PASSIVE | 天生·主動 | 22-00 | `godie-e001` 龍宮禮奈 | — | [輔助][範圍] |
 | `godie-e001.q` | 22-01 鬼隱之擊 | Q | 輔助 | 22-01 | `godie-e001` 龍宮禮奈 | ✅ | 隱形並在一定的時間內提昇50/50/50/150/300%速度以暗殺目標，當攻擊時隱形術即告失效，但是會造成額外100點的… |
 | `godie-e001.w` | 22-02 染血的柴刀 | W | 被動 | 22-02 | `godie-e001` 龍宮禮奈 | ✅ | 攻擊時有18%的機率可以使出會心一擊造成1.25倍的傷害。 |
-| `godie-e001.e` | 22-03 五吋釘 | E | 主動攻擊 | 22-03 | `godie-e001` 龍宮禮奈 | ✅ | 將一枚充滿詛咒的五吋釘射向敵方目標，造成瞬間500/750/1000/1250點傷害，並減緩60%移動速度5秒。 |
+| `godie-e001.e` | 22-03 五吋釘 | E | 主動攻擊 | 22-03 | `godie-e001` 龍宮禮奈 | ✅ | 將一枚充滿詛咒的五吋釘射向敵方目標，造成瞬間625/937.5/1250/1562.5點傷害，並減緩60%移動速度5秒。 |
 | `godie-e001.r` | 22-04 雛見澤症候群L5 | R | 輔助 | 22-04 | `godie-e001` 龍宮禮奈 | ✅ | 注射藥物使自己短暫激發到L5的病狀，此狀態將會強化攻擊55點和移動速度，並暫時減少生命最大值150點，持續7秒。 |
 | `godie-e001.ex` | 22-002 月光下的決鬥者 | EX | 被動 | 22-002 | `godie-e001` 龍宮禮奈 | ✅ | 在夜晚的時刻決鬥能讓禮奈異常興奮，被敵人攻擊的時候有20%機率，引起嗚鎖打的快速打擊狀態，狀態內亦可連續引發嗚鎖打，並且讓… |
 | `godie-e002.passive` | 20-00 銀色甲胄 | PASSIVE | 天生·被動 | 20-00 | `godie-e002` Saber | — | [被動][格擋][機率] |
@@ -481,25 +637,25 @@
 | `godie-e007.passive` | 12-00 感應意脈 | PASSIVE | 天生·被動 | 12-00 | `godie-e007` 天地志狼 | — | [被動][迴避] |
 | `godie-e007.q` | 12-01 鬥仙術 | Q | 主動 | 12-01 | `godie-e007` 天地志狼 | — | [主動][指定][混亂][AP加成] |
 | `godie-e007.w` | 12-02 仙氣．採藥 | W | 主動 | 12-02 | `godie-e007` 天地志狼 | — | [主動][輔助][治療][淨化] |
-| `godie-e007.e` | 12-03 破凰之心-徒手空破山 | E | 輔助 | 12-03 | `godie-e007` 天地志狼 | — | 使用破凰之力的志狼徒手空破山，劃出大氣之刃，對目標造成500/875/1250/1625點傷害。 |
+| `godie-e007.e` | 12-03 破凰之心-徒手空破山 | E | 輔助 | 12-03 | `godie-e007` 天地志狼 | — | 使用破凰之力的志狼徒手空破山，劃出大氣之刃，對目標造成625/1093.75/1562.5/2031.25點傷害。 |
 | `godie-e007.r` | 12-04 龍氣爆發 | R | 主動 | 12-04 | `godie-e007` 天地志狼 | — | [主動][範圍][淨化][AP加成] |
 | `godie-e007.ex` | 12-002 仙氣發勁 | EX | 主動 | 12-002 | `godie-e007` 天地志狼 | — | [主動][指定][擊退][AP加成] |
 | `godie-e008.passive` | 21-00 灼眼 | PASSIVE | 天生·被動 | 21-00 | `godie-e008` 夏娜 | — | 灼眼的特殊體質可以讓夏娜看見隱藏在空間夾縫的所有人，即使在晚上仍能清楚的看到四周。 |
-| `godie-e008.q` | 21-02 拔焰刀 | Q | 主動攻擊 | 21-02 | `godie-e008` 夏娜 | ✅ | 拔抽覆蓋火焰的刀斬擊敵人造成500/750/1000傷害，同時可以打昏目標0.5秒。同時熾熱的刀身能造成普攻附加額外75點… |
+| `godie-e008.q` | 21-02 拔焰刀 | Q | 主動攻擊 | 21-02 | `godie-e008` 夏娜 | ✅ | 拔抽覆蓋火焰的刀斬擊敵人造成625/937.5/1250傷害，同時可以打昏目標0.5秒。同時熾熱的刀身能造成普攻附加額外7… |
 | `godie-e008.w` | 21-01 火羽 | W | 傷害加成 | 21-01 | `godie-e008` 夏娜 | ✅ | 召喚火焰般的羽毛幫助周圍單位加速移動1.5倍，持續6秒。 |
 | `godie-e008.e` | 21-03 赤焰爆發 | E | 主動攻擊 | 21-03 | `godie-e008` 夏娜 | ✅ | 赤焰爆發可以攻擊一直線敵人，將其打到空中給予400點損害，落地後暈眩1秒。 |
 | `godie-e008.r` | 21-04 討滅封絕 | R | 輔助 | 21-04 | `godie-e008` 夏娜 | ✅ | 開啟封絕的結界，範圍1800敵方移動速度下降30%、攻擊速度下降100%，而夏娜在結界內每殺死一名英雄可取得存在之力，增加… |
 | `godie-e008.ex` | 21-002 天破壤碎 | EX | 主動 | 21-002 | `godie-e008` 夏娜 | ✅ | 以燃燒火霧戰士的心臟為祭品，讓身為紅世「天罰神」的阿拉斯托爾得以直接在現世顯現並不受現世影響發揮全部實力。 |
 | `godie-e00l.passive` | 20-00 銀色甲胄 | PASSIVE | 天生·被動 | 20-00 | `godie-e00l` Saber | — | Saber魔力化的銀色鎧甲讓Saber有相當良好的魔法抗性，當Saber魔力高於30%最大值時，有50%機率抵消(50+S… |
 | `godie-e00l.q` | 20-02 感知能力 | Q | 被動 | 20-02 | `godie-e00l` Saber | — | 受到物理攻擊時有7%機率可迴避物理攻擊。 |
-| `godie-e00l.w` | 20-01 風王結界 | W | 被動 | 20-01 | `godie-e00l` Saber | — | [切換] 開關型 · 冷卻 30 秒 · 開關本身不花半點法力 |
+| `godie-e00l.w` | 20-01 風王結界 | W | 被動 | 20-01 | `godie-e00l` Saber | — | [切換] 開關型 · 冷卻 60 秒 · 開關本身不花半點法力 |
 | `godie-e00l.e` | 20-03 約束與勝利之劍 | E | 主動 | 20-03 | `godie-e00l` Saber | — | [主動][指向][範圍][AP加成] |
 | `godie-e00l.r` | 20-04 Avalon-永恆的理想鄉 | R | 主動 | 20-04 | `godie-e00l` Saber | — | [主動][輔助][反彈][AP加成] |
 | `godie-e00l.ex` | 20-002 解放.約束勝利劍MAX | EX | 被動 | 20-002 | `godie-e00l` Saber | — | [被動][指向][範圍][反彈][反彈成功時][AP加成] |
 | `godie-e00n.passive` | 22-00 嗚鎖打! | PASSIVE | 天生·主動 | 22-00 | `godie-e00n` 龍宮禮奈 | — | [輔助][範圍] |
 | `godie-e00n.q` | 22-01 鬼隱之擊 | Q | 輔助 | 22-01 | `godie-e00n` 龍宮禮奈 | — | 隱形並在一定的時間內提昇50%速度以暗殺目標，當攻擊時隱形術即告失效，但是會造成額外100點的背刺傷害，持續12秒。 |
 | `godie-e00n.w` | 22-02 染血的柴刀 | W | 被動 | 22-02 | `godie-e00n` 龍宮禮奈 | — | 攻擊時有18%的機率可以使出會心一擊造成1.25倍的傷害。 |
-| `godie-e00n.e` | 22-03 五吋釘 | E | 主動攻擊 | 22-03 | `godie-e00n` 龍宮禮奈 | — | 將一枚充滿詛咒的五吋釘射向敵方目標，造成瞬間500/750/1000/1250點傷害，並減緩60%移動速度5秒。 |
+| `godie-e00n.e` | 22-03 五吋釘 | E | 主動攻擊 | 22-03 | `godie-e00n` 龍宮禮奈 | — | 將一枚充滿詛咒的五吋釘射向敵方目標，造成瞬間625/937.5/1250/1562.5點傷害，並減緩60%移動速度5秒。 |
 | `godie-e00n.r` | 22-04 雛見澤症候群L5 | R | 輔助 | 22-04 | `godie-e00n` 龍宮禮奈 | — | 注射藥物使自己短暫激發到L5的病狀，此狀態將會強化攻擊55點和移動速度，並暫時減少生命最大值150點，持續7秒。 |
 | `godie-e00n.ex` | 22-002 月光下的決鬥者 | EX | 被動 | 22-002 | `godie-e00n` 龍宮禮奈 | — | 在夜晚的時刻決鬥能讓禮奈異常興奮，被敵人攻擊的時候有20%機率，引起嗚鎖打的快速打擊狀態，狀態內亦可連續引發嗚鎖打，並且讓… |
 | `godie-e00r.passive` | 59-00 暴走 | PASSIVE | 天生·被動 | 59-00 | `godie-e00r` 初號機 | — | [被動][暴走][迴避][吸血][免疫][受到傷害時][屬性門檻][機率] |
@@ -520,14 +676,14 @@
 | `godie-e00w.e` | 77-03 GLADIARIA ALAT | E | 主動 | 77-03 | `godie-e00w` 櫻綻剎那 | ✅ | [主動][變身][加速][飛行] |
 | `godie-e00w.r` | 77-04 真-雷光劍 | R | 主動 | 77-04 | `godie-e00w` 櫻綻剎那 | ✅ | [主動][範圍][AD加成] |
 | `godie-e00w.ex` | 77-002 御雷劍 | EX | 被動 | 77-002 | `godie-e00w` 櫻綻剎那 | ✅ | [被動][機率] |
-| `godie-e00x.passive` | 77-00 浮雲-旋一閃 | PASSIVE | 天生·主動 | 77-00 | `godie-e00x` 櫻綻剎那 | — | 神鳴流的體術招式之一，閃過敵人攻擊，抓住對手後，旋轉拋摔。（每次發動限一人且為英雄）造成500點傷害。 |
-| `godie-e00x.q` | 77-01 百烈櫻華斬 | Q | 主動攻擊 | 77-01 | `godie-e00x` 櫻綻剎那 | — | 用劍捲起一陣由內往外的旋風，給予複數敵人200/200/500/500點傷害，並暈眩1秒，擊退1000距離。 |
+| `godie-e00x.passive` | 77-00 浮雲-旋一閃 | PASSIVE | 天生·主動 | 77-00 | `godie-e00x` 櫻綻剎那 | — | 神鳴流的體術招式之一，閃過敵人攻擊，抓住對手後，旋轉拋摔。（每次發動限一人且為英雄）造成625點傷害。 |
+| `godie-e00x.q` | 77-01 百烈櫻華斬 | Q | 主動攻擊 | 77-01 | `godie-e00x` 櫻綻剎那 | — | 用劍捲起一陣由內往外的旋風，給予複數敵人250/250/625/625點傷害，並暈眩1秒，擊退1000距離。 |
 | `godie-e00x.w` | 77-02 雷鳴劍 | W | 被動 | 77-02 | `godie-e00x` 櫻綻剎那 | — | [被動][普攻時][機率][暴擊][範圍][AP加成] |
 | `godie-e00x.e` | 77-03 GLADIARIA ALAT | E | 變身 | 77-03 | `godie-e00x` 櫻綻剎那 | — | GLADIARIA ALAT意指有翼的劍士，剎那不輕易展露烏鴉族的身分，一但展開翅膀，剎那就可以發揮100%的實力，提升… |
 | `godie-e00x.r` | 77-04 真-雷光劍 | R | 主動攻擊 | 77-04 | `godie-e00x` 櫻綻剎那 | — | 神鳴流決戰奧義，聚集大量雷電於劍上予以斬擊，給予擊中範圍500內敵人600傷害，若範圍內含有英雄則額外受到600/(範圍內… |
 | `godie-e00x.ex` | 77-002 御雷劍 | EX | 強化 | 77-002 | `godie-e00x` 櫻綻剎那 | — | 使用從者道具"御雷劍"的剎那，在效果期間，其雷鳴劍發動機率上升至50%，並且可以減免33%傷害，持續15秒。 |
 | `godie-e010.passive` | 70-00 紮根 | PASSIVE | 天生·主動 | 70-00 | `godie-e010` 白木卡迪那 | — | 讓樹人在地面紮根，變得無法移動，但是這可以讓它開始丟出巨大的石塊，轉變為穿刺擴散傷害，初使裝甲增加為10點，力量增加10點。 |
-| `godie-e010.q` | 70-01 伸卡球 | Q | 主動攻擊 | 70-01 | `godie-e010` 白木卡迪那 | — | 某天卡迪納吃著洋芋片從MLB某球員領悟的球技，變化為必殺技後有意想不到的傷害，造成範圍敵人200/200/500/500+… |
+| `godie-e010.q` | 70-01 伸卡球 | Q | 主動攻擊 | 70-01 | `godie-e010` 白木卡迪那 | — | 某天卡迪納吃著洋芋片從MLB某球員領悟的球技，變化為必殺技後有意想不到的傷害，造成範圍敵人250/250/625/625+… |
 | `godie-e010.w` | 70-02 大怒石 | W | 被動 | 70-02 | `godie-e010` 白木卡迪那 | — | [被動][普攻時][範圍] |
 | `godie-e010.e` | 70-03 木束縛之術 | E | 輔助 | 70-03 | `godie-e010` 白木卡迪那 | — | 讓白木周圍的敵方都受到木靈束縛綑綁，持續1.5秒。 |
 | `godie-e010.r` | 70-04 千年練成 | R | 主動 | 70-04 | `godie-e010` 白木卡迪那 | — | [主動][AP加成][範圍] |
@@ -555,11 +711,11 @@
 | `godie-emns.e` | 44-03 火車輾過 | E | 主動 | 44-03 | `godie-emns` 夜神月 | ✅ | [主動][範圍][AP加成] |
 | `godie-emns.r` | 44-04 心臟麻痺 | R | 主動 | 44-04 | `godie-emns` 夜神月 | ✅ | [主動][AP加成] |
 | `godie-emns.ex` | 44-002 交換筆記本 | EX | 主動 | 44-002 | `godie-emns` 夜神月 | ✅ | [主動][指定] |
-| `godie-etyr.passive` | 14-00 召喚式神 | PASSIVE | 天生·主動 | 14-00 | `godie-etyr` 木乃香 | — | 召喚出式神跟隨木乃香，此式神周圍將附帶500點傷害，持續25秒。 |
-| `godie-etyr.q` | 14-01 東風繪扇、南風末廣 | Q | 輔助 | 14-01 | `godie-etyr` 木乃香 | ✅ | 揮動兩把具有神奇魔力的扇子，使我方範圍300內單位解除異常狀態，並且回復生命力150+70% [AP]點。 |
+| `godie-etyr.passive` | 14-00 召喚式神 | PASSIVE | 天生·主動 | 14-00 | `godie-etyr` 木乃香 | — | 召喚出式神跟隨木乃香，此式神周圍將附帶625點傷害，持續25秒。 |
+| `godie-etyr.q` | 14-01 東風繪扇、南風末廣 | Q | 輔助 | 14-01 | `godie-etyr` 木乃香 | ✅ | 揮動兩把具有神奇魔力的扇子，使我方範圍300內單位解除異常狀態，並且回復生命力150+71% [AP]點。 |
 | `godie-etyr.w` | 14-03 魔力應援 | W | 被動 | 14-03 | `godie-etyr` 木乃香 | ✅ | 木乃香強大的魔力使得400範圍內的友軍增加攻擊速度35%和移動速度5/10/15/20%。 |
-| `godie-etyr.e` | 14-02 式神炸裂 | E | 主動攻擊 | 14-02 | `godie-etyr` 木乃香 | ✅ | 讓每個召喚出來的式神自爆，使周圍敵人受到150+28.73% [AP]點傷害，每位式神的犧牲都能讓木乃香獲得150點魔力。 |
-| `godie-etyr.r` | 14-04 聖夜降臨 | R | 主動攻擊 | 14-04 | `godie-etyr` 木乃香 | ✅ | 利用木乃香身上深不可測的魔力使得周圍死去的亡靈轉換成1個式神，持續8秒，召喚瞬間會造成周圍500/750/1000傷害。 |
+| `godie-etyr.e` | 14-02 式神炸裂 | E | 主動攻擊 | 14-02 | `godie-etyr` 木乃香 | ✅ | 讓每個召喚出來的式神自爆，使周圍敵人受到150+29% [AP]點傷害，每位式神的犧牲都能讓木乃香獲得150點魔力。 |
+| `godie-etyr.r` | 14-04 聖夜降臨 | R | 主動攻擊 | 14-04 | `godie-etyr` 木乃香 | ✅ | 利用木乃香身上深不可測的魔力使得周圍死去的亡靈轉換成1個式神，持續8秒，召喚瞬間會造成周圍625/937.5/1250傷害。 |
 | `godie-etyr.ex` | 14-002 魔力激發 | EX | 被動 | 14-002 | `godie-etyr` 木乃香 | ✅ | 打開魔力封印使得木乃香自身的魔力回復到達顛峰，每秒獲得7%的瑪那回復，使用東風繪扇、南風末廣有效範圍也能增加。 |
 | `godie-ewar.passive` | 12-00 感應意脈 | PASSIVE | 天生·被動 | 12-00 | `godie-ewar` 天地志狼 | — | [被動][迴避] |
 | `godie-ewar.q` | 12-01 鬥仙術 | Q | 主動 | 12-01 | `godie-ewar` 天地志狼 | ✅ | [主動][指定][混亂][AP加成] |
@@ -580,8 +736,8 @@
 | `godie-h01n.r` | 79-04 卍解 | R | 主動 | 79-04 | `godie-h01n` 黑崎一護 | ✅ | [主動][輔助][變身] |
 | `godie-h01n.ex` | 79-002 虛化 | EX | 被動 | 79-002 | `godie-h01n` 黑崎一護 | ✅ | [被動][回復][機率] |
 | `godie-h01o.passive` | 79-00 靈壓 | PASSIVE | 天生·被動 | 79-00 | `godie-h01o` 黑崎一護 | — | 卍解後的一護具有更強大的靈力，初始法力值較一般人高，伴隨其靈力而來的巨大靈壓可降低極大範圍內敵人攻擊速度50%及移動速度1… |
-| `godie-h01o.q` | 79-01 瞬步 | Q | 主動攻擊 | 79-01 | `godie-h01o` 黑崎一護 | — | 以急快的速度移動至對方身旁並給予兩段式傷害，共計500/750/1000/1250點傷害。 |
-| `godie-h01o.w` | 79-02 斬擊 | W | 被動 | 79-02 | `godie-h01o` 黑崎一護 | — | 將月牙的能量聚集在斬月上，在攻擊敵人的同時釋放出，給予目標額外100+313.46% [AP]點傷害。 |
+| `godie-h01o.q` | 79-01 瞬步 | Q | 主動攻擊 | 79-01 | `godie-h01o` 黑崎一護 | — | 以急快的速度移動至對方身旁並給予兩段式傷害，共計625/937.5/1250/1562.5點傷害。 |
+| `godie-h01o.w` | 79-02 斬擊 | W | 被動 | 79-02 | `godie-h01o` 黑崎一護 | — | 將月牙的能量聚集在斬月上，在攻擊敵人的同時釋放出，給予目標額外100+294% [AP]點傷害。 |
 | `godie-h01o.e` | 79-03 月牙天衝 | E | 主動攻擊 | 79-03 | `godie-h01o` 黑崎一護 | — | 讓斬月吸收靈力的力量，再由刀尖放出超高密度靈壓的斬擊，造成一直線上的敵方部隊受到450傷害。 |
 | `godie-h01o.r` | 79-04 卍解 | R | 輔助 | 79-04 | `godie-h01o` 黑崎一護 | — | 死神中的奧義，只有踏上死神最高點才可習得的技能，黑崎的卍解是將靈氣集中於斬月上，使其爆發出最高的力量，攻擊及移動速度大幅提… |
 | `godie-h01o.ex` | 79-002 虛化 | EX | 輔助 | 79-002 | `godie-h01o` 黑崎一護 | — | 突破死神力量極限的一種技巧，可以藉此獲的更強大的力量，期間黑崎獲得100%攻擊力提昇，每秒回復60點生命，虛化後的硬皮可在… |
@@ -592,10 +748,10 @@
 | `godie-h01u.r` | 80-04 赤兔咆哮 | R | 主動 | 80-04 | `godie-h01u` 呂布奉先 | ✅ | [主動][輔助][機率][普攻時] |
 | `godie-h01u.ex` | 80-002 戰無不勝 | EX | 被動 | 80-002 | `godie-h01u` 呂布奉先 | ✅ | 「只要一直贏，就沒有平衡問題」 |
 | `godie-h020.passive` | 04-00 翔封界 | PASSIVE | 天生·被動 | 04-00 | `godie-h020` 莉娜因巴斯 | — | 翔封界不再是「擋一次負面魔法」了——莉娜嫌麻煩，乾脆整個人浮起來。 |
-| `godie-h020.q` | 04-01 火球術 | Q | 主動攻擊 | 04-01 | `godie-h020` 莉娜因巴斯 | — | 使用火球來攻擊敵人造成500/750/1000/1250點傷害，並附帶暈眩1.50秒的效果。 |
+| `godie-h020.q` | 04-01 火球術 | Q | 主動攻擊 | 04-01 | `godie-h020` 莉娜因巴斯 | — | 使用火球來攻擊敵人造成625/937.5/1250/1562.5點傷害，並附帶暈眩1.50秒的效果。 |
 | `godie-h020.w` | 04-02 炸彈陣 | W | 主動攻擊 | 04-02 | `godie-h020` 莉娜因巴斯 | — | 施展火焰爆裂魔法傷害敵方部隊，每秒可以燒傷55點並持續5秒的時間。在火柱消散之後，在火焰中的部隊仍然會持續受到10點的傷害… |
 | `godie-h020.e` | 04-03 龍破斬 | E | 主動攻擊 | 04-03 | `godie-h020` 莉娜因巴斯 | — | 藉由赤眼魔王沙布蘭尼古之力使用的咒文，以範圍廣和強大的破壞力自誇，具有一擊可殺死巨龍及毀滅一個小鎮的威力。給予範圍內的敵人… |
-| `godie-h020.r` | 04-04 神滅斬 | R | 主動攻擊 | 04-04 | `godie-h020` 莉娜因巴斯 | — | 是藉金色魔王之力使出的強力咒文。將魔力化為黑色的光刀，力量強勁到似乎可以斬斷一切。造成敵方單體1500/3000/4500… |
+| `godie-h020.r` | 04-04 神滅斬 | R | 主動攻擊 | 04-04 | `godie-h020` 莉娜因巴斯 | — | 是藉金色魔王之力使出的強力咒文。將魔力化為黑色的光刀，力量強勁到似乎可以斬斷一切。造成敵方單體1875/3750/5625… |
 | `godie-h020.ex` | 04-002 惡夢魔王的碎片 | EX | 輔助 | 04-002 | `godie-h020` 莉娜因巴斯 | — | 使用惡夢魔王碎片來短暫增幅黑魔法的威力，持續20秒。 |
 | `godie-h02k.passive` | 89-00 憤怒的門牙 | PASSIVE | 天生·被動 | 89-00 | `godie-h02k` 熊貓 | — | [被動][普攻時][機率][暈眩] |
 | `godie-h02k.q` | 89-01 憤怒的頭槌 | Q | 被動 | 89-01 | `godie-h02k` 熊貓 | ✅ | [被動][機率][普攻時][暈眩] |
@@ -603,17 +759,17 @@
 | `godie-h02k.e` | 89-03 憤怒的胸毛 | E | 被動 | 89-03 | `godie-h02k` 熊貓 | ✅ | [被動][機率] |
 | `godie-h02k.r` | 89-04 憤怒的簡諧運動 | R | 被動 | 89-04 | `godie-h02k` 熊貓 | ✅ | [被動][機率][普攻時][迴避][迴避時][拉扯][擊退][暈眩][身上有某狀態時][混亂][AP加成] |
 | `godie-h02k.ex` | 89-002 俄羅斯輪盤 | EX | 主動 | 89-002 | `godie-h02k` 熊貓 | ✅ | [主動][指定][範圍][輔助][恐懼][機率] |
-| `godie-h02r.passive` | 90-00 寄生種子 | PASSIVE | 天生·主動 | 90-00 | `godie-h02r` 妙蛙花 | — | 將寄生種子丟向敵人，每秒造成500點傷害並吸收生命回饋給施法者，持續5秒。 |
-| `godie-h02r.q` | 90-01 飛葉快刀 | Q | 主動攻擊 | 90-01 | `godie-h02r` 妙蛙花 | — | 發出飛快的葉子進行攻擊，每秒對附近的敵人造成250/375/500點傷害，持續2秒。 |
+| `godie-h02r.passive` | 90-00 寄生種子 | PASSIVE | 天生·主動 | 90-00 | `godie-h02r` 妙蛙花 | — | 將寄生種子丟向敵人，每秒造成625點傷害並吸收生命回饋給施法者，持續5秒。 |
+| `godie-h02r.q` | 90-01 飛葉快刀 | Q | 主動攻擊 | 90-01 | `godie-h02r` 妙蛙花 | — | 發出飛快的葉子進行攻擊，每秒對附近的敵人造成312.5/468.75/625點傷害，持續2秒。 |
 | `godie-h02r.w` | 90-02 麻痺粉 | W | 輔助 | 90-02 | `godie-h02r` 妙蛙花 | — | 散發出麻痺的粉末，令周圍600的敵人減緩速度60%，持續3秒。 |
-| `godie-h02r.e` | 90-03 藤鞭 | E | 輔助 | 90-03 | `godie-h02r` 妙蛙花 | — | 指定目標區域，1秒後將位於該區域上的所有單位拉到身旁，若受作用的目標是敵人則會給予500/875/1250/1625點傷害。 |
-| `godie-h02r.r` | 90-04 陽光烈焰 | R | 主動攻擊 | 90-04 | `godie-h02r` 妙蛙花 | — | 草系的強力招式之一，將陽光的能量慢慢聚集起來，累積成強烈的烈焰後發射，造成一直線上敵方部隊1500/3000/4500+全… |
+| `godie-h02r.e` | 90-03 藤鞭 | E | 輔助 | 90-03 | `godie-h02r` 妙蛙花 | — | 指定目標區域，1秒後將位於該區域上的所有單位拉到身旁，若受作用的目標是敵人則會給予625/1093.75/1562.5/2… |
+| `godie-h02r.r` | 90-04 陽光烈焰 | R | 主動攻擊 | 90-04 | `godie-h02r` 妙蛙花 | — | 草系的強力招式之一，將陽光的能量慢慢聚集起來，累積成強烈的烈焰後發射，造成一直線上敵方部隊1875/3750/5625+全… |
 | `godie-h02r.ex` | 90-002 超進化! 妙蛙花 | EX | 輔助 | 90-002 | `godie-h02r` 妙蛙花 | — | 小小青蛙也會有變態的時候，小學課本都有教。超進化為妙蛙花的時候攻擊速度加快、攻擊力大幅提升，代價是攻擊距離縮短為近身，移動… |
 | `godie-h02u.passive` | 92-00 憂鬱的眼神 | PASSIVE | 天生·被動 | 92-00 | `godie-h02u` 草泥馬 | — | 草泥馬天生有著極富感性的憂鬱眼神，令觀者無不動容，讓草泥馬有18%閃避敵人攻擊，對草泥馬造成傷害的部隊將降低攻擊力50%，… |
 | `godie-h02u.q` | 92-01 臥草泥馬 | Q | 輔助 | 92-01 | `godie-h02u` 草泥馬 | — | 這是較高等級的草泥馬才有的稱號，優秀的牠們被允許躺在朝尼族的水槽邊休息恢復體力，每秒恢復3%體力，持續10秒，於臥草泥馬期… |
 | `godie-h02u.w` | 92-03 狂草泥馬 | W | 被動 | 92-03 | `godie-h02u` 草泥馬 | — | [被動][屬性門檻][普攻時][吞噬][層數累積] |
 | `godie-h02u.e` | 92-02 消化液 | E | 被動 | 92-02 | `godie-h02u` 草泥馬 | — | [被動][指向][範圍][破魔][AP加成][機率][週期] |
-| `godie-h02u.r` | 92-04 馬勒戈壁 | R | 投影 | 92-04 | `godie-h02u` 草泥馬 | — | 草泥馬將內心的風景投射到戰場上，改變了戰場，每秒額外獲得150黃金並對周圍敵人造成500/750/1000傷害，持續6秒。 |
+| `godie-h02u.r` | 92-04 馬勒戈壁 | R | 投影 | 92-04 | `godie-h02u` 草泥馬 | — | 草泥馬將內心的風景投射到戰場上，改變了戰場，每秒額外獲得150黃金並對周圍敵人造成625/937.5/1250傷害，持續6… |
 | `godie-h02u.ex` | 92-002 最終戈壁 | EX | 輔助 | 92-002 | `godie-h02u` 草泥馬 | — | 人人討厭的馬勒戈壁最終進化版，可以同時搶錢、搶糧、搶娘們(誤)，馬勒戈壁發動時每秒額外獲得75點[經驗值]，持續6秒。 |
 | `godie-h02v.passive` | 92-00 憂鬱的眼神 | PASSIVE | 天生·被動 | 92-00 | `godie-h02v` 草泥馬 | — | [被動][受到攻擊][致盲][機率] |
 | `godie-h02v.q` | 92-01 臥草泥馬 | Q | 主動 | 92-01 | `godie-h02v` 草泥馬 | ✅ | [主動][變身][週期] |
@@ -628,97 +784,97 @@
 | `godie-hapm.r` | 52-04 巨神一擊 | R | 主動 | 52-04 | `godie-hapm` Berserker | ✅ | [主動][衝刺][範圍] |
 | `godie-hapm.ex` | 52-002 射殺百頭 | EX | 主動 | 52-002 | `godie-hapm` Berserker | ✅ | [主動][指定][AP加成] |
 | `godie-hart.passive` | 01-00 怒斬 | PASSIVE | 天生·被動 | 01-00 | `godie-hart` 克勞德 | — | 攻擊時有15%的機會，造成175點額外傷害，並震昏敵人0.5秒。 |
-| `godie-hart.q` | 01-01 凶斬 | Q | 主動攻擊 | 01-01 | `godie-hart` 克勞德 | ✅ | 使用大刀在敵人身上刻下凶字造成500/750/1000/1250/1500傷害，並且使人暫時無法行動1秒。 |
+| `godie-hart.q` | 01-01 凶斬 | Q | 主動攻擊 | 01-01 | `godie-hart` 克勞德 | ✅ | 使用大刀在敵人身上刻下凶字造成625/937.5/1250/1562.5/1875傷害，並且使人暫時無法行動1秒。 |
 | `godie-hart.w` | 01-02 隕石擊 | W | 主動攻擊 | 01-02 | `godie-hart` 克勞德 | ✅ | 招喚隕石擊落攻擊區域內的敵人造成100傷害並且跳躍到該範圍給予斬殺造成100傷害。 |
-| `godie-hart.e` | 01-03 畫龍點睛 | E | 主動攻擊 | 01-03 | `godie-hart` 克勞德 | ✅ | 快速迴旋巨劍產生龍捲風砍殺敵人造成500/750/1000/1250點傷害，並降低目標裝甲3點，持續5秒。 |
-| `godie-hart.r` | 01-04 超究武神霸斬 | R | 主動攻擊 | 01-04 | `godie-hart` 克勞德 | ✅ | 克勞德的奧義招式，連斬七次的超必殺攻擊，每一次斬擊皆造成極大傷害，總傷害630+50.69% [AP]點。 |
+| `godie-hart.e` | 01-03 畫龍點睛 | E | 主動攻擊 | 01-03 | `godie-hart` 克勞德 | ✅ | 快速迴旋巨劍產生龍捲風砍殺敵人造成625/937.5/1250/1562.5點傷害，並降低目標裝甲3點，持續5秒。 |
+| `godie-hart.r` | 01-04 超究武神霸斬 | R | 主動攻擊 | 01-04 | `godie-hart` 克勞德 | ✅ | 克勞德的奧義招式，連斬七次的超必殺攻擊，每一次斬擊皆造成極大傷害，總傷害630+51% [AP]點。 |
 | `godie-hart.ex` | 01-002 究極魔劍 | EX | 被動 | 01-002 | `godie-hart` 克勞德 | ✅ | 只有在使用究極魔劍時，克勞德才能發揮出他100%的力量。凶斬及超究武神霸斬升級為囧斬及超究武神霸斬-改，攻擊時100%造成… |
-| `godie-hgam.passive` | 90-00 寄生種子 | PASSIVE | 天生·主動 | 90-00 | `godie-hgam` 妙蛙種子 | — | 將寄生種子丟向敵人，每秒造成500點傷害並吸收生命回饋給施法者，持續5秒。 |
-| `godie-hgam.q` | 90-01 飛葉快刀 | Q | 主動攻擊 | 90-01 | `godie-hgam` 妙蛙種子 | ✅ | 發出飛快的葉子進行攻擊，每秒對附近的敵人造成250/375/500點傷害，持續2秒。 |
+| `godie-hgam.passive` | 90-00 寄生種子 | PASSIVE | 天生·主動 | 90-00 | `godie-hgam` 妙蛙種子 | — | 將寄生種子丟向敵人，每秒造成625點傷害並吸收生命回饋給施法者，持續5秒。 |
+| `godie-hgam.q` | 90-01 飛葉快刀 | Q | 主動攻擊 | 90-01 | `godie-hgam` 妙蛙種子 | ✅ | 發出飛快的葉子進行攻擊，每秒對附近的敵人造成312.5/468.75/625點傷害，持續2秒。 |
 | `godie-hgam.w` | 90-02 麻痺粉 | W | 輔助 | 90-02 | `godie-hgam` 妙蛙種子 | ✅ | 散發出麻痺的粉末，令周圍600的敵人減緩速度60%，持續3秒。 |
-| `godie-hgam.e` | 90-03 藤鞭 | E | 輔助 | 90-03 | `godie-hgam` 妙蛙種子 | ✅ | 指定目標區域，1秒後將位於該區域上的所有單位拉到身旁，若受作用的目標是敵人則會給予500/875/1250/1625點傷害。 |
-| `godie-hgam.r` | 90-04 陽光烈焰 | R | 主動攻擊 | 90-04 | `godie-hgam` 妙蛙種子 | ✅ | 草系的強力招式之一，將陽光的能量慢慢聚集起來，累積成強烈的烈焰後發射，造成一直線上敵方部隊1500/3000/4500+全… |
+| `godie-hgam.e` | 90-03 藤鞭 | E | 輔助 | 90-03 | `godie-hgam` 妙蛙種子 | ✅ | 指定目標區域，1秒後將位於該區域上的所有單位拉到身旁，若受作用的目標是敵人則會給予625/1093.75/1562.5/2… |
+| `godie-hgam.r` | 90-04 陽光烈焰 | R | 主動攻擊 | 90-04 | `godie-hgam` 妙蛙種子 | ✅ | 草系的強力招式之一，將陽光的能量慢慢聚集起來，累積成強烈的烈焰後發射，造成一直線上敵方部隊1875/3750/5625+全… |
 | `godie-hgam.ex` | 90-002 超進化! 妙蛙花 | EX | 輔助 | 90-002 | `godie-hgam` 妙蛙種子 | ✅ | 小小青蛙也會有變態的時候，小學課本都有教。超進化為妙蛙花的時候攻擊速度加快、攻擊力大幅提升，代價是攻擊距離縮短為近身，移動… |
 | `godie-hjai.passive` | 04-00 翔封界 | PASSIVE | 天生·被動 | 04-00 | `godie-hjai` 莉娜因巴斯 | — | 翔封界不再是「擋一次負面魔法」了——莉娜嫌麻煩，乾脆整個人浮起來。 |
-| `godie-hjai.q` | 04-01 火球術 | Q | 主動攻擊 | 04-01 | `godie-hjai` 莉娜因巴斯 | ✅ | 使用火球來攻擊敵人造成500/750/1000/1250點傷害，並附帶暈眩1.50秒的效果。 |
+| `godie-hjai.q` | 04-01 火球術 | Q | 主動攻擊 | 04-01 | `godie-hjai` 莉娜因巴斯 | ✅ | 使用火球來攻擊敵人造成625/937.5/1250/1562.5點傷害，並附帶暈眩1.50秒的效果。 |
 | `godie-hjai.w` | 04-02 炸彈陣 | W | 主動攻擊 | 04-02 | `godie-hjai` 莉娜因巴斯 | ✅ | 施展火焰爆裂魔法傷害敵方部隊，每秒可以燒傷55點並持續5秒的時間。在火柱消散之後，在火焰中的部隊仍然會持續受到10點的傷害… |
 | `godie-hjai.e` | 04-03 龍破斬 | E | 主動攻擊 | 04-03 | `godie-hjai` 莉娜因巴斯 | ✅ | 藉由赤眼魔王沙布蘭尼古之力使用的咒文，以範圍廣和強大的破壞力自誇，具有一擊可殺死巨龍及毀滅一個小鎮的威力。給予範圍內的敵人… |
-| `godie-hjai.r` | 04-04 神滅斬 | R | 主動攻擊 | 04-04 | `godie-hjai` 莉娜因巴斯 | ✅ | 是藉金色魔王之力使出的強力咒文。將魔力化為黑色的光刀，力量強勁到似乎可以斬斷一切。造成敵方單體1500/3000/4500… |
+| `godie-hjai.r` | 04-04 神滅斬 | R | 主動攻擊 | 04-04 | `godie-hjai` 莉娜因巴斯 | ✅ | 是藉金色魔王之力使出的強力咒文。將魔力化為黑色的光刀，力量強勁到似乎可以斬斷一切。造成敵方單體1875/3750/5625… |
 | `godie-hjai.ex` | 04-002 惡夢魔王的碎片 | EX | 輔助 | 04-002 | `godie-hjai` 莉娜因巴斯 | ✅ | 使用惡夢魔王碎片來短暫增幅黑魔法的威力，持續20秒。 |
 | `godie-hpb1.passive` | 07-00 獸化心靈 | PASSIVE | 天生·被動 | 07-00 | `godie-hpb1` 蒼月潮 | — | 獸矛不挑食：小兵、殭屍、英雄，數量到了就給糖。 |
 | `godie-hpb1.q` | 07-01 臨、兵、鬥 | Q | 輔助 | 07-01 | `godie-hpb1` 蒼月潮 | ✅ | 可抵擋對方負性魔法。 |
-| `godie-hpb1.w` | 07-02 者、皆、陣 | W | 主動攻擊 | 07-02 | `godie-hpb1` 蒼月潮 | ✅ | 以超快的速度衝刺砍殺一直線上的敵人使得血流成河，砍殺造成500/875/1250/1625/2000+187.61% [A… |
-| `godie-hpb1.e` | 07-03 列、在、前 | E | 主動攻擊 | 07-03 | `godie-hpb1` 蒼月潮 | ✅ | 用盡全身力氣跳起落下斬擊使得大地震動，區域內敵人皆受到(35.23% [AP])+450傷害。 |
+| `godie-hpb1.w` | 07-02 者、皆、陣 | W | 主動攻擊 | 07-02 | `godie-hpb1` 蒼月潮 | ✅ | 以超快的速度衝刺砍殺一直線上的敵人使得血流成河，砍殺造成625/1093.75/1562.5/2031.25/2500+1… |
+| `godie-hpb1.e` | 07-03 列、在、前 | E | 主動攻擊 | 07-03 | `godie-hpb1` 蒼月潮 | ✅ | 用盡全身力氣跳起落下斬擊使得大地震動，區域內敵人皆受到(35% [AP])+450傷害。 |
 | `godie-hpb1.r` | 07-04 神聖結界 | R | 輔助 | 07-04 | `godie-hpb1` 蒼月潮 | ✅ | 展開一道強力的結界，可以抵擋50%的傷害，持續8秒。 |
 | `godie-hpb1.ex` | 07-002 獸矛持有者 | EX | 強化 | 07-002 | `godie-hpb1` 蒼月潮 | ✅ | 持有獸矛的蒼月潮，在攻擊非英雄部隊時(不包含建築)，當該部隊血量低於35%將直接死亡，並有1%機率造成英雄直接死亡，連技額… |
 | `godie-huth.passive` | 28-00 無限再生 | PASSIVE | 天生·被動 | 28-00 | `godie-huth` 魔人普烏 | — | 魔人普烏天生擁有快速的肉體再生能力，每秒回覆12點生命。 |
 | `godie-huth.q` | 28-01 吃掉你 | Q | 主動攻擊 | 28-01 | `godie-huth` 魔人普烏 | ✅ | 張開大口吃掉目標，把敵人變成養分。 |
-| `godie-huth.w` | 28-02 把你變成餅乾 | W | 主動攻擊 | 28-02 | `godie-huth` 魔人普烏 | ✅ | 把低等的敵人變成餅乾，吃下餅乾可以回復體力500點，也會對目標造成500/750/1000/1250/1500傷害。 |
+| `godie-huth.w` | 28-02 把你變成餅乾 | W | 主動攻擊 | 28-02 | `godie-huth` 魔人普烏 | ✅ | 把低等的敵人變成餅乾，吃下餅乾可以回復體力500點，也會對目標造成625/937.5/1250/1562.5/1875傷害。 |
 | `godie-huth.e` | 28-03 分身 | E | 輔助 | 28-03 | `godie-huth` 魔人普烏 | ✅ | 創造出2個普烏的實體來攻擊敵人，具有30%攻擊力，並除掉身上的所有法術效果，可持續10秒。 |
-| `godie-huth.r` | 28-04 破滅能量彈 | R | 主動攻擊 | 28-04 | `godie-huth` 魔人普烏 | ✅ | 指定一區域給予強大的重力能量彈，造成該區域單位行動速度降低35%，並且每秒受到500/1000/1500點傷害，持續5秒。 |
+| `godie-huth.r` | 28-04 破滅能量彈 | R | 主動攻擊 | 28-04 | `godie-huth` 魔人普烏 | ✅ | 指定一區域給予強大的重力能量彈，造成該區域單位行動速度降低35%，並且每秒受到625/1250/1875點傷害，持續5秒。 |
 | `godie-huth.ex` | 28-002 純粹魔人普烏 | EX | 強化 | 28-002 | `godie-huth` 魔人普烏 | ✅ | 普烏被逼至絕境時的最終手段——捨棄圓潤外型，回歸最純粹兇暴的原初魔人。（機制沿用原 w3x 28-002，數值待對帳補述） |
 | `godie-hvsh.passive` | 48-00 石化之眼 | PASSIVE | 天生·主動 | 48-00 | `godie-hvsh` Rider | — | 開啟石化之眼，將Rider附近小範圍的部隊予以石化，持續2秒。 |
 | `godie-hvsh.q` | 48-01 魔法鎖鏈 | Q | 主動攻擊 | 48-01 | `godie-hvsh` Rider | ✅ | 使用鎖鏈將路線上的部隊拉回自己身旁，並受到150的傷害。 |
 | `godie-hvsh.w` | 48-02 心眼 | W | 被動 | 48-02 | `godie-hvsh` Rider | ✅ | 心眼讓梅杜莎有12%的機會閃避攻擊。 |
 | `godie-hvsh.e` | 48-03 鮮血神殿 | E | 主動 | 48-03 | `godie-hvsh` Rider | ✅ | [主動][自身][範圍][持續傷害][減速][回復][屬性成長] |
-| `godie-hvsh.r` | 48-04 騎英之疆繩 | R | 主動攻擊 | 48-04 | `godie-hvsh` Rider | ✅ | 招喚飛馬以超快的速度衝擊前方，對指定地點上的地面部隊造成250.15% [AP]+300的傷害。 |
+| `godie-hvsh.r` | 48-04 騎英之疆繩 | R | 主動攻擊 | 48-04 | `godie-hvsh` Rider | ✅ | 招喚飛馬以超快的速度衝擊前方，對指定地點上的地面部隊造成250% [AP]+300的傷害。 |
 | `godie-hvsh.ex` | 48-002 騎英之疆繩MAX | EX | 被動 | 48-002 | `godie-hvsh` Rider | ✅ | Rider解開眼罩封印，讓必殺技騎英之疆繩轉變成騎英之疆繩MAX，造成直線上1500的傷害並額外追加80% [AP]。 |
 | `godie-hvwd.passive` | 02-00 淨化 | PASSIVE | 天生·主動 | 02-00 | `godie-hvwd` 桔梗 | — | 淨化移除所有的異常狀態，並可以緩慢對手4秒，燃燒50點瑪那。 |
 | `godie-hvwd.q` | 02-01 破魔之箭 | Q | 法球效應 | 02-01 | `godie-hvwd` 桔梗 | ✅ | 桔梗擁有極強力的淨化能力，使敵人受到25點傷害的同時流失法力。 |
 | `godie-hvwd.w` | 02-02 明鏡止水 | W | 靈氣 | 02-02 | `godie-hvwd` 桔梗 | ✅ | 明鏡止水可以讓桔梗的弓箭威力有7%的遠距攻擊傷害加成。 |
-| `godie-hvwd.e` | 02-03 魂飛魄散 | E | 主動攻擊 | 02-03 | `godie-hvwd` 桔梗 | ✅ | 桔梗將死魂收集的妖力爆發噴射，造成一直線上的敵人500/1000/1500/2000點傷害。 |
+| `godie-hvwd.e` | 02-03 魂飛魄散 | E | 主動攻擊 | 02-03 | `godie-hvwd` 桔梗 | ✅ | 桔梗將死魂收集的妖力爆發噴射，造成一直線上的敵人625/1250/1875/2500點傷害。 |
 | `godie-hvwd.r` | 02-04 死魂蟲 | R | 主動攻擊 | 02-04 | `godie-hvwd` 桔梗 | ✅ | 放出6隻死魂蟲，吸取附近敵軍部隊的生命能量。當他們回到身邊時，他們會將從犧牲者身上吸取的生命能量，用於補充生命值 。持續時… |
 | `godie-hvwd.ex` | 02-002 神通眼 | EX | 主動攻擊 | 02-002 | `godie-hvwd` 桔梗 | ✅ | 修練到極致的桔梗可以打開神通眼，讓淨化之箭追蹤千里之外的敵人並造成1750點傷害，暈眩2秒。 |
 | `godie-n003.passive` | 42-00 魔法障壁 | PASSIVE | 天生·主動 | 42-00 | `godie-n003` 依文潔琳 | — | 真祖常駐的魔法障壁可以增加10點裝甲並減慢近戰部隊的攻擊速度9秒，可以持續9秒。 |
-| `godie-n003.q` | 42-01 凍結的大地 | Q | 主動攻擊 | 42-01 | `godie-n003` 依文潔琳 | ✅ | 以一波冰雪轟擊敵方部隊，造成目標500/750/1000/1250點的傷害，以及周圍目標150點的冰爆傷害。冰冷傷害可以降… |
+| `godie-n003.q` | 42-01 凍結的大地 | Q | 主動攻擊 | 42-01 | `godie-n003` 依文潔琳 | ✅ | 以一波冰雪轟擊敵方部隊，造成目標625/937.5/1250/1562.5點的傷害，以及周圍目標150點的冰爆傷害。冰冷傷… |
 | `godie-n003.w` | 42-02 吸血祭品 | W | 輔助 | 42-02 | `godie-n003` 依文潔琳 | ✅ | 犧牲選定的友方不死部隊，並將它50%的生命點數轉化為吸血鬼的生命力，20%轉化為吸血鬼的法力。 |
-| `godie-n003.e` | 42-03 暗夜吹雪 | E | 主動攻擊 | 42-03 | `godie-n003` 依文潔琳 | ✅ | 依文潔琳的得意技之一，使用高等冰系黑魔法造成一直線敵方1500/2625/3750/4875點傷害。 |
+| `godie-n003.e` | 42-03 暗夜吹雪 | E | 主動攻擊 | 42-03 | `godie-n003` 依文潔琳 | ✅ | 依文潔琳的得意技之一，使用高等冰系黑魔法造成一直線敵方1875/3281.25/4687.5/6093.75點傷害。 |
 | `godie-n003.r` | 42-04 世界終結 | R | 主動攻擊 | 42-04 | `godie-n003` 依文潔琳 | ✅ | 由暗系永遠的黑暗以及冰系魔法永遠的冰河混合成的超強力魔法,有著足以將上古鬼神一擊殺的恐怖力量，給予隨機12次區域傷害150… |
 | `godie-n003.ex` | 42-002 魔力印章 | EX | 輔助 | 42-002 | `godie-n003` 依文潔琳 | ✅ | 用校長的印章解除魔力使用限制，讓依文可以隨時在身邊施展出世界終結的效果，這段時間移動速度會因為念咒而降低，持續7秒。 |
 | `godie-n00b.passive` | 57-00 四次元口袋 | PASSIVE | 天生·主動 | 57-00 | `godie-n00b` 哆拉A夢 | — | 從小叮噹的百寶袋隨機拿出道具，雖然大多是便宜貨，但是偶爾也會有珍貴的寶物，同時也會引起附近敵人的注意，進而攻擊小叮噹。 |
-| `godie-n00b.q` | 57-01 空氣砲 | Q | 主動攻擊 | 57-01 | `godie-n00b` 哆拉A夢 | ✅ | 小叮噹的空氣砲可以造成一直線上敵方部隊500/750/1000/1250傷害並且擊退附近敵人。 |
+| `godie-n00b.q` | 57-01 空氣砲 | Q | 主動攻擊 | 57-01 | `godie-n00b` 哆拉A夢 | ✅ | 小叮噹的空氣砲可以造成一直線上敵方部隊625/937.5/1250/1562.5傷害並且擊退附近敵人。 |
 | `godie-n00b.w` | 57-03 複製鏡 | W | 輔助攻擊 | 57-03 | `godie-n00b` 哆拉A夢 | ✅ | 未來的法寶，可將鏡前的人或物加以複製，複製出來的人物擁有與本尊相同的攻擊力，但將承受200%額外傷害，持續20秒。 |
 | `godie-n00b.e` | 57-02 任意門 | E | 輔助 | 57-02 | `godie-n00b` 哆拉A夢 | ✅ | 使用任意門可以傳送到地圖探索過的任何一點，準備時間為3秒。 |
-| `godie-n00b.r` | 57-04 竹蜻蜓 | R | 輔助 | 57-04 | `godie-n00b` 哆拉A夢 | ✅ | 給目標帶上竹蜻蜓，而四周會產生共12道龍捲風每個龍捲風都有著500/875/1250點傷害。 |
+| `godie-n00b.r` | 57-04 竹蜻蜓 | R | 輔助 | 57-04 | `godie-n00b` 哆拉A夢 | ✅ | 給目標帶上竹蜻蜓，而四周會產生共12道龍捲風每個龍捲風都有著625/1093.75/1562.5點傷害。 |
 | `godie-n00b.ex` | 57-002 時光機 | EX | 未來科技 | 57-002 | `godie-n00b` 哆拉A夢 | ✅ | 可以穿梭時空回到過去的超先進科技。 |
 | `godie-n00p.passive` | 18-00 薔薇荊棘之刃 | PASSIVE | 天生·被動 | 18-00 | `godie-n00p` 南野秀一 | — | 藏馬把玫瑰甩成鞭子，然後完全沒注意到目標後面還排著隊。 |
 | `godie-n00p.q` | 18-01 風華圓舞陣 | Q | 主動攻擊 | 18-01 | `godie-n00p` 南野秀一 | — | 周圍內飄逸出10片的花瓣，每片花瓣碰觸到敵方時造成50傷害，持續8秒。 |
-| `godie-n00p.w` | 18-02 寄生種子 | W | 主動攻擊 | 18-02 | `godie-n00p` 南野秀一 | — | 把魔界凶惡植物寄生在敵人身上造成500/750/1000/1250點傷害，若干時間後將會侵蝕敵人的身體造成每秒60點傷害，… |
+| `godie-n00p.w` | 18-02 寄生種子 | W | 主動攻擊 | 18-02 | `godie-n00p` 南野秀一 | — | 把魔界凶惡植物寄生在敵人身上造成625/937.5/1250/1562.5點傷害，若干時間後將會侵蝕敵人的身體造成每秒60… |
 | `godie-n00p.e` | 18-03 妖狐變化 | E | 變身 | 18-03 | `godie-n00p` 南野秀一 | — | 幻化為妖狐型態，能力將會大幅提升，隨著技能等級提升妖狐可以具備更多的能力，攻擊力和各方面的數值也會獲得成長，持續8秒。 |
-| `godie-n00p.r` | 18-04 億年樹 | R | 主動攻擊 | 18-04 | `godie-n00p` 南野秀一 | — | 讓魔界最具強大魔力的億年樹在現世甦醒，億年樹擁有500點生命，出現時造成附近敵軍500/750/1000傷害，每秒回復附近… |
+| `godie-n00p.r` | 18-04 億年樹 | R | 主動攻擊 | 18-04 | `godie-n00p` 南野秀一 | — | 讓魔界最具強大魔力的億年樹在現世甦醒，億年樹擁有500點生命，出現時造成附近敵軍625/937.5/1250傷害，每秒回復… |
 | `godie-n00p.ex` | 18-002 魔界吸血植物 | EX | 被動 | 18-002 | `godie-n00p` 南野秀一 | — | 培養殘暴的魔界吸血植物，當聞到血的味道將會自動追上敵人，使寄生種子額外造成敵人最大生命40%傷害，如果妖狐藏馬的生命低於5… |
 | `godie-n01c.passive` | 08-00 龍紋記憶 | PASSIVE | 天生·被動 | 08-00 | `godie-n01c` 勇者小呆 | — | 小呆平常呆，被打暈的時候龍紋章反而會替他清醒——這大概就是傳說的定義。 |
 | `godie-n01c.q` | 08-01 雙龍紋 | Q | 輔助 | 08-01 | `godie-n01c` 勇者小呆 | — | 繼承父親巴藍以及自身的龍紋章，使用雙龍紋將會使小呆的增加50點傷害，可持續9秒 |
-| `godie-n01c.w` | 08-02 萊丁快速劍 | W | 主動攻擊 | 08-02 | `godie-n01c` 勇者小呆 | — | 使用萊丁(閃電咒文)複合阿邦快速劍使出的魔法劍術，造成500/750/1000/1250點傷害並瞬間移動到敵方面前，周圍敵… |
-| `godie-n01c.e` | 08-03 龍鬥氣砲咒文 | E | 主動攻擊 | 08-03 | `godie-n01c` 勇者小呆 | — | 龍騎士的得意技之一，發動龍紋章之力使出咒文迫擊砲，造成攻擊線地面部隊500/1000/1500/2000點傷害。 |
+| `godie-n01c.w` | 08-02 萊丁快速劍 | W | 主動攻擊 | 08-02 | `godie-n01c` 勇者小呆 | — | 使用萊丁(閃電咒文)複合阿邦快速劍使出的魔法劍術，造成625/937.5/1250/1562.5點傷害並瞬間移動到敵方面前… |
+| `godie-n01c.e` | 08-03 龍鬥氣砲咒文 | E | 主動攻擊 | 08-03 | `godie-n01c` 勇者小呆 | — | 龍騎士的得意技之一，發動龍紋章之力使出咒文迫擊砲，造成攻擊線地面部隊625/1250/1875/2500點傷害。 |
 | `godie-n01c.r` | 08-04 阿邦快速劍X | R | 主動攻擊 | 08-04 | `godie-n01c` 勇者小呆 | — | 小呆獨自思考和特訓中，所創出的新阿邦式快速劍，將A式(Arrow)與B式(Break)兩種快速劍同時使用(A+B)，造成威… |
 | `godie-n01c.ex` | 08-002 龍魔人 | EX | 變身 | 08-002 | `godie-n01c` 勇者小呆 | — | [變身] 冷卻 120 秒 · 花費 0 法力 · 持續 20 秒 |
 | `godie-n01g.passive` | 42-00 魔法障壁 | PASSIVE | 天生·主動 | 42-00 | `godie-n01g` 依文潔琳 | — | 真祖常駐的魔法障壁可以增加10點裝甲並減慢近戰部隊的攻擊速度9秒，可以持續9秒。 |
-| `godie-n01g.q` | 42-01 凍結的大地 | Q | 主動攻擊 | 42-01 | `godie-n01g` 依文潔琳 | — | 以一波冰雪轟擊敵方部隊，造成目標500/750/1000/1250點的傷害，以及周圍目標150點的冰爆傷害。冰冷傷害可以降… |
+| `godie-n01g.q` | 42-01 凍結的大地 | Q | 主動攻擊 | 42-01 | `godie-n01g` 依文潔琳 | — | 以一波冰雪轟擊敵方部隊，造成目標625/937.5/1250/1562.5點的傷害，以及周圍目標150點的冰爆傷害。冰冷傷… |
 | `godie-n01g.w` | 42-02 吸血祭品 | W | 輔助 | 42-02 | `godie-n01g` 依文潔琳 | — | 犧牲選定的友方不死部隊，並將它50%的生命點數轉化為吸血鬼的生命力，20%轉化為吸血鬼的法力。 |
-| `godie-n01g.e` | 42-03 暗夜吹雪 | E | 主動攻擊 | 42-03 | `godie-n01g` 依文潔琳 | — | 依文潔琳的得意技之一，使用高等冰系黑魔法造成一直線敵方1500/2625/3750/4875點傷害。 |
+| `godie-n01g.e` | 42-03 暗夜吹雪 | E | 主動攻擊 | 42-03 | `godie-n01g` 依文潔琳 | — | 依文潔琳的得意技之一，使用高等冰系黑魔法造成一直線敵方1875/3281.25/4687.5/6093.75點傷害。 |
 | `godie-n01g.r` | 42-04 世界終結 | R | 主動攻擊 | 42-04 | `godie-n01g` 依文潔琳 | — | 由暗系永遠的黑暗以及冰系魔法永遠的冰河混合成的超強力魔法,有著足以將上古鬼神一擊殺的恐怖力量，給予隨機12次區域傷害150… |
 | `godie-n01g.ex` | 42-002 魔力印章 | EX | 輔助 | 42-002 | `godie-n01g` 依文潔琳 | — | 用校長的印章解除魔力使用限制，讓依文可以隨時在身邊施展出世界終結的效果，這段時間移動速度會因為念咒而降低，持續7秒。 |
 | `godie-nbbc.passive` | 08-00 龍紋記憶 | PASSIVE | 天生·被動 | 08-00 | `godie-nbbc` 勇者小呆 | — | 小呆平常呆，被打暈的時候龍紋章反而會替他清醒——這大概就是傳說的定義。 |
 | `godie-nbbc.q` | 08-01 雙龍紋 | Q | 輔助 | 08-01 | `godie-nbbc` 勇者小呆 | ✅ | 繼承父親巴藍以及自身的龍紋章，使用雙龍紋將會使小呆的增加50點傷害，可持續9秒 |
-| `godie-nbbc.w` | 08-02 萊丁快速劍 | W | 主動攻擊 | 08-02 | `godie-nbbc` 勇者小呆 | ✅ | 使用萊丁(閃電咒文)複合阿邦快速劍使出的魔法劍術，造成500/750/1000/1250點傷害並瞬間移動到敵方面前，周圍敵… |
-| `godie-nbbc.e` | 08-03 龍鬥氣砲咒文 | E | 主動攻擊 | 08-03 | `godie-nbbc` 勇者小呆 | ✅ | 龍騎士的得意技之一，發動龍紋章之力使出咒文迫擊砲，造成攻擊線地面部隊500/1000/1500/2000點傷害。 |
+| `godie-nbbc.w` | 08-02 萊丁快速劍 | W | 主動攻擊 | 08-02 | `godie-nbbc` 勇者小呆 | ✅ | 使用萊丁(閃電咒文)複合阿邦快速劍使出的魔法劍術，造成625/937.5/1250/1562.5點傷害並瞬間移動到敵方面前… |
+| `godie-nbbc.e` | 08-03 龍鬥氣砲咒文 | E | 主動攻擊 | 08-03 | `godie-nbbc` 勇者小呆 | ✅ | 龍騎士的得意技之一，發動龍紋章之力使出咒文迫擊砲，造成攻擊線地面部隊625/1250/1875/2500點傷害。 |
 | `godie-nbbc.r` | 08-04 阿邦快速劍X | R | 主動攻擊 | 08-04 | `godie-nbbc` 勇者小呆 | ✅ | 小呆獨自思考和特訓中，所創出的新阿邦式快速劍，將A式(Arrow)與B式(Break)兩種快速劍同時使用(A+B)，造成威… |
 | `godie-nbbc.ex` | 08-002 龍魔人 | EX | 變身 | 08-002 | `godie-nbbc` 勇者小呆 | ✅ | [變身] 冷卻 120 秒 · 花費 0 法力 · 持續 20 秒 |
 | `godie-nsjs.passive` | 18-00 薔薇荊棘之刃 | PASSIVE | 天生·被動 | 18-00 | `godie-nsjs` 南野秀一 | — | 藏馬把玫瑰甩成鞭子，然後完全沒注意到目標後面還排著隊。 |
 | `godie-nsjs.q` | 18-01 風華圓舞陣 | Q | 主動攻擊 | 18-01 | `godie-nsjs` 南野秀一 | ✅ | 周圍內飄逸出10片的花瓣，每片花瓣碰觸到敵方時造成50傷害，持續8秒。 |
-| `godie-nsjs.w` | 18-02 寄生種子 | W | 主動攻擊 | 18-02 | `godie-nsjs` 南野秀一 | ✅ | 把魔界凶惡植物寄生在敵人身上造成500/750/1000/1250點傷害，若干時間後將會侵蝕敵人的身體造成每秒60點傷害，… |
+| `godie-nsjs.w` | 18-02 寄生種子 | W | 主動攻擊 | 18-02 | `godie-nsjs` 南野秀一 | ✅ | 把魔界凶惡植物寄生在敵人身上造成625/937.5/1250/1562.5點傷害，若干時間後將會侵蝕敵人的身體造成每秒60… |
 | `godie-nsjs.e` | 18-03 妖狐變化 | E | 變身 | 18-03 | `godie-nsjs` 南野秀一 | ✅ | 幻化為妖狐型態，能力將會大幅提升，隨著技能等級提升妖狐可以具備更多的能力，攻擊力和各方面的數值也會獲得成長，持續8秒。 |
-| `godie-nsjs.r` | 18-04 億年樹 | R | 主動攻擊 | 18-04 | `godie-nsjs` 南野秀一 | ✅ | 讓魔界最具強大魔力的億年樹在現世甦醒，億年樹擁有500點生命，出現時造成附近敵軍500/750/1000傷害，每秒回復附近… |
+| `godie-nsjs.r` | 18-04 億年樹 | R | 主動攻擊 | 18-04 | `godie-nsjs` 南野秀一 | ✅ | 讓魔界最具強大魔力的億年樹在現世甦醒，億年樹擁有500點生命，出現時造成附近敵軍625/937.5/1250傷害，每秒回復… |
 | `godie-nsjs.ex` | 18-002 魔界吸血植物 | EX | 被動 | 18-002 | `godie-nsjs` 南野秀一 | ✅ | 培養殘暴的魔界吸血植物，當聞到血的味道將會自動追上敵人，使寄生種子額外造成敵人最大生命40%傷害，如果妖狐藏馬的生命低於5… |
 | `godie-o00k.passive` | 86-00 裝可愛 | PASSIVE | 天生·主動 | 86-00 | `godie-o00k` 皮卡娘 | — | 裝可愛是皮卡的絕技，只可惜在戰場上裝可愛只會讓別人更想打他，有效範圍為極大，嘲諷持續 3 秒。 |
 | `godie-o00k.q` | 86-01 十萬伏特 | Q | 主動攻擊 | 86-01 | `godie-o00k` 皮卡娘 | ✅ | 皮卡的得意絕招，使出電擊攻擊6個敵人，每個敵人傷害175。 |
 | `godie-o00k.w` | 86-02 電光一閃 | W | 輔助 | 86-02 | `godie-o00k` 皮卡娘 | ✅ | 讓皮卡娘以疾快的速度移動進出600的距離到指定的位置。 |
-| `godie-o00k.e` | 86-03 神鳴 | E | 主動攻擊 | 86-03 | `godie-o00k` 皮卡娘 | ✅ | 皮卡娘大絕招之一，將雷電集中在手上，再放射出去，可造成前方一直線1500/2250/3000/3750點的傷害。 |
+| `godie-o00k.e` | 86-03 神鳴 | E | 主動攻擊 | 86-03 | `godie-o00k` 皮卡娘 | ✅ | 皮卡娘大絕招之一，將雷電集中在手上，再放射出去，可造成前方一直線1875/2812.5/3750/4687.5點的傷害。 |
 | `godie-o00k.r` | 86-04 打雷絕招 | R | 主動攻擊 | 86-04 | `godie-o00k` 皮卡娘 | ✅ | 放出全身積蓄的電壓，瘋狂電擊周圍的敵人並使之暈眩0.5秒。範圍內的敵人（最多20名）各自引爆一條獨立的連鎖閃電：第一發造成… |
 | `godie-o00k.ex` | 86-002 雷電萌神 | EX | 主動 | 86-002 | `godie-o00k` 皮卡娘 | ✅ | 皮卡娘在雷電萌神狀態，閃電大決傷害將增加為兩倍。 |
 | `godie-o00l.passive` | 53-00 空間穿梭 | PASSIVE | 天生·主動 | 53-00 | `godie-o00l` 傑洛士 | — | 讓一個部隊能在空間穿梭，使敵方無法直接看見，如果部隊展開攻擊，使用能力或是施展法術，就會為人所見。 |
-| `godie-o00l.q` | 53-01 獸王牙操彈 | Q | 傷害加成 | 53-01 | `godie-o00l` 傑洛士 | ✅ | 借獸王之力施展之咒文，可依施法者思考操縱攻擊，光帶周圍每秒造成500/750/1000/1250+125.07% [AP]… |
+| `godie-o00l.q` | 53-01 獸王牙操彈 | Q | 傷害加成 | 53-01 | `godie-o00l` 傑洛士 | ✅ | 借獸王之力施展之咒文，可依施法者思考操縱攻擊，光帶周圍每秒造成625/937.5/1250/1562.5+125% [AP… |
 | `godie-o00l.w` | 53-02 強化炸彈陣 | W | 主動攻擊 | 53-02 | `godie-o00l` 傑洛士 | ✅ | 施展火焰爆裂魔法傷害敵方部隊，燒傷150點。 |
 | `godie-o00l.e` | 53-03 破法對咒 | E | 輔助 | 53-03 | `godie-o00l` 傑洛士 | ✅ | 使用強大的魔力展開結界承受住大範圍內650點的法術傷害，持續6秒。 |
 | `godie-o00l.r` | 53-04 暴爆咒 | R | 主動攻擊 | 53-04 | `godie-o00l` 傑洛士 | ✅ | 火系黑魔法的最高等攻擊法術，需要的魔力相當驚人，賢者等級以上才能施展的毀滅性咒文，使用後施術者會以極快的速度移動，並以自我… |
@@ -727,48 +883,48 @@
 | `godie-o00x.q` | 09-01 界王拳 | Q | 輔助 | 09-01 | `godie-o00x` 悟空 | — | 悟空在界王神那邊以10倍重力之下所習得的招數，可增加55點的額外傷害，但是將會每秒消耗生命10點。 |
 | `godie-o00x.w` | 09-02 瞬間移動 | W | 輔助 | 09-02 | `godie-o00x` 悟空 | — | 悟空跟佛利沙大戰之後，在宇宙漂流到了亞德拉特星，跟那邊的人習得了瞬間移動，以傳送的方式移動中距離到指定的位置。 |
 | `godie-o00x.e` | 09-03 超級賽亞人 | E | 變身 | 09-03 | `godie-o00x` 悟空 | — | 帶著憤怒的情緒，將氣發揮到極致，變身成為超級賽亞人，攻擊和移動速度將會大幅提升，持續8秒。 |
-| `godie-o00x.r` | 09-04 龜派氣功 | R | 主動攻擊 | 09-04 | `godie-o00x` 悟空 | — | 源自武天老師的絕學，將氣集中在手上，累積成強烈氣旋後發射，造成一直線上敵方部隊500/1000/1500+141.73%… |
+| `godie-o00x.r` | 09-04 龜派氣功 | R | 主動攻擊 | 09-04 | `godie-o00x` 悟空 | — | 源自武天老師的絕學，將氣集中在手上，累積成強烈氣旋後發射，造成一直線上敵方部隊625/1250/1875+150% [AP… |
 | `godie-o00x.ex` | 09-002 十倍龜派氣功 | EX | 主動 | 09-002 | `godie-o00x` 悟空 | — | 可以無限增強的悟空，在能力達一定程度後，可以使出一擊將一顆星球打爆的十倍龜派氣功，這樣威力強大也是合情合理的!!!在超級賽… |
 | `godie-o02l.passive` | 58-00 電光一閃 | PASSIVE | 天生·主動 | 58-00 | `godie-o02l` 皮卡丘 | — | 皮卡丘的得意技能之一，可以瞬間移動到800距離內的任何地方，幫助他瞬間烙跑或偷襲。 |
 | `godie-o02l.q` | 58-01 十萬伏特 | Q | 主動攻擊 | 58-01 | `godie-o02l` 皮卡丘 | — | 皮卡的得意絕招，使出電擊攻擊6個敵人，每個敵人傷害175。 |
 | `godie-o02l.w` | 58-02 鋼鐵尾巴 | W | 被動 | 58-02 | `godie-o02l` 皮卡丘 | — | 揮動鋼鐵尾巴可以讓皮卡在攻擊時有10%機率增加75點破壞力，並有機會將敵人震昏0.01秒。 |
-| `godie-o02l.e` | 58-03 就決定是你了!小智 | E | 主動傷害 | 58-03 | `godie-o02l` 皮卡丘 | — | 對著敵方的部隊投出皮卡丘痛恨已久的低能小智缺，造成500/1000/1500/2000傷害之後還會將對方打昏0.5秒。 |
+| `godie-o02l.e` | 58-03 就決定是你了!小智 | E | 主動傷害 | 58-03 | `godie-o02l` 皮卡丘 | — | 對著敵方的部隊投出皮卡丘痛恨已久的低能小智缺，造成625/1250/1875/2500傷害之後還會將對方打昏0.5秒。 |
 | `godie-o02l.r` | 58-04 瘋狂皮卡丘 | R | 變身 | 58-04 | `godie-o02l` 皮卡丘 | — | 再也受不了裝可愛清純路線的皮卡丘終於露出本性，變身為瘋狂癡呆惡棍皮卡，瘋狂使用鋼鐵尾巴攻擊敵人，轉變成近戰單位，攻擊速度大… |
 | `godie-o02l.ex` | 58-002 打雷絕招 | EX | 主動攻擊 | 58-002 | `godie-o02l` 皮卡丘 | — | 放出全身積蓄的電壓瘋狂電擊範圍1800距離內的敵人並使之暈眩0.5秒，每個敵人將會受到雷擊造成250點傷害並向旁邊的單位傳… |
 | `godie-o02p.passive` | 99-00 可愛就是正義 | PASSIVE | 天生·被動 | 99-00 | `godie-o02p` 初音 | — | 這世界的真理就是可愛，可愛就是正義！在初音的影響下，週遭的部隊可以額外獲得30%生命恢復率及10%跑速。 |
 | `godie-o02p.q` | 99-01 甩蔥歌 | Q | 主動攻擊 | 99-01 | `godie-o02p` 初音 | ✅ | 初音的成名曲之一，其電波般的旋律，會讓週遭的聽者有如全身通過電流一般；召喚一道閃電進行攻擊，給予最多6位敵人200點的傷害… |
 | `godie-o02p.w` | 99-02 最初的聲音 | W | 輔助 | 99-02 | `godie-o02p` 初音 | ✅ | 初音的成名曲之一，其輕快的旋律，唱出的卻是感傷的故事，撫慰的歌聲，讓聽者的內心也受到了治癒；召喚一道療癒之風進行治癒，給予… |
 | `godie-o02p.e` | 99-03 初音未來的消失 | E | 輔助 | 99-03 | `godie-o02p` 初音 | ✅ | 初音的成名曲之一，讓聽者莫名的悲憤及難過，進而在一定時間內武裝自己；在初音週遭的部隊可以額外獲得10%攻擊力加成及3點防禦… |
-| `godie-o02p.r` | 99-04 世界第一的公主殿下 | R | 主動傷害 | 99-04 | `godie-o02p` 初音 | ✅ | 初音的成名曲之一，讓初音宛如公主般的翩翩起舞，期間不受任何魔法傷害；在初音週遭的部隊每秒受到200/300/400點傷害，… |
+| `godie-o02p.r` | 99-04 世界第一的公主殿下 | R | 主動傷害 | 99-04 | `godie-o02p` 初音 | ✅ | 初音的成名曲之一，讓初音宛如公主般的翩翩起舞，期間不受任何魔法傷害；在初音週遭的部隊每秒受到250/375/500點傷害，… |
 | `godie-o02p.ex` | 99-002 把你給MikuMiku掉 | EX | 被動 | 99-002 | `godie-o02p` 初音 | ✅ | 初音的成名曲之一，可以發揮出初音最強之實力；所選擇的部隊將會獲得20點額外裝甲，並恢復100%血量及瑪那，攻擊擁有該狀態的… |
 | `godie-o030.passive` | 30-00 攝影機 | PASSIVE | 天生·主動 | 30-00 | `godie-o030` 臭作 | — | [輔助][指定] |
 | `godie-o030.q` | 30-01 綁架 | Q | 輔助 | 30-01 | `godie-o030` 臭作 | — | 因為想非常想要肛人而起了綁架人的念頭，導致不分敵我的胡亂綁架來肛，綑綁範圍中。 |
 | `godie-o030.w` | 30-02 酒精灌腸 | W | 輔助 | 30-02 | `godie-o030` 臭作 | — | 把敵人肛門泡在酒精中，讓他們的移動速度降低10%，而且有20%的機會在攻擊時失手。當這個受到酒醉迷霧影響的敵方部隊，再受到… |
-| `godie-o030.e` | 30-03 痴漢火焰 | E | 主動攻擊 | 30-03 | `godie-o030` 臭作 | — | 讓一個敵方單位身陷痴漢火焰之中，造成每秒500/750/1000/1250點的持續性的傷害，並使其無法施展法術、並降低攻擊… |
-| `godie-o030.r` | 30-04 電車之狼衝擊 | R | 主動攻擊 | 30-04 | `godie-o030` 臭作 | — | 在臭作肛了新幹線車長之時，導致車長興奮過度讓新幹線脫軌衝了出來，造成一直線地面部隊1500/2250/3000點傷害。 |
+| `godie-o030.e` | 30-03 痴漢火焰 | E | 主動攻擊 | 30-03 | `godie-o030` 臭作 | — | 讓一個敵方單位身陷痴漢火焰之中，造成每秒625/937.5/1250/1562.5點的持續性的傷害，並使其無法施展法術、並… |
+| `godie-o030.r` | 30-04 電車之狼衝擊 | R | 主動攻擊 | 30-04 | `godie-o030` 臭作 | — | 在臭作肛了新幹線車長之時，導致車長興奮過度讓新幹線脫軌衝了出來，造成一直線地面部隊1875/2812.5/3750點傷害。 |
 | `godie-o030.ex` | 30-002 變態紳士 | EX | 被動 | 30-002 | `godie-o030` 臭作 | — | 當臭作變態指數達到顛峰之時，攻擊身上有酒精灌腸效果的敵人將額外敵人現存瑪娜*20%的爆擊高潮撕裂傷。 |
 | `godie-ofar.passive` | 58-00 電光一閃 | PASSIVE | 天生·主動 | 58-00 | `godie-ofar` 皮卡丘 | — | 皮卡丘的得意技能之一，可以瞬間移動到800距離內的任何地方，幫助他瞬間烙跑或偷襲。 |
 | `godie-ofar.q` | 58-01 十萬伏特 | Q | 主動攻擊 | 58-01 | `godie-ofar` 皮卡丘 | ✅ | 皮卡的得意絕招，使出電擊攻擊6個敵人，每個敵人傷害175。 |
 | `godie-ofar.w` | 58-02 鋼鐵尾巴 | W | 被動 | 58-02 | `godie-ofar` 皮卡丘 | ✅ | 揮動鋼鐵尾巴可以讓皮卡在攻擊時有10%機率增加75點破壞力，並有機會將敵人震昏0.01秒。 |
-| `godie-ofar.e` | 58-03 就決定是你了!小智 | E | 主動傷害 | 58-03 | `godie-ofar` 皮卡丘 | ✅ | 對著敵方的部隊投出皮卡丘痛恨已久的低能小智缺，造成500/1000/1500/2000傷害之後還會將對方打昏0.5秒。 |
+| `godie-ofar.e` | 58-03 就決定是你了!小智 | E | 主動傷害 | 58-03 | `godie-ofar` 皮卡丘 | ✅ | 對著敵方的部隊投出皮卡丘痛恨已久的低能小智缺，造成625/1250/1875/2500傷害之後還會將對方打昏0.5秒。 |
 | `godie-ofar.r` | 58-04 瘋狂皮卡丘 | R | 變身 | 58-04 | `godie-ofar` 皮卡丘 | ✅ | 再也受不了裝可愛清純路線的皮卡丘終於露出本性，變身為瘋狂癡呆惡棍皮卡，瘋狂使用鋼鐵尾巴攻擊敵人，轉變成近戰單位，攻擊速度大… |
 | `godie-ofar.ex` | 58-002 打雷絕招 | EX | 主動攻擊 | 58-002 | `godie-ofar` 皮卡丘 | ✅ | 放出全身積蓄的電壓瘋狂電擊範圍1800距離內的敵人並使之暈眩0.5秒，每個敵人將會受到雷擊造成250點傷害並向旁邊的單位傳… |
-| `godie-ogld.q` | 72-01洗刷刷 | Q | 主動攻擊 | 72-01 | `godie-ogld` 黑人牙膏 | ✅ | 召喚一陣雨季的暴風來攻擊對方的部隊，在350範圍造成500/750/1000/1250/1500點的傷害。可持續2秒。 |
-| `godie-ogld.w` | 72-02 黑人牙菌斑 | W | 主動 | 72-02 | `godie-ogld` 黑人牙膏 | ✅ | 釋放黑人牙菌斑病毒，被感染的部隊會每秒受到500/750/1000點傷害並減緩攻擊移動速度30%，持續10秒。死亡後會釋放… |
+| `godie-ogld.q` | 72-01洗刷刷 | Q | 主動攻擊 | 72-01 | `godie-ogld` 黑人牙膏 | ✅ | 召喚一陣雨季的暴風來攻擊對方的部隊，在350範圍造成625/937.5/1250/1562.5/1875點的傷害。可持續2… |
+| `godie-ogld.w` | 72-02 黑人牙菌斑 | W | 主動 | 72-02 | `godie-ogld` 黑人牙膏 | ✅ | 釋放黑人牙菌斑病毒，被感染的部隊會每秒受到625/937.5/1250點傷害並減緩攻擊移動速度30%，持續10秒。死亡後會… |
 | `godie-ogld.e` | 72-03 超亮白 | E | 輔助 | 72-03 | `godie-ogld` 黑人牙膏 | ✅ | 使用超亮白牙膏攻擊目標，帶腐蝕性的牙膏會侵蝕目標6點裝甲，亮白效果也將使目標暴露於我方視野之中，持續8秒。 |
-| `godie-ogld.r` | 72-04 黑化 | R | 主動攻擊 | 72-04 | `godie-ogld` 黑人牙膏 | ✅ | 黑化後的黑人牙膏將會在短時間內使出敵我皆傷的噴牙膏攻擊，對周圍所有生物造成最多113.78% [AP]的傷害。 |
-| `godie-ogld.ex` | 72-002 億萬衛星殞落 | EX | 主動攻擊 | 72-002 | `godie-ogld` 黑人牙膏 | ✅ | 黑人牙膏的最終能力，可以大範圍召喚流星進行攻擊，其規模毀天滅地，每秒造成大範圍廣域200點傷害，持續30秒。 |
+| `godie-ogld.r` | 72-04 黑化 | R | 主動攻擊 | 72-04 | `godie-ogld` 黑人牙膏 | ✅ | 黑化後的黑人牙膏將會在短時間內使出敵我皆傷的噴牙膏攻擊，對周圍所有生物造成最多122% [AP]的傷害。 |
+| `godie-ogld.ex` | 72-002 億萬衛星殞落 | EX | 主動攻擊 | 72-002 | `godie-ogld` 黑人牙膏 | ✅ | 黑人牙膏的最終能力，可以大範圍召喚流星進行攻擊，其規模毀天滅地，每秒造成大範圍廣域250點傷害，持續30秒。 |
 | `godie-ogrh.passive` | 09-00 賽亞人的血脈 | PASSIVE | 天生·被動 | 09-00 | `godie-ogrh` 悟空 | — | 悟空身為賽亞人，在每次的戰鬥之後都會永無止盡的增強，每殺死一個部隊增加2點生命，每殺死15個部隊增加1點力量。 |
 | `godie-ogrh.q` | 09-01 界王拳 | Q | 輔助 | 09-01 | `godie-ogrh` 悟空 | ✅ | 悟空在界王神那邊以10倍重力之下所習得的招數，可增加55點的額外傷害，但是將會每秒消耗生命10點。 |
 | `godie-ogrh.w` | 09-02 瞬間移動 | W | 輔助 | 09-02 | `godie-ogrh` 悟空 | ✅ | 悟空跟佛利沙大戰之後，在宇宙漂流到了亞德拉特星，跟那邊的人習得了瞬間移動，以傳送的方式移動中距離到指定的位置。 |
 | `godie-ogrh.e` | 09-03 超級賽亞人 | E | 變身 | 09-03 | `godie-ogrh` 悟空 | ✅ | 帶著憤怒的情緒，將氣發揮到極致，變身成為超級賽亞人，攻擊和移動速度將會大幅提升，持續8秒。 |
-| `godie-ogrh.r` | 09-04 龜派氣功 | R | 主動攻擊 | 09-04 | `godie-ogrh` 悟空 | ✅ | 源自武天老師的絕學，將氣集中在手上，累積成強烈氣旋後發射，造成一直線上敵方部隊500/1000/1500+141.73%… |
+| `godie-ogrh.r` | 09-04 龜派氣功 | R | 主動攻擊 | 09-04 | `godie-ogrh` 悟空 | ✅ | 源自武天老師的絕學，將氣集中在手上，累積成強烈氣旋後發射，造成一直線上敵方部隊625/1250/1875+150% [AP… |
 | `godie-ogrh.ex` | 09-002 十倍龜派氣功 | EX | 主動 | 09-002 | `godie-ogrh` 悟空 | ✅ | 可以無限增強的悟空，在能力達一定程度後，可以使出一擊將一顆星球打爆的十倍龜派氣功，這樣威力強大也是合情合理的!!!在超級賽… |
 | `godie-orkn.passive` | 30-00 攝影機 | PASSIVE | 天生·主動 | 30-00 | `godie-orkn` 臭作 | — | [輔助][指定] |
 | `godie-orkn.q` | 30-01 綁架 | Q | 輔助 | 30-01 | `godie-orkn` 臭作 | ✅ | 因為想非常想要肛人而起了綁架人的念頭，導致不分敵我的胡亂綁架來肛，綑綁範圍中。 |
 | `godie-orkn.w` | 30-02 酒精灌腸 | W | 輔助 | 30-02 | `godie-orkn` 臭作 | ✅ | 把敵人肛門泡在酒精中，讓他們的移動速度降低10%，而且有20%的機會在攻擊時失手。當這個受到酒醉迷霧影響的敵方部隊，再受到… |
-| `godie-orkn.e` | 30-03 痴漢火焰 | E | 主動攻擊 | 30-03 | `godie-orkn` 臭作 | ✅ | 讓一個敵方單位身陷痴漢火焰之中，造成每秒500/750/1000/1250點的持續性的傷害，並使其無法施展法術、並降低攻擊… |
-| `godie-orkn.r` | 30-04 電車之狼衝擊 | R | 主動攻擊 | 30-04 | `godie-orkn` 臭作 | ✅ | 在臭作肛了新幹線車長之時，導致車長興奮過度讓新幹線脫軌衝了出來，造成一直線地面部隊1500/2250/3000點傷害。 |
+| `godie-orkn.e` | 30-03 痴漢火焰 | E | 主動攻擊 | 30-03 | `godie-orkn` 臭作 | ✅ | 讓一個敵方單位身陷痴漢火焰之中，造成每秒625/937.5/1250/1562.5點的持續性的傷害，並使其無法施展法術、並… |
+| `godie-orkn.r` | 30-04 電車之狼衝擊 | R | 主動攻擊 | 30-04 | `godie-orkn` 臭作 | ✅ | 在臭作肛了新幹線車長之時，導致車長興奮過度讓新幹線脫軌衝了出來，造成一直線地面部隊1875/2812.5/3750點傷害。 |
 | `godie-orkn.ex` | 30-002 變態紳士 | EX | 被動 | 30-002 | `godie-orkn` 臭作 | ✅ | [主動][變身][被動][普攻時][身上有某狀態時] |
 | `godie-osam.passive` | 34-00 靈魂吞噬 | PASSIVE | 天生·主動 | 34-00 | `godie-osam` 殺生丸 | — | 身為妖怪中貴公子的殺生丸，喜好汲取敵人靈魂的生命力來恢復自身生命值的妖怪特性，每秒吸取200點生命，持續5秒。 |
 | `godie-osam.q` | 34-01 毒華爪 | Q | 被動 | 34-01 | `godie-osam` 殺生丸 | ✅ | 殺生丸以毒華爪攻擊,爪中劇毒，導致這一擊之中10%的傷害會擊穿對方，並造成附近敵人的傷害。 |
@@ -780,96 +936,96 @@
 | `godie-u00h.q` | 39-01 無明神風流-白虎 | Q | 主動攻擊 | 39-01 | `godie-u00h` 鬼畜狂刀KYO | ✅ | 村正臨死前教授的真無名神風 |
 | `godie-u00h.w` | 39-02 無明神風流-朱雀 | W | 主動攻擊 | 39-02 | `godie-u00h` 鬼畜狂刀KYO | ✅ | 村正臨死前教授的真無名神風 |
 | `godie-u00h.e` | 39-03 無明神風流-蛟龍 | E | 主動攻擊 | 39-03 | `godie-u00h` 鬼畜狂刀KYO | ✅ | 你聽到神風的清響聲了嗎? |
-| `godie-u00h.r` | 39-04 祕奧義．金色的神風 | R | 主動攻擊 | 39-04 | `godie-u00h` 鬼畜狂刀KYO | ✅ | 同時召喚出四神時所同時發動的最終奧義，將帶給接近鬼眼狂刀的人333+53.64% [AP]傷害並暈眩1秒，並且招換四神造成… |
+| `godie-u00h.r` | 39-04 祕奧義．金色的神風 | R | 主動攻擊 | 39-04 | `godie-u00h` 鬼畜狂刀KYO | ✅ | 同時召喚出四神時所同時發動的最終奧義，將帶給接近鬼眼狂刀的人333+57% [AP]傷害並暈眩1秒，並且招換四神造成各12… |
 | `godie-u00h.ex` | 39-002 紅王 | EX | 被動 | 39-002 | `godie-u00h` 鬼畜狂刀KYO | ✅ | 取回原本的身體，使得全能力值大幅提升30點，並額外增加蛟龍 80% [AP]、金色神風 30% [AP] 傷害。 |
 | `godie-u00j.passive` | 74-00 JENOVA | PASSIVE | 天生·被動 | 74-00 | `godie-u00j` 賽菲洛斯 | — | 擁有JENOVA優越物種的DNA，使得戰鬥能力相當卓越，有15%的機會閃避攻擊，而且有15%機會造成攻擊3倍的傷害，無視對… |
-| `godie-u00j.q` | 74-01 獄門 | Q | 主動攻擊 | 74-01 | `godie-u00j` 賽菲洛斯 | ✅ | 傳說中刺死愛麗絲的必殺技，命中範圍不算大，卻具有強大殺傷力，造成中範圍500/750/1000/1250傷害。 |
-| `godie-u00j.w` | 74-02 八刀一閃 | W | 主動攻擊 | 74-02 | `godie-u00j` 賽菲洛斯 | ✅ | 極快的速度衝刺到敵人面前，給予週遭敵人42.22% [AP]+150傷害。 |
-| `godie-u00j.e` | 74-03 闇之天使 | E | 主動攻擊 | 74-03 | `godie-u00j` 賽菲洛斯 | ✅ | 抽取星球之力轉換為魔晃能量，瞬間爆發的威力造成500/750/1000/1250點傷害，共8道爆炸。 |
+| `godie-u00j.q` | 74-01 獄門 | Q | 主動攻擊 | 74-01 | `godie-u00j` 賽菲洛斯 | ✅ | 傳說中刺死愛麗絲的必殺技，命中範圍不算大，卻具有強大殺傷力，造成中範圍625/937.5/1250/1562.5傷害。 |
+| `godie-u00j.w` | 74-02 八刀一閃 | W | 主動攻擊 | 74-02 | `godie-u00j` 賽菲洛斯 | ✅ | 極快的速度衝刺到敵人面前，給予週遭敵人43% [AP]+150傷害。 |
+| `godie-u00j.e` | 74-03 闇之天使 | E | 主動攻擊 | 74-03 | `godie-u00j` 賽菲洛斯 | ✅ | 抽取星球之力轉換為魔晃能量，瞬間爆發的威力造成625/937.5/1250/1562.5點傷害，共8道爆炸。 |
 | `godie-u00j.r` | 74-04 最終殞落星 | R | 主動攻擊 | 74-04 | `godie-u00j` 賽菲洛斯 | ✅ | 招喚災難彗星造成地面嚴重傷害，每顆隕石造成650點傷害，總共1顆隕石。 |
-| `godie-u00j.ex` | 74-002 超新星 | EX | 被動 | 74-002 | `godie-u00j` 賽菲洛斯 | ✅ | 在八刀一閃施展後瞬間施展獄門，將會招喚超新星造成大範圍1000傷害。 |
+| `godie-u00j.ex` | 74-002 超新星 | EX | 被動 | 74-002 | `godie-u00j` 賽菲洛斯 | ✅ | 在八刀一閃施展後瞬間施展獄門，將會招喚超新星造成大範圍1250傷害。 |
 | `godie-u00k.passive` | 71-00 暗夜契約 | PASSIVE | 天生·被動 | 71-00 | `godie-u00k` 死之王 | — | GGD 沒有日夜循環，所以死之王自己把夜晚扛過來。 |
-| `godie-u00k.q` | 71-01 死亡隕落 | Q | 主動攻擊 | 71-01 | `godie-u00k` 死之王 | ✅ | 死之王可幻化成代表死亡的隕石造成敵方500/750/1000點傷害。 |
+| `godie-u00k.q` | 71-01 死亡隕落 | Q | 主動攻擊 | 71-01 | `godie-u00k` 死之王 | ✅ | 死之王可幻化成代表死亡的隕石造成敵方625/937.5/1250點傷害。 |
 | `godie-u00k.w` | 71-02 靈魂吸取 | W | 被動 | 71-02 | `godie-u00k` 死之王 | ✅ | 死之王每次攻擊可造成部隊的靈魂凍結0.01秒，並於部隊死亡後20秒內增加死之王全能力1點(最高累計10次)。 |
 | `godie-u00k.e` | 71-03 厄夜靈魂 | E | 主動攻擊 | 71-03 | `godie-u00k` 死之王 | ✅ | 抽取範圍內所有生命的泉源，造成生命8%傷害。 |
 | `godie-u00k.r` | 71-04 萬惡歸宗 | R | 主動攻擊 | 71-04 | `godie-u00k` 死之王 | ✅ | 抽走附近敵我所有魔力，釋放出魔力總合乘上15%的魔法爆炸傷害。 |
 | `godie-u00k.ex` | 71-002 夜之主 | EX | 被動 | 71-002 | `godie-u00k` 死之王 | ✅ | 當死之王累積到足夠的邪惡，祂將重新奪回祂的力量，所施展的每一個招式都將喚來黑夜，持續30秒。 |
 | `godie-u00l.passive` | 25-00 北斗暗殺拳 | PASSIVE | 天生·主動 | 25-00 | `godie-u00l` 拳四郎 | — | 北斗神拳本身就是暗殺拳的極致代表，因此使用拳法的人能隱藏自身並且提升100%速度以暗殺目標，當攻擊時隱形術即告失效，但是會… |
-| `godie-u00l.q` | 25-01 北斗懺悔拳 | Q | 主動攻擊 | 25-01 | `godie-u00l` 拳四郎 | — | "你還有3秒的時間可以懺悔你這輩子的罪孽"，點擊指定單位之秘穴，在三秒後造成自身86.93% [AP]+150傷害。 |
+| `godie-u00l.q` | 25-01 北斗懺悔拳 | Q | 主動攻擊 | 25-01 | `godie-u00l` 拳四郎 | — | "你還有3秒的時間可以懺悔你這輩子的罪孽"，點擊指定單位之秘穴，在三秒後造成自身85% [AP]+150傷害。 |
 | `godie-u00l.w` | 25-02 北斗神拳秘訣轉龍呼吸法 | W | 被動 | 25-02 | `godie-u00l` 拳四郎 | — | 有7%的機會閃避攻擊，而且有12%機會擊中敵人祕穴造成正常攻擊1.5倍的傷害。 |
-| `godie-u00l.e` | 25-03 北斗百裂拳 | E | 主動攻擊 | 25-03 | `godie-u00l` 拳四郎 | — | 拳四郎得意絕技之一，以連續拳頭攻擊區域內的敵人造成單體攻擊500/750/1000/1250+57.47% [AP]傷害。 |
+| `godie-u00l.e` | 25-03 北斗百裂拳 | E | 主動攻擊 | 25-03 | `godie-u00l` 拳四郎 | — | 拳四郎得意絕技之一，以連續拳頭攻擊區域內的敵人造成單體攻擊625/937.5/1250/1562.5+57% [AP]傷害。 |
 | `godie-u00l.r` | 25-04 ChangeDNA | R | 輔助 | 25-04 | `godie-u00l` 拳四郎 | — | 在一次偶然失敗實驗中，拳四郎學會招喚強力雷電改變自身DNA，變身成為北斗之鼠，攻擊時擁有25%機率使出連鎖閃電，另外因為皮… |
 | `godie-u00l.ex` | 25-002 喔拉喔拉喔拉喔拉 | EX | 主動 | 25-002 | `godie-u00l` 拳四郎 | — | 聽說這樣叫會比較強，有25%機率造成256點範圍傷害，並且提升在北斗之鼠狀態下，北斗懺悔拳額外150% [AP]以及百烈拳… |
 | `godie-u00n.passive` | 76-00 二檔 | PASSIVE | 天生·主動 | 76-00 | `godie-u00n` 蒙其.D.魯夫 | — | 讓身體像幫浦一樣加壓，加速血液流動增加攻擊速度100%和移動速度100點，使用一二招傷害會增加(50% [AP])點，但每… |
-| `godie-u00n.q` | 76-01 伸縮自如的橡膠戰斧 | Q | 主動攻擊 | 76-01 | `godie-u00n` 蒙其.D.魯夫 | ✅ | 利用橡膠果實的力量，將腿拉長，由上而下重擊敵人，造成傷害500/875/1250/1625點，並於目標落下處範圍250內，… |
-| `godie-u00n.w` | 76-02 伸縮自如的橡膠火箭砲 | W | 主動攻擊 | 76-02 | `godie-u00n` 蒙其.D.魯夫 | ✅ | 藉由橡膠果實的能力，將手臂伸長，長距離給於敵人500/750/1000/1250點傷害，並且將其擊退且擊昏1秒。 |
-| `godie-u00n.e` | 76-03 伸縮自如的槍亂打 | E | 主動攻擊 | 76-03 | `godie-u00n` 蒙其.D.魯夫 | ✅ | 利用拳頭迅速的攻擊範圍400內敵人造成暈眩1.5秒及傷害500/1000/1500/2000點。 |
-| `godie-u00n.r` | 76-04 三檔.巨人迴旋彈 | R | 主動攻擊 | 76-04 | `godie-u00n` 蒙其.D.魯夫 | ✅ | 將空氣吹入骨頭中形成骨氣球，在這個狀態下將拳頭揮出造成巨人般的破壞力，給予周圍的敵人600+44.21% [AP]傷害並使… |
+| `godie-u00n.q` | 76-01 伸縮自如的橡膠戰斧 | Q | 主動攻擊 | 76-01 | `godie-u00n` 蒙其.D.魯夫 | ✅ | 利用橡膠果實的力量，將腿拉長，由上而下重擊敵人，造成傷害625/1093.75/1562.5/2031.25點，並於目標落… |
+| `godie-u00n.w` | 76-02 伸縮自如的橡膠火箭砲 | W | 主動攻擊 | 76-02 | `godie-u00n` 蒙其.D.魯夫 | ✅ | 藉由橡膠果實的能力，將手臂伸長，長距離給於敵人625/937.5/1250/1562.5點傷害，並且將其擊退且擊昏1秒。 |
+| `godie-u00n.e` | 76-03 伸縮自如的槍亂打 | E | 主動攻擊 | 76-03 | `godie-u00n` 蒙其.D.魯夫 | ✅ | 利用拳頭迅速的攻擊範圍400內敵人造成暈眩1.5秒及傷害625/1250/1875/2500點。 |
+| `godie-u00n.r` | 76-04 三檔.巨人迴旋彈 | R | 主動攻擊 | 76-04 | `godie-u00n` 蒙其.D.魯夫 | ✅ | 將空氣吹入骨頭中形成骨氣球，在這個狀態下將拳頭揮出造成巨人般的破壞力，給予周圍的敵人600+44% [AP]傷害並使之難以… |
 | `godie-u00n.ex` | 76-002 霸王色 | EX | 主動攻擊 | 76-002 | `godie-u00n` 蒙其.D.魯夫 | ✅ | 可以靠著自身「氣魄」震攝或嚇昏敵人，但如果控制不好，會使周遭的人一併受牽連。可造成範圍內敵方部隊受到500點傷害，並暈眩英… |
 | `godie-u00o.passive` | 76-00 二檔 | PASSIVE | 天生·主動 | 76-00 | `godie-u00o` 蒙其.D.魯夫 | — | 讓身體像幫浦一樣加壓，加速血液流動增加攻擊速度100%和移動速度100點，使用一二招傷害會增加(50% [AP])點，但每… |
-| `godie-u00o.q` | 76-01 伸縮自如的橡膠戰斧 | Q | 主動攻擊 | 76-01 | `godie-u00o` 蒙其.D.魯夫 | — | 利用橡膠果實的力量，將腿拉長，由上而下重擊敵人，造成傷害500/875/1250/1625點，並於目標落下處範圍250內，… |
-| `godie-u00o.w` | 76-02 伸縮自如的橡膠火箭砲 | W | 主動攻擊 | 76-02 | `godie-u00o` 蒙其.D.魯夫 | — | 藉由橡膠果實的能力，將手臂伸長，長距離給於敵人500/750/1000/1250點傷害，並且將其擊退且擊昏1秒。 |
-| `godie-u00o.e` | 76-03 伸縮自如的槍亂打 | E | 主動攻擊 | 76-03 | `godie-u00o` 蒙其.D.魯夫 | — | 利用拳頭迅速的攻擊範圍400內敵人造成暈眩1.5秒及傷害500/1000/1500/2000點。 |
-| `godie-u00o.r` | 76-04 三檔.巨人迴旋彈 | R | 主動攻擊 | 76-04 | `godie-u00o` 蒙其.D.魯夫 | — | 將空氣吹入骨頭中形成骨氣球，在這個狀態下將拳頭揮出造成巨人般的破壞力，給予周圍的敵人600+44.21% [AP]傷害並使… |
+| `godie-u00o.q` | 76-01 伸縮自如的橡膠戰斧 | Q | 主動攻擊 | 76-01 | `godie-u00o` 蒙其.D.魯夫 | — | 利用橡膠果實的力量，將腿拉長，由上而下重擊敵人，造成傷害625/1093.75/1562.5/2031.25點，並於目標落… |
+| `godie-u00o.w` | 76-02 伸縮自如的橡膠火箭砲 | W | 主動攻擊 | 76-02 | `godie-u00o` 蒙其.D.魯夫 | — | 藉由橡膠果實的能力，將手臂伸長，長距離給於敵人625/937.5/1250/1562.5點傷害，並且將其擊退且擊昏1秒。 |
+| `godie-u00o.e` | 76-03 伸縮自如的槍亂打 | E | 主動攻擊 | 76-03 | `godie-u00o` 蒙其.D.魯夫 | — | 利用拳頭迅速的攻擊範圍400內敵人造成暈眩1.5秒及傷害625/1250/1875/2500點。 |
+| `godie-u00o.r` | 76-04 三檔.巨人迴旋彈 | R | 主動攻擊 | 76-04 | `godie-u00o` 蒙其.D.魯夫 | — | 將空氣吹入骨頭中形成骨氣球，在這個狀態下將拳頭揮出造成巨人般的破壞力，給予周圍的敵人600+44% [AP]傷害並使之難以… |
 | `godie-u00o.ex` | 76-002 霸王色 | EX | 主動攻擊 | 76-002 | `godie-u00o` 蒙其.D.魯夫 | — | 可以靠著自身「氣魄」震攝或嚇昏敵人，但如果控制不好，會使周遭的人一併受牽連。可造成範圍內敵方部隊受到500點傷害，並暈眩英… |
 | `godie-u00v.passive` | 78-00 銅皮鐵骨 | PASSIVE | 天生·被動 | 78-00 | `godie-u00v` 基廉列克 | — | 黑手黨老大的健身邏輯：拳頭越硬，皮就越厚。買一把刀等於順便買半件防彈衣。 |
 | `godie-u00v.q` | 78-01 斬鐵拳 | Q | 被動 | 78-01 | `godie-u00v` 基廉列克 | ✅ | 基廉列克的拳頭在攻擊時有10%機率增加75點破壞力，並有機會將敵人震昏1秒。 |
-| `godie-u00v.w` | 78-02 地走龍牙破 | W | 主動攻擊 | 78-02 | `godie-u00v` 基廉列克 | ✅ | 對付裝甲戰車時發動之必殺技，挖地道到目標上方後突襲，使該範圍受到500/875/1250/1625點傷害，並且暈眩0.1秒。 |
-| `godie-u00v.e` | 78-03 廬山昇龍破 | E | 主動攻擊 | 78-03 | `godie-u00v` 基廉列克 | ✅ | 使數百輛警車和警察仆街的超必殺技，可對附近敵方單位造成500/750/1000/1250點傷害。 |
-| `godie-u00v.r` | 78-04 死亡噴射肘擊 | R | 主動攻擊 | 78-04 | `godie-u00v` 基廉列克 | ✅ | 在基廉列克發怒的時候，將會使出意外的致命一擊，超快速速飛奔到敵人面前，使用肘擊敵方造成500/875/1250點傷害，擊退… |
+| `godie-u00v.w` | 78-02 地走龍牙破 | W | 主動攻擊 | 78-02 | `godie-u00v` 基廉列克 | ✅ | 對付裝甲戰車時發動之必殺技，挖地道到目標上方後突襲，使該範圍受到625/1093.75/1562.5/2031.25點傷害… |
+| `godie-u00v.e` | 78-03 廬山昇龍破 | E | 主動攻擊 | 78-03 | `godie-u00v` 基廉列克 | ✅ | 使數百輛警車和警察仆街的超必殺技，可對附近敵方單位造成625/937.5/1250/1562.5點傷害。 |
+| `godie-u00v.r` | 78-04 死亡噴射肘擊 | R | 主動攻擊 | 78-04 | `godie-u00v` 基廉列克 | ✅ | 在基廉列克發怒的時候，將會使出意外的致命一擊，超快速速飛奔到敵人面前，使用肘擊敵方造成625/1093.75/1562.5… |
 | `godie-u00v.ex` | 78-002 加速爆體 | EX | 被動 | 78-002 | `godie-u00v` 基廉列克 | ✅ | 暴走的監獄兔接近無敵狀態，將可抵擋50%法術和穿刺傷害，並有機率增加攻擊及移動速度。 |
 | `godie-u010.passive` | 38-00 邪眼全開 | PASSIVE | 天生·主動 | 38-00 | `godie-u010` 飛影 | — | 將移植到身上的邪眼全部打開，使得妖氣爆增，攻擊速度提升100%和移動速度50點，使用一二招傷害會增加(50% [AP])點… |
-| `godie-u010.q` | 38-01 邪王炎殺劍 | Q | 主動攻擊 | 38-01 | `godie-u010` 飛影 | — | 招喚魔界火炎盤旋在劍上，使劍在瞬間變得鋒利無比，衝刺砍殺一直線上的敵人直到撞到為止，砍殺造成500/875/1250/16… |
-| `godie-u010.w` | 38-02 邪王炎殺煉獄焦 | W | 主動攻擊 | 38-02 | `godie-u010` 飛影 | — | 將火燄集中於拳頭上，以連續拳頭攻擊區域內的敵人造成500/750/1000/1250/1500傷害。 |
-| `godie-u010.e` | 38-03 邪王炎殺黑龍波 | E | 主動攻擊 | 38-03 | `godie-u010` 飛影 | — | 將飛影手上封印的魔界生物炎殺黑龍釋放，凝聚到極限使出邪王奧義黑龍波，造成1500/3000/4500/6000傷害將敵方燒… |
+| `godie-u010.q` | 38-01 邪王炎殺劍 | Q | 主動攻擊 | 38-01 | `godie-u010` 飛影 | — | 招喚魔界火炎盤旋在劍上，使劍在瞬間變得鋒利無比，衝刺砍殺一直線上的敵人直到撞到為止，砍殺造成625/1093.75/156… |
+| `godie-u010.w` | 38-02 邪王炎殺煉獄焦 | W | 主動攻擊 | 38-02 | `godie-u010` 飛影 | — | 將火燄集中於拳頭上，以連續拳頭攻擊區域內的敵人造成625/937.5/1250/1562.5/1875傷害。 |
+| `godie-u010.e` | 38-03 邪王炎殺黑龍波 | E | 主動攻擊 | 38-03 | `godie-u010` 飛影 | — | 將飛影手上封印的魔界生物炎殺黑龍釋放，凝聚到極限使出邪王奧義黑龍波，造成1875/3750/5625/7500傷害將敵方燒… |
 | `godie-u010.r` | 38-04 黑龍波吸收 | R | 輔助 | 38-04 | `godie-u010` 飛影 | — | 吸收黑龍波的妖力，使支配魔界火焰的妖術師獲得爆發性的能力成長，但是會持續消耗魔力10點。 |
 | `godie-u010.ex` | 38-002 究極暴走黑龍波 | EX | 被動 | 38-002 | `godie-u010` 飛影 | — | 在邪眼全開的狀態下，將邪王炎殺黑龍波發揮到極致，黑龍波黑龍數量增加為三條，造成大範圍2500點傷害。 |
 | `godie-u01u.passive` | 11-00 三刀流 | PASSIVE | 天生·主動 | 11-00 | `godie-u01u` 索隆 | — | 使出三刀流，增加自身攻擊速度75%，但是每秒損失12點生命值，持續15秒，期間可增加鬼氣九刀流和三千世界傷害。 |
 | `godie-u01u.q` | 11-01 燒鬼斬 | Q | 傷害加成 | 11-01 | `godie-u01u` 索隆 | — | 在攻擊敵人時附加10點的火焰擴散傷害。 |
 | `godie-u01u.w` | 11-02 虎狩獵 | W | 主動傷害 | 11-02 | `godie-u01u` 索隆 | — | 由背負著2把刀的型態下揮出「斬擊」系招式。據說名稱的由來是因為其傷痕簡直好像老虎的條紋一樣。給予多個對手250傷害並擊暈對… |
 | `godie-u01u.e` | 11-03 鬼氣九刀流-阿修羅壹霧銀 | E | 主動傷害 | 11-03 | `godie-u01u` 索隆 | — | 以鬥氣創造出鬼神阿修羅幻象的"鬼氣九刀流 阿修羅"，使出將對手斬擊都能霧化的必殺技"阿修羅 壹霧銀"，使敵人受到300傷害… |
-| `godie-u01u.r` | 11-04 三千世界 | R | 主動傷害 | 11-04 | `godie-u01u` 索隆 | — | 三刀流的奧義，也是索隆最強的招式。把3把刀像風車般旋轉的姿態，會產生強勁的風。然後使出的斬刀幾乎沒可能看穿。給予直線單位5… |
+| `godie-u01u.r` | 11-04 三千世界 | R | 主動傷害 | 11-04 | `godie-u01u` 索隆 | — | 三刀流的奧義，也是索隆最強的招式。把3把刀像風車般旋轉的姿態，會產生強勁的風。然後使出的斬刀幾乎沒可能看穿。給予直線單位6… |
 | `godie-u01u.ex` | 11-002 武裝色霸氣 | EX | 變身 | 11-002 | `godie-u01u` 索隆 | — | [變身] 冷卻 120 秒 · 花費 0 法力 · 持續 15 秒 |
-| `godie-u034.passive` | 06-00 猜猜拳 | PASSIVE | 天生·主動 | 06-00 | `godie-u034` 傑 富力士 | — | 消耗MP112 |
-| `godie-u034.q` | 06-01 山形修煉-放 | Q | 被動 | 06-01 | `godie-u034` 傑 富力士 | — | 攻擊時有5/10/15/20%機率施展放出系能力，由掌心放出念彈造成一直線敵人500/750/1000/1250點傷害，並… |
-| `godie-u034.w` | 06-02 山形修煉-變 | W | 被動 | 06-02 | `godie-u034` 傑 富力士 | — | 攻擊時有25%機率會發動變化系能力，將念化為刀刃攻擊目標造成500/750/1000/1250點額外傷害，並增強「猜猜拳-… |
+| `godie-u034.passive` | 06-00 猜猜拳 | PASSIVE | 天生·主動 | 06-00 | `godie-u034` 傑 富力士 | — | 消耗MP150 |
+| `godie-u034.q` | 06-01 山形修煉-放 | Q | 被動 | 06-01 | `godie-u034` 傑 富力士 | — | 攻擊時有5/10/15/20%機率施展放出系能力，由掌心放出念彈造成一直線敵人625/937.5/1250/1562.5點… |
+| `godie-u034.w` | 06-02 山形修煉-變 | W | 被動 | 06-02 | `godie-u034` 傑 富力士 | — | 攻擊時有25%機率會發動變化系能力，將念化為刀刃攻擊目標造成625/937.5/1250/1562.5點額外傷害，並增強「… |
 | `godie-u034.e` | 06-03 山形修煉-強 | E | 被動 | 06-03 | `godie-u034` 傑 富力士 | — | 不斷地修煉強化系能力，能讓自身攻防能力大幅上升，每階永久性的提昇力量7點（第5階共35點），並增強「猜猜拳-石頭」的威力（… |
 | `godie-u034.r` | 06-04 傑桑變化 | R | 被動 | 06-04 | `godie-u034` 傑 富力士 | — | 消耗MP0 |
 | `godie-u034.ex` | 06-002 殺意 | EX | 被動 | 06-002 | `godie-u034` 傑 富力士 | — | 平時的小傑雖然固執卻不喜歡殺害生命，但一旦被激起憤怒，將殺意注入攻擊之中便會瞬間成為人間兇器。 |
 | `godie-ubal.passive` | 37-00 鬼眼 | PASSIVE | 天生·主動 | 37-00 | `godie-ubal` 巴恩大魔王 | — | 使用鬼眼降低指定目標區域內的攻擊和移動速度50%，持續5秒。 |
 | `godie-ubal.q` | 37-01 凱薩之鷹 | Q | 主動攻擊 | 37-01 | `godie-ubal` 巴恩大魔王 | ✅ | 召喚魔界火焰形成像鷹一樣的灼熱衝擊波重創敵人，是巴恩的得意技，但是在老年姿態施展會有些慢，威力也相當程度的下降，造成一直線… |
-| `godie-ubal.w` | 37-03 災難之牆 | W | 主動攻擊 | 37-03 | `godie-ubal` 巴恩大魔王 | ✅ | 釋放一道火牆，對面前所有的敵人每秒造成166.67/250/333.33/416.67點的傷害，火牆持續3秒。 |
-| `godie-ubal.e` | 37-02 黑核晶 | E | 主動攻擊 | 37-02 | `godie-ubal` 巴恩大魔王 | ✅ | 黑核晶是長年埋在魔界地底深層的脈礦，吸收蘊藏了相當驚人的魔力，一旦被引爆釋放出來將會毀滅一切，範圍200內造成500/75… |
+| `godie-ubal.w` | 37-03 災難之牆 | W | 主動攻擊 | 37-03 | `godie-ubal` 巴恩大魔王 | ✅ | 釋放一道火牆，對面前所有的敵人每秒造成208.33/312.5/416.67/520.83點的傷害，火牆持續3秒。 |
+| `godie-ubal.e` | 37-02 黑核晶 | E | 主動攻擊 | 37-02 | `godie-ubal` 巴恩大魔王 | ✅ | 黑核晶是長年埋在魔界地底深層的脈礦，吸收蘊藏了相當驚人的魔力，一旦被引爆釋放出來將會毀滅一切，範圍200內造成625/93… |
 | `godie-ubal.r` | 37-04 魔界之王 | R | 輔助 | 37-04 | `godie-ubal` 巴恩大魔王 | ✅ | 召喚巴恩大魔王封印的年輕肉體並將靈魂合而為一，隨著技能等級提升可以使用的招式也將變多，變身後各方面的能力也會隨著技能等級提… |
 | `godie-ubal.ex` | 37-002 真‧黑核晶 | EX | 主動攻擊 | 37-002 | `godie-ubal` 巴恩大魔王 | ✅ | 巴恩大魔王拿出真正的黑核晶進行設置，可以造成毀滅性的區域傷害，最高可造成範圍內2400點傷害。 |
-| `godie-ucrl.passive` | 06-00 猜猜拳 | PASSIVE | 天生·主動 | 06-00 | `godie-ucrl` 傑 富力士 | — | 消耗MP112 |
-| `godie-ucrl.q` | 06-01 山形修煉-放 | Q | 被動 | 06-01 | `godie-ucrl` 傑 富力士 | ✅ | 攻擊時有5/10/15/20%機率施展放出系能力，由掌心放出念彈造成一直線敵人500/750/1000/1250點傷害，並… |
-| `godie-ucrl.w` | 06-02 山形修煉-變 | W | 被動 | 06-02 | `godie-ucrl` 傑 富力士 | ✅ | 攻擊時有25%機率會發動變化系能力，將念化為刀刃攻擊目標造成500/750/1000/1250點額外傷害，並增強「猜猜拳-… |
+| `godie-ucrl.passive` | 06-00 猜猜拳 | PASSIVE | 天生·主動 | 06-00 | `godie-ucrl` 傑 富力士 | — | 消耗MP150 |
+| `godie-ucrl.q` | 06-01 山形修煉-放 | Q | 被動 | 06-01 | `godie-ucrl` 傑 富力士 | ✅ | 攻擊時有5/10/15/20%機率施展放出系能力，由掌心放出念彈造成一直線敵人625/937.5/1250/1562.5點… |
+| `godie-ucrl.w` | 06-02 山形修煉-變 | W | 被動 | 06-02 | `godie-ucrl` 傑 富力士 | ✅ | 攻擊時有25%機率會發動變化系能力，將念化為刀刃攻擊目標造成625/937.5/1250/1562.5點額外傷害，並增強「… |
 | `godie-ucrl.e` | 06-03 山形修煉-強 | E | 被動 | 06-03 | `godie-ucrl` 傑 富力士 | ✅ | 不斷地修煉強化系能力，能讓自身攻防能力大幅上升，每階永久性的提昇力量7點（第5階共35點），並增強「猜猜拳-石頭」的威力（… |
 | `godie-ucrl.r` | 06-04 傑桑變化 | R | 被動 | 06-04 | `godie-ucrl` 傑 富力士 | ✅ | 消耗MP0 |
 | `godie-ucrl.ex` | 06-002 殺意 | EX | 被動 | 06-002 | `godie-ucrl` 傑 富力士 | ✅ | 平時的小傑雖然固執卻不喜歡殺害生命，但一旦被激起憤怒，將殺意注入攻擊之中便會瞬間成為人間兇器。 |
 | `godie-udea.passive` | 65-00 古老智慧 | PASSIVE | 天生·被動 | 65-00 | `godie-udea` 飛鼠先生 | — | 由於飛鼠先生熟讀世間所有魔法的根基，繼承著最古老的智慧，對於穿刺與魔法攻擊的傷害能降低50%。 |
 | `godie-udea.q` | 65-01 神出鬼沒 | Q | 輔助 | 65-01 | `godie-udea` 飛鼠先生 | ✅ | 飛鼠先生可以瞬間移動中距離到指定的位置。 |
-| `godie-udea.w` | 65-02 寒冰破碎 | W | 主動攻擊 | 65-02 | `godie-udea` 飛鼠先生 | ✅ | 飛鼠先生在劍術學院結業創造之劍術，成功融合寒冰魔法與劍擊，能給予冰爆和劍斬衝擊雙重傷害，造成一直線敵人500/750/10… |
+| `godie-udea.w` | 65-02 寒冰破碎 | W | 主動攻擊 | 65-02 | `godie-udea` 飛鼠先生 | ✅ | 飛鼠先生在劍術學院結業創造之劍術，成功融合寒冰魔法與劍擊，能給予冰爆和劍斬衝擊雙重傷害，造成一直線敵人625/937.5/… |
 | `godie-udea.e` | 65-03 魔法膨脹 | E | 主動攻擊 | 65-03 | `godie-udea` 飛鼠先生 | ✅ | 施咒補充敵方部隊法力的缺陷，但是過度膨脹的法力將會使目標暈眩1秒並造成生命傷害，傷害公式為目標(法力上限-法力值)*1倍魔… |
-| `godie-udea.r` | 65-04 天譴 | R | 主動攻擊 | 65-04 | `godie-udea` 飛鼠先生 | ✅ | 怒氣凝聚為閃電，朝周圍的敵人放電並奪取魔力。範圍內的敵人（最多20名）各自引爆一條獨立的連鎖閃電：第一發造成200/300… |
+| `godie-udea.r` | 65-04 天譴 | R | 主動攻擊 | 65-04 | `godie-udea` 飛鼠先生 | ✅ | 怒氣凝聚為閃電，朝周圍的敵人放電並奪取魔力。範圍內的敵人（最多20名）各自引爆一條獨立的連鎖閃電：第一發造成250/375… |
 | `godie-udea.ex` | 65-002 永恆的愚蠢鄉 | EX | 輔助 | 65-002 | `godie-udea` 飛鼠先生 | ✅ | 使飛鼠先生在一定時間內受到技能攻擊時，能夠給予對手強大的反擊，威力基礎為自身等級*200，承受時間6秒。 |
 | `godie-udre.passive` | 11-00 三刀流 | PASSIVE | 天生·主動 | 11-00 | `godie-udre` 索隆 | — | 使出三刀流，增加自身攻擊速度75%，但是每秒損失12點生命值，持續15秒，期間可增加鬼氣九刀流和三千世界傷害。 |
 | `godie-udre.q` | 11-01 燒鬼斬 | Q | 傷害加成 | 11-01 | `godie-udre` 索隆 | ✅ | 在攻擊敵人時附加10點的火焰擴散傷害。 |
 | `godie-udre.w` | 11-02 虎狩獵 | W | 主動傷害 | 11-02 | `godie-udre` 索隆 | ✅ | 由背負著2把刀的型態下揮出「斬擊」系招式。據說名稱的由來是因為其傷痕簡直好像老虎的條紋一樣。給予多個對手250傷害並擊暈對… |
 | `godie-udre.e` | 11-03 鬼氣九刀流-阿修羅壹霧銀 | E | 主動傷害 | 11-03 | `godie-udre` 索隆 | ✅ | 以鬥氣創造出鬼神阿修羅幻象的"鬼氣九刀流 阿修羅"，使出將對手斬擊都能霧化的必殺技"阿修羅 壹霧銀"，使敵人受到300傷害… |
-| `godie-udre.r` | 11-04 三千世界 | R | 主動傷害 | 11-04 | `godie-udre` 索隆 | ✅ | 三刀流的奧義，也是索隆最強的招式。把3把刀像風車般旋轉的姿態，會產生強勁的風。然後使出的斬刀幾乎沒可能看穿。給予直線單位5… |
+| `godie-udre.r` | 11-04 三千世界 | R | 主動傷害 | 11-04 | `godie-udre` 索隆 | ✅ | 三刀流的奧義，也是索隆最強的招式。把3把刀像風車般旋轉的姿態，會產生強勁的風。然後使出的斬刀幾乎沒可能看穿。給予直線單位6… |
 | `godie-udre.ex` | 11-002 武裝色霸氣 | EX | 變身 | 11-002 | `godie-udre` 索隆 | ✅ | [變身] 冷卻 120 秒 · 花費 0 法力 · 持續 15 秒 |
 | `godie-umal.passive` | 25-00 北斗暗殺拳 | PASSIVE | 天生·主動 | 25-00 | `godie-umal` 拳四郎 | — | 北斗神拳本身就是暗殺拳的極致代表，因此使用拳法的人能隱藏自身並且提升100%速度以暗殺目標，當攻擊時隱形術即告失效，但是會… |
-| `godie-umal.q` | 25-01 北斗懺悔拳 | Q | 主動攻擊 | 25-01 | `godie-umal` 拳四郎 | ✅ | "你還有3秒的時間可以懺悔你這輩子的罪孽"，點擊指定單位之秘穴，在三秒後造成自身86.93% [AP]+150傷害。 |
+| `godie-umal.q` | 25-01 北斗懺悔拳 | Q | 主動攻擊 | 25-01 | `godie-umal` 拳四郎 | ✅ | "你還有3秒的時間可以懺悔你這輩子的罪孽"，點擊指定單位之秘穴，在三秒後造成自身85% [AP]+150傷害。 |
 | `godie-umal.w` | 25-02 北斗神拳秘訣轉龍呼吸法 | W | 被動 | 25-02 | `godie-umal` 拳四郎 | ✅ | 有7%的機會閃避攻擊，而且有12%機會擊中敵人祕穴造成正常攻擊1.5倍的傷害。 |
-| `godie-umal.e` | 25-03 北斗百裂拳 | E | 主動攻擊 | 25-03 | `godie-umal` 拳四郎 | ✅ | 拳四郎得意絕技之一，以連續拳頭攻擊區域內的敵人造成單體攻擊500/750/1000/1250+57.47% [AP]傷害。 |
+| `godie-umal.e` | 25-03 北斗百裂拳 | E | 主動攻擊 | 25-03 | `godie-umal` 拳四郎 | ✅ | 拳四郎得意絕技之一，以連續拳頭攻擊區域內的敵人造成單體攻擊625/937.5/1250/1562.5+57% [AP]傷害。 |
 | `godie-umal.r` | 25-04 ChangeDNA | R | 輔助 | 25-04 | `godie-umal` 拳四郎 | ✅ | 在一次偶然失敗實驗中，拳四郎學會招喚強力雷電改變自身DNA，變身成為北斗之鼠，攻擊時擁有25%機率使出連鎖閃電，另外因為皮… |
 | `godie-umal.ex` | 25-002 喔拉喔拉喔拉喔拉 | EX | 主動 | 25-002 | `godie-umal` 拳四郎 | ✅ | 聽說這樣叫會比較強，有25%機率造成256點範圍傷害，並且提升在北斗之鼠狀態下，北斗懺悔拳額外150% [AP]以及百烈拳… |
 | `godie-uvng.passive` | 38-00 邪眼全開 | PASSIVE | 天生·主動 | 38-00 | `godie-uvng` 飛影 | — | 將移植到身上的邪眼全部打開，使得妖氣爆增，攻擊速度提升100%和移動速度50點，使用一二招傷害會增加(50% [AP])點… |
-| `godie-uvng.q` | 38-01 邪王炎殺劍 | Q | 主動攻擊 | 38-01 | `godie-uvng` 飛影 | ✅ | 招喚魔界火炎盤旋在劍上，使劍在瞬間變得鋒利無比，衝刺砍殺一直線上的敵人直到撞到為止，砍殺造成500/875/1250/16… |
-| `godie-uvng.w` | 38-02 邪王炎殺煉獄焦 | W | 主動攻擊 | 38-02 | `godie-uvng` 飛影 | ✅ | 將火燄集中於拳頭上，以連續拳頭攻擊區域內的敵人造成500/750/1000/1250/1500傷害。 |
-| `godie-uvng.e` | 38-03 邪王炎殺黑龍波 | E | 主動攻擊 | 38-03 | `godie-uvng` 飛影 | ✅ | 將飛影手上封印的魔界生物炎殺黑龍釋放，凝聚到極限使出邪王奧義黑龍波，造成1500/3000/4500/6000傷害將敵方燒… |
+| `godie-uvng.q` | 38-01 邪王炎殺劍 | Q | 主動攻擊 | 38-01 | `godie-uvng` 飛影 | ✅ | 招喚魔界火炎盤旋在劍上，使劍在瞬間變得鋒利無比，衝刺砍殺一直線上的敵人直到撞到為止，砍殺造成625/1093.75/156… |
+| `godie-uvng.w` | 38-02 邪王炎殺煉獄焦 | W | 主動攻擊 | 38-02 | `godie-uvng` 飛影 | ✅ | 將火燄集中於拳頭上，以連續拳頭攻擊區域內的敵人造成625/937.5/1250/1562.5/1875傷害。 |
+| `godie-uvng.e` | 38-03 邪王炎殺黑龍波 | E | 主動攻擊 | 38-03 | `godie-uvng` 飛影 | ✅ | 將飛影手上封印的魔界生物炎殺黑龍釋放，凝聚到極限使出邪王奧義黑龍波，造成1875/3750/5625/7500傷害將敵方燒… |
 | `godie-uvng.r` | 38-04 黑龍波吸收 | R | 輔助 | 38-04 | `godie-uvng` 飛影 | ✅ | 吸收黑龍波的妖力，使支配魔界火焰的妖術師獲得爆發性的能力成長，但是會持續消耗魔力10點。 |
 | `godie-uvng.ex` | 38-002 究極暴走黑龍波 | EX | 被動 | 38-002 | `godie-uvng` 飛影 | ✅ | 在邪眼全開的狀態下，將邪王炎殺黑龍波發揮到極致，黑龍波黑龍數量增加為三條，造成大範圍2500點傷害。 |
 | `godie-zombiex.passive` | 100-00 黑泥吞噬 | PASSIVE | 天生·被動 | — | `godie-zombiex` 喪標麥可 | — | 黑化聖杯溢出的惡意邪念，吞下去的東西全部變成自己的血肉。每擊殺一隻部隊永久增加 8 點最大生命，每擊殺一名敵方英雄永久增加… |
@@ -878,6 +1034,42 @@
 | `godie-zombiex.e` | 100-03 咕咕嘎嘎 | E | 主動攻擊 | — | `godie-zombiex` 喪標麥可 | ✅ | 在地面攤開一片黑泥沼，踩進去的敵人受傷並被黏住定身。 |
 | `godie-zombiex.r` | 100-04 百式・哈基米 | R | 主動攻擊 | — | `godie-zombiex` 喪標麥可 | ✅ | 聖杯的黑泥從體內爆發，對周圍造成大範圍魔法傷害並重減速。 |
 | `godie-zombiex.ex` | 100-002 此世全部之咖哩・バタンキュー | EX | 強化 | — | `godie-zombiex` 喪標麥可 | ✅ | 倒地詐死再猛然起身，黑泥狂化，短時間大幅提升攻擊力。マイ・キョー・グァ・エ・ミャー、キョー・グァ・カン・リンニャー。 |
+| `lol-ahri.passive` | 銷魂 | PASSIVE | 天生·被動 | — | `lol-ahri` 阿璃 | — | 擊殺九個小兵/野怪回復；擊殺英雄額外回復。 |
+| `lol-ahri.q` | 幻玉 | Q | 主動 | — | `lol-ahri` 阿璃 | — | 向前擲出法球穿過敵人，射程盡頭掉頭飛回阿璃身上，去程與回程各打一次。 |
+| `lol-ahri.w` | 魅火 | W | 主動 | — | `lol-ahri` 阿璃 | — | 自身短加速，三次打擊周圍敵人。 |
+| `lol-ahri.e` | 傾城 | E | 主動 | — | `lol-ahri` 阿璃 | — | 直線吻彈命中後魅惑：被命中者被迫減速朝阿璃走過去。 |
+| `lol-ahri.r` | 飛仙 | R | 主動 | — | `lol-ahri` 阿璃 | — | 向落點快速短衝，抵達後傷害周圍敵人。 |
+| `lol-ahri.ex` | 已讀不回 | EX | 主動 | — | `lol-ahri` 阿璃 | — | 短瞬移逃離，但兩秒不能普攻。 |
+| `lol-ashe.passive` | 冰霜射擊 | PASSIVE | 天生·被動 | — | `lol-ashe` 艾希 | — | 普攻減速；攻擊已帶自身霜痕的目標追加傷害，並累积最多四層專注。 |
+| `lol-ashe.q` | 專注射擊 | Q | 主動 | — | `lol-ashe` 艾希 | — | 消耗四層專注，四秒加攻速並每次普攻追加小額傷害。 |
+| `lol-ashe.w` | 萬箭齊發 | W | 主動 | — | `lol-ashe` 艾希 | — | 朝面向射出短寬箭幕，傷害並施加霜痕緩速。 |
+| `lol-ashe.e` | 鷹擊長空：強制簽收 | E | 主動 | — | `lol-ashe` 艾希 | — | 指定區域出現送件預警，0.7 秒後使仍在區域內的敵人繳械 0.8 秒，不能普攻但仍可移動與施法。 |
+| `lol-ashe.r` | 魔法水晶箭 | R | 主動 | — | `lol-ashe` 艾希 | — | 發射會碰撞的直線冰箭，主目標暈眩，周圍緩速。 |
+| `lol-ashe.ex` | 冷凍保存 | EX | 主動 | — | `lol-ashe` 艾希 | — | 兩秒護盾保鮮；前0.6秒自己鎖足。 |
+| `lol-blitzcrank.passive` | 法力屏障 | PASSIVE | 天生·被動 | — | `lol-blitzcrank` 布里姿 | — | 低於30%生命受擊時取得魔力比例護盾。 |
+| `lol-blitzcrank.q` | 火箭抓取 | Q | 主動 | — | `lol-blitzcrank` 布里姿 | — | 直線手臂命中第一位敵人，造成傷害並拉回。 |
+| `lol-blitzcrank.w` | 過載運轉 | W | 主動 | — | `lol-blitzcrank` 布里姿 | — | 三秒移速與攻速提升，結束後一秒自緩速。 |
+| `lol-blitzcrank.e` | 充能一擊 | E | 主動 | — | `lol-blitzcrank` 布里姿 | — | 下一次普攻追加物理傷害並擊飛。 |
+| `lol-blitzcrank.r` | 靜電力場 | R | 主動 | — | `lol-blitzcrank` 布里姿 | — | 移除身旁敵人护盾，傷害並短暫沉默。 |
+| `lol-blitzcrank.ex` | 七天鑑賞期 | EX | 主動 | — | `lol-blitzcrank` 布里姿 | — | 把剛才自己 Q 抓到的目標退回去；沒抓過不能退貨。 |
+| `lol-chogath.passive` | 肉食者 | PASSIVE | 天生·被動 | — | `lol-chogath` 科加斯 | — | 擊殺敵方單位回復生命與魔力。 |
+| `lol-chogath.q` | 破裂 | Q | 主動 | — | `lol-chogath` 科加斯 | — | 落點預警後地刺傷害、短擊飛與緩速。 |
+| `lol-chogath.w` | 野性尖嘯 | W | 主動 | — | `lol-chogath` 科加斯 | — | 前方短寬帶造成魔法傷害並沉默。 |
+| `lol-chogath.e` | 恐懼尖刺 | E | 主動 | — | `lol-chogath` 科加斯 | — | 接下來三次普攻向前噴刺，傷害及緩速。 |
+| `lol-chogath.r` | 饗宴 | R | 主動 | — | `lol-chogath` 科加斯 | — | 近距真傷；處決線內吞噬並獲得有上限的最大生命成長。 |
+| `lol-chogath.ex` | 吃太飽走不動 | EX | 主動 | — | `lol-chogath` 科加斯 | — | 大口回復自身生命，但兩秒移速降至六成。 |
+| `lol-fiddlesticks.passive` | 無害稻草人 | PASSIVE | 天生·被動 | — | `lol-fiddlesticks` 稻草人 | — | 回合開始生成一具短命低傷替身。 |
+| `lol-fiddlesticks.q` | 恐懼 | Q | 主動 | — | `lol-fiddlesticks` 稻草人 | — | 指定敵人傷害並恐懼。 |
+| `lol-fiddlesticks.w` | 豐收之魘 | W | 主動 | — | `lol-fiddlesticks` 稻草人 | — | 站定引導 2 秒，周圍敵人每 0.5 秒受傷、每打中一人自身回血；撐滿再收割一次。移動、暈眩、沉默、擊倒、死亡、恐懼或魅惑… |
+| `lol-fiddlesticks.e` | 駭懼收割 | E | 主動 | — | `lol-fiddlesticks` 稻草人 | — | 前方窄帶斬擊、減速並短暫沉默。 |
+| `lol-fiddlesticks.r` | 群鴉風暴 | R | 主動 | — | `lol-fiddlesticks` 稻草人 | — | 長起手躍至落點，著地後開啟跟身三秒群鴉傷害。 |
+| `lol-fiddlesticks.ex` | 尖叫外包 | EX | 主動 | — | `lol-fiddlesticks` 稻草人 | — | 召喚三具四秒低血低傷替身，分散對手注意力。 |
+| `lol-garen.passive` | 堅韌 | PASSIVE | 天生·被動 | — | `lol-garen` 蓋倫 | — | 八秒未受傷後每秒回復少量最大生命。 |
+| `lol-garen.q` | 致命打擊 | Q | 主動 | — | `lol-garen` 蓋倫 | — | 清掉身上既有的減速後自己加速，下一次普攻追加傷害並沉默。 |
+| `lol-garen.w` | 勇氣 | W | 主動 | — | `lol-garen` 蓋倫 | — | 短暂護盾抵禦爆發。 |
+| `lol-garen.e` | 審判 | E | 主動 | — | `lol-garen` 蓋倫 | — | 跟隨自身旋轉三秒、週期傷害周圍敵人。 |
+| `lol-garen.r` | 蒂瑪西亞制裁 | R | 主動 | — | `lol-garen` 蓋倫 | — | 近距真實傷害，附加目標已損生命比例傷害。 |
+| `lol-garen.ex` | 蒂瑪西亞先休息 | EX | 主動 | — | `lol-garen` 蓋倫 | — | 大聲喊完口號後原地休息，一秒鎖足換生命回復。 |
 | `lol-karthus.passive` | 未竟尾聲 | PASSIVE | 天生·被動 | — | `lol-karthus` 卡爾瑟斯 | — | 每場持有一層續命標記；致命傷時消耗標記並恢復部分生命。死亡後不能施法。 |
 | `lol-karthus.q` | 暮點 | Q | 主動 | — | `lol-karthus` 卡爾瑟斯 | ✅ | 短暫吟唱後，在指定區域引爆小級魔法傷害。 |
 | `lol-karthus.w` | 亡途繫縛 | W | 主動 | — | `lol-karthus` 卡爾瑟斯 | ✅ | 以單體咒縛取代牆體，命中敵人後減速 35%，持續 2 秒。 |
@@ -896,12 +1088,42 @@
 | `lol-lux.e` | 流光之域 | E | 主動 | — | `lol-lux` 拉克絲 | ✅ | 在落點留下 3 秒光域，每秒造成極小級魔法傷害。 |
 | `lol-lux.r` | 破曉光路 | R | 主動 | — | `lol-lux` 拉克絲 | ✅ | 向前依序展開四段光束判定；敵人可受到相交段落的傷害。 |
 | `lol-lux.ex` | 引路星芒 | EX | 主動 | — | `lol-lux` 拉克絲 | ✅ | 獲得 3 秒極小級移速加成，並恢復自身少量生命。 |
+| `lol-malphite.passive` | 花崗岩護盾 | PASSIVE | 天生·被動 | — | `lol-malphite` 墨菲特 | — | 六秒未受傷後回充最大生命10%護盾。 |
+| `lol-malphite.q` | 地震碎片 | Q | 主動 | — | `lol-malphite` 墨菲特 | — | 指定敵人受傷減速，自己獲得短加速。 |
+| `lol-malphite.w` | 震雷之擊 | W | 主動 | — | `lol-malphite` 墨菲特 | — | 四秒強化普攻，附帶前方震波。 |
+| `lol-malphite.e` | 大地震顫 | E | 主動 | — | `lol-malphite` 墨菲特 | — | 周圍魔法震擊並降低攻速。 |
+| `lol-malphite.r` | 勢不可擋 | R | 主動 | — | `lol-malphite` 墨菲特 | — | 高速衝到指定落點，著地傷害並擊飛周邊。 |
+| `lol-malphite.ex` | 此處禁止停車 | EX | 主動 | — | `lol-malphite` 墨菲特 | — | 原地三秒提高雙抗，但自己也不能移動。 |
 | `lol-missfortune.passive` | 先聲奪人 | PASSIVE | 天生·被動 | — | `lol-missfortune` 好運姐 | — | 普攻追加極小級物理傷害，內置冷卻 2 秒。 |
 | `lol-missfortune.q` | 回聲雙響 | Q | 主動 | — | `lol-missfortune` 好運姐 | ✅ | 先命中指定敵人，再發出最多兩人的物理連鎖；起點會承受追加一擊。 |
 | `lol-missfortune.w` | 揚帆快步 | W | 主動 | — | `lol-missfortune` 好運姐 | ✅ | 獲得 3 秒極小級移速加成與 20% 攻速加成。 |
 | `lol-missfortune.e` | 緋帆彈雨 | E | 主動 | — | `lol-missfortune` 好運姐 | ✅ | 在指定區域維持 3 秒彈雨，每秒造成極小級魔法傷害。 |
 | `lol-missfortune.r` | 扇港齊射 | R | 主動 | — | `lol-missfortune` 好運姐 | ✅ | 向指定區域連續投下六發物理彈幕，散布及命中區域均有界。 |
 | `lol-missfortune.ex` | 藏帆備彈 | EX | 主動 | — | `lol-missfortune` 好運姐 | ✅ | 短暫以全傷害護盾掩護換位，持續 3 秒。 |
+| `lol-ornn.passive` | 活火爐 | PASSIVE | 天生·被動 | — | `lol-ornn` 鄂爾 | — | 增加雙抗，普攻可消耗自身施加的焦化追加傷害及短擊退。 |
+| `lol-ornn.q` | 火山脈動 | Q | 主動 | — | `lol-ornn` 鄂爾 | — | 前方裂地造成傷害並緩速，裂地終點升起一根可堵路、可被熔岩俯衝撞碎的暫時柱。 |
+| `lol-ornn.w` | 熾焰吹息 | W | 主動 | — | `lol-ornn` 鄂爾 | — | 向前吐火，命中施加三秒焦化。 |
+| `lol-ornn.e` | 熔岩俯衝 | E | 主動 | — | `lol-ornn` 鄂爾 | — | 向前衝撞傷害沿途敵人；只有撞上柱子或牆被擋停，才震波擊飛周圍敵人並撞碎柱子。 |
+| `lol-ornn.r` | 鑄火者的呼喚 | R | 主動 | — | `lol-ornn` 鄂爾 | — | 長起手後在遠處召出火羊朝自己衝回，沿途緩速並焦化敵人；再次施放往前短衝，撞到火羊就讓牠改朝衝刺方向奔去並擊飛沿途敵人。 |
+| `lol-ornn.ex` | 終身保固三秒 | EX | 主動 | — | `lol-ornn` 鄂爾 | — | 指定一位隊友給予短期大護盾；工匠站定吟唱。 |
+| `lol-sett.passive` | 恆毅之泉 | PASSIVE | 天生·被動 | — | `lol-sett` 賽特 | — | 普通攻擊左右拳交替，右拳追加傷害；低血量時週期回血；承傷累積最多三層供 W 使用。 |
+| `lol-sett.q` | 懾人猛拳 | Q | 主動 | — | `lol-sett` 賽特 | — | 提速並強化接下來兩次普攻。 |
+| `lol-sett.w` | 獸魂轟拳 | W | 主動 | — | `lol-sett` 賽特 | — | 朝面向揮拳並取得護盾；中心真傷、兩側物傷，同一敵人只受一種傷害。消耗已有恆毅，三層時提高護盾與傷害。 |
+| `lol-sett.e` | 碎顱猛擊 | E | 主動 | — | `lol-sett` 賽特 | — | 將身旁敵人拉近並減速，接 Q/W。 |
+| `lol-sett.r` | 嘆為觀止 | R | 主動 | — | `lol-sett` 賽特 | — | 抱住單一敵人，朝目標方向帶行，移動結束後傷害並緩速周圍敵人。 |
+| `lol-sett.ex` | 媽媽來電 | EX | 主動 | — | `lol-sett` 賽特 | — | 回復生命，但接電話時一秒不能普攻。 |
+| `lol-thresh.passive` | 靈魂饗宴 | PASSIVE | 天生·被動 | — | `lol-thresh` 瑟雷西 | — | 擊殺敵人獲得有上限的護甲與魔攻成長。 |
+| `lol-thresh.q` | 死亡宣告 | Q | 主動 | — | `lol-thresh` 瑟雷西 | — | 直線鉤命中後傷害、鎖足並短拉近。 |
+| `lol-thresh.w` | 鬼影燈籠 | W | 主動 | — | `lol-thresh` 瑟雷西 | — | 朝地面丟出燈籠：落點圈內的隊友獲得護盾；隊友自己點燈才飛回瑟雷西身邊。 |
+| `lol-thresh.e` | 懾魂掃蕩 | E | 主動 | — | `lol-thresh` 瑟雷西 | — | 向面向掃鏈，傷害並把命中者沿揮擊方向推移。 |
+| `lol-thresh.r` | 惡靈領域 | R | 主動 | — | `lol-thresh` 瑟雷西 | — | 自身周圍立起五段邊界；敵人穿過任何一段時受傷並重緩速，那一段隨即消失。 |
+| `lol-thresh.ex` | 本燈拒載 | EX | 主動 | — | `lol-thresh` 瑟雷西 | — | 把貼身敵人向外推，給隊友清出上車位置。 |
+| `lol-velkoz.passive` | 結構毀滅 | PASSIVE | 天生·被動 | — | `lol-velkoz` 威寇茲 | — | 技能命中同敵人第三次時消耗兩層舊標記，追加真傷並標記研究完成。 |
+| `lol-velkoz.q` | 分裂電漿 | Q | 主動 | — | `lol-velkoz` 威寇茲 | — | 直線電漿命中造成傷害及緩速；命中或飛行中再按一次，從電漿當下位置左右分裂出兩發子彈。 |
+| `lol-velkoz.w` | 虛空裂痕 | W | 主動 | — | `lol-velkoz` 威寇茲 | — | 直線裂痕先小爆，延遲後在同一條裂痕上再爆；施法者走開或轉身也不會帶走裂痕。 |
+| `lol-velkoz.e` | 反物質瓦解 | E | 主動 | — | `lol-velkoz` 威寇茲 | — | 落點爆破、短击飛並向外小推。 |
+| `lol-velkoz.r` | 生化射線 | R | 主動 | — | `lol-velkoz` 威寇茲 | — | 朝瞄準方向站定引導 2.5 秒，射線判定 5 次，引導中可轉動方向；研究完成目標吃真傷。移動、暈眩、沉默、擊倒、死亡、恐懼… |
+| `lol-velkoz.ex` | 論文退回重寫 | EX | 主動 | — | `lol-velkoz` 威寇茲 | — | 只對自己研究完成的敵人清除研究標记，換回自己魔力並緩速對方。 |
 | `lol-warwick.passive` | 嗅血 | PASSIVE | 天生·被動 | — | `lol-warwick` 沃維克 | — | 普攻生命低於 35% 的目標時追加極小級魔法傷害，內置冷卻 2 秒。 |
 | `lol-warwick.q` | 噬痕 | Q | 主動 | — | `lol-warwick` 沃維克 | ✅ | 對指定敵人施加持續傷害，3 秒內每秒造成傷害；施放時立即回復自身生命。 |
 | `lol-warwick.w` | 循血疾行 | W | 主動 | — | `lol-warwick` 沃維克 | ✅ | 主動獲得 3 秒極小級移速加成與 20% 攻速加成。 |

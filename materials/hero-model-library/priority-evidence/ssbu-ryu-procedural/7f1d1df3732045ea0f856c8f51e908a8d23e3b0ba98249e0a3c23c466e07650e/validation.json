@@ -1,0 +1,221 @@
+{
+  "schema": "ggd-procedural-six-state-validation@1",
+  "candidateId": "ssbu-ryu-c00-static-skinned-v1",
+  "source": {
+    "path": "/private/tmp/ggd-pr1152-merge-audit/content/assets/models/community/cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c.glb",
+    "bytes": 1005808,
+    "sha256": "cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c",
+    "preservedAndRehashed": true
+  },
+  "glb": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-procedural-six-state-v1/body.glb",
+    "bytes": 1069196,
+    "sha256": "97898b3e9211bfb829a1e23ecb28bcd09bb72354e594959eb11e484e379316cf"
+  },
+  "preparationReceipt": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-procedural-six-state-v1/preparation.receipt.json",
+    "sha256": "4ecc1ba628b2179370ae6bf6fffcb34d438769388e8043b4d8ff1935751b613c"
+  },
+  "renderProof": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ryu-c00-procedural-six-state-visual-v1/proof.json",
+    "sha256": "19093285f104fbf2cd263a9033207ef947a3f9f72dc51ce9f454d385437fb5d5",
+    "sampleCount": 60,
+    "cameraEvidence": {
+      "views": [
+        {
+          "view": "front",
+          "positionAxis": "+Z"
+        },
+        {
+          "view": "side",
+          "positionAxis": "+X"
+        }
+      ],
+      "upAxis": "+Y"
+    }
+  },
+  "validator": "gltf-validator@2.0.0-dev.3.10",
+  "khronosIssues": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 6,
+    "numHints": 0,
+    "messages": [
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/3/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/4/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/155"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/156"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/157"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/158"
+      }
+    ],
+    "truncated": false
+  },
+  "ggdInspection": {
+    "triangles": 14621,
+    "drawPrimitives": 5,
+    "skinnedPrimitives": 5,
+    "skinCount": 1,
+    "jointCount": 154,
+    "textureCount": 5,
+    "textures": [
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 17303,
+        "sha256": "c34e9aad17f7f524314dad9bdbefdb43b04ff7fcde4126c176e4a993960c7e87"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 115857,
+        "sha256": "803b2cc06511983e59c652edaf39ac157b503d6506c09202b032014f5fb2fee0"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 91786,
+        "sha256": "116adc0b62f22c1453fc417ef7dec705ef079721f69248ad7f07bc8c1e4c61dc"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 12175,
+        "sha256": "2f28557f611f4ab1631c55f7f1cd33a5cc95d02da9dd191ccd094bf7b20fb997"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 12370,
+        "sha256": "5facf0010d484085f0a484b201ff7d97ce095cb908907d93046d10c820795a74"
+      }
+    ],
+    "clips": [
+      {
+        "index": 0,
+        "name": "GGD_procedural_idle",
+        "duration": 2.4000000953674316,
+        "channels": 12
+      },
+      {
+        "index": 1,
+        "name": "GGD_procedural_run",
+        "duration": 0.800000011920929,
+        "channels": 12
+      },
+      {
+        "index": 2,
+        "name": "GGD_procedural_attack",
+        "duration": 1,
+        "channels": 12
+      },
+      {
+        "index": 3,
+        "name": "GGD_procedural_cast",
+        "duration": 1.600000023841858,
+        "channels": 12
+      },
+      {
+        "index": 4,
+        "name": "GGD_procedural_hurt",
+        "duration": 0.550000011920929,
+        "channels": 12
+      },
+      {
+        "index": 5,
+        "name": "GGD_procedural_death",
+        "duration": 1.25,
+        "channels": 12
+      }
+    ],
+    "budget": {
+      "errors": [],
+      "warnings": [
+        "繪製網格 5 高於警戒值 3，送審時需檢查演出負載。"
+      ]
+    }
+  },
+  "animationChecks": [
+    {
+      "name": "GGD_procedural_idle",
+      "channelCount": 12,
+      "targetedNodePaths": 12,
+      "timeAccessorCount": 1
+    },
+    {
+      "name": "GGD_procedural_run",
+      "channelCount": 12,
+      "targetedNodePaths": 12,
+      "timeAccessorCount": 1
+    },
+    {
+      "name": "GGD_procedural_attack",
+      "channelCount": 12,
+      "targetedNodePaths": 12,
+      "timeAccessorCount": 1
+    },
+    {
+      "name": "GGD_procedural_cast",
+      "channelCount": 12,
+      "targetedNodePaths": 12,
+      "timeAccessorCount": 1
+    },
+    {
+      "name": "GGD_procedural_hurt",
+      "channelCount": 12,
+      "targetedNodePaths": 12,
+      "timeAccessorCount": 1
+    },
+    {
+      "name": "GGD_procedural_death",
+      "channelCount": 12,
+      "targetedNodePaths": 12,
+      "timeAccessorCount": 1
+    }
+  ],
+  "finiteFloatAccessors": {
+    "passed": true,
+    "accessorCount": 101,
+    "valueCount": 129228
+  },
+  "structuralValidationPassed": true,
+  "webglSamplingPassed": true,
+  "visualAcceptanceSeparate": true,
+  "nativeAnimationCount": 0,
+  "proceduralAnimationCount": 6,
+  "runtimeSelectable": false,
+  "deployed": false,
+  "limitations": [
+    "All six clips are generated fallback motion, not original SSBU or Street Fighter animation.",
+    "Machine validation does not establish artistic motion quality, gameplay timing, collision, foot contact, backend selection or deployment."
+  ]
+}

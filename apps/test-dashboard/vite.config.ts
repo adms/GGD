@@ -1,6 +1,7 @@
 /// <reference types="vitest/config" />
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { VITEST_WATCHDOG } from "../../vitest.shared";
 
 // Dev/CI-only dashboard. Talks to tools/testrunner (default 127.0.0.1:8799,
 // override with VITE_RUNNER_URL).
@@ -11,6 +12,8 @@ export default defineConfig({
     host: "127.0.0.1",
   },
   test: {
+    // ⏲️ GH#1257 —— 卡死（整棵樹 CPU≈0）時自己停下來、印出還沒跑完的檔。理由在 `vitest.shared.ts`。
+    ...VITEST_WATCHDOG,
     // ⏱ GH#979 —— vitest 預設逾時 **5 秒**，而 CI runner 在負載下擠不進去
     //   （`mobWavesSave` 本機 1.5 秒 / CI **13,299ms**）。
     // ⚠️ ⭐ 根目錄的 `vitest.config.ts` **套不到這裡** —— 這個檔存在，

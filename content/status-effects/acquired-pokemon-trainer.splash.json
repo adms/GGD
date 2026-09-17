@@ -1,0 +1,15 @@
+{
+  "id": "acquired-pokemon-trainer.splash",
+  "schema": "status-effect@1",
+  "name": "傑尼龜・水槍",
+  "description": "Pokémon Trainer「傑尼龜・水槍」施加的狀態。",
+  "polarity": "debuff",
+  "tags": [
+    "acquired-pokemon-trainer.splash",
+    "slow",
+    "move-speed-down",
+    "soft-cc",
+    "cc",
+    "debuff"
+  ]
+}

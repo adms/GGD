@@ -1,0 +1,95 @@
+{
+  "id": "fx.strash.popp.nps-merami-firetrail-00.candidate",
+  "schema": "vfx@1",
+  "presentation": "billboard",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.14,
+    "angleDeg": 12
+  },
+  "mode": "burst",
+  "burstCount": 30,
+  "lifetimeSec": {
+    "min": 0.18,
+    "max": 0.56
+  },
+  "size": {
+    "start": 0.18,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      1.0,
+      0.88,
+      0.42,
+      1.0
+    ],
+    "end": [
+      0.68,
+      0.08,
+      0.015,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1.0,
+        0.88,
+        0.42,
+        1.0
+      ]
+    ],
+    [
+      0.22,
+      [
+        1.0,
+        0.88,
+        0.42,
+        0.95
+      ]
+    ],
+    [
+      0.68,
+      [
+        0.68,
+        0.08,
+        0.015,
+        0.38
+      ]
+    ],
+    [
+      1,
+      [
+        0.68,
+        0.08,
+        0.015,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.18
+    ],
+    [
+      0.18,
+      0.324
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0,
+  "speed": {
+    "min": 5.0,
+    "max": 9.0
+  },
+  "texture": "assets/textures/particles/strash/popp/f416bd8f79f0a117b376f430c5223f7dab4db9615c6c5f83e14900c4d4f2981a.png",
+  "stretched": true,
+  "tailLength": 1.8
+}

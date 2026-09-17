@@ -1,0 +1,16 @@
+{
+  "sevenPaths": 4927,
+  "centralOverlapPaths": 448,
+  "audioPrefetchResolutionReports": [
+    {
+      "sourceId": "local-lol-decoded-audio",
+      "reportPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/materials/hero-model-library/lol-prefetch-resolution.json",
+      "sha256": "173b92c9f7b690aae727b7390a9488347937d62f86df9a4e62d6e5b7bfbc347a",
+      "recordCount": 47,
+      "intersections": []
+    }
+  ],
+  "centralPrefetchAliasCount": 47,
+  "centralPrefetchAliasIntersections": [],
+  "finding": "No current prefetch alias target intersects seven JP paths or 448 duplicated central paths. Current aliases belong to separate installed-game local-lol-audio-20260910 paths. A path+group lookup is still safer for future shared-source groups."
+}

@@ -1,16 +1,16 @@
 {
   "id": "community-review-27-20260907",
   "name": "庫洛魔法使",
-  "description": "庫洛魔法使 社群英雄功能驗收稿。作品：《庫洛魔法使》  \n角色實體：木之本櫻；採庫洛牌篇能力意象。  \n定位：固定牌組、技能替換、短期武裝。\n\n視覺方向：粉金牌框、綠風、葉枝束縛、羽翼與細劍；各牌圖示跟真實狀態同步。\n以 GGD 軟輔 的三圍與正規化生成屬性，使用標準魔力。六槽原文與待補機制保存在各槽 purpose。現有模型／圖示為 GGD 代理資產，未包含原作外觀。這是待審查稿，不是原設計機制已通過。",
+  "description": "作品：《庫洛魔法使》  \n角色實體：木之本櫻；採庫洛牌篇能力意象。  \n定位：固定牌組、技能替換、短期武裝。\n\n視覺方向：粉金牌框、綠風、葉枝束縛、羽翼與細劍；各牌圖示跟真實狀態同步。",
   "role": "fighter",
   "attackType": "ranged",
   "archetype": "fighter",
   "origin": "軟輔",
-  "modelKey": "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a",
+  "modelKey": "version.body.f8311299c86c82ff2d915d0b144092596f21827e4d7bb33a",
   "baseStats": {
-    "maxHealth": 541,
+    "maxHealth": 150,
     "healthRegen": 0.97,
-    "maxMana": 370,
+    "maxMana": 100,
     "manaRegen": 1.41,
     "ad": 32,
     "ap": 18,
@@ -25,9 +25,9 @@
     "mr": 0
   },
   "growth": {
-    "maxHealth": 26.93612244897959,
+    "maxHealth": 60,
     "healthRegen": 0.07386938775510205,
-    "maxMana": 29.456938775510206,
+    "maxMana": 35,
     "manaRegen": 0,
     "ad": 2.220326530612245,
     "as": 0,
@@ -62,10 +62,10 @@
         15.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 4.5,
@@ -82,7 +82,7 @@
           }
         }
       ],
-      "castTimeSec": 0.567,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-27-20260907.q.webp",
       "template": {
@@ -93,7 +93,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 0.567
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -145,7 +145,7 @@
           "onExisting": "keepLarger"
         }
       ],
-      "castTimeSec": 0.067,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-27-20260907.w.webp",
       "template": {
@@ -153,7 +153,7 @@
         "params": {
           "duration": 3,
           "modifiers": [],
-          "castTimeSec": 0.067
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -180,10 +180,10 @@
         45.0
       ],
       "manaCost": [
-        112.0,
-        112.0,
-        112.0,
-        112.0
+        150.0,
+        150.0,
+        150.0,
+        150.0
       ],
       "manaCostTier": "小",
       "range": 8,
@@ -211,7 +211,7 @@
           ]
         }
       ],
-      "castTimeSec": 1.033,
+      "castTimeSec": 0.1,
       "castTimeTier": "小",
       "icon": "assets/icons/abilities/community-review-27-20260907.e.webp",
       "template": {
@@ -227,7 +227,7 @@
             "ratios": []
           },
           "damageType": "magic",
-          "castTimeSec": 1.033
+          "castTimeSec": 0.1
         },
         "inheritDefaults": true
       },
@@ -277,7 +277,7 @@
           "duration": 4
         }
       ],
-      "castTimeSec": 0.667,
+      "castTimeSec": 0.5,
       "castTimeTier": "大",
       "icon": "assets/icons/abilities/community-review-27-20260907.r.webp",
       "template": {
@@ -296,7 +296,7 @@
               "value": 0.2
             }
           ],
-          "castTimeSec": 0.667
+          "castTimeSec": 0.5
         },
         "inheritDefaults": true
       },
@@ -322,5 +322,61 @@
   "tags": [
     "magic"
   ],
-  "schema": "champion@1"
+  "schema": "champion@1",
+  "modelVersions": [
+    {
+      "modelKey": "version.body.0a17d59aab16b776610a5c8c23fe0057bd84f022956951c4",
+      "label": "原上線模型",
+      "sourceModelKey": "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a",
+      "modelSha256": "0541edd740663ef6b3514d3b23aa23816a13a74ea699fa4c5a809bf5a8e63446",
+      "binarySha256": "ceab40377e1df17ec9dc831230df59546c19d04556c712ffd485768cd26b8fe2",
+      "registeredAt": "2026-09-12T23:02:33.798Z",
+      "source": {
+        "kind": "previous",
+        "character": "庫洛魔法使",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a.json",
+        "tier": "original"
+      }
+    },
+    {
+      "modelKey": "version.body.d16c6b2b4461997a39de68a2a792a4865cbdc454ca0e15cc",
+      "label": "木之本櫻",
+      "sourceModelKey": "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a",
+      "modelSha256": "636e7366065b37c8681db4fe97ac837f89bbdff25a55951451ff1742c2bd61ad",
+      "binarySha256": "577637e6d556c50d4a6e9bae0e9da4684a712100a37c05ee9fc828eeccd4f9ed",
+      "registeredAt": "2026-09-12T23:02:33.802Z",
+      "source": {
+        "kind": "exact",
+        "character": "木之本櫻",
+        "work": "庫洛魔法使",
+        "library": "mba",
+        "reference": "mba:ce884f239ba2fa1f0e05bceb",
+        "tier": "mba"
+      },
+      "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.f8311299c86c82ff2d915d0b144092596f21827e4d7bb33a",
+      "label": "木之本櫻",
+      "sourceModelKey": "community.body.d856c3a007c470bb1fe1015f4aaa0c15d6f0dd2bfbcf7f7a",
+      "modelSha256": "a04c54ec55c4eb0af307b13d4c1a94efcf399e02c8e4d38ed564f3a50af27665",
+      "binarySha256": "577637e6d556c50d4a6e9bae0e9da4684a712100a37c05ee9fc828eeccd4f9ed",
+      "registeredAt": "2026-09-13T00:08:49.684Z",
+      "source": {
+        "kind": "exact",
+        "character": "木之本櫻",
+        "work": "庫洛魔法使",
+        "library": "mba",
+        "reference": "mba:ce884f239ba2fa1f0e05bceb",
+        "tier": "mba",
+        "selectionClass": "mba",
+        "sourceGame": "Magical Battle Arena",
+        "sourcePlatform": "Windows"
+      },
+      "automaticEligible": true
+    }
+  ],
+  "modelSelectionMode": "automatic"
 }

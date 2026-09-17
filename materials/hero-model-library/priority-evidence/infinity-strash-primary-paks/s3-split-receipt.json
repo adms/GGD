@@ -1,0 +1,398 @@
+{
+  "id": "steam-infinity-strash-primary-paks-build-local-20240328",
+  "type": "split-zip",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/manifest-f9698cf2e179f592b2728af368d5f2bb5e96b18a5d7b8c834fc553dfcf3e283c.json",
+  "s3ObjectSha256": "f9698cf2e179f592b2728af368d5f2bb5e96b18a5d7b8c834fc553dfcf3e283c",
+  "sha256": "9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9",
+  "bytes": 12715342764,
+  "parts": [
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00001",
+      "bytes": 268435456,
+      "sha256": "2d9186f6806a22d83aee8215e1532668c6c552a3aa3f466c38d73600f56267d6",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 1
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00002",
+      "bytes": 268435456,
+      "sha256": "3cb8827114e322f0781323a4b0f568bd6d771613c2b0cef833cac7bb9ce9b322",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 2
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00003",
+      "bytes": 268435456,
+      "sha256": "bbab609f0069fdee2bc46bca31276d9238cf4b7ad74b2ae2b6f3368950d7fe4f",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 3
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00004",
+      "bytes": 268435456,
+      "sha256": "25cfcbb4c8c2f2daf453b86ca8116ecc924e921e7f79cb1efdfbb1772070c2dd",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 4
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00005",
+      "bytes": 268435456,
+      "sha256": "a5257cc4f832c41084c5e394628bc6bbf550c6b1624b960599b35c4bd41c80e0",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 5
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00006",
+      "bytes": 268435456,
+      "sha256": "0b899411bce4537fff0e9face4d9be1bdbed177859f0b1508d864a07975c6188",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 6
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00007",
+      "bytes": 268435456,
+      "sha256": "5a48bae4ded3e5b84a10be0858d1a882d7b1c715c4229fb74c0654eb54c07e51",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 7
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00008",
+      "bytes": 268435456,
+      "sha256": "819a4e8f6383e7ae575ae76dec811cd060c9fa61d75ba1f9bf34edb66ce3d899",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 8
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00009",
+      "bytes": 268435456,
+      "sha256": "dd2aaf957729e22100a94c08936dcf5bbb3928c64a6dcfac8dda00c483d9a904",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 9
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00010",
+      "bytes": 268435456,
+      "sha256": "e7caea711533eab03d82ffd7fe0204d70bb752be59b48329f0f3c4a100bdd326",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 10
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00011",
+      "bytes": 268435456,
+      "sha256": "7740e86b1013a6701bb9280ebf7287f0047707a653d28e7c9dbab537137dc998",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 11
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00012",
+      "bytes": 268435456,
+      "sha256": "c9a1e0f9d935d535fb8a371429df144f17b186e6080dd9ed97930e00809ff948",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 12
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00013",
+      "bytes": 268435456,
+      "sha256": "42ddb7f857788f0bc511822260d88d1a714e09be1a56788fc9208a4709ab09e5",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 13
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00014",
+      "bytes": 268435456,
+      "sha256": "0c1907bcba32c2b40166ac0a3923378ebb23f79a1c2a4ae09c5226c24cd81b73",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 14
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00015",
+      "bytes": 268435456,
+      "sha256": "b584e15ed3a2a0317f1eaaf89e98ada9e571959484d789582c4fd49eabab8820",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 15
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00016",
+      "bytes": 268435456,
+      "sha256": "72f3e64ced211f89179a24490161a77e35f636b1a3fe2d474f609d8e1c312267",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 16
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00017",
+      "bytes": 268435456,
+      "sha256": "2a9e58c394fd107e7550a3d5fb21c191e09191307a675bed7aee3f599469b627",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 17
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00018",
+      "bytes": 268435456,
+      "sha256": "a82fea67f7294f7a082f9cc1f1e985a40695df4604edfa1a5baf58dc1b9a273e",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 18
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00019",
+      "bytes": 268435456,
+      "sha256": "17054c90b1775ff26c788f89b822dc5fa43e6a35a8d17dd48516226916dc003f",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 19
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00020",
+      "bytes": 268435456,
+      "sha256": "d86b56d9f8a43e115e41a1999aee259b5571a4de37368d4b31fabd93c157552f",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 20
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00021",
+      "bytes": 268435456,
+      "sha256": "a02eac03d4720bf9512448786e46651380c1b79e1e80ae36333adf18e0b51d94",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 21
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00022",
+      "bytes": 268435456,
+      "sha256": "4f74ecf3166ea6f049cae5204a05364da87d6afdefad129c942f7f558ad99cd9",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 22
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00023",
+      "bytes": 268435456,
+      "sha256": "6dbb9b57f8d98a62c8a80d4dcf025dce219242cfd30d5452f6d2f3be6b44a219",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 23
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00024",
+      "bytes": 268435456,
+      "sha256": "504b9457e276c3f4a69930e920a528ee272177d0de12a4a5dca60a3141d9ef08",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 24
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00025",
+      "bytes": 268435456,
+      "sha256": "1df7155da8d0694b135a5891c16e8b5a3c38e2b57eaf9d3d9ccab51e6793775e",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 25
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00026",
+      "bytes": 268435456,
+      "sha256": "9dbb50cc2eff7f73679404bb1608130e1c4c09b0963158067d6a0a31264bc8fc",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 26
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00027",
+      "bytes": 268435456,
+      "sha256": "6d04ed7f3dec1ee85778e5e8512ba5e7c710209ff300f902a09b8045f8a9db92",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 27
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00028",
+      "bytes": 268435456,
+      "sha256": "2aabb016c3c90cfb430ad47efa6ec87847c991314ff2045d86e078da3933aa7c",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 28
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00029",
+      "bytes": 268435456,
+      "sha256": "0749ca9f4b8b4f236928a28c4f10d876f0d0a6d985ce8bb50a3d22e3befa5f5f",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 29
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00030",
+      "bytes": 268435456,
+      "sha256": "0015582a0f9d56d9afa28db8753f1bbc653918c87559ac778c02a6289495d4d7",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 30
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00031",
+      "bytes": 268435456,
+      "sha256": "4d303173bce34b4a5632cf39adcd3e76b894fa2fecdfd43a94d50b6fddc8c0d1",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 31
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00032",
+      "bytes": 268435456,
+      "sha256": "e409baa4ac320d31a4308f89e8a231d7aa2d52381e8fee03e0ff1330f4d6dc01",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 32
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00033",
+      "bytes": 268435456,
+      "sha256": "fe5f8c94db5d6556846ded5a158c82c43734616ecbeb89508d960e1b35fb4c33",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 33
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00034",
+      "bytes": 268435456,
+      "sha256": "4f4008563ab72ec58ecdcd5d1397c3cc2d581344d2ab010456bcc04fdd420673",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 34
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00035",
+      "bytes": 268435456,
+      "sha256": "503e224a9141fd2e1c6be7f4a20c3f49554af68073a99bd014f31ebbf253fd89",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 35
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00036",
+      "bytes": 268435456,
+      "sha256": "e17199c9909f15d57ac455535aee0f109e2ed75cc0db878d7e7c77547704eb43",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 36
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00037",
+      "bytes": 268435456,
+      "sha256": "5cb3a40574bb05fba09d9331459675f7506aa76725f8e4ca13546d41aef4492a",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 37
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00038",
+      "bytes": 268435456,
+      "sha256": "2135e6e9acf8695609b1117f39df37f2ae6ac11b88921b7368ca0ee6510fd47d",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 38
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00039",
+      "bytes": 268435456,
+      "sha256": "3bc0c14da1d3f7d75d437a8bba2daf37ecd1bc516ed4a981fb2a9581c343db5b",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 39
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00040",
+      "bytes": 268435456,
+      "sha256": "9eb6e091d006faa4942bff4b07702d364a33ff292a2eb1b7c658dc7c2dc02947",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 40
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00041",
+      "bytes": 268435456,
+      "sha256": "d27816c33774656d7096f8536c11cd08e0944b6e62d891da92906c8502fa82ff",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 41
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00042",
+      "bytes": 268435456,
+      "sha256": "e820a8eed2b4b1956063113b7d0fc85c7d597856d7ffcc0b1cd8539a411277c6",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 42
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00043",
+      "bytes": 268435456,
+      "sha256": "50b0c73eb608595a32cd75339115fa851efda9100c23c5d1721c012942e0f6c3",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 43
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00044",
+      "bytes": 268435456,
+      "sha256": "119129c0164e179194f3312a566ad3b1f51dbbcdc98d978a075453c37f84261f",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 44
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00045",
+      "bytes": 268435456,
+      "sha256": "86a56cb3af1f15bf503a0d5ee1435f87f9c5e04286aa7817c8a0c812d2eddf4e",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 45
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00046",
+      "bytes": 268435456,
+      "sha256": "c811c9e2aa4aa0d36b7b575907060969a104abda768f31fe7584f559ce2529a6",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 46
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00047",
+      "bytes": 268435456,
+      "sha256": "39bfe4f9573d9f9a9e10cc75a54f4968763aab0b6009022366de1fc3f3972b65",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 47
+    },
+    {
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9/split/archive.zip.part-00048",
+      "bytes": 98876332,
+      "sha256": "57035960f94409bee01b4f6ef09800b0bc034191b4dd7aa0ac5c098c4753f1b1",
+      "readbackVerified": true,
+      "reusedExisting": false,
+      "number": 48
+    }
+  ],
+  "readbackVerified": true,
+  "orderedArchiveReadbackVerified": true,
+  "originalLocalArchive": "outputs/model-source-backups/steam-infinity-strash-primary-paks-build-local-20240328/9e83cadd7ade44a50c1679d73097809376d713d3132de7f7450aed8704d355f9.zip",
+  "restore": "Fetch all parts, verify each SHA-256, concatenate in numeric order, verify archiveSha256, then open the ZIP."
+}

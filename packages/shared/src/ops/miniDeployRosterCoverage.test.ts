@@ -25,18 +25,24 @@
  */
 import { describe, it, expect } from "vitest";
 import { execFileSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { BATCH_DOC_REL, parseBatchDoc } from "../../testkit/rosterDeclaration";
 
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const SCRIPT = join(REPO, "scripts/mini-deploy.sh");
+/** ⭐ GH#1227：126 名文件餵**出貨的那一份**（⛔ 不是夾具）—— 表格形狀一變，這裡就知道。 */
+const DOC = join(REPO, BATCH_DOC_REL);
 
 /**
- * 跑 `roster_coverage_check`，餵它兩份假的端點回應。
+ * 跑 `roster_coverage_check`，餵它假的端點回應（published＝`/hero-works/published` 的 workId）。
  * ⚠️ 只 source 到 `cmd_check` 之前（⛔ 那之後是會真的連線的指令）。
  */
-function run(starter: string[] | null, whitelist: string[] | null): string {
+function run(starter: string[] | null, whitelist: string[] | null, published: string[] | string | null = null): string {
   const j = (ids: string[] | null) => (ids === null ? "" : JSON.stringify({ champions: ids }));
+  // 字串 ＝ 原樣的回應本體（驗形狀用）；陣列 ＝ 出貨形狀 `[{ workId }]`
+  const p = published === null ? "" : typeof published === "string" ? published : JSON.stringify(published.map((workId) => ({ workId })));
   const harness = `
     set -u
     export GGD_MINI_USER=test-harness GGD_MINI_HOST=127.0.0.1
@@ -44,6 +50,8 @@ function run(starter: string[] | null, whitelist: string[] | null): string {
     r(){ case "$*" in
            *whitelist/starter*) printf '%s' ${JSON.stringify(j(starter))} ;;
            *curation/whitelist*) printf '%s' ${JSON.stringify(j(whitelist))} ;;
+           *hero-works/published*) printf '%s' ${JSON.stringify(p)} ;;
+           *社群英雄126名上架狀態*) cat ${JSON.stringify(DOC)} ;;
            *) printf '' ;;
          esac; }
     roster_coverage_check
@@ -68,14 +76,17 @@ describe("mini-deploy.sh 的名單覆蓋 —— 映像宣告 ↔ 這台機器啟
     expect(out).toContain("37");
     expect(out).not.toMatch(/✓\s*白名單涵蓋/);
     // ⭐ ⛔ 不只是喊一聲：要給得出補它的那一行,⛔ 否則讀的人得自己去翻程式碼。
-    expect(out).toContain("/seed -starter-union");
+    // ⭐ 2026-09-17：提示那一行改成 `--entrypoint /seed`（見本檔最後一條）。
+    expect(out).toContain("--entrypoint /seed platform -starter-union");
+    // ⭐ GH#1227：缺的人要**逐名**印出來，⛔ 不是只有人數。
+    expect(out).toContain(NEW_37[0]!);
   });
 
   it("⭐ 已知**涵蓋**：兩邊一樣 ⇒ 要是綠的（量尺的另一邊）", () => {
     const all = [...OLD_49, ...NEW_37];
     const out = run(all, all);
     expect(out).toMatch(/✓\s*白名單涵蓋/);
-    expect(out).not.toContain("/seed -starter-union");
+    expect(out).not.toContain("--entrypoint /seed platform -starter-union");
   });
 
   it("⭐ 白名單**多**啟用了幾名 ⇒ 仍然是綠的（union-only：營運方加的不是缺陷）", () => {
@@ -85,8 +96,28 @@ describe("mini-deploy.sh 的名單覆蓋 —— 映像宣告 ↔ 這台機器啟
 
   it("⛔ 端點讀不到 ⇒ 要說「**沒有驗到**」，⛔ 不可以長得像通過", () => {
     const out = run(null, OLD_49);
-    expect(out).toContain("沒有驗到");
+    // ⚠️ 指名是**白名單那一段**沒驗到 —— 發布那一段在沒餵資料時也會說「沒有驗到」，⛔ 不可以借它的綠。
+    expect(out).toMatch(/名單端點讀不到[^\n]*沒有驗到/);
     expect(out).not.toMatch(/✓\s*白名單涵蓋/);
+  });
+
+  it("⭐ GH#1227 126 名文件逐群 ↔ /hero-works/published：缺發布的要指名批次與人，全發布要是綠的", () => {
+    const batches = [...parseBatchDoc(readFileSync(DOC, "utf8"))];
+    const all = batches.flatMap(([, ids]) => ids);
+    const [name, ids] = batches[batches.length - 1]!;
+    const short = run(OLD_49, OLD_49, all.filter((id) => id !== ids[0]));
+    expect(short).toContain(`${name}：發布 ${ids.length - 1}/${ids.length}`);
+    expect(short).toContain(ids[0]!);
+    const full = run(OLD_49, OLD_49, all);
+    for (const [n] of batches) expect(full).toMatch(new RegExp(`✓ ${n}：`));
+    expect(full).not.toContain("服務沒有發布");
+    expect(run(OLD_49, OLD_49, null)).toContain("逐群發布**沒有驗到**");
+    // ⭐ 形狀：`{items:[…]}` 照樣讀得到；不是陣列的物件 ⇒ 「沒有驗到」，⛔ 不是五批全部假紅
+    const items = run(OLD_49, OLD_49, JSON.stringify({ items: all.map((workId) => ({ workId })) }));
+    for (const [n] of batches) expect(items).toMatch(new RegExp(`✓ ${n}：`));
+    const odd = run(OLD_49, OLD_49, JSON.stringify({ workId: all[0] }));
+    expect(odd).toContain("逐群發布**沒有驗到**");
+    expect(odd).not.toContain("服務沒有發布");
   });
 
   it("⭐ 數量相等而**內容不同** ⇒ 要抓得到（⛔ 比數字的實作會在這裡放行）", () => {
@@ -100,5 +131,26 @@ describe("mini-deploy.sh 的名單覆蓋 —— 映像宣告 ↔ 這台機器啟
   it("出貨的腳本真的呼叫它（⛔ 不是一個沒有人叫的函式）", () => {
     const src = execFileSync("bash", ["-c", `cat ${JSON.stringify(SCRIPT)}`], { encoding: "utf8" });
     expect(src.match(/^\s*roster_coverage_check\s*$/gm)?.length ?? 0).toBeGreaterThanOrEqual(1);
+  });
+
+  /**
+   * ⛔⛔ 2026-09-17（v0.46.0 部署實測）—— **補啟用那一行被進入點吃掉**。
+   *
+   * 映像的 `ENTRYPOINT ["/platform"]`（`docker/platform.Dockerfile:72`），而那份檔頭逐字寫著
+   * 「**The server itself parses NO flags**」⇒ `run --rm platform /seed -starter-union`
+   * 實際跑的是 `/platform /seed -starter-union`：⭐ 參數被丟掉、**伺服器開起來並永遠不結束**。
+   * ⚠️ 實測：卡 21 分鐘、白名單原封不動停在 130（要補的 37 名一個都沒進去），
+   * ⛔ 而輸出看起來只是「還在跑」—— 這正是本檔在防的那一族（假的綠燈）。
+   *
+   * ⇒ 判準：那一行**一定要** `--entrypoint /seed`。⛔ 不是「記得別寫錯」。
+   */
+  it("⭐ 補啟用那一行要 `--entrypoint /seed` —— ⛔ 不可以讓伺服器的進入點吃掉旗標", () => {
+    const src = readFileSync(SCRIPT, "utf8");
+    const seedLines = src.split("\n").filter((l) => l.includes("-starter-union") && l.includes("docker compose"));
+    expect(seedLines.length, "找不到補啟用那一行 —— 母體壞了（量尺自證）").toBeGreaterThan(0);
+    for (const line of seedLines) {
+      expect(line, `⛔ 這一行會被 ENTRYPOINT /platform 吃掉旗標：${line.trim()}`).toContain("--entrypoint /seed");
+      expect(line, "⛔ 舊寫法（把 /seed 當參數）").not.toMatch(/run\s+--rm\s+platform\s+\/seed/);
+    }
   });
 });

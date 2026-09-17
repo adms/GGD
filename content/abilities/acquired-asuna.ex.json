@@ -1,0 +1,42 @@
+{
+  "id": "acquired-asuna.ex",
+  "name": "晚餐預約成功",
+  "provenance": "editor-json",
+  "description": "自行回復110生命，作為貼身戰後補給。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "cooldownTier": "大",
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "heal",
+      "amount": {
+        "flat": 110,
+        "ratios": []
+      }
+    }
+  ],
+  "castTimeSec": 0.1,
+  "castTimeTier": "小",
+  "template": {
+    "ref": "hero-template.5e32c7c7058f94bde709b5227a3055b220279f0e74f0eda6",
+    "params": {
+      "target": "self",
+      "amount": {
+        "flat": 110,
+        "ratios": []
+      }
+    },
+    "inheritDefaults": true,
+    "contentSha256": "sha256:9c7291d301abf92d392b67fd21b240d31682d9f8b677c241d33ab276c7e7ef4b"
+  },
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/acquired-asuna.ex.webp"
+}

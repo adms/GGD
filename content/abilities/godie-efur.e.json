@@ -14,10 +14,10 @@
     60.0
   ],
   "manaCost": [
-    112.0,
-    112.0,
-    112.0,
-    112.0
+    150.0,
+    150.0,
+    150.0,
+    150.0
   ],
   "range": 0.0,
   "radiusTier": "小",
@@ -67,7 +67,7 @@
       "radius": 4.5,
       "radiusTier": "小",
       "includeOrigin": true,
-      "castTimeSec": 0.667
+      "castTimeSec": 0.5
     }
   },
   "icon": "assets/icons/abilities/godie-efur.e.webp",
@@ -87,6 +87,7 @@
     }
   ],
   "cooldownTier": "中",
+  "castTimeTier": "大",
   "manaCostTier": "小",
-  "castTimeSec": 0.667
+  "castTimeSec": 0.5
 }

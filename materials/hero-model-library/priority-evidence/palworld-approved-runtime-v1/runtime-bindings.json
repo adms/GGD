@@ -1,0 +1,385 @@
+{
+  "schema": "ggd.palworld-approved-runtime-bindings@1",
+  "sourceApprovedComponents": {
+    "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/approved-components.json",
+    "bytes": 51177,
+    "sha256": "0c18c9e16adb729eea4d986b89a15cbf315c65b7c8376617b70d002cc24a821f"
+  },
+  "ownerDecisionReceipt": {
+    "bytes": 108481,
+    "sha256": "fb55bc1d0feed268d902aed09aec7cba738e089b441785626ac880cebf39e8a7",
+    "gitPath": "materials/hero-model-library/review/asset-review-portal-v1/owner-decisions.json"
+  },
+  "summary": {
+    "characters": 3,
+    "approvedCrySourceBindings": 18,
+    "runtimeVoiceCategoryRoutes": 42,
+    "approvedSkillMotionOverlays": 4
+  },
+  "cries": [
+    {
+      "candidateId": "palworld-jetragon-cry-normal",
+      "heroId": "acquired-jetragon",
+      "characterId": "jetragon",
+      "sourceLabel": "Normal",
+      "approvedBinding": "spawn-or-idle",
+      "runtimeCategories": [
+        "hum"
+      ],
+      "clip": {
+        "path": "assets/audio/voices/palworld/jetragon/normal-4a207cb88f48.mp3",
+        "bytes": 11745,
+        "sha256": "4a207cb88f48a40068cecccfe87c0b3b551a43df475429fa4304ca02f11c5099",
+        "language": "zxx",
+        "text": "Normal"
+      }
+    },
+    {
+      "candidateId": "palworld-jetragon-cry-joy",
+      "heroId": "acquired-jetragon",
+      "characterId": "jetragon",
+      "sourceLabel": "Joy",
+      "approvedBinding": "victory",
+      "runtimeCategories": [
+        "victory"
+      ],
+      "clip": {
+        "path": "assets/audio/voices/palworld/jetragon/joy-03253d18585f.mp3",
+        "bytes": 9447,
+        "sha256": "03253d18585f726f30ca469aab0cbc5d9587853593a48214474fbfad13e4c7ae",
+        "language": "zxx",
+        "text": "Joy"
+      }
+    },
+    {
+      "candidateId": "palworld-jetragon-cry-anger",
+      "heroId": "acquired-jetragon",
+      "characterId": "jetragon",
+      "sourceLabel": "Anger",
+      "approvedBinding": "generic-attack-or-cast",
+      "runtimeCategories": [
+        "attack-light",
+        "attack-heavy",
+        "crit",
+        "skill-name.q",
+        "skill-name.w",
+        "skill-name.e",
+        "skill-name.r",
+        "skill-name.ex"
+      ],
+      "clip": {
+        "path": "assets/audio/voices/palworld/jetragon/anger-6745afcc8c9a.mp3",
+        "bytes": 13417,
+        "sha256": "6745afcc8c9a62296494f1c8600873287bd46314d6b9ea48886b1d9c07e507ec",
+        "language": "zxx",
+        "text": "Anger"
+      }
+    },
+    {
+      "candidateId": "palworld-jetragon-cry-sorrow",
+      "heroId": "acquired-jetragon",
+      "characterId": "jetragon",
+      "sourceLabel": "Sorrow",
+      "approvedBinding": "low-health-or-retreat",
+      "runtimeCategories": [
+        "retreat"
+      ],
+      "clip": {
+        "path": "assets/audio/voices/palworld/jetragon/sorrow-5638ed8f9fe2.mp3",
+        "bytes": 10074,
+        "sha256": "5638ed8f9fe228dac48993592014fb0b1b01f4de2c2824d484c7944561664e4c",
+        "language": "zxx",
+        "text": "Sorrow"
+      }
+    },
+    {
+      "candidateId": "palworld-jetragon-cry-pain",
+      "heroId": "acquired-jetragon",
+      "characterId": "jetragon",
+      "sourceLabel": "Pain",
+      "approvedBinding": "hurt",
+      "runtimeCategories": [
+        "hurt",
+        "hurt-heavy"
+      ],
+      "clip": {
+        "path": "assets/audio/voices/palworld/jetragon/pain-e28698306de8.mp3",
+        "bytes": 10283,
+        "sha256": "e28698306de8f5780bf97dcad8cebd96e0c2612e439c396ed8b2e34a39c78143",
+        "language": "zxx",
+        "text": "Pain"
+      }
+    },
+    {
+      "candidateId": "palworld-jetragon-cry-death",
+      "heroId": "acquired-jetragon",
+      "characterId": "jetragon",
+      "sourceLabel": "Death",
+      "approvedBinding": "death",
+      "runtimeCategories": [
+        "defeat"
+      ],
+      "clip": {
+        "path": "assets/audio/voices/palworld/jetragon/death-64114cec12d8.mp3",
+        "bytes": 14462,
+        "sha256": "64114cec12d8fddd0d5530760e1fc1bcfe5babed5b8362006b51d0771da20358",
+        "language": "zxx",
+        "text": "Death"
+      }
+    },
+    {
+      "candidateId": "palworld-astralym-cry-normal",
+      "heroId": "acquired-astralym",
+      "characterId": "astralym",
+      "sourceLabel": "Normal",
+      "approvedBinding": "spawn-or-idle",
+      "runtimeCategories": [
+        "hum"
+      ],
+      "clip": {
+        "path": "assets/audio/voices/palworld/astralym/normal-f9949315b5d2.mp3",
+        "bytes": 25956,
+        "sha256": "f9949315b5d27e7b717237acd6d5f07a1bff7fd975fac10b5dc5e6d4f6b0fce0",
+        "language": "zxx",
+        "text": "Normal"
+      }
+    },
+    {
+      "candidateId": "palworld-astralym-cry-joy",
+      "heroId": "acquired-astralym",
+      "characterId": "astralym",
+      "sourceLabel": "Joy",
+      "approvedBinding": "victory",
+      "runtimeCategories": [
+        "victory"
+      ],
+      "clip": {
+        "path": "assets/audio/voices/palworld/astralym/joy-5da4f560d3d3.mp3",
+        "bytes": 13208,
+        "sha256": "5da4f560d3d3ae02bcc295dbe25746a5af6d7ff193185a9196c171eb1f0e9bda",
+        "language": "zxx",
+        "text": "Joy"
+      }
+    },
+    {
+      "candidateId": "palworld-astralym-cry-anger",
+      "heroId": "acquired-astralym",
+      "characterId": "astralym",
+      "sourceLabel": "Anger",
+      "approvedBinding": "generic-attack-or-cast",
+      "runtimeCategories": [
+        "attack-light",
+        "attack-heavy",
+        "crit",
+        "skill-name.q",
+        "skill-name.w",
+        "skill-name.e",
+        "skill-name.r",
+        "skill-name.ex"
+      ],
+      "clip": {
+        "path": "assets/audio/voices/palworld/astralym/anger-149239e93275.mp3",
+        "bytes": 29718,
+        "sha256": "149239e93275bef7b153ee28f20c41f6e5425bfb2fbe305f7fdd1376079bd397",
+        "language": "zxx",
+        "text": "Anger"
+      }
+    },
+    {
+      "candidateId": "palworld-astralym-cry-sorrow",
+      "heroId": "acquired-astralym",
+      "characterId": "astralym",
+      "sourceLabel": "Sorrow",
+      "approvedBinding": "low-health-or-retreat",
+      "runtimeCategories": [
+        "retreat"
+      ],
+      "clip": {
+        "path": "assets/audio/voices/palworld/astralym/sorrow-51bcb37280e8.mp3",
+        "bytes": 18224,
+        "sha256": "51bcb37280e8735e9061fb343d30d4adbbd78e0cdf0bbff3134f1858c15eb03a",
+        "language": "zxx",
+        "text": "Sorrow"
+      }
+    },
+    {
+      "candidateId": "palworld-astralym-cry-pain",
+      "heroId": "acquired-astralym",
+      "characterId": "astralym",
+      "sourceLabel": "Pain",
+      "approvedBinding": "hurt",
+      "runtimeCategories": [
+        "hurt",
+        "hurt-heavy"
+      ],
+      "clip": {
+        "path": "assets/audio/voices/palworld/astralym/pain-9c981c73e979.mp3",
+        "bytes": 19687,
+        "sha256": "9c981c73e97987c781b3ac7289fa72f9d20eb1149097eb676e7b9c6d7998e7aa",
+        "language": "zxx",
+        "text": "Pain"
+      }
+    },
+    {
+      "candidateId": "palworld-astralym-cry-death",
+      "heroId": "acquired-astralym",
+      "characterId": "astralym",
+      "sourceLabel": "Death",
+      "approvedBinding": "death",
+      "runtimeCategories": [
+        "defeat"
+      ],
+      "clip": {
+        "path": "assets/audio/voices/palworld/astralym/death-814242c5ae71.mp3",
+        "bytes": 56258,
+        "sha256": "814242c5ae71523681c96a0bcd62a5b050be495ffb5987805bb0eaae6f269dab",
+        "language": "zxx",
+        "text": "Death"
+      }
+    },
+    {
+      "candidateId": "palworld-cattiva-cry-normal",
+      "heroId": "acquired-cattiva",
+      "characterId": "cattiva",
+      "sourceLabel": "Normal",
+      "approvedBinding": "spawn-or-idle",
+      "runtimeCategories": [
+        "hum"
+      ],
+      "clip": {
+        "path": "assets/audio/voices/palworld/cattiva/normal-2ea4e920f9d5.mp3",
+        "bytes": 10493,
+        "sha256": "092754d7394d37f76dde668583d440a55d4ba5f255a3366337b07fce7904e82e",
+        "language": "zxx",
+        "text": "Normal"
+      }
+    },
+    {
+      "candidateId": "palworld-cattiva-cry-joy",
+      "heroId": "acquired-cattiva",
+      "characterId": "cattiva",
+      "sourceLabel": "Joy",
+      "approvedBinding": "victory",
+      "runtimeCategories": [
+        "victory"
+      ],
+      "clip": {
+        "path": "assets/audio/voices/palworld/cattiva/joy-085d017aa8b4.mp3",
+        "bytes": 13000,
+        "sha256": "c8c816c4256d0d80b880615d34f743d00c7acaed7071e19c2548064e400d3d5d",
+        "language": "zxx",
+        "text": "Joy"
+      }
+    },
+    {
+      "candidateId": "palworld-cattiva-cry-anger",
+      "heroId": "acquired-cattiva",
+      "characterId": "cattiva",
+      "sourceLabel": "Anger",
+      "approvedBinding": "generic-attack-or-cast",
+      "runtimeCategories": [
+        "attack-light",
+        "attack-heavy",
+        "crit",
+        "skill-name.q",
+        "skill-name.w",
+        "skill-name.e",
+        "skill-name.r",
+        "skill-name.ex"
+      ],
+      "clip": {
+        "path": "assets/audio/voices/palworld/cattiva/anger-3a592d5a23ab.mp3",
+        "bytes": 14254,
+        "sha256": "79b3eef4789d216e4e2a38a6bfa796c006bcc58a5fa2d5b8723acea4bf09fa22",
+        "language": "zxx",
+        "text": "Anger"
+      }
+    },
+    {
+      "candidateId": "palworld-cattiva-cry-sorrow",
+      "heroId": "acquired-cattiva",
+      "characterId": "cattiva",
+      "sourceLabel": "Sorrow",
+      "approvedBinding": "low-health-or-retreat",
+      "runtimeCategories": [
+        "retreat"
+      ],
+      "clip": {
+        "path": "assets/audio/voices/palworld/cattiva/sorrow-ea1af01924ec.mp3",
+        "bytes": 21359,
+        "sha256": "dc081a8ad9258a9f720a0fcb1eecc9274b728e4af9bcb0624b8c8d708e284ef4",
+        "language": "zxx",
+        "text": "Sorrow"
+      }
+    },
+    {
+      "candidateId": "palworld-cattiva-cry-pain",
+      "heroId": "acquired-cattiva",
+      "characterId": "cattiva",
+      "sourceLabel": "Pain",
+      "approvedBinding": "hurt",
+      "runtimeCategories": [
+        "hurt",
+        "hurt-heavy"
+      ],
+      "clip": {
+        "path": "assets/audio/voices/palworld/cattiva/pain-138aa3d053e7.mp3",
+        "bytes": 10911,
+        "sha256": "058255819417f9b563b1b93aad299d9b1bbd45f13b87f6364cebac53506ecebe",
+        "language": "zxx",
+        "text": "Pain"
+      }
+    },
+    {
+      "candidateId": "palworld-cattiva-cry-death",
+      "heroId": "acquired-cattiva",
+      "characterId": "cattiva",
+      "sourceLabel": "Death",
+      "approvedBinding": "death",
+      "runtimeCategories": [
+        "defeat"
+      ],
+      "clip": {
+        "path": "assets/audio/voices/palworld/cattiva/death-cfb643854222.mp3",
+        "bytes": 15926,
+        "sha256": "a1706a89b9c8f91ba9dd2e51221f4e300b90d73e976269e4acd8b10e5dbbd98a",
+        "language": "zxx",
+        "text": "Death"
+      }
+    }
+  ],
+  "motionOverlays": [
+    {
+      "candidateId": "palworld-jetragon-motion-attack",
+      "heroId": "acquired-jetragon",
+      "abilityId": "acquired-jetragon.q",
+      "semanticState": "attack",
+      "nativeClip": "FarSkill_Action",
+      "modelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb"
+    },
+    {
+      "candidateId": "palworld-jetragon-motion-cast",
+      "heroId": "acquired-jetragon",
+      "abilityId": "acquired-jetragon.r",
+      "semanticState": "cast",
+      "nativeClip": "JumpBeam_Loop",
+      "modelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb"
+    },
+    {
+      "candidateId": "palworld-astralym-motion-cast",
+      "heroId": "acquired-astralym",
+      "abilityId": "acquired-astralym.q",
+      "semanticState": "cast",
+      "nativeClip": "HaloBeam_Loop",
+      "modelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59"
+    },
+    {
+      "candidateId": "palworld-cattiva-motion-attack",
+      "heroId": "acquired-cattiva",
+      "abilityId": "acquired-cattiva.q",
+      "semanticState": "attack",
+      "nativeClip": "NekoPunch_Loop",
+      "modelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da"
+    }
+  ]
+}

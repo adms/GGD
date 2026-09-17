@@ -1,0 +1,425 @@
+{
+  "schema": "ggd-deterministic-scoped-stage@1",
+  "sourceId": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
+  "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/infinity-strash-mystvearn-en653-01-static-skinned-v1",
+  "absoluteLocalArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/infinity-strash-mystvearn-en653-01-static-skinned-v1-v1/source.tar.gz",
+  "archiveFormat": "tar-gzip",
+  "archiveMemberRoot": "",
+  "bytes": 20608400,
+  "sha256": "e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047",
+  "fileCount": 79,
+  "uncompressedFileBytes": 74717036,
+  "files": [
+    {
+      "path": "delivery.json",
+      "bytes": 6628,
+      "sha256": "18eca537074395231a4a13a1a73c8ea0ae95570ee703c19f93b30f11e2f1957a"
+    },
+    {
+      "path": "stages/component-portable-v1/component.glb",
+      "bytes": 1154688,
+      "sha256": "0dc7f6cf132b538e7a50b1b92125e6e9ce3c48f6180b8486bc764109c774b551"
+    },
+    {
+      "path": "stages/component-portable-v1/conversion.json",
+      "bytes": 5373,
+      "sha256": "56065e3b7dd24986babbcc1576ef408c13f1944eca5a33467366842e417b0bc5"
+    },
+    {
+      "path": "stages/component-portable-v1/textures/body-base.png",
+      "bytes": 68043,
+      "sha256": "f621fa7bd1ee75d0648ee16300791a46e1f92b2964c6e1ff6e299735ce5b16d7"
+    },
+    {
+      "path": "stages/component-portable-v1/textures/face-base.png",
+      "bytes": 112156,
+      "sha256": "3a9258db4de3fdf20b156a5f0c80cc207dc1e967f77dd521855deff93dbaa315"
+    },
+    {
+      "path": "stages/component-portable-v2/component.glb",
+      "bytes": 1156216,
+      "sha256": "a0d777a38fccd39b59686bf9b0a98062c15f19110606e0cb3ff7deaef99b59ed"
+    },
+    {
+      "path": "stages/component-portable-v2/conversion.json",
+      "bytes": 6819,
+      "sha256": "e8654d7303a32c56e92cca06807212bacf0e273e8e89e9da0be019187566e8ee"
+    },
+    {
+      "path": "stages/component-portable-v2/textures/body-base.png",
+      "bytes": 68043,
+      "sha256": "f621fa7bd1ee75d0648ee16300791a46e1f92b2964c6e1ff6e299735ce5b16d7"
+    },
+    {
+      "path": "stages/component-portable-v2/textures/face-base.png",
+      "bytes": 112156,
+      "sha256": "3a9258db4de3fdf20b156a5f0c80cc207dc1e967f77dd521855deff93dbaa315"
+    },
+    {
+      "path": "stages/component-portable-v3/component.glb",
+      "bytes": 1156216,
+      "sha256": "a0d777a38fccd39b59686bf9b0a98062c15f19110606e0cb3ff7deaef99b59ed"
+    },
+    {
+      "path": "stages/component-portable-v3/conversion.json",
+      "bytes": 6819,
+      "sha256": "ea5d059c326e598b41677bab1c1fd99e91ca6dd2c80e4af0a865de99cf3165ee"
+    },
+    {
+      "path": "stages/component-portable-v3/textures/body-base.png",
+      "bytes": 68043,
+      "sha256": "f621fa7bd1ee75d0648ee16300791a46e1f92b2964c6e1ff6e299735ce5b16d7"
+    },
+    {
+      "path": "stages/component-portable-v3/textures/face-base.png",
+      "bytes": 112156,
+      "sha256": "3a9258db4de3fdf20b156a5f0c80cc207dc1e967f77dd521855deff93dbaa315"
+    },
+    {
+      "path": "stages/mesh-gltf/Strash/Chara/Monster/EN653/00/SK_EN653_00.bin",
+      "bytes": 3607700,
+      "sha256": "7753f15b99df7a28de672b5e37c9673944529ca35d93b43a426147ceae344b47"
+    },
+    {
+      "path": "stages/mesh-gltf/Strash/Chara/Monster/EN653/00/SK_EN653_00.gltf",
+      "bytes": 87013,
+      "sha256": "56e78900e831d11c2f5b7ac0bacec06ac239ce15e68de06219447e03a56fa9e6"
+    },
+    {
+      "path": "stages/mesh-gltf/Strash/Chara/Monster/EN653/01/SK_EN653_01_model.bin",
+      "bytes": 943244,
+      "sha256": "88275473418c4fc072d578aa4059c8eaf76a24a297d442eb623bded3d9238894"
+    },
+    {
+      "path": "stages/mesh-gltf/Strash/Chara/Monster/EN653/01/SK_EN653_01_model.gltf",
+      "bytes": 44435,
+      "sha256": "91e0a429eaa8ec88013db74010465f1948acfe15ec04f5a707635711aa2a9b4e"
+    },
+    {
+      "path": "stages/mesh-gltf/export-manifest.json",
+      "bytes": 4093,
+      "sha256": "430f2f66acfe4c9c85a835d219f6e7654b77654412dac55106aa62c7c6267e1c"
+    },
+    {
+      "path": "stages/mesh-gltf/strash__Content__Strash__Chara__Monster__EN653__00__SK_EN653_00.uasset.log",
+      "bytes": 2365,
+      "sha256": "2a317b7ed5b7784112601dc661397944dc043ddc402be4f0d940eb0755b59cf4"
+    },
+    {
+      "path": "stages/mesh-gltf/strash__Content__Strash__Chara__Monster__EN653__01__SK_EN653_01_model.uasset.log",
+      "bytes": 2491,
+      "sha256": "08472714cee6fbcbd3acbbda4a6d575fd8723a7b101568a09cb958b46da20f7b"
+    },
+    {
+      "path": "stages/mesh-gltf-textured-en653-01/Strash/Chara/Monster/EN653/00/T_EN653_00_Base.tga",
+      "bytes": 259560,
+      "sha256": "01f6d1bc1ad8780403cd022638bc8df527c919d8213217b65a9bd3606be76b70"
+    },
+    {
+      "path": "stages/mesh-gltf-textured-en653-01/Strash/Chara/Monster/EN653/00/T_EN653_00_Bundle.tga",
+      "bytes": 2002537,
+      "sha256": "12c5831b565a30d4a3697c8390a49664b522eff2ce1e26654e2594da42225228"
+    },
+    {
+      "path": "stages/mesh-gltf-textured-en653-01/Strash/Chara/Monster/EN653/00/T_EN653_00_Filter.tga",
+      "bytes": 2812,
+      "sha256": "42dd88e4a45bcee268768fe26e2c77a352763ad207a39bb78e1dc98da2f9d476"
+    },
+    {
+      "path": "stages/mesh-gltf-textured-en653-01/Strash/Chara/Monster/EN653/00/T_EN653_00_N.tga",
+      "bytes": 256550,
+      "sha256": "3f4ae57d3317686b1f5f2295f48f7e948a97ca1534804db336123e425c0f81dd"
+    },
+    {
+      "path": "stages/mesh-gltf-textured-en653-01/Strash/Chara/Monster/EN653/00/T_EN653_00_Shade.tga",
+      "bytes": 269646,
+      "sha256": "33f243638cde16d583d4fd2ea157f280932f9b2fb15bca3398e1ff26342800eb"
+    },
+    {
+      "path": "stages/mesh-gltf-textured-en653-01/Strash/Chara/Monster/EN653/01/SK_EN653_01_model.bin",
+      "bytes": 943244,
+      "sha256": "88275473418c4fc072d578aa4059c8eaf76a24a297d442eb623bded3d9238894"
+    },
+    {
+      "path": "stages/mesh-gltf-textured-en653-01/Strash/Chara/Monster/EN653/01/SK_EN653_01_model.gltf",
+      "bytes": 44442,
+      "sha256": "403c0dbfb97acc645c7e9b9cee3587dbedea49537629911e4aeea089b8526756"
+    },
+    {
+      "path": "stages/mesh-gltf-textured-en653-01/Strash/Chara/Monster/EN653/01/T_EN653_01_Face_Base.tga",
+      "bytes": 1627668,
+      "sha256": "1e86e16649a07f888d5009e0038c26dc5cdc805dd97f63018e2e1a7613586cfe"
+    },
+    {
+      "path": "stages/mesh-gltf-textured-en653-01/Strash/Chara/Monster/EN653/01/T_EN653_01_Face_Bundle.tga",
+      "bytes": 1581607,
+      "sha256": "b8a2c85c72016330e95bc5cbdf756955e1db175f42fa2ca1b9b0bb2128a6dc39"
+    },
+    {
+      "path": "stages/mesh-gltf-textured-en653-01/Strash/Chara/Monster/EN653/01/T_EN653_01_Face_Shade.tga",
+      "bytes": 322264,
+      "sha256": "88d2a22fc99d48f8da672ab73c621aafe6d28a989d37255d1c099867a19303e8"
+    },
+    {
+      "path": "stages/mesh-gltf-textured-en653-01/export-manifest.json",
+      "bytes": 4453,
+      "sha256": "a221a95f805eb33f27f73b1722738b465bb982c023b967b84bbb5850a0d05e96"
+    },
+    {
+      "path": "stages/mesh-gltf-textured-en653-01/strash__Content__Strash__Chara__Monster__EN653__01__SK_EN653_01_model.uasset.log",
+      "bytes": 9503,
+      "sha256": "e8ddd59125ed6af123792fbb227353363d3025303c73ba602d98ecf88bed7b28"
+    },
+    {
+      "path": "stages/normalized-v1/khronos-input.json",
+      "bytes": 19243,
+      "sha256": "1a346f9fd78cf2c988c70dce68530f83e9b5d1ae979ebd17d8f1be5e710d5b34"
+    },
+    {
+      "path": "stages/normalized-v2/component-ggd-normalized.glb",
+      "bytes": 1342948,
+      "sha256": "f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65"
+    },
+    {
+      "path": "stages/normalized-v2/ggd-upload.json",
+      "bytes": 7258,
+      "sha256": "95fae79ad2cd2dcd221e54e42a639069ebf0016af8756895816e7ff6b7cb9af0"
+    },
+    {
+      "path": "stages/normalized-v2/khronos-input.json",
+      "bytes": 3081,
+      "sha256": "ea0ce7d3e3d24357af12040746875e6d3eba349421d28c8444757e45b273044a"
+    },
+    {
+      "path": "stages/normalized-v3/babylon-nullengine.json",
+      "bytes": 810,
+      "sha256": "49a3b7732b05ea53d292394b0403d76586cc40a3d2fa8e9add6103cc260bb5a1"
+    },
+    {
+      "path": "stages/normalized-v3/component-ggd-normalized.glb",
+      "bytes": 1342948,
+      "sha256": "f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65"
+    },
+    {
+      "path": "stages/normalized-v3/ggd-upload.json",
+      "bytes": 7258,
+      "sha256": "eccf900e688048fca477150098610b5c23d3708ee724a2598a4f89721b720110"
+    },
+    {
+      "path": "stages/normalized-v3/khronos-input.json",
+      "bytes": 3081,
+      "sha256": "ea0ce7d3e3d24357af12040746875e6d3eba349421d28c8444757e45b273044a"
+    },
+    {
+      "path": "stages/normalized-v3/render-v1/bundle.js",
+      "bytes": 11648424,
+      "sha256": "fc132b960a4e2d20bb8466031c41715897616ba56041a3638ec7200eb2abac85"
+    },
+    {
+      "path": "stages/normalized-v3/render-v2/bundle.js",
+      "bytes": 11648424,
+      "sha256": "fc132b960a4e2d20bb8466031c41715897616ba56041a3638ec7200eb2abac85"
+    },
+    {
+      "path": "stages/normalized-v3/render-v2/chrome.log",
+      "bytes": 2599,
+      "sha256": "c768a5df6deb52e6bf77a45405f43b198e7ce277593f7f5cea366487939b5763"
+    },
+    {
+      "path": "stages/normalized-v3/render-v2/error.json",
+      "bytes": 240,
+      "sha256": "2ecadd77b283f8f4004d2442228c7f47afd5293484112d3ac6e09d7e7127b235"
+    },
+    {
+      "path": "stages/normalized-v3/render-v2/run.json",
+      "bytes": 412,
+      "sha256": "5f0cb8d67dbe70d0b0f89b9209225a7a8a13dbb4dd2bc667179d014e1b533b64"
+    },
+    {
+      "path": "stages/normalized-v3/render-v3/bundle.js",
+      "bytes": 11649351,
+      "sha256": "f30b24d797031869bef2f819b1979612d0ab7c7750ab96b360ddf1220dd0a891"
+    },
+    {
+      "path": "stages/normalized-v3/render-v3/chrome.log",
+      "bytes": 13305,
+      "sha256": "9852a24e866c5e5f2943c8af1961b59f45e3f9372ccafb014d6756bcd837844f"
+    },
+    {
+      "path": "stages/normalized-v3/render-v3/run.json",
+      "bytes": 434,
+      "sha256": "dd0b6d1297157d35cd78b7446ebc2bbb06d5bee00cc55bba1a944a070f6157dc"
+    },
+    {
+      "path": "stages/normalized-v3/render-v4/back.png",
+      "bytes": 115860,
+      "sha256": "8029bd6a8396778eae0c7ea4790bf0f5faf73c6842ebbeae1e053e0ab749b308"
+    },
+    {
+      "path": "stages/normalized-v3/render-v4/bundle.js",
+      "bytes": 11649351,
+      "sha256": "f30b24d797031869bef2f819b1979612d0ab7c7750ab96b360ddf1220dd0a891"
+    },
+    {
+      "path": "stages/normalized-v3/render-v4/chrome.log",
+      "bytes": 2599,
+      "sha256": "13ca08adea087c0a27e8561d92dee6cee6cf3854869bd63f0e8142bb07dbcfc1"
+    },
+    {
+      "path": "stages/normalized-v3/render-v4/contact-sheet.png",
+      "bytes": 289242,
+      "sha256": "630911b42cd9d24810ba7b59f39221d0424c9a46d2b9947232a5f9864b078f08"
+    },
+    {
+      "path": "stages/normalized-v3/render-v4/front.png",
+      "bytes": 177990,
+      "sha256": "f3c4b02189d9bc118b5e331bf05c6e55e86c2443331709e7b9454d6dccb03775"
+    },
+    {
+      "path": "stages/normalized-v3/render-v4/isometric.png",
+      "bytes": 158799,
+      "sha256": "e1c8e277bfc39474114471b6f8fa42c24ded2854be1954dc6dd93936bfb0ef77"
+    },
+    {
+      "path": "stages/normalized-v3/render-v4/proof.json",
+      "bytes": 2514,
+      "sha256": "8c54aea5bcb48163312ed0e66d9c6be45251598b02fe3376367b28954c9e5a0e"
+    },
+    {
+      "path": "stages/normalized-v3/render-v4/run.json",
+      "bytes": 432,
+      "sha256": "7d1688f58410322a6fd7ab4c1b29fce4f41f6bb189f63731da706d2f0221c170"
+    },
+    {
+      "path": "stages/normalized-v4/babylon-nullengine.json",
+      "bytes": 810,
+      "sha256": "49a3b7732b05ea53d292394b0403d76586cc40a3d2fa8e9add6103cc260bb5a1"
+    },
+    {
+      "path": "stages/normalized-v4/component-ggd-normalized.glb",
+      "bytes": 1342948,
+      "sha256": "f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65"
+    },
+    {
+      "path": "stages/normalized-v4/ggd-upload.json",
+      "bytes": 7258,
+      "sha256": "f90d71de3812fd66a5ef8582f32832512423fd85fc107cfbc7850abf1fa5afbe"
+    },
+    {
+      "path": "stages/normalized-v4/khronos-input.json",
+      "bytes": 3081,
+      "sha256": "ea0ce7d3e3d24357af12040746875e6d3eba349421d28c8444757e45b273044a"
+    },
+    {
+      "path": "stages/review/en653-00/assimp-info.txt",
+      "bytes": 25079,
+      "sha256": "f69fb1b02983a1c38f3aabda623b1d09a9f76f2a3088a0185df60967018f8539"
+    },
+    {
+      "path": "stages/review/en653-00/back.png",
+      "bytes": 11705,
+      "sha256": "f0c20a401254b74af16e72eb8fd7fc0a52b521e20e8e6702db42d40c570d7ff3"
+    },
+    {
+      "path": "stages/review/en653-00/component.glb",
+      "bytes": 5500168,
+      "sha256": "c8562333d64bc06ab75beac61f6a95036c4432ac1f58182afbba7787a28a3b8c"
+    },
+    {
+      "path": "stages/review/en653-00/front.png",
+      "bytes": 12768,
+      "sha256": "f86aa8fd2b9d862efa421fac89dc393b2fa7574a2048cb27de2d0fc0128257c3"
+    },
+    {
+      "path": "stages/review/en653-00/isometric.png",
+      "bytes": 13901,
+      "sha256": "a4f634a9a1da8027bd8b09c27fd9b672fa7a034df619de77e69ad2eae079400e"
+    },
+    {
+      "path": "stages/review/en653-00/receipt.json",
+      "bytes": 1561,
+      "sha256": "d17c2b70c1373a17b84ff1a81526ebf7acd4a88cd5b8def62f0bc83b4a3d2434"
+    },
+    {
+      "path": "stages/review/en653-01/assimp-info.txt",
+      "bytes": 10469,
+      "sha256": "2dea376fcb9ac45907cf79ece7e934f0265ea2ea4766b027f744bac92c79a780"
+    },
+    {
+      "path": "stages/review/en653-01/back.png",
+      "bytes": 31403,
+      "sha256": "1d81a97fe1511a920d566e7a6dbda4bd402acc5c464ff2e5bda0b0d8ba3bbb5c"
+    },
+    {
+      "path": "stages/review/en653-01/component.glb",
+      "bytes": 1464172,
+      "sha256": "872980bcb0596261a584168ea5f9186508b5599588ea2f3bbabc6bd481f8be65"
+    },
+    {
+      "path": "stages/review/en653-01/front.png",
+      "bytes": 54802,
+      "sha256": "2b0c2f7209c4f943da7edf9189bde1dcb6cfa4cea9187b9bb9ef5cfafac9b483"
+    },
+    {
+      "path": "stages/review/en653-01/isometric.png",
+      "bytes": 57353,
+      "sha256": "75a8435d9f39854cdd2ef17370bd16232b6fe73be6dc59586c24383ee16fb320"
+    },
+    {
+      "path": "stages/review/en653-01/receipt.json",
+      "bytes": 1571,
+      "sha256": "7fe567fe74130a95edf367df806a0f27c0041088062ba65b0e66db65fa799035"
+    },
+    {
+      "path": "tools/collect_en653_delivery.py",
+      "bytes": 6906,
+      "sha256": "17394ccc9719a0c579d3e594bd9b263a33da9e2370d83d1b15a44ac0d69ce1cc"
+    },
+    {
+      "path": "tools/export.py",
+      "bytes": 4513,
+      "sha256": "3f7c3a1a1218c2168265b52fa0a63a52f89ddb5b01bc929ce18c2d1c0649dc0e"
+    },
+    {
+      "path": "tools/normalize_validate_candidate.mts",
+      "bytes": 5579,
+      "sha256": "9be7756c59a87666a24fdb2d7a9e37ae428d15a586793a899261784954ab5f60"
+    },
+    {
+      "path": "tools/prepare_en653_component.py",
+      "bytes": 12223,
+      "sha256": "0d50fec57a09075740097bf3513607e63d2854ae2906c78a30e8c82363d90699"
+    },
+    {
+      "path": "tools/render_babylon.mjs",
+      "bytes": 5325,
+      "sha256": "0ff58abef0acba02ceb4b46ba6df34ca92005111ece1b4c1219885f284f6fd0a"
+    },
+    {
+      "path": "tools/render_babylon.py",
+      "bytes": 5216,
+      "sha256": "e24eb2ed7aec152ee27d7138fae29b92832b80db51e5888e665f52d2c799fbf1"
+    },
+    {
+      "path": "tools/ueviewer-infinity-strash.patch",
+      "bytes": 2639,
+      "sha256": "1ecc9d04150281054182c816b349a0eb136815fa3f0df57928d678375b396e98"
+    }
+  ],
+  "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/infinity-strash-mystvearn-en653-01-static-skinned-v1/e192ef6314616540dcef75906259bbe1f337120bd964545c55da27d5641ae047.tar.gz",
+  "localPreserved": true,
+  "snapshotScope": "Complete EN653/00 and EN653/01 identity review, raw UModel exports, deterministic conversion/normalization rebuilds, failed attempts, successful WebGL proof and pinned tools; MystVearn only, not Vearn post-transformation or Baran",
+  "deterministicParameters": {
+    "tarFormat": "PAX",
+    "memberOrder": "lexicographic POSIX path",
+    "mode": "0644",
+    "uid": 0,
+    "gid": 0,
+    "mtime": 0,
+    "uname": "",
+    "gname": "",
+    "gzipMtime": 0,
+    "gzipFilename": "",
+    "gzipCompressLevel": 1
+  }
+}

@@ -1,0 +1,487 @@
+{
+  "id": "lol-malphite",
+  "name": "墨菲特",
+  "description": "岩盾換血、減攻速與落點擊飛坦克\n\n概念來源：LoL 墨菲特\nhttps://www.leagueoflegends.com/zh-tw/champions/malphite/\n\n本遊戲改編：\n• 保留原版 QWER 的招式結構。\n• PASSIVE：需驗證護盾完全吸收的命中是否仍重設受擊計時；未驗前不宣称正典回盾完整。\n• Q：固定加減速，不按目標原速逐量偷取。\n• W：首下普攻重置與護盾期間三倍護甲未加入。\n• E：本草案先用傷害級距，不另抄護甲換算數字。\n• R：共通牆前落點規則仍在；未額外授予無敵/全程不可阻擋。\n• EX：不是牆體，不擋路、不改碰撞。\n\n採用所選 GGD 模型與特效。",
+  "role": "tank",
+  "attackType": "melee",
+  "archetype": "tank",
+  "origin": "坦克",
+  "modelKey": "community.body.bf5d1c1350a97aa76cd9edcf9e9f2d1cf1452626f91c489e",
+  "baseStats": {
+    "maxHealth": 541,
+    "healthRegen": 0.97,
+    "maxMana": 370,
+    "manaRegen": 1.41,
+    "ad": 32,
+    "ap": 18,
+    "as": 0.7,
+    "range": 1.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "ms": 6,
+    "armor": 0,
+    "mr": 0
+  },
+  "growth": {
+    "maxHealth": 27.67734693877551,
+    "healthRegen": 0.08196326530612243,
+    "maxMana": 0.9209183673469388,
+    "manaRegen": 0,
+    "ad": 1.8716734693877548,
+    "as": 0,
+    "mr": 5.279591836734694,
+    "armor": 1.5605204081632653,
+    "ap": 0
+  },
+  "msGrowthTier": "極小",
+  "attributes": {
+    "str": 29,
+    "agi": 18,
+    "int": 13,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "STR",
+    "source": "authored"
+  },
+  "abilities": {
+    "Q": {
+      "id": "lol-malphite.q",
+      "name": "地震碎片",
+      "provenance": "editor-json",
+      "description": "指定敵人受傷減速，自己獲得短加速。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 6,
+      "radius": 3,
+      "rangeTier": "中",
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小"
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "sourceScope": "caster",
+          "statusId": "lol-malphite.shard-slow",
+          "duration": 3,
+          "moveSpeedMult": 0.75
+        },
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "msBonusTier": "極小"
+            }
+          ],
+          "duration": 3,
+          "statusId": "lol-malphite.shard-speed",
+          "applyTo": "self",
+          "stackKey": "lol-malphite.shard-speed",
+          "maxStacks": 1
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "targeted",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "lol-malphite.shard-slow",
+              "duration": 3,
+              "sourceScope": "caster",
+              "moveSpeedMult": 0.75
+            },
+            {
+              "kind": "applyBuff",
+              "applyTo": "self",
+              "duration": 3,
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "msBonusTier": "極小"
+                }
+              ],
+              "statusId": "lol-malphite.shard-speed",
+              "stackKey": "lol-malphite.shard-speed",
+              "maxStacks": 1
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-malphite.q.webp"
+    },
+    "W": {
+      "id": "lol-malphite.w",
+      "name": "震雷之擊",
+      "provenance": "editor-json",
+      "description": "四秒強化普攻，附帶前方震波。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 0.0,
+      "radius": 3,
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "pctAdd",
+              "value": 0.1
+            }
+          ],
+          "duration": 4,
+          "statusId": "lol-malphite.thunder",
+          "applyTo": "self",
+          "stackKey": "lol-malphite.thunder",
+          "maxStacks": 1,
+          "hooks": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damageLine",
+                  "damageType": "physical",
+                  "amount": {
+                    "damageTier": "極小"
+                  },
+                  "length": 3,
+                  "width": 2,
+                  "aim": "facing",
+                  "fromCaster": true,
+                  "includeOrigin": true
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "applyTo": "self",
+              "duration": 4,
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "pctAdd",
+                  "value": 0.1
+                }
+              ],
+              "statusId": "lol-malphite.thunder",
+              "stackKey": "lol-malphite.thunder",
+              "maxStacks": 1,
+              "hooks": [
+                {
+                  "on": "onBasicAttack",
+                  "effects": [
+                    {
+                      "kind": "damageLine",
+                      "damageType": "physical",
+                      "amount": {
+                        "damageTier": "極小"
+                      },
+                      "length": 3,
+                      "width": 2,
+                      "aim": "facing",
+                      "fromCaster": true,
+                      "includeOrigin": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-malphite.w.webp"
+    },
+    "E": {
+      "id": "lol-malphite.e",
+      "name": "大地震顫",
+      "provenance": "editor-json",
+      "description": "周圍魔法震擊並降低攻速。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 0.0,
+      "radius": 3,
+      "cooldownTier": "小",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "damageTier": "小"
+          },
+          "radius": 3,
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyBuff",
+              "sourceScope": "caster",
+              "modifiers": [
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": -0.25
+                }
+              ],
+              "duration": 2,
+              "statusId": "lol-malphite.slam-as",
+              "stackKey": "lol-malphite.slam-as",
+              "maxStacks": 1,
+              "dispellable": true,
+              "polarity": "debuff"
+            }
+          ],
+          "radiusTier": "極小"
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "self",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "damageArea",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "小"
+              },
+              "radius": 2.5,
+              "includeOrigin": true,
+              "onHitTargets": [
+                {
+                  "kind": "applyBuff",
+                  "duration": 2,
+                  "modifiers": [
+                    {
+                      "stat": "as",
+                      "op": "pctAdd",
+                      "value": -0.25
+                    }
+                  ],
+                  "statusId": "lol-malphite.slam-as",
+                  "stackKey": "lol-malphite.slam-as",
+                  "maxStacks": 1,
+                  "sourceScope": "caster",
+                  "dispellable": true,
+                  "polarity": "debuff"
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "radiusTier": "極小",
+      "icon": "assets/icons/abilities/lol-malphite.e.webp"
+    },
+    "R": {
+      "id": "lol-malphite.r",
+      "name": "勢不可擋",
+      "provenance": "editor-json",
+      "description": "高速衝到指定落點，著地傷害並擊飛周邊。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0
+      ],
+      "manaCostTier": "小",
+      "range": 8,
+      "radius": 3,
+      "rangeTier": "大",
+      "cooldownTier": "大",
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0,
+          "durationSec": 0.2,
+          "landRadius": 3,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "damageTier": "中"
+              }
+            },
+            {
+              "kind": "knockback",
+              "distance": 2,
+              "speed": 12,
+              "from": "caster",
+              "subtractGap": false,
+              "launchHeight": 1.2
+            },
+            {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.earth.nova-lg",
+              "at": "point"
+            }
+          ]
+        }
+      ],
+      "castTimeSec": 0.1,
+      "castTimeTier": "小",
+      "template": {
+        "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
+        "params": {
+          "castType": "ground",
+          "castTimeSec": 0.1,
+          "radius": 2.5,
+          "side": "enemies",
+          "effects": [
+            {
+              "kind": "leap",
+              "applyTo": "self",
+              "mode": "toPoint",
+              "apexHeight": 0,
+              "durationSec": 0.2,
+              "landRadius": 2.5,
+              "onLand": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "damageTier": "中"
+                  }
+                },
+                {
+                  "kind": "knockback",
+                  "distance": 0.2,
+                  "speed": 12,
+                  "from": "caster",
+                  "subtractGap": false,
+                  "launchHeight": 1.2
+                },
+                {
+                  "kind": "spawnVfx",
+                  "vfxId": "fx.prim.earth.nova-lg",
+                  "at": "point"
+                }
+              ]
+            }
+          ]
+        },
+        "inheritDefaults": true,
+        "contentSha256": "sha256:ba349d3ee57d3151756c13b7240811a659ba2e26fa1f7b4299bf867806f6a850"
+      },
+      "icon": "assets/icons/abilities/lol-malphite.r.webp"
+    }
+  },
+  "exAbility": "lol-malphite.ex",
+  "passiveAbility": "lol-malphite.passive",
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [],
+  "tags": [
+    "fist"
+  ],
+  "schema": "champion@1",
+  "icon": "assets/icons/champions/lol-malphite.webp"
+}

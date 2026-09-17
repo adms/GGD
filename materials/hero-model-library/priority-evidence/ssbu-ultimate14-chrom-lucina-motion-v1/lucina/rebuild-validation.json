@@ -1,0 +1,545 @@
+{
+  "schema": "ggd-ssbu-ultimate14-matching-motion-validation@1",
+  "candidateId": "ssbu-lucina-c00-ultimate14-motion-v1",
+  "fighterId": "lucina",
+  "sourceIds": [
+    "gitlab-ssbu-models",
+    "parallel-ns-ultimate14"
+  ],
+  "glb": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1/optimized-v3-02/body.glb",
+    "bytes": 2731060,
+    "sha256": "6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744"
+  },
+  "blenderReceipt": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1/optimized-v3-02/optimization.json",
+    "sha256": "67435ff3873a831bed8bcfba7cedb027d16ea8171228d78a2fd1a18a9024fd9a"
+  },
+  "importReceipt": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-lucina-ultimate14-motion-v1/import-02/import-receipt.json",
+    "sha256": "0b722e92261c5c2568157fa81797311f5f250add9a6b436fbff2e922afeea314"
+  },
+  "motionIndex": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-ssbu-ultimate-full-batch/materials/hero-model-library/source-inventories/ultimate14-native-motions.json",
+    "sha256": "fb9c7f61904056e321189efb68867aa48d357254eeb0cbec99af30a0c7cb7d23"
+  },
+  "validator": "gltf-validator@2.0.0-dev.3.10",
+  "khronosIssues": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 15,
+    "numHints": 0,
+    "messages": [
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/meshes/0/primitives/5/attributes/TEXCOORD_0"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/157"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/158"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/159"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/160"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/161"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/162"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/163"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/164"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/165"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/166"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/167"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/168"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/169"
+      },
+      {
+        "code": "NODE_EMPTY",
+        "message": "Empty node encountered.",
+        "severity": 2,
+        "pointer": "/nodes/170"
+      }
+    ],
+    "truncated": false
+  },
+  "ggdInspection": {
+    "triangles": 7927,
+    "drawPrimitives": 6,
+    "skinnedPrimitives": 6,
+    "skinCount": 1,
+    "jointCount": 156,
+    "textureCount": 5,
+    "textures": [
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 64908,
+        "sha256": "f40a6170a222ae38a910165890108474b72e0cfaeefce00a1fdb23bba79539bd"
+      },
+      {
+        "width": 256,
+        "height": 128,
+        "bytes": 52503,
+        "sha256": "9e7636e3b855720fe5c0f8e0dfe68925f688371b92fab80dc66cda5365eec5b4"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 109195,
+        "sha256": "86eda89e3548845c8ae9ea655efabc604e0adba33fa77fbbd52d42d0cc6e9f0f"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 58561,
+        "sha256": "a8ef3c57bf704b161029b93b780c98468b45cfdfbbc9cdce4fbbc627df996e45"
+      },
+      {
+        "width": 256,
+        "height": 256,
+        "bytes": 54793,
+        "sha256": "25e2d99807413ce1f42ced37190d9de6164c499e814e8c4ccce63b532d2b4f5d"
+      }
+    ],
+    "clips": [
+      {
+        "index": 0,
+        "name": "c00attack100",
+        "duration": 0.4166666567325592,
+        "channels": 468
+      },
+      {
+        "index": 1,
+        "name": "c00attack100start",
+        "duration": 0.25,
+        "channels": 468
+      },
+      {
+        "index": 2,
+        "name": "c00attack11",
+        "duration": 2.7916667461395264,
+        "channels": 468
+      },
+      {
+        "index": 3,
+        "name": "c00attack12",
+        "duration": 2.0416667461395264,
+        "channels": 468
+      },
+      {
+        "index": 4,
+        "name": "c00attack13",
+        "duration": 2.25,
+        "channels": 468
+      },
+      {
+        "index": 5,
+        "name": "c00attackend",
+        "duration": 3.0416667461395264,
+        "channels": 468
+      },
+      {
+        "index": 6,
+        "name": "c02attackhi3",
+        "duration": 2.2083332538604736,
+        "channels": 468
+      },
+      {
+        "index": 7,
+        "name": "d01specialairs1",
+        "duration": 2.125,
+        "channels": 468
+      },
+      {
+        "index": 8,
+        "name": "d01specialairs2lw",
+        "duration": 0.375,
+        "channels": 468
+      },
+      {
+        "index": 9,
+        "name": "d01specialairs3s",
+        "duration": 2.5,
+        "channels": 468
+      },
+      {
+        "index": 10,
+        "name": "d01specials1",
+        "duration": 2.125,
+        "channels": 468
+      },
+      {
+        "index": 11,
+        "name": "d01specials2lw",
+        "duration": 0.4166666567325592,
+        "channels": 468
+      },
+      {
+        "index": 12,
+        "name": "d01specials3s",
+        "duration": 2.6666667461395264,
+        "channels": 468
+      }
+    ],
+    "budget": {
+      "errors": [],
+      "warnings": [
+        "繪製網格 6 高於警戒值 3，送審時需檢查演出負載。",
+        "單段動作通道 468 高於警戒值 300，送審時需檢查演出負載。"
+      ]
+    }
+  },
+  "animationChecks": [
+    {
+      "name": "c00attack100",
+      "channelCount": 468,
+      "targetedJointCount": 156,
+      "pinnedTransformNodeCount": 108,
+      "exporterEvaluatedAdditionalJointCount": 48,
+      "timeAccessors": [
+        {
+          "accessor": 1,
+          "count": 10,
+          "minimum": 0.0416666679084301,
+          "maximum": 0.4166666567325592
+        },
+        {
+          "accessor": 3,
+          "count": 2,
+          "minimum": 0.0416666679084301,
+          "maximum": 0.4166666567325592
+        }
+      ]
+    },
+    {
+      "name": "c00attack100start",
+      "channelCount": 468,
+      "targetedJointCount": 156,
+      "pinnedTransformNodeCount": 108,
+      "exporterEvaluatedAdditionalJointCount": 48,
+      "timeAccessors": [
+        {
+          "accessor": 443,
+          "count": 6,
+          "minimum": 0.0416666679084301,
+          "maximum": 0.25
+        },
+        {
+          "accessor": 445,
+          "count": 2,
+          "minimum": 0.0416666679084301,
+          "maximum": 0.25
+        }
+      ]
+    },
+    {
+      "name": "c00attack11",
+      "channelCount": 468,
+      "targetedJointCount": 156,
+      "pinnedTransformNodeCount": 108,
+      "exporterEvaluatedAdditionalJointCount": 48,
+      "timeAccessors": [
+        {
+          "accessor": 880,
+          "count": 67,
+          "minimum": 0.0416666679084301,
+          "maximum": 2.7916667461395264
+        },
+        {
+          "accessor": 882,
+          "count": 2,
+          "minimum": 0.0416666679084301,
+          "maximum": 2.7916667461395264
+        }
+      ]
+    },
+    {
+      "name": "c00attack12",
+      "channelCount": 468,
+      "targetedJointCount": 156,
+      "pinnedTransformNodeCount": 108,
+      "exporterEvaluatedAdditionalJointCount": 48,
+      "timeAccessors": [
+        {
+          "accessor": 1302,
+          "count": 2,
+          "minimum": 0.0416666679084301,
+          "maximum": 2.0416667461395264
+        },
+        {
+          "accessor": 1304,
+          "count": 49,
+          "minimum": 0.0416666679084301,
+          "maximum": 2.0416667461395264
+        }
+      ]
+    },
+    {
+      "name": "c00attack13",
+      "channelCount": 468,
+      "targetedJointCount": 156,
+      "pinnedTransformNodeCount": 108,
+      "exporterEvaluatedAdditionalJointCount": 48,
+      "timeAccessors": [
+        {
+          "accessor": 1728,
+          "count": 54,
+          "minimum": 0.0416666679084301,
+          "maximum": 2.25
+        },
+        {
+          "accessor": 1730,
+          "count": 2,
+          "minimum": 0.0416666679084301,
+          "maximum": 2.25
+        }
+      ]
+    },
+    {
+      "name": "c00attackend",
+      "channelCount": 468,
+      "targetedJointCount": 156,
+      "pinnedTransformNodeCount": 108,
+      "exporterEvaluatedAdditionalJointCount": 48,
+      "timeAccessors": [
+        {
+          "accessor": 2150,
+          "count": 73,
+          "minimum": 0.0416666679084301,
+          "maximum": 3.0416667461395264
+        },
+        {
+          "accessor": 2152,
+          "count": 2,
+          "minimum": 0.0416666679084301,
+          "maximum": 3.0416667461395264
+        }
+      ]
+    },
+    {
+      "name": "c02attackhi3",
+      "channelCount": 468,
+      "targetedJointCount": 156,
+      "pinnedTransformNodeCount": 108,
+      "exporterEvaluatedAdditionalJointCount": 48,
+      "timeAccessors": [
+        {
+          "accessor": 2555,
+          "count": 53,
+          "minimum": 0.0416666679084301,
+          "maximum": 2.2083332538604736
+        },
+        {
+          "accessor": 2557,
+          "count": 2,
+          "minimum": 0.0416666679084301,
+          "maximum": 2.2083332538604736
+        }
+      ]
+    },
+    {
+      "name": "d01specialairs1",
+      "channelCount": 468,
+      "targetedJointCount": 156,
+      "pinnedTransformNodeCount": 108,
+      "exporterEvaluatedAdditionalJointCount": 48,
+      "timeAccessors": [
+        {
+          "accessor": 2966,
+          "count": 2,
+          "minimum": 0.0416666679084301,
+          "maximum": 2.125
+        },
+        {
+          "accessor": 2969,
+          "count": 51,
+          "minimum": 0.0416666679084301,
+          "maximum": 2.125
+        }
+      ]
+    },
+    {
+      "name": "d01specialairs2lw",
+      "channelCount": 468,
+      "targetedJointCount": 156,
+      "pinnedTransformNodeCount": 108,
+      "exporterEvaluatedAdditionalJointCount": 48,
+      "timeAccessors": [
+        {
+          "accessor": 3380,
+          "count": 2,
+          "minimum": 0.0416666679084301,
+          "maximum": 0.375
+        },
+        {
+          "accessor": 3381,
+          "count": 9,
+          "minimum": 0.0416666679084301,
+          "maximum": 0.375
+        }
+      ]
+    },
+    {
+      "name": "d01specialairs3s",
+      "channelCount": 468,
+      "targetedJointCount": 156,
+      "pinnedTransformNodeCount": 108,
+      "exporterEvaluatedAdditionalJointCount": 48,
+      "timeAccessors": [
+        {
+          "accessor": 3776,
+          "count": 60,
+          "minimum": 0.0416666679084301,
+          "maximum": 2.5
+        },
+        {
+          "accessor": 3778,
+          "count": 2,
+          "minimum": 0.0416666679084301,
+          "maximum": 2.5
+        }
+      ]
+    },
+    {
+      "name": "d01specials1",
+      "channelCount": 468,
+      "targetedJointCount": 156,
+      "pinnedTransformNodeCount": 108,
+      "exporterEvaluatedAdditionalJointCount": 48,
+      "timeAccessors": [
+        {
+          "accessor": 2966,
+          "count": 2,
+          "minimum": 0.0416666679084301,
+          "maximum": 2.125
+        },
+        {
+          "accessor": 2969,
+          "count": 51,
+          "minimum": 0.0416666679084301,
+          "maximum": 2.125
+        }
+      ]
+    },
+    {
+      "name": "d01specials2lw",
+      "channelCount": 468,
+      "targetedJointCount": 156,
+      "pinnedTransformNodeCount": 108,
+      "exporterEvaluatedAdditionalJointCount": 48,
+      "timeAccessors": [
+        {
+          "accessor": 1,
+          "count": 10,
+          "minimum": 0.0416666679084301,
+          "maximum": 0.4166666567325592
+        },
+        {
+          "accessor": 3,
+          "count": 2,
+          "minimum": 0.0416666679084301,
+          "maximum": 0.4166666567325592
+        }
+      ]
+    },
+    {
+      "name": "d01specials3s",
+      "channelCount": 468,
+      "targetedJointCount": 156,
+      "pinnedTransformNodeCount": 108,
+      "exporterEvaluatedAdditionalJointCount": 48,
+      "timeAccessors": [
+        {
+          "accessor": 4973,
+          "count": 2,
+          "minimum": 0.0416666679084301,
+          "maximum": 2.6666667461395264
+        },
+        {
+          "accessor": 4974,
+          "count": 64,
+          "minimum": 0.0416666679084301,
+          "maximum": 2.6666667461395264
+        }
+      ]
+    }
+  ],
+  "finiteFloatAccessors": {
+    "passed": true,
+    "accessorCount": 5410,
+    "valueCount": 269300
+  },
+  "structuralValidationPassed": true,
+  "visualPlaybackValidationPassed": false,
+  "completeGameplayActionSet": false,
+  "runtimeReady": false,
+  "runtimeSelectable": false,
+  "defaultEligible": false,
+  "limitations": [
+    "The 13 Transform motions are native to the acquired Ultimate14 community MOD, not verified Nintendo-original animations and not retargeted animations.",
+    "This is an incomplete gameplay action set and has no GGD semantic action mapping.",
+    "Visibility and material tracks were not imported into this body-motion GLB.",
+    "No hero binding, backend registration, runtime switching or deployment was performed."
+  ]
+}

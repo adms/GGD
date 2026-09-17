@@ -1,0 +1,110 @@
+{
+  "schema": "ggd.cattiva.material-conversion-handoff@1",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-20260911-v1",
+  "candidate": {
+    "path": "candidate.json",
+    "bytes": 2967,
+    "sha256": "2ce1b52c1341f7c7d98a6446fa9db957290c22f8bf09091e472f147ca29dd412"
+  },
+  "glb": {
+    "path": "result/body.glb",
+    "bytes": 16640188,
+    "sha256": "f1c7ddd235164ac83dd9eb48021cb76137292acf52f91473734be3e50bfb1934"
+  },
+  "animationCount": 33,
+  "jointCount": 43,
+  "embeddedPngCount": 5,
+  "pixelExactRoundTrips": true,
+  "allAnimationTimeValueBytesUnchanged": true,
+  "allSourceBinaryBytesPreservedAsPrefix": true,
+  "sourceIntakesUnchanged": [
+    {
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg",
+      "manifestSha256": "71f0736648d2901444f765463bb8e1222331046003ee4be6555269b0c4e04cba",
+      "verifiedFiles": 29,
+      "allBytesAndShaPass": true
+    },
+    {
+      "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-atlasforge",
+      "manifestSha256": "dd558a92974a69215c764b591deecb8c54b73630eed519e751cbca7716b7b6d7",
+      "verifiedFiles": 28,
+      "allBytesAndShaPass": true
+    }
+  ],
+  "deterministicReplay": {
+    "path": "reproduction-check.json",
+    "bytes": 465,
+    "sha256": "be2001a23db49bdf57127b4f52f8cae977b356e1215b7162e20e43a9ceb7480a"
+  },
+  "khronos": {
+    "numErrors": 0,
+    "numWarnings": 2,
+    "numInfos": 3,
+    "numHints": 0,
+    "messages": [
+      {
+        "code": "MESH_PRIMITIVE_GENERATED_TANGENT_SPACE",
+        "message": "Material requires a tangent space but the mesh primitive does not provide it. Runtime-generated tangent space may be non-portable across implementations.",
+        "severity": 1,
+        "pointer": "/meshes/0/primitives/2/material"
+      },
+      {
+        "code": "NODE_SKINNED_MESH_NON_ROOT",
+        "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+        "severity": 1,
+        "pointer": "/nodes/43"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/3349"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/3351"
+      },
+      {
+        "code": "UNUSED_OBJECT",
+        "message": "This object may be unused.",
+        "severity": 2,
+        "pointer": "/accessors/3353"
+      }
+    ],
+    "truncated": false
+  },
+  "ggdUploadGate": "pass",
+  "ggdToolPins": [
+    {
+      "path": "packages/shared/src/content/modelUpload/inspect.ts",
+      "bytes": 3756,
+      "sha256": "9cd4919abd0662607d552f45e40114128f958a97847a2adf12c2ed12a48316b1"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/glb.ts",
+      "bytes": 9926,
+      "sha256": "daaa10f7e0d9caa47fbb394bb920af9ad6bca8aa53dcc5f7f96eddc4a816598a"
+    },
+    {
+      "path": "tools/community-hero-forge/inspect-library-motion.mjs",
+      "bytes": 6184,
+      "sha256": "9ef19cf6d7ebe604b0a77d27df4b8fb83539623fa860002fd398cb6741e41d9a"
+    }
+  ],
+  "babylonVersion": "7.54.3",
+  "babylonMovingClipCount": 33,
+  "actualWebglShots": 66,
+  "visualReview": {
+    "reviewer": "Codex visual inspection",
+    "scope": "All 66 snapshots at contact-sheet scale plus 900px Idle mid-frame",
+    "status": "no missing textures or gross skin/mesh corruption observed",
+    "remaining": "Different camera angles, complete playback, foot contact, collisions, facial UV expressions and gameplay state binding need target-game review"
+  },
+  "backendRegistration": "not-performed",
+  "centralFilesChanged": false,
+  "gitChanged": false,
+  "s3Changed": false,
+  "limitationsDocument": "README.md"
+}

@@ -1,0 +1,27 @@
+{
+  "schema": "ggd.skinned-component-acceptance@1",
+  "deliverySha256": "f32c260869808cceaaef726b59ddc6a5f617e50831ebe2b52af2757c8e14696d",
+  "acceptedAt": "2026-09-12",
+  "components": [
+    {
+      "id": "rezero-felix-thunderstore-0.1.1-static-skinned-v1",
+      "nativeId": "felixPrefab",
+      "sha256": "35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1",
+      "accepted": true,
+      "scope": "independent-static-skinned-model-component",
+      "reviewedViews": [
+        "front",
+        "back",
+        "isometric"
+      ],
+      "limitationsAccepted": [
+        "Source Unity bundle contains zero AnimationClip objects; idle, run, attack, cast, hurt and death actions remain missing.",
+        "No GGD hero definition or skill binding exists for this exact identity.",
+        "No VFX, sound effect, dialogue or voice asset for this character was accepted from this source.",
+        "No backend dropdown registration, runtime switching, default selection or deployment was performed.",
+        "Unity custom shader behavior is represented only by a portable base-color PBR material.",
+        "Triangle count is above the 16,000 advisory threshold but below the 28,000 hard limit."
+      ]
+    }
+  ]
+}

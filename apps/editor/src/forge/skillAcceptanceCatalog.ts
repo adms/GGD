@@ -368,6 +368,39 @@ export const SKILL_ACCEPTANCE_CANDIDATES: readonly SkillAcceptanceCandidate[] = 
     requiredHooks: ["onBasicAttack"], requiredConditionKinds: ["chance"],
     acceptance: "每次普通攻擊以100%機率進入分支並追加極小物理傷害，兩秒內置冷卻生效；技能傷害不得誤觸。",
   }),
+  // ⭐ 2026-09-17（GH#1281）—— 第四批 LoL 11 名帶進五個**第一次有人採用**的 effect kind。
+  //   它們原本掛在 `CAPABILITY_ONLY_EFFECT_KINDS`（契約有、內容沒人用）上，
+  //   今天有內容了 ⇒ 逐支進驗收清單，⛔ 不是把清單放寬。
+  capability({
+    id: "lol-sett.r", name: "嘆為觀止",
+    requiredEffectKinds: ["carry", "dash", "damageArea"],
+    acceptance: "抱住單一敵人朝面向帶行，被抱者期間不可被索敵／指定；帶行結束落點造成範圍傷害並緩速，攜帶者死亡則放下。",
+  }),
+  capability({
+    id: "lol-ornn.q", name: "火山脈動",
+    requiredEffectKinds: ["spawnObstacle", "damageLine"],
+    acceptance: "前方裂地造成傷害並緩速，裂地終點升起一根**真碰撞**的暫時柱：走路推不過、衝刺撞得到、四秒後消失。",
+  }),
+  capability({
+    id: "lol-thresh.w", name: "鬼影燈籠",
+    requiredEffectKinds: ["spawnInteractable"],
+    acceptance: "在落點放一盞可互動的燈籠，隊友觸碰才生效（吸附回施法者側）；敵人踩不到、時間到自行消失。",
+  }),
+  capability({
+    id: "lol-thresh.r", name: "惡靈領域",
+    requiredEffectKinds: ["spawnThresholds"],
+    acceptance: "圍出一圈牆：敵人**穿過**才吃到減速與傷害，站在原地不吃；牆存在期間可被視覺辨識。",
+  }),
+  capability({
+    id: "lol-fiddlesticks.passive", name: "無害稻草人",
+    requiredHooks: ["onRoundStart"],
+    acceptance: "每一回合開始時重新鋪一次被動的偵察標記；⛔ 回合中途不得再觸發一次，回合結束要收乾淨。",
+  }),
+  capability({
+    id: "lol-blitzcrank.r", name: "靜電力場",
+    requiredEffectKinds: ["shieldBreak", "damageArea"],
+    acceptance: "周身放電：範圍魔法傷害並**打掉護盾**與沉默；沒有護盾的目標只吃傷害與沉默。",
+  }),
 ] as const;
 
 export const SKILL_ACCEPTANCE_THEME_IDS = new Set(
@@ -386,14 +419,15 @@ export const SKILL_VISUAL_ACCEPTANCE_THEME_IDS = new Set(
   SKILL_VISUAL_ACCEPTANCE_CANDIDATES.map(skillAcceptanceThemeId),
 );
 
-export const CAPABILITY_ONLY_EFFECT_KINDS = [
-  "carry", "convertTeam", "revive", "shieldBreak", "spawnObstacle", "spawnThresholds",
-] as const;
+// ⭐ 2026-09-17（GH#1281）：第四批上架讓 carry／shieldBreak／spawnInteractable／spawnObstacle／spawnThresholds
+//   第一次有正式技能採用（賽特 R・布里姿 R・瑟雷西 W/R・鄂爾 Q）⇒ 它們離開這張「只有契約、沒人用」的清單。
+export const CAPABILITY_ONLY_EFFECT_KINDS = ["convertTeam", "revive"] as const;
 
+// ⭐ 2026-09-17（GH#1281）：`onRoundStart` 第一次有正式技能採用（稻草人／鄂爾的天生技）⇒ 離開這張清單。
 export const CAPABILITY_ONLY_HOOK_EVENTS = [
   "onAllyDeath", "onBossSpawn", "onBoundaryTouch", "onDeath",
   "onFireRingIgnite", "onGuardianDown", "onLethalDamage", "onOverheal",
-  "onProjectileExpire", "onRevive", "onRoundEnd", "onRoundStart", "onShieldBroken",
+  "onProjectileExpire", "onRevive", "onRoundEnd", "onShieldBroken",
   "onStatCapReached", "onStatusApplied",
 ] as const;
 

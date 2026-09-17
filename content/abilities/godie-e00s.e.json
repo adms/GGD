@@ -21,6 +21,7 @@
   ],
   "range": 0.0,
   "radiusTier": "小",
+  "castTimeTier": "大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -50,5 +51,5 @@
   "icon": "assets/icons/abilities/godie-e00s.e.webp",
   "vfxKey": "fx.prim.nature.pulse-sm",
   "cooldownTier": "小",
-  "castTimeSec": 0.667
+  "castTimeSec": 0.5
 }

@@ -1,0 +1,800 @@
+{
+  "schema": "ggd.palworld.material-integration-review@1",
+  "reviewedAt": "2026-09-10T19:10:59.408762+00:00",
+  "scope": "Read-only local rehash of4 recorded S3 uploads/readbacks, every archive member and manifest,7 exact material candidates and native sample preservation; no AWS/network/Git/central mutation.",
+  "counts": {
+    "characters": 3,
+    "modelCandidates": 7,
+    "candidates256": 3,
+    "backupPackages": 4,
+    "archiveFileCount": 433,
+    "archiveBytes": 183572806
+  },
+  "backups": [
+    {
+      "id": "jetragon",
+      "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1",
+      "receipt": {
+        "path": "/private/tmp/ggd-jetragon-materials-s3-backup.json",
+        "bytes": 77796,
+        "sha256": "c899b9d30640b48040cc1e1a423b537f8659b2b0a469f357e6b79f0a30ea05de"
+      },
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-jetragon-materials-20260911/f5b1d41e1dbbc07b94588e95b2adb186045818e8fd9ead348a862e68a6393fe5.tar.gz",
+      "archive": {
+        "path": "/private/tmp/ggd-jetragon-materials-s3/f5b1d41e1dbbc07b94588e95b2adb186045818e8fd9ead348a862e68a6393fe5.tar.gz",
+        "bytes": 43958020,
+        "sha256": "f5b1d41e1dbbc07b94588e95b2adb186045818e8fd9ead348a862e68a6393fe5"
+      },
+      "existingFullGetReadback": {
+        "path": "/private/tmp/ggd-jetragon-materials-s3/full-get.tar.gz",
+        "bytes": 43958020,
+        "sha256": "f5b1d41e1dbbc07b94588e95b2adb186045818e8fd9ead348a862e68a6393fe5"
+      },
+      "recordedFullGetVerified": true,
+      "rehashedLocallyThisReview": true,
+      "archiveAndReadbackShaEqual": true,
+      "allTarMembersMatchCurrentLocalBytes": true,
+      "archiveFileCount": 170,
+      "archiveDirectoryCount": 0,
+      "manifest": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/files-sha256.json",
+        "bytes": 29277,
+        "sha256": "82c38b6bd80cfe536a5bbb8c00b68912f19780e5741fba2459bbda5e4d002f74"
+      },
+      "manifestEntries": 169,
+      "localFileCount": 170,
+      "extraOrMissingLocalFiles": [],
+      "currentRemoteReGetPerformed": false
+    },
+    {
+      "id": "astralym",
+      "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911",
+      "receipt": {
+        "path": "/private/tmp/ggd-astralym-materials-s3-backup-receipt.json",
+        "bytes": 2293,
+        "sha256": "a385286d405ba8f2d2caa8e1c401fa8a8d91314ebc6aeb601fa9681048cc35e9"
+      },
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-models/palworld-astralym-materials-20260911/f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1.tar.gz",
+      "archive": {
+        "path": "/private/tmp/ggd-astralym-materials-backup/f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1.tar.gz",
+        "bytes": 56052298,
+        "sha256": "f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1"
+      },
+      "existingFullGetReadback": {
+        "path": "/private/tmp/ggd-astralym-materials-backup/readback.tar.gz",
+        "bytes": 56052298,
+        "sha256": "f3a1f8634533270c7167812853a17a9f6bb93103fae15393c05f2e63a86d1dd1"
+      },
+      "recordedFullGetVerified": true,
+      "rehashedLocallyThisReview": true,
+      "archiveAndReadbackShaEqual": true,
+      "allTarMembersMatchCurrentLocalBytes": true,
+      "archiveFileCount": 64,
+      "archiveDirectoryCount": 0,
+      "manifest": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/file-manifest.json",
+        "bytes": 11126,
+        "sha256": "eba999010a2e2dd704f30b7d0a1272336d89fd05d8b5c938f2a8b69ba84c5409"
+      },
+      "manifestEntries": 63,
+      "localFileCount": 64,
+      "extraOrMissingLocalFiles": [],
+      "currentRemoteReGetPerformed": false
+    },
+    {
+      "id": "palworld-cattiva-opgg-materials-20260911-v1",
+      "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-20260911-v1",
+      "receipt": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-material-conversions-20260911/palworld-cattiva-opgg-materials-20260911-v1.s3-readback.json",
+        "bytes": 17977,
+        "sha256": "bd56ec129aefb96df874302298007ad59a47d8dcfedc9f9d226a80a685aa0abc"
+      },
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/palworld-cattiva-opgg-materials-20260911-v1/4716aea7a2de5db0cb31a0cf042ad3a72499a1b7d58bbcc89aae017daa4f828b.tar.gz",
+      "archive": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-cattiva-material-conversions-20260911/palworld-cattiva-opgg-materials-20260911-v1.tar.gz",
+        "bytes": 59324636,
+        "sha256": "4716aea7a2de5db0cb31a0cf042ad3a72499a1b7d58bbcc89aae017daa4f828b"
+      },
+      "existingFullGetReadback": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-cattiva-material-conversions-20260911/palworld-cattiva-opgg-materials-20260911-v1.readback.tar.gz",
+        "bytes": 59324636,
+        "sha256": "4716aea7a2de5db0cb31a0cf042ad3a72499a1b7d58bbcc89aae017daa4f828b"
+      },
+      "recordedFullGetVerified": true,
+      "rehashedLocallyThisReview": true,
+      "archiveAndReadbackShaEqual": true,
+      "allTarMembersMatchCurrentLocalBytes": true,
+      "archiveFileCount": 96,
+      "archiveDirectoryCount": 9,
+      "manifest": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-20260911-v1/files-sha256.json",
+        "bytes": 15986,
+        "sha256": "7292ca1eeb157d25ed69a9cc07b91c2096e7f80cb7918a1c3c2961d8e53aba0a"
+      },
+      "manifestEntries": 95,
+      "localFileCount": 96,
+      "extraOrMissingLocalFiles": [],
+      "currentRemoteReGetPerformed": false
+    },
+    {
+      "id": "palworld-cattiva-opgg-materials-256-20260911-v1",
+      "sourceRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1",
+      "receipt": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/deliveries/palworld-cattiva-material-conversions-20260911/palworld-cattiva-opgg-materials-256-20260911-v1.s3-readback.json",
+        "bytes": 19150,
+        "sha256": "3e14edfe1eb8407a799a00d0fe33694844ef747a03edb4e848cb046a2ce7e2e6"
+      },
+      "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/character-model-conversions/palworld-cattiva-opgg-materials-256-20260911-v1/61cc852d5181d5a795d16510596c7e86d27d5e7e625799c104e632047d42292c.tar.gz",
+      "archive": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-cattiva-material-conversions-20260911/palworld-cattiva-opgg-materials-256-20260911-v1.tar.gz",
+        "bytes": 24237852,
+        "sha256": "61cc852d5181d5a795d16510596c7e86d27d5e7e625799c104e632047d42292c"
+      },
+      "existingFullGetReadback": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/archives/palworld-cattiva-material-conversions-20260911/palworld-cattiva-opgg-materials-256-20260911-v1.readback.tar.gz",
+        "bytes": 24237852,
+        "sha256": "61cc852d5181d5a795d16510596c7e86d27d5e7e625799c104e632047d42292c"
+      },
+      "recordedFullGetVerified": true,
+      "rehashedLocallyThisReview": true,
+      "archiveAndReadbackShaEqual": true,
+      "allTarMembersMatchCurrentLocalBytes": true,
+      "archiveFileCount": 103,
+      "archiveDirectoryCount": 8,
+      "manifest": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/files-sha256.json",
+        "bytes": 17134,
+        "sha256": "c7f71cc813a916248417373756e298a38909db338f681c5475393e2d31299a8c"
+      },
+      "manifestEntries": 102,
+      "localFileCount": 103,
+      "extraOrMissingLocalFiles": [],
+      "currentRemoteReGetPerformed": false
+    }
+  ],
+  "candidates": [
+    {
+      "id": "opgg-palworld-jetragon.material-bound-native-res-v1",
+      "character": "Jetragon / 空渦龍",
+      "model": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-native-res.glb",
+        "bytes": 11266728,
+        "sha256": "f3e0253139c6840a91a9ae15c5296861b7dfffad83790df93777749a8c4e126a"
+      },
+      "shaAndSizeMatchCandidate": true,
+      "is256Candidate": false,
+      "jsonChunkBytes": 1200856,
+      "triangles": 8468,
+      "drawPrimitives": 3,
+      "bones": [
+        75
+      ],
+      "imagesEmbedded": 9,
+      "storedAnimationEntries": 29,
+      "timeChangingClipCount": 29,
+      "staticClips": [],
+      "uniqueTrackSignatureCount": 28,
+      "duplicateClipContentGroups": [
+        [
+          "Carrying",
+          "Carrying_Start"
+        ]
+      ],
+      "animationScope": "complete-source-animation-library",
+      "fullSourceStoredEntries": 29,
+      "allSelectedNativeTrackSamplesIdenticalToFrozenSource": true,
+      "nativeSource": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/decoded/jetragon-quantization-declared.glb",
+        "bytes": 3783400,
+        "sha256": "146be6696634db536dcbeb5481f0f7a775ec602e01800f184f6d08b314253203"
+      },
+      "proceduralMotionAdded": false,
+      "inspectReceipt": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/evidence/ggd-inspect.json",
+        "bytes": 13609,
+        "sha256": "f86da4709653d711818c383b4c6c080ff4ae72ea545536580c706f5f992376f3"
+      },
+      "recordedGgdInspectPassed": true,
+      "recordedBudget": {
+        "errors": [
+          "貼圖邊長 2048 超過英雄模型上限 256。"
+        ],
+        "warnings": []
+      },
+      "animationNames": [
+        "Carrying",
+        "Carrying_Start",
+        "Damage",
+        "Eat",
+        "Encount",
+        "FarSkill_Action",
+        "FarSkill_ActionLoop",
+        "FarSkill_End",
+        "FarSkill_Start",
+        "FarSkill_StartLoop",
+        "GetUp_LeftDown",
+        "GetUp_RightDown",
+        "Idle",
+        "JumpBeam_End",
+        "JumpBeam_Loop",
+        "JumpBeam_Start",
+        "Petting",
+        "Rest01",
+        "Rest02",
+        "Rest03",
+        "Run",
+        "Run_Riding",
+        "SleepEnd",
+        "SleepLoop",
+        "SleepStart",
+        "Spa",
+        "Sprint",
+        "Walk",
+        "Walk_Riding"
+      ],
+      "noSourceDeathName": true,
+      "alphaModes": [
+        {
+          "name": "MI_JetDragon_Body",
+          "alphaMode": "MASK"
+        },
+        {
+          "name": "MI_JetDragon_Eye",
+          "alphaMode": "BLEND"
+        },
+        {
+          "name": "MI_JetDragon_Extra",
+          "alphaMode": "BLEND"
+        }
+      ]
+    },
+    {
+      "id": "opgg-palworld-jetragon.material-bound-256-v1",
+      "character": "Jetragon / 空渦龍",
+      "model": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/models/jetragon-materials-256.glb",
+        "bytes": 4297580,
+        "sha256": "894e7aaa153116876a7c0159f4659374003f0f8f911c8c637a3c6b708f9f71a8"
+      },
+      "shaAndSizeMatchCandidate": true,
+      "is256Candidate": true,
+      "jsonChunkBytes": 1200836,
+      "triangles": 8468,
+      "drawPrimitives": 3,
+      "bones": [
+        75
+      ],
+      "imagesEmbedded": 9,
+      "storedAnimationEntries": 29,
+      "timeChangingClipCount": 29,
+      "staticClips": [],
+      "uniqueTrackSignatureCount": 28,
+      "duplicateClipContentGroups": [
+        [
+          "Carrying",
+          "Carrying_Start"
+        ]
+      ],
+      "animationScope": "complete-source-animation-library",
+      "fullSourceStoredEntries": 29,
+      "allSelectedNativeTrackSamplesIdenticalToFrozenSource": true,
+      "nativeSource": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-jetragon/decoded/jetragon-quantization-declared.glb",
+        "bytes": 3783400,
+        "sha256": "146be6696634db536dcbeb5481f0f7a775ec602e01800f184f6d08b314253203"
+      },
+      "proceduralMotionAdded": false,
+      "inspectReceipt": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/conversions-20260911/jetragon-opgg-material-bound-v1/evidence/ggd-inspect.json",
+        "bytes": 13609,
+        "sha256": "f86da4709653d711818c383b4c6c080ff4ae72ea545536580c706f5f992376f3"
+      },
+      "recordedGgdInspectPassed": true,
+      "recordedBudget": {
+        "errors": [],
+        "warnings": []
+      },
+      "animationNames": [
+        "Carrying",
+        "Carrying_Start",
+        "Damage",
+        "Eat",
+        "Encount",
+        "FarSkill_Action",
+        "FarSkill_ActionLoop",
+        "FarSkill_End",
+        "FarSkill_Start",
+        "FarSkill_StartLoop",
+        "GetUp_LeftDown",
+        "GetUp_RightDown",
+        "Idle",
+        "JumpBeam_End",
+        "JumpBeam_Loop",
+        "JumpBeam_Start",
+        "Petting",
+        "Rest01",
+        "Rest02",
+        "Rest03",
+        "Run",
+        "Run_Riding",
+        "SleepEnd",
+        "SleepLoop",
+        "SleepStart",
+        "Spa",
+        "Sprint",
+        "Walk",
+        "Walk_Riding"
+      ],
+      "noSourceDeathName": true,
+      "alphaModes": [
+        {
+          "name": "MI_JetDragon_Body",
+          "alphaMode": "MASK"
+        },
+        {
+          "name": "MI_JetDragon_Eye",
+          "alphaMode": "BLEND"
+        },
+        {
+          "name": "MI_JetDragon_Extra",
+          "alphaMode": "BLEND"
+        }
+      ]
+    },
+    {
+      "id": "opgg-palworld-astralym-2026081102.full58",
+      "character": "Astralym / 枯星龍",
+      "model": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/astralym-material-bound.glb",
+        "bytes": 25503732,
+        "sha256": "5178b51b17783acaab5542b5cb50483b3f85110dc915803a5fd0682afba6baaf"
+      },
+      "shaAndSizeMatchCandidate": true,
+      "is256Candidate": false,
+      "jsonChunkBytes": 4753652,
+      "triangles": 23928,
+      "drawPrimitives": 3,
+      "bones": [
+        145
+      ],
+      "imagesEmbedded": 9,
+      "storedAnimationEntries": 58,
+      "timeChangingClipCount": 57,
+      "staticClips": [
+        "HaloCutter_Loop_Ring"
+      ],
+      "uniqueTrackSignatureCount": 58,
+      "duplicateClipContentGroups": [],
+      "animationScope": "complete-source-animation-library",
+      "fullSourceStoredEntries": 58,
+      "allSelectedNativeTrackSamplesIdenticalToFrozenSource": true,
+      "nativeSource": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/derived/model-decoded-v2.glb",
+        "bytes": 17242184,
+        "sha256": "601db2cfa74b3fd3694248d380422ccdd15f304492b4d14b8ff65ba6fe1a3797"
+      },
+      "proceduralMotionAdded": false,
+      "inspectReceipt": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/validation/ggd-inspect.json",
+        "bytes": 676,
+        "sha256": "415f298662b7564307e53c74aeb365d0ee168e0f89b6f58148b194ac3ff28735"
+      },
+      "recordedGgdInspectPassed": false,
+      "recordedBudget": null,
+      "animationNames": [
+        "Damage",
+        "FarSkill_Action",
+        "FarSkill_ActionLoop",
+        "FarSkill_End",
+        "FarSkill_Start",
+        "FarSkill_StartLoop",
+        "HaloBeam_End",
+        "HaloBeam_End_Ring",
+        "HaloBeam_Loop",
+        "HaloBeam_Loop_Ring",
+        "HaloBeam_Start",
+        "HaloBeam_Start_Ring",
+        "HaloCutter",
+        "HaloCutter_End_Ring",
+        "HaloCutter_Loop_Ring",
+        "HaloCutter_Start_Ring",
+        "Idle",
+        "Idle_Ring",
+        "LaserGliding_End",
+        "LaserGliding_End_Ring",
+        "LaserGliding_Loop",
+        "LaserGliding_Loop_Ring",
+        "LaserGliding_Start",
+        "LaserGliding_Start_Ring",
+        "PaldiumCannon_Attack",
+        "PaldiumCannon_Attack_Loop",
+        "PaldiumCannon_Attack_Loop_Ring",
+        "PaldiumCannon_Attack_Ring",
+        "PaldiumCannon_End",
+        "PaldiumCannon_End_Ring",
+        "PaldiumCannon_Start",
+        "PaldiumCannon_Start_Loop",
+        "PaldiumCannon_Start_Loop_Ring",
+        "PaldiumCannon_Start_Ring",
+        "PaldiumExplosion_Cancel",
+        "PaldiumExplosion_Cancel_Ring",
+        "PaldiumExplosion_End",
+        "PaldiumExplosion_End_Ring",
+        "PaldiumExplosion_Loop",
+        "PaldiumExplosion_Loop_Ring",
+        "PaldiumExplosion_Start",
+        "PaldiumExplosion_Start_Ring",
+        "PaldiumRain_End",
+        "PaldiumRain_Loop",
+        "PaldiumRain_Start",
+        "PaldiumShot_End",
+        "PaldiumShot_End_Ring",
+        "PaldiumShot_Loop",
+        "PaldiumShot_Loop_Ring",
+        "PaldiumShot_Start",
+        "PaldiumShot_Start_Ring",
+        "Supernova_End",
+        "Supernova_End_Ring",
+        "Supernova_Loop",
+        "Supernova_Loop_Ring",
+        "Supernova_Start",
+        "Supernova_Start_Ring",
+        "Walk"
+      ],
+      "noSourceDeathName": true,
+      "alphaModes": [
+        {
+          "name": "MI_WorldTreeDragon_Body",
+          "alphaMode": "MASK"
+        },
+        {
+          "name": "MI_WorldTreeDragon_Extra",
+          "alphaMode": "MASK"
+        },
+        {
+          "name": "MI_WorldTreeDragon_Eye",
+          "alphaMode": "BLEND"
+        }
+      ]
+    },
+    {
+      "id": "opgg-palworld-astralym-2026081102.idle-walk-hd",
+      "character": "Astralym / 枯星龍",
+      "model": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/idle-walk/astralym-idle-walk.glb",
+        "bytes": 21162960,
+        "sha256": "4ee29eb0d345df2a843c5981a4bc26596610c0676327fecf30cc217d50b19b16"
+      },
+      "shaAndSizeMatchCandidate": true,
+      "is256Candidate": false,
+      "jsonChunkBytes": 219716,
+      "triangles": 23928,
+      "drawPrimitives": 3,
+      "bones": [
+        145
+      ],
+      "imagesEmbedded": 9,
+      "storedAnimationEntries": 2,
+      "timeChangingClipCount": 2,
+      "staticClips": [],
+      "uniqueTrackSignatureCount": 2,
+      "duplicateClipContentGroups": [],
+      "animationScope": "native-subset-Idle-Walk",
+      "fullSourceStoredEntries": 58,
+      "allSelectedNativeTrackSamplesIdenticalToFrozenSource": true,
+      "nativeSource": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/derived/model-decoded-v2.glb",
+        "bytes": 17242184,
+        "sha256": "601db2cfa74b3fd3694248d380422ccdd15f304492b4d14b8ff65ba6fe1a3797"
+      },
+      "proceduralMotionAdded": false,
+      "inspectReceipt": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/idle-walk/ggd-inspect-budget.json",
+        "bytes": 3008,
+        "sha256": "f8f9462beaa6678eec44a8ca928aaa4670e7a3871697c44ef944cbbc6e48efb1"
+      },
+      "recordedGgdInspectPassed": true,
+      "recordedBudget": {
+        "errors": [
+          "貼圖邊長 2048 超過英雄模型上限 256。"
+        ],
+        "warnings": [
+          "三角面 23928 高於警戒值 16000，送審時需檢查演出負載。",
+          "單段動作通道 435 高於警戒值 300，送審時需檢查演出負載。"
+        ]
+      },
+      "animationNames": [
+        "Idle",
+        "Walk"
+      ],
+      "noSourceDeathName": true,
+      "alphaModes": [
+        {
+          "name": "MI_WorldTreeDragon_Body",
+          "alphaMode": "MASK"
+        },
+        {
+          "name": "MI_WorldTreeDragon_Extra",
+          "alphaMode": "MASK"
+        },
+        {
+          "name": "MI_WorldTreeDragon_Eye",
+          "alphaMode": "BLEND"
+        }
+      ]
+    },
+    {
+      "id": "opgg-palworld-astralym-2026081102.idle-walk-256",
+      "character": "Astralym / 枯星龍",
+      "model": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/idle-walk-256/astralym-idle-walk-256.glb",
+        "bytes": 13224512,
+        "sha256": "1e75b1d125f3b03ae662b471a4e9fb00e563617e617c6e234a4afd9e4005ba09"
+      },
+      "shaAndSizeMatchCandidate": true,
+      "is256Candidate": true,
+      "jsonChunkBytes": 219816,
+      "triangles": 23928,
+      "drawPrimitives": 3,
+      "bones": [
+        145
+      ],
+      "imagesEmbedded": 9,
+      "storedAnimationEntries": 2,
+      "timeChangingClipCount": 2,
+      "staticClips": [],
+      "uniqueTrackSignatureCount": 2,
+      "duplicateClipContentGroups": [],
+      "animationScope": "native-subset-Idle-Walk",
+      "fullSourceStoredEntries": 58,
+      "allSelectedNativeTrackSamplesIdenticalToFrozenSource": true,
+      "nativeSource": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-astralym/derived/model-decoded-v2.glb",
+        "bytes": 17242184,
+        "sha256": "601db2cfa74b3fd3694248d380422ccdd15f304492b4d14b8ff65ba6fe1a3797"
+      },
+      "proceduralMotionAdded": false,
+      "inspectReceipt": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-astralym-materials-20260911/idle-walk-256/receipt.json",
+        "bytes": 4008,
+        "sha256": "06a5d77a8db5a3676ebbc5b4fadfabe46c930d0ed5d11339dadd53f5a2687a59"
+      },
+      "recordedGgdInspectPassed": true,
+      "recordedBudget": {
+        "errors": [],
+        "warnings": [
+          "三角面 23928 高於警戒值 16000，送審時需檢查演出負載。",
+          "單段動作通道 435 高於警戒值 300，送審時需檢查演出負載。"
+        ]
+      },
+      "animationNames": [
+        "Idle",
+        "Walk"
+      ],
+      "noSourceDeathName": true,
+      "alphaModes": [
+        {
+          "name": "MI_WorldTreeDragon_Body",
+          "alphaMode": "MASK"
+        },
+        {
+          "name": "MI_WorldTreeDragon_Extra",
+          "alphaMode": "MASK"
+        },
+        {
+          "name": "MI_WorldTreeDragon_Eye",
+          "alphaMode": "BLEND"
+        }
+      ]
+    },
+    {
+      "id": "palworld-cattiva-opgg-materials-v1",
+      "character": "Cattiva / 搗蛋貓",
+      "model": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-20260911-v1/result/body.glb",
+        "bytes": 16640188,
+        "sha256": "f1c7ddd235164ac83dd9eb48021cb76137292acf52f91473734be3e50bfb1934"
+      },
+      "shaAndSizeMatchCandidate": true,
+      "is256Candidate": false,
+      "jsonChunkBytes": 802748,
+      "triangles": 5798,
+      "drawPrimitives": 3,
+      "bones": [
+        43
+      ],
+      "imagesEmbedded": 5,
+      "storedAnimationEntries": 33,
+      "timeChangingClipCount": 33,
+      "staticClips": [],
+      "uniqueTrackSignatureCount": 33,
+      "duplicateClipContentGroups": [],
+      "animationScope": "complete-source-animation-library",
+      "fullSourceStoredEntries": 33,
+      "allSelectedNativeTrackSamplesIdenticalToFrozenSource": true,
+      "nativeSource": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/decoded/cattiva-quantization-declared.glb",
+        "bytes": 1788472,
+        "sha256": "c28f35cf095450f5aa0ecd00a60037197ca6af22694650b3afdeb7ca361d4635"
+      },
+      "proceduralMotionAdded": false,
+      "inspectReceipt": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-20260911-v1/result/validation/ggd-upload.json",
+        "bytes": 8055,
+        "sha256": "e266a0ee6bfc3cbb1746046a81d5810db4450955e657f26a2a62e59488545b91"
+      },
+      "recordedGgdInspectPassed": true,
+      "recordedBudget": {
+        "errors": [
+          "貼圖邊長 2048 超過英雄模型上限 256。"
+        ],
+        "warnings": []
+      },
+      "animationNames": [
+        "Architecture",
+        "Carrying",
+        "Carrying_Start",
+        "CommonWork",
+        "Damage",
+        "Eat",
+        "Encount",
+        "FarSkill_Action",
+        "FarSkill_ActionLoop",
+        "FarSkill_End",
+        "FarSkill_Start",
+        "FarSkill_StartLoop",
+        "GetUp_FrontDown",
+        "Gunner",
+        "Idle",
+        "Idle_Swim",
+        "Jail",
+        "JumpEnd",
+        "JumpLoop",
+        "Mining",
+        "NekoPunch_End",
+        "NekoPunch_Loop",
+        "NekoPunch_Start",
+        "Petting",
+        "Rest01",
+        "Rest02",
+        "Rest03",
+        "Run",
+        "SleepEnd",
+        "SleepLoop",
+        "SleepStart",
+        "Transport",
+        "Walk"
+      ],
+      "noSourceDeathName": true,
+      "alphaModes": [
+        {
+          "name": "MI_PinkCat_Mouth",
+          "alphaMode": "BLEND"
+        },
+        {
+          "name": "MI_PinkCat_Eye",
+          "alphaMode": "BLEND"
+        },
+        {
+          "name": "MI_PinkCat_Body",
+          "alphaMode": "MASK"
+        }
+      ]
+    },
+    {
+      "id": "palworld-cattiva-opgg-materials-256-v1",
+      "character": "Cattiva / 搗蛋貓",
+      "model": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/body.glb",
+        "bytes": 2148052,
+        "sha256": "b404c9a9593e9c5f742eb929ff78f707fa6bc262f2d8cbefa311b653599dc0a5"
+      },
+      "shaAndSizeMatchCandidate": true,
+      "is256Candidate": true,
+      "jsonChunkBytes": 802724,
+      "triangles": 5798,
+      "drawPrimitives": 3,
+      "bones": [
+        43
+      ],
+      "imagesEmbedded": 5,
+      "storedAnimationEntries": 33,
+      "timeChangingClipCount": 33,
+      "staticClips": [],
+      "uniqueTrackSignatureCount": 33,
+      "duplicateClipContentGroups": [],
+      "animationScope": "complete-source-animation-library",
+      "fullSourceStoredEntries": 33,
+      "allSelectedNativeTrackSamplesIdenticalToFrozenSource": true,
+      "nativeSource": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260911/parallel-palworld-cattiva-opgg/decoded/cattiva-quantization-declared.glb",
+        "bytes": 1788472,
+        "sha256": "c28f35cf095450f5aa0ecd00a60037197ca6af22694650b3afdeb7ca361d4635"
+      },
+      "proceduralMotionAdded": false,
+      "inspectReceipt": {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/palworld-cattiva-opgg-materials-256-20260911-v1/result/validation/ggd-upload.json",
+        "bytes": 8030,
+        "sha256": "0ca63f6e9cc1a1e70185bd99b6eab2ca5e150d5c99749ad33b961c8982ec3a51"
+      },
+      "recordedGgdInspectPassed": true,
+      "recordedBudget": {
+        "errors": [],
+        "warnings": []
+      },
+      "animationNames": [
+        "Architecture",
+        "Carrying",
+        "Carrying_Start",
+        "CommonWork",
+        "Damage",
+        "Eat",
+        "Encount",
+        "FarSkill_Action",
+        "FarSkill_ActionLoop",
+        "FarSkill_End",
+        "FarSkill_Start",
+        "FarSkill_StartLoop",
+        "GetUp_FrontDown",
+        "Gunner",
+        "Idle",
+        "Idle_Swim",
+        "Jail",
+        "JumpEnd",
+        "JumpLoop",
+        "Mining",
+        "NekoPunch_End",
+        "NekoPunch_Loop",
+        "NekoPunch_Start",
+        "Petting",
+        "Rest01",
+        "Rest02",
+        "Rest03",
+        "Run",
+        "SleepEnd",
+        "SleepLoop",
+        "SleepStart",
+        "Transport",
+        "Walk"
+      ],
+      "noSourceDeathName": true,
+      "alphaModes": [
+        {
+          "name": "MI_PinkCat_Mouth",
+          "alphaMode": "BLEND"
+        },
+        {
+          "name": "MI_PinkCat_Eye",
+          "alphaMode": "BLEND"
+        },
+        {
+          "name": "MI_PinkCat_Body",
+          "alphaMode": "MASK"
+        }
+      ]
+    }
+  ],
+  "knownIntegrationLimits": {
+    "Jetragon": [
+      "Full29entries/28unique preserved,7 source textures standard-bound plusSSS inextras; no standard SSS runtime implementation.",
+      "No confirmed sourceDeath or six-state hero descriptor.",
+      "Transparent eye/crystal differ from source tiny alpha-test/depth-bias semantics."
+    ],
+    "Astralym": [
+      "Full58 source entries contain57 time-changing motions plusstatic HaloCutter_Loop_Ring.",
+      "The256candidate has nativeIdle/Walk only; complete58library retained as separatecandidate and exceeds4MiB JSON import ceiling.",
+      "23928tris and435channels triggerwarnings belowhardcaps.",
+      "SSSsource multiplier[0,0,0], imageembedded/inextras; no fabricated scatter. Eye transparency/depth bias and clearcoat limitations retained.",
+      "No complete six-state contract or inventedDeath."
+    ],
+    "Cattiva": [
+      "Bothmaterial variants retain33source clips; noDeath or six-state mapping authored.",
+      "SourceSSScustom branch inactive: no SSStexture and zero subsurfaceColor.",
+      "Eye/mouth blend/double-sided present; sourcealphaTest.01/polygonOffset-4/interactiveeyeoffset notfullyencoded."
+    ]
+  },
+  "observedDefects": [],
+  "status": "local-integrity-and-source-preservation-passed-pending-fresh-inspect",
+  "newRemoteReadbackPerformed": false,
+  "originalDirectoriesModified": false
+}

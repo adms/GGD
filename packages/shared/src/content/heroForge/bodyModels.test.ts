@@ -1,5 +1,6 @@
 import { expect, it } from "vitest";
 import { heroBodyModelIds } from "./bodyModels";
+// GH#1188 待認領的守衛搬到 `apps/content-api/src/modelClaims.test.ts`（判準改住 `./modelClaims.ts`，涵蓋凍結版本來源鏈在內的每一種證據）。
 
 const model = (id: string, extra: Record<string, unknown> = {}) => ({
   id, schema: "model@1", glbPath: "assets/models/body.glb", scale: 1, collisionRadius: 0.5,

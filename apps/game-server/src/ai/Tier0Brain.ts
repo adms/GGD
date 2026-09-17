@@ -18,7 +18,8 @@ import {
   LEGENDARY_ORB_PRICE,
   shopChargeFor,
 } from "@ggd/shared/sim/economy/itemTiers";
-import { DEFAULT_BOT_SHOP, type BotShopConfig } from "@ggd/shared/content";
+import { DEFAULT_BOT_INTERACT, DEFAULT_BOT_SHOP, type BotInteractConfig, type BotShopConfig } from "@ggd/shared/content";
+import { checkInteractable } from "@ggd/shared/sim/interactables";
 import { distSq } from "@ggd/shared/sim/math/vec2";
 import { acquireRadius, acquireTarget } from "@ggd/shared/sim/targeting";
 import { Stat } from "@ggd/shared/sim/stats/statTypes";
@@ -229,6 +230,11 @@ export class AIDriver implements SeatDriver {
      * 「這個功能沒發生」（第〇·六守則：優先權大的更新預設啟動）。
      */
     private readonly botShop: BotShopConfig = DEFAULT_BOT_SHOP,
+    /**
+     * ⭐ GH#1189 —— bot 會不會自己點隊友的技能互動物（`rules.botInteract`）。
+     * 省略 = 出貨預設（⛔ 不點：票文「隊友可**自行決定**」，而 bot 沒有決定可言）。
+     */
+    private readonly botInteract: BotInteractConfig = DEFAULT_BOT_INTERACT,
   ) {}
 
   onAttach(_seat: Seat): void {
@@ -328,6 +334,18 @@ export class AIDriver implements SeatDriver {
       }
     } else {
       this.didReady = false;
+    }
+
+    // ----- GH#1189 隊友的技能互動物（瑟雷西 W 燈籠）-----
+    // ⭐ 開關 `arena-rules.botInteract.autoAccept`（出貨 false）。打開時：站進接受圈就點最小 id 的那一個。
+    // ⛔ 規則不在這裡重寫一份 —— `checkInteractable` 就是伺服器接受指令時跑的那一支（同隊・距離・存活・沒用完）。
+    if (this.botInteract.autoAccept && world.interactable.size > 0) {
+      for (const oid of [...world.interactable.keys()].sort((a, b) => a - b)) {
+        if (checkInteractable(world, id, oid) === "ok") {
+          commands.push({ kind: "interact", objectId: oid });
+          break;
+        }
+      }
     }
 
     // ----- combat: THE shared target rule (task #221) -----

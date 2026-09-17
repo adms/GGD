@@ -1,0 +1,15 @@
+{
+  "schema": "ggd-intake-backup-receipt@1",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-ptrainer-formal-decimation-v1/c38566fabacb72be2aa8ce36e1f487fac31443dc563de0cc23353201919a06c4.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/conversion-stages/ssbu-ptrainer-formal-decimation-v1/c38566fabacb72be2aa8ce36e1f487fac31443dc563de0cc23353201919a06c4.files.json",
+  "archiveSha256": "c38566fabacb72be2aa8ce36e1f487fac31443dc563de0cc23353201919a06c4",
+  "archiveBytes": 13862800,
+  "fileCount": 46,
+  "fullGetVerified": true,
+  "allMemberSha256Verified": true,
+  "localUnchanged": true,
+  "source": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/ssbu-ptrainer-formal-decimation-v1",
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-formal-decimation-v1/c4aab438f370c917a9e7aa8e00b9f836fdf8f790b332e5ce76f2d171b8f4dca2/source.tar.gz",
+  "readback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-formal-decimation-v1/c4aab438f370c917a9e7aa8e00b9f836fdf8f790b332e5ce76f2d171b8f4dca2/readback.tar.gz",
+  "manifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/ssbu-ptrainer-formal-decimation-v1/c4aab438f370c917a9e7aa8e00b9f836fdf8f790b332e5ce76f2d171b8f4dca2/manifest.json"
+}

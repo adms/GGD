@@ -1,0 +1,25 @@
+{
+  "sourceId": "mai-xv-raw",
+  "expectedBytes": 79735587,
+  "filename": "King of Fighters XV - Mai Shiranui.rar",
+  "publicPage": "https://drive.google.com/file/d/1caTkddaLZIXrtypXlGGgAWd67K7bOUIX/view",
+  "steps": [
+    {
+      "url": "https://drive.usercontent.google.com/uc?id=1caTkddaLZIXrtypXlGGgAWd67K7bOUIX&export=download",
+      "http": "200",
+      "exitCode": 0,
+      "error": ""
+    },
+    {
+      "url": "https://drive.usercontent.google.com/download?id=1caTkddaLZIXrtypXlGGgAWd67K7bOUIX&export=download&confirm=t&uuid=f5ceb4b2-b700-48a0-a58f-b417bc6c05f0",
+      "http": "200",
+      "exitCode": 0,
+      "error": ""
+    }
+  ],
+  "bytes": 79735587,
+  "magic": "526172211a07010015779b14",
+  "sha256": "c4d3db3685d7be6a8b07f5485aab4f90873ea18dee023978c5d723099a39da67",
+  "path": "/Users/Takuro/Dropbox/\u6211\u7684 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-models-20260910/kof-author-models-round20/mai-xv-raw/raw/King of Fighters XV - Mai Shiranui.rar",
+  "status": "downloaded-rar"
+}

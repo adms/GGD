@@ -36,7 +36,7 @@
   ],
   "id": "b2-albus.ex",
   "manaCost": [
-    112.0
+    150.0
   ],
   "manaCostTier": "小",
   "maxRank": 1,
@@ -74,5 +74,6 @@
     }
   ],
   "icon": "assets/icons/abilities/b2-albus.ex.webp",
-  "castTimeSec": 0.9
+  "castTimeSec": 1,
+  "castTimeTier": "極大"
 }

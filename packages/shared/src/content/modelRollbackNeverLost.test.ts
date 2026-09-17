@@ -18,7 +18,7 @@
  * ═══════════════════════════════════════════════════════════════════════════
  *  ⭐ 為什麼是**棘輪**，⛔ 而不是「每一隻都要有版本」
  * ═══════════════════════════════════════════════════════════════════════════
- * 153 隻裡只有 47 隻有版本歷史 —— ⭐ 那是**對的**：
+ * 153 隻裡只有一部分有版本歷史 —— ⭐ 那是**對的**：
  * 版本清單是「這顆模型被換過」的紀錄，⛔ 從來沒換過的英雄本來就不該有。
  * ⇒ 硬性要求全部有 ＝ 一條永遠不會綠的閘（假綠燈⑨）。
  *
@@ -37,24 +37,44 @@ import { fileURLToPath } from "node:url";
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..", "..", "content");
 
 /**
- * ⭐ 今天**有**後台 rollback 選項的英雄（2026-09-11 量到 47 隻）。
+ * ⭐ 今天**有**後台 rollback 選項的英雄（2026-09-13 量到 107 隻）。
  *
  * ⛔ 這張名單**只能變長**。少掉任何一個都代表有人拿走了一個 owner 的開關。
- * ⚠️ ⭐ `b2-keyaru` 與 `b2-aladdin` **刻意不在上面** —— 它們是 #1201 的兩個傷者，
- *   ⭐ 補回去（走 `ModelVersions.prepare({action:"register"})`）之後把 id 加進來。
+ * ⭐ `b2-keyaru` 與 `b2-aladdin` 已透過 `ModelVersions.prepare({action:"register"})` 補回，
+ *   並納入這份棘輪名單。
+ * ⭐ 2026-09-15：`b2-maple-alt-9769eb88b85b`、`godie-h01u`、`godie-huth` 因貼圖 256 正規化
+ *   （`tools/model-fix/register-texture-256.mts`）第一次有了版本 ⇒ 原上線模型自動保存成可切回的一列，加入名單。
  */
 const HAS_ROLLBACK: readonly string[] = [
-  "b2-boxxo", "b2-elma", "b2-fushi", "b2-guts", "b2-haga", "b2-kaede", "b2-kaiji",
-  "b2-klaus", "b2-luckyman", "b2-makoto", "b2-maomao", "b2-matthias", "b2-naofumi",
-  "b2-ned", "b2-noor", "b2-nube", "b2-orphen", "b2-shadow", "b2-shinchan", "b2-sinbad",
-  "b2-touka", "b2-uncle",
-  "community-review-02-20260907", "community-review-05-20260907", "community-review-07-20260907",
-  "community-review-09-20260907", "community-review-11-20260907", "community-review-14-20260907",
-  "community-review-15-20260907", "community-review-22-20260907", "community-review-30-20260907",
-  "community-review-33-20260907", "community-review-34-20260907", "community-review-36-20260907",
-  "community-review-37-20260907",
-  "godie-e00s", "godie-e010", "godie-efur", "godie-hapm", "godie-n003", "godie-n00b",
-  "godie-o030", "godie-ogld", "godie-orkn", "godie-u00k", "godie-ubal", "godie-udea",
+  "b2-aladdin", "b2-albus", "b2-bojji", "b2-boxxo",
+  "b2-elma", "b2-fushi", "b2-goblin", "b2-guts",
+  "b2-haga", "b2-kaede", "b2-kaiji", "b2-keyaru",
+  "b2-kisaragi", "b2-klaus", "b2-kumoko", "b2-luckyman",
+  "b2-makoto", "b2-maomao", "b2-maple", "b2-maple-alt-9769eb88b85b", "b2-matthias",
+  "b2-misery", "b2-naofumi", "b2-ned", "b2-noor",
+  "b2-nube", "b2-orphen", "b2-popp", "b2-rem",
+  "b2-rin", "b2-shadow", "b2-shinchan", "b2-sinbad",
+  "b2-takopi", "b2-touka", "b2-uncle", "b2-yogiri",
+  "b2-zenitsu", "community-review-01-20260907", "community-review-02-20260907", "community-review-03-20260907",
+  "community-review-04-20260907", "community-review-05-20260907", "community-review-06-20260907", "community-review-07-20260907",
+  "community-review-08-20260907", "community-review-09-20260907", "community-review-10-20260907", "community-review-11-20260907",
+  "community-review-12-20260907", "community-review-13-20260907", "community-review-14-20260907", "community-review-15-20260907",
+  "community-review-16-20260907", "community-review-17-20260907", "community-review-18-20260907", "community-review-19-20260907",
+  "community-review-20-20260907", "community-review-21-20260907", "community-review-22-20260907", "community-review-23-20260907",
+  "community-review-24-20260907", "community-review-25-20260907", "community-review-26-20260907", "community-review-27-20260907",
+  "community-review-28-20260907", "community-review-29-20260907", "community-review-30-20260907", "community-review-31-20260907",
+  "community-review-32-20260907", "community-review-33-20260907", "community-review-34-20260907", "community-review-35-20260907",
+  "community-review-36-20260907", "community-review-37-20260907", "godie-e002", "godie-e008",
+  // ⭐ 2026-09-17（GH#1281）：PR #1280 替初號機（godie-e00r）與熊貓（godie-h02k）換上論壇模型
+  //   ⇒ 原上線模型自動保存成可切回的一列 ⇒ 兩位第一次有了版本歷史，加入名單。
+  "godie-e00l", "godie-e00r", "godie-e00s", "godie-e010", "godie-edem",
+  "godie-efur", "godie-h01n", "godie-h01o", "godie-h01u", "godie-h020",
+  "godie-h02k", "godie-hapm", "godie-hjai", "godie-huth", "godie-hvsh", "godie-n003",
+  "godie-n00b", "godie-nbbc", "godie-o030", "godie-ogld", "godie-orkn",
+  "godie-osam", "godie-u00k", "godie-u00n", "godie-u00o", "godie-umal",
+  "godie-u01u", "godie-ubal", "godie-udea", "godie-udre",
+  "lol-karthus", "lol-leesin", "lol-lux", "lol-missfortune",
+  "lol-warwick", "lol-xerath", "lol-yasuo",
 ];
 
 interface Champ {

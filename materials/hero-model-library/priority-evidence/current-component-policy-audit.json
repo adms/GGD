@@ -1,0 +1,3004 @@
+{
+  "schema": "ggd-current-component-policy-audit@1",
+  "scope": "Current measurements for independently reusable Git GLBs plus SHA-pinned measurements for #1252 components moved to S3 legacy. Historical conversion receipts remain immutable; this audit does not prove hero registration, dropdown availability, visual acceptance, or production deployment.",
+  "generatedFrom": [
+    {
+      "path": "materials/hero-model-library/download-sources.json",
+      "bytes": 3522785,
+      "sha256": "5aaf01d855e12a6851421434f09cae5efd9e517f75ded039aa051471794a1f7a"
+    },
+    {
+      "path": "materials/asset-library/pr1152-s3-split.json",
+      "bytes": 138128,
+      "sha256": "f1203e90d1cf75bdd29402049b29a286556b214e64ead7fa9c705eb3d7e7d752"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
+      "bytes": 292,
+      "sha256": "e82083fc605b125a3479f66ea2f1cf451dbcd5b2d2bcf22cf6be443613d623cf"
+    },
+    {
+      "path": "packages/shared/src/content/modelUpload/budget.ts",
+      "bytes": 10126,
+      "sha256": "814778538b7527f89efcc41ac4fb2ee9a2d7abdb3156d4d8bf2c2a7f4160f639"
+    },
+    {
+      "path": "tools/model-budget/limits.ts",
+      "bytes": 21184,
+      "sha256": "ea27075bc05b93c0643fbd57044883ff1bb241c9f02bc968f54268b92e8314f9"
+    },
+    {
+      "path": "tools/model-budget/glb.ts",
+      "bytes": 12311,
+      "sha256": "aea1f9d648bc5306e9a01c7f71accaf12bac45e41e4086e1a49817c71f1316ce"
+    },
+    {
+      "path": "tools/model-budget/roles.ts",
+      "bytes": 5929,
+      "sha256": "0a064e7381df15d8df50a99afaecc67b3c59f3f65efefbdc30a1a7676edf6258"
+    },
+    {
+      "path": "tools/hero-model-library/audit_current_component_policy.mts",
+      "bytes": 8320,
+      "sha256": "62180b6e5c99634a36ecd5878b21b1c7280266ea046416513b24d628ec557073"
+    }
+  ],
+  "policy": {
+    "formalHeroAdoption": {
+      "decimateWhenTrianglesAbove": 10000,
+      "decimatedTargetTrianglesMax": 8000,
+      "visualLitPixelDeltaPctMax": 5,
+      "preserveOriginalLocally": true,
+      "archiveOriginalToS3Legacy": true,
+      "gitOnlyAfterAcceptance": true
+    },
+    "runtimeChampionGate": {
+      "triangles": {
+        "warn": 16000,
+        "limit": 28000
+      },
+      "meshes": {
+        "warn": 3,
+        "limit": 6
+      },
+      "maxTextureEdge": {
+        "warn": 256,
+        "limit": 256
+      },
+      "channelsPerFrame": {
+        "warn": 300,
+        "limit": 500
+      }
+    }
+  },
+  "totals": {
+    "audited": 55,
+    "gitMeasured": 27,
+    "s3LegacyPreparation": 28,
+    "runtimeBudgetPass": 55,
+    "runtimeBudgetNeedsWork": 0,
+    "heroAdoptionEligible": 35,
+    "requiresDecimatedCandidate": 10
+  },
+  "records": [
+    {
+      "id": "dai-shinteo-v2-sword-back-256-v1",
+      "sourceId": "patreon-shinteo-dai-daz-v2",
+      "resourceRole": "weapon-prop",
+      "gitPath": "content/assets/models/community/756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9.glb",
+      "sha256": "756420793cb772ff4a00b5cd85f3ffaba251af5641136e24695e3b888c8cb4e9",
+      "bytes": 732224,
+      "metrics": {
+        "triangles": 1854,
+        "meshes": 2,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 0,
+        "joints": 0,
+        "clips": 0,
+        "embeddedImages": 7
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": false,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "dai-shinteo-v2-sword-handheld-256-v1",
+      "sourceId": "patreon-shinteo-dai-daz-v2",
+      "resourceRole": "weapon-prop",
+      "gitPath": "content/assets/models/community/9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975.glb",
+      "sha256": "9ad148092a0da2ed09fb2036e8ff7f76157827e164bc2f6632017aa34cb9a975",
+      "bytes": 732280,
+      "metrics": {
+        "triangles": 1854,
+        "meshes": 2,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 0,
+        "joints": 0,
+        "clips": 0,
+        "embeddedImages": 7
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": false,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "historical-astralym-7bc2fa3f8",
+      "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
+      "resourceRole": "independent-historical-model-body-component",
+      "gitPath": "content/assets/models/community/618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8.glb",
+      "sha256": "618a52817f4fe563ddf339563856180c3acb27106d5fdb839fb469c642495ea8",
+      "bytes": 3889188,
+      "metrics": {
+        "triangles": 23928,
+        "meshes": 3,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 435,
+        "skins": 1,
+        "joints": 145,
+        "clips": 5,
+        "embeddedImages": 8
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": true,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "historical-astralym-decimated-c45f111d",
+      "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
+      "resourceRole": "independent-historical-model-body-component",
+      "gitPath": "content/assets/models/community/c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f.glb",
+      "sha256": "c45f111dfef172872db990ee8c40161bfba4a9e38f36a95951273ba0ebd0b71f",
+      "bytes": 3793672,
+      "metrics": {
+        "triangles": 7996,
+        "meshes": 3,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 435,
+        "skins": 1,
+        "joints": 145,
+        "clips": 5,
+        "embeddedImages": 8
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "historical-astralym-decimated-f77cf1ee",
+      "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
+      "resourceRole": "independent-historical-model-body-component",
+      "gitPath": "content/assets/models/community/7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f.glb",
+      "sha256": "7d8264d1cbef118a2851e133a7721c3de6243bbe759cc8e81a58e8280440364f",
+      "bytes": 3782388,
+      "metrics": {
+        "triangles": 7996,
+        "meshes": 3,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 435,
+        "skins": 1,
+        "joints": 145,
+        "clips": 5,
+        "embeddedImages": 8
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "historical-jetragon-7bc2fa3f8",
+      "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
+      "resourceRole": "independent-historical-model-body-component",
+      "gitPath": "content/assets/models/community/0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d.glb",
+      "sha256": "0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d",
+      "bytes": 3222184,
+      "metrics": {
+        "triangles": 8468,
+        "meshes": 3,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 225,
+        "skins": 1,
+        "joints": 75,
+        "clips": 5,
+        "embeddedImages": 7
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "historical-kita-kita-7bc2fa3f8",
+      "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
+      "resourceRole": "independent-historical-model-body-component",
+      "gitPath": "content/assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
+      "sha256": "be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e",
+      "bytes": 373212,
+      "metrics": {
+        "triangles": 1202,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 54,
+        "skins": 1,
+        "joints": 17,
+        "clips": 6,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "historical-lord-nightmares-7bc2fa3f8",
+      "sourceId": "ggd-historical-model-recovery-7bc2fa3f8",
+      "resourceRole": "independent-historical-model-body-component",
+      "gitPath": "content/assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
+      "sha256": "98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c",
+      "bytes": 695020,
+      "metrics": {
+        "triangles": 3274,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 96,
+        "skins": 1,
+        "joints": 31,
+        "clips": 6,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "infinity-strash-mystvearn-en653-01-static-skinned-v1",
+      "sourceId": "steam-infinity-strash-priority-original-assets-build-local-20240328",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65.glb",
+      "sha256": "f76a9108bca1da1934eb3a823b6a9ff6f6ce5311715dd6959ab91ed16390df65",
+      "bytes": 1342948,
+      "metrics": {
+        "triangles": 13128,
+        "meshes": 3,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 175,
+        "clips": 0,
+        "embeddedImages": 2
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": true,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "kof-xv-ash-crimson-left-hair-universal-atlas-static-v1",
+      "sourceId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/7803d2e7af5352d44f50944bc159d39cb71319ca1d123c12c6e85de405dc0d04.glb",
+      "sha256": "7803d2e7af5352d44f50944bc159d39cb71319ca1d123c12c6e85de405dc0d04",
+      "bytes": 1486220,
+      "metrics": {
+        "triangles": 7869,
+        "meshes": 5,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 258,
+        "clips": 0,
+        "embeddedImages": 12
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/7803d2e7af5352d44f50944bc159d39cb71319ca1d123c12c6e85de405dc0d04.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "kof-xv-ash-crimson-right-hair-universal-atlas-static-v1",
+      "sourceId": "kof-open3dlab-ash-xv-material-v2-budget-candidate-v1",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/0584ba7eebf254425705cb513b83075426b475a8d65acacd455af6b22d6ffcfa.glb",
+      "sha256": "0584ba7eebf254425705cb513b83075426b475a8d65acacd455af6b22d6ffcfa",
+      "bytes": 1486536,
+      "metrics": {
+        "triangles": 7868,
+        "meshes": 5,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 258,
+        "clips": 0,
+        "embeddedImages": 12
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/0584ba7eebf254425705cb513b83075426b475a8d65acacd455af6b22d6ffcfa.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "mba-unused-batch2-gajet1-native-six-motion-v1",
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "resourceRole": "independent-mba-character-body-native-motion-reserve",
+      "gitPath": "content/assets/models/community/4a09b9491a47423a0c27293419065e767e9a0dfa57fa07b33dcb14b27724e407.glb",
+      "sha256": "4a09b9491a47423a0c27293419065e767e9a0dfa57fa07b33dcb14b27724e407",
+      "bytes": 145472,
+      "metrics": {
+        "triangles": 168,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 24,
+        "skins": 1,
+        "joints": 7,
+        "clips": 6,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": false,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/4a09b9491a47423a0c27293419065e767e9a0dfa57fa07b33dcb14b27724e407.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "mba-unused-batch2-kukuri-native-six-motion-v1",
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "resourceRole": "independent-mba-character-body-native-motion-reserve",
+      "gitPath": "content/assets/models/community/788d1d3e417857b4d7f8f6d723c7d06238f3c45b1b6a17a745d4321197cac69e.glb",
+      "sha256": "788d1d3e417857b4d7f8f6d723c7d06238f3c45b1b6a17a745d4321197cac69e",
+      "bytes": 626792,
+      "metrics": {
+        "triangles": 3239,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 81,
+        "skins": 1,
+        "joints": 25,
+        "clips": 6,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": false,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/788d1d3e417857b4d7f8f6d723c7d06238f3c45b1b6a17a745d4321197cac69e.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "mba-unused-batch2-naga-native-six-motion-v1",
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "resourceRole": "independent-mba-character-body-native-motion-reserve",
+      "gitPath": "content/assets/models/community/25f1f35e501854b3500ed075ca841009f7bc977de89dae6317448876492a37a6.glb",
+      "sha256": "25f1f35e501854b3500ed075ca841009f7bc977de89dae6317448876492a37a6",
+      "bytes": 800640,
+      "metrics": {
+        "triangles": 3587,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 108,
+        "skins": 1,
+        "joints": 33,
+        "clips": 6,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": false,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/25f1f35e501854b3500ed075ca841009f7bc977de89dae6317448876492a37a6.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "mba-unused-batch2-nowel-native-six-motion-v1",
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "resourceRole": "independent-mba-character-body-native-motion-reserve",
+      "gitPath": "content/assets/models/community/e56185d473370a975e0fbb5d077e9e266ddcc7ec3b7816ea29222a7fafad54ac.glb",
+      "sha256": "e56185d473370a975e0fbb5d077e9e266ddcc7ec3b7816ea29222a7fafad54ac",
+      "bytes": 642648,
+      "metrics": {
+        "triangles": 3180,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 105,
+        "skins": 1,
+        "joints": 34,
+        "clips": 6,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": false,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/e56185d473370a975e0fbb5d077e9e266ddcc7ec3b7816ea29222a7fafad54ac.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "mba-unused-kirara-native-six-motion-v1",
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "resourceRole": "independent-mba-character-body-native-motion-reserve",
+      "gitPath": "content/assets/models/community/86b49786366d05057bdb714c419aa209bb04c55acd55974d01945debe0cabbd6.glb",
+      "sha256": "86b49786366d05057bdb714c419aa209bb04c55acd55974d01945debe0cabbd6",
+      "bytes": 911004,
+      "metrics": {
+        "triangles": 4192,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 117,
+        "skins": 1,
+        "joints": 38,
+        "clips": 6,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": false,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/86b49786366d05057bdb714c419aa209bb04c55acd55974d01945debe0cabbd6.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "mba-unused-ruru-native-six-motion-v1",
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "resourceRole": "independent-mba-character-body-native-motion-reserve",
+      "gitPath": "content/assets/models/community/7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed.glb",
+      "sha256": "7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed",
+      "bytes": 618276,
+      "metrics": {
+        "triangles": 2787,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 87,
+        "skins": 1,
+        "joints": 26,
+        "clips": 6,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": false,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/7618d81886206f269d89de8a2e83dffc3184cf7259afe116d6328d5c19031fed.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "mba-unused-sarara-native-six-motion-v1",
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "resourceRole": "independent-mba-character-body-native-motion-reserve",
+      "gitPath": "content/assets/models/community/b21fef58c3cc97ac9ae7bb75d9e5e96dbd3a5da5507ba285cc9f5a81124feab1.glb",
+      "sha256": "b21fef58c3cc97ac9ae7bb75d9e5e96dbd3a5da5507ba285cc9f5a81124feab1",
+      "bytes": 750360,
+      "metrics": {
+        "triangles": 3365,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 99,
+        "skins": 1,
+        "joints": 32,
+        "clips": 6,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": false,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/b21fef58c3cc97ac9ae7bb75d9e5e96dbd3a5da5507ba285cc9f5a81124feab1.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "mba-unused-vita-native-six-motion-v1",
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "resourceRole": "independent-mba-character-body-native-motion-reserve",
+      "gitPath": "content/assets/models/community/982a9f483f3bf953fe622dc31393079988577903bcd0eef57cc8b19937ac7cdf.glb",
+      "sha256": "982a9f483f3bf953fe622dc31393079988577903bcd0eef57cc8b19937ac7cdf",
+      "bytes": 707692,
+      "metrics": {
+        "triangles": 4412,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 81,
+        "skins": 1,
+        "joints": 26,
+        "clips": 6,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": false,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/982a9f483f3bf953fe622dc31393079988577903bcd0eef57cc8b19937ac7cdf.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "rezero-beatrice-thunderstore-0.1.1-static-skinned-v1",
+      "sourceId": "thunderstore-rezero",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c.glb",
+      "sha256": "4ddaa0fcc4362b8caef122aebeddd349404306693bfe5ae4222cced08830e34c",
+      "bytes": 1246640,
+      "metrics": {
+        "triangles": 20932,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 228,
+        "clips": 0,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": true,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "rezero-emilia-thunderstore-0.1.1-static-skinned-v1",
+      "sourceId": "thunderstore-rezero",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9.glb",
+      "sha256": "6a848b70006cefac04ec791295aca9d89fda64028c074597f2b0925d3276d6a9",
+      "bytes": 1037796,
+      "metrics": {
+        "triangles": 18137,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 171,
+        "clips": 0,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": true,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "rezero-felix-thunderstore-0.1.1-static-skinned-v1",
+      "sourceId": "thunderstore-rezero",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1.glb",
+      "sha256": "35e41dd3684240a99fab59e28bb6864a8c1ed8d2b071c9fc7d38bb927c4a7cc1",
+      "bytes": 948284,
+      "metrics": {
+        "triangles": 16444,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 137,
+        "clips": 0,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": true,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "rezero-ram-thunderstore-0.1.1-static-skinned-v1",
+      "sourceId": "thunderstore-rezero",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b.glb",
+      "sha256": "333c43b9a8a1cbaa8871072df7eec1a41307fcb1aa27af5aab63203e81221e3b",
+      "bytes": 1180240,
+      "metrics": {
+        "triangles": 18454,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 166,
+        "clips": 0,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": true,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "rezero-rem-thunderstore-0.1.1-formal-decimated-v1",
+      "sourceId": "thunderstore-rezero",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47.glb",
+      "sha256": "c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47",
+      "bytes": 1041264,
+      "metrics": {
+        "triangles": 7986,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 151,
+        "clips": 0,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/c05904afe2e1ab9164ec490d73099609d97e407c85671fd756b5380f2447ec47.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "rezero-rem-thunderstore-0.1.1-static-skinned-v1",
+      "sourceId": "thunderstore-rezero",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93.glb",
+      "sha256": "5bc147726f99061f492fe5dc34700a033a46c7ac4941a3255e7ab927e6766e93",
+      "bytes": 1173224,
+      "metrics": {
+        "triangles": 18328,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 151,
+        "clips": 0,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": true,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "rezero-subaru-thunderstore-0.1.1-static-skinned-v1",
+      "sourceId": "thunderstore-rezero",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af.glb",
+      "sha256": "782b715815b20e10aa0ea34c463d59abb9eed86990d78b5dda2e241f8edc69af",
+      "bytes": 497032,
+      "metrics": {
+        "triangles": 8122,
+        "meshes": 3,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 2,
+        "joints": 42,
+        "clips": 0,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "ssbu-chrom-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587.glb",
+      "sha256": "fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587",
+      "bytes": 963000,
+      "metrics": {
+        "triangles": 7890,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 123,
+        "clips": 0,
+        "embeddedImages": 7
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/fb2db67a3741b78e16fd5d5ed09911a8cf7382011896e16bd976701de06e7587.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "ssbu-chrom-c00-ultimate14-motion-v1",
+      "sourceId": "parallel-ns-ultimate14",
+      "resourceRole": "independent-skinned-model-motion-component",
+      "gitPath": "content/assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb",
+      "sha256": "9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e",
+      "bytes": 1942664,
+      "metrics": {
+        "triangles": 7890,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 369,
+        "skins": 1,
+        "joints": 123,
+        "clips": 9,
+        "embeddedImages": 7
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/9da38a1fa8e00fd2756f1f14bc21a0cbb870d688fb5f22fe9dacc987f9c4c05e.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "ssbu-daisy-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a.glb",
+      "sha256": "22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a",
+      "bytes": 846532,
+      "metrics": {
+        "triangles": 7890,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 136,
+        "clips": 0,
+        "embeddedImages": 7
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/22114aa5f5b26c5ba7496d9183a703574850ef564413e932f15aca4a3cfb838a.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "ssbu-ganondorf-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b.glb",
+      "sha256": "46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b",
+      "bytes": 1264104,
+      "metrics": {
+        "triangles": 7890,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 90,
+        "clips": 0,
+        "embeddedImages": 6
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/46ba09bc4e5bc1eba60479c55136c43cd8c59594690b98618e783ff21183b65b.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "ssbu-kirby-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114.glb",
+      "sha256": "611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114",
+      "bytes": 496028,
+      "metrics": {
+        "triangles": 5500,
+        "meshes": 2,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 51,
+        "clips": 0,
+        "embeddedImages": 2
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/611c654822e717b670dfc6024ef25f9c5cd32b4e6a928d8fceb3bfc1aa93d114.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "ssbu-link-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754.glb",
+      "sha256": "ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754",
+      "bytes": 1035504,
+      "metrics": {
+        "triangles": 7897,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 145,
+        "clips": 0,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/ab6b618b3db1c3d085648bc6a75ea27903595d864756d97efa96f53aa1ae1754.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "ssbu-lucina-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170.glb",
+      "sha256": "44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170",
+      "bytes": 895472,
+      "metrics": {
+        "triangles": 7927,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 156,
+        "clips": 0,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/44b065ca0a0a3191ba9a859c9a30d7f4579f62297f6facc3e9f933c1cdc9e170.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "ssbu-lucina-c00-ultimate14-motion-v1",
+      "sourceId": "parallel-ns-ultimate14",
+      "resourceRole": "independent-skinned-model-motion-component",
+      "gitPath": "content/assets/models/community/6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744.glb",
+      "sha256": "6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744",
+      "bytes": 2731060,
+      "metrics": {
+        "triangles": 7927,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 468,
+        "skins": 1,
+        "joints": 156,
+        "clips": 13,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/6ff811f6789c2dcd619c8cb897ccb9489127b0c17e96c2dd2bfe98a0002e0744.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "ssbu-mario-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/bf35a1a5f517a37424b7b186978c78e8ab5717d68b7dbb23035e2d641e2248a6.glb",
+      "sha256": "bf35a1a5f517a37424b7b186978c78e8ab5717d68b7dbb23035e2d641e2248a6",
+      "bytes": 818052,
+      "metrics": {
+        "triangles": 7189,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 98,
+        "clips": 0,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "ssbu-mario-c00-static-skinned-v2",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb",
+      "sha256": "87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257",
+      "bytes": 865396,
+      "metrics": {
+        "triangles": 7189,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 98,
+        "clips": 0,
+        "embeddedImages": 6
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/87f172896c929c486dfcefd7f905e7bac5c1b0c5b5349cd0a047f744da997257.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "ssbu-mario-c00-ultimate14-motion-v1",
+      "sourceId": "parallel-ns-ultimate14",
+      "resourceRole": "independent-skinned-model-motion-component",
+      "gitPath": "content/assets/models/community/bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526.glb",
+      "sha256": "bdb557c348f155e1c931ce226c5a6bbb37aaefb68717df266ab1ed698ca2c526",
+      "bytes": 1148100,
+      "metrics": {
+        "triangles": 7189,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 294,
+        "skins": 1,
+        "joints": 98,
+        "clips": 5,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "ssbu-mewtwo-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9.glb",
+      "sha256": "ce4caf1e9dbe7461d625a62a31362f34f62cc5222896ed9fecdfa3387e33bea9",
+      "bytes": 667904,
+      "metrics": {
+        "triangles": 6972,
+        "meshes": 3,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 75,
+        "clips": 0,
+        "embeddedImages": 2
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "ssbu-peach-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf.glb",
+      "sha256": "b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf",
+      "bytes": 932380,
+      "metrics": {
+        "triangles": 7888,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 134,
+        "clips": 0,
+        "embeddedImages": 6
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/b3d4efeef604ea0ea207c63eff3dda3e81093e5f98bc4a1d3c9cb9767eac55bf.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "ssbu-pickel-alex-c01-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177.glb",
+      "sha256": "681ff2f2f551afe5b144b2b5077e0de4af4f81057bf531cb7ca69b30fc5a1177",
+      "bytes": 51960,
+      "metrics": {
+        "triangles": 828,
+        "meshes": 3,
+        "maxTextureEdge": 64,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 31,
+        "clips": 0,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "ssbu-pickel-steve-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75.glb",
+      "sha256": "087602550e80ef44c20d874a8b804df6f898b43fa93615c5cbfe95523d131a75",
+      "bytes": 51664,
+      "metrics": {
+        "triangles": 828,
+        "meshes": 3,
+        "maxTextureEdge": 64,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 31,
+        "clips": 0,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "ssbu-ptrainer-female-c01-formal-decimated-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a.glb",
+      "sha256": "73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a",
+      "bytes": 1221592,
+      "metrics": {
+        "triangles": 7892,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 72,
+        "clips": 0,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/73dc16fe5d0fe5c971ceeb54ec83a9ffa6b71bc9452185c1079b67c0c1c7273a.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "ssbu-ptrainer-female-c01-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec.glb",
+      "sha256": "a40f2f987a31f4220f5b6686bd92f8fbf547f39a96ccc46be76ba42abc2e2cec",
+      "bytes": 1373732,
+      "metrics": {
+        "triangles": 11086,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 72,
+        "clips": 0,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": true,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "ssbu-ptrainer-male-c00-formal-decimated-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91.glb",
+      "sha256": "07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91",
+      "bytes": 1178320,
+      "metrics": {
+        "triangles": 7896,
+        "meshes": 5,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 44,
+        "clips": 0,
+        "embeddedImages": 4
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/07182532a0fd1cb2f023673ed7204838859fa0c4c59745558eccc5eb029bee91.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "ssbu-ptrainer-male-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b.glb",
+      "sha256": "f9ae10168ce75cb6e9b6d4d8c8157cfa77e5da11b1b8531c799f61b1f3fe9f8b",
+      "bytes": 1317084,
+      "metrics": {
+        "triangles": 10698,
+        "meshes": 5,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 44,
+        "clips": 0,
+        "embeddedImages": 4
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": true,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "ssbu-ryu-c00-procedural-six-state-decimated-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "complete-hero-body-with-procedural-six-state-motion",
+      "gitPath": "content/assets/models/community/c932402930880da55b3f79c1bdc47b955e9a3f048e46a74800bd39f5d9698b8c.glb",
+      "sha256": "c932402930880da55b3f79c1bdc47b955e9a3f048e46a74800bd39f5d9698b8c",
+      "bytes": 748828,
+      "metrics": {
+        "triangles": 7894,
+        "meshes": 5,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 12,
+        "skins": 1,
+        "joints": 154,
+        "clips": 6,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "ssbu-ryu-c00-static-decimated-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/8b662728d36c9d92e1047cb83f93a549e0e60de026679f9d2b9329ced035d61f.glb",
+      "sha256": "8b662728d36c9d92e1047cb83f93a549e0e60de026679f9d2b9329ced035d61f",
+      "bytes": 952704,
+      "metrics": {
+        "triangles": 7979,
+        "meshes": 5,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 154,
+        "clips": 0,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/8b662728d36c9d92e1047cb83f93a549e0e60de026679f9d2b9329ced035d61f.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "ssbu-ryu-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c.glb",
+      "sha256": "cb216ec537d9ea1a5c5d01c3a8afe88de547c57b76282254c1b6da0e15193c5c",
+      "bytes": 1005808,
+      "metrics": {
+        "triangles": 14621,
+        "meshes": 5,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 154,
+        "clips": 0,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": true,
+        "eligible": false
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "ssbu-sonic-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a.glb",
+      "sha256": "9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a",
+      "bytes": 936116,
+      "metrics": {
+        "triangles": 8980,
+        "meshes": 5,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 115,
+        "clips": 0,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/9c05c3efbb080e8182ff32a2429c2b07a47b01842fe38bbfe1d7414748e56c2a.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "ssbu-sonic-c00-static-skinned-v2",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
+      "sha256": "5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3",
+      "bytes": 916024,
+      "metrics": {
+        "triangles": 7900,
+        "meshes": 5,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 115,
+        "clips": 0,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/5961f6366ccf8d3ce9f6859bc9aa70a8a0f0be15518b54d42d436f8e77aacfd3.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "ssbu-sonic-c00-ultimate14-motion-v1",
+      "sourceId": "parallel-ns-ultimate14",
+      "resourceRole": "independent-skinned-model-motion-component",
+      "gitPath": "content/assets/models/community/25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9.glb",
+      "sha256": "25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9",
+      "bytes": 2000388,
+      "metrics": {
+        "triangles": 8980,
+        "meshes": 5,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 345,
+        "skins": 1,
+        "joints": 115,
+        "clips": 10,
+        "embeddedImages": 5
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/25a6597ff35ccad15ed4be5fae6683f7492baaefd1a2453ecb2af626490c97a9.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "ssbu-toonlink-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540.glb",
+      "sha256": "fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540",
+      "bytes": 993100,
+      "metrics": {
+        "triangles": 7894,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 96,
+        "clips": 0,
+        "embeddedImages": 7
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      },
+      "storage": {
+        "class": "s3-legacy-preparation",
+        "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.tar.gz",
+        "s3ManifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/pr1152-preparation-split-v1/13e5c3e4407e10e285eaa9d4be45828d46e0ce05cef5c235690b36dbb53ef431.files.json",
+        "archiveMember": "content/assets/models/community/fede3d9ff3b28c942f55e5eed7420d7323e745d02091729c8a7c1840a79d3540.glb",
+        "fullGetAndEveryFileVerified": true,
+        "note": "Metrics were measured before the #1252 Git/S3 split and remain pinned to the same SHA-256 and byte count."
+      }
+    },
+    {
+      "id": "ssbu-zero-c00-static-skinned-v1",
+      "sourceId": "gitlab-ssbu-models",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1.glb",
+      "sha256": "3804d9bf6fb53514ec7ed8d6684d5e515ac12e24aca980d6daaf5d125d44edf1",
+      "bytes": 596332,
+      "metrics": {
+        "triangles": 5276,
+        "meshes": 6,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 75,
+        "clips": 0,
+        "embeddedImages": 4
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "warn",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "zero-lancer-p1-static-skinned-v1",
+      "sourceId": "gamebanana-zero-lancer-493444",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/ff390642eac658f3bae04a98cde73178749dff9cd069c601b4284f812e45e184.glb",
+      "sha256": "ff390642eac658f3bae04a98cde73178749dff9cd069c601b4284f812e45e184",
+      "bytes": 336752,
+      "metrics": {
+        "triangles": 4984,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 59,
+        "clips": 0,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    },
+    {
+      "id": "zero-lancer-p2-static-skinned-v1",
+      "sourceId": "gamebanana-zero-lancer-493444",
+      "resourceRole": "independent-static-skinned-model-component",
+      "gitPath": "content/assets/models/community/2e1d102a04092d99620cf912748357f9a5c717aedd06733cf678420b88c7d6a8.glb",
+      "sha256": "2e1d102a04092d99620cf912748357f9a5c717aedd06733cf678420b88c7d6a8",
+      "bytes": 337876,
+      "metrics": {
+        "triangles": 4984,
+        "meshes": 1,
+        "maxTextureEdge": 256,
+        "channelsPerFrame": 0,
+        "skins": 1,
+        "joints": 59,
+        "clips": 0,
+        "embeddedImages": 1
+      },
+      "runtimeBudget": {
+        "role": "champion",
+        "warningValues": {
+          "triangles": 16000,
+          "drawCalls": 3,
+          "maxTextureEdge": 256,
+          "animChannels": 300
+        },
+        "limitValues": {
+          "triangles": 28000,
+          "drawCalls": 6,
+          "maxTextureEdge": 256,
+          "animChannels": 500
+        },
+        "verdict": "ok",
+        "blockingAxes": [],
+        "pass": true
+      },
+      "formalHeroAdoption": {
+        "applicable": true,
+        "sourceTriangleTriggerAbove": 10000,
+        "decimatedCandidateTargetMax": 8000,
+        "requiresDecimatedCandidate": false,
+        "eligible": true
+      },
+      "catalogSemantics": {
+        "componentReady": true,
+        "runtimeSelectable": false,
+        "fullHeroModel": false,
+        "note": "Current policy measurement does not promote this independent component to a hero or runtime dropdown option."
+      }
+    }
+  ]
+}

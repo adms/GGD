@@ -1,0 +1,267 @@
+{
+  "schema": "ggd-historical-model-webgl-proof@1",
+  "candidateId": "historical-jetragon-7bc2fa3f8",
+  "modelSha256": "0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c1a07c3bbf9106fa6",
+  "renderer": "Babylon WebGL glTF loader in a right-handed scene; idle or first native clip at 20 percent; CPU-skinned bounds frame three views",
+  "idleClipRequested": "Idle",
+  "clipRendered": "Idle",
+  "animationGroups": [
+    "Idle",
+    "Run",
+    "FarSkill_Action",
+    "JumpBeam_Loop",
+    "Damage"
+  ],
+  "worldSkinnedBounds": {
+    "min": [
+      -3.388030319779432,
+      0.8293179898861496,
+      -3.010197076271538
+    ],
+    "max": [
+      3.465247725280051,
+      5.22803394076152,
+      3.5497634094261343
+    ],
+    "extent": [
+      6.853278045059483,
+      4.398715950875371,
+      6.5599604856976725
+    ]
+  },
+  "geometry": [
+    {
+      "name": "SK_JetDragon.001_primitive0",
+      "vertices": 4999,
+      "indices": 24612,
+      "worldBounds": {
+        "min": [
+          -1.568599818454686,
+          0.8293179898861496,
+          -3.010197076271538
+        ],
+        "max": [
+          1.0144666063532242,
+          3.7307430196387372,
+          3.5497634094261343
+        ]
+      },
+      "skeleton": "SK_JetDragon",
+      "bones": 75
+    },
+    {
+      "name": "SK_JetDragon.001_primitive1",
+      "vertices": 122,
+      "indices": 600,
+      "worldBounds": {
+        "min": [
+          -0.19746148621749526,
+          2.2431692003495414,
+          3.0841530682708367
+        ],
+        "max": [
+          0.27505355220168326,
+          2.4043334423527085,
+          3.296661303267001
+        ]
+      },
+      "skeleton": "SK_JetDragon",
+      "bones": 75
+    },
+    {
+      "name": "SK_JetDragon.001_primitive2",
+      "vertices": 72,
+      "indices": 192,
+      "worldBounds": {
+        "min": [
+          -3.388030319779432,
+          2.920382014802499,
+          -1.393453948346064
+        ],
+        "max": [
+          3.465247725280051,
+          5.22803394076152,
+          -0.1221875640260972
+        ]
+      },
+      "skeleton": "SK_JetDragon",
+      "bones": 75
+    }
+  ],
+  "skeletons": [
+    {
+      "name": "SK_JetDragon",
+      "bones": 75
+    }
+  ],
+  "materials": [
+    {
+      "name": "MI_JetDragon_Body",
+      "alpha": 1,
+      "transparencyMode": 1,
+      "backFaceCulling": false,
+      "albedoTexture": {
+        "name": "MI_JetDragon_Body (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": {
+        "name": "MI_JetDragon_Body (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      }
+    },
+    {
+      "name": "MI_JetDragon_Eye",
+      "alpha": 1,
+      "transparencyMode": 1,
+      "backFaceCulling": false,
+      "albedoTexture": {
+        "name": "MI_JetDragon_Eye (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": null
+    },
+    {
+      "name": "MI_JetDragon_Extra",
+      "alpha": 1,
+      "transparencyMode": 2,
+      "backFaceCulling": false,
+      "albedoTexture": {
+        "name": "MI_JetDragon_Extra (Base Color)",
+        "ready": true,
+        "gammaSpace": false,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      },
+      "normalTexture": {
+        "name": "MI_JetDragon_Extra (Normal)",
+        "ready": true,
+        "gammaSpace": true,
+        "size": {
+          "width": 256,
+          "height": 256
+        }
+      }
+    }
+  ],
+  "textures": [
+    {
+      "name": "data:EnvironmentBRDFTexture0",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 304,
+        "height": 1
+      }
+    },
+    {
+      "name": "MI_JetDragon_Body (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_JetDragon_Body (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_JetDragon_Body (Metallic Roughness)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_JetDragon_Eye (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_JetDragon_Extra (Normal)",
+      "ready": true,
+      "gammaSpace": true,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_JetDragon_Extra (Emissive)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    },
+    {
+      "name": "MI_JetDragon_Extra (Base Color)",
+      "ready": true,
+      "gammaSpace": false,
+      "size": {
+        "width": 256,
+        "height": 256
+      }
+    }
+  ],
+  "shots": [
+    {
+      "name": "front",
+      "alpha": 1.5707963267948966,
+      "beta": 1.4612058853906016
+    },
+    {
+      "name": "back",
+      "alpha": -1.5707963267948966,
+      "beta": 1.4612058853906016
+    },
+    {
+      "name": "isometric",
+      "alpha": 0.7853981633974483,
+      "beta": 1.2822827157509358
+    }
+  ],
+  "sourceGameShaderParity": false,
+  "visualIdentityAcceptance": "pending-human-review",
+  "runtimeRegistration": false,
+  "deploymentVerified": false
+}

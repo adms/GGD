@@ -1,0 +1,825 @@
+{
+  "schema": "ggd-ou99-residual-geometry-review@1",
+  "frozen": true,
+  "scope": "Only3specific flagged primitives; raw file read/MDX analysis/diagnostic WebGL. No central/model/frozen/gate modifications.",
+  "localRoot": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910",
+  "counts": {
+    "reviewedPrimitives": 3,
+    "sourceAuthoredAccessories": 2,
+    "confirmedDecayGoreDefects": 1,
+    "rawWebglScreenshots": 24
+  },
+  "findings": [
+    {
+      "modelKey": "ou99.458777-standard-v3",
+      "targetHero": "凱亞爾",
+      "primitive": 0,
+      "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/bb6bd9fd28cf1cf7c8bcc1682f833f6dae7b0651baa67c90bfcd91b095213991.glb",
+      "glbSha256": "bb6bd9fd28cf1cf7c8bcc1682f833f6dae7b0651baa67c90bfcd91b095213991",
+      "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/models/ou99.458777-standard-v3.json",
+      "modelDocumentSha256": "3b954661c4ce81e78c783000ac9345548f77bcaaaf4963d8a150bae29a5b4338",
+      "vertices": 1789,
+      "triangles": 988,
+      "localBindBounds": [
+        [
+          0.19679699838161469,
+          1.0675196647644043,
+          -0.7405698895454407
+        ],
+        [
+          0.3395744562149048,
+          1.3699368238449097,
+          -0.5965982675552368
+        ]
+      ],
+      "materialIndex": 0,
+      "nativeArchive": "/Users/Takuro/GGD-assets/models/458777.zip",
+      "nativeArchiveSha256": "7182e7cc7f7cb6d6afae393011485d3cf19287c40d3c8c72dd17be5f6c501b6d",
+      "nativeMdxMember": "file.mdx",
+      "nativeMdxSha256": "e1a4e198fe1724918fe821fd36f198f5a44fd6f4c795b94f22f4db72979a0dd0",
+      "sourceGeoset": 0,
+      "nativeTriangleVertexTriplesIdentical": true,
+      "nativeToGlbAffineMaxError": 6.127532437005812e-08,
+      "structureEvidence": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/ou99.458777-standard-v3/structure.json",
+      "nativeEvidenceFile": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/ou99.458777-standard-v3/native-geoset-proof.json",
+      "textureEvidence": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/ou99.458777-standard-v3/suspect-material-original-image.png",
+      "contactSheet": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-458777-standard-v3-contact.png",
+      "screenshots": [
+        {
+          "name": "ou99-458777-standard-v3-full-idle.png",
+          "state": "idle",
+          "clip": "Stand",
+          "fraction": 0.6,
+          "view": "full",
+          "center": [
+            -0.22473083436489105,
+            0.8392770071513951,
+            -0.15881198644638062
+          ],
+          "span": 1.6816015681251884,
+          "targetWorldBounds": {
+            "min": [
+              -0.01623796857893467,
+              0.8189589977264404,
+              0.22223718464374542
+            ],
+            "max": [
+              0.12525306642055511,
+              1.1197080612182617,
+              0.3630979061126709
+            ]
+          },
+          "diagnosticIsolationOnly": false,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-458777-standard-v3-full-idle.png",
+          "sha256": "90c457ae6490122fcad276148a3f9dc631dd86ddc3e9663e4354b389f2794707"
+        },
+        {
+          "name": "ou99-458777-standard-v3-target-idle.png",
+          "state": "idle",
+          "clip": "Stand",
+          "fraction": 0.6,
+          "view": "target",
+          "center": [
+            0.05450754892081022,
+            0.9693335294723511,
+            0.29266754537820816
+          ],
+          "span": 0.3007490634918213,
+          "targetWorldBounds": {
+            "min": [
+              -0.01623796857893467,
+              0.8189589977264404,
+              0.22223718464374542
+            ],
+            "max": [
+              0.12525306642055511,
+              1.1197080612182617,
+              0.3630979061126709
+            ]
+          },
+          "diagnosticIsolationOnly": true,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-458777-standard-v3-target-idle.png",
+          "sha256": "84456e47828d5beaf03b379a7fe8c43a246352a07495b459be904eb83e0f1de1"
+        },
+        {
+          "name": "ou99-458777-standard-v3-full-run.png",
+          "state": "run",
+          "clip": "Walk",
+          "fraction": 0.6,
+          "view": "full",
+          "center": [
+            -0.2780894637107849,
+            0.6997665427625179,
+            -0.30746886134147644
+          ],
+          "span": 1.6578413248062134,
+          "targetWorldBounds": {
+            "min": [
+              -0.03516801819205284,
+              0.644757091999054,
+              0.16635014116764069
+            ],
+            "max": [
+              0.1093580424785614,
+              0.9444935917854309,
+              0.3070220351219177
+            ]
+          },
+          "diagnosticIsolationOnly": false,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-458777-standard-v3-full-run.png",
+          "sha256": "f3f2c8f5c62138068f105b7b76b1db4cf6c23faba53f645329a7e33dda08ec09"
+        },
+        {
+          "name": "ou99-458777-standard-v3-target-run.png",
+          "state": "run",
+          "clip": "Walk",
+          "fraction": 0.6,
+          "view": "target",
+          "center": [
+            0.03709501214325428,
+            0.7946253418922424,
+            0.2366860881447792
+          ],
+          "span": 0.29973649978637695,
+          "targetWorldBounds": {
+            "min": [
+              -0.03516801819205284,
+              0.644757091999054,
+              0.16635014116764069
+            ],
+            "max": [
+              0.1093580424785614,
+              0.9444935917854309,
+              0.3070220351219177
+            ]
+          },
+          "diagnosticIsolationOnly": true,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-458777-standard-v3-target-run.png",
+          "sha256": "aa0f0668d9154a71534a178d5629d8f1814c0da5d16d361f272434ecfeec44e8"
+        },
+        {
+          "name": "ou99-458777-standard-v3-full-cast.png",
+          "state": "cast",
+          "clip": "Spell One",
+          "fraction": 0.6,
+          "view": "full",
+          "center": [
+            0.10067689418792725,
+            0.7605933881131932,
+            0.15298184752464294
+          ],
+          "span": 1.5275071191135794,
+          "targetWorldBounds": {
+            "min": [
+              0.08339954167604446,
+              0.9443307518959045,
+              -0.15442879498004913
+            ],
+            "max": [
+              0.2659607529640198,
+              1.1732287406921387,
+              -0.003923838026821613
+            ]
+          },
+          "diagnosticIsolationOnly": false,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-458777-standard-v3-full-cast.png",
+          "sha256": "357fdac83b7fc4b31bf27d9388468c186110e4bddea23c85221e05282d93e012"
+        },
+        {
+          "name": "ou99-458777-standard-v3-target-cast.png",
+          "state": "cast",
+          "clip": "Spell One",
+          "fraction": 0.6,
+          "view": "target",
+          "center": [
+            0.17468014732003212,
+            1.0587797462940216,
+            -0.07917631650343537
+          ],
+          "span": 0.22889798879623413,
+          "targetWorldBounds": {
+            "min": [
+              0.08339954167604446,
+              0.9443307518959045,
+              -0.15442879498004913
+            ],
+            "max": [
+              0.2659607529640198,
+              1.1732287406921387,
+              -0.003923838026821613
+            ]
+          },
+          "diagnosticIsolationOnly": true,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-458777-standard-v3-target-cast.png",
+          "sha256": "4e9c37226c94b840fb4d1dbaff5a24af49c43fc4f6d6f8ae898d7f287825655f"
+        },
+        {
+          "name": "ou99-458777-standard-v3-full-death.png",
+          "state": "death",
+          "clip": "Death",
+          "fraction": 0.6,
+          "view": "full",
+          "center": [
+            -1.4635378122329712,
+            0.023579269647598267,
+            0.06853190064430237
+          ],
+          "span": 1.7167298793792725,
+          "targetWorldBounds": {
+            "min": [
+              -2.158421277999878,
+              0.07210604101419449,
+              0.6054695844650269
+            ],
+            "max": [
+              -1.896907091140747,
+              0.21237848699092865,
+              0.7605588436126709
+            ]
+          },
+          "diagnosticIsolationOnly": false,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-458777-standard-v3-full-death.png",
+          "sha256": "1dd1fbd24693b183547dc62f0f5ea1102e3ba366bea3d2ad90c8e112ae226b56"
+        },
+        {
+          "name": "ou99-458777-standard-v3-target-death.png",
+          "state": "death",
+          "clip": "Death",
+          "fraction": 0.6,
+          "view": "target",
+          "center": [
+            -2.0276641845703125,
+            0.14224226400256157,
+            0.6830142140388489
+          ],
+          "span": 0.26151418685913086,
+          "targetWorldBounds": {
+            "min": [
+              -2.158421277999878,
+              0.07210604101419449,
+              0.6054695844650269
+            ],
+            "max": [
+              -1.896907091140747,
+              0.21237848699092865,
+              0.7605588436126709
+            ]
+          },
+          "diagnosticIsolationOnly": true,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-458777-standard-v3-target-death.png",
+          "sha256": "e277d05318848ecb1601b3a880c443fb6be92cba44d076f5180e4a739d1edd57"
+        }
+      ],
+      "classification": "source-authored-held-accessory",
+      "ruleResult": "second-skeleton false positive for this pinned primitive",
+      "visualIdentification": "手持螺旋燈器／法器，有吊環與螺旋結構，四個取樣姿勢隨手持動作移動；不是另一個角色身體。",
+      "nativeEvidence": "Native geoset0; source texture JD-JINGDIAN-SYW_wing_4.blp; weights91.1% JD-Bone017-QQ136183818 and8.9% JD-Bip001 Prop1-QQ136183818; no GEOA hiding entry.",
+      "recommendation": "保留prim0及兩個原生道具骨。不要填hiddenPrimitives或剔除。後續若要讓閘辨識已審附件，应添加具GLB SHA/primitive index/vertex count/骨名證據的附件分類，不能全面忽略second-skeleton。"
+    },
+    {
+      "modelKey": "ou99.474258-standard",
+      "targetHero": "楓",
+      "primitive": 3,
+      "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/57dd13abf17b9fd326433db56eec992aa2ea88430c251fe314e3efa15b117af6.glb",
+      "glbSha256": "57dd13abf17b9fd326433db56eec992aa2ea88430c251fe314e3efa15b117af6",
+      "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/models/ou99.474258-standard.json",
+      "modelDocumentSha256": "5531a1eb2a31126ccdc26eace13372f1ba031b723787bc8f377bf060188829d0",
+      "vertices": 597,
+      "triangles": 740,
+      "localBindBounds": [
+        [
+          -0.1609278917312622,
+          0.12778905034065247,
+          0.6823666095733643
+        ],
+        [
+          0.08214031159877777,
+          1.5928804874420166,
+          0.8084965348243713
+        ]
+      ],
+      "materialIndex": 1,
+      "nativeArchive": "/Users/Takuro/GGD-assets/models/474258.zip",
+      "nativeArchiveSha256": "d020bddc739f26f8ad78732711dc6cb6d9b5bc8516c62aa2306af7b42188d238",
+      "nativeMdxMember": "file00012699.mdx",
+      "nativeMdxSha256": "eac1b16df314b76008718806a95fe5175b7c92590b8a59ab20ee6ac039a2b534",
+      "sourceGeoset": 3,
+      "nativeTriangleVertexTriplesIdentical": true,
+      "nativeToGlbAffineMaxError": 5.985245032924524e-08,
+      "structureEvidence": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/ou99.474258-standard/structure.json",
+      "nativeEvidenceFile": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/ou99.474258-standard/native-geoset-proof.json",
+      "textureEvidence": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/ou99.474258-standard/suspect-material-original-image.png",
+      "contactSheet": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-474258-standard-contact.png",
+      "screenshots": [
+        {
+          "name": "ou99-474258-standard-full-idle.png",
+          "state": "idle",
+          "clip": "Stand",
+          "fraction": 0.6,
+          "view": "full",
+          "center": [
+            0.08234778046607971,
+            0.8776610121130943,
+            0.13083341717720032
+          ],
+          "span": 1.7031976729631424,
+          "targetWorldBounds": {
+            "min": [
+              -0.3346860706806183,
+              0.35148242115974426,
+              0.1729007214307785
+            ],
+            "max": [
+              0.7371997833251953,
+              1.0342880487442017,
+              0.6997004747390747
+            ]
+          },
+          "diagnosticIsolationOnly": false,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-474258-standard-full-idle.png",
+          "sha256": "87d80efb0baf8b0c1f08a865508de193438cfc78b2c950a1a205d62c219a2181"
+        },
+        {
+          "name": "ou99-474258-standard-target-idle.png",
+          "state": "idle",
+          "clip": "Stand",
+          "fraction": 0.6,
+          "view": "target",
+          "center": [
+            0.2012568563222885,
+            0.692885234951973,
+            0.4363005980849266
+          ],
+          "span": 1.0718858540058136,
+          "targetWorldBounds": {
+            "min": [
+              -0.3346860706806183,
+              0.35148242115974426,
+              0.1729007214307785
+            ],
+            "max": [
+              0.7371997833251953,
+              1.0342880487442017,
+              0.6997004747390747
+            ]
+          },
+          "diagnosticIsolationOnly": true,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-474258-standard-target-idle.png",
+          "sha256": "70a4fa331b7904806e4593cbb7aec7c0c6e87cde8b7e8faf8d9d30fd5ec152cf"
+        },
+        {
+          "name": "ou99-474258-standard-full-run.png",
+          "state": "run",
+          "clip": "walk",
+          "fraction": 0.6,
+          "view": "full",
+          "center": [
+            -0.1150437742471695,
+            0.7903416771441698,
+            0.41874612867832184
+          ],
+          "span": 1.6347040832042694,
+          "targetWorldBounds": {
+            "min": [
+              -0.18320052325725555,
+              0.6863573789596558,
+              -0.08452849835157394
+            ],
+            "max": [
+              0.337607741355896,
+              1.0610343217849731,
+              1.2360981702804565
+            ]
+          },
+          "diagnosticIsolationOnly": false,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-474258-standard-full-run.png",
+          "sha256": "49ab40172589268a812e95c686c6433d0dac8b53bd52caceb478ada54bee62a7"
+        },
+        {
+          "name": "ou99-474258-standard-target-run.png",
+          "state": "run",
+          "clip": "walk",
+          "fraction": 0.6,
+          "view": "target",
+          "center": [
+            0.07720360904932022,
+            0.8736958503723145,
+            0.5757848359644413
+          ],
+          "span": 1.3206266686320305,
+          "targetWorldBounds": {
+            "min": [
+              -0.18320052325725555,
+              0.6863573789596558,
+              -0.08452849835157394
+            ],
+            "max": [
+              0.337607741355896,
+              1.0610343217849731,
+              1.2360981702804565
+            ]
+          },
+          "diagnosticIsolationOnly": true,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-474258-standard-target-run.png",
+          "sha256": "f1f54a21cb037ebb3f3671dbcb2f5e9ecc3a6ab0b1bb0691a1dd77fa669e364a"
+        },
+        {
+          "name": "ou99-474258-standard-full-cast.png",
+          "state": "cast",
+          "clip": "spell one",
+          "fraction": 0.6,
+          "view": "full",
+          "center": [
+            0.3536708503961563,
+            0.6891013127751648,
+            0.8399447202682495
+          ],
+          "span": 2.4003307819366455,
+          "targetWorldBounds": {
+            "min": [
+              0.3864966034889221,
+              0.8674596548080444,
+              0.8475529551506042
+            ],
+            "max": [
+              1.072824478149414,
+              1.2535922527313232,
+              2.0401101112365723
+            ]
+          },
+          "diagnosticIsolationOnly": false,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-474258-standard-full-cast.png",
+          "sha256": "ff04ffbdbed108053be74bf2a5eebf5f3b15d65fc2e5db0662fd6b6825aa543f"
+        },
+        {
+          "name": "ou99-474258-standard-target-cast.png",
+          "state": "cast",
+          "clip": "spell one",
+          "fraction": 0.6,
+          "view": "target",
+          "center": [
+            0.7296605408191681,
+            1.0605259537696838,
+            1.4438315331935883
+          ],
+          "span": 1.192557156085968,
+          "targetWorldBounds": {
+            "min": [
+              0.3864966034889221,
+              0.8674596548080444,
+              0.8475529551506042
+            ],
+            "max": [
+              1.072824478149414,
+              1.2535922527313232,
+              2.0401101112365723
+            ]
+          },
+          "diagnosticIsolationOnly": true,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-474258-standard-target-cast.png",
+          "sha256": "821fa8f311fa795206d4522d29b6c1ba2b48a9bd7536174944a958298ac27235"
+        },
+        {
+          "name": "ou99-474258-standard-full-death.png",
+          "state": "death",
+          "clip": "Death",
+          "fraction": 0.6,
+          "view": "full",
+          "center": [
+            -0.08758866786956787,
+            0.5783677436411381,
+            0.1168341189622879
+          ],
+          "span": 1.952707052230835,
+          "targetWorldBounds": {
+            "min": [
+              -0.5322950482368469,
+              0.5089174509048462,
+              0.02737651951611042
+            ],
+            "max": [
+              0.8887648582458496,
+              0.8843507766723633,
+              0.2721971571445465
+            ]
+          },
+          "diagnosticIsolationOnly": false,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-474258-standard-full-death.png",
+          "sha256": "10345a17605f16b1b4500b6595a27397be7a745b6402843851ec7851b27cf92c"
+        },
+        {
+          "name": "ou99-474258-standard-target-death.png",
+          "state": "death",
+          "clip": "Death",
+          "fraction": 0.6,
+          "view": "target",
+          "center": [
+            0.17823490500450134,
+            0.6966341137886047,
+            0.14978683833032846
+          ],
+          "span": 1.4210599064826965,
+          "targetWorldBounds": {
+            "min": [
+              -0.5322950482368469,
+              0.5089174509048462,
+              0.02737651951611042
+            ],
+            "max": [
+              0.8887648582458496,
+              0.8843507766723633,
+              0.2721971571445465
+            ]
+          },
+          "diagnosticIsolationOnly": true,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-474258-standard-target-death.png",
+          "sha256": "2e3ce5d4259c6eba4b2965f2a4a06bf90065e0af91ba545dc9f5810d7b316365"
+        }
+      ],
+      "classification": "source-authored-held-weapon",
+      "ruleResult": "second-skeleton false positive for this pinned primitive",
+      "visualIdentification": "右手附近的紅黑長刃武器；整隻與部件分離視圖均可識別武器柄與尖刃，動作取樣帶動武器。不是另一個角色身體。",
+      "nativeEvidence": "Native geoset3; texture eff\\Axixn2.blp; weights on Bone091(93.1%), Bone036/034/035, independent root bone_new1; no GEOA hiding entry.",
+      "recommendation": "保留prim3及武器支鏈。不要填hiddenPrimitives或僅因獨立骨架根刪除。後續可用GLB SHA和精確primitive證據作受審附件分類；維持其他未知second-skeleton告警。"
+    },
+    {
+      "modelKey": "ou99.495015-standard",
+      "targetHero": "羽賀",
+      "primitive": 2,
+      "glb": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/assets/models/community/52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d.glb",
+      "glbSha256": "52eef1bdd02b3d903ca50f58fad639f626a0b96be078d1fdb0d030ea141fa03d",
+      "modelDocument": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-hero-model-options/content/models/ou99.495015-standard.json",
+      "modelDocumentSha256": "94919888ba110de705b60aa13e4d535f2c49dbb12ad5403610e4b99557bdfe92",
+      "vertices": 49,
+      "triangles": 22,
+      "localBindBounds": [
+        [
+          0.4159727990627289,
+          0.03383905813097954,
+          -0.9375895261764526
+        ],
+        [
+          2.310960054397583,
+          0.20881174504756927,
+          0.9243839979171753
+        ]
+      ],
+      "materialIndex": 1,
+      "nativeArchive": "/Users/Takuro/GGD-assets/models/495015.zip",
+      "nativeArchiveSha256": "6688d46ac59eb71e318e7ec661f10ee4595bd79b91d1c5a2deda0fcba5cb713a",
+      "nativeMdxMember": "patrick2.mdx",
+      "nativeMdxSha256": "4e7418e7a104f4a5dacd43e979c84aea180aae4b6d1d315e9c4d4ebb57b1559d",
+      "sourceGeoset": 2,
+      "nativeTriangleVertexTriplesIdentical": true,
+      "nativeToGlbAffineMaxError": 1.1231006435963309e-07,
+      "structureEvidence": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/ou99.495015-standard/structure.json",
+      "nativeEvidenceFile": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/ou99.495015-standard/native-geoset-proof.json",
+      "textureEvidence": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/ou99.495015-standard/suspect-material-original-image.png",
+      "contactSheet": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-495015-standard-contact.png",
+      "screenshots": [
+        {
+          "name": "ou99-495015-standard-full-idle.png",
+          "state": "idle",
+          "clip": "Stand",
+          "fraction": 0.6,
+          "view": "full",
+          "center": [
+            0.9973780512809753,
+            0.8555492227897048,
+            -0.006602764129638672
+          ],
+          "span": 2.6271640062332153,
+          "targetWorldBounds": {
+            "min": [
+              0.4159727990627289,
+              0.03383905813097954,
+              -0.9375895261764526
+            ],
+            "max": [
+              2.310960054397583,
+              0.20881174504756927,
+              0.9243839979171753
+            ]
+          },
+          "diagnosticIsolationOnly": false,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-495015-standard-full-idle.png",
+          "sha256": "95b3c2db0a1ca91230041f81c9c0b74c7feca88aac91c24fea6eef895217c6ca"
+        },
+        {
+          "name": "ou99-495015-standard-target-idle.png",
+          "state": "idle",
+          "clip": "Stand",
+          "fraction": 0.6,
+          "view": "target",
+          "center": [
+            1.363466426730156,
+            0.1213254015892744,
+            -0.006602764129638672
+          ],
+          "span": 1.8949872553348541,
+          "targetWorldBounds": {
+            "min": [
+              0.4159727990627289,
+              0.03383905813097954,
+              -0.9375895261764526
+            ],
+            "max": [
+              2.310960054397583,
+              0.20881174504756927,
+              0.9243839979171753
+            ]
+          },
+          "diagnosticIsolationOnly": true,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-495015-standard-target-idle.png",
+          "sha256": "dfb9c5fc324163aa9ae14b14cf18d249965bd6a56eb7cda57b2d72fb265c5331"
+        },
+        {
+          "name": "ou99-495015-standard-full-run.png",
+          "state": "run",
+          "clip": "Walk",
+          "fraction": 0.6,
+          "view": "full",
+          "center": [
+            0.17306917905807495,
+            0.04279148578643799,
+            0.07729756832122803
+          ],
+          "span": 4.275781750679016,
+          "targetWorldBounds": {
+            "min": [
+              0.4159727990627289,
+              0.03383905813097954,
+              -0.9375895261764526
+            ],
+            "max": [
+              2.310960054397583,
+              0.20881174504756927,
+              0.9243839979171753
+            ]
+          },
+          "diagnosticIsolationOnly": false,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-495015-standard-full-run.png",
+          "sha256": "c87ecd11fdca06ae8a009964c045ff4a90d239d735191979e9fc4ebdfa4a7aaa"
+        },
+        {
+          "name": "ou99-495015-standard-target-run.png",
+          "state": "run",
+          "clip": "Walk",
+          "fraction": 0.6,
+          "view": "target",
+          "center": [
+            1.363466426730156,
+            0.1213254015892744,
+            -0.006602764129638672
+          ],
+          "span": 1.8949872553348541,
+          "targetWorldBounds": {
+            "min": [
+              0.4159727990627289,
+              0.03383905813097954,
+              -0.9375895261764526
+            ],
+            "max": [
+              2.310960054397583,
+              0.20881174504756927,
+              0.9243839979171753
+            ]
+          },
+          "diagnosticIsolationOnly": true,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-495015-standard-target-run.png",
+          "sha256": "cc9eff2f4d2ae308cac97185199296b592f1cd795bd8fe3dd0999af2d34de876"
+        },
+        {
+          "name": "ou99-495015-standard-full-cast.png",
+          "state": "cast",
+          "clip": "Spell",
+          "fraction": 0.6,
+          "view": "full",
+          "center": [
+            0.831614077091217,
+            0.823574865469709,
+            -0.11202573776245117
+          ],
+          "span": 2.958691954612732,
+          "targetWorldBounds": {
+            "min": [
+              0.4159727990627289,
+              0.03383905813097954,
+              -0.9375895261764526
+            ],
+            "max": [
+              2.310960054397583,
+              0.20881174504756927,
+              0.9243839979171753
+            ]
+          },
+          "diagnosticIsolationOnly": false,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-495015-standard-full-cast.png",
+          "sha256": "5b42bcfd285c5694bb10dfb941d9e892c051a801d1203f26d4d25efc0506af03"
+        },
+        {
+          "name": "ou99-495015-standard-target-cast.png",
+          "state": "cast",
+          "clip": "Spell",
+          "fraction": 0.6,
+          "view": "target",
+          "center": [
+            1.363466426730156,
+            0.1213254015892744,
+            -0.006602764129638672
+          ],
+          "span": 1.8949872553348541,
+          "targetWorldBounds": {
+            "min": [
+              0.4159727990627289,
+              0.03383905813097954,
+              -0.9375895261764526
+            ],
+            "max": [
+              2.310960054397583,
+              0.20881174504756927,
+              0.9243839979171753
+            ]
+          },
+          "diagnosticIsolationOnly": true,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-495015-standard-target-cast.png",
+          "sha256": "0539c5a6884cc45b4fb6c84b275ac1ca470b569e5deb52be9be9f2acc84b8b8d"
+        },
+        {
+          "name": "ou99-495015-standard-full-death.png",
+          "state": "death",
+          "clip": "Death",
+          "fraction": 0.6,
+          "view": "full",
+          "center": [
+            0.4780336618423462,
+            0.6090509817004204,
+            -0.006602764129638672
+          ],
+          "span": 3.6658527851104736,
+          "targetWorldBounds": {
+            "min": [
+              0.4159727990627289,
+              0.03383905813097954,
+              -0.9375895261764526
+            ],
+            "max": [
+              2.310960054397583,
+              0.20881174504756927,
+              0.9243839979171753
+            ]
+          },
+          "diagnosticIsolationOnly": false,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-495015-standard-full-death.png",
+          "sha256": "6e26fe21f249377c91deb5d4445a0d4a87d55d961c4c43e43a86fd1b067e0dac"
+        },
+        {
+          "name": "ou99-495015-standard-target-death.png",
+          "state": "death",
+          "clip": "Death",
+          "fraction": 0.6,
+          "view": "target",
+          "center": [
+            1.363466426730156,
+            0.1213254015892744,
+            -0.006602764129638672
+          ],
+          "span": 1.8949872553348541,
+          "targetWorldBounds": {
+            "min": [
+              0.4159727990627289,
+              0.03383905813097954,
+              -0.9375895261764526
+            ],
+            "max": [
+              2.310960054397583,
+              0.20881174504756927,
+              0.9243839979171753
+            ]
+          },
+          "diagnosticIsolationOnly": true,
+          "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/outputs/priority-ou99-residual-geometry-audit-20260910/render/ou99-495015-standard-target-death.png",
+          "sha256": "cbe8cf79d4b9c1dd6a82116ab964e57f5d6533e938bb244fa3a625ce56d9a0a8"
+        }
+      ],
+      "classification": "confirmed-source-decay-gore-visibility-loss",
+      "ruleResult": "gore-joint + floor-slab true positive",
+      "visualIdentification": "派大星代理模型旁邊的薄扁血肉平面／凸起碎片，與手持捕網是不同primitive。idle/run/cast/death畫面均可看見殘留。",
+      "nativeEvidence": "Native patrick2.mdx geoset2 exactly49vertices/22triangles, texture Textures\\gutz.blp, 100%gutz00. KGAO step interpolation0/globalSeq-1; every relevant Stand/Stand Ready/Walk/Attack/Spell/Death source interval has peakalpha0, only Decay Flesh/Decay Bone peakalpha1.",
+      "recommendation": "這是原W3X GEOA顯隱未轉入GLB的真缺陷。保留完整原件與舊frozen版本；另外建立新body版本，按來源顯隱修復。若runtime只用現行六態（均native alpha0），可在新版本精確宣告hiddenPrimitives:[2]；若要重用Decay素材，应另保留該geoset/狀態，不永久破壞原素材。不要隱藏其他網子／手腳，也不要原地改frozen版本。"
+    }
+  ],
+  "centralWrites": false,
+  "frozenModelOrDocModified": false,
+  "gateModified": false,
+  "partsHiddenInShippedModel": false,
+  "diagnosticIsolation": "Target-only pictures change in-memory visibility only, expressly to identify the flagged part; source bytes/model docs are unchanged.",
+  "fullModelVisualAcceptance": false,
+  "buildGateCleared": false,
+  "limitations": [
+    "Onlythe3requestedprimitiveflagsareadjudicated;otherDoraemon/airborneflagsinmodels:checkremainoutside scope.",
+    "Four native clips per model sampled at60%, not exhaustive gameplay or fullmotionqualityacceptance.",
+    "Original target hero proxy/identity metadata remains unchanged.",
+    "MDX GEOA is parsed from exact local archive member; no Warcraft III game was executed."
+  ]
+}

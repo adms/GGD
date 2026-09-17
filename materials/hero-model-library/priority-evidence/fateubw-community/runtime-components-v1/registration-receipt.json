@@ -1,0 +1,259 @@
+{
+  "schema": "ggd.fateubw-backend-registration-receipt@1",
+  "sourceId": "github-flemmli97-fateubw-07e9d79b",
+  "manifestGitPath": "materials/hero-model-library/priority-evidence/fateubw-community/runtime-components-v1/manifest.json",
+  "manifestSha256": "78cd7931a398bf4df993a945c12fa8efd022ec727f0c670e049cd5459869a9e3",
+  "catalogGitPath": "materials/hero-model-library/priority-runtime-options.json",
+  "catalogSha256": "ee6b537894f33346c4e0ea814331d8cef315a6851763ec3c75e37b0a7cf1f741",
+  "summary": {
+    "registeredHeroOptions": 5,
+    "registeredCharacters": 4,
+    "candidateOnly": 5,
+    "manualSelectionsPreserved": 3,
+    "activeSelectionsPreserved": 5,
+    "automaticSelectionsReevaluated": 0,
+    "productionDeployed": 0
+  },
+  "registrations": [
+    {
+      "heroId": "godie-e002",
+      "sourceId": "runtime:fateubw-artoria_pendragon_saber-native-fallback-v1",
+      "sourceModelKey": "community.body.a5c8e947a9c8825945fc5f4d7a80fbd2bcccaa2aa93384e9",
+      "versionModelKey": "version.body.9a36d62104310aa6be802ce83d0babd2129b1efaa7f4d3b7",
+      "automaticEligible": false,
+      "activeModelKeyBefore": "version.body.b675e6eae6b94cc1e13cb455da2a41d2af4d178844c543ac",
+      "activeModelKeyAfter": "version.body.b675e6eae6b94cc1e13cb455da2a41d2af4d178844c543ac",
+      "selectionMode": "manual",
+      "versionCountBefore": 2,
+      "versionCountAfter": 3,
+      "championGitPath": "content/champions/godie-e002.json",
+      "championSha256After": "baad02fc45f78620bb3496d2d84ea15270b409480a7ccf752c6ad01c22bc8c95",
+      "commandResult": {
+        "heroId": "godie-e002",
+        "runtimeHeroId": "godie-e002",
+        "sourceId": "runtime:fateubw-artoria_pendragon_saber-native-fallback-v1",
+        "unchanged": true,
+        "beforeVersions": 3,
+        "afterVersions": 3,
+        "activeModelKey": "version.body.b675e6eae6b94cc1e13cb455da2a41d2af4d178844c543ac",
+        "preferredModelKey": "version.body.68cfd17a20e43e38be323af5ecc73ff21176d1af2e294bce",
+        "existing": {
+          "modelKey": "version.body.9a36d62104310aa6be802ce83d0babd2129b1efaa7f4d3b7",
+          "label": "Artoria Pendragon (Saber)｜FateUBW 社群模型＋來源動作",
+          "sourceModelKey": "community.body.a5c8e947a9c8825945fc5f4d7a80fbd2bcccaa2aa93384e9",
+          "modelSha256": "4d1468eebf4ab8363beccbf7a95151d9edc40455bdede41f18c42ddfc14481b7",
+          "binarySha256": "661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f",
+          "registeredAt": "2026-09-15T05:08:48.345Z",
+          "source": {
+            "kind": "exact",
+            "character": "Artoria Pendragon (Saber)",
+            "work": "Fate/stay night",
+            "library": "Fate/Unlimited Block Works",
+            "reference": "https://github.com/Flemmli97/FateUBW",
+            "tier": "original",
+            "selectionClass": "community-mod",
+            "sourceGame": "Fate/Unlimited Block Works",
+            "sourcePlatform": "Minecraft Java 1.21.1"
+          },
+          "automaticEligible": false
+        },
+        "activeSelectionPreservation": {
+          "changed": false,
+          "activeModelKey": "version.body.b675e6eae6b94cc1e13cb455da2a41d2af4d178844c543ac"
+        }
+      }
+    },
+    {
+      "heroId": "godie-e00l",
+      "sourceId": "runtime:fateubw-artoria_pendragon_saber-native-fallback-v1",
+      "sourceModelKey": "community.body.a5c8e947a9c8825945fc5f4d7a80fbd2bcccaa2aa93384e9",
+      "versionModelKey": "version.body.9a36d62104310aa6be802ce83d0babd2129b1efaa7f4d3b7",
+      "automaticEligible": false,
+      "activeModelKeyBefore": "version.body.b675e6eae6b94cc1e13cb455da2a41d2af4d178844c543ac",
+      "activeModelKeyAfter": "version.body.b675e6eae6b94cc1e13cb455da2a41d2af4d178844c543ac",
+      "selectionMode": "manual",
+      "versionCountBefore": 2,
+      "versionCountAfter": 3,
+      "championGitPath": "content/champions/godie-e00l.json",
+      "championSha256After": "7a75aea09238d58823657cceccc25c484b3ea06a8a39eb4c4c48d19fd6b6fc6d",
+      "commandResult": {
+        "heroId": "godie-e00l",
+        "runtimeHeroId": "godie-e00l",
+        "sourceId": "runtime:fateubw-artoria_pendragon_saber-native-fallback-v1",
+        "unchanged": true,
+        "beforeVersions": 3,
+        "afterVersions": 3,
+        "activeModelKey": "version.body.b675e6eae6b94cc1e13cb455da2a41d2af4d178844c543ac",
+        "preferredModelKey": "version.body.68cfd17a20e43e38be323af5ecc73ff21176d1af2e294bce",
+        "existing": {
+          "modelKey": "version.body.9a36d62104310aa6be802ce83d0babd2129b1efaa7f4d3b7",
+          "label": "Artoria Pendragon (Saber)｜FateUBW 社群模型＋來源動作",
+          "sourceModelKey": "community.body.a5c8e947a9c8825945fc5f4d7a80fbd2bcccaa2aa93384e9",
+          "modelSha256": "4d1468eebf4ab8363beccbf7a95151d9edc40455bdede41f18c42ddfc14481b7",
+          "binarySha256": "661a6d6c4ac00b9118cb4f968f8dfeea4d17be5c9c4075e4b3b09ffeedb69c2f",
+          "registeredAt": "2026-09-15T05:08:50.381Z",
+          "source": {
+            "kind": "exact",
+            "character": "Artoria Pendragon (Saber)",
+            "work": "Fate/stay night",
+            "library": "Fate/Unlimited Block Works",
+            "reference": "https://github.com/Flemmli97/FateUBW",
+            "tier": "original",
+            "selectionClass": "community-mod",
+            "sourceGame": "Fate/Unlimited Block Works",
+            "sourcePlatform": "Minecraft Java 1.21.1"
+          },
+          "automaticEligible": false
+        },
+        "activeSelectionPreservation": {
+          "changed": false,
+          "activeModelKey": "version.body.b675e6eae6b94cc1e13cb455da2a41d2af4d178844c543ac"
+        }
+      }
+    },
+    {
+      "heroId": "community-review-18-20260907",
+      "sourceId": "runtime:fateubw-gilgamesh_archer-native-fallback-v1",
+      "sourceModelKey": "community.body.0829b83f03e2a89eaa5aa955dfbeddc4f3cb32badcdd6ff4",
+      "versionModelKey": "version.body.a3dfce52e325d32d2df4929c6ff3af0eac9629fc937c736d",
+      "automaticEligible": false,
+      "activeModelKeyBefore": "version.body.849cb657c5a0d5d028f3340b76799e52a0194c614b082816",
+      "activeModelKeyAfter": "version.body.849cb657c5a0d5d028f3340b76799e52a0194c614b082816",
+      "selectionMode": "automatic",
+      "versionCountBefore": 3,
+      "versionCountAfter": 4,
+      "championGitPath": "content/champions/community-review-18-20260907.json",
+      "championSha256After": "972e83a88183c32103dde914957bbb53c6b50287496a9ba7394aeaf5c09fe6e9",
+      "commandResult": {
+        "heroId": "community-review-18-20260907",
+        "runtimeHeroId": "community-review-18-20260907",
+        "sourceId": "runtime:fateubw-gilgamesh_archer-native-fallback-v1",
+        "unchanged": true,
+        "beforeVersions": 4,
+        "afterVersions": 4,
+        "activeModelKey": "version.body.849cb657c5a0d5d028f3340b76799e52a0194c614b082816",
+        "preferredModelKey": "version.body.849cb657c5a0d5d028f3340b76799e52a0194c614b082816",
+        "existing": {
+          "modelKey": "version.body.a3dfce52e325d32d2df4929c6ff3af0eac9629fc937c736d",
+          "label": "Gilgamesh (Archer)｜FateUBW 社群模型＋來源動作",
+          "sourceModelKey": "community.body.0829b83f03e2a89eaa5aa955dfbeddc4f3cb32badcdd6ff4",
+          "modelSha256": "7d885a11670058b6776e3cea73960eeca70fa2b286c6200673bf1c44d3de9b24",
+          "binarySha256": "459905a2eb9735899c1ee207f790a2a7f7d35f4338f1cfa1e598b83041ac858a",
+          "registeredAt": "2026-09-15T05:08:52.483Z",
+          "source": {
+            "kind": "exact",
+            "character": "Gilgamesh (Archer)",
+            "work": "Fate",
+            "library": "Fate/Unlimited Block Works",
+            "reference": "https://github.com/Flemmli97/FateUBW",
+            "tier": "original",
+            "selectionClass": "community-mod",
+            "sourceGame": "Fate/Unlimited Block Works",
+            "sourcePlatform": "Minecraft Java 1.21.1"
+          },
+          "automaticEligible": false
+        },
+        "activeSelectionPreservation": {
+          "changed": false,
+          "activeModelKey": "version.body.849cb657c5a0d5d028f3340b76799e52a0194c614b082816"
+        }
+      }
+    },
+    {
+      "heroId": "godie-hapm",
+      "sourceId": "runtime:fateubw-heracles_berserker-native-fallback-v1",
+      "sourceModelKey": "community.body.4ee727bce7d1a3d2483e42069da6baf7fc9765803acaf5ca",
+      "versionModelKey": "version.body.23acd67134c8e186ed0ae7ea502f161a89765f7b065920fc",
+      "automaticEligible": false,
+      "activeModelKeyBefore": "version.body.6c7076cb544f1812f857597fa1a58632c334a7aa3a0d13fe",
+      "activeModelKeyAfter": "version.body.6c7076cb544f1812f857597fa1a58632c334a7aa3a0d13fe",
+      "selectionMode": "automatic",
+      "versionCountBefore": 2,
+      "versionCountAfter": 3,
+      "championGitPath": "content/champions/godie-hapm.json",
+      "championSha256After": "3e0baf3dd2fb78a18dd8887970f61df876b8b1b0bc97337567c0016211d6cde6",
+      "commandResult": {
+        "heroId": "godie-hapm",
+        "runtimeHeroId": "godie-hapm",
+        "sourceId": "runtime:fateubw-heracles_berserker-native-fallback-v1",
+        "unchanged": true,
+        "beforeVersions": 3,
+        "afterVersions": 3,
+        "activeModelKey": "version.body.6c7076cb544f1812f857597fa1a58632c334a7aa3a0d13fe",
+        "preferredModelKey": "version.body.a7b7a815bdf6df9e9ded9dea5ca47dd5a1648142f9210601",
+        "existing": {
+          "modelKey": "version.body.23acd67134c8e186ed0ae7ea502f161a89765f7b065920fc",
+          "label": "Heracles (Berserker)｜FateUBW 社群模型＋來源動作",
+          "sourceModelKey": "community.body.4ee727bce7d1a3d2483e42069da6baf7fc9765803acaf5ca",
+          "modelSha256": "5ec552fa1178bb414aa26f5ee477e42e829c50d92ef0e56d8a7040d4bfc59b3b",
+          "binarySha256": "1341c1bd22d771459b2ce75f85e9e147fbbdedd81d5e77ec9c139581c2b4982b",
+          "registeredAt": "2026-09-15T05:08:54.740Z",
+          "source": {
+            "kind": "exact",
+            "character": "Heracles (Berserker)",
+            "work": "Fate/stay night",
+            "library": "Fate/Unlimited Block Works",
+            "reference": "https://github.com/Flemmli97/FateUBW",
+            "tier": "original",
+            "selectionClass": "community-mod",
+            "sourceGame": "Fate/Unlimited Block Works",
+            "sourcePlatform": "Minecraft Java 1.21.1"
+          },
+          "automaticEligible": false
+        },
+        "activeSelectionPreservation": {
+          "changed": false,
+          "activeModelKey": "version.body.6c7076cb544f1812f857597fa1a58632c334a7aa3a0d13fe"
+        }
+      }
+    },
+    {
+      "heroId": "godie-hvsh",
+      "sourceId": "runtime:fateubw-medusa_rider-native-fallback-v1",
+      "sourceModelKey": "community.body.0071d6d498c8541074d2bb5593da9e4521df14ef2a9531fd",
+      "versionModelKey": "version.body.268aa54510b30fc8c1efb2ff7de4c2a99cca982c2e8593fe",
+      "automaticEligible": false,
+      "activeModelKeyBefore": "version.body.db39bed40d040d70cd4adc7a340aef4c682b34b51b89d60a",
+      "activeModelKeyAfter": "version.body.db39bed40d040d70cd4adc7a340aef4c682b34b51b89d60a",
+      "selectionMode": "manual",
+      "versionCountBefore": 2,
+      "versionCountAfter": 3,
+      "championGitPath": "content/champions/godie-hvsh.json",
+      "championSha256After": "f27196c8d11de25ae59b18a75da93c7c76a0e979b31cbfb44df06cc1bbd2aca6",
+      "commandResult": {
+        "heroId": "godie-hvsh",
+        "runtimeHeroId": "godie-hvsh",
+        "sourceId": "runtime:fateubw-medusa_rider-native-fallback-v1",
+        "unchanged": true,
+        "beforeVersions": 3,
+        "afterVersions": 3,
+        "activeModelKey": "version.body.db39bed40d040d70cd4adc7a340aef4c682b34b51b89d60a",
+        "preferredModelKey": "version.body.a806e2beb9b0683d6b0437a4b4e7b761e3b2ee4d234579f8",
+        "existing": {
+          "modelKey": "version.body.268aa54510b30fc8c1efb2ff7de4c2a99cca982c2e8593fe",
+          "label": "Medusa (Rider)｜FateUBW 社群模型＋來源動作",
+          "sourceModelKey": "community.body.0071d6d498c8541074d2bb5593da9e4521df14ef2a9531fd",
+          "modelSha256": "cecaf1139e7ba34a7279069854a32d1579e58c50d56b1f943bb19f8d0d115cc2",
+          "binarySha256": "5b7eb29bf926d5a3a4d5833679f43a74b0ab2d10cc092348e195cf1d490c3c85",
+          "registeredAt": "2026-09-15T05:08:56.758Z",
+          "source": {
+            "kind": "exact",
+            "character": "Medusa (Rider)",
+            "work": "Fate/stay night",
+            "library": "Fate/Unlimited Block Works",
+            "reference": "https://github.com/Flemmli97/FateUBW",
+            "tier": "original",
+            "selectionClass": "community-mod",
+            "sourceGame": "Fate/Unlimited Block Works",
+            "sourcePlatform": "Minecraft Java 1.21.1"
+          },
+          "automaticEligible": false
+        },
+        "activeSelectionPreservation": {
+          "changed": false,
+          "activeModelKey": "version.body.db39bed40d040d70cd4adc7a340aef4c682b34b51b89d60a"
+        }
+      }
+    }
+  ]
+}
