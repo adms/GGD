@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-09-17 18:25 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-17 19:21 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.46.0 · 資料截至 2026-09-17 18:25 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-17 18:25 (GMT+8)</h1><div class="meta"><span>帳本 <b>30</b> 份</span><span>點名票號 <b>490</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.46.0 · 資料截至 2026-09-17 19:21 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-17 19:21 (GMT+8)</h1><div class="meta"><span>帳本 <b>30</b> 份</span><span>點名票號 <b>491</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1861,6 +1861,30 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>18:15</td><td>合併 PR #1232</td><td>#1232</td></tr>
 <tr><td>18:17</td><td>好 繼續 另外 這個圖片的分支 #1152 怎麼處理</td><td>#1152</td></tr>
 <tr><td>18:25</td><td>你確定 #1152 的東西都有驗收及備份?</td><td>#1152</td></tr>
+<tr><td>18:27</td><td>你盤點一下 還有哪些分支你還沒合併進來 或是還沒被妥善標注、關閉 完整的逐檔清單和壓縮包在S3上，需下載才能實際驗證 =&gt; 你 checksum 就好 不要真的下載浪費流量及 token</td><td>⏸ 未對票</td></tr>
+<tr><td>18:31</td><td>那我先改到穩定版本再來改 private?</td><td>⏸ 未對票</td></tr>
+<tr><td>18:33</td><td>你先看看 mac mini M4 適合自架 runner 嗎? 還會不會有額外費用？</td><td>⏸ 未對票</td></tr>
+<tr><td>18:34</td><td>我有連上 vpn</td><td>⏸ 未對票</td></tr>
+<tr><td>18:39</td><td>contactsd 那是啥</td><td>⏸ 未對票</td></tr>
+<tr><td>18:47</td><td>先做 1</td><td>⏸ 未對票</td></tr>
+<tr><td>18:47</td><td>照建議處理，本機 64 個分支也逐檔核對</td><td>⏸ 未對票</td></tr>
+<tr><td>18:48</td><td>我提醒你 如果有大量上下載的動作盡量避免，目前網路不是很快</td><td>⏸ 未對票</td></tr>
+<tr><td>18:49</td><td>已完成並推送。<code>已取得模型待設計英雄.md</code> 現在會由產生器持續納入下列素材庫，包括尚未轉換、待設定、待確認身分及已註冊候選： * 300英雄：276 個來源 ID，整理為 265 個身分列。 * KOF XIV／XV／Maximum Impact：目前已取得不知火舞、八神庵、阿修等模型、動作及音訊候選，未取得項目仍明列。 * 任天堂明星大亂鬥：NS Ultimate Worldblender 整庫、社群 MOD、日語音包、GameCube Melee、Wii Brawl、N64 線索分開登記。 * 無限神速斬：達伊 4 個、何布 5 個、老年巴恩 2 個，共 11 個已登記模型版本；年輕巴恩…</td><td>#1284</td></tr>
+<tr><td>18:56</td><td>是你要參考他的內容更新你的 readme</td><td>⏸ 未對票</td></tr>
+<tr><td>18:57</td><td>你先暫停</td><td>⏸ 未對票</td></tr>
+<tr><td>19:00</td><td>你可以做快點嗎</td><td>⏸ 未對票</td></tr>
+<tr><td>19:02</td><td>那你不要去跑別人的項目 專注你自己的 readme 就好 我可以幫你一鍵複製給負責的工作流</td><td>⏸ 未對票</td></tr>
+<tr><td>19:08</td><td>【給主線】README PR #1232 已更新，可合併：https://github.com/adms/GGD/pull/1232 head 3aae77f98，已包含 origin/main 全部內容，沒有衝突。 這一版已併入 PR #1284（codex/hero-model-library-options-clean，到 bdd19be75），README 衝突已在 #1232 解掉： - README 清單對齊 v0.46.0：190 英雄／1129 技能、開放名單 167、待上架 8 - §7 新增「已取得素材庫」：804 個來源身分（尚未建立英雄 397、待補 17、身分待確認…</td><td>#1232 #1284</td></tr>
+<tr><td>19:08</td><td>幫我開一張票 處理變身態問題 之前有說過要消滅所有變身態 請你追蹤整體規劃及進度為何</td><td>⏸ 未對票</td></tr>
+<tr><td>19:11</td><td>也可以參考 docs/全英雄列表.md</td><td>⏸ 未對票</td></tr>
+<tr><td>19:12</td><td>那 11 條照你建議先保留，繼續出貨 BMPNDD</td><td>⏸ 未對票</td></tr>
+<tr><td>19:13</td><td>＃1152 別忘了要繼續處理完後關閉</td><td>⏸ 未對票</td></tr>
+<tr><td>19:15</td><td>「盡可能下架」除非你跟我解釋必要性 我答應進白名單</td><td>⏸ 未對票</td></tr>
+<tr><td>19:15</td><td>你應該另外開一個分支來處理不要影響到 main</td><td>⏸ 未對票</td></tr>
+<tr><td>19:16</td><td>變身態 session 已經暫停了</td><td>⏸ 未對票</td></tr>
+<tr><td>19:18</td><td>所以你這次會合併完所有分支 或是至少標注怎麼完成? 或是驗收關閉?</td><td>⏸ 未對票</td></tr>
+<tr><td>19:20</td><td>你先照開票守則開票</td><td>⏸ 未對票</td></tr>
+<tr><td>19:21</td><td>好 照這樣做 部署完接著收尾</td><td>⏸ 未對票</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

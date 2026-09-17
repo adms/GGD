@@ -600,3 +600,147 @@ s3://ggd-390630837668-ap-east-2-an/voice-review-0915/quotegap-state-20260917.tgz
 ## 18:25 · 069cf628
 
 你確定 #1152 的東西都有驗收及備份?
+
+## 18:27 · b0ced308
+
+你盤點一下 還有哪些分支你還沒合併進來 或是還沒被妥善標注、關閉
+
+完整的逐檔清單和壓縮包在S3上，需下載才能實際驗證 => 你 checksum 就好 不要真的下載浪費流量及 token
+
+## 18:31 · 3f686f44
+
+那我先改到穩定版本再來改 private?
+
+## 18:33 · a9a529a7
+
+你先看看 mac mini M4 適合自架 runner 嗎? 還會不會有額外費用？
+
+## 18:34 · 45ba500e
+
+我有連上 vpn
+
+## 18:39 · 593693ba
+
+contactsd 那是啥
+
+## 18:47 · fbb273e0
+
+先做 1
+
+## 18:47 · 2945d3cf
+
+照建議處理，本機 64 個分支也逐檔核對
+
+## 18:48 · aa57b170
+
+我提醒你 如果有大量上下載的動作盡量避免，目前網路不是很快
+
+## 18:49 · 4c85471e
+
+已完成並推送。`已取得模型待設計英雄.md` 現在會由產生器持續納入下列素材庫，包括尚未轉換、待設定、待確認身分及已註冊候選：
+
+* 300英雄：276 個來源 ID，整理為 265 個身分列。
+* KOF XIV／XV／Maximum Impact：目前已取得不知火舞、八神庵、阿修等模型、動作及音訊候選，未取得項目仍明列。
+* 任天堂明星大亂鬥：NS Ultimate Worldblender 整庫、社群 MOD、日語音包、GameCube Melee、Wii Brawl、N64 線索分開登記。
+* 無限神速斬：達伊 4 個、何布 5 個、老年巴恩 2 個，共 11 個已登記模型版本；年輕巴恩、MystVearn、巴蘭分開記錄。
+* JUMP FORCE：模型、音訊包、達伊部件、大傑 PAK、劍心模型等依實際完成階段記錄。
+* J‑STARS Victory VS+：7 個 CPK、19,471 筆檔案、56 個角色／模型 token；六名優先角已確認身分，目前仍是待解碼與待轉換，沒有誤列為上架。
+
+同步更新：
+
+* [已取得模型待設計英雄.md](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/已取得模型待設計英雄.md)
+* [已取得模型待設計英雄.json](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/已取得模型待設計英雄.json)
+* [全英雄列表.md](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-final/docs/全英雄列表.md)
+* [近四日新增模型動作特效清單.md](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/近四日新增模型動作特效清單.md)
+* [J‑STARS 原包解取收據](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json)
+
+同批也完成波吉皇冠與阿薩謝爾翅膀模型選項的 Git 註冊：
+
+* [波吉皇冠 A/B 圖](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/source-inventories/bojji-crown-v1/bojji-crown-ab.png)
+* [阿薩謝爾翅膀 A/B 圖](/Users/Takuro/Dropbox/我的 Mac (Moriya.local\)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/priority-evidence/approved-derivative-azazel-wings-v1/azazel-wings-ab.jpg)
+
+交付資訊：
+
+* Commit：`b9009cb1d`
+* 分支：`codex/hero-model-library-options-clean`
+* PR：[PR #1284](https://github.com/adms/GGD/pull/1284)
+* PR 交付留言：[本批完整說明](https://github.com/adms/GGD/pull/1284#issuecomment-5713011842)
+* CI：目前 GitHub `setup` 還在排隊執行。
+
+本機檢查已通過：804 個來源身分、194 名唯一英雄、205 個模型來源、65 個元件；資產 manifest、文件生成、4000 份內容驗證、模型預算報告與 J‑STARS 16 項解包測試均通過。帕魯的 18 份本機／S3 準備音訊仍留在本機，沒有混入 Git。
+
+## 18:56 · ae9aebbb
+
+是你要參考他的內容更新你的 readme
+
+## 18:57 · a9e4609e
+
+你先暫停
+
+## 19:00 · 079a0c4f
+
+你可以做快點嗎
+
+## 19:02 · f5512c7b
+
+那你不要去跑別人的項目 專注你自己的 readme 就好 我可以幫你一鍵複製給負責的工作流
+
+## 19:08 · 71018fca
+
+【給主線】README PR #1232 已更新，可合併：https://github.com/adms/GGD/pull/1232
+head 3aae77f98，已包含 origin/main 全部內容，沒有衝突。
+
+這一版已併入 PR #1284（codex/hero-model-library-options-clean，到 bdd19be75），README 衝突已在 #1232 解掉：
+- README 清單對齊 v0.46.0：190 英雄／1129 技能、開放名單 167、待上架 8
+- §7 新增「已取得素材庫」：804 個來源身分（尚未建立英雄 397、待補 17、身分待確認 297、已對應 93）
+
+合併順序：先合 #1284，再合 #1232；或只合 #1232，會連同 #1284 到 bdd19be75 一起進 main。
+#1284 在 bdd19be75 之後的 78ab89dc7 只動素材收據，不影響 README。
+
+注意：
+1. main 自己的 CI unit 在 72dc6ef7c 就是紅的，#1232 的 unit 可能會繼承。
+2. #1232 最後一個 commit 用了 GGD_GENINPUT_OFF=1：README 也是 skillforge:audit 的輸入，那份報告沒有在 README 分支重產。若 skillforge:audit:check 變紅，交給 skillforge 工作流。
+3. 合併後、跑 docs:readme 或 skills:sync 之前，先把本機白名單同步成正式站的，否則開放名單會被改回 130：
+   cp data/curation/whitelist.json data/curation/whitelist.before-20260917.json
+   curl -sS https://ggd.adms.ai/api/v1/curation/whitelist -o data/curation/whitelist.json
+
+## 19:08 · 2856e730
+
+幫我開一張票 處理變身態問題 之前有說過要消滅所有變身態 請你追蹤整體規劃及進度為何
+
+## 19:11 · 21743632
+
+也可以參考
+docs/全英雄列表.md
+
+## 19:12 · caa1bc87
+
+那 11 條照你建議先保留，繼續出貨 BMPNDD
+
+## 19:13 · 493cbe24
+
+＃1152 別忘了要繼續處理完後關閉
+
+## 19:15 · 1a992c02
+
+「盡可能下架」除非你跟我解釋必要性 我答應進白名單
+
+## 19:15 · e21f9587
+
+你應該另外開一個分支來處理不要影響到 main
+
+## 19:16 · 487de89e
+
+變身態 session 已經暫停了
+
+## 19:18 · 67fffc49
+
+所以你這次會合併完所有分支 或是至少標注怎麼完成? 或是驗收關閉?
+
+## 19:20 · a6fae624
+
+你先照開票守則開票
+
+## 19:21 · f9bcfbbb
+
+好 照這樣做 部署完接著收尾
