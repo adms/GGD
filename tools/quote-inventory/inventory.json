@@ -1,9 +1,9 @@
 {
  "schema": "ggd.champion-quote-inventory@1",
  "generator": "tools/quote-inventory/gen.mjs",
- "roster": 130,
+ "roster": 167,
  "battleMissing": 0,
- "selectMissing": 59,
+ "selectMissing": 96,
  "noVoicePack": 0,
  "noVoicePackWithTwin": 0,
  "rows": [
@@ -2812,7 +2812,7 @@
     "text": "（原檔）51d146/00013-375078456"
    },
    "defaultSlot": "quote",
-   "packSlots": 11,
+   "packSlots": 12,
    "takes": 3,
    "select": null,
    "unsourcedWhy": "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。",
@@ -2836,6 +2836,873 @@
    "select": null,
    "unsourcedWhy": "Riot Data Dragon（⭐ 本 repo 在 `build-champ-names.mjs` 已經 join 過的官方來源）只出貨 name / title / lore / blurb,⛔ **不出貨語音台詞**;本機 checkout 也沒有任何 ddragon 傾印（實測 `find` 0 命中）⇒ 沒有可引用的出處。",
    "candidates": []
+  },
+  {
+   "id": "acquired-alice",
+   "name": "愛麗絲·滋貝魯庫（Alice Zuberg）",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "300heroes:249",
+     "name": "爱丽丝",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-astralym",
+   "name": "枯星龍",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "acquired-astralym",
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": "victory",
+   "packSlots": 14,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "gamevault-palworld-astralym-audio:astralym-cries",
+     "name": "枯星龍 Astralym 非語言叫聲",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-asuna",
+   "name": "亞絲娜／結城明日奈",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "300heroes:76",
+     "name": "狂暴补师",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "hive-anime-team-survival:asuna2",
+     "name": "地圖音訊檔名／asuna2",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-beatrice",
+   "name": "碧翠絲",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": []
+  },
+  {
+   "id": "acquired-cattiva",
+   "name": "搗蛋貓",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "acquired-cattiva",
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": "victory",
+   "packSlots": 14,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "palworld-cattiva-gamevault:cattiva-cries",
+     "name": "搗蛋貓 Cattiva 非語言叫聲",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-dio",
+   "name": "DIO",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "parallel-ps-jumpforce-local-final3:jumpforce-dio",
+     "name": "DIO",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-emilia",
+   "name": "愛蜜莉雅",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "300heroes:238",
+     "name": "爱蜜莉雅",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-inuyasha",
+   "name": "犬夜叉",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": []
+  },
+  {
+   "id": "acquired-jetragon",
+   "name": "空渦龍",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "acquired-jetragon",
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": "victory",
+   "packSlots": 14,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "gamevault-palworld-jetragon-cries:jetragon-cries",
+     "name": "空渦龍 Jetragon 非語言叫聲",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-kita-kita",
+   "name": "吉他吉他老伯（阿德巴古·艾魯多魯）",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": []
+  },
+  {
+   "id": "acquired-kuroyukihime",
+   "name": "黑雪姬",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "300heroes:164",
+     "name": "黑雪姬",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-leafa",
+   "name": "莉法",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "300heroes:260",
+     "name": "莉法",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-lord-nightmares",
+   "name": "金色魔王／惡夢之王",
+   "hasVoicePack": true,
+   "viaForm": false,
+   "packId": "acquired-lord-nightmares",
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": "attack-heavy",
+   "packSlots": 4,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": []
+  },
+  {
+   "id": "acquired-mario",
+   "name": "Mario",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "parallel-voice-melee-local-29:SSBM_Characters_Dr_Mario",
+     "name": "SSBM / Characters_Dr_Mario",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": false
+    },
+    {
+     "id": "parallel-voice-melee-local-29:SSBM_Characters_Mario",
+     "name": "SSBM / Characters_Mario",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-mewtwo",
+   "name": "Mewtwo",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "parallel-voice-ssbu-japanese:vc_mewtwo",
+     "name": "NS 原生音訊／vc_mewtwo",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "parallel-voice-melee-local-29:SSBM_Characters_Mewtwo",
+     "name": "SSBM / Characters_Mewtwo",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-minecraft",
+   "name": "Steve／Alex",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": []
+  },
+  {
+   "id": "acquired-morgiana",
+   "name": "摩尔迦娜",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "300heroes:62",
+     "name": "摩尔迦娜",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-naruto",
+   "name": "漩渦鳴人",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "parallel-ps-jumpforce-local-next32:jumpforce-naruto",
+     "name": "Naruto",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    },
+    {
+     "id": "steam-jump-force-streaming-audio-816020-build-8523149:chr0120",
+     "name": "Naruto",
+     "library": "本機遊戲",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-pokemon-trainer",
+   "name": "Pokémon Trainer",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "parallel-voice-ssbu-japanese:vc_ptrainer",
+     "name": "NS 原生音訊／vc_ptrainer",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-ram",
+   "name": "拉姆",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": []
+  },
+  {
+   "id": "acquired-rim",
+   "name": "莉姆（Rim；粉紅魔龍）",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "300heroes:289",
+     "name": "莉姆",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-ryu",
+   "name": "Ryu",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "parallel-voice-ssbu-japanese:vc_ryu",
+     "name": "NS 原生音訊／vc_ryu",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-saya",
+   "name": "沙耶",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "300heroes:162",
+     "name": "美树沙耶加",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": false
+    },
+    {
+     "id": "300heroes:29",
+     "name": "沙耶",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-wargreymon",
+   "name": "戰鬥暴龍獸",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "300heroes:159",
+     "name": "龙教练",
+     "library": "300英雄",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "acquired-xiaodangjia",
+   "name": "小當家",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": []
+  },
+  {
+   "id": "acquired-zero",
+   "name": "Zero",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "gamebanana-zero-lancer-493444:zero-lancer-voice",
+     "name": "Diarmuid Ua Duibhne / Zero Lancer",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": false
+    }
+   ]
+  },
+  {
+   "id": "lol-ahri",
+   "name": "阿璃",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-ahri-ja-jp-16-18-8159717",
+     "name": "League of Legends / Ahri / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-ashe",
+   "name": "艾希",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-ashe-ja-jp-16-18-8159717",
+     "name": "League of Legends / Ashe / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-blitzcrank",
+   "name": "布里姿",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-blitzcrank-ja-jp-16-18-8159717",
+     "name": "League of Legends / Blitzcrank / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-chogath",
+   "name": "科加斯",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-chogath-ja-jp-16-18-8159717",
+     "name": "League of Legends / Chogath / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-fiddlesticks",
+   "name": "稻草人",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-fiddlesticks-ja-jp-16-18-8159717",
+     "name": "League of Legends / FiddleSticks / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-garen",
+   "name": "蓋倫",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-garen-ja-jp-16-18-8159717",
+     "name": "League of Legends / Garen / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-malphite",
+   "name": "墨菲特",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-malphite-ja-jp-16-18-8159717",
+     "name": "League of Legends / Malphite / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-ornn",
+   "name": "鄂爾",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-ornn-ja-jp-16-18-8159717",
+     "name": "League of Legends / Ornn / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-sett",
+   "name": "賽特",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-sett-ja-jp-16-18-8159717",
+     "name": "League of Legends / Sett / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-thresh",
+   "name": "瑟雷西",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-thresh-ja-jp-16-18-8159717",
+     "name": "League of Legends / Thresh / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
+  },
+  {
+   "id": "lol-velkoz",
+   "name": "威寇茲",
+   "hasVoicePack": false,
+   "viaForm": false,
+   "packId": null,
+   "twin": null,
+   "ownerExcluded": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架，戰鬥語音之後再做（⛔ 不逐名合成）",
+   "battle": null,
+   "defaultSlot": null,
+   "packSlots": 0,
+   "takes": 0,
+   "select": null,
+   "unsourcedWhy": "owner 2026-09-16（逐字）：「全部英雄上架是預設的 不需要我審查通過」⇒ 第四批 37 名先上架；名言要有出處才能填，⛔ 不替作者編一句 ⇒ 之後有來源再補。",
+   "candidates": [
+    {
+     "id": "lol-riot-ja-jp-16.18.8159717:lol-velkoz-ja-jp-16-18-8159717",
+     "name": "League of Legends / Velkoz / ja_JP / 16.18.8159717",
+     "library": "公開來源",
+     "language": "unreviewed",
+     "bound": true
+    }
+   ]
   }
  ]
 }

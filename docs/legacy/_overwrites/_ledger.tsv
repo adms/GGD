@@ -13869,3 +13869,8 @@ overwrite_temp_20260917-151529	Bash	SKIP(git 有)	/private/tmp/ggd-integ-nc/cont
 20260917-200539	gen_board	產生器覆蓋前	/private/tmp/ggd-integ-nc/docs/_release/ggd-board.html	/private/tmp/ggd-integ-nc/docs/legacy/_overwrites/overwrite_temp_20260917-200539/docs/_release/ggd-board.html
 20260917-200617	preserve.sh	SKIP(git 有)	docs/_release/戰情版-20260917.md
 20260917-200617	preserve.sh	SKIP(git 有)	docs/_execution-batches.md
+20260917-201240	gen_board	SKIP(內容相同)	/private/tmp/ggd-integ-nc/docs/_release/ggd-board.html	
+overwrite_temp_20260917-202415	Bash	repo 外	/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/laneZ-663-stale.txt	/Users/Takuro/.claude/projects/-Users-Takuro-GGD/overwrite-backups/overwrite_temp_20260917-202415/laneZ-663-stale.txt
+overwrite_temp_20260917-202711	Edit	SKIP(git 有)	/private/tmp/ggd-integ-nc/README.md
+overwrite_temp_20260917-202912	Edit	SKIP(git 有)	content/config/ugc.json
+overwrite_temp_20260917-202912	Edit	SKIP(git 有)	packages/shared/src/sim/SimWorld.ts
