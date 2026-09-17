@@ -176,6 +176,13 @@ ENV GGD_BUILD_STAMP=$GGD_BUILD_STAMP
 # Default OFF. See the header. `/dist-out/editor` is created either way so the
 # final stage's COPY has a source in both configurations — an image built
 # without the opt-in gets an EMPTY directory there, which is the whole point.
+# ---- 玩家版英雄鑄造器（GH#1270）--------------------------------------------
+# ⭐⭐ `pnpm --filter @ggd/editor build:player`（`--mode player`）一律建，⛔ 與下面那個
+# GGD_INCLUDE_EDITOR 無關：它只有「創作英雄／我的作品」兩個畫面
+# （`apps/editor/src/appRoute.ts` 的 PLAYER_ONLY），⛔ 沒有集合瀏覽、鑄技工坊、特效工坊、
+# 匯出中心 —— 那幾頁在這一份 build 裡連進入點都沒有。
+# ⚠️ 它**不是**授權機制：寫入照樣走需要登入的 `/api/v1/hero-*`（身分由 Platform 判定）。
+# ⚠️ 路由那一半住 `nginx/nginx.conf` 的 `location /editor/`，⭐ 兩半缺一不可。
 ARG GGD_INCLUDE_EDITOR="0"
 ENV GGD_INCLUDE_EDITOR=$GGD_INCLUDE_EDITOR
 RUN echo "edge build: VITE_GGD_FULL_ASSETS='${VITE_GGD_FULL_ASSETS}' GGD_BUILD_STAMP='${GGD_BUILD_STAMP}' GGD_INCLUDE_EDITOR='${GGD_INCLUDE_EDITOR}'" \
@@ -184,10 +191,12 @@ RUN echo "edge build: VITE_GGD_FULL_ASSETS='${VITE_GGD_FULL_ASSETS}' GGD_BUILD_S
       echo "!!          pass --build-arg GGD_BUILD_STAMP=\"\$(git rev-parse --short HEAD) \$(date -u +%F)\"" >&2; \
     fi \
  && pnpm --filter "@ggd/client" build && pnpm --filter "@ggd/admin" build \
- && mkdir -p /dist-out/editor \
+ && mkdir -p /dist-out/editor /dist-out/hero-forge \
+ && pnpm --filter "@ggd/editor" build:player && cp -a apps/editor/dist-player/. /dist-out/hero-forge/ \
  && if [ "${GGD_INCLUDE_EDITOR}" = "1" ]; then \
       echo "edge build: INCLUDING the content editor at /editor/ — this image must NOT be deployed publicly." >&2; \
-      pnpm --filter "@ggd/editor" build && cp -a apps/editor/dist/. /dist-out/editor/; \
+      pnpm --filter "@ggd/editor" build && cp -a apps/editor/dist/. /dist-out/editor/ \
+      && cp -a apps/editor/dist/. /dist-out/hero-forge/; \
     else \
       echo "edge build: content editor OMITTED (task #241). Pass --build-arg GGD_INCLUDE_EDITOR=1 for a dev image." >&2; \
     fi
@@ -207,7 +216,7 @@ RUN echo "edge build: VITE_GGD_FULL_ASSETS='${VITE_GGD_FULL_ASSETS}' GGD_BUILD_S
 COPY nginx/precompress.sh nginx/
 RUN apk add --no-cache brotli \
     && sh nginx/precompress.sh \
-        /repo/apps/client/dist /dist-out/editor /repo/apps/admin/dist
+        /repo/apps/client/dist /dist-out/editor /dist-out/hero-forge /repo/apps/admin/dist
 
 # Unprivileged nginx: uid 101, listens 8080, pid/temp under /tmp.
 FROM nginxinc/nginx-unprivileged:alpine
@@ -223,6 +232,9 @@ COPY --from=build /repo/apps/client/dist/ /usr/share/nginx/html/client/
 # /repo/apps/editor/dist: that would bake the authoring console into every
 # image again regardless of the flag, which is the whole defect.
 COPY --from=build /dist-out/editor/ /usr/share/nginx/html/editor/
+# ⭐ GH#1270 —— 玩家版鑄造器：**每一個映像都有**（上面那一份仍然只在 dev 映像裡有位元組）。
+#   路由住 nginx/nginx.conf 的 `location /editor/`，兩半缺一不可。
+COPY --from=build /dist-out/hero-forge/ /usr/share/nginx/html/hero-forge/
 COPY --from=build /repo/apps/admin/dist/ /usr/share/nginx/html/admin/
 # ---- full-asset boot assertion (task #176) ---------------------------------
 # The official nginx entrypoint runs /docker-entrypoint.d/*.sh under `set -e`

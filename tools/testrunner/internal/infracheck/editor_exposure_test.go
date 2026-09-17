@@ -46,12 +46,21 @@ func TestContentEditorNotExposedInProduction(t *testing.T) {
 	// ---- 1. the route is not in the production config (either copy) ---------
 	for _, path := range []string{"nginx/nginx.conf", "deploy/helm/ggd/files/nginx.conf"} {
 		conf := readRepoFile(t, path)
-		assert.NotContains(t, conf, "location /editor/ {",
-			"%s must NOT route /editor/ — it is unauthenticated static and belongs in "+
-				"nginx/dev/editor.conf (task #241)", path)
-		assert.NotContains(t, conf, "location = /editor {",
-			"%s must NOT redirect to /editor/ either — a 301 into a route that should "+
-				"not exist is still an advertisement for it", path)
+		// ⭐⭐ GH#1270 (2026-09-17) — /editor/ IS routed in production now, but it
+		// serves the PLAYER bundle (hero-forge only), never the authoring console.
+		// The old assertion ("no /editor/ at all") was the right answer to task
+		// #241's question; the question changed when the owner asked for a player
+		// entry point. What must stay impossible is the AUTHORING console being
+		// served publicly — so the assertion moves from "no route" to "the route
+		// points at the player bundle, and the console's bytes stay dev-only".
+		assert.Contains(t, conf, "alias /usr/share/nginx/html/hero-forge/;",
+			"%s must serve the PLAYER bundle at /editor/ (GH#1270) — anything else there "+
+				"is either the authoring console (the #241 defect) or the game's SPA "+
+				"fallback (the #1270 defect: HTTP 200 showing the login page)", path)
+		assert.NotContains(t, conf, "root /usr/share/nginx/html/editor",
+			"%s must NOT serve the authoring console tree — that is task #241's defect", path)
+		assert.NotContains(t, conf, "alias /usr/share/nginx/html/editor/",
+			"%s must NOT alias the authoring console tree either", path)
 		// The dev-only include is what carries it; losing that line would make
 		// the editor unreachable even in the dev profile.
 		assert.Contains(t, conf, "include /etc/nginx/ggd-dev/*.conf;",
@@ -59,12 +68,16 @@ func TestContentEditorNotExposedInProduction(t *testing.T) {
 				"reach a dev box", path)
 	}
 
-	// ---- 2. the dev-only fragment exists and carries the route --------------
+	// ---- 2. the route has exactly ONE home (GH#1270) -----------------------
+	// nginx refuses to start when the same location is declared twice, so the dev
+	// fragment must NOT re-declare /editor/ now that nginx.conf owns it. MEASURED:
+	// with both present the whole edge answered 500 — even `/`.
 	dev := readRepoFile(t, "nginx/dev/editor.conf")
-	assert.Contains(t, dev, "location /editor/ {",
-		"nginx/dev/editor.conf is where the editor route lives now")
-	assert.Contains(t, dev, "location = /editor { return 301 /editor/; }",
-		"the no-trailing-slash redirect moves with it, or /editor 404s on a dev box")
+	assert.NotContains(t, dev, "location /editor/ {",
+		"nginx/dev/editor.conf must NOT re-declare /editor/ — nginx.conf owns it (GH#1270); "+
+			"duplicate locations take the whole edge down")
+	assert.NotContains(t, dev, "location = /editor {",
+		"same for the no-trailing-slash redirect — one home only")
 
 	// ---- 3. the bytes are opt-in at image build time ------------------------
 	const arg = "GGD_INCLUDE_EDITOR"
@@ -76,6 +89,12 @@ func TestContentEditorNotExposedInProduction(t *testing.T) {
 			"authoring console into every image regardless of "+arg)
 	assert.Contains(t, edge, "COPY --from=build /dist-out/editor/",
 		"the final stage must copy the staging dir, which is empty unless "+arg+"=1")
+	// ⭐ GH#1270 — the PLAYER bundle is the other half of the route above: without
+	// these bytes the location would 404 into the game's SPA fallback again.
+	assert.Contains(t, edge, `pnpm --filter "@ggd/editor" build:player`,
+		"docker/edge.Dockerfile must build the player bundle unconditionally (GH#1270)")
+	assert.Contains(t, edge, "COPY --from=build /dist-out/hero-forge/",
+		"the final stage must copy the player bundle — the nginx location aliases it")
 	// The staging dir has to be created unconditionally or the COPY has no
 	// source and the DEFAULT build — the one that matters — fails outright.
 	assert.Contains(t, edge, "mkdir -p /dist-out/editor",
@@ -85,10 +104,12 @@ func TestContentEditorNotExposedInProduction(t *testing.T) {
 	assert.NotContains(t, edge, `pnpm --filter "@ggd/client" build && pnpm --filter "@ggd/editor" build`,
 		"the editor build must be inside the "+arg+" conditional, not chained to the client build")
 	condIdx := strings.Index(edge, `if [ "${`+arg+`}" = "1" ]`)
-	editorIdx := strings.Index(edge, `pnpm --filter "@ggd/editor" build`)
+	// ⭐ GH#1270 — `build:player` is DELIBERATELY unconditional, so the search for the
+	// AUTHORING build must skip it: look for the exact console build command.
+	editorIdx := strings.Index(edge, `pnpm --filter "@ggd/editor" build && cp -a apps/editor/dist/.`)
 	require.NotEqual(t, -1, condIdx, "the %s conditional is missing", arg)
 	require.NotEqual(t, -1, editorIdx, "the editor build RUN is missing")
-	assert.Less(t, condIdx, editorIdx, "the editor build must come AFTER the %s test", arg)
+	assert.Less(t, condIdx, editorIdx, "the authoring-console build must come AFTER the %s test", arg)
 
 	// ---- 4. no deploy path silently turns it back on ------------------------
 	// A build path that sets GGD_INCLUDE_EDITOR=1 ships the console again. The

@@ -18,8 +18,14 @@ export default defineConfig(({ mode }) => {
   // `.env.*` is intentionally ignored repository-wide.  Desktop mode must be
   // reproducible in a clean clone, so compile the local-loopback authority flag
   // from the tracked Vite mode instead of relying on an untracked env file.
+  // ⭐⭐ GH#1270 —— `--mode player` 是**玩家版**：只有創作英雄與我的作品，
+  //   而且產物落在**另一個目錄**（`dist-player/`）⇒ ⛔ 正式站的映像複製的是它，
+  //   ⛔ 不是內部內容編輯器那一份（那一份仍然由 `GGD_INCLUDE_EDITOR=1` 的 dev 映像決定）。
+  //   ⚠️ 它**不是**授權機制：寫入照樣只走需要登入的 `/api/v1/hero-*`。
+  ...(mode === "player" ? { build: { outDir: "dist-player" } } : {}),
   define: {
     ...(mode === "desktop" ? { "import.meta.env.VITE_DESKTOP": JSON.stringify("1") } : {}),
+    ...(mode === "player" ? { "import.meta.env.VITE_GGD_PLAYER_EDITOR": JSON.stringify("1") } : {}),
     "import.meta.env.VITE_HERO_GENERATOR_VERSION": JSON.stringify(generator.versionId),
   },
   plugins: [react(), {

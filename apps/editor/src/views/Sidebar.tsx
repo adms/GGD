@@ -27,7 +27,8 @@ export function Sidebar({
   forgeActive?: boolean;
   vfxForgeActive?: boolean;
   exportActive?: boolean;
-  onPick(collection: CollectionName): void;
+  /** ⭐ GH#1270：玩家版**不傳**它 ⇒ 整個 Collections 區塊連渲染都不渲染。 */
+  onPick?(collection: CollectionName): void;
   onPickForge?(): void;
   onPickVfxForge?(): void;
   onPickExport?(): void;
@@ -71,17 +72,21 @@ export function Sidebar({
           📦 匯出中心
         </button>
       ) : null}
-      <h2>Collections</h2>
-      {collectionRegistry.map((c) => (
-        <button
-          key={c.name}
-          type="button"
-          className={active === c.name ? "active" : ""}
-          onClick={() => onPick(c.name)}
-        >
-          {c.label}
-        </button>
-      ))}
+      {onPick ? (
+        <>
+          <h2>Collections</h2>
+          {collectionRegistry.map((c) => (
+            <button
+              key={c.name}
+              type="button"
+              className={active === c.name ? "active" : ""}
+              onClick={() => onPick(c.name)}
+            >
+              {c.label}
+            </button>
+          ))}
+        </>
+      ) : null}
       <DesktopSourceBadge />
     </nav>
   );
