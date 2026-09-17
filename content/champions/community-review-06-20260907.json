@@ -448,6 +448,22 @@
         "sourcePlatform": "GGD runtime"
       },
       "automaticEligible": true
+    },
+    {
+      "modelKey": "version.body.6484c748978551f4419a5e982a3e6814f8fca9b9ff276939",
+      "label": "卡比當年上線那顆（卡通調色盤，GH#1181 找回）",
+      "sourceModelKey": "community.body.8112e707eec9a4cacf3df145e57602cdea1c0c186db23e2b",
+      "modelSha256": "e2f9f9549a3c1b3ef81c799f1adef3cd2f93f915b5dae4f4fcbcfb608a87a725",
+      "binarySha256": "7bf3e20c8c3cb7af472c81f59d643719bc4c02d467c7d5a78ed67536d36ef963",
+      "registeredAt": "2026-09-17T14:00:27.383Z",
+      "source": {
+        "kind": "previous",
+        "character": "卡比",
+        "work": "原上線內容",
+        "library": "GGD",
+        "reference": "models/version.body.6484c748978551f4419a5e982a3e6814f8fca9b9ff276939.json",
+        "tier": "original"
+      }
     }
   ],
   "modelSelectionMode": "automatic"
