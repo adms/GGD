@@ -232,14 +232,14 @@
     }
   ],
   "fullAudit": {
+    "status": "local-preserved-s3-readback-verified",
     "archiveMember": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
-    "archiveStatus": "pending-manifest-publication-and-readback",
     "bytes": 339170,
     "gitManifest": "materials/hero-model-library/pr1284-preparation-s3.json",
     "localPath": "../GGD-Asset-Library/conversions/pr1284-preparation-final-v1/payload/materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+    "archiveStatus": "full-get-and-member-sha256-verified",
     "restoreRequiredForInventoryBuild": false,
-    "sha256": "b9dd84b125d120b2f9aeb23e79533c4a1bbb97fad53472e7331a19cc6efbeaf3",
-    "status": "local-preserved-s3-readback-pending"
+    "sha256": "b9dd84b125d120b2f9aeb23e79533c4a1bbb97fad53472e7331a19cc6efbeaf3"
   },
   "fullMemberManifest": {
     "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/cpk-members.jsonl.gz",

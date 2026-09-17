@@ -10,15 +10,15 @@
   "inputs": [
     {
       "path": "materials/hero-model-library/source-module-catalog-v1/300-mba.json",
-      "bytes": 196927,
-      "sha256": "724a70450852211ec8f261136e5540676c07a0aaebe5513804b6897fa592b2d0",
+      "bytes": 196922,
+      "sha256": "6126c9954633e4629c7c58f32506916ecef5ed7164a7a582950e49133f62cb2e",
       "sourceGroups": 2,
       "candidates": 291
     },
     {
       "path": "materials/hero-model-library/source-module-catalog-v1/ssbu.json",
-      "bytes": 101815,
-      "sha256": "53723600704e9ad45be7d869d41bbaefe6438c004d0719e75462c6d62811a07c",
+      "bytes": 101810,
+      "sha256": "95397cda4e8dd6b3029e7f25bf3498f1bd5e4c3f457e6f3156aab3e3201f45fd",
       "sourceGroups": 6,
       "candidates": 184
     },

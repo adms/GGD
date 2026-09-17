@@ -14,7 +14,30 @@
 
 **其他工作流先讀這一份。** 共用 repo 是 `adms/GGD`；目前增量交付在 `codex/hero-model-library-options-clean` 分支，[PR #1284](https://github.com/adms/GGD/pull/1284)；舊 #1152／#1267 留作歷史追溯。各批是否已合併及部署須查該批收據，不以本分支存在推定 `main` 已有新增設定。
 
-本批準備材料另見 [PR #1284 歸檔清單](../hero-model-library/pr1284-preparation-s3.json)。以 `fullGetVerified` 判定是否已上傳讀回；`plannedS3Uri` 只是目的地。完整解析原件與審查圖保留在本機，未驗證上傳前不移除既有 Git 材料。
+<!-- generated:pr1284-preparation-archive:start -->
+
+### PR #1284 準備材料歸檔
+
+**已上傳，完整讀回與逐檔 SHA-256 驗證通過**。本批限定 **13 份材料**，封裝 **1,815,311 bytes**；逐檔路徑、大小與 SHA-256 讀 [歸檔清單](../hero-model-library/pr1284-preparation-s3.json)。
+
+- 封裝 SHA-256：`b7a1f83afa3da5f38dba0906559f9443f4c61641f19cdd24f2ce15270c14e528`。
+- S3 已驗證位置：`s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/pr1284-preparation-final-v1/b7a1f83afa3da5f38dba0906559f9443f4c61641f19cdd24f2ce15270c14e528.tar.gz`。
+- 驗證旗標：`fullGetVerified=true`；`allArchiveMembersSha256Verified=true`。
+- 本機原件保留：`localPreserved=true`；本機封裝：`/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/pr1284-preparation-final-v1/source.tar.gz`。
+
+範圍僅為清單列出的準備材料與完整解析收據，不代表全部本機材料已備份，也不證明英雄可切換或正式站已部署。
+
+人工唯讀下載封裝後，使用既有還原入口；將第一個參數換成下載檔絕對路徑，目的地須位於 checkout 外。此入口核對封裝與逐檔 SHA-256，不覆蓋不同內容的檔案，也不把完整解析 JSON 寫回 Git 的精簡清單。
+
+```bash
+python3 tools/hero-model-library/publish_pr1284_preparation_index.py \
+  --restore-from "<已下載的封裝絕對路徑>" \
+  --destination "../GGD-Asset-Library/restored/pr1284-preparation-final-v1"
+```
+
+此區由 `python3 tools/hero-model-library/publish_pr1284_preparation_index.py --sync-docs` 從歸檔清單生成；`--check` 驗證文件同步。
+
+<!-- generated:pr1284-preparation-archive:end -->
 
 **分工固定：來源工作流找檔、下載與交付；本工作流負責轉換驗收、版本合併、中央索引與 Git 分支推送；Main 審查合併及部署。** 已交付素材分批發布，不等待 KOF／其他遊戲整庫搜尋完成。
 

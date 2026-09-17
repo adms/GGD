@@ -853,14 +853,14 @@
     }
   ],
   "fullAudit": {
+    "status": "local-preserved-s3-readback-verified",
     "archiveMember": "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
-    "archiveStatus": "pending-manifest-publication-and-readback",
     "bytes": 324863,
     "gitManifest": "materials/hero-model-library/pr1284-preparation-s3.json",
     "localPath": "../GGD-Asset-Library/conversions/pr1284-preparation-final-v1/payload/materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
+    "archiveStatus": "full-get-and-member-sha256-verified",
     "restoreRequiredForSourceAudit": false,
-    "sha256": "3b5ecd29672ddfd8ec9e32cbe5926da311d4ea4bf341aef265c7e9674011e32e",
-    "status": "local-preserved-s3-readback-pending"
+    "sha256": "3b5ecd29672ddfd8ec9e32cbe5926da311d4ea4bf341aef265c7e9674011e32e"
   },
   "inventoryDate": "2026-09-17",
   "mode": "read-only-source-audit-and-extraction-preparation",

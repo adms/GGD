@@ -1,9 +1,9 @@
 {
   "schema": "ggd.pr1284-preparation-s3@1",
   "scope": "Only the listed preparation evidence and full analysis receipts; not all local materials.",
-  "status": "local-frozen-awaiting-explicit-upload-approval",
-  "plannedS3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/pr1284-preparation-final-v1/b7a1f83afa3da5f38dba0906559f9443f4c61641f19cdd24f2ce15270c14e528.tar.gz",
-  "s3Uri": null,
+  "status": "s3-full-readback-verified",
+  "s3Uri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/pr1284-preparation-final-v1/b7a1f83afa3da5f38dba0906559f9443f4c61641f19cdd24f2ce15270c14e528.tar.gz",
+  "manifestUri": "s3://ggd-390630837668-ap-east-2-an/legacy/public-model-sources/pr1284-preparation-final-v1/b7a1f83afa3da5f38dba0906559f9443f4c61641f19cdd24f2ce15270c14e528.files.json",
   "sha256": "b7a1f83afa3da5f38dba0906559f9443f4c61641f19cdd24f2ce15270c14e528",
   "bytes": 1815311,
   "fileCount": 13,
@@ -74,10 +74,13 @@
       "sha256": "14c14f1153b2d546f979b71298c4fd49f5b3426b6a687e2613717f0c12c083e8"
     }
   ],
-  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/pr1284-preparation-final-v1/source.tar.gz",
+  "fullGetVerified": true,
+  "allArchiveMembersSha256Verified": true,
+  "profile": "vibe-coding",
+  "region": "ap-east-2",
   "localPreserved": true,
-  "fullGetVerified": false,
-  "allArchiveMembersSha256Verified": false,
-  "localArchiveMembersSha256Verified": true,
+  "localArchive": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/pr1284-preparation-final-v1/source.tar.gz",
+  "localReadback": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/backups/pr1284-preparation-final-v1/s3-full-readback.tar.gz",
+  "restorePolicy": "Manual read-only retrieval only. Restore to a separate directory; full analysis JSON must not overwrite compact Git summaries.",
   "productionDeploymentVerified": false
 }

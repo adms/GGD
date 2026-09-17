@@ -6780,13 +6780,13 @@
   ],
   "expandedSchema": "ggd.source-module-catalog-fragment@1",
   "fullAudit": {
-    "status": "local-preserved-s3-readback-pending",
+    "status": "local-preserved-s3-readback-verified",
     "bytes": 801068,
     "sha256": "b31b86c542d22f5f277438c8e2a7902c1d0f9b002d9f78091244bba1997fbd26",
     "localPath": "../GGD-Asset-Library/conversions/pr1284-preparation-final-v1/payload/materials/hero-model-library/source-module-catalog-v1/300-mba.json",
     "gitManifest": "materials/hero-model-library/pr1284-preparation-s3.json",
     "archiveMember": "materials/hero-model-library/source-module-catalog-v1/300-mba.json",
-    "archiveStatus": "pending-manifest-publication-and-readback",
+    "archiveStatus": "full-get-and-member-sha256-verified",
     "restoreRequiredForCatalogBuild": false
   }
 }

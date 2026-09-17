@@ -381,14 +381,14 @@
     }
   ],
   "fullAudit": {
+    "status": "local-preserved-s3-readback-verified",
     "archiveMember": "materials/hero-model-library/source-inventories/jstars-priority-gintoki-gon-killua-v1/inventory.json",
-    "archiveStatus": "pending-manifest-publication-and-readback",
     "bytes": 599291,
     "gitManifest": "materials/hero-model-library/pr1284-preparation-s3.json",
     "localPath": "../GGD-Asset-Library/conversions/pr1284-preparation-final-v1/payload/materials/hero-model-library/source-inventories/jstars-priority-gintoki-gon-killua-v1/inventory.json",
+    "archiveStatus": "full-get-and-member-sha256-verified",
     "restoreRequiredForInventoryBuild": false,
-    "sha256": "6e8f7f0062bb1b0755dad36bdb5f3a609b706d60e7b89abbd72f0c58bb07702a",
-    "status": "local-preserved-s3-readback-pending"
+    "sha256": "6e8f7f0062bb1b0755dad36bdb5f3a609b706d60e7b89abbd72f0c58bb07702a"
   },
   "policies": {
     "audio": "Numbered SFX and voice files remain listening-review candidates until the owner approves the speaker and event.",
