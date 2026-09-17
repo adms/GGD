@@ -45,7 +45,7 @@
       "maxAlive": 3,
       "onOwnerDeath": "despawn",
       "cleanse": "none",
-      "castTimeSec": 0.2
+      "castTimeSec": 0.1
     },
     "inheritDefaults": true,
     "contentSha256": "sha256:28911a3620fffaad01d4b1d5cb95b4ba5fcf53474b5534c3012ac4cf4ad22a4b"

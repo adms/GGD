@@ -35,6 +35,7 @@
     "armor": 0,
     "ap": 0
   },
+  "msGrowthTier": "極小",
   "attributes": {
     "str": 13,
     "agi": 29,
@@ -130,7 +131,7 @@
           "statusId": "lol-ashe.focus",
           "minStacks": 4,
           "castType": "self",
-          "castTimeSec": 0,
+          "castTimeSec": 0.1,
           "missingText": "先普攻累積四層專注",
           "effects": [
             {
@@ -229,7 +230,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.2,
+          "castTimeSec": 0.1,
           "radius": 2.5,
           "side": "enemies",
           "effects": [
@@ -425,7 +426,7 @@
         "ref": "hero-template.7737c132c32231e336a95ad3052ea0092a0eaba31a4d4550",
         "params": {
           "castType": "skillshot",
-          "castTimeSec": 0.5,
+          "castTimeSec": 0.1,
           "radius": 2.5,
           "side": "enemies",
           "effects": [

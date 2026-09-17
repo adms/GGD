@@ -2,7 +2,7 @@
   "id": "acquired-cattiva.passive",
   "name": "不是我打破的",
   "provenance": "editor-json",
-  "description": "受傷後取得 2 秒極小級移速加成，內置冷卻 4 秒。",
+  "description": "受傷後取得 2 秒極小級移速加成，內置冷卻 {{cd}} 秒。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",
@@ -78,6 +78,5 @@
     "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
   },
   "schema": "ability@1",
-  "castTimeSec": 0,
   "icon": "assets/icons/abilities/acquired-cattiva.passive.webp"
 }

@@ -2,7 +2,7 @@
   "id": "acquired-naruto.passive",
   "name": "打架前先吃麵",
   "provenance": "editor-json",
-  "description": "施放技能後回復自身20生命，內置冷卻3秒。",
+  "description": "施放技能後回復自身20生命，內置冷卻{{cd}}秒。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",
@@ -62,6 +62,5 @@
     "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
   },
   "schema": "ability@1",
-  "castTimeSec": 0,
   "icon": "assets/icons/abilities/acquired-naruto.passive.webp"
 }

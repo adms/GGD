@@ -2,7 +2,7 @@
   "id": "acquired-dio.passive",
   "name": "吸血鬼加班制",
   "provenance": "editor-json",
-  "description": "普攻命中自己 E 留下的停格狀態時回復自身 35 生命，內置冷卻 2 秒。",
+  "description": "普攻命中自己 E 留下的停格狀態時回復自身 35 生命，內置冷卻 {{cd}} 秒。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",
@@ -76,6 +76,5 @@
     "contentSha256": "sha256:5e28e73ce2690935281d226511a359eaa931b83e39773119279f78ecfdcc5c26"
   },
   "schema": "ability@1",
-  "castTimeSec": 0,
   "icon": "assets/icons/abilities/acquired-dio.passive.webp"
 }
