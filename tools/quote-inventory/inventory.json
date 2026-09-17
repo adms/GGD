@@ -2,9 +2,9 @@
  "schema": "ggd.champion-quote-inventory@1",
  "generator": "tools/quote-inventory/gen.mjs",
  "roster": 130,
- "battleMissing": 2,
+ "battleMissing": 0,
  "selectMissing": 59,
- "noVoicePack": 2,
+ "noVoicePack": 0,
  "noVoicePackWithTwin": 0,
  "rows": [
   {
@@ -98,14 +98,17 @@
   {
    "id": "godie-e00s",
    "name": "白木老樹精 - 白木卡迪那",
-   "hasVoicePack": false,
+   "hasVoicePack": true,
    "viaForm": false,
-   "packId": null,
+   "packId": "godie-e00s",
    "twin": null,
    "ownerExcluded": null,
-   "battle": null,
-   "defaultSlot": null,
-   "packSlots": 0,
+   "battle": {
+    "source": "語音包",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 13,
    "takes": 0,
    "select": {
     "text": "森（もり）の古木（こぼく）、その根で縛（しば）り上（あ）げてやろう。",
@@ -1075,14 +1078,17 @@
   {
    "id": "godie-ucrl",
    "name": "職業獵人 - 傑 富力士",
-   "hasVoicePack": false,
+   "hasVoicePack": true,
    "viaForm": false,
-   "packId": null,
+   "packId": "godie-ucrl",
    "twin": null,
    "ownerExcluded": null,
-   "battle": null,
-   "defaultSlot": null,
-   "packSlots": 0,
+   "battle": {
+    "source": "語音包",
+    "text": "（原檔）"
+   },
+   "defaultSlot": "quote",
+   "packSlots": 23,
    "takes": 0,
    "select": {
     "text": "キルアじゃなきゃダメなんだ！",

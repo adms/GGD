@@ -28,10 +28,10 @@
       "defeat"
     ]
   },
-  "generatedCount": 132,
-  "partialCount": 81,
-  "sharedCount": 20,
-  "championCount": 152,
+  "generatedCount": 134,
+  "partialCount": 83,
+  "sharedCount": 22,
+  "championCount": 156,
   "formSharesNote": "「變身前/後共用就好」 (owner 2026-07-26, task #249): a base and its ALTERNATE form are ONE character per the map's Eme1/Emeu + unsf evidence, so one pack serves both. Each entry below carries `sharedFrom` and its clip paths point at the DONOR's files — nothing was copied. This is a PLAYBACK fallback, not a generation status: ROSTER.json still (correctly) shows these champions as having no clips of their own.",
   "formShares": [
     {
@@ -62,6 +62,12 @@
       "championId": "godie-e00z",
       "sharedFrom": "godie-e00k",
       "heroNumber": "19",
+      "direction": "base-to-alternate"
+    },
+    {
+      "championId": "godie-e010",
+      "sharedFrom": "godie-e00s",
+      "heroNumber": "70",
       "direction": "base-to-alternate"
     },
     {
@@ -134,6 +140,12 @@
       "championId": "godie-u00o",
       "sharedFrom": "godie-u00n",
       "heroNumber": "76",
+      "direction": "base-to-alternate"
+    },
+    {
+      "championId": "godie-u034",
+      "sharedFrom": "godie-ucrl",
+      "heroNumber": "06",
       "direction": "base-to-alternate"
     },
     {
@@ -18647,6 +18659,186 @@
             "durationSec": 1,
             "speakerSim": null,
             "hash": "b6e6f028fcb5899cd6de939e6f2bae3b6a6161d34e4765d031c597bfa2220d12"
+          }
+        ]
+      }
+    },
+    "godie-e00s": {
+      "engine": "cosyvoice3",
+      "variant": "cv3-0.5b",
+      "tier": "combat-core",
+      "missingCategories": [
+        "quote",
+        "victory",
+        "stun",
+        "poison",
+        "slow",
+        "blind",
+        "bind",
+        "knockdown",
+        "healed",
+        "confused",
+        "paralyzed",
+        "thanks",
+        "taunt",
+        "curse",
+        "hum",
+        "attack-light",
+        "attack-heavy",
+        "crit",
+        "block",
+        "dodge",
+        "sprint",
+        "jump",
+        "respond.ok",
+        "respond.no",
+        "puzzled",
+        "love",
+        "thumbs-up",
+        "retreat",
+        "charge",
+        "watch",
+        "free-move",
+        "first-blood",
+        "kill-2",
+        "kill-3",
+        "kill-4",
+        "kill-5",
+        "unstoppable"
+      ],
+      "lines": {
+        "defeat": [
+          {
+            "clip": "assets/audio/voices/lines/godie-e00s/defeat.mp3",
+            "text": "ぐ……っ……",
+            "lang": "ja",
+            "durationSec": 0.36,
+            "speakerSim": null,
+            "hash": "650e1104b339c63fc2eb28c8d41f2dc0d094c25595e1dee5042524ea1b9e02d3"
+          }
+        ],
+        "hurt": [
+          {
+            "clip": "assets/audio/voices/lines/godie-e00s/hurt.mp3",
+            "text": "うっ！",
+            "lang": "ja",
+            "durationSec": 0.44,
+            "speakerSim": null,
+            "hash": "b314da9f66594cdd1ec4247f42e83ae04a22d5f2fec89d15385f81f102c3ee34"
+          }
+        ],
+        "hurt-heavy": [
+          {
+            "clip": "assets/audio/voices/lines/godie-e00s/hurt-heavy.mp3",
+            "text": "ぐああっ……！",
+            "lang": "ja",
+            "durationSec": 0.6,
+            "speakerSim": null,
+            "hash": "1c06791cf988cb234c427ff4237a5b8bab4b8497e9cb1478c86a8034701b6eac"
+          }
+        ],
+        "kill-1": [
+          {
+            "clip": "assets/audio/voices/lines/godie-e00s/kill-1.mp3",
+            "text": "はぁっ！",
+            "lang": "ja",
+            "durationSec": 0.4,
+            "speakerSim": null,
+            "hash": "7bc464b3a8ead52befe6639786cd32af507cba6a70142dc54fdfae2174c54dcc"
+          }
+        ],
+        "skill-name.e": [
+          {
+            "clip": "assets/audio/voices/lines/godie-e00s/skill-name.e.mp3",
+            "text": "木束縛之術！",
+            "lang": "ja",
+            "durationSec": 1.52,
+            "speakerSim": null,
+            "hash": "375879bf1de84e19cb97e8c56ec8a9829504103ad42c9bb31050e3c418e973f8"
+          }
+        ],
+        "skill-name.ex": [
+          {
+            "clip": "assets/audio/voices/lines/godie-e00s/skill-name.ex.mp3",
+            "text": "樹海降臨！",
+            "lang": "ja",
+            "durationSec": 1.04,
+            "speakerSim": null,
+            "hash": "686a48c7c8c5fb009e7d47c989f7d4e50ed4341a74244034c0cda9f28d078d00"
+          }
+        ],
+        "skill-name.q": [
+          {
+            "clip": "assets/audio/voices/lines/godie-e00s/skill-name.q.mp3",
+            "text": "伸卡球！",
+            "lang": "ja",
+            "durationSec": 0.88,
+            "speakerSim": null,
+            "hash": "e783d11beb75ad6892d7e1818d0cdfa497e0ddd3643d30df98ca6096b64ce59c"
+          }
+        ],
+        "skill-name.r": [
+          {
+            "clip": "assets/audio/voices/lines/godie-e00s/skill-name.r.mp3",
+            "text": "千年練成！",
+            "lang": "ja",
+            "durationSec": 1.24,
+            "speakerSim": null,
+            "hash": "7aed91f90ec54c44359af3d5f620acd6edd6ad592f3fe5107770f71b7885800e"
+          }
+        ],
+        "skill-name.w": [
+          {
+            "clip": "assets/audio/voices/lines/godie-e00s/skill-name.w.mp3",
+            "text": "大怒石！",
+            "lang": "ja",
+            "durationSec": 0.88,
+            "speakerSim": null,
+            "hash": "ff7f447260e109d26e1b33e6895a4130c2aa2a2d460c1272f4d6f76b44eb8b93"
+          }
+        ],
+        "taunt": [
+          {
+            "clip": "assets/audio/voices/lines/godie-e00s/kill-1.mp3",
+            "text": "はぁっ！",
+            "lang": "ja",
+            "durationSec": 0.4,
+            "speakerSim": null,
+            "hash": "7bc464b3a8ead52befe6639786cd32af507cba6a70142dc54fdfae2174c54dcc",
+            "aliasOf": "kill-1"
+          }
+        ],
+        "victory": [
+          {
+            "clip": "assets/audio/voices/lines/godie-e00s/kill-1.mp3",
+            "text": "はぁっ！",
+            "lang": "ja",
+            "durationSec": 0.4,
+            "speakerSim": null,
+            "hash": "7bc464b3a8ead52befe6639786cd32af507cba6a70142dc54fdfae2174c54dcc",
+            "aliasOf": "kill-1"
+          }
+        ],
+        "quote": [
+          {
+            "clip": "assets/audio/voices/lines/godie-e00s/kill-1.mp3",
+            "text": "はぁっ！",
+            "lang": "ja",
+            "durationSec": 0.4,
+            "speakerSim": null,
+            "hash": "7bc464b3a8ead52befe6639786cd32af507cba6a70142dc54fdfae2174c54dcc",
+            "aliasOf": "kill-1"
+          }
+        ],
+        "select": [
+          {
+            "clip": "assets/audio/voices/lines/godie-e00s/kill-1.mp3",
+            "text": "はぁっ！",
+            "lang": "ja",
+            "durationSec": 0.4,
+            "speakerSim": null,
+            "hash": "7bc464b3a8ead52befe6639786cd32af507cba6a70142dc54fdfae2174c54dcc",
+            "aliasOf": "kill-1"
           }
         ]
       }
@@ -42195,6 +42387,295 @@
             "durationSec": 1.52,
             "speakerSim": null,
             "hash": "e308d1b4ceeb073e645900be08196eede364106f8b53b8f176b56a8941212ce4"
+          }
+        ]
+      }
+    },
+    "godie-ucrl": {
+      "engine": "cosyvoice3",
+      "variant": "cv3-0.5b",
+      "tier": "combat-core",
+      "missingCategories": [
+        "quote",
+        "stun",
+        "poison",
+        "slow",
+        "blind",
+        "bind",
+        "healed",
+        "confused",
+        "paralyzed",
+        "thanks",
+        "curse",
+        "hum",
+        "block",
+        "dodge",
+        "sprint",
+        "respond.no",
+        "thumbs-up",
+        "watch",
+        "free-move",
+        "first-blood",
+        "kill-2",
+        "kill-3",
+        "kill-4",
+        "kill-5",
+        "unstoppable"
+      ],
+      "lines": {
+        "select": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/taunt.mp3",
+            "text": "（原檔）chr0300_ActVoice#55",
+            "lang": "und",
+            "durationSec": 1.129433,
+            "speakerSim": null,
+            "hash": "79bf8cac99a21bc3327801c5d39c41b5bcb6ed0bc561fb59535026079f237e27"
+          },
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/respond.ok.mp3",
+            "text": "（原檔）130300_chr0300_EvnVoice#0025",
+            "lang": "und",
+            "durationSec": 1.500045,
+            "speakerSim": null,
+            "hash": "0ed2ef497c2513cdc367484d5b975649ece8e391c2c00119a615c1642423bdb1"
+          },
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/love.mp3",
+            "text": "（原檔）chr0300_ActVoice#8",
+            "lang": "und",
+            "durationSec": 1.817211,
+            "speakerSim": null,
+            "hash": "c45a1e3510823973c493ef730fd3affb8f0c699a30b2dd1a6dc1762c15b723a2"
+          },
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/puzzled.mp3",
+            "text": "（原檔）chr0300_ActVoice#4",
+            "lang": "und",
+            "durationSec": 2.498821,
+            "speakerSim": null,
+            "hash": "0e83d4280a862c5de445998d6bbd155f31af20377932eca7dd85c48421003337"
+          }
+        ],
+        "attack-heavy": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/attack-heavy.mp3",
+            "text": "（原檔）chr0300_ActVoice#71",
+            "lang": "und",
+            "durationSec": 1.08449,
+            "speakerSim": null,
+            "hash": "6c483f10af424de32872ddbccec9eb92d2e063c40607f3a849a6c4e795f9a9fe"
+          }
+        ],
+        "attack-light": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/attack-light.mp3",
+            "text": "（原檔）chr0300_ActVoice#63",
+            "lang": "und",
+            "durationSec": 0.663855,
+            "speakerSim": null,
+            "hash": "f20744b67e2d96c91fdbf52d926dd826cd3b92825b42f874a7513e58bf09fb8c"
+          }
+        ],
+        "charge": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/charge.mp3",
+            "text": "（原檔）chr0300_ActVoice#14",
+            "lang": "und",
+            "durationSec": 1.689683,
+            "speakerSim": null,
+            "hash": "264e007b229032eb2a4013a7dfba9c3c7e42e670f3430316a72206adb1bf57a9"
+          }
+        ],
+        "crit": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/crit.mp3",
+            "text": "（原檔）chr0300_ActVoice#174",
+            "lang": "und",
+            "durationSec": 1.040023,
+            "speakerSim": null,
+            "hash": "031c26ad9c7ff19007e974032254b6e7edf8d9f8019eb90319f84c35e6f24937"
+          }
+        ],
+        "defeat": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/defeat.mp3",
+            "text": "（原檔）chr0300_ActVoice#93",
+            "lang": "und",
+            "durationSec": 2.454422,
+            "speakerSim": null,
+            "hash": "a1ef6fd79a96d61f8321334f0c7af60dd3e96b9c94ad809fd2d2797f30aaeaca"
+          }
+        ],
+        "hurt": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/hurt.mp3",
+            "text": "（原檔）chr0300_ActVoice#79",
+            "lang": "und",
+            "durationSec": 0.661066,
+            "speakerSim": null,
+            "hash": "fafb666304a0c54d5fa143bb0a557777ca7efb31378c6e82a09557a4ec70f34c"
+          }
+        ],
+        "hurt-heavy": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/hurt-heavy.mp3",
+            "text": "（原檔）chr0300_ActVoice#111",
+            "lang": "und",
+            "durationSec": 1.498753,
+            "speakerSim": null,
+            "hash": "8fd4380e7de8b32f162d891f4b1fe38f887b2cd6719c170f28593f0edb08f216"
+          }
+        ],
+        "jump": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/jump.mp3",
+            "text": "（原檔）chr0300_ActVoice#137",
+            "lang": "und",
+            "durationSec": 0.750227,
+            "speakerSim": null,
+            "hash": "1308baf432925a97d3ade50848169e6518748f1962093ae81f25bf3446716935"
+          }
+        ],
+        "kill-1": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/kill-1.mp3",
+            "text": "（原檔）chr0300_ActVoice#200",
+            "lang": "und",
+            "durationSec": 1.001701,
+            "speakerSim": null,
+            "hash": "2da1f7049fa65e58912f4f5e4b8f577780dff4e0e83d9ec623e062ab01dd4e8b"
+          }
+        ],
+        "knockdown": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/knockdown.mp3",
+            "text": "（原檔）chr0300_ActVoice#182",
+            "lang": "und",
+            "durationSec": 1.573379,
+            "speakerSim": null,
+            "hash": "57565c1e72a100b6cb5b57b24cf305ad17fe4fea7b990d4fcd8dac82453904d4"
+          }
+        ],
+        "love": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/love.mp3",
+            "text": "（原檔）chr0300_ActVoice#8",
+            "lang": "und",
+            "durationSec": 1.817211,
+            "speakerSim": null,
+            "hash": "c45a1e3510823973c493ef730fd3affb8f0c699a30b2dd1a6dc1762c15b723a2"
+          }
+        ],
+        "puzzled": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/puzzled.mp3",
+            "text": "（原檔）chr0300_ActVoice#4",
+            "lang": "und",
+            "durationSec": 2.498821,
+            "speakerSim": null,
+            "hash": "0e83d4280a862c5de445998d6bbd155f31af20377932eca7dd85c48421003337"
+          }
+        ],
+        "respond.ok": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/respond.ok.mp3",
+            "text": "（原檔）130300_chr0300_EvnVoice#0025",
+            "lang": "und",
+            "durationSec": 1.500045,
+            "speakerSim": null,
+            "hash": "0ed2ef497c2513cdc367484d5b975649ece8e391c2c00119a615c1642423bdb1"
+          }
+        ],
+        "retreat": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/retreat.mp3",
+            "text": "（原檔）chr0300_ActVoice#81",
+            "lang": "und",
+            "durationSec": 0.827279,
+            "speakerSim": null,
+            "hash": "716ea3e6102706d07ed1e518ebd1219426eb3bbfcdab19ec84961dd22f9b2b3e"
+          }
+        ],
+        "skill-name.e": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/skill-name.e.mp3",
+            "text": "山形修煉-強！",
+            "lang": "ja",
+            "durationSec": 1.88,
+            "speakerSim": null,
+            "hash": "d75422429033213d4f62834e8c08748325af70e2a5e5a5ae04f3e922e92e0b42"
+          }
+        ],
+        "skill-name.ex": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/skill-name.ex.mp3",
+            "text": "（原檔）chr0300_ActVoice#115",
+            "lang": "und",
+            "durationSec": 1.65619,
+            "speakerSim": null,
+            "hash": "01d83d81193988cd304db7f441899dcedc81198d229be680cda3fff37a27843b"
+          }
+        ],
+        "skill-name.q": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/skill-name.q.mp3",
+            "text": "山形修煉-放！",
+            "lang": "ja",
+            "durationSec": 1.72,
+            "speakerSim": null,
+            "hash": "83e027b67c440def2b5249da43ea663018609830f6cddc19e0710bde30adcfc6"
+          }
+        ],
+        "skill-name.r": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/skill-name.r.mp3",
+            "text": "（原檔）chr0300_ActVoice#17",
+            "lang": "und",
+            "durationSec": 2.589025,
+            "speakerSim": null,
+            "hash": "cc9ef001d70c85645284b94e38780746ccce8e7fb9cc7953700311b4d7db142f"
+          }
+        ],
+        "skill-name.w": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/skill-name.w.mp3",
+            "text": "（原檔）chr0300_ActVoice#100",
+            "lang": "und",
+            "durationSec": 1.494331,
+            "speakerSim": null,
+            "hash": "9302d382bdcc3e71ad538452a29bbf245300509a406deac5ddae371acfc176ac"
+          }
+        ],
+        "taunt": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/taunt.mp3",
+            "text": "（原檔）chr0300_ActVoice#55",
+            "lang": "und",
+            "durationSec": 1.129433,
+            "speakerSim": null,
+            "hash": "79bf8cac99a21bc3327801c5d39c41b5bcb6ed0bc561fb59535026079f237e27"
+          }
+        ],
+        "victory": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/victory.mp3",
+            "text": "（原檔）chr0300_ActVoice#15",
+            "lang": "und",
+            "durationSec": 2.515737,
+            "speakerSim": null,
+            "hash": "df3f4bc0022722c783c3b121b8c9f6212fd34fb4d73e0b29e06bbd2a4e91991b"
+          }
+        ],
+        "quote": [
+          {
+            "clip": "assets/audio/voices/lines/godie-ucrl/victory.mp3",
+            "text": "（原檔）chr0300_ActVoice#15",
+            "lang": "und",
+            "durationSec": 2.515737,
+            "speakerSim": null,
+            "hash": "df3f4bc0022722c783c3b121b8c9f6212fd34fb4d73e0b29e06bbd2a4e91991b",
+            "aliasOf": "victory"
           }
         ]
       }

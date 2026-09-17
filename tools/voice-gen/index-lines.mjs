@@ -259,10 +259,20 @@ function main() {
     // ⭐ 名言別名（`QUOTE_ALIAS.json`，owner 2026-09-17「若沒有第二順位是勝利 第三順位是嘲諷」）：
     // 這位沒有名言時，讓名言那一格**指向他自己另一段**（勝利／嘲諷）—— 與變身共用同一個哲學：
     // ⛔ 不複製任何檔（複製出來的那一份沒有人認領、也沒有鏈會重生成它，GH#771），只是多指一次。
-    const alias = QUOTE_ALIAS[id];
-    if (alias?.from && alias?.to && !lines[alias.to] && lines[alias.from]) {
-      lines[alias.to] = lines[alias.from].map((e) => ({ ...e, aliasOf: alias.from }));
-      aliased.push(`${id}: ${alias.to} ← ${alias.from}`);
+    // ⭐ 一位可以有多筆（例：白木卡迪那的勝利與名言都指到他的擊殺呻吟）
+    for (const alias of [QUOTE_ALIAS[id] ?? []].flat()) {
+      if (alias?.from && alias?.to && !lines[alias.to] && lines[alias.from]) {
+        lines[alias.to] = lines[alias.from].map((e) => ({ ...e, aliasOf: alias.from }));
+        aliased.push(`${id}: ${alias.to} ← ${alias.from}`);
+      }
+    }
+    // ⚠️ 選角點擊的來源池在上面就算好了 ⇒ 別名補出來的格要讓它再看一次，否則點擊會是啞的
+    if (!lines[SELECT_CATEGORY]?.length) {
+      const late = SELECT_SOURCE_CATEGORIES.flatMap((cat) => (lines[cat] ?? []).slice(0, 1));
+      if (late.length) {
+        lines[SELECT_CATEGORY] = late.map((e) => ({ ...e }));
+        aliased.push(`${id}: select ← 別名補出來的格`);
+      }
     }
 
     champions[id] = {

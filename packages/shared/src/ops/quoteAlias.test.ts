@@ -15,13 +15,16 @@ import { join, resolve } from "node:path";
 
 const REPO = resolve(__dirname, "../../../..");
 const read = (p: string) => JSON.parse(readFileSync(join(REPO, p), "utf8"));
-const ALIAS = read("content/assets/audio/voices/lines/QUOTE_ALIAS.json").champions as Record<string, { from: string; to: string; why: string }>;
+type Alias = { from: string; to: string; why: string };
+const RAW = read("content/assets/audio/voices/lines/QUOTE_ALIAS.json").champions as Record<string, Alias | Alias[]>;
+// ⭐ 一位可以有多筆（陣列）——攤平成 [id, 一筆] 逐筆驗
+const ALIAS: [string, Alias][] = Object.entries(RAW).flatMap(([id, v]) => [v].flat().map((a) => [id, a] as [string, Alias]));
 const PACK = read("content/assets/audio/voices/champions/MANIFEST.json").champions as Record<string, { lines: Record<string, { clip: string; aliasOf?: string }[]> }>;
 
 describe("名言別名（QUOTE_ALIAS.json）", () => {
   it("每一位別名英雄的名言都指到自己那一段的同一個檔", () => {
-    expect(Object.keys(ALIAS).length, "別名表空的 ⇒ 這條閘會空轉").toBeGreaterThan(0);
-    for (const [id, a] of Object.entries(ALIAS)) {
+    expect(ALIAS.length, "別名表空的 ⇒ 這條閘會空轉").toBeGreaterThan(0);
+    for (const [id, a] of ALIAS) {
       const lines = PACK[id]?.lines;
       expect(lines, `${id} 不在出貨的語音清單裡`).toBeTruthy();
       expect(lines?.[a.from], `${id}：別名表說借「${a.from}」，但清單裡沒有這一格`).toBeTruthy();
@@ -33,7 +36,7 @@ describe("名言別名（QUOTE_ALIAS.json）", () => {
   });
 
   it("每一筆別名都寫得出 owner 的理由", () => {
-    for (const [id, a] of Object.entries(ALIAS)) {
+    for (const [id, a] of ALIAS) {
       expect(a.why, `${id} 的別名沒有理由 —— ⛔ 沒有出處的對應不可以出貨`).toMatch(/owner/);
     }
   });

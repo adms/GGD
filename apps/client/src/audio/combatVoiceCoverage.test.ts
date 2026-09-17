@@ -110,13 +110,14 @@ function ownPackIds(pack: ChampionVoicePack | null): Set<string> {
  * gap disappear. That is an owner call, not a test-author call.
  */
 const VOICE_GAP: readonly string[] = [
-  "godie-e00s",
+  // ⭐ 2026-09-17：godie-e00s 與 godie-ucrl **離開**這張表 —— 兩位都拿到整包語音了。
+  //   · godie-ucrl（傑富力士）：owner「傑富力士 應該是全部音效跟語音都要從 JUMP 對應上架吧」⇒ JUMP FORCE Gon 的原檔 19 格＋用他自己的聲音合成其餘。
+  //   · godie-e00s（白木卡迪那）：owner「可以借用 Berserker」⇒ 用 Berserker 的參考音合成他自己的整包。
   // ⚠️ 2026-09-11: godie-ucrl STAYS. The owner adopted Jump Force Gon clips for it on the review page,
   //   but this hero owns no pack — it borrows its counterpart's (godie-u034) through the form share, and
   //   a pack of its own would END that borrowing (a champion that owns a pack is never lent one) and
   //   silence every category the originals do not cover. Its clips are parked in S3 until a partial pack
   //   can borrow the rest from its counterpart; the same holds for the other seven form-share halves.
-  "godie-ucrl",
   // ── 2026-09-10: the 74 new heroes (b2-* / community-review-*) landed their combat
   // packs (tools/voice-gen/src/build-combat-lines.mjs — Japanese-only synthesis over
   // the hero's own reference, original game clips where the owner's index has them,

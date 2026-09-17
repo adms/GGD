@@ -107,10 +107,15 @@ if WRITE:
     os.replace(tmpj, orig_path)
     if ARCHIVE:
         n = sum(1 for p in (ARCHIVE / "voice-archive" / stamp).rglob("*.mp3"))
-        s = subprocess.run(["aws", "s3", "sync", str(ARCHIVE / "voice-archive" / stamp), f"s3://{BUCKET}/voice-archive/{stamp}", "--profile", PROFILE, "--region", REGION, "--only-show-errors"], capture_output=True, text=True)
-        if s.returncode != 0:
+        # ⭐ 這一批全是新格、沒有取代任何東西 ⇒ 沒有要歸檔的檔，⛔ 不是錯誤
+        if n == 0:
+            print("S3 歸檔：這一批沒有被取代的檔（全是新格）⇒ 跳過")
+            n = None
+        s = None if n is None else subprocess.run(["aws", "s3", "sync", str(ARCHIVE / "voice-archive" / stamp), f"s3://{BUCKET}/voice-archive/{stamp}", "--profile", PROFILE, "--region", REGION, "--only-show-errors"], capture_output=True, text=True)
+        if s is not None and s.returncode != 0:
             print(f"⛔ S3 歸檔失敗（{n} 檔）：action=s3:PutObject resource=s3://{BUCKET}/voice-archive/{stamp}\n{s.stderr[-400:]}"); sys.exit(4)
         # ⭐ 「sync 離開碼 0」⛔ 不是上去了的證據（fd90b7a3d 記過）⇒ 整批抓回來逐檔比 SHA-256
+        if n is None: raise SystemExit(0)
         back = pathlib.Path(tempfile.mkdtemp(prefix="orig-direct-back-"))
         g = subprocess.run(["aws", "s3", "cp", f"s3://{BUCKET}/voice-archive/{stamp}/", str(back), "--recursive", "--profile", PROFILE, "--region", REGION, "--only-show-errors"], capture_output=True, text=True)
         local = {p.relative_to(ARCHIVE / "voice-archive" / stamp): sha(p) for p in (ARCHIVE / "voice-archive" / stamp).rglob("*.mp3")}

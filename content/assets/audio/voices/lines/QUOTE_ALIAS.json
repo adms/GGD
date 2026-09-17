@@ -1,7 +1,7 @@
 {
   "id": "combat-quote-alias",
   "schema": "audio.combat-quote-alias@1",
-  "note": "沒有名言的英雄，用他自己的哪一格當名言 —— ⭐ 這是資料（owner 逐位裁決），⛔ 不是寫死在產生器裡。讀它的是 tools/voice-gen/src/build-combat-lines.mjs：來源那一段會被複製成 quote.mp3，textSource=alias。",
+  "note": "沒有名言的英雄，用他自己的哪一格當名言 —— ⭐ 這是資料（owner 逐位裁決），⛔ 不是寫死在產生器裡。讀它的是 tools/voice-gen/src/build-combat-lines.mjs：來源那一段會被複製成 quote.mp3，textSource=alias。 ⭐ 2026-09-17：一位可以有多筆（陣列）。",
   "champions": {
     "b2-aladdin": {
       "from": "victory",
@@ -68,6 +68,32 @@
       "to": "quote",
       "why": "owner 2026-09-17：「若沒有第二順位是勝利 第三順位是嘲諷」「其他都可以用勝利宣言」",
       "text": "ニャーはなんにも悪いことしてないのに…"
+    },
+    "godie-e00s": [
+      {
+        "from": "kill-1",
+        "to": "taunt",
+        "why": "owner 2026-09-17「白木老樹精 - 白木卡迪那 可以借用 Berserker」⇒ 選角點擊的來源是嘲諷那一類，他沒有任何台詞 ⇒ 用他自己的擊殺呻吟",
+        "text": ""
+      },
+      {
+        "from": "kill-1",
+        "to": "victory",
+        "why": "owner 2026-09-17「白木老樹精 - 白木卡迪那 可以借用 Berserker」⇒ 用 Berserker 聲線合成的整包只有擬聲與喊招（他沒有任何台詞來源，⛔ 我不編台詞）⇒ 勝利用他自己的擊殺呻吟",
+        "text": ""
+      },
+      {
+        "from": "kill-1",
+        "to": "quote",
+        "why": "同上；owner「其他都可以用勝利宣言」的同一條規則，他沒有勝利台詞 ⇒ 名言也用那一段",
+        "text": ""
+      }
+    ],
+    "godie-ucrl": {
+      "from": "victory",
+      "to": "quote",
+      "why": "owner 2026-09-17「其他都可以用勝利宣言」；他的勝利是 JUMP FORCE 的原作語音「やったー!みんなありがとう!」",
+      "text": "やったー！みんなありがとう！"
     }
   }
 }
