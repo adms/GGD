@@ -2072,7 +2072,6 @@
       "variant": "cv3-0.5b",
       "tier": "combat-core",
       "missingCategories": [
-        "quote",
         "stun",
         "poison",
         "slow",
@@ -2159,6 +2158,16 @@
             "hash": "ddc58f6082ecbea9b36c2ff8fa4fe6d1d7111179f861c3398e09af655cb7b702"
           }
         ],
+        "quote": [
+          {
+            "clip": "assets/audio/voices/lines/b2-kisaragi/quote.mp3",
+            "text": "（原檔）kisaragi.b",
+            "lang": "und",
+            "durationSec": 5,
+            "speakerSim": null,
+            "hash": "7339ab0b2835c9348ac03badf7d475f1dec9cc9934b3a7537635cb39d4854213"
+          }
+        ],
         "skill-name.e": [
           {
             "clip": "assets/audio/voices/lines/b2-kisaragi/skill-name.e.mp3",
@@ -2222,11 +2231,11 @@
         "victory": [
           {
             "clip": "assets/audio/voices/lines/b2-kisaragi/victory.mp3",
-            "text": "（原檔）JR_Melody",
+            "text": "（原檔）kisaragi.d",
             "lang": "und",
-            "durationSec": 10.03102,
+            "durationSec": 5.47,
             "speakerSim": null,
-            "hash": "c29f2a0371b76b370ecde10c776b7e0d70b7f78b2d2c2175b3f3281701854bcc"
+            "hash": "070154c0bc6538cbd80e67774cbe58d4e3e299b6eab2c5d312a18e0e8e940afa"
           }
         ]
       }

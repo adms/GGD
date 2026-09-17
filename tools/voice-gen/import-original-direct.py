@@ -61,7 +61,10 @@ for slot, m in spec["map"].items():
         problems.append(f"{slot}: 原檔不存在 {src}"); continue
     existing = rows.get(slot)
     if existing and existing.get("sha256") != sha(src):
-        problems.append(f"{slot}: 已經是原作（{existing.get('group')}:{existing.get('name')}）⛔ 原作不互相取代"); continue
+        # ⭐ 取代既有原作只有一種情況合法：owner 明講要換 ⇒ `replaceOriginal` 必須帶著他的原話
+        if not (m.get("replaceOriginal") and "owner" in str(m.get("why", ""))):
+            problems.append(f"{slot}: 已經是原作（{existing.get('group')}:{existing.get('name')}）⛔ 原作不互相取代"
+                            f"（真要換：在該格加 replaceOriginal 並在 why 裡寫 owner 的原話）"); continue
     plan.append((slot, m, src))
 if problems:
     print("\n".join("⛔ " + p for p in problems)); sys.exit(2)
@@ -82,7 +85,9 @@ for slot, m, src in plan:
         print(f"⛔ {slot}: 轉出來不合格（{'；'.join(why for _code, why in bad)}；ffprobe {secs:.2f}s, 峰值 {peak} dB）"); sys.exit(3)
     dst = LINES / hero / f"{slot}.mp3"
     head = subprocess.run(["git", "-C", str(ROOT), "cat-file", "-e", f"HEAD:{dst.relative_to(ROOT)}"], capture_output=True).returncode == 0
-    report.append({"slot": slot, "file": m.get("file") or src.name, "seconds": round(secs, 2), "replaces": "git HEAD 合成檔" if head else "（新格）", "why": m["why"]})
+    was = rows.get(slot)
+    report.append({"slot": slot, "file": m.get("file") or src.name, "seconds": round(secs, 2),
+                   "replaces": (f"原作 {was.get('group')}:{was.get('name')}" if was else ("git HEAD 合成檔" if head else "（新格）")), "why": m["why"]})
     if not WRITE:
         continue
     if head and ARCHIVE:

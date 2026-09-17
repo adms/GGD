@@ -1,0 +1,21 @@
+{
+  "schema": "ggd-original-voice-direct-map@1",
+  "hero": "b2-kisaragi",
+  "loudnorm": false,
+  "note": "來源＝owner 指定的 YouTube 短片 https://www.youtube.com/shorts/Ih9ZTaDsznM（已抓下來放進素材庫 intake/owner-supplied-20260917/）；切段由 owner 在審查頁上挑。⛔ 音量已在切段時正規化過，這裡不再做一次。",
+  "map": {
+    "quote": {
+      "src": "GGD-Asset-Library/intake/owner-supplied-20260917/b2-kisaragi/kisaragi.b.mp3",
+      "file": "kisaragi.b.mp3",
+      "group": "youtube:Ih9ZTaDsznM",
+      "why": "owner 2026-09-17：「如月電車 勝利 跟 名言都是 https://www.youtube.com/shorts/Ih9ZTaDsznM」（原片 19 秒，owner 在審查頁上挑的切段）・名言＝4.5–9.5 秒那段"
+    },
+    "victory": {
+      "src": "GGD-Asset-Library/intake/owner-supplied-20260917/b2-kisaragi/kisaragi.d.mp3",
+      "file": "kisaragi.d.mp3",
+      "group": "youtube:Ih9ZTaDsznM",
+      "why": "owner 2026-09-17：「如月電車 勝利 跟 名言都是 https://www.youtube.com/shorts/Ih9ZTaDsznM」（原片 19 秒，owner 在審查頁上挑的切段）・勝利＝13.5–19 秒那段",
+      "replaceOriginal": true
+    }
+  }
+}
