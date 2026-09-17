@@ -352,7 +352,14 @@ describe("stand-in fallback preserves the map's declared scale (task #77)", () =
           readFileSync(join(__dirname, "../../../../content/champions", f), "utf8"),
         ) as { id: string; name: string; modelKey: string },
     )
-    .filter((c) => STOCK_KEYS.has(c.modelKey) && c.id.startsWith("godie-"));
+    // ⭐⭐ GH#1281（2026-09-17）—— 在此之前這裡多一個 `id.startsWith("godie-")` 的濾網。
+    //   那是 2026-07 的現況（共用替身上只有 w3x 匯入英雄），⛔ 不是規則的一部分：
+    //   `defaultPrefersVoxelBody` 讀的是 **modelKey**，⛔ 從來不看 id 的前綴。
+    //   ⇒ godie-* 全部畢業（#1280／#1267 換上自己的模型）之後這個母體整個空掉，
+    //   而母體一空，底下每一條都變成空跑（這一條的自證正是為此而紅）。
+    //   ⭐ 拿掉前綴濾網，母體回到「**誰站在共用替身上**」—— 今天是第四批那兩位
+    //   （碧翠絲 → champ.sela、Steve／Alex → champ.thorne，理由逐列寫在 roster-sync.baseline.json）。
+    .filter((c) => STOCK_KEYS.has(c.modelKey));
 
   it("finds the stand-in roster (guard against the fixture silently emptying)", () => {
     cover("client-standin-override");
@@ -382,10 +389,26 @@ describe("stand-in fallback preserves the map's declared scale (task #77)", () =
     // GH#323 —— ⛔ 不釘 40（那是 2026-08-13 搬家前的族群大小）。這一條在守的是
     //    「夾具沒有默默變空」，⛔ 不是「共用替身有幾位」。
     expect(standIns.length, "共用替身名單是空的 —— 底下每一條都會空跑").toBeGreaterThan(0);
-    const stillVoxel = standIns.filter((c) => defaultPrefersVoxelBody(c.modelKey, c.id));
+    // ⭐ GH#1281（2026-09-17）—— 骨架本人（sela／thorne）與**宣告過的佔位**不算：
+    //   `roster-sync.baseline.json` 的 `skeletonPlaceholders` 逐列寫著誰在等本尊模型、
+    //   以及為什麼（⛔ 單一住處，⛔ 不在這裡抄第二份名單）。
+    //   ⇒ 沒宣告就掉回體素的，照樣紅並指名 —— 那才是這一條要抓的。
+    const declaredPlaceholders = new Set(
+      (
+        JSON.parse(
+          readFileSync(join(__dirname, "../../../../tools/ship-81/roster-sync.baseline.json"), "utf8"),
+        ) as { skeletonPlaceholders: { rows: { id: string }[] } }
+      ).skeletonPlaceholders.rows.map((r) => r.id),
+    );
+    const stillVoxel = standIns.filter(
+      (c) =>
+        defaultPrefersVoxelBody(c.modelKey, c.id) &&
+        !declaredPlaceholders.has(c.id) &&
+        !["sela", "thorne"].includes(c.id),
+    );
     expect(
       stillVoxel.map((c) => c.id),
-      "又有 godie-* 掉回程序生成的體素身體了 —— 若是刻意的,把它的 usca-verbatim 規則一起寫回來",
+      "又有英雄**沒有宣告**就掉回程序生成的體素身體了 —— 若是刻意的,到 roster-sync.baseline.json 的 skeletonPlaceholders 補一列理由",
     ).toEqual([]);
     // 而那六位「靠對半才穿到模型」的,一個都不能**默默**失去保底
     // GH#323 —— ⚠️ 2026-08-13 其中四位（h00w / n01b / o02n / u011）隨變身系統整理

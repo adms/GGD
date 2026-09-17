@@ -301,6 +301,43 @@ const FACING_UNVERIFIED: Readonly<Record<string, string>> = {
   //   這批骨架的 L/R 骨頭命名少（多數只有 1–2 對），`chiralityForward()` 量不出方向。
   //   ⛔ 逐具具名、理由是量到的 n／coherence，⭐ 第 64 具出現照樣紅；修好一具（量得出來）
   //   ④ 會叫你把它從表上拿掉。要真的判定它們，仍然是 GH#216 的後續（第三個線索）。
+  // ⭐ 2026-09-17（GH#1281）—— 合併 PR #1267（模型庫整合，Codex）之後新出現的 17 具：
+  //   同一批社群骨架的同一個病（L/R 骨頭彼此不同意／對數太少）⇒ `chiralityForward()` 量不出方向。
+  //   ⛔ 它們**不是**「已知面向錯誤」，是「沒有人知道對不對」；⭐ 第 18 具出現照樣紅，修好一具要刪掉那一列。
+  "community.body.0071d6d498c8541074d2bb5593da9e4521df14ef2a9531fd":
+    "9 對 L/R 骨頭彼此不同意（coherence 0.778）—— 骨架疑似被鏡射過",
+  "community.body.05ddb6d20ef3cf2df768a2dbb31e8caec511cbe97918afa7":
+    "9 對 L/R 骨頭彼此不同意（coherence 0.778）—— 骨架疑似被鏡射過",
+  "community.body.0829b83f03e2a89eaa5aa955dfbeddc4f3cb32badcdd6ff4":
+    "9 對 L/R 骨頭彼此不同意（coherence 0.778）—— 骨架疑似被鏡射過",
+  "community.body.0f91217f741abc5990f1a494126e53778adbe402e79ca159":
+    "9 對 L/R 骨頭彼此不同意（coherence 0.778）—— 骨架疑似被鏡射過",
+  "community.body.186f1aaa1bc737a5808b3a0e7aee9615cb76e59c87506172":
+    "9 對 L/R 骨頭彼此不同意（coherence 0.778）—— 骨架疑似被鏡射過",
+  "community.body.33f640110a121a9dd86ceee0b9ed84088f972cd4dd3f64e1":
+    "9 對 L/R 骨頭彼此不同意（coherence 0.778）—— 骨架疑似被鏡射過",
+  "community.body.47698b71404dc0b8c0b72ac6b084d916e1861f6340c9ce02":
+    "9 對 L/R 骨頭彼此不同意（coherence 0.778）—— 骨架疑似被鏡射過",
+  "community.body.6e0180091ddd3b4bc7f55491d9fbfc7aeafad8ed141193a9":
+    "9 對 L/R 骨頭彼此不同意（coherence 0.778）—— 骨架疑似被鏡射過",
+  "community.body.7602f4f08b819e465bba704483ea5d5ce2e7309bcac408a7":
+    "9 對 L/R 骨頭彼此不同意（coherence 0.778）—— 骨架疑似被鏡射過",
+  "community.body.8292ebeb24654dbf2eba2df5fac88e9b150ea5f09dea3b18":
+    "9 對 L/R 骨頭彼此不同意（coherence 0.778）—— 骨架疑似被鏡射過",
+  "community.body.894e7aaa153116876a7c0159f4659374003f0f8f911c8c63":
+    "只有 2 對 L/R 骨頭 —— 樣本數不足以排除巧合",
+  "community.body.a5c8e947a9c8825945fc5f4d7a80fbd2bcccaa2aa93384e9":
+    "9 對 L/R 骨頭彼此不同意（coherence 0.778）—— 骨架疑似被鏡射過",
+  "community.body.e9d47c70c716ff9393696b14c2f21bb706d40a061f0a4cbc":
+    "9 對 L/R 骨頭彼此不同意（coherence 0.778）—— 骨架疑似被鏡射過",
+  "community.body.ea710cf0a680944a4d8b9822ddf9534e68c2c4b3e4f0af4c":
+    "9 對 L/R 骨頭彼此不同意（coherence 0.778）—— 骨架疑似被鏡射過",
+  "version.body.268aa54510b30fc8c1efb2ff7de4c2a99cca982c2e8593fe":
+    "9 對 L/R 骨頭彼此不同意（coherence 0.778）—— 骨架疑似被鏡射過",
+  "version.body.9a36d62104310aa6be802ce83d0babd2129b1efaa7f4d3b7":
+    "9 對 L/R 骨頭彼此不同意（coherence 0.778）—— 骨架疑似被鏡射過",
+  "version.body.a3dfce52e325d32d2df4929c6ff3af0eac9629fc937c736d":
+    "9 對 L/R 骨頭彼此不同意（coherence 0.778）—— 骨架疑似被鏡射過",
   "community.body.0bcbde77f00fedccc721ef59c941e3b6ed10e48f97649f8c":
     "只有 1 對 L/R 骨頭 —— 樣本數不足以排除巧合",
   "community.body.0d9eed3ab4e8246e20a12e2f0ee03786931aeacfe4976e2c":

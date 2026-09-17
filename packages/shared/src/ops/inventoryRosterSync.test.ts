@@ -57,6 +57,9 @@ interface Audit {
   staleBlockers: Array<{ rowId: string; row: string; value: number; citedLimit: number }>;
   forwardGap: string[];
   reverseGap: string[];
+  /** ⭐ GH#1281：登記過的「出貨跑在盤點表前面」，以及已經過期的那幾列。 */
+  shippedAheadOfInventory: string[];
+  shippedAheadStale: string[];
   /** ⭐ 別名**驗不過**的那幾筆（⛔ 它們不套用 —— 落差會照樣浮出來）。 */
   aliasIssues: Array<{ rowId: string; shippedId: string; reason: string; detail: string }>;
   /** ⭐ 掛在引擎骨架上而**沒有被宣告**的 —— 一個靜靜的佔位。 */
@@ -191,9 +194,24 @@ describe("盤點表 ↔ 上架設定的雙向同步（GH#1165）", () => {
       ctx.skip();
       return;
     }
-    // ⚠️ ⭐ 這一頭**沒有基準線** —— 出貨是我這邊控制得了的，
+    // ⚠️ ⭐ 這一頭原本**沒有基準線** —— 出貨是我這邊控制得了的，
     //   ⛔ 沒有理由讓一名「表上不存在的英雄」留在出貨內容裡而不喊。
+    // ⭐⭐ GH#1281（2026-09-17）—— 而 owner 直接下令**先上架**：
+    //   「我要全部上線」／「全部英雄上架是預設的 不需要我審查通過」
+    //   ⇒ 出貨真的跑在盤點表前面了，而盤點表是他的檔（repo 外，⛔ 我不可以改）
+    //   ⇒ 「有落差就紅」在這一頭會變成**我這邊做什麼都不會變綠**的閘（失敗形態⑨）。
+    // ⇒ ⭐ 逐名登記進 `roster-sync.baseline.json` 的 `shippedAheadOfInventory`（帶 owner 原話），
+    //   ⛔ 而沒登記的照樣紅；⭐ 而且是**棘輪**：owner 補進盤點表之後那一列就過期 ⇒ 下面那條紅。
+    console.log(
+      `📋 出貨跑在盤點表前面（已登記）${audit.shippedAheadOfInventory.length} 名：` +
+        audit.shippedAheadOfInventory.join(", "),
+    );
     expect(audit.reverseGap).toEqual([]);
+    expect(
+      audit.shippedAheadStale.map(
+        (id) => `${id} 已經在盤點表上了 ⇒ 從 roster-sync.baseline.json 的 shippedAheadOfInventory 刪掉那一列`,
+      ),
+    ).toEqual([]);
   });
 
   // ⭐ AC 第 4 條（GH#1165）逐字：「盤點表標『待轉換』的那幾名，`modelKey`

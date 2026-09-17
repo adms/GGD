@@ -100,7 +100,9 @@ describe("GH#1258 英靈殿介紹完整（出貨內容 × 出貨 valhallaCard）
 
 describe("GH#1250 英靈殿的替身徽章是推導的（出貨 models × 出貨 standInBadgeFor）", () => {
   /** 棘輪：今天名單上站在通用身體包上的英雄。⛔ 只能變短 —— 換成本人模型的那一位要劃掉。 */
-  const KNOWN_STAND_IN_ON_ROSTER = ["godie-h02k", "godie-umal", "godie-zombiex"];
+  // ⭐ 2026-09-17（GH#1281）：熊貓（h02k）與烏瑪（umal）換上論壇模型畢業（PR #1280／#1267）；
+  //   第四批兩位沒有本尊模型的先穿方塊人上架（理由逐列在 tools/ship-81/roster-sync.baseline.json）。
+  const KNOWN_STAND_IN_ON_ROSTER = ["acquired-beatrice", "acquired-minecraft", "godie-zombiex"];
   const glbOf = (id: string): string => String(Models.tryGet(Champions.get(id as ChampionId).modelKey)?.glbPath ?? "");
 
   it("名單上每一位：徽章亮 ⇔ glb 在通用身體包；亮的只能是棘輪上的，棘輪上沒有幽靈", () => {
@@ -114,10 +116,14 @@ describe("GH#1250 英靈殿的替身徽章是推導的（出貨 models × 出貨
   });
 
   it("徽章看 overlay 解析之後的 doc：原作模型蓋上去就熄", () => {
-    const shippedDoc = Models.get(Champions.get("godie-h02k" as ChampionId).modelKey);
+    // ⭐ 2026-09-17（GH#1281）：夾具原本用熊貓（godie-h02k），而他在 PR #1280 換上了論壇模型
+    //   ⇒ 「出貨的那顆是通用身體」這個**前提消失**（⛔ 不是徽章壞了）。
+    //   ⇒ 換一位今天真的站在通用身體上的（碧翠絲，等本尊模型中）；unit code 只是 overlay 的鍵。
+    const FIXTURE = "acquired-beatrice";
+    const shippedDoc = Models.get(Champions.get(FIXTURE as ChampionId).modelKey);
     const unit = blizzardOverlayFromDoc({
-      units: { H02K: { champId: "godie-h02k", glb: `${BLIZZARD_LOCAL_GLB_PREFIX}H02K.glb` } },
-    })!.get("godie-h02k")!;
+      units: { H02K: { champId: FIXTURE, glb: `${BLIZZARD_LOCAL_GLB_PREFIX}H02K.glb` } },
+    })!.get(FIXTURE)!;
     expect(standInBadgeFor(shippedDoc.id, shippedDoc), "夾具前提：出貨的那顆是通用身體").toBe(true);
     expect(standInBadgeFor(shippedDoc.id, overlayModelDoc(unit))).toBe(false);
   });
