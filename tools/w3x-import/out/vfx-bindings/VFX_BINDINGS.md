@@ -45,11 +45,11 @@ GGD doc id       ->  ggdDocIndex["godie-e002.e"] -> [{abilityId, via, confidence
 | `stock-buff-inherited` | buff art inherited from the retail buff record. |
 | `jass-literal` | a model string written literally in a war3map.j art call. |
 
-Counts this run: `stock-inherited` 788, `w3a-override` 741
+Counts this run: `w3a-override` 741
 
 **`stock-inherited` is the correction that matters most.** `war3map.w3a` stores only
 *overrides*. An ability with no art field does not mean "no effect" — it means WC3
-falls through to the base ability's retail art. 788 of this run's 1529 art entries come
+falls through to the base ability's retail art. 0 of this run's 741 art entries come
 from that fallthrough. Reading only the w3a would report every one of them as blank.
 
 ## 3. Asset status — what the renderer can actually draw
@@ -60,8 +60,8 @@ from that fallthrough. Reading only the w3a would report every one of them as bl
 | `IN_REPO_MESH_PLUS_EMITTERS` | 33 | map-imported model with real geometry AND emitters. The glb looks fine today and the particle layer is silently missing. |
 | `IN_REPO_MESH_ONLY` | 41 | map-imported model, no emitters. The existing glb is the whole truth. |
 | `INVISIBLE_CARRIER` | 0 | collision.mdx and friends — 0 geoset, 0 emitter, but a live `umdl`. Keep, do not delete. |
-| `MISSING_BLIZZARD_STOCK` | 1305 | a retail Blizzard .mdl. Not in the repo, and cannot be redistributed. This is the #81/#116 licensing gap, not a conversion bug. |
-| `LIGHTNING_ID` | 112 | a Lightning.slk row id (SPLK/AFOD/FORK/...). There is no model — it is a procedural beam the renderer must build. |
+| `MISSING_BLIZZARD_STOCK` | 595 | a retail Blizzard .mdl. Not in the repo, and cannot be redistributed. This is the #81/#116 licensing gap, not a conversion bug. |
+| `LIGHTNING_ID` | 34 | a Lightning.slk row id (SPLK/AFOD/FORK/...). There is no model — it is a procedural beam the renderer must build. |
 | `INVISIBLE` | 0 | the field is set to an empty/none path. The original genuinely draws nothing. |
 
 Counts are over `art[*].entries` only. `INVISIBLE` reads 0 there by construction —
@@ -69,21 +69,21 @@ an empty / `none.mdl` art field is dropped before it becomes an entry, and shows
 instead as the ability having no `art` for that slot. Both statuses stay reachable
 through `summonedUnits[]`, where an invisible carrier is a meaningful answer.
 
-## 4. The honest scoreboard — all 907 GGD ability docs
+## 4. The honest scoreboard — all 1129 GGD ability docs
 
 | state | docs | meaning |
 |---|---:|---|
-| `CONFIRMED_ART_AND_PARAMS` | **78** | real art found **and** every per-cast override binds unambiguously |
-| `CONFIRMED_ART_INFERRED_PARAMS` | **18** | real art found; at least one override needed a documented inference |
-| `CONFIRMED_ART` | **210** | real art found; the original applies no per-cast override (natural size/colour **is** the faithful reproduction) |
+| `CONFIRMED_ART_AND_PARAMS` | **65** | real art found **and** every per-cast override binds unambiguously |
+| `CONFIRMED_ART_INFERRED_PARAMS` | **17** | real art found; at least one override needed a documented inference |
+| `CONFIRMED_ART` | **172** | real art found; the original applies no per-cast override (natural size/colour **is** the faithful reproduction) |
 | `INFERRED_ART` | **1** | art reached only through an inferred attribution |
-| `CONFIRMED_NEGATIVE` | **99** | **an answer, not a gap** — no w3a override, no inherited stock art, no buff art, no summoned unit, no JASS art call. The original draws nothing. Faithful = `vfxKey: null` |
+| `CONFIRMED_NEGATIVE` | **151** | **an answer, not a gap** — no w3a override, no inherited stock art, no buff art, no summoned unit, no JASS art call. The original draws nothing. Faithful = `vfxKey: null` |
 | `SYNTHETIC_NO_SOURCE_IN_MAP` | **0** | the GGD doc is named `none` with an empty description and no rawcode — a slot the importer minted for a hero whose `uhab` is empty. **The map contains no such ability** |
-| `HAND_AUTHORED_NOT_FROM_THE_MAP` | **494** | `sela.*` / `thorne.*` — the repo's own demo champions, written by hand. They never came from the w3x, so there is nothing to be faithful *to* |
+| `HAND_AUTHORED_NOT_FROM_THE_MAP` | **716** | `sela.*` / `thorne.*` — the repo's own demo champions, written by hand. They never came from the w3x, so there is nothing to be faithful *to* |
 | `UNRESOLVED_NO_RAWCODE` | **7** | a real-looking doc that no bridge method could tie to a w3a record |
-| | **907** | |
+| | **1129** | |
 
-Rolled up: **306 of 907 docs (34%) now have CONFIRMED original art**; **99 more are
+Rolled up: **254 of 1129 docs (22%) now have CONFIRMED original art**; **151 more are
 CONFIRMED-NEGATIVE** — the faithful action there is to set `vfxKey` to null, not to
 pick a nicer particle. Only **7** docs are genuinely unresolved:
   - `godie-zombieking.passive` — 殭屍王 - leap吸血
@@ -95,7 +95,7 @@ pick a nicer particle. Only **7** docs are genuinely unresolved:
   - `godie-zombiex.w` — 100-02 黑天覆七重咖哩・硬啦
 
 > Caveat that belongs on the same page: CONFIRMED art is not the same as *available*
-> art. 1305 of the 1529 resolved art entries are retail Blizzard `.mdl` paths that are not
+> art. 595 of the 741 resolved art entries are retail Blizzard `.mdl` paths that are not
 > in this repo and cannot be redistributed (#81 / #116). The archaeology is done; the
 > licensing is not.
 
@@ -103,19 +103,19 @@ pick a nicer particle. Only **7** docs are genuinely unresolved:
 
 | | 球體 ORB | 蝗蟲群 LOCUST | 粒子 PARTICLE |
 |---|---:|---:|---:|
-| abilities detected | 77 | 47 | 116 |
-| custom to this map | 76 | 47 | 114 |
-| art CONFIRMED | 77 | 44 | 113 |
-| asset in repo | 21 | 5 | 74 |
-| asset = missing Blizzard stock | 56 | 38 | 42 |
+| abilities detected | 77 | 45 | 116 |
+| custom to this map | 76 | 45 | 114 |
+| art CONFIRMED | 77 | 39 | 110 |
+| asset in repo | 21 | 7 | 92 |
+| asset = missing Blizzard stock | 56 | 19 | 24 |
 | has per-cast overrides | 0 | 35 | 38 |
-| reachable from a GGD doc | 3 | 21 | 58 |
-| GGD docs covered | 4 | 30 | 97 |
+| reachable from a GGD doc | 3 | 19 | 58 |
+| GGD docs covered | 4 | 27 | 97 |
 
 **球體** — detection: `baseId == Asph` or the author named it `球體(...)`. All 77 have
 at least one attached model; scored on the attached slot only (their inherited
 `Missileart` fires on attack, not on cast, so counting it as "the orb" is misleading):
-  `IN_REPO_EMITTER_IS_THE_ASSET` 2, `IN_REPO_MESH_ONLY` 14, `IN_REPO_MESH_PLUS_EMITTERS` 5, `MISSING_BLIZZARD_STOCK` 56
+  `IN_REPO_EMITTER_IS_THE_ASSET` 2, `IN_REPO_MESH_ONLY` 14, `IN_REPO_MESH_PLUS_EMITTERS` 5, `MISSING_BLIZZARD_STOCK` 55
 Delivery routes found: grantedByItem 16, permanentlyOwnedByHeroUnit 21, spawnedDummyCarrier 14; **39 orbs still have no carrier**.
 An orb is never cast, so it has no GGD ability doc of its own — `orbCarrierChain`
 names what puts it on screen. This is an **attachment-system** gap, not a particle one.

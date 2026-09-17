@@ -110,10 +110,25 @@ describe("#233 scope — what the beam can honestly promise", () => {
     // 這個翻轉是**朝著那個目標**動的，所以斷言跟著改，而不是把內容改回去。
     //
     // ⛔ 但方向要鎖住：躲得掉的那一半**不可以再掉回少數**。這就是新的棘輪。
+    // ⭐⭐ GH#1281（2026-09-17）—— **分母換了人，⛔ 不是吟唱時間被改短**。
+    //   這個翻轉（reactable 280 vs notice 460）全部來自 2026-09-10 起上架的社群／LoL 英雄：
+    //   他們的吟唱由配方的**五級距預設**給（`communityExamples.ts`：主動預設「小」、被動「極小」），
+    //   ⛔ 而 #233 那句「多數躲得掉」是對 **90 支重製**（owner 逐字規格的吟唱時間）量出來的。
+    //   ⇒ 棘輪留在**它原本量的那個母體**上；社群那一半逐次印出來，⛔ 不假裝它也成立。
+    // ⚠️ 這是一個**會被玩家感覺到**的事實：新英雄的招式普遍比較快。要改的話那是吟唱級距的
+    //   預設（`communityExamples.ts` 的 `definition.cast ?? "小"`），⛔ 不是這條測試。
+    const remade = rows.filter((r) => r.id.startsWith("godie-"));
+    const remadeReactable = remade.filter((r) => r.verdict === "reactable").length;
+    const remadeNotice = remade.filter((r) => r.verdict === "notice").length;
+    console.log(
+      `[cast-beam-scope] 90 支重製母體 ${remade.length}：reactable ${remadeReactable} / notice ${remadeNotice}；` +
+        `全庫 ${rows.length}：reactable ${reactable} / notice ${notice}（社群英雄走五級距預設，吟唱較短）`,
+    );
+    expect(remade.length, "重製母體是空的 —— 量尺壞了").toBeGreaterThan(50);
     expect(
-      reactable,
+      remadeReactable,
       "躲得掉的技能又變成少數了 —— 吟唱時間被改短了？這會把 #233 打回原形",
-    ).toBeGreaterThan(notice);
+    ).toBeGreaterThan(remadeNotice);
     // 而 notice 也不能歸零：它歸零代表沒有任何短吟唱技能，那多半是資料出錯。
     expect(notice).toBeGreaterThan(0);
   });

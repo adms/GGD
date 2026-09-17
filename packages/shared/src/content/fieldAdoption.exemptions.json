@@ -71,12 +71,6 @@
     "why": "GH#838 M11 沿路拖尾 —— 機制與守衛都在（rig 在**這一幀模型真的所在的點**放一發，走 VfxSystem 自己的 play ⇒ 同一份粒子密度上限）。⛔ 內容今天是 0，而那是**誠實的**：04-03 龍破斬的原作拖尾是 HCancelDeath／VolcanoDeath 兩顆 mdx，GGD 今天只有它們的 **model@1**（glb），⛔ 沒有對應的 `vfx@1` 粒子文件 ——⭐ 而拖尾吃的是 vfxId。硬指一份「看起來像的」就是第〇·五守則禁的近似。⇒ 30 天內要嘛補那兩顆的 vfx 文件（資產批），要嘛讓拖尾也吃 modelKey；⛔ 不是編一份內容餵這個閘。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
-  "field:vfx-scripts.segments[]|1#vfx.offsetForwardU": {
-    "status": "landing",
-    "since": "2026-08-28",
-    "why": "GH#838 —— 拖拉落點寫進來的位移（studio 把畫面落點換算成面向座標）。六招的段今天都錨在 self/target 的預設點上（JASS 逐行如此），所以沒有一份用到側向位移。⭐ 它有真的消費端（`applyFacingOffset`，守衛驗過）—— 這是「作者面剛開」不是「機制沒接」。",
-    "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
-  },
   "field:vfx-scripts.segments[]|1#vfx.offsetSideU": {
     "status": "landing",
     "since": "2026-08-28",
@@ -147,18 +141,6 @@
     "status": "landing",
     "since": "2026-08-28",
     "why": "GH#838 特效工坊 —— `vfx-script@1` 是**第二個作者面**，⛔ 不是新機制：這一格是從出貨的 `spawnModelFx`／`spawnVfx` 用 `.pick()` 借過來的**同一格詞彙**（單一住處），而它背後的機制**在 sim 那一側已經有內容採用**。⇒ 這裡的零不是「做了沒人用」，是「這個作者面才剛開，六招的腳本還沒用到這一格」。⭐ 30 天到期是對的：六招之後還沒有任何腳本用到它，那就要問這一格該不該存在。",
-    "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
-  },
-  "enum:vfx-scripts.segments[]|1#anim.on=projectileHit": {
-    "status": "landing",
-    "since": "2026-08-28",
-    "why": "GH#838 —— 演出腳本的觸發器/段組合。六招的 JASS 逐行**沒有**這個時機的動作（原作那幾支沒有投射物階段的動畫脈衝），所以今天沒有內容用它。⭐ 它不是憑空發明：`on` 的每一個值都對得上一個**客戶端真的收得到**的 wire 事件（`vfxScriptShippedChain.test.ts` 走出貨鏈驗過 castStart/castEffect/strike）。⚠️ 30 天內若仍無腳本用到，正解是**把這個組合從 enum 拿掉**，⛔ 不是編一份內容餵它。",
-    "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
-  },
-  "enum:vfx-scripts.segments[]|1#anim.on=projectileSpawn": {
-    "status": "landing",
-    "since": "2026-08-28",
-    "why": "GH#838 —— 演出腳本的觸發器/段組合。六招的 JASS 逐行**沒有**這個時機的動作（原作那幾支沒有投射物階段的動畫脈衝），所以今天沒有內容用它。⭐ 它不是憑空發明：`on` 的每一個值都對得上一個**客戶端真的收得到**的 wire 事件（`vfxScriptShippedChain.test.ts` 走出貨鏈驗過 castStart/castEffect/strike）。⚠️ 30 天內若仍無腳本用到，正解是**把這個組合從 enum 拿掉**，⛔ 不是編一份內容餵它。",
     "group": "GH#838 特效工坊：新作者面的詞彙（landing，30 天到期）"
   },
   "enum:vfx-scripts.segments[]|1#anim.pulse=attack": {
@@ -490,192 +472,6 @@
     "why": "同上。四份文件全部填 `\"ignore\"`，而那是**刻意**的：`requireAndSpend` 花的是**全隊共用的復活圈額度**，用它等於「隊友用過復活圈就沒有這件寶具」—— 那不是任何一張卡寫的東西（見 `teardrop-of-rebirth.authoringNote` 的同一段推導）。",
     "group": "具名標記（marks）家族裡沒被用到的那幾格"
   },
-  "enum:abilities.effects[]#applyBuff.damageTypeOverride.impactType=converted": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `applyBuff` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "enum:abilities.effects[]#applyBuff.hooks[].damageCrit=any": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `applyBuff` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "enum:abilities.effects[]#applyBuff.hooks[].damageCrit=nonCrit": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `applyBuff` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "enum:abilities.effects[]#applyBuff.hooks[].onConsumed=stop": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `applyBuff` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "enum:abilities.effects[]#blink.shape=circle": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "enum:abilities.effects[]#dispel.order=oldest": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `dispel` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "enum:abilities.effects[]#eventValueConversion.basis=mitigated": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "enum:abilities.effects[]#eventValueConversion.basis=raw": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "enum:abilities.effects[]#eventValueConversion.shape=circle": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "enum:abilities.effects[]#eventValueConversion.source=targetCurrentHealth": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "enum:abilities.effects[]#eventValueConversion.who=target": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "enum:abilities.effects[]#proxyCast.payCosts=mana": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "enum:abilities.effects[]#proxyCast.payCosts=manaAndCooldown": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "enum:abilities.effects[]#proxyCast.rankMode=fixed": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "enum:abilities.effects[]#proxyCast.shape=circle": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "field:abilities.effects[]#blink.maxTargets": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "field:abilities.effects[]#blink.radius": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "field:abilities.effects[]#blink.radiusTier": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "field:abilities.effects[]#blink.side": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "field:abilities.effects[]#eventValueConversion.condition": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "field:abilities.effects[]#eventValueConversion.maxTargets": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "field:abilities.effects[]#eventValueConversion.radius": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "field:abilities.effects[]#eventValueConversion.radiusTier": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "field:abilities.effects[]#eventValueConversion.side": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "field:abilities.effects[]#proxyCast.abilityId": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "field:abilities.effects[]#proxyCast.condition": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "field:abilities.effects[]#proxyCast.fixedRank": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "field:abilities.effects[]#proxyCast.maxTargets": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "field:abilities.effects[]#proxyCast.radius": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "field:abilities.effects[]#proxyCast.radiusTier": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
-  "field:abilities.effects[]#proxyCast.side": {
-    "status": "landing",
-    "since": "2026-08-17",
-    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。",
-    "group": "具名標記（marks）家族裡沒被用到的那幾格"
-  },
   "enum:maps.interactions[].kind=channel": {
     "status": "debt",
     "since": "2026-08-14",
@@ -841,12 +637,6 @@
     "why": "G1 ② —— 一個人都沒打到時要不要照樣跑下游。省略 = false = 今天什麼都不會發生的那個語意。 ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
-  "field:abilities.effects[]#damageLine.victimCondition": {
-    "status": "landing",
-    "since": "2026-09-11",
-    "why": "同 damageArea.victimCondition 的膠囊版本。⚠️ 兩個 kind 在這一族上是同一個機制的兩個形狀，欄位名一旦分岔，編輯器上長得一樣的兩格就會是兩件事 —— 所以四格同名同語意、共用同一組常數。 ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
-    "group": "跨技能強化 ability@1.augment (2026-08-08)"
-  },
   "field:abilities.effects[]#damageLine.maxTargetsCounts": {
     "status": "landing",
     "since": "2026-09-11",
@@ -923,12 +713,6 @@
     "status": "landing",
     "since": "2026-09-11",
     "why": "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。） ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
-    "group": "跨技能強化 ability@1.augment (2026-08-08)"
-  },
-  "field:abilities.effects[]#dash.onEndOn": {
-    "status": "landing",
-    "since": "2026-09-11",
-    "why": "S7 —— 被地形擋下來的衝刺算不算「衝完」。真的岔路：位移系統今天把「撞牆停下」與「跑完距離」合成同一個結束條件。預設 always，因為卡面說「衝刺後揮出」，而一刀被場景取消是玩家看不見的失敗。 ⚠️ 2026-09-11：第一個 30 天到期仍零採用 ⇒ **延長一次**（第四批 LoL 在飛：#1185／#1187／#1197）。⛔ 再到期不續。",
     "group": "跨技能強化 ability@1.augment (2026-08-08)"
   },
   "field:abilities.effects[]#dash.onEndWhenDead": {
@@ -1136,11 +920,6 @@
     "why": "GH#354（owner 2026-08-17 的引擎盤點）—— 「碰到場地邊界的時候⋯」——火圈就是這張地圖的邊界，吃 `fireRingDamage`。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
     "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onRoundStart": {
-    "status": "default-live",
-    "why": "GH#354（owner 2026-08-17 的引擎盤點）—— 「回合開始時⋯」——`MatchController` 發，`world` scope。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
-    "group": "RESTORED 2026-07-30, and the reason is the whole point of this census"
-  },
   "enum:abilities.effects[]#applyBuff.hooks[].on=onRoundEnd": {
     "status": "default-live",
     "why": "GH#354（owner 2026-08-17 的引擎盤點）—— 「回合結束時⋯」——同上，而且是唯一帶 `firesOutsideCombat` 的一列。 機制**整條路都通了**（enum → WorldHookSystem 的發射列 → fireHooks），內容側 0 筆是因為這一批是**先開路再寫卡**：owner 列這張清單的理由就是「現在寫不出這種句型」。⚠️ 這條豁免的到期日就是第一張用它的卡上架的那天，而那天這一列會因為 STALE 而紅 —— ⛔ 到時候刪掉它，不要延期。守衛：sim/systems/worldHookGh354.test.ts（驗每一個都真的有人發，⛔ 不是掃 enum）。",
@@ -1316,11 +1095,6 @@
     "why": "⏳ 2026-09-06 —— landing 到期（31 天）⇒ 誠實改成 debt（閘要求「一個新欄位不可以永遠是新的」）。⭐ 這一側今天沒有內容客戶：沒有任何一支技能在守衛塔倒下時要觸發什麼，⛔ 不是一次沒做完的遷移。守衛塔倒下(世界廣播)。⚠️ 打倒守衛塔**不發 `onKill`**(獎勵由 GuardianSystem 自己付),所以在這個成員之前,「塔倒了」在內容側完全接不到。⭐ 它同時是 GH#263(拆塔即勝)的掛載點。",
     "group": "事件流廣播的六個時刻 (2026-08-06, `sim/systems/WorldHookSystem.ts`)"
   },
-  "enum:abilities.effects[]#dispel.polarity=any": {
-    "status": "default-live",
-    "why": "`any` = 增益減益一起拔。三支出貨全部是有方向的(對敵拔增益 / 對己拔減益),因為**無差別淨化會拔掉自己隊友的增益**,那幾乎一定是作者手滑而不是意圖。所以零採用正是它該有的樣子:它要留在選單上(WC3 的 Dispel Magic 本體就是無差別,1:1 還原那一支的那天要用得到),但不該是任何人不小心選到的預設。",
-    "group": "事件流廣播的六個時刻 (2026-08-06, `sim/systems/WorldHookSystem.ts`)"
-  },
   "field:abilities.effects[]#championForm.condition": {
     "status": "debt",
     "since": "2026-08-09",
@@ -1364,12 +1138,6 @@
     "group": "③ 四個 hook 事件今天是**零發射點**"
   },
   "field:abilities.effects[]#spawnProjectile.condition": {
-    "status": "debt",
-    "since": "2026-08-09",
-    "why": "⛔ 2026-09-09 —— `landing` 的 30 天寬限**到期了**（filed 2026-08-09，31 天）。⭐ 到期本身就是答案：一個月過去，內容遷移沒有發生 ⇒ 誠實的狀態是 `debt`，⛔ 不是再展延一次 —— 那會讓這一格永遠是 `landing`，而 `landing` 的用途正好相反。⭐ `debt` 讓它**每一次執行都印在橫幅上**，⛔ 而不是被一個到期的寬限藏起來。⚠️ 這一批 24 筆同一天報備、同一天到期；13 筆是**條件葉**家族 —— 它們的第一份採用者會是**外部編輯器產出的內容**，而社群英雄那條路今天還沒進出貨名單。\n\n── ⭐ 以下是原本的理由，⛔ 一個字都沒有刪（第一·五守則：另存，⛔ 不是壓縮取代）──\n效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
-    "group": "2026-09-09 —— landing 到期改判 debt（⭐ 到期本身就是答案）"
-  },
-  "field:abilities.effects[]#spawnVfx.condition": {
     "status": "debt",
     "since": "2026-08-09",
     "why": "⛔ 2026-09-09 —— `landing` 的 30 天寬限**到期了**（filed 2026-08-09，31 天）。⭐ 到期本身就是答案：一個月過去，內容遷移沒有發生 ⇒ 誠實的狀態是 `debt`，⛔ 不是再展延一次 —— 那會讓這一格永遠是 `landing`，而 `landing` 的用途正好相反。⭐ `debt` 讓它**每一次執行都印在橫幅上**，⛔ 而不是被一個到期的寬限藏起來。⚠️ 這一批 24 筆同一天報備、同一天到期；13 筆是**條件葉**家族 —— 它們的第一份採用者會是**外部編輯器產出的內容**，而社群英雄那條路今天還沒進出貨名單。\n\n── ⭐ 以下是原本的理由，⛔ 一個字都沒有刪（第一·五守則：另存，⛔ 不是壓縮取代）──\n效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
@@ -1474,12 +1242,6 @@
     "why": "⛔ 2026-09-15 —— `landing` 的 30 天寬限**到期了**（filed 2026-08-13）。⭐ 到期本身就是答案：一個月過去，內容遷移沒有發生 ⇒ 誠實的狀態是 `debt`，⛔ 不是再展延一次 —— 那會讓這一格永遠是 `landing`（前例 `62e20850c` 同一個判法）。⭐ `debt` 讓它**每一次執行都印在橫幅上**，⛔ 而不是被一個到期的寬限藏起來。 ⚠️ 原本的分節（`group`）是「⑧ 營運母體縮編的三個副作用（owner 2026-08-13 的 legacy 搬遷）」—— 分節欄改成本次改判的批次，原文留在這裡。\n\n── ⭐ 以下是原本的理由，⛔ 一個字都沒有刪（第一·五守則：另存，⛔ 不是壓縮取代）──\n三選一增益卡授予的穿透。同上第三個面。31 張出貨增益卡沒有一張是穿透卡；⛔ 加一張是內容決策，屬於 owner 的排序，不是這一批引擎工作的一部分。",
     "group": "2026-09-15 —— landing 到期改判 debt（⭐ 到期本身就是答案）"
   },
-  "enum:abilities.effects[]#blink.distanceTier=小": {
-    "status": "landing",
-    "since": "2026-08-18",
-    "why": "⚠️ 2026-09-15（GH#1260 B3 修正輪）**鍵名改了、這一列的意思沒有改**：`dash`／`knockback`／`blink`／`leap` 四種位移的 `distanceTier` 共用**同一個** `zDisplacementTier` enum 物件，census 用「最淺、字典序最小」的路徑替它命名（`fieldAdoption.ts::nameSchemas`）⇒ B3 補上 `blink.distanceTier` 之後名字從 `dash.…` 換成 `blink.…`（`b` < `d`）。⭐ 採用量是**四種位移合計**（2026-09-15 量 content/：極小 5、小 0、中 0、大 1、極大 5），⛔ 不是只數 blink。⏳ 寬限從 `since` 2026-08-18 起算、⛔ 改名不重置（重置＝再展延一次，同 09-15 那批 debt 改判的判法）：2026-09-18T00:00Z（台北 08:00）起這一列會紅 ⇒ 屆時「把距離級別標籤寫回文件」那一步仍沒落地，就改判 `debt`。⭐ B3 吸格後場上已經落在「小」的節點（例：社群 tpl-charge-push 擊退 3 ×14、79-01 瞬步衝刺 8.25）寫上 `distanceTier:\"小\"` 就是採用。\n\n── 以下是原本的理由（⛔ 一個字都沒有刪；`items/godie-i01s` 是 dash 那一族當年的第一個採用）──\nGH#318 位移級距。第一個採用（`items/godie-i01s`）在 2026-08-18 落地 —— ⚠️ 它當時填的字是「小」，GH#463 把級距名整體左移一格之後那一筆變成「**極小**」（值一個都沒動）。四個刻度共用同一段查表，所以這一列講的是**內容還沒有一支中距離位移需要改用級別**，⛔ 不是引擎少了什麼。等哪一支距離正好落在「中」的刻度上時把它改過去，這一列就會自己過期。",
-    "group": "⑧ 營運母體縮編的三個副作用（owner 2026-08-13 的 legacy 搬遷）"
-  },
   "enum:abilities.effects[]#blink.distanceTier=中": {
     "status": "landing",
     "since": "2026-08-18",
@@ -1516,31 +1278,7 @@
     "why": "⭐ GH#838 —— owner 2026-08-28 逐字：「我要可以拖拉 model,**粒子特效**進編輯器…用 **silder** 調**大小、透明度、顏色、轉向、高度、動畫速度**」。這六格是**工坊的滑桿**，詞彙直接展開 `zAbilityVfxLayerOverride`（家族綁定表同一份 Zod），消費端沿用出貨的 `applyVfxOverrides`。\n⚠️ 內容採用 **0** 是誠實的現況：調參數本身就是 #838 還沒做完的那一半（六招要在工坊裡逐段對著 JASS 調）。⛔ 我刻意**不**先塞一個沒有出處的值 進去把這一列消掉 —— 那正是守則禁止的「用現有參數湊一個看起來像的」。\n⭐ 要反駁它：在工坊調完任何一段粒子並存回 JSON，這一列就該刪掉。⚠️ 而 #838 收掉時**這幾列必須一起消失** —— 留著就是一格死旋鈕。",
     "group": "⭐ 2026-08-22 —— 四個新 kind 的**選用參數**，首批 5 份內容還沒走到"
   },
-  "field:vfx-scripts.segments[]|1#vfx.flyHeight": {
-    "status": "landing",
-    "since": "2026-08-28",
-    "why": "⭐ GH#838 —— owner 2026-08-28 逐字：「我要可以拖拉 model,**粒子特效**進編輯器…用 **silder** 調**大小、透明度、顏色、轉向、高度、動畫速度**」。這六格是**工坊的滑桿**，詞彙直接展開 `zAbilityVfxLayerOverride`（家族綁定表同一份 Zod），消費端沿用出貨的 `applyVfxOverrides`。\n⚠️ 內容採用 **0** 是誠實的現況：調參數本身就是 #838 還沒做完的那一半（六招要在工坊裡逐段對著 JASS 調）。⛔ 我刻意**不**先塞一個沒有出處的值 進去把這一列消掉 —— 那正是守則禁止的「用現有參數湊一個看起來像的」。\n⭐ 要反駁它：在工坊調完任何一段粒子並存回 JSON，這一列就該刪掉。⚠️ 而 #838 收掉時**這幾列必須一起消失** —— 留著就是一格死旋鈕。",
-    "group": "⭐ 2026-08-22 —— 四個新 kind 的**選用參數**，首批 5 份內容還沒走到"
-  },
   "field:vfx-scripts.segments[]|1#vfx.pitchDeg": {
-    "status": "landing",
-    "since": "2026-08-28",
-    "why": "⭐ GH#838 —— owner 2026-08-28 逐字：「我要可以拖拉 model,**粒子特效**進編輯器…用 **silder** 調**大小、透明度、顏色、轉向、高度、動畫速度**」。這六格是**工坊的滑桿**，詞彙直接展開 `zAbilityVfxLayerOverride`（家族綁定表同一份 Zod），消費端沿用出貨的 `applyVfxOverrides`。\n⚠️ 內容採用 **0** 是誠實的現況：調參數本身就是 #838 還沒做完的那一半（六招要在工坊裡逐段對著 JASS 調）。⛔ 我刻意**不**先塞一個沒有出處的值 進去把這一列消掉 —— 那正是守則禁止的「用現有參數湊一個看起來像的」。\n⭐ 要反駁它：在工坊調完任何一段粒子並存回 JSON，這一列就該刪掉。⚠️ 而 #838 收掉時**這幾列必須一起消失** —— 留著就是一格死旋鈕。",
-    "group": "⭐ 2026-08-22 —— 四個新 kind 的**選用參數**，首批 5 份內容還沒走到"
-  },
-  "field:vfx-scripts.segments[]|1#vfx.timeScale": {
-    "status": "landing",
-    "since": "2026-08-28",
-    "why": "⭐ GH#838 —— owner 2026-08-28 逐字：「我要可以拖拉 model,**粒子特效**進編輯器…用 **silder** 調**大小、透明度、顏色、轉向、高度、動畫速度**」。這六格是**工坊的滑桿**，詞彙直接展開 `zAbilityVfxLayerOverride`（家族綁定表同一份 Zod），消費端沿用出貨的 `applyVfxOverrides`。\n⚠️ 內容採用 **0** 是誠實的現況：調參數本身就是 #838 還沒做完的那一半（六招要在工坊裡逐段對著 JASS 調）。⛔ 我刻意**不**先塞一個沒有出處的值 進去把這一列消掉 —— 那正是守則禁止的「用現有參數湊一個看起來像的」。\n⭐ 要反駁它：在工坊調完任何一段粒子並存回 JSON，這一列就該刪掉。⚠️ 而 #838 收掉時**這幾列必須一起消失** —— 留著就是一格死旋鈕。",
-    "group": "⭐ 2026-08-22 —— 四個新 kind 的**選用參數**，首批 5 份內容還沒走到"
-  },
-  "field:vfx-scripts.segments[]|1#vfx.tint": {
-    "status": "landing",
-    "since": "2026-08-28",
-    "why": "⭐ GH#838 —— owner 2026-08-28 逐字：「我要可以拖拉 model,**粒子特效**進編輯器…用 **silder** 調**大小、透明度、顏色、轉向、高度、動畫速度**」。這六格是**工坊的滑桿**，詞彙直接展開 `zAbilityVfxLayerOverride`（家族綁定表同一份 Zod），消費端沿用出貨的 `applyVfxOverrides`。\n⚠️ 內容採用 **0** 是誠實的現況：調參數本身就是 #838 還沒做完的那一半（六招要在工坊裡逐段對著 JASS 調）。⛔ 我刻意**不**先塞一個沒有出處的值 進去把這一列消掉 —— 那正是守則禁止的「用現有參數湊一個看起來像的」。\n⭐ 要反駁它：在工坊調完任何一段粒子並存回 JSON，這一列就該刪掉。⚠️ 而 #838 收掉時**這幾列必須一起消失** —— 留著就是一格死旋鈕。",
-    "group": "⭐ 2026-08-22 —— 四個新 kind 的**選用參數**，首批 5 份內容還沒走到"
-  },
-  "field:vfx-scripts.segments[]|1#vfx.w3xScale": {
     "status": "landing",
     "since": "2026-08-28",
     "why": "⭐ GH#838 —— owner 2026-08-28 逐字：「我要可以拖拉 model,**粒子特效**進編輯器…用 **silder** 調**大小、透明度、顏色、轉向、高度、動畫速度**」。這六格是**工坊的滑桿**，詞彙直接展開 `zAbilityVfxLayerOverride`（家族綁定表同一份 Zod），消費端沿用出貨的 `applyVfxOverrides`。\n⚠️ 內容採用 **0** 是誠實的現況：調參數本身就是 #838 還沒做完的那一半（六招要在工坊裡逐段對著 JASS 調）。⛔ 我刻意**不**先塞一個沒有出處的值 進去把這一列消掉 —— 那正是守則禁止的「用現有參數湊一個看起來像的」。\n⭐ 要反駁它：在工坊調完任何一段粒子並存回 JSON，這一列就該刪掉。⚠️ 而 #838 收掉時**這幾列必須一起消失** —— 留著就是一格死旋鈕。",
@@ -1862,12 +1600,6 @@
     "since": "2026-09-02",
     "why": "⭐ `conditionTier` 是 2026-09-02（GH#943）新做的軸，而它**刻意是推導型**：缺席時由 `resolveConditionTier()` 從文件自己的結構推導（沒條件 ⇒ 極小＝恆真）。⛔ 往 208 支帶 AP 係數的技能各填一格 ＝ 208 個會過期的第二住處（第〇·四守則）。⇒ ⭐ **零採用是設計，⛔ 不是缺口** —— 真正要人填的只有「有條件而難度不是預設」那幾支。⚠️ 30 天後要問的是「有沒有出現那種技能」，⛔ 不是把它續期。"
   },
-  "field:vfx-scripts.segments[]|1#anim.replaces": {
-    "status": "landing",
-    "since": "2026-09-02",
-    "why": "⭐ 2026-09-02 **取代語意**（Codex 阻塞清單 C 的 `replacementPolicy`）——這一段接管哪一條演出通道。⛔ 在此之前 Main **沒有取代機制**:專屬 script 與預設演出**兩條都跑**,出貨 10 份 script 是靠**作者的約定**避開重疊的,⛔ 不是靠機制（收據那一格因此逐字是 `unsupported`,而它是實話）。⭐ 這一格今天是 0 是**對的**:第一份採用者會是**外部編輯器產出的內容** —— ⛔ 我不先填它,填了就是替 Codex 決定哪一段該接管哪條通道。⚠️ 機制側三段全通並有守衛（`channelTakeover.test.ts` 五條 · `presentationReceiptFresh` 的承重那一半要求 `heldBy` 在 `playDefaultPresentation` **函式體內**,突變驗過會掉回 `unsupported`）:schema `replaces` · 播放器 `claim` · 預設演出 `heldBy`。⚠️ ⭐ 省略它 ＝ 今天的行為（兩條都跑）⇒ 出貨的 10 份 script **逐位元不變**。",
-    "group": "2026-09-02 這一輪剛出貨、內容還沒採用的（landing，30 天到期）"
-  },
   "field:vfx-scripts.segments[]|1#anim.replacesForMs": {
     "status": "landing",
     "since": "2026-09-02",
@@ -2048,12 +1780,6 @@
     "why": "⭐ PR 1118 —— hook 的**一次施放只給一次額度**（`sim/effects/hooks.ts:293`,守衛 `oncePerCast.test.ts` 34 條）。⛔ 出貨 171 份零採用：既有的「打到就給一層」全部是逐發計數（原作就是那樣）⇒ 沒有一支需要去重。⭐ 第一份採用者是**集氣類**的社群英雄（一次 AoE 打到五個人只該給一層）——那正是這個機制存在的理由,而它今天還沒有內容。",
     "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）"
   },
-  "field:abilities.effects[]#applyBuff.sourceScope": {
-    "status": "landing",
-    "since": "2026-09-08",
-    "why": "⭐ PR 1118 —— buff 的**來源作用域**。同 `condition.appliedBy` 那一列的理由：既有 184 份是原作翻譯,原作不分來源。⛔ 不先填。",
-    "group": "2026-09-08 合併 PR 1118 出貨、內容還沒採用的（landing，30 天到期）"
-  },
   "field:abilities.statusCost": {
     "status": "landing",
     "since": "2026-09-08",
@@ -2137,22 +1863,12 @@
     "since": "2026-09-11",
     "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
   },
-  "field:abilities.effects[]#consumeStatus.appliedBy": {
-    "status": "landing",
-    "since": "2026-09-11",
-    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
-  },
   "field:abilities.effects[]#consumeStatus.condition": {
     "status": "landing",
     "since": "2026-09-11",
     "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
   },
   "field:abilities.effects[]#consumeStatus.maxTargets": {
-    "status": "landing",
-    "since": "2026-09-11",
-    "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
-  },
-  "field:abilities.effects[]#consumeStatus.onMissing": {
     "status": "landing",
     "since": "2026-09-11",
     "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
@@ -2287,105 +2003,6 @@
     "since": "2026-09-11",
     "why": "⭐ 2026-09-11（GH#1195 分類）：2026-09 這批 effect 擴充的欄位，機制先於內容上架（S8）。**在飛的消費者是第四批 LoL**（#1185 的 66 槽、#1187／#1189／#1190／#1191／#1197 的 14 槽核心操作）。⭐ 到期條件：#1185 落地後重評 —— 30 天內仍零採用 ⇒ ⛔ 不再續，轉 deliberate（要寫得出為什麼該留）或刪欄位。"
   },
-  "field:abilities.recast": {
-    "status": "landing",
-    "since": "2026-09-11",
-    "why": "GH#1187 —— 【再次施放】機制（e36a5acda）—— 內容綁定在 LoL lane：阿璃 R／瑟雷西 Q／鄂爾 R 由 #1185 接回三槽。⛔ 我不先填：填了等於替內容 lane 決定那三支長什麼樣。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
-    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
-  },
-  "field:abilities.recastEffects": {
-    "status": "landing",
-    "since": "2026-09-11",
-    "why": "GH#1187 —— 同上 —— 後段效果樹的第一份採用者是鄂爾 R（撞羊改向），由 #1185 接回。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
-    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
-  },
-  "field:abilities.effects[]#spawnProjectile.launchFrom": {
-    "status": "landing",
-    "since": "2026-09-15",
-    "why": "GH#1187 —— 鄂爾 R 首段「射程盡頭召出火羊朝自己衝回」。第一份採用者是 `communityLolBatch2.ts` 的 ornn.R 配方（社群英雄草稿，⛔ 還不在 content/）；守衛 `communityLolBatch2Mechanics.test.ts`「Ornn R」跑正常指令。#1185 上架前 content/ 沒有採用者，30 天到期會自己紅。",
-    "group": "2026-09-15 #1187 撞擊改向剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
-  },
-  "field:abilities.effects[]#spawnProjectile.onRedirectHit": {
-    "status": "landing",
-    "since": "2026-09-15",
-    "why": "GH#1187 —— 鄂爾 R 後段「衝刺撞到同一隻火羊 ⇒ 改向並擊飛」的改向命中效果。採用者同上（ornn.R 配方草稿）；機制在 `sim/projectileRedirect.ts`，守衛含突變（拿掉碰撞改向 ⇒ 撞羊臂紅）。#1185 上架前 content/ 沒有採用者，30 天到期會自己紅。",
-    "group": "2026-09-15 #1187 撞擊改向剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
-  },
-  "field:abilities.channel": {
-    "status": "landing",
-    "since": "2026-09-15",
-    "why": "GH#1191 —— 【持續引導】（效果開始之後可被打斷、撐滿才收尾）。第一份採用者是 `communityLolBatch2.ts` 的 fiddlesticks.W 與 velkoz.R 配方（社群英雄草稿，⛔ 還不在 content/）；機制在 `sim/abilities/channel.ts`，守衛 `communityLolBatch2Mechanics.test.ts`「channel:」跑正常指令並做過突變（拿掉打斷時作廢波次 ⇒ 移動／暈眩臂紅）。#1185 上架前 content/ 沒有採用者，30 天到期會自己紅。",
-    "group": "2026-09-15 #1191 持續引導剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
-  },
-  "field:champions.abilities.*.channel": {
-    "status": "landing",
-    "since": "2026-09-15",
-    "why": "GH#1191 —— 同上，鏡像側（champion 文件內嵌的 Q/W/E/R）。採用者同上（稻草人 W／威寇茲 R 草稿），#1185 上架時兩格一起變綠；30 天到期會自己紅。",
-    "group": "2026-09-15 #1191 持續引導剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
-  },
-  "field:champions.abilities.*.recast": {
-    "status": "landing",
-    "since": "2026-09-11",
-    "why": "GH#1187 —— 同上（英雄內嵌鏡像那一份，同步器從 standalone 抄過去）。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
-    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
-  },
-  "field:champions.abilities.*.recastEffects": {
-    "status": "landing",
-    "since": "2026-09-11",
-    "why": "GH#1187 —— 同上（鏡像）。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
-    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
-  },
-  "field:abilities.effects[]#applyStatus.charmed": {
-    "status": "landing",
-    "since": "2026-09-11",
-    "why": "GH#1197 —— 魅惑機制（sim/charm.ts）—— 第一份採用者是阿璃 E，由 #1193／#1185 接回六槽。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
-    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
-  },
-  "field:abilities.effects[]#dispel.statusKinds": {
-    "status": "landing",
-    "since": "2026-09-11",
-    "why": "GH#1197 —— 只清減速 —— 第一份採用者是蓋倫 Q，由 #1193 接回。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
-    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
-  },
-  "enum:abilities.effects[]#damageLine.aim=cast": {
-    "status": "landing",
-    "since": "2026-09-15",
-    "why": "GH#1197 —— 威寇茲 W「延遲的第二段仍在原裂痕上」：`damageLine.aim:\"cast\"` 的起點與方向凍在施放那一刻（`delayed` 排程時凍住、每一發原樣帶著）。第一份採用者是 `communityLolBatch2.ts` 的 velkoz.W 配方，由 #1193／#1185 接回（社群英雄草稿，⛔ 還不在 content/）；守衛 `sim/effects/damageLine.test.ts`「延遲直線 aim:cast／facing」兩個方向一起驗。30 天內沒綁上去這一列會自己紅。",
-    "group": "2026-09-15 #1197 契約層補齊、內容由 LoL lane 接回（landing，30 天到期）"
-  },
-  "variant:abilities.effects[]#spawnThresholds": {
-    "status": "landing",
-    "since": "2026-09-11",
-    "why": "GH#1197 —— 邊界陣（新 effect kind）—— 第一份採用者是瑟雷西 R，由 #1193 接回；客戶端畫面另票 #1209。 機制側守衛與突變都在（第二守則），只差內容那一份；30 天內沒綁上去這一列會自己紅。",
-    "group": "2026-09-11 #1187／#1197 六個共用機制剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
-  },
-  "field:abilities.effects[]#dash.shatter": {
-    "status": "landing",
-    "since": "2026-09-11",
-    "why": "GH#1190／#1211 —— ⭐ 機制與它的第一份內容**不在同一批**。`dash.shatter` 是 `fdd1a25d3` 為「衝刺撞到暫時柱才震」做的那一半；⭐ 它的第一個使用者是 **鄂爾（`lol-ornn`）Q→E**，而那位英雄今天**還不在 `content/champions/`** —— 他在 LoL 第二批 11 名的待上架名單裡（GH#1185）。⇒ ⛔ 今天的 0 **不是沒做完的遷移**，是「內容那一半還沒進 repo」。⭐ 反駁法：#1185 上架之後這一格要變成非零；若那批上了而它仍是 0，代表機制與內容對不上 —— ⭐ 那時這條 30 天的閘會自己再喊一次。"
-  },
-  "variant:abilities.effects[]#spawnInteractable": {
-    "status": "landing",
-    "since": "2026-09-15",
-    "why": "GH#1189 —— 互動物（瑟雷西 W 燈籠：隊友送 interact 指令才觸發 onAccept）由本 commit 落地；⭐ 第一份採用者是 **瑟雷西 W**，而它住在 `heroForge/communityLolBatch2.ts`（LoL 第四批 11 名的待上架候選，GH#1185），⛔ 今天還不在 `content/abilities/`。⇒ 今天的 0 是「內容那一半還沒進 repo」。⭐ 反駁法：#1185 上架後這一格仍為 0 ⇒ 接線斷了，這條 30 天的閘會自己再喊一次。"
-  },
-  "field:abilities.effects[]#dash.onPathHit": {
-    "status": "landing",
-    "since": "2026-09-15",
-    "why": "GH#1190 修正輪 —— 【衝刺沿途命中】身體真的掃過的那一段線上的敵人各吃一次（被柱／牆擋停就只算到擋停點）。第一份採用者是 `communityLolBatch2.ts` 的 ornn.E 配方（社群英雄草稿，⛔ 還不在 content/）；守衛 `communityLolBatch2Mechanics.test.ts`「Ornn E after Q pillar」兩臂（撞柱臂柱後敵人⛔ 不挨打／空衝臂挨打）。出貨另有兩支同形的近似（80-03 godie-h01u.e、45-03 godie-edem.e 用 damageLine 抄衝刺長度），要不要遷移是另一張票。#1185 上架前 content/ 沒有採用者，30 天到期會自己紅。",
-    "group": "2026-09-15 #1190 修正輪 衝刺沿途命中剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
-  },
-  "field:abilities.effects[]#dash.pathWidth": {
-    "status": "landing",
-    "since": "2026-09-15",
-    "why": "GH#1190 修正輪 —— 同上，沿途命中那條線的寬度（缺 = 施法者身體直徑）。採用者同上（ornn.E 配方草稿 1.4 格）；#1185 上架時與 onPathHit 一起變綠，30 天到期會自己紅。",
-    "group": "2026-09-15 #1190 修正輪 衝刺沿途命中剛出貨、內容由 LoL lane 接回（landing，30 天到期）"
-  },
-  "variant:abilities.effects[]#spawnObstacle": {
-    "status": "landing",
-    "since": "2026-09-11",
-    "why": "GH#1190／#1211 —— 同上：`spawnObstacle`（技能生得出**真的擋路**的暫時柱）由 `fdd1a25d3` 落地，⭐ 而它的第一份內容是 **鄂爾 Q**，仍在 GH#1185 的待上架 11 名裡。⚠️ ⭐ 這一格特別值得留 30 天的計時器：機制已經**出貨**（registry 認得、編輯器列得出來），⛔ 而一個出貨了卻沒有任何內容用的 effect kind，正是 S8「做了但玩家拿不到」的定義。⭐ 反駁法同上：#1185 上架後仍為 0 ⇒ 接線斷了。"
-  },
   "enum:champions.modelVersions[].source.selectionClass=retextured-proxy": {
     "status": "debt",
     "why": "2026-09-13 模型來源欄位遷移後仍為 0。現有 11 組使用者指定加工副本依既有 default-policy 明示歸類為 manual，其他 style-proxy 都是 similar-proxy；目前沒有一個可誠實標成 retextured-proxy 的非手動候選。保留此順位供日後真正的貼圖加工候選，不能為通過普查改寫既有授權分類。"
@@ -2411,5 +2028,245 @@
     "since": "2026-09-15",
     "why": "GH#1260 B3 —— `leap.landRadius`（落地爆炸半徑）的級別欄位，解析到 `landRadius`（`aoeTiers.ts::radiusFieldOf`）。⭐ 零採用是**對的**：`geometrySnap.ts` 已在載入時把沒標級別的 63 個落地半徑（其中 2.75→3 的 45 個裡 41 個是模板技）吸格；這一格等內容遷移把標籤寫進文件與模板參數。⚠️ 修正輪更正：⛔ 不是「需要 skills:sync 全域鎖」—— 擋住的是模板參數（wc3u，模板沒有級別參數）與匯入器上游（社群 recipe 唯讀、第二批編譯稿在 repo 外）。",
     "group": "GH#1260 B3 距離收進五級距（2026-09-15）"
+  },
+  "enum:abilities.effects[]#carry.onCarrierDeath=drop": {
+    "status": "landing",
+    "since": "2026-09-17",
+    "why": "⭐ GH#1281（第四批 37 名上架時的合併）—— 【抱人】的攜帶者死亡時把人**丟下**（另一種是 release）。出貨唯一一支 carry（賽特 R）走 `release`（抱著衝完再砸）⇒ 這一格今天是 0。⛔ 不先替它編一支技能。 ⚠️ 30 天後這條寬限到期會再紅一次：到時要嘛內容採用了，要嘛改標 `debt` 說實話。",
+    "group": "2026-09-17 合併 #1267／#1280／第四批上架時剛出貨、內容還沒採用"
+  },
+  "enum:vfx-scripts.segments[]|1#anim.replaces=target.reaction": {
+    "status": "landing",
+    "since": "2026-09-17",
+    "why": "⭐ GH#1281（第四批 37 名上架時的合併）—— 演出腳本接管**受擊者**的反應動作。出貨 185 份腳本全部接管施法者（`caster.action`）⇒ 這一格等第一支「命中時改寫受擊者演出」的技能。 ⚠️ 30 天後這條寬限到期會再紅一次：到時要嘛內容採用了，要嘛改標 `debt` 說實話。",
+    "group": "2026-09-17 合併 #1267／#1280／第四批上架時剛出貨、內容還沒採用"
+  },
+  "field:abilities.channel.cancelOn": {
+    "status": "landing",
+    "since": "2026-09-17",
+    "why": "⭐ GH#1281（第四批 37 名上架時的合併）—— 引導的**中斷條件**（受擊／位移…）。出貨 4 支引導技全部走引擎預設（被控就斷）⇒ 這一格是 override，0 是真話。 ⚠️ 30 天後這條寬限到期會再紅一次：到時要嘛內容採用了，要嘛改標 `debt` 說實話。",
+    "group": "2026-09-17 合併 #1267／#1280／第四批上架時剛出貨、內容還沒採用"
+  },
+  "field:abilities.effects[]#carry.condition": {
+    "status": "landing",
+    "since": "2026-09-17",
+    "why": "⭐ GH#1281（第四批 37 名上架時的合併）—— 【抱人】的條件葉。賽特 R 無條件抱 ⇒ 0。 ⚠️ 30 天後這條寬限到期會再紅一次：到時要嘛內容採用了，要嘛改標 `debt` 說實話。",
+    "group": "2026-09-17 合併 #1267／#1280／第四批上架時剛出貨、內容還沒採用"
+  },
+  "field:abilities.effects[]#shieldBreak.condition": {
+    "status": "landing",
+    "since": "2026-09-17",
+    "why": "⭐ GH#1281（第四批 37 名上架時的合併）—— 【破盾】的條件葉。出貨 4 支破盾無條件 ⇒ 0。 ⚠️ 30 天後這條寬限到期會再紅一次：到時要嘛內容採用了，要嘛改標 `debt` 說實話。",
+    "group": "2026-09-17 合併 #1267／#1280／第四批上架時剛出貨、內容還沒採用"
+  },
+  "field:abilities.effects[]#shieldBreak.maxTargets": {
+    "status": "landing",
+    "since": "2026-09-17",
+    "why": "⭐ GH#1281（第四批 37 名上架時的合併）—— 【破盾】的目標上限。出貨 4 支都是單體或已由 shape 限制 ⇒ 0。 ⚠️ 30 天後這條寬限到期會再紅一次：到時要嘛內容採用了，要嘛改標 `debt` 說實話。",
+    "group": "2026-09-17 合併 #1267／#1280／第四批上架時剛出貨、內容還沒採用"
+  },
+  "field:abilities.recast.costPerRecast": {
+    "status": "landing",
+    "since": "2026-09-17",
+    "why": "⭐ GH#1281（第四批 37 名上架時的合併）—— 【再次施放】每一段各自的耗魔。出貨 8 支再次施放技（阿璃 R／鄂爾 R／瑟雷西 Q／威寇茲 Q…）都是一次付清 ⇒ 0。 ⚠️ 30 天後這條寬限到期會再紅一次：到時要嘛內容採用了，要嘛改標 `debt` 說實話。",
+    "group": "2026-09-17 合併 #1267／#1280／第四批上架時剛出貨、內容還沒採用"
+  },
+  "field:vfx-scripts.segments[]|1#sound.replaces": {
+    "status": "landing",
+    "since": "2026-09-17",
+    "why": "⭐ GH#1281（第四批 37 名上架時的合併）—— 音效段落接管某一條聲音通道。出貨 132 份有聲腳本都用疊加 ⇒ 0。 ⚠️ 30 天後這條寬限到期會再紅一次：到時要嘛內容採用了，要嘛改標 `debt` 說實話。",
+    "group": "2026-09-17 合併 #1267／#1280／第四批上架時剛出貨、內容還沒採用"
+  },
+  "field:vfx-scripts.segments[]|1#sound.replacesForMs": {
+    "status": "landing",
+    "since": "2026-09-17",
+    "why": "⭐ GH#1281（第四批 37 名上架時的合併）—— 同上，接管時長。沒有人接管 ⇒ 0。 ⚠️ 30 天後這條寬限到期會再紅一次：到時要嘛內容採用了，要嘛改標 `debt` 說實話。",
+    "group": "2026-09-17 合併 #1267／#1280／第四批上架時剛出貨、內容還沒採用"
+  },
+  "enum:abilities.effects[]#applyBuff.damageTypeOverride.impactType=converted": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `applyBuff` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].damageCrit=any": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `applyBuff` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].damageCrit=nonCrit": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `applyBuff` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].onConsumed=stop": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `applyBuff` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "enum:abilities.effects[]#blink.shape=circle": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "enum:abilities.effects[]#dispel.order=oldest": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `dispel` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "enum:abilities.effects[]#eventValueConversion.basis=mitigated": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "enum:abilities.effects[]#eventValueConversion.basis=raw": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "enum:abilities.effects[]#eventValueConversion.shape=circle": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "enum:abilities.effects[]#eventValueConversion.source=targetCurrentHealth": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "enum:abilities.effects[]#eventValueConversion.who=target": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "enum:abilities.effects[]#proxyCast.payCosts=mana": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "enum:abilities.effects[]#proxyCast.payCosts=manaAndCooldown": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "enum:abilities.effects[]#proxyCast.rankMode=fixed": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "enum:abilities.effects[]#proxyCast.shape=circle": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "field:abilities.effects[]#blink.maxTargets": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "field:abilities.effects[]#blink.radius": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "field:abilities.effects[]#blink.radiusTier": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "field:abilities.effects[]#blink.side": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `blink` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "field:abilities.effects[]#eventValueConversion.condition": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "field:abilities.effects[]#eventValueConversion.maxTargets": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "field:abilities.effects[]#eventValueConversion.radius": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "field:abilities.effects[]#eventValueConversion.radiusTier": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "field:abilities.effects[]#eventValueConversion.side": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `eventValueConversion` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "field:abilities.effects[]#proxyCast.abilityId": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "field:abilities.effects[]#proxyCast.condition": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "field:abilities.effects[]#proxyCast.fixedRank": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "field:abilities.effects[]#proxyCast.maxTargets": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "field:abilities.effects[]#proxyCast.radius": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "field:abilities.effects[]#proxyCast.radiusTier": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
+  },
+  "field:abilities.effects[]#proxyCast.side": {
+    "status": "debt",
+    "since": "2026-08-17",
+    "why": "GH#333 —— 60 張聖杯願望讓 `proxyCast` 這一族**第一次有內容用它**，於是同一族裡**沒被用到的那幾格**從「整族零採用」浮出來變成單獨的零採用鍵。⛔ 這不是新機制沒接線：處理器與 schema 都在，是內容還沒有一張願望需要這個參數組合。**到期**：owner 的下一批願望（或任何技能）填了它的那一刻，這一列會被「STALE」那半邊叫，刪掉即可。 ⚠️ 2026-09-17（GH#1281）：30 天寬限到期而內容仍然 0 ⇒ 由 `landing` 改標 `debt` —— `landing` 承諾「馬上會有人用」，那個承諾已經過期；`debt` 讓它每次跑都留在橫幅上，⛔ 不是安靜過期。",
+    "group": "具名標記（marks）家族裡沒被用到的那幾格"
   }
 }

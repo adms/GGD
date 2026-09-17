@@ -21,9 +21,9 @@
   },
   "bigBlobs": [
     {
-      "path": "tools/bgm-gen/sf/MuseScore_General.sf3",
-      "bytes": 39900972,
-      "why": "bgm-gen 每一首曲子的決定性輸入：tools/bgm-gen/src/ggd/sampler.py 與 voices.py 讀它，content/assets/audio/bgm/MANIFEST.json 記它的 sha256；同一份譜換一個音色庫就產出不同位元組 ⇒ 出貨 BGM 能不能重現取決於它（MIT，授權檔同目錄）。FETCH.sh 可自上游 osuosl 驗 sha256 重抓 —— 若判定上游夠可靠，這一列就該搬出 git。"
+      "path": "content/bundle.json",
+      "bytes": 5704778,
+      "why": "⭐ 出貨的內容包（`content:build` 的產物）—— 客戶端每次載入直接抓它（`[client] content loaded: N champions … via bundle`），而 `content/` 是正式站的 live bind-mount、跟著 `git pull` 走 ⇒ ⛔ 它不能搬去 S3，搬了玩家就載不到內容。2026-09-17 第四批 37 名上架後越過 5 MiB 門檻（190 位英雄 × 每位 6 格技能全部內嵌）。⭐ 它是**可重生成**的：任何時候 `pnpm content:build` 逐位元組重建；要縮就縮內容本身（退休英雄／拆包），⛔ 不是把門檻調大。"
     },
     {
       "path": "materials/community-hero-forge/manifest.json",
@@ -41,6 +41,16 @@
       "why": "素材庫固定中央索引；其他工作流以此查詢本機、Git、S3、雜湊與驗收狀態"
     },
     {
+      "path": "materials/hero-model-library/priority-81-handoff.json",
+      "bytes": 7816018,
+      "why": "優先 81 名英雄的模型／動作／語音交接總表（Codex）。owner 2026-09-15 合併 PR #1152 時選「保留完整步驟」—— 問句逐字寫明含約 30 MB「製作過程紀錄」（轉檔證據、截圖、原始備份；09-10 規則應放 S3），⇒ 這一次接受進 git。⛔ 只准變少：搬去 S3 之後把這一列刪掉並調低 materials。"
+    },
+    {
+      "path": "materials/hero-model-library/priority-evidence/main-81-handoff/current-branch-audio/overlay.json",
+      "bytes": 6313764,
+      "why": "優先 81 名的分支語音疊加稽核（Codex）。owner 2026-09-15 合併 PR #1152 時選「保留完整步驟」—— 問句逐字寫明含約 30 MB「製作過程紀錄」（轉檔證據、截圖、原始備份；09-10 規則應放 S3），⇒ 這一次接受進 git。⛔ 只准變少：搬去 S3 之後把這一列刪掉並調低 materials。"
+    },
+    {
       "path": "materials/hero-model-library/public-source-files.json",
       "bytes": 30058389,
       "why": "素材庫固定公開來源逐檔索引；保留來源與版本關係及 SHA-256，供共編查詢"
@@ -56,14 +66,9 @@
       "why": "素材庫固定待設計英雄索引；保存未綁定原生角色 ID、來源版本與缺口狀態"
     },
     {
-      "path": "materials/hero-model-library/priority-81-handoff.json",
-      "bytes": 7816018,
-      "why": "優先 81 名英雄的模型／動作／語音交接總表（Codex）。owner 2026-09-15 合併 PR #1152 時選「保留完整步驟」—— 問句逐字寫明含約 30 MB「製作過程紀錄」（轉檔證據、截圖、原始備份；09-10 規則應放 S3），⇒ 這一次接受進 git。⛔ 只准變少：搬去 S3 之後把這一列刪掉並調低 materials。"
-    },
-    {
-      "path": "materials/hero-model-library/priority-evidence/main-81-handoff/current-branch-audio/overlay.json",
-      "bytes": 6313764,
-      "why": "優先 81 名的分支語音疊加稽核（Codex）。owner 2026-09-15 合併 PR #1152 時選「保留完整步驟」—— 問句逐字寫明含約 30 MB「製作過程紀錄」（轉檔證據、截圖、原始備份；09-10 規則應放 S3），⇒ 這一次接受進 git。⛔ 只准變少：搬去 S3 之後把這一列刪掉並調低 materials。"
+      "path": "tools/bgm-gen/sf/MuseScore_General.sf3",
+      "bytes": 39900972,
+      "why": "bgm-gen 每一首曲子的決定性輸入：tools/bgm-gen/src/ggd/sampler.py 與 voices.py 讀它，content/assets/audio/bgm/MANIFEST.json 記它的 sha256；同一份譜換一個音色庫就產出不同位元組 ⇒ 出貨 BGM 能不能重現取決於它（MIT，授權檔同目錄）。FETCH.sh 可自上游 osuosl 驗 sha256 重抓 —— 若判定上游夠可靠，這一列就該搬出 git。"
     }
   ],
   "legacyPerFileBytes": 1048576,

@@ -36,9 +36,18 @@ const COLLECTIONS: readonly EditCollection[] = ["champions", "abilities", "items
 /** Read up to `n` real documents from a collection (skipping the index). */
 function sampleDocs(collection: EditCollection, n: number): Record<string, unknown>[] {
   const dir = join(CONTENT, collection);
-  return readdirSync(dir)
+  // ⭐⭐ GH#1281（2026-09-17）—— 取樣要**橫跨整個集合**，⛔ 不是「前 25 個」。
+  //   `.slice(0, n)` 取的是**字母序最前面**的 25 份；第四批 37 名上架之後那 25 份
+  //   全部是 `acquired-a…`（他們的施法特效由載入時規則補、磁碟上沒有 `vfxKey`）
+  //   ⇒ 「`vfxKey` 在 25 份真文件裡一次都沒出現」⇒ 這條閘判它是打錯字的欄位。
+  //   ⚠️ 那是**取樣偏差**，⛔ 不是規格錯 —— 出貨 1129 份技能裡有 500 多份帶 vfxKey。
+  //   ⭐ 等距抽樣（每 k 份取一份）在任何名單長度下都掃得到整個字母序。
+  const files = readdirSync(dir)
     .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
-    .sort()
+    .sort();
+  const stride = Math.max(1, Math.floor(files.length / n));
+  return files
+    .filter((_, i) => i % stride === 0)
     .slice(0, n)
     .map((f) => JSON.parse(readFileSync(join(dir, f), "utf8")) as Record<string, unknown>);
 }
