@@ -210,7 +210,7 @@ PY
     info "⇒ git 有、服務沒有啟用：${short_ids//,/, }"
     info "⇒ 玩家的症狀是**選人畫面少人**，⛔ 而每一個既有檢查都會是綠的。"
     info "⇒ 補它（union-only，⛔ 一個都不會被移除，有稽核）："
-    info "   cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env run --rm platform /seed -starter-union"
+    info "   cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env run --rm --entrypoint /seed platform -starter-union"
     # ⚠️ ⭐ 刻意**不自動跑** —— 它寫的是玩家資料，而「營運方把某位停用了」
     #   必須贏過「部署腳本覺得應該啟用」。⇒ 這裡的責任是**讓它不可能被忽略**。
     [ "${GGD_DEPLOY_APPLY_STARTER:-0}" = "1" ] && {
@@ -223,8 +223,15 @@ PY
       # ⇒ 走 `run_step`：它 `die`,⛔ 不往下走。⭐ 這是刻意的 ——
       #   ⚠️ 這一段是**操作者明確開旗標要求的修復**（⛔ 不是順帶的讀取），
       #   失敗還往下印綠勾就是替一個沒發生的修復背書。
+      # ⛔⛔ 2026-09-17（v0.46.0 部署實測）—— **`/seed` 被進入點吃掉**：
+      #   映像的 `ENTRYPOINT ["/platform"]`（docker/platform.Dockerfile:72）⇒
+      #   `run --rm platform /seed -starter-union` 實際執行的是 `/platform /seed -starter-union`，
+      #   ⭐ 而**伺服器不解析任何旗標**（那份 Dockerfile 檔頭逐字寫著「The server itself parses NO flags」）
+      #   ⇒ 它把 37 名要補的英雄丟掉、開起一台伺服器並**永遠不結束** ——
+      #   實測卡了 21 分鐘、白名單原封不動停在 130，⛔ 而輸出看起來只是「還在跑」。
+      # ⇒ 一定要 `--entrypoint /seed`。⚠️ 上面那一行印給人看的提示也是同一句，⭐ 兩處一起改。
       run_step "補啟用官方英雄（starter-union）" \
-        "cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env run --rm platform /seed -starter-union" 3
+        "cd $REMOTE_REPO && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env run --rm --entrypoint /seed platform -starter-union" 3
     }
   fi
 fi

@@ -76,7 +76,8 @@ describe("mini-deploy.sh 的名單覆蓋 —— 映像宣告 ↔ 這台機器啟
     expect(out).toContain("37");
     expect(out).not.toMatch(/✓\s*白名單涵蓋/);
     // ⭐ ⛔ 不只是喊一聲：要給得出補它的那一行,⛔ 否則讀的人得自己去翻程式碼。
-    expect(out).toContain("/seed -starter-union");
+    // ⭐ 2026-09-17：提示那一行改成 `--entrypoint /seed`（見本檔最後一條）。
+    expect(out).toContain("--entrypoint /seed platform -starter-union");
     // ⭐ GH#1227：缺的人要**逐名**印出來，⛔ 不是只有人數。
     expect(out).toContain(NEW_37[0]!);
   });
@@ -85,7 +86,7 @@ describe("mini-deploy.sh 的名單覆蓋 —— 映像宣告 ↔ 這台機器啟
     const all = [...OLD_49, ...NEW_37];
     const out = run(all, all);
     expect(out).toMatch(/✓\s*白名單涵蓋/);
-    expect(out).not.toContain("/seed -starter-union");
+    expect(out).not.toContain("--entrypoint /seed platform -starter-union");
   });
 
   it("⭐ 白名單**多**啟用了幾名 ⇒ 仍然是綠的（union-only：營運方加的不是缺陷）", () => {
@@ -130,5 +131,26 @@ describe("mini-deploy.sh 的名單覆蓋 —— 映像宣告 ↔ 這台機器啟
   it("出貨的腳本真的呼叫它（⛔ 不是一個沒有人叫的函式）", () => {
     const src = execFileSync("bash", ["-c", `cat ${JSON.stringify(SCRIPT)}`], { encoding: "utf8" });
     expect(src.match(/^\s*roster_coverage_check\s*$/gm)?.length ?? 0).toBeGreaterThanOrEqual(1);
+  });
+
+  /**
+   * ⛔⛔ 2026-09-17（v0.46.0 部署實測）—— **補啟用那一行被進入點吃掉**。
+   *
+   * 映像的 `ENTRYPOINT ["/platform"]`（`docker/platform.Dockerfile:72`），而那份檔頭逐字寫著
+   * 「**The server itself parses NO flags**」⇒ `run --rm platform /seed -starter-union`
+   * 實際跑的是 `/platform /seed -starter-union`：⭐ 參數被丟掉、**伺服器開起來並永遠不結束**。
+   * ⚠️ 實測：卡 21 分鐘、白名單原封不動停在 130（要補的 37 名一個都沒進去），
+   * ⛔ 而輸出看起來只是「還在跑」—— 這正是本檔在防的那一族（假的綠燈）。
+   *
+   * ⇒ 判準：那一行**一定要** `--entrypoint /seed`。⛔ 不是「記得別寫錯」。
+   */
+  it("⭐ 補啟用那一行要 `--entrypoint /seed` —— ⛔ 不可以讓伺服器的進入點吃掉旗標", () => {
+    const src = readFileSync(SCRIPT, "utf8");
+    const seedLines = src.split("\n").filter((l) => l.includes("-starter-union") && l.includes("docker compose"));
+    expect(seedLines.length, "找不到補啟用那一行 —— 母體壞了（量尺自證）").toBeGreaterThan(0);
+    for (const line of seedLines) {
+      expect(line, `⛔ 這一行會被 ENTRYPOINT /platform 吃掉旗標：${line.trim()}`).toContain("--entrypoint /seed");
+      expect(line, "⛔ 舊寫法（把 /seed 當參數）").not.toMatch(/run\s+--rm\s+platform\s+\/seed/);
+    }
   });
 });
