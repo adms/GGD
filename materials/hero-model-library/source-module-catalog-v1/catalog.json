@@ -1,0 +1,335 @@
+{
+  "schema": "ggd.source-module-catalog@1",
+  "scope": [
+    "300英雄",
+    "Magical Battle Arena",
+    "Super Smash Bros.",
+    "The King of Fighters",
+    "J-Stars Victory VS+"
+  ],
+  "inputs": [
+    {
+      "path": "materials/hero-model-library/source-module-catalog-v1/300-mba.json",
+      "bytes": 801068,
+      "sha256": "b31b86c542d22f5f277438c8e2a7902c1d0f9b002d9f78091244bba1997fbd26",
+      "sourceGroups": 2,
+      "candidates": 291
+    },
+    {
+      "path": "materials/hero-model-library/source-module-catalog-v1/ssbu.json",
+      "bytes": 469489,
+      "sha256": "14c14f1153b2d546f979b71298c4fd49f5b3426b6a687e2613717f0c12c083e8",
+      "sourceGroups": 6,
+      "candidates": 184
+    },
+    {
+      "path": "materials/hero-model-library/source-module-catalog-v1/kof-jstars.json",
+      "bytes": 162012,
+      "sha256": "acee4c665d23b5288bdf0e756aa5f477a46f8315d0761264fc795dd82366a41a",
+      "sourceGroups": 5,
+      "candidates": 62
+    }
+  ],
+  "counts": {
+    "sourceGroups": 13,
+    "candidates": 537,
+    "registeredCandidates": 0,
+    "deployedCandidates": 0
+  },
+  "statusSemantics": {
+    "candidate": "來源索引、容器、轉換檔或待審元件；不等於 GGD 已驗收",
+    "registered": "GGD 內容或後台選項已引用；不等於正式站部署",
+    "deployed": "只有 Main 合併後的正式服務版本與實際切換驗證才成立",
+    "nullCount": "現有證據無法建立可靠數量或逐角色對應，不能視為零"
+  },
+  "sourceGroups": [
+    {
+      "sourceId": "300heroes-official-client-20260902",
+      "title": "300英雄官方用戶端",
+      "platform": "Windows PC",
+      "version": "v202609021",
+      "status": "extracted-indexed-candidate-library; no source-file registration or deployment",
+      "candidateCount": 270,
+      "summary": {
+        "candidateCharacters": 270,
+        "nativeFiles": 111198,
+        "modelIndexRecords": 34378,
+        "textureFiles": 47543,
+        "motionIndexRecords": 49859,
+        "nativeVfxPathRecords": 58922,
+        "playableAudioFilesUnclassified": 70395,
+        "undecodedAudioFiles": 4,
+        "convertedCharacterCandidateFiles": 0,
+        "ggdAcceptedSourceFiles": 0,
+        "registeredSourceFiles": 0,
+        "deployedSourceFiles": 0,
+        "boundary": "Audio counts are not split into SFX/voice; model records include static previews; VFX path records are mostly unlinked reserve."
+      },
+      "fragment": "materials/hero-model-library/source-module-catalog-v1/300-mba.json",
+      "evidencePaths": [
+        "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+        "../outputs/game-asset-library-20260907/asset-library-summary.json",
+        "../outputs/asset-library-registry-20260907/catalog.sqlite",
+        "../outputs/asset-library-registry-20260907/characters.json"
+      ]
+    },
+    {
+      "sourceId": "magical-battle-arena-complete-form-1.60-plus",
+      "title": "Magical Battle Arena Complete Form",
+      "platform": "Windows PC",
+      "version": "Complete Form 1.60+",
+      "status": "1.60-plus-extracted-and-converted-candidate-library; 1.70 absent; registration and deployment pending",
+      "candidateCount": 21,
+      "summary": {
+        "candidateCharacters": 21,
+        "rawFiles": 2385,
+        "modelIndexRecords": 447,
+        "nativeModelFiles": 224,
+        "glbCandidateFiles": 223,
+        "textureFiles": 808,
+        "motionIndexRecords": 1614,
+        "nativeVfxRecords": 423,
+        "playableAudioFilesUnclassified": 640,
+        "convertedCharacterCandidateFiles": 20,
+        "staticVisualValidatedSixClipComponents": 8,
+        "structurallyValidatedSixStateCandidates": 3,
+        "ggdAcceptedSourceFiles": 0,
+        "registeredSourceFiles": 0,
+        "deployedSourceFiles": 0,
+        "versionBoundary": "Magic Knight Rayearth content introduced in 1.70 is not included in this 1.60 extraction.",
+        "boundary": "VFX and audio are library-level reserves without authoritative per-character mapping; audio is not split into SFX/voice."
+      },
+      "fragment": "materials/hero-model-library/source-module-catalog-v1/300-mba.json",
+      "evidencePaths": [
+        "materials/hero-model-library/priority-evidence/300-mba-unused-assets-v1/index.json",
+        "../outputs/game-asset-library-20260907/asset-library-summary.json",
+        "../outputs/game-asset-library-20260907/evidence/mba-output-validation.json",
+        "../outputs/asset-library-registry-20260907/catalog.sqlite",
+        "../outputs/asset-library-registry-20260907/characters.json",
+        "materials/hero-model-library/priority-evidence/mba-unused-model-pilot-v1/report.json",
+        "materials/hero-model-library/priority-evidence/mba-unused-model-batch2-v1/report.json",
+        "materials/hero-model-library/priority-evidence/mba-unused-native-batch-v2/receipt.json"
+      ]
+    },
+    {
+      "sourceId": "gitlab-ssbu-models",
+      "title": "SSBU Worldblender pinned community model snapshot",
+      "platform": "Nintendo Switch / community Blender export",
+      "version": "df76879171b064570b4e49a608c9f98211b33edb",
+      "status": "source-payload-verified-with-independent-components",
+      "candidateCount": 94,
+      "summary": {
+        "manifestFiles": 28681,
+        "manifestBytes": 16148574001,
+        "fighterOrFormIds": 92,
+        "primaryModelCandidates": 698,
+        "acceptedStaticComponents": 14,
+        "registeredOptions": 0,
+        "note": "All 28,681 LFS paths exist and match pinned size/hash evidence. They are community exports; accepted components are independent GLBs, not backend-selectable options."
+      },
+      "fragment": "materials/hero-model-library/source-module-catalog-v1/ssbu.json",
+      "evidencePaths": [
+        "materials/hero-model-library/source-inventories/ssbu-ultimate-local-roster-v1/inventory.json",
+        "materials/hero-model-library/ssbu-model-library-validation.json"
+      ]
+    },
+    {
+      "sourceId": "parallel-ns-ultimate14",
+      "title": "Ultimate14 1.0 community-mod motion, effect, and audio payloads",
+      "platform": "Nintendo Switch / community mod",
+      "version": "1.0",
+      "status": "payload-parsed-partially-converted-not-registered",
+      "candidateCount": 17,
+      "summary": {
+        "motionFighterIds": 16,
+        "motionAliases": 435,
+        "uniqueTransformPayloads": 175,
+        "acceptedMotionComponents": 4,
+        "effectFiles": 3,
+        "audioBankAliases": 56,
+        "decodedWavFiles": 19,
+        "registeredOptions": 0,
+        "note": "Ultimate14 is a community mod, not a full SSBU roster or verified base-game extraction. Audio is decoded but remains unclassified and unmapped."
+      },
+      "fragment": "materials/hero-model-library/source-module-catalog-v1/ssbu.json",
+      "evidencePaths": [
+        "materials/hero-model-library/source-inventories/ssbu-ultimate-local-roster-v1/inventory.json",
+        "materials/hero-model-library/source-inventories/ultimate14-native-motions.json",
+        "../GGD-Asset-Library/conversions/ultimate14-audio-decoded-20260911-v1/audioFileIndex.json"
+      ]
+    },
+    {
+      "sourceId": "parallel-voice-ssbu-japanese",
+      "title": "SSBU All Japanese Voices reserve",
+      "platform": "Nintendo Switch / community audio package",
+      "version": null,
+      "status": "decoded-local-pending-listening-and-character-mapping",
+      "candidateCount": 68,
+      "summary": {
+        "nativeBankAliases": 350,
+        "nativeNameGroups": 68,
+        "decodedInputGroups": 65,
+        "uniqueDecodedBanks": 76,
+        "decodedWavFiles": 2512,
+        "uniqueDecodedWavHashes": 2184,
+        "confirmedVoiceCount": null,
+        "registeredOptions": 0,
+        "deployedOptions": 0,
+        "note": "The author declares Japanese game-rip audio, but GGD evidence has not verified speaker/language/event mappings per clip. Decoded files are candidates only."
+      },
+      "fragment": "materials/hero-model-library/source-module-catalog-v1/ssbu.json",
+      "evidencePaths": [
+        "materials/hero-model-library/ssbu-japanese-audio-validation.json",
+        "../GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/native-audio-groups.json",
+        "../GGD-Asset-Library/intake/public-models-20260910/parallel-voice-ssbu-japanese/nus3audio-decoding.json"
+      ]
+    },
+    {
+      "sourceId": "parallel-ns-alucard-ssbu",
+      "title": "Alucard SSM community mod",
+      "platform": "Nintendo Switch / Super Smash Bros. Ultimate community mod",
+      "version": "2.7 source release lineage",
+      "status": "payload-and-audio-decoded-not-converted-or-registered",
+      "candidateCount": 1,
+      "summary": {
+        "extractedFiles": 340,
+        "headerChecks": 147,
+        "headerErrors": 0,
+        "modelMeshes": 6,
+        "motions": 112,
+        "effectFiles": 8,
+        "decodedSfxLabelledWavs": 92,
+        "decodedVoiceLikeLabelledWavs": 41,
+        "silentPlaceholdersExcluded": 2,
+        "registeredOptions": 0,
+        "deployedOptions": 0,
+        "note": "All module identities are source-path/filename based. No model, animation, VFX, audio event, backend option, or deployment acceptance is implied."
+      },
+      "fragment": "materials/hero-model-library/source-module-catalog-v1/ssbu.json",
+      "evidencePaths": [
+        "../GGD-Asset-Library/intake/public-models-20260910/parallel-ns-alucard-ssbu/extracted-files.jsonl",
+        "../GGD-Asset-Library/intake/public-models-20260910/parallel-ns-alucard-ssbu/native-format-validation.json",
+        "../GGD-Asset-Library/conversions/alucard-audio-20260911-v1/revision-02/audioFileIndex.json",
+        "materials/hero-model-library/voice-index.json"
+      ]
+    },
+    {
+      "sourceId": "parallel-ns-bowser-big-blast",
+      "title": "Bowser's Big Blast community motion mod",
+      "platform": "Nintendo Switch / Super Smash Bros. Ultimate community mod",
+      "version": null,
+      "status": "motion-payload-header-validated-not-converted",
+      "candidateCount": 1,
+      "summary": {
+        "extractedFiles": 68,
+        "motionPathsAcrossRevisions": 38,
+        "headerErrors": 0,
+        "acceptedMotionComponents": 0,
+        "registeredOptions": 0,
+        "deployedOptions": 0,
+        "note": "This is a source motion candidate only. Costume and revision aliases have not been deduplicated into accepted GGD actions."
+      },
+      "fragment": "materials/hero-model-library/source-module-catalog-v1/ssbu.json",
+      "evidencePaths": [
+        "../GGD-Asset-Library/intake/public-models-20260910/parallel-ns-bowser-big-blast/extracted-files.jsonl",
+        "../GGD-Asset-Library/intake/public-models-20260910/parallel-ns-bowser-big-blast/native-format-validation.json"
+      ]
+    },
+    {
+      "sourceId": "windows-game-library-20260912:ssbu-nsandns2",
+      "title": "NSandNS2 SSBU NSP/ZIP container records",
+      "platform": "Nintendo Switch / Windows library metadata",
+      "version": null,
+      "status": "container-metadata-only-share-unmounted",
+      "candidateCount": 3,
+      "summary": {
+        "containerRecords": 3,
+        "payloadBytesRead": 0,
+        "memberRecords": 0,
+        "convertedCandidates": 0,
+        "acceptedCandidates": 0,
+        "registeredOptions": 0,
+        "deployedOptions": 0,
+        "note": "The Windows share is not mounted in this run. Only metadata was available: payload bytes read 0, header/member inventory 0, title/update/DLC composition unverified, extracted 0 and converted 0."
+      },
+      "fragment": "materials/hero-model-library/source-module-catalog-v1/ssbu.json",
+      "evidencePaths": [
+        "materials/hero-model-library/source-inventories/ssbu-ultimate-local-roster-v1/inventory.json",
+        "../GGD-Asset-Library/intake/ultimate16-nsandns2-audit-20260915-v1/ultimate14-files-reverified.json"
+      ]
+    },
+    {
+      "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+      "title": "THE KING OF FIGHTERS XIV",
+      "platform": "Windows (Steam)",
+      "version": "local-v126",
+      "status": "source-acquired-conversion-blocked",
+      "candidateCount": 3,
+      "summary": "MAI／IOR／KYO 共 1,088 個檔案逐檔 SHA-256 通過；原生格式 reader 接受 0，runtime selectable models、motion bindings、VFX bindings 與 production deployments 全為 0。",
+      "fragment": "materials/hero-model-library/source-module-catalog-v1/kof-jstars.json",
+      "evidencePaths": [
+        "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json",
+        "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/source-manifest.json",
+        "materials/hero-model-library/source-inventories/kof-xiv-native-container-probe-v2/receipt.json",
+        "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/audio-file-index.json",
+        "materials/hero-model-library/source-inventories/kof-local-pipeline-v1/receipt.json"
+      ]
+    },
+    {
+      "sourceId": "kof-xv-local-candidates-20260914",
+      "title": "THE KING OF FIGHTERS XV",
+      "platform": "PC community ports / author rips; installed Steam game not found",
+      "version": null,
+      "status": "mixed-static-candidates-and-blocked-sources",
+      "candidateCount": 3,
+      "summary": "Ash 有兩個結構通過但尚未視覺驗收的靜態 GLB；Mai／Iori 原始 FBX 仍卡在材質槽位。後台可選模型與正式部署均為 0。",
+      "fragment": "materials/hero-model-library/source-module-catalog-v1/kof-jstars.json",
+      "evidencePaths": [
+        "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json",
+        "materials/hero-model-library/priority-evidence/kof-xv-ash-audio-review-v1/receipt.json",
+        "materials/hero-model-library/source-inventories/kof-xv-sfm-material-route-v1/receipt.json"
+      ]
+    },
+    {
+      "sourceId": "kof-maximum-impact-local-inventory-20260914",
+      "title": "KOF Maximum Impact series",
+      "platform": "PlayStation 2 / Taito Type X2",
+      "version": null,
+      "status": "not-found-in-local-inventory",
+      "candidateCount": 3,
+      "summary": "Maximum Impact、Maximum Impact 2、Regulation A 只有來源與工具線索；本機沒有 ISO、遊戲目錄、逐檔 SHA、模型或其他可轉換模組。",
+      "fragment": "materials/hero-model-library/source-module-catalog-v1/kof-jstars.json",
+      "evidencePaths": [
+        "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
+      ]
+    },
+    {
+      "sourceId": "steam-kof2002um-voice-dat-222440-build-8463197",
+      "title": "THE KING OF FIGHTERS 2002 UNLIMITED MATCH",
+      "platform": "Windows (Steam)",
+      "version": "Steam build 8463197",
+      "status": "voice-extracted-pending-listening-review",
+      "candidateCount": 1,
+      "summary": "voice.dat 已抽出 2687 個 RIFF/WAV；角色、語言與事件尚未映射。",
+      "fragment": "materials/hero-model-library/source-module-catalog-v1/kof-jstars.json",
+      "evidencePaths": [
+        "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
+      ]
+    },
+    {
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "title": "J-Stars Victory VS+",
+      "platform": "PS3 archive; verify contents before assigning platform/version",
+      "version": null,
+      "status": "blocked-upstream-extraction",
+      "candidateCount": 52,
+      "summary": "名單含 39 名可操作角色與 13 名支援角色；owner archive 狀態為 blocked-archive-not-found。擷取角色、準備模型、註冊模型、音訊綁定與正式部署均為 0。",
+      "fragment": "materials/hero-model-library/source-module-catalog-v1/kof-jstars.json",
+      "evidencePaths": [
+        "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+        "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+        "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+      ]
+    }
+  ]
+}

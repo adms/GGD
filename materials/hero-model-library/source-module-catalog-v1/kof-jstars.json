@@ -1,0 +1,3482 @@
+{
+  "schema": "ggd.source-module-catalog-fragment@1",
+  "sourceGroups": [
+    {
+      "sourceId": "steam-kofxiv-priority-mai-ior-kyo-build-local-v126",
+      "title": "THE KING OF FIGHTERS XIV",
+      "platform": "Windows (Steam)",
+      "version": "local-v126",
+      "status": "source-acquired-conversion-blocked",
+      "evidencePaths": [
+        "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json",
+        "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/source-manifest.json",
+        "materials/hero-model-library/source-inventories/kof-xiv-native-container-probe-v2/receipt.json",
+        "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/audio-file-index.json",
+        "materials/hero-model-library/source-inventories/kof-local-pipeline-v1/receipt.json"
+      ],
+      "summary": "MAI／IOR／KYO 共 1,088 個檔案逐檔 SHA-256 通過；原生格式 reader 接受 0，runtime selectable models、motion bindings、VFX bindings 與 production deployments 全為 0。",
+      "candidates": [
+        {
+          "character": "八神庵",
+          "id": "IOR",
+          "work": "THE KING OF FIGHTERS XIV",
+          "model": {
+            "stage": "native-containers-acquired-format-blocked",
+            "count": 29,
+            "note": "已取得原生模型容器；Assimp reader 接受 0，幾何與權重尚未解碼。"
+          },
+          "texture": {
+            "stage": "decoded-review-candidates-not-material-bound",
+            "count": 5,
+            "note": "256px 1P COL PNG 已確定性轉換；材質槽位與模型視覺驗收仍受原生模型 converter 阻擋。"
+          },
+          "skeleton": {
+            "stage": "name-table-indexed-hierarchy-not-decoded",
+            "count": 220,
+            "note": "數量是 OMIR 骨架名稱，不代表 hierarchy、bind pose 或 skin weight 已解碼。"
+          },
+          "motion": {
+            "stage": "native-labels-indexed-transforms-not-decoded",
+            "count": 114,
+            "note": "數量是 OTRA 動作標籤候選，不是可播放 clip；transform、時間與事件皆未解碼。"
+          },
+          "vfx": {
+            "stage": "native-containers-indexed-unbound",
+            "count": 66,
+            "note": "原生特效容器／依賴已取得；runtime blend、timing、attachment 與技能綁定皆為 0。"
+          },
+          "sfx": {
+            "stage": "decoded-unclassified-pending-listening",
+            "count": 22,
+            "note": "來自角色 Sound/se 目錄；檔案可解碼，但事件與技能綁定未審。"
+          },
+          "voice": {
+            "stage": "decoded-unclassified-pending-listening",
+            "count": 132,
+            "note": "來自角色 Sound/voice 目錄；語言、說話者與事件仍待逐段聽審。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "KOF XIV runtime selectable model、motion binding 與 VFX binding 均為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "沒有正式部署證據。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/source-manifest.json",
+            "materials/hero-model-library/source-inventories/kof-xiv-native-container-probe-v2/receipt.json",
+            "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/audio-file-index.json",
+            "materials/hero-model-library/source-inventories/kof-local-pipeline-v1/receipt.json",
+            "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
+          ]
+        },
+        {
+          "character": "草薙京",
+          "id": "KYO",
+          "work": "THE KING OF FIGHTERS XIV",
+          "model": {
+            "stage": "native-containers-acquired-format-blocked",
+            "count": 22,
+            "note": "已取得原生模型容器；Assimp reader 接受 0，幾何與權重尚未解碼。"
+          },
+          "texture": {
+            "stage": "decoded-review-candidates-not-material-bound",
+            "count": 3,
+            "note": "256px 1P COL PNG 已確定性轉換；材質槽位與模型視覺驗收仍受原生模型 converter 阻擋。"
+          },
+          "skeleton": {
+            "stage": "name-table-indexed-hierarchy-not-decoded",
+            "count": 227,
+            "note": "數量是 OMIR 骨架名稱，不代表 hierarchy、bind pose 或 skin weight 已解碼。"
+          },
+          "motion": {
+            "stage": "native-labels-indexed-transforms-not-decoded",
+            "count": 119,
+            "note": "數量是 OTRA 動作標籤候選，不是可播放 clip；transform、時間與事件皆未解碼。"
+          },
+          "vfx": {
+            "stage": "native-containers-indexed-unbound",
+            "count": 56,
+            "note": "原生特效容器／依賴已取得；runtime blend、timing、attachment 與技能綁定皆為 0。"
+          },
+          "sfx": {
+            "stage": "decoded-unclassified-pending-listening",
+            "count": 33,
+            "note": "來自角色 Sound/se 目錄；檔案可解碼，但事件與技能綁定未審。"
+          },
+          "voice": {
+            "stage": "decoded-unclassified-pending-listening",
+            "count": 137,
+            "note": "來自角色 Sound/voice 目錄；語言、說話者與事件仍待逐段聽審。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "KOF XIV runtime selectable model、motion binding 與 VFX binding 均為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "沒有正式部署證據。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/source-manifest.json",
+            "materials/hero-model-library/source-inventories/kof-xiv-native-container-probe-v2/receipt.json",
+            "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/audio-file-index.json",
+            "materials/hero-model-library/source-inventories/kof-local-pipeline-v1/receipt.json",
+            "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
+          ]
+        },
+        {
+          "character": "不知火舞",
+          "id": "MAI",
+          "work": "THE KING OF FIGHTERS XIV",
+          "model": {
+            "stage": "native-containers-acquired-format-blocked",
+            "count": 47,
+            "note": "已取得原生模型容器；Assimp reader 接受 0，幾何與權重尚未解碼。"
+          },
+          "texture": {
+            "stage": "decoded-review-candidates-not-material-bound",
+            "count": 6,
+            "note": "256px 1P COL PNG 已確定性轉換；材質槽位與模型視覺驗收仍受原生模型 converter 阻擋。"
+          },
+          "skeleton": {
+            "stage": "name-table-indexed-hierarchy-not-decoded",
+            "count": 211,
+            "note": "數量是 OMIR 骨架名稱，不代表 hierarchy、bind pose 或 skin weight 已解碼。"
+          },
+          "motion": {
+            "stage": "native-labels-indexed-transforms-not-decoded",
+            "count": 105,
+            "note": "數量是 OTRA 動作標籤候選，不是可播放 clip；transform、時間與事件皆未解碼。"
+          },
+          "vfx": {
+            "stage": "native-containers-indexed-unbound",
+            "count": 54,
+            "note": "原生特效容器／依賴已取得；runtime blend、timing、attachment 與技能綁定皆為 0。"
+          },
+          "sfx": {
+            "stage": "decoded-unclassified-pending-listening",
+            "count": 27,
+            "note": "來自角色 Sound/se 目錄；檔案可解碼，但事件與技能綁定未審。"
+          },
+          "voice": {
+            "stage": "decoded-unclassified-pending-listening",
+            "count": 123,
+            "note": "來自角色 Sound/voice 目錄；語言、說話者與事件仍待逐段聽審。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "KOF XIV runtime selectable model、motion binding 與 VFX binding 均為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "沒有正式部署證據。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/source-manifest.json",
+            "materials/hero-model-library/source-inventories/kof-xiv-native-container-probe-v2/receipt.json",
+            "materials/hero-model-library/source-inventories/kof-xiv-priority-v1/audio-file-index.json",
+            "materials/hero-model-library/source-inventories/kof-local-pipeline-v1/receipt.json",
+            "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "kof-xv-local-candidates-20260914",
+      "title": "THE KING OF FIGHTERS XV",
+      "platform": "PC community ports / author rips; installed Steam game not found",
+      "version": null,
+      "status": "mixed-static-candidates-and-blocked-sources",
+      "evidencePaths": [
+        "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json",
+        "materials/hero-model-library/priority-evidence/kof-xv-ash-audio-review-v1/receipt.json",
+        "materials/hero-model-library/source-inventories/kof-xv-sfm-material-route-v1/receipt.json"
+      ],
+      "summary": "Ash 有兩個結構通過但尚未視覺驗收的靜態 GLB；Mai／Iori 原始 FBX 仍卡在材質槽位。後台可選模型與正式部署均為 0。",
+      "candidates": [
+        {
+          "character": "Ash Crimson",
+          "id": "ASH",
+          "work": "THE KING OF FIGHTERS XV",
+          "model": {
+            "stage": "converted-structural-pass-static-component",
+            "count": 2,
+            "note": "兩個 universal-atlas GLB 結構檢查通過；仍缺最終視覺重繪、英雄綁定與後台切換。"
+          },
+          "texture": {
+            "stage": "embedded-structural-pass-visual-review-pending",
+            "count": 24,
+            "note": "兩個靜態 GLB 各含 12 張 256px 貼圖；數量合計 24，最終視覺重繪仍待完成。"
+          },
+          "skeleton": {
+            "stage": "structural-pass-static-rig",
+            "count": 258,
+            "note": "兩個靜態 GLB 各為 258 joints；這不是兩套已綁定英雄 runtime skeleton。"
+          },
+          "motion": {
+            "stage": "missing-native-gameplay-motion",
+            "count": 0,
+            "note": "兩個靜態元件皆有 0 個原生遊戲動作 clip。"
+          },
+          "vfx": {
+            "stage": "unknown",
+            "count": null,
+            "note": "現有證據沒有可歸屬且可綁定的 Ash VFX 候選數。"
+          },
+          "sfx": {
+            "stage": "unclassified-audio-pending-listening",
+            "count": null,
+            "note": "86 段音訊尚未逐段區分語音與音效。"
+          },
+          "voice": {
+            "stage": "review-converted-identity-unconfirmed",
+            "count": 86,
+            "note": "86 個 MP3 僅供本機聽審；逐段語言、說話者與事件確認皆為 0。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "backend selectable assets 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployments 為 0。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json",
+            "materials/hero-model-library/priority-evidence/kof-xv-ash-audio-review-v1/receipt.json"
+          ]
+        },
+        {
+          "character": "Iori Yagami",
+          "id": "IOR",
+          "work": "THE KING OF FIGHTERS XV",
+          "model": {
+            "stage": "source-fbx-acquired-conversion-rejected",
+            "count": 1,
+            "note": "原始 FBX 已取得並驗 SHA；拒絕的 Assimp GLB 有 26 個外部貼圖 URI，缺權威材質槽位對應，不能算可上架 GLB。"
+          },
+          "texture": {
+            "stage": "source-textures-decoded-mapping-blocked",
+            "count": 12,
+            "note": "來源 TGA 已解碼並驗 SHA；缺權威材質槽位 mapping，不能視為已綁定貼圖。"
+          },
+          "skeleton": {
+            "stage": "source-rig-indexed-conversion-rejected",
+            "count": 241,
+            "note": "數量是原始 FBX bone count；拒絕的轉換產物不能作為 runtime skeleton。"
+          },
+          "motion": {
+            "stage": "unknown",
+            "count": null,
+            "note": "沒有可驗證的原生 gameplay motion 候選數。"
+          },
+          "vfx": {
+            "stage": "unknown",
+            "count": null,
+            "note": "現有證據沒有可歸屬且可綁定的 VFX 候選數。"
+          },
+          "sfx": {
+            "stage": "source-reserve-unreviewed",
+            "count": null,
+            "note": "音訊 reserve 有索引線索，未有逐段分類數。"
+          },
+          "voice": {
+            "stage": "source-reserve-unreviewed",
+            "count": null,
+            "note": "語言、說話者與事件尚未逐段確認。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "沒有後台可選模型證據。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "沒有正式部署證據。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
+          ]
+        },
+        {
+          "character": "Mai Shiranui",
+          "id": "MAI",
+          "work": "THE KING OF FIGHTERS XV",
+          "model": {
+            "stage": "source-fbx-acquired-conversion-rejected",
+            "count": 1,
+            "note": "原始 FBX 已取得並驗 SHA；拒絕的 Assimp GLB 有 21 個外部貼圖 URI，缺權威材質槽位對應，不能算可上架 GLB。 SFM head/body 來源已擷取，但已稽核 reader 仍不接受。"
+          },
+          "texture": {
+            "stage": "source-textures-decoded-mapping-blocked",
+            "count": 12,
+            "note": "來源 TGA 已解碼並驗 SHA；缺權威材質槽位 mapping，不能視為已綁定貼圖。"
+          },
+          "skeleton": {
+            "stage": "source-rig-indexed-conversion-rejected",
+            "count": 319,
+            "note": "數量是原始 FBX bone count；拒絕的轉換產物不能作為 runtime skeleton。"
+          },
+          "motion": {
+            "stage": "static-pose-only-not-gameplay",
+            "count": 2,
+            "note": "SFM body/head 各一個靜態 pose action；原生 gameplay clips 為 0。"
+          },
+          "vfx": {
+            "stage": "unknown",
+            "count": null,
+            "note": "現有證據沒有可歸屬且可綁定的 VFX 候選數。"
+          },
+          "sfx": {
+            "stage": "source-reserve-unreviewed",
+            "count": null,
+            "note": "音訊 reserve 有索引線索，未有逐段分類數。"
+          },
+          "voice": {
+            "stage": "source-reserve-unreviewed",
+            "count": null,
+            "note": "語言、說話者與事件尚未逐段確認。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "沒有後台可選模型證據。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "沒有正式部署證據。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json",
+            "materials/hero-model-library/source-inventories/kof-xv-sfm-material-route-v1/receipt.json"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "kof-maximum-impact-local-inventory-20260914",
+      "title": "KOF Maximum Impact series",
+      "platform": "PlayStation 2 / Taito Type X2",
+      "version": null,
+      "status": "not-found-in-local-inventory",
+      "evidencePaths": [
+        "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
+      ],
+      "summary": "Maximum Impact、Maximum Impact 2、Regulation A 只有來源與工具線索；本機沒有 ISO、遊戲目錄、逐檔 SHA、模型或其他可轉換模組。",
+      "candidates": [
+        {
+          "character": null,
+          "id": null,
+          "work": "KOF: Maximum Impact",
+          "model": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload；工具線索不是模型候選。"
+          },
+          "texture": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload。"
+          },
+          "skeleton": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload。"
+          },
+          "motion": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload。"
+          },
+          "vfx": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload。"
+          },
+          "sfx": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload。"
+          },
+          "voice": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "沒有候選可註冊。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "沒有正式部署證據。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
+          ]
+        },
+        {
+          "character": null,
+          "id": null,
+          "work": "KOF: Maximum Impact 2",
+          "model": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload；工具線索不是模型候選。"
+          },
+          "texture": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload。"
+          },
+          "skeleton": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload。"
+          },
+          "motion": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload。"
+          },
+          "vfx": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload。"
+          },
+          "sfx": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload。"
+          },
+          "voice": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "沒有候選可註冊。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "沒有正式部署證據。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
+          ]
+        },
+        {
+          "character": null,
+          "id": null,
+          "work": "KOF Maximum Impact Regulation A",
+          "model": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload；工具線索不是模型候選。"
+          },
+          "texture": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload。"
+          },
+          "skeleton": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload。"
+          },
+          "motion": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload。"
+          },
+          "vfx": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload。"
+          },
+          "sfx": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload。"
+          },
+          "voice": {
+            "stage": "source-not-found",
+            "count": 0,
+            "note": "沒有本機 payload。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "沒有候選可註冊。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "沒有正式部署證據。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "steam-kof2002um-voice-dat-222440-build-8463197",
+      "title": "THE KING OF FIGHTERS 2002 UNLIMITED MATCH",
+      "platform": "Windows (Steam)",
+      "version": "Steam build 8463197",
+      "status": "voice-extracted-pending-listening-review",
+      "evidencePaths": [
+        "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
+      ],
+      "summary": "voice.dat 已抽出 2687 個 RIFF/WAV；角色、語言與事件尚未映射。",
+      "candidates": [
+        {
+          "character": null,
+          "id": "voice.dat-unmapped-pool",
+          "work": "THE KING OF FIGHTERS 2002 UNLIMITED MATCH",
+          "model": {
+            "stage": "out-of-scope",
+            "count": 0,
+            "note": "此來源只登記 voice.dat。"
+          },
+          "texture": {
+            "stage": "out-of-scope",
+            "count": 0,
+            "note": "此來源只登記 voice.dat。"
+          },
+          "skeleton": {
+            "stage": "out-of-scope",
+            "count": 0,
+            "note": "此來源只登記 voice.dat。"
+          },
+          "motion": {
+            "stage": "out-of-scope",
+            "count": 0,
+            "note": "此來源只登記 voice.dat。"
+          },
+          "vfx": {
+            "stage": "out-of-scope",
+            "count": 0,
+            "note": "此來源只登記 voice.dat。"
+          },
+          "sfx": {
+            "stage": "unclassified-audio",
+            "count": null,
+            "note": "尚未逐段區分音效與語音。"
+          },
+          "voice": {
+            "stage": "extracted-unmapped-pending-listening",
+            "count": 2687,
+            "note": "數量是容器抽出的 RIFF/WAV，不代表已歸屬角色或可綁定事件。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "尚未完成角色／事件映射。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "沒有正式部署證據。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/kof-3d-sources-v1/inventory.json"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "title": "J-Stars Victory VS+",
+      "platform": "PS3 archive; verify contents before assigning platform/version",
+      "version": null,
+      "status": "blocked-upstream-extraction",
+      "evidencePaths": [
+        "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+        "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+        "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+      ],
+      "summary": "名單含 39 名可操作角色與 13 名支援角色；owner archive 狀態為 blocked-archive-not-found。擷取角色、準備模型、註冊模型、音訊綁定與正式部署均為 0。",
+      "candidates": [
+        {
+          "character": "殺老師",
+          "id": null,
+          "work": "暗殺教室",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "男鹿辰巳＋小貝魯",
+          "id": null,
+          "work": "惡魔奶爸",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "黑崎一護",
+          "id": null,
+          "work": "BLEACH 死神",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "藍染惣右介",
+          "id": null,
+          "work": "BLEACH 死神",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "波波波＋首領巴奇",
+          "id": null,
+          "work": "鼻毛真拳",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "山田太郎",
+          "id": null,
+          "work": "珍遊記",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "則卷阿拉蕾＋卡斯拉",
+          "id": null,
+          "work": "怪博士與機器娃娃",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "孫悟空",
+          "id": null,
+          "work": "七龍珠",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "貝吉塔",
+          "id": null,
+          "work": "七龍珠",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "弗利沙",
+          "id": null,
+          "work": "七龍珠",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "拳四郎",
+          "id": null,
+          "work": "北斗神拳",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "拉歐",
+          "id": null,
+          "work": "北斗神拳",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "坂田銀時",
+          "id": null,
+          "work": "銀魂",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "鵺野鳴介",
+          "id": null,
+          "work": "靈異教師神眉",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "小傑·富力士",
+          "id": null,
+          "work": "HUNTER×HUNTER",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "奇犽·揍敵客",
+          "id": "018",
+          "work": "HUNTER×HUNTER",
+          "model": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "可操作角色候選；另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "喬納森·喬斯達",
+          "id": null,
+          "work": "JoJo 的奇妙冒險",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "喬瑟夫·喬斯達",
+          "id": null,
+          "work": "JoJo 的奇妙冒險",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "兩津勘吉",
+          "id": null,
+          "work": "烏龍派出所",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "黑神目瀧",
+          "id": null,
+          "work": "最強學生會長",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "漩渦鳴人",
+          "id": null,
+          "work": "火影忍者",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "宇智波佐助",
+          "id": null,
+          "work": "火影忍者",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "宇智波斑",
+          "id": null,
+          "work": "火影忍者",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "蒙其·D·魯夫",
+          "id": "000",
+          "work": "ONE PIECE",
+          "model": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "可操作角色候選；另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "波特卡斯·D·艾斯",
+          "id": null,
+          "work": "ONE PIECE",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "波雅·漢考克",
+          "id": null,
+          "work": "ONE PIECE",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "赤犬／薩卡斯基",
+          "id": null,
+          "work": "ONE PIECE",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "澤田綱吉＋里包恩",
+          "id": null,
+          "work": "家庭教師HITMAN REBORN!",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "緋村劍心",
+          "id": null,
+          "work": "神劍闖江湖",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "志志雄真實",
+          "id": null,
+          "work": "神劍闖江湖",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "天馬座星矢",
+          "id": null,
+          "work": "聖鬥士星矢",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "劍桃太郎",
+          "id": null,
+          "work": "魁!!男塾",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "齊木楠雄",
+          "id": null,
+          "work": "齊木楠雄的災難",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "幸運超人",
+          "id": null,
+          "work": "幸運超人",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "阿虜",
+          "id": "013",
+          "work": "美食獵人 TORIKO",
+          "model": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "可操作角色候選；另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "澤布拉",
+          "id": "014",
+          "work": "美食獵人 TORIKO",
+          "model": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "可操作角色候選；另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "native-container-sample-indexed",
+            "count": null,
+            "note": "另有原生 PAK/STPK 對照樣本與 native token；$CH0 尚未解碼，不能算已轉換。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "浦飯幽助",
+          "id": null,
+          "work": "幽遊白書",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "飛影",
+          "id": null,
+          "work": "幽遊白書",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "戶愚呂弟",
+          "id": null,
+          "work": "幽遊白書",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "可操作角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "朽木露琪亞",
+          "id": null,
+          "work": "BLEACH 死神",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "亞連·沃克",
+          "id": null,
+          "work": "D.Gray-man",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "神樂＋定春",
+          "id": null,
+          "work": "銀魂",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "日向翔陽",
+          "id": null,
+          "work": "排球少年!!",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "西索",
+          "id": null,
+          "work": "HUNTER×HUNTER",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "黑子哲也",
+          "id": null,
+          "work": "影子籃球員",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "球磨川禊",
+          "id": null,
+          "work": "最強學生會長",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "腦嚙涅羅",
+          "id": null,
+          "work": "魔人偵探腦嚙涅羅",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "桐崎千棘",
+          "id": null,
+          "work": "偽戀",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "皮尤彥／捷豹",
+          "id": null,
+          "work": "搞怪吹笛手",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "江田島平八",
+          "id": null,
+          "work": "魁!!男塾",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "SKET 團三人組",
+          "id": null,
+          "work": "SKET DANCE",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        },
+        {
+          "character": "菈菈·撒塔林·戴比路克",
+          "id": null,
+          "work": "出包王女",
+          "model": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 模型、貼圖、骨架皆未準備成 runtime candidate。"
+          },
+          "texture": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已轉換並完成材質映射的貼圖候選數。"
+          },
+          "skeleton": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已解碼 hierarchy、bind pose 與 skin weight 的骨架。"
+          },
+          "motion": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "支援角色候選；owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已映射六態動作。"
+          },
+          "vfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有已審核技能事件綁定。"
+          },
+          "sfx": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段播放審查或 runtime 綁定。"
+          },
+          "voice": {
+            "stage": "planned-source-missing",
+            "count": null,
+            "note": "owner archive 尚未在本機可見；沒有可驗證的角色模組數。 沒有逐段說話者、語言與事件審核。"
+          },
+          "registration": {
+            "stage": "not-registered",
+            "count": 0,
+            "note": "此 owner-archive pipeline registered models 為 0。"
+          },
+          "deployment": {
+            "stage": "not-deployed",
+            "count": 0,
+            "note": "production deployment 未驗證。"
+          },
+          "evidence": [
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+            "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
+          ]
+        }
+      ]
+    }
+  ]
+}
