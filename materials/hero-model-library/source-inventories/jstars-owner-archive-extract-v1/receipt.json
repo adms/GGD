@@ -1,0 +1,45 @@
+{
+  "archiveListing": null,
+  "attemptedLocations": [
+    "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/J-Stars Victory Vs+.7z",
+    "/Users/Takuro/Downloads/J-Stars Victory Vs+.7z",
+    "/Users/Takuro/Desktop/J-Stars Victory Vs+.7z"
+  ],
+  "blockers": [
+    {
+      "action": "inventory owner archive",
+      "reason": "archive is not visible at the supplied or standard local paths",
+      "resource": "J-Stars Victory Vs+.7z"
+    }
+  ],
+  "characterContainerTokens": [],
+  "identification": {
+    "edition": "VS+ from owner-supplied filename only",
+    "evidence": [],
+    "platform": "unconfirmed",
+    "platformVersion": "unconfirmed",
+    "title": "J-Stars Victory VS+"
+  },
+  "isoListings": [],
+  "mode": "read-only-inventory",
+  "rerunCommand": "python3 \"/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/inventory.py\" --archive \"/absolute/path/J-Stars Victory Vs+.7z\" --output \"/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json\"",
+  "safety": {
+    "fullArchiveExtracted": false,
+    "largePayloadCopied": false,
+    "nestedIsoInspectionMode": "stream-only",
+    "sourceModified": false
+  },
+  "schema": "ggd.jstars-owner-archive-extraction-receipt@1",
+  "source": null,
+  "sourceId": "owner-jstars-victory-vs-plus-20260917",
+  "status": "blocked-archive-not-found",
+  "summary": {
+    "archiveEntries": 0,
+    "characterTokens": 0,
+    "isoEntries": 0
+  },
+  "toolAvailability": {
+    "bsdtar": "/usr/bin/bsdtar",
+    "sevenZip": null
+  }
+}

@@ -163,6 +163,37 @@ python3 tools/hero-model-library/source-workflows/jump-force-full-roster-v1/extr
 
 目前 Git 產物只證明計畫可重建。`已抽取`、`已轉換`、`已驗收`、`已註冊`、`可切換` 與 `已部署` 必須由後續收據分開更新。
 
+### 小傑 `godie-ucrl` 的正式候選入口
+
+`run_gon_pipeline.py` 固定使用正式 `prepareUploadedHeroModel`、`verifyUploadedHeroModel` 與
+`ModelVersions.prepare`，不直接拼寫 `modelVersions`。沒有參數時只報告阻塞狀態；不會把路徑索引
+升格成成品：
+
+```bash
+python3 tools/hero-model-library/source-workflows/jump-force-full-roster-v1/run_gon_pipeline.py --repo .
+```
+
+JUMP FORCE `chr0300` 完成授權解包與 UE Viewer 匯出後，以一條命令進行 GGD 六項動作選取、
+正規化、正式限制驗證與非預設後台選項註冊：
+
+```bash
+python3 tools/hero-model-library/source-workflows/jump-force-full-roster-v1/run_gon_pipeline.py \
+  --repo . \
+  --source-id steam-jump-force-priority-original-assets-build-8523149:chr0300 \
+  --source-glb /absolute/path/to/exported-gon.glb \
+  --selections auto \
+  --apply
+```
+
+`auto` 只依片段名稱選取 idle/run/attack/cast/hurt/death；缺 death 時按 owner 規則明列為
+`hurt` fallback，候選仍以 `automaticEligible=false` 保留在下拉選單，待實際播放審查後才可改預設。
+也可傳入含六個用途索引的 JSON 取代 `auto`。
+
+JUMP FORCE 與 J-STARS Victory VS+ 使用 `gon-source-options.json` 中不同的來源 ID、原生角色 ID、
+擷取收據與 provenance。即使最終 GLB 位元組相同，後台也會依來源分成兩個獨立選項，不互相覆蓋。
+J-STARS 的 owner archive 尚未完成容器角色 ID 核對，因此工作流會在身份閘停止，不會先把未知成員
+綁成小傑。
+
 ## 測試
 
 ```bash

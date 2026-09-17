@@ -1,0 +1,1176 @@
+{
+  "schema": "ggd.jstars-owner-archive-plan@1",
+  "sourceId": "owner-jstars-victory-vs-plus-20260917",
+  "sourceGame": "J-Stars Victory VS+",
+  "platformRequested": "PS3 archive; verify contents before assigning platform/version",
+  "archiveFileName": "J-Stars Victory Vs+.7z",
+  "preferredIntakePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/J-Stars Victory Vs+.7z",
+  "archiveFound": false,
+  "archivePath": null,
+  "sourceReferences": [
+    {
+      "label": "VIZ J-Stars VICTORY VS+ overview",
+      "url": "https://www.viz.com/blog/posts/j-stars-victory-vs",
+      "purpose": "39 playable and 13 support count cross-check"
+    },
+    {
+      "label": "PlayStation release article",
+      "url": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "purpose": "title, release and platform provenance"
+    },
+    {
+      "label": "J-Stars Victory VS roster",
+      "url": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "purpose": "full 52-character roster cross-check"
+    }
+  ],
+  "rosterCounts": {
+    "total": 52,
+    "playable": 39,
+    "support": 13
+  },
+  "policy": {
+    "modelOrder": "同角色且皆合格時，較新的 JUMP FORCE 原作模型預選；J-Stars 保留為獨立原作選項",
+    "triangleRule": "超過 10000 面啟動減面，成品目標低於 8000 面",
+    "audioReview": "未核實編號音效與語音不得直接綁技能；先產生逐項播放審查清單",
+    "supportRule": "支援角色不因擁有模型或支援技就宣稱完整英雄"
+  },
+  "gonCommunityFallback": {
+    "sourceClass": "community-mod",
+    "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jumpforce-gon-thunderstore-v1/optimized-256/body.glb",
+    "bytes": 466424,
+    "sha256": "1f6677d6695fe1ecda694b3728d004d2c80e9587beb04ced7d154a54dc106b74",
+    "triangles": 2245,
+    "drawCalls": 5,
+    "joints": 56,
+    "textures": 5,
+    "maxTextureDimension": 256,
+    "animations": 0,
+    "status": "標準化靜態模型候選；不可標成 J-Stars 原作，動作與正式選項尚未註冊"
+  },
+  "characters": [
+    {
+      "rosterOrder": 1,
+      "workZhTW": "暗殺教室",
+      "nameZhTW": "殺老師",
+      "nameEnglish": "Koro-sensei",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [
+        "community-review-14-20260907"
+      ],
+      "alreadyInGgd": true,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 2,
+      "workZhTW": "惡魔奶爸",
+      "nameZhTW": "男鹿辰巳＋小貝魯",
+      "nameEnglish": "Tatsumi Oga + Baby Beel",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 3,
+      "workZhTW": "BLEACH 死神",
+      "nameZhTW": "黑崎一護",
+      "nameEnglish": "Ichigo Kurosaki",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [
+        "godie-h01o",
+        "godie-h01n"
+      ],
+      "alreadyInGgd": true,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 4,
+      "workZhTW": "BLEACH 死神",
+      "nameZhTW": "藍染惣右介",
+      "nameEnglish": "Sosuke Aizen",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": 6,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 5,
+      "workZhTW": "鼻毛真拳",
+      "nameZhTW": "波波波＋首領巴奇",
+      "nameEnglish": "Bobobo-bo Bo-bobo + Don Patch",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 6,
+      "workZhTW": "珍遊記",
+      "nameZhTW": "山田太郎",
+      "nameEnglish": "Taro Yamada",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 7,
+      "workZhTW": "怪博士與機器娃娃",
+      "nameZhTW": "則卷阿拉蕾＋卡斯拉",
+      "nameEnglish": "Arale Norimaki + Gatchan",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 8,
+      "workZhTW": "七龍珠",
+      "nameZhTW": "孫悟空",
+      "nameEnglish": "Son Goku",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [
+        "godie-ogrh",
+        "godie-o00x"
+      ],
+      "alreadyInGgd": true,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 9,
+      "workZhTW": "七龍珠",
+      "nameZhTW": "貝吉塔",
+      "nameEnglish": "Vegeta",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": 7,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 10,
+      "workZhTW": "七龍珠",
+      "nameZhTW": "弗利沙",
+      "nameEnglish": "Frieza",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": 8,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 11,
+      "workZhTW": "北斗神拳",
+      "nameZhTW": "拳四郎",
+      "nameEnglish": "Kenshiro",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [
+        "godie-u00l",
+        "godie-umal"
+      ],
+      "alreadyInGgd": true,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 12,
+      "workZhTW": "北斗神拳",
+      "nameZhTW": "拉歐",
+      "nameEnglish": "Raoh",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 13,
+      "workZhTW": "銀魂",
+      "nameZhTW": "坂田銀時",
+      "nameEnglish": "Gintoki Sakata",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [
+        "community-review-23-20260907"
+      ],
+      "alreadyInGgd": true,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 14,
+      "workZhTW": "靈異教師神眉",
+      "nameZhTW": "鵺野鳴介",
+      "nameEnglish": "Meisuke Nueno",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [
+        "b2-nube"
+      ],
+      "alreadyInGgd": true,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 15,
+      "workZhTW": "HUNTER×HUNTER",
+      "nameZhTW": "小傑·富力士",
+      "nameEnglish": "Gon Freecss",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [
+        "godie-ucrl"
+      ],
+      "alreadyInGgd": true,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 16,
+      "workZhTW": "HUNTER×HUNTER",
+      "nameZhTW": "奇犽·揍敵客",
+      "nameEnglish": "Killua Zoldyck",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": "018",
+      "ggdHeroIds": [
+        "community-review-24-20260907"
+      ],
+      "alreadyInGgd": true,
+      "newHeroPriority": null,
+      "status": "已有原生 PAK/STPK 對照樣本，等待 $CH0 解碼與標準化轉換",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 17,
+      "workZhTW": "JoJo 的奇妙冒險",
+      "nameZhTW": "喬納森·喬斯達",
+      "nameEnglish": "Jonathan Joestar",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 18,
+      "workZhTW": "JoJo 的奇妙冒險",
+      "nameZhTW": "喬瑟夫·喬斯達",
+      "nameEnglish": "Joseph Joestar",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 19,
+      "workZhTW": "烏龍派出所",
+      "nameZhTW": "兩津勘吉",
+      "nameEnglish": "Kankichi Ryotsu",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 20,
+      "workZhTW": "最強學生會長",
+      "nameZhTW": "黑神目瀧",
+      "nameEnglish": "Medaka Kurokami",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": 12,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 21,
+      "workZhTW": "火影忍者",
+      "nameZhTW": "漩渦鳴人",
+      "nameEnglish": "Naruto Uzumaki",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": 3,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 22,
+      "workZhTW": "火影忍者",
+      "nameZhTW": "宇智波佐助",
+      "nameEnglish": "Sasuke Uchiha",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [
+        "godie-edem"
+      ],
+      "alreadyInGgd": true,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 23,
+      "workZhTW": "火影忍者",
+      "nameZhTW": "宇智波斑",
+      "nameEnglish": "Madara Uchiha",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 24,
+      "workZhTW": "ONE PIECE",
+      "nameZhTW": "蒙其·D·魯夫",
+      "nameEnglish": "Monkey D. Luffy",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": "000",
+      "ggdHeroIds": [
+        "godie-u00n",
+        "godie-u00o"
+      ],
+      "alreadyInGgd": true,
+      "newHeroPriority": null,
+      "status": "已有原生 PAK/STPK 對照樣本，等待 $CH0 解碼與標準化轉換",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 25,
+      "workZhTW": "ONE PIECE",
+      "nameZhTW": "波特卡斯·D·艾斯",
+      "nameEnglish": "Portgas D. Ace",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 26,
+      "workZhTW": "ONE PIECE",
+      "nameZhTW": "波雅·漢考克",
+      "nameEnglish": "Boa Hancock",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 27,
+      "workZhTW": "ONE PIECE",
+      "nameZhTW": "赤犬／薩卡斯基",
+      "nameEnglish": "Akainu",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 28,
+      "workZhTW": "家庭教師HITMAN REBORN!",
+      "nameZhTW": "澤田綱吉＋里包恩",
+      "nameEnglish": "Tsuna Sawada + Reborn",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 29,
+      "workZhTW": "神劍闖江湖",
+      "nameZhTW": "緋村劍心",
+      "nameEnglish": "Kenshin Himura",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": 9,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 30,
+      "workZhTW": "神劍闖江湖",
+      "nameZhTW": "志志雄真實",
+      "nameEnglish": "Makoto Shishio",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": 10,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 31,
+      "workZhTW": "聖鬥士星矢",
+      "nameZhTW": "天馬座星矢",
+      "nameEnglish": "Pegasus Seiya",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": 11,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 32,
+      "workZhTW": "魁!!男塾",
+      "nameZhTW": "劍桃太郎",
+      "nameEnglish": "Momotaro Tsurugi",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 33,
+      "workZhTW": "齊木楠雄的災難",
+      "nameZhTW": "齊木楠雄",
+      "nameEnglish": "Kusuo Saiki",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 34,
+      "workZhTW": "幸運超人",
+      "nameZhTW": "幸運超人",
+      "nameEnglish": "Luckyman",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [
+        "b2-luckyman"
+      ],
+      "alreadyInGgd": true,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 35,
+      "workZhTW": "美食獵人 TORIKO",
+      "nameZhTW": "阿虜",
+      "nameEnglish": "Toriko",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": "013",
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": 1,
+      "status": "已有原生 PAK/STPK 對照樣本，等待 $CH0 解碼與標準化轉換",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 36,
+      "workZhTW": "美食獵人 TORIKO",
+      "nameZhTW": "澤布拉",
+      "nameEnglish": "Zebra",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": "014",
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": 2,
+      "status": "已有原生 PAK/STPK 對照樣本，等待 $CH0 解碼與標準化轉換",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 37,
+      "workZhTW": "幽遊白書",
+      "nameZhTW": "浦飯幽助",
+      "nameEnglish": "Yusuke Urameshi",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": 4,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 38,
+      "workZhTW": "幽遊白書",
+      "nameZhTW": "飛影",
+      "nameEnglish": "Hiei",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [
+        "godie-u010",
+        "godie-uvng"
+      ],
+      "alreadyInGgd": true,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 39,
+      "workZhTW": "幽遊白書",
+      "nameZhTW": "戶愚呂弟",
+      "nameEnglish": "Younger Toguro",
+      "role": "playable",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": 5,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保留原生模型、貼圖、骨架與形態；通過限制後建立獨立 J-Stars 選項",
+        "motion": "優先使用原生可操作角色動作；映射 idle/run/attack/cast/hurt/death，缺 death 才用已核准 fallback",
+        "vfxSfx": "特效與音效先依原生事件分組；編號不明者進逐項播放審查，不自動綁 Q/W/E/R",
+        "voice": "日語語音逐檔保留並分離戰鬥喊聲、劇情對白；說話者與事件未核實者維持待審"
+      }
+    },
+    {
+      "rosterOrder": 40,
+      "workZhTW": "BLEACH 死神",
+      "nameZhTW": "朽木露琪亞",
+      "nameEnglish": "Rukia Kuchiki",
+      "role": "support",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
+        "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
+        "vfxSfx": "保存支援技特效與音效，可成為獨立技能元件；未核准前不綁正式英雄事件",
+        "voice": "保存日語語音；先辨識說話者與支援技事件，再進逐項聽審"
+      }
+    },
+    {
+      "rosterOrder": 41,
+      "workZhTW": "D.Gray-man",
+      "nameZhTW": "亞連·沃克",
+      "nameEnglish": "Allen Walker",
+      "role": "support",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
+        "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
+        "vfxSfx": "保存支援技特效與音效，可成為獨立技能元件；未核准前不綁正式英雄事件",
+        "voice": "保存日語語音；先辨識說話者與支援技事件，再進逐項聽審"
+      }
+    },
+    {
+      "rosterOrder": 42,
+      "workZhTW": "銀魂",
+      "nameZhTW": "神樂＋定春",
+      "nameEnglish": "Kagura + Sadaharu",
+      "role": "support",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
+        "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
+        "vfxSfx": "保存支援技特效與音效，可成為獨立技能元件；未核准前不綁正式英雄事件",
+        "voice": "保存日語語音；先辨識說話者與支援技事件，再進逐項聽審"
+      }
+    },
+    {
+      "rosterOrder": 43,
+      "workZhTW": "排球少年!!",
+      "nameZhTW": "日向翔陽",
+      "nameEnglish": "Shoyo Hinata",
+      "role": "support",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
+        "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
+        "vfxSfx": "保存支援技特效與音效，可成為獨立技能元件；未核准前不綁正式英雄事件",
+        "voice": "保存日語語音；先辨識說話者與支援技事件，再進逐項聽審"
+      }
+    },
+    {
+      "rosterOrder": 44,
+      "workZhTW": "HUNTER×HUNTER",
+      "nameZhTW": "西索",
+      "nameEnglish": "Hisoka",
+      "role": "support",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [
+        "community-review-07-20260907"
+      ],
+      "alreadyInGgd": true,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
+        "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
+        "vfxSfx": "保存支援技特效與音效，可成為獨立技能元件；未核准前不綁正式英雄事件",
+        "voice": "保存日語語音；先辨識說話者與支援技事件，再進逐項聽審"
+      }
+    },
+    {
+      "rosterOrder": 45,
+      "workZhTW": "影子籃球員",
+      "nameZhTW": "黑子哲也",
+      "nameEnglish": "Tetsuya Kuroko",
+      "role": "support",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
+        "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
+        "vfxSfx": "保存支援技特效與音效，可成為獨立技能元件；未核准前不綁正式英雄事件",
+        "voice": "保存日語語音；先辨識說話者與支援技事件，再進逐項聽審"
+      }
+    },
+    {
+      "rosterOrder": 46,
+      "workZhTW": "最強學生會長",
+      "nameZhTW": "球磨川禊",
+      "nameEnglish": "Misogi Kumagawa",
+      "role": "support",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
+        "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
+        "vfxSfx": "保存支援技特效與音效，可成為獨立技能元件；未核准前不綁正式英雄事件",
+        "voice": "保存日語語音；先辨識說話者與支援技事件，再進逐項聽審"
+      }
+    },
+    {
+      "rosterOrder": 47,
+      "workZhTW": "魔人偵探腦嚙涅羅",
+      "nameZhTW": "腦嚙涅羅",
+      "nameEnglish": "Neuro Nogami",
+      "role": "support",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
+        "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
+        "vfxSfx": "保存支援技特效與音效，可成為獨立技能元件；未核准前不綁正式英雄事件",
+        "voice": "保存日語語音；先辨識說話者與支援技事件，再進逐項聽審"
+      }
+    },
+    {
+      "rosterOrder": 48,
+      "workZhTW": "偽戀",
+      "nameZhTW": "桐崎千棘",
+      "nameEnglish": "Chitoge Kirisaki",
+      "role": "support",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
+        "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
+        "vfxSfx": "保存支援技特效與音效，可成為獨立技能元件；未核准前不綁正式英雄事件",
+        "voice": "保存日語語音；先辨識說話者與支援技事件，再進逐項聽審"
+      }
+    },
+    {
+      "rosterOrder": 49,
+      "workZhTW": "搞怪吹笛手",
+      "nameZhTW": "皮尤彥／捷豹",
+      "nameEnglish": "Jaguar Junichi",
+      "role": "support",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
+        "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
+        "vfxSfx": "保存支援技特效與音效，可成為獨立技能元件；未核准前不綁正式英雄事件",
+        "voice": "保存日語語音；先辨識說話者與支援技事件，再進逐項聽審"
+      }
+    },
+    {
+      "rosterOrder": 50,
+      "workZhTW": "魁!!男塾",
+      "nameZhTW": "江田島平八",
+      "nameEnglish": "Heihachi Edajima",
+      "role": "support",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
+        "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
+        "vfxSfx": "保存支援技特效與音效，可成為獨立技能元件；未核准前不綁正式英雄事件",
+        "voice": "保存日語語音；先辨識說話者與支援技事件，再進逐項聽審"
+      }
+    },
+    {
+      "rosterOrder": 51,
+      "workZhTW": "SKET DANCE",
+      "nameZhTW": "SKET 團三人組",
+      "nameEnglish": "Bossun + Himeko + Switch",
+      "role": "support",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
+        "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
+        "vfxSfx": "保存支援技特效與音效，可成為獨立技能元件；未核准前不綁正式英雄事件",
+        "voice": "保存日語語音；先辨識說話者與支援技事件，再進逐項聽審"
+      }
+    },
+    {
+      "rosterOrder": 52,
+      "workZhTW": "出包王女",
+      "nameZhTW": "菈菈·撒塔林·戴比路克",
+      "nameEnglish": "Lala Satalin Deviluke",
+      "role": "support",
+      "sourceId": "owner-jstars-victory-vs-plus-20260917",
+      "sourceUrl": "https://blog.playstation.com/archive/2015/06/26/anime-brawler-j-stars-victory-vs-hits-ps4-ps3-ps-vita-today",
+      "rosterReferenceUrl": "https://en.wikipedia.org/wiki/J-Stars_Victory_VS",
+      "nativeId": null,
+      "ggdHeroIds": [],
+      "alreadyInGgd": false,
+      "newHeroPriority": null,
+      "status": "等待 owner archive 在本機可見；不得用推測 ID 代替擷取收據",
+      "recommendation": {
+        "model": "保存原生支援角色模型、貼圖與道具，先登記元件／候選，不冒稱完整英雄",
+        "motion": "支援角色通常沒有完整六狀態；原生片段照實保留，借用／程序化動作須另行播放審查",
+        "vfxSfx": "保存支援技特效與音效，可成為獨立技能元件；未核准前不綁正式英雄事件",
+        "voice": "保存日語語音；先辨識說話者與支援技事件，再進逐項聽審"
+      }
+    }
+  ]
+}
