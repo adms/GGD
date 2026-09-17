@@ -56,30 +56,30 @@
     }
   },
   "population": {
-    "glbFiles": 1150,
-    "animatedModels": 974,
+    "glbFiles": 1164,
+    "animatedModels": 988,
     "clips": 9
   },
   "coverage": {
     "attack": {
-      "models": 837,
-      "pct": 85.9
+      "models": 843,
+      "pct": 85.3
     },
     "cast": {
       "models": 555,
-      "pct": 57
+      "pct": 56.2
     },
     "celebrate": {
-      "models": 38,
-      "pct": 3.9
+      "models": 46,
+      "pct": 4.7
     },
     "death": {
       "models": 630,
-      "pct": 64.7
+      "pct": 63.8
     },
     "dodge": {
       "models": 536,
-      "pct": 55
+      "pct": 54.3
     },
     "guard": {
       "models": 13,
@@ -87,15 +87,15 @@
     },
     "hurt": {
       "models": 100,
-      "pct": 10.3
+      "pct": 10.1
     },
     "idle": {
-      "models": 921,
+      "models": 935,
       "pct": 94.6
     },
     "run": {
-      "models": 871,
-      "pct": 89.4
+      "models": 885,
+      "pct": 89.6
     }
   },
   "degradesTo": "idle",
@@ -206,6 +206,14 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/0d1da69f61afe8c3121850885dd969f85ffbba2b85a23ed23c2acb9b308787c9.glb": [
+      "attack",
+      "cast",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/community/0d533af89dee1680ed68dc321b209b6c3e70871027c6ada53656d625cbff522d.glb": [
       "attack",
       "cast",
@@ -249,6 +257,14 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/16ffc917be1fc86a9710c1e35bd181659292f17d7c54f3285026e204cd7f0e28.glb": [
+      "attack",
+      "cast",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/community/17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e.glb": [
       "celebrate",
       "dodge",
@@ -270,6 +286,14 @@
       "hurt",
       "idle",
       "run"
+    ],
+    "content/assets/models/community/1aa41f0c82c5fb32fd3996601d596573a282716fb30297f9916309bf844c7f36.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
     ],
     "content/assets/models/community/1ca1d4e3305431ddbae3d9cc23d1f4c8bfeccfd82fb3ab5d4d61795e2aeca838.glb": [
       "attack",
@@ -855,6 +879,14 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/8c1e23a6873d2a9dba21f60000a157c2cb30c5160e22b98621bc7e6ed86a2672.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/community/8d960ff2a55db7de8b570dfcf4f8e8732310a3eecea203a3e9025df27f469933.glb": [
       "cast",
       "celebrate",
@@ -968,6 +1000,14 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/9c975b4a3d353e5e96adcdf2442d5d8970ce8dac9a7997cf9ea460383d538d39.glb": [
+      "attack",
+      "cast",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/community/9d0476bdc39349e9169dc99e5326496b7d5e1301e3ef660b49ba5b562bd53efd.glb": [
       "cast",
       "celebrate",
@@ -1065,6 +1105,14 @@
     ],
     "content/assets/models/community/a7a46c6a4328d65b8b547478d65b790540cb8fbe858edfe4c21d2bd7922e0894.glb": [
       "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/acbc5a0cd8880ef835cfc0bb59011f59fbca3c053f7e0902c5d7df5cae5e166a.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
       "guard",
       "hurt"
     ],
@@ -1188,6 +1236,14 @@
       "guard",
       "hurt",
       "idle"
+    ],
+    "content/assets/models/community/bf74313802c832c3cdb78908484f8c8e5e76065607c27767110557304b80ed03.glb": [
+      "attack",
+      "cast",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
     ],
     "content/assets/models/community/c1144a4f419ac79d7454a35304942db88962c5050f13f51d82c1757f0fc73d06.glb": [
       "celebrate",
@@ -1700,6 +1756,14 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/versions/0d1da69f61afe8c3121850885dd969f85ffbba2b85a23ed23c2acb9b308787c9.glb": [
+      "attack",
+      "cast",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/community/versions/0de4625aa386a6965981791eacf24c4af80ca1defa7fae59e340bc731cf5bb47.glb": [
       "attack",
       "cast",
@@ -1756,6 +1820,14 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/versions/16ffc917be1fc86a9710c1e35bd181659292f17d7c54f3285026e204cd7f0e28.glb": [
+      "attack",
+      "cast",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/community/versions/17edce57f8c0cc894cdbca31da556f9561a391e2820e09e4bd719d903e15de2e.glb": [
       "celebrate",
       "dodge",
@@ -1769,6 +1841,14 @@
     ],
     "content/assets/models/community/versions/1a17c7fc9c89bde158bd6f9d70c3a98761e7e02225f57a09b6c7ffc7e799f137.glb": [
       "celebrate",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/versions/1aa41f0c82c5fb32fd3996601d596573a282716fb30297f9916309bf844c7f36.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
       "guard",
       "hurt"
     ],
@@ -2488,6 +2568,14 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/versions/8c1e23a6873d2a9dba21f60000a157c2cb30c5160e22b98621bc7e6ed86a2672.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/community/versions/8ceb588f8309374326aee986facfdfb240676925140fc1aaf8bd8fb0c5b0da93.glb": [
       "celebrate",
       "dodge",
@@ -2615,6 +2703,14 @@
       "guard",
       "hurt"
     ],
+    "content/assets/models/community/versions/9c975b4a3d353e5e96adcdf2442d5d8970ce8dac9a7997cf9ea460383d538d39.glb": [
+      "attack",
+      "cast",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
     "content/assets/models/community/versions/9d0476bdc39349e9169dc99e5326496b7d5e1301e3ef660b49ba5b562bd53efd.glb": [
       "cast",
       "celebrate",
@@ -2720,6 +2816,14 @@
       "guard"
     ],
     "content/assets/models/community/versions/aa3d330fe0b439969b825a9b56b0ba72a59f59f5d9860ba8037d6eb797674f1c.glb": [
+      "cast",
+      "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/versions/acbc5a0cd8880ef835cfc0bb59011f59fbca3c053f7e0902c5d7df5cae5e166a.glb": [
       "cast",
       "celebrate",
       "death",
@@ -2879,6 +2983,14 @@
     "content/assets/models/community/versions/bdf77de4789523c132c4e620f49ead67d70fd8374a9ed5613196695960fa02c6.glb": [
       "cast",
       "celebrate",
+      "death",
+      "dodge",
+      "guard",
+      "hurt"
+    ],
+    "content/assets/models/community/versions/bf74313802c832c3cdb78908484f8c8e5e76065607c27767110557304b80ed03.glb": [
+      "attack",
+      "cast",
       "death",
       "dodge",
       "guard",
