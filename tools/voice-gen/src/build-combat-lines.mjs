@@ -210,7 +210,10 @@ for (const id of [...heroes, ...originalsOnlyIds].sort()) {
   // generated status is current when its pinned reference identity and SHA are
   // unchanged. A normal build remains strict and must read the WAV bytes; the
   // explicit maintenance flag can rewrite metadata while retaining the pin.
-  if (ALLOW_PINNED_REFERENCE_STATUS && ref?.error) {
+  // ⚠️ A hero whose OWN take is missing gets `null` from referenceFor (only a
+  // missing DONOR take comes back as `{ error }`), so the own-pin branch below
+  // was unreachable and CI failed b2-misery / godie-ucrl as "no reference".
+  if (ALLOW_PINNED_REFERENCE_STATUS && !originalsOnly && (!ref || ref.error)) {
     const donor = cast.donor;
     const pinned = prev.reference;
     const ownSource = `voice-reference-pipeline/approved/processed/${id}.wav`;

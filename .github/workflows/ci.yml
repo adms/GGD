@@ -90,8 +90,11 @@ jobs:
       #   ⛔ 不是為了讓它跳過 —— 「環境不對就跳過」的閘等於沒有閘
       #   （`composeLogCap.test.ts` 逐字寫過同一個理由）。
       #   ⭐ 出貨映像那一半由 GH#967 保證（`docker/content-api.Dockerfile` 的 runtime stage）。
-      - name: Icon toolchain (cwebp)
-        run: sudo apt-get update && sudo apt-get install -y webp && cwebp -version
+      # ⭐ GH#1211 —— ffmpeg／ffprobe 同一個判準：`audioIntake.test.ts`（owner 2026-09-15 的
+      #   128 kbps／44.1 kHz 入庫閘）找不到它們就明說「跑不起來」並紅 ⇒ 裝它，讓那條真的跑。
+      #   （v0.46.0 的 CI unit 就是只紅這一個檔的 2 條）
+      - name: Icon + audio toolchain (cwebp, ffmpeg)
+        run: sudo apt-get update && sudo apt-get install -y webp ffmpeg && cwebp -version && ffprobe -version | head -1
       # ⭐⭐ GH#979 —— Pillow。**同一個判準**（就在上面那三行）：
       #   `w3xFilterModeContract.test.ts` 在沒有 Pillow 的機器上會 `it.skip`，
       #   ⛔ 而「環境不對就跳過」的閘等於沒有閘。⇒ 裝它，讓那條**真的跑**。
