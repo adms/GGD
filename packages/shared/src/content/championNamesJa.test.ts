@@ -27,6 +27,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { cover } from "../../testkit/cover";
+import { VOICE_GAP_BATCH4 } from "./voiceGapBatch4";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT = join(HERE, "../../../../content");
@@ -188,11 +189,24 @@ describe("champion call-out VO pack", () => {
     expect(unknown, `mapped ids that are not champions: ${unknown.join(", ")}`).toEqual([]);
 
     // the skipped ones really are the placeholders, and got no clip
+    // ⭐⭐ GH#1281（2026-09-17）—— 跳過有**兩種**，而在此之前只認得第一種：
+    //   ① 測試／範例佔位（本來就不該有聲音）
+    //   ② ⭐ **宣告過的語音缺口**：owner 2026-09-16「全部英雄上架是預設的 不需要我審查通過」
+    //      ⇒ 第四批 37 名今天就在選人畫面上，而唸名語音還沒做。
+    //      名單只有一個住處（`content/voiceGapBatch4.ts`，⛔ 不是四條測試各抄一份），
+    //      而且是**棘輪**：做好一位就刪一列，多一位要寫 owner 原話。
+    // ⛔ 兩種都**不可以有 clip**（有 clip 就代表它其實做好了 ⇒ 該從宣告裡刪掉）。
     for (const s of doc.skipped) {
       expect(known.get(s.id), `${s.id} still exists`).toBeDefined();
-      expect(/測試|範例|placeholder/.test(`${s.name}${s.why}`)).toBe(true);
+      expect(
+        /測試|範例|placeholder/.test(`${s.name}${s.why}`) || VOICE_GAP_BATCH4.includes(s.id),
+        `${s.id}：跳過的理由既不是佔位，也不在宣告過的語音缺口名單上`,
+      ).toBe(true);
       expect(existsSync(join(CONTENT, NAMES_DIR, `${s.id}.mp3`))).toBe(false);
     }
+    // ⭐ 反方向（形態⑫）：宣告缺口的人全部真的在跳過名單上 —— 補好了卻忘記刪宣告 ⇒ 紅。
+    const gapNotSkipped = VOICE_GAP_BATCH4.filter((id) => known.has(id) && !skipped.has(id));
+    expect(gapNotSkipped, "⛔ 這幾位已經有唸名了，把他們從 VOICE_GAP_BATCH4 刪掉").toEqual([]);
   });
 
   // ── the requirement that keeps regressing ─────────────────────────────────
@@ -492,8 +506,9 @@ describe("champion call-out VO pack", () => {
       ids.filter((id) => !onRoster.has(id)).join(", "),
       "⛔ 呼名 MANIFEST 裡有**已下架**的英雄 —— 產生器該把它移進 retiredCasting",
     ).toBe("");
+    // ⭐ GH#1281：宣告過的語音缺口（`VOICE_GAP_BATCH4`）不算在這一條裡 —— 理由與棘輪寫在那一份。
     expect(
-      [...onRoster].filter((id) => !ids.includes(id)).join(", "),
+      [...onRoster].filter((id) => !ids.includes(id) && !VOICE_GAP_BATCH4.includes(id)).join(", "),
       "⛔ 上架英雄沒有呼名 clip —— 選角時他會沒有聲音",
     ).toBe("");
     for (const id of ids) {
