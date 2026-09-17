@@ -110,6 +110,40 @@ describe("後台的 rollback 選項不可以無聲消失（GH#1201）", () => {
     ).toEqual([]);
   });
 
+  /**
+   * ⭐⭐ GH#1201 Scope③（2026-09-17）—— 「有清單」與「**真的切得回去**」是兩件事。
+   *
+   * 上面兩條問的是「這位英雄**有沒有**版本歷史」。⛔ 而後台下拉真正要的是
+   * **至少一個不是現在這顆的選項** —— 一份只列著作用中那一顆的清單，在畫面上
+   * 長得與有 rollback 一模一樣（下拉打開有一列），⭐ 而按下去什麼都不會變。
+   * ⚠️ 另一半：清單裡**必須**有現在這顆，否則後台答不出「現在跑的是哪一個」。
+   *
+   * 量到的（2026-09-17）：114 位有清單的英雄，兩個方向都是 0 —— ⭐ 這條閘是在
+   * **現況已經乾淨**的時候關上的，⛔ 不是拿它去追既有的債。
+   */
+  it("⭐ 有版本清單 ⇒ 清單裡有現用那顆，而且至少有一個切得回去的（GH#1201 Scope③）", () => {
+    const missingCurrent: string[] = [];
+    const noAlternative: string[] = [];
+    for (const champ of all) {
+      const versions = champ.modelVersions ?? [];
+      if (versions.length === 0) continue;
+      const keys = versions.map((v) => v.modelKey);
+      if (champ.modelKey !== undefined && !keys.includes(champ.modelKey)) missingCurrent.push(champ.id);
+      if (keys.filter((k) => k !== champ.modelKey).length === 0) noAlternative.push(champ.id);
+    }
+    expect(
+      missingCurrent,
+      "⛔ 這幾位的版本清單裡**沒有現在用的那顆** ⇒ 後台答不出「現在跑的是哪一個」。\n" +
+        "⇒ 換模型走 `ModelVersions.prepare({action:\"register\"})`，⛔ 不要手改 modelKey。",
+    ).toEqual([]);
+    expect(
+      noAlternative,
+      "⛔ 這幾位的清單**只有作用中那一顆** ⇒ 下拉看起來有選項，而按下去什麼都不會變\n" +
+        "（owner 2026-08-23：「留後台開關可以簡易 rollback」—— 一個切不回去的開關不算）。",
+    ).toEqual([]);
+    expect(withVersions.length, "母體是空的 —— 量尺自證").toBeGreaterThan(10);
+  });
+
   it("⭐ 新長出來的 rollback 要加進名單（⛔ 否則上面那條會慢慢放行真的損失）", () => {
     const extra = withVersions.filter((id) => !HAS_ROLLBACK.includes(id));
     expect(
