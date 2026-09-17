@@ -139,3 +139,23 @@ owner 2026-09-15 說過「不使用300英雄裡的中文語音」與「whisper �
 - 還需要 owner 同意安裝兩個開源工具：`vgmstream`（遊戲音訊轉檔）、必要時 `PyCriCodecs`（拆 CRI 封包）。
 - PS3 樣本的語音 cue 名是 `cv_<三碼角色ID><三碼編號>_jp` ⇒ 高機率可以照檔名分出銀時。同一款遊戲裡另有 12 位 GGD 英雄的原作語音（奇犽也在）。
 - 明細：工作資料 `jstars/findings.json`。
+
+---
+
+## 五、名言缺口：owner 2026-09-17 的逐位裁決（待執行）
+
+審查頁：https://claude.ai/code/artifact/2366abb7-9a96-494a-92d4-8b6ab8f90301 （決定寫 db `quotegap/choices/heroes/<id>`，送出寫 `quotegap/export/all`）
+
+實況（照**執行期**解析，`resolveVoicePackId`）：出貨 130 位 · 有名言 116 · 有語音沒名言 12 · 完全沒聲音 2 · 靠變身共用本尊 10。
+
+| 英雄 | owner 的裁決（逐字） | 要做什麼 |
+|---|---|---|
+| 全體變身型態 | 「變身都用本尊的就好」 | ⭐ 已經是現況（執行期借本尊的包），⛔ 不用動 |
+| 其餘缺名言的 | 「若沒有第二順位是勝利 第三順位是嘲諷」「其他都可以用勝利宣言」 | 把該位的 `victory` 複製成 `quote`（沒有 victory 才用 `taunt`），跑 `combat:build` |
+| 波吉 `b2-bojji` | 「波吉 不會講話 應該全部都沒語音才對」 | ⛔ **整包語音下架**：刪 `lines/b2-bojji/*.mp3` 與 status.json、`COMBAT_CASTING.json` 移進 `excluded` 並寫這句理由，重跑 `voice:index` |
+| 如月電車 `b2-kisaragi` | 「勝利 跟 名言都是 https://www.youtube.com/shorts/Ih9ZTaDsznM」 | ⚠️ 本機沒有 yt-dlp ⇒ 要 owner 同意安裝，或由 owner 給音檔；抓到後 victory 與 quote 都用它 |
+| 米瑟利 `b2-misery` | 「米瑟利 是性感大姊姊聲音 你生成錯了」 | 重配音：`COMBAT_CASTING.json` 換 voiceClass／參考音（要一段大姊姊聲的參考），整包重合成 |
+| 白木卡迪那 `godie-e00s` | 「可以借用 Berserker」 | 借 `godie-hapm` 的包。⚠️ 現行借用機制**只認變身對**（`voiceFormSharing`）⇒ 要加一張「指定借用」表（owner 指定，⛔ 不是名字猜的），或替它登記一對 |
+| 傑富力士 `godie-ucrl` | 「JUMP大亂鬥系列應該有」 | ⭐ 找到了：JUMP FORCE 的 Gon 共 250 段（本機 `GGD-Asset-Library`，含 25 段劇情語音）。頁面放了最長的 18 段給 owner 挑名言；整包對應要再派一輪 lane |
+
+⛔ 這一節只是把裁決寫下來，⛔ 還沒有套用到任何語音檔。
