@@ -3,7 +3,9 @@
  *
  * 邏輯住 `packages/shared/testkit/rosterDeclaration.ts`（`pnpm roster:check` 也呼叫它）；
  * 宣告住 `tools/roster-guard/batch-declaration.json`；退休卡狀態讀 `docs/legacy-index-champions.json`
- * （build_index.py 的產物，過期由 legacyIndexFresh.test.ts 紅）。⛔ 這裡不寫任何 id 或人數。
+ * —— ⚠️ 那是 **legacyindex:build** 的產物（`tools/legacy-index/build_index.py`，已接在 `skills:sync` 尾端）：
+ * 要動它就改**來源**（誰住在 `docs/legacy/`）再 `bash scripts/genrun.sh legacyindex:build`，
+ * ⛔ 直接改產物會被下一次 sync 打回來；過期由 legacyIndexFresh.test.ts 紅。⛔ 這裡不寫任何 id 或人數。
  *
  * ⭐ 量尺自證（兩個方向）：先證明出貨的世界是綠的，再在**記憶體裡**把世界改壞，證明每一個方向都會紅。
  */
