@@ -9,7 +9,7 @@ import { registerSkeletonContent, SELA } from "../content/skeleton";
 import { registerChampion } from "../content/registry";
 import { spawnChampion } from "../spawnChampion";
 import { castAbility } from "./abilitySystem";
-import { asSeatId, asTeamId, type AbilityId, type ChampionId, type SeatId } from "../../ids";
+import { asSeatId, asTeamId, type AbilityId, type ChampionId, type SeatId, type StatusId } from "../../ids";
 import type { AbilityDef, AbilityRecast, ChampionDef } from "../content/defs";
 import type { EffectDef } from "../effects/effect";
 import type { IntentFrame } from "../intents";
@@ -76,6 +76,29 @@ describe("【再次施放】GH#1187", () => {
     while (a.world.tick <= until) a.world.step(NO_INTENTS); // tickCooldowns 在 tick 累加前跑 ⇒ 多走一格
     expect(a.slot().recast).toBeUndefined();
     expect(a.q()).toBe("cooldown");
+  });
+
+  // ⭐ GH#1187 驗收③「死亡及控制狀態不留下可濫用或永久卡住的階段」—— 在此之前只驗了窗口到期與打空。
+  it("施法者窗口內死亡 ⇒ 後段當場收掉（⛔ 不會帶著「可再按」復活）", () => {
+    const a = arena(CH.plain);
+    expect(a.q()).toBe("ok");
+    expect(a.slot().recast?.chargesLeft).toBe(1);
+    a.world.health.get(a.caster)!.alive = false;
+    a.world.step(NO_INTENTS);
+    expect(a.slot().recast, "⛔ 死掉的施法者還握著後段").toBeUndefined();
+  });
+
+  it("窗口內被暈 ⇒ 後段按不出來、⛔ 不扣次數；暈著等到窗口到期 ⇒ 階段照樣收掉（⛔ 不會卡住）", () => {
+    const a = arena(CH.plain);
+    expect(a.q()).toBe("ok");
+    const until = a.slot().recast!.untilTick;
+    a.world.status.get(a.caster)!.effects.push({
+      sourceId: "fixture-stun", statusId: "fixture-stun" as StatusId, expiresAtTick: until + 5, stun: true,
+    });
+    expect(a.q()).toBe("stunned");
+    expect(a.slot().recast?.chargesLeft, "⛔ 被暈擋下的一按扣了後段次數").toBe(1);
+    while (a.world.tick <= until) a.world.step(NO_INTENTS);
+    expect(a.slot().recast, "⛔ 窗口過了，被暈的施法者還卡在後段").toBeUndefined();
   });
 
   it("cooldownAt:end ⇒ 首段不起冷卻，最後一段放完才寫", () => {
