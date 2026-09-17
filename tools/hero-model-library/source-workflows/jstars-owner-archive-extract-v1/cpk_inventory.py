@@ -21,6 +21,9 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any, BinaryIO
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from full_audit_archive import refreshed_full_audit
+
 
 SCHEMA = "ggd.jstars-owner-cpk-inventory@1"
 SOURCE_ID = "owner-jstars-victory-vs-plus-20260917"
@@ -532,16 +535,14 @@ def build(container_root: Path, manifest: Path, split_root: Path, identity_probe
         "schema": SCHEMA,
         "sourceId": SOURCE_ID,
         "status": "native-containers-inventoried-conversion-blocked",
-        "fullAudit": {
-            "status": "local-preserved-s3-readback-pending",
+        "fullAudit": refreshed_full_audit({
             "bytes": 339170,
             "sha256": "b9dd84b125d120b2f9aeb23e79533c4a1bbb97fad53472e7331a19cc6efbeaf3",
             "localPath": "../GGD-Asset-Library/conversions/pr1284-preparation-final-v1/payload/materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
             "gitManifest": "materials/hero-model-library/pr1284-preparation-s3.json",
             "archiveMember": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
-            "archiveStatus": "pending-manifest-publication-and-readback",
             "restoreRequiredForInventoryBuild": False,
-        },
+        }, repo_root()),
         "containerRoot": str(container_root.resolve()),
         "containers": containers,
         "fullMemberManifest": manifest_record,

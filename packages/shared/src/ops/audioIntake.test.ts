@@ -26,6 +26,11 @@ const run = (...args: string[]) => {
 const sha = (file: string) => createHash("sha256").update(readFileSync(file)).digest("hex");
 
 describe("語音／音效入庫閘（owner 2026-09-15：128 kbps／44.1 kHz mp3）", () => {
+  it("MP3 padding：跨 ffprobe 版本一致，真截斷仍不合格，音檔不重編碼", () => {
+    execFileSync("python3", [join(REPO, "tools/audio-intake/test_audio_intake_padding.py")],
+      { cwd: REPO, stdio: "pipe" });
+  }, 30_000);
+
   it("① 出貨庫：被引用的不合格檔數與棘輪持平（只能變少）", () => {
     const { code, out } = run("--all", "--ratchet", join(REPO, "tools/audio-intake/intake-ratchet.txt"));
     expect(out, "⛔ 印不出量尺自證／分帳 ⇒ 偵測壞了，⛔ 不是零個問題").toMatch(/量尺自證[\s\S]*分帳[\s\S]*voices\/lines/);

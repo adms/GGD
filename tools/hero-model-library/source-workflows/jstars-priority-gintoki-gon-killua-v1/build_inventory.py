@@ -12,8 +12,12 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import sys
 from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from full_audit_archive import refreshed_full_audit
 
 
 HERE = Path(__file__).resolve().parent
@@ -289,16 +293,14 @@ def build() -> dict[str, Any]:
     return {
         "schema": "ggd.jstars-priority-three-inventory@1",
         "workflowId": reference["workflowId"],
-        "fullAudit": {
-            "status": "local-preserved-s3-readback-pending",
+        "fullAudit": refreshed_full_audit({
             "bytes": 599291,
             "sha256": "6e8f7f0062bb1b0755dad36bdb5f3a609b706d60e7b89abbd72f0c58bb07702a",
             "localPath": "../GGD-Asset-Library/conversions/pr1284-preparation-final-v1/payload/materials/hero-model-library/source-inventories/jstars-priority-gintoki-gon-killua-v1/inventory.json",
             "gitManifest": "materials/hero-model-library/pr1284-preparation-s3.json",
             "archiveMember": "materials/hero-model-library/source-inventories/jstars-priority-gintoki-gon-killua-v1/inventory.json",
-            "archiveStatus": "pending-manifest-publication-and-readback",
             "restoreRequiredForInventoryBuild": False,
-        },
+        }, REPO),
         "source": {
             "sourceGame": reference["sourceGame"],
             "ownerArchiveStatus": owner_status,

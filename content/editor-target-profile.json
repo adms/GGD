@@ -8895,11 +8895,11 @@
       }
     ]
   },
-  "assetManifestDigest": "351c2899b704",
+  "assetManifestDigest": "5678eb882850",
   "assetManifest": {
     "path": "assets-manifest.json",
-    "entries": 3191,
-    "totalBytes": 1183552788
+    "entries": 3201,
+    "totalBytes": 1191271468
   },
   "effectiveVfxLimits": {
     "schema": "ggd-effective-vfx-limits@1",
@@ -8987,5 +8987,5 @@
       "reason": "⭐ 這一份是**靜態** profile ⇒ 它看不到 runtime 的 ACTIVE ⇒ 永遠是 bootstrap。⛔ 那不是「不支援」——要問這一台**現在**支不支援 delta，讀 `GET /api/v1/content-import/active/target-profile`。缺的那幾條見 `stageBlockers`。"
     }
   ],
-  "profileDigest": "643677da46de"
+  "profileDigest": "5e9a040e8d13"
 }

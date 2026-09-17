@@ -23,6 +23,9 @@ import sys
 from pathlib import Path
 from typing import Any, Iterable
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from full_audit_archive import refreshed_full_audit
+
 
 SCHEMA = "ggd.jstars-priority-six-source-receipt@1"
 ARCHIVE_NAME = "J-Stars Victory Vs+.7z"
@@ -535,16 +538,14 @@ def build_receipt(repo: Path, roots: list[dict[str, Any]] | None = None) -> dict
         "inventoryDate": "2026-09-17",
         "mode": "read-only-source-audit-and-extraction-preparation",
         "status": overall_status,
-        "fullAudit": {
-            "status": "local-preserved-s3-readback-pending",
+        "fullAudit": refreshed_full_audit({
             "bytes": 324863,
             "sha256": "3b5ecd29672ddfd8ec9e32cbe5926da311d4ea4bf341aef265c7e9674011e32e",
             "localPath": "../GGD-Asset-Library/conversions/pr1284-preparation-final-v1/payload/materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
             "gitManifest": "materials/hero-model-library/pr1284-preparation-s3.json",
             "archiveMember": "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
-            "archiveStatus": "pending-manifest-publication-and-readback",
             "restoreRequiredForSourceAudit": False,
-        },
+        }, repo),
         "scope": {
             "game": "J-Stars Victory VS+",
             "characters": len(characters),

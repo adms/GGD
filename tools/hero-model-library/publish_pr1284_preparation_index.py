@@ -40,6 +40,7 @@ def publish(manifest_path, receipt_path):
     result = {
         'schema': 'ggd.pr1284-preparation-s3@1',
         'scope': 'Only the listed preparation evidence and full analysis receipts; not all local materials.',
+        'status': 's3-full-readback-verified',
         's3Uri': receipt['s3Uri'], 'manifestUri': receipt['manifestUri'],
         'sha256': receipt['sha256'], 'bytes': receipt['bytes'],
         'fileCount': receipt['fileCount'], 'files': manifest['files'],

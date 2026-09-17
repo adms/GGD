@@ -10,9 +10,13 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import sys
 from collections import Counter
 from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from full_audit_archive import refreshed_full_audit
 
 
 COMPACT_SCHEMA = "ggd.source-module-catalog-fragment@2"
@@ -35,16 +39,14 @@ def _mode(values: list[Any]) -> tuple[Any, int]:
 
 
 def full_audit_reference(repo_relative_path: str, expanded_bytes: bytes) -> dict[str, Any]:
-    return {
-        "status": "local-preserved-s3-readback-pending",
+    return refreshed_full_audit({
         "bytes": len(expanded_bytes),
         "sha256": hashlib.sha256(expanded_bytes).hexdigest(),
         "localPath": f"{BACKUP_PREFIX}/{repo_relative_path}",
         "gitManifest": GIT_MANIFEST,
         "archiveMember": repo_relative_path,
-        "archiveStatus": "pending-manifest-publication-and-readback",
         "restoreRequiredForCatalogBuild": False,
-    }
+    })
 
 
 def compact_fragment(
