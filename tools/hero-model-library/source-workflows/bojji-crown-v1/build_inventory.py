@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Publish the narrow Bojji crown candidate inventory without central registration."""
+"""Publish the Bojji crown candidate inventory after central registration."""
 from __future__ import annotations
 
 import argparse
@@ -13,6 +13,9 @@ REPO = HERE.parents[3]
 WORKSPACE = REPO.parent
 LOCAL = WORKSPACE / "GGD-Asset-Library/conversions/bojji-crown-v1"
 OUTPUT = REPO / "materials/hero-model-library/source-inventories/bojji-crown-v1"
+CENTRAL_INVENTORY = REPO / "materials/hero-model-library/inventory.json"
+CURRENT_RESOURCES = REPO / "materials/asset-library/current-resources.json"
+MODEL_BUDGET_REPORT = REPO / "content/assets/model-budget/report.json"
 
 
 def digest(data: bytes) -> str:
@@ -34,6 +37,9 @@ def outputs(local: Path) -> dict[Path, bytes]:
     visual = json.loads((local / "visual-evidence.json").read_text())
     registration_path = OUTPUT / "registration-receipt.json"
     registration = json.loads(registration_path.read_text())
+    central_inventory = json.loads(CENTRAL_INVENTORY.read_text())
+    current_resources = json.loads(CURRENT_RESOURCES.read_text())
+    model_budget = json.loads(MODEL_BUDGET_REPORT.read_text())
     candidate = local / "candidate.glb"
     assert pin(candidate)["sha256"] == validation["candidate"]["sha256"] == build["output"]["sha256"]
     assert validation["metrics"] == {
@@ -62,6 +68,40 @@ def outputs(local: Path) -> dict[Path, bytes]:
         "automaticEligible": True,
         "currentAutomaticSelected": True,
         "productionDeployed": False,
+    }
+    hero_inventory = next(row for row in central_inventory["heroes"] if row.get("id") == "b2-bojji")
+    assert hero_inventory["checkoutSelection"] == {
+        "modelKey": registration["registeredVersion"]["modelKey"],
+        "mode": "automatic",
+    }
+    hero_option = next(
+        row for row in hero_inventory["options"]
+        if row.get("asset", {}).get("modelKey") == registration["sourceModel"]["modelKey"]
+    )
+    assert hero_option["asset"]["sha256"] == validation["candidate"]["sha256"]
+    resource_row = next(
+        row for row in current_resources["models"]
+        if row.get("modelKey") == registration["sourceModel"]["modelKey"]
+    )
+    assert resource_row["sha256"] == validation["candidate"]["sha256"]
+    assert resource_row["registeredFor"] == ["b2-bojji"]
+    assert resource_row["runtimeDropdownRegistered"] is True
+    assert resource_row["registrationEvidence"]["versionModelKeys"] == [registration["registeredVersion"]["modelKey"]]
+    budget_row = next(
+        row for row in model_budget["models"]
+        if row.get("id") == registration["registeredVersion"]["modelKey"]
+    )
+    assert budget_row["path"] == f"assets/models/community/versions/{validation['candidate']['sha256']}.glb"
+    assert budget_row["role"] == "champion"
+    assert budget_row["triangles"] == validation["metrics"]["triangles"]
+    assert budget_row["drawCalls"] == validation["metrics"]["drawPrimitives"]
+    assert budget_row["maxTextureEdge"] == validation["metrics"]["maxTextureEdge"]
+    assert budget_row["animChannels"] == validation["metrics"]["maxChannelsPerClip"]
+    assert budget_row["verdicts"] == {
+        "triangles": "ok",
+        "drawCalls": "ok",
+        "maxTextureEdge": "ok",
+        "animChannels": "ok",
     }
     inventory = {
         "schema": "ggd.hero-model-source-inventory@1",
@@ -113,6 +153,26 @@ def outputs(local: Path) -> dict[Path, bytes]:
             "localContactSheet": visual["contactSheet"],
             "gitContactSheet": "materials/hero-model-library/source-inventories/bojji-crown-v1/bojji-crown-ab.png",
             "views": visual["records"],
+            "centralIndexes": {
+                "modelInventory": {
+                    "gitPath": "materials/hero-model-library/inventory.json",
+                    "heroId": "b2-bojji",
+                    "checkoutSelection": hero_inventory["checkoutSelection"],
+                    "sourceModelKey": hero_option["asset"]["modelKey"],
+                },
+                "currentResources": {
+                    "gitPath": "materials/asset-library/current-resources.json",
+                    "sourceModelKey": resource_row["modelKey"],
+                    "runtimeDropdownRegistered": resource_row["runtimeDropdownRegistered"],
+                    "registeredVersionModelKeys": resource_row["registrationEvidence"]["versionModelKeys"],
+                },
+                "modelBudget": {
+                    "gitPath": "content/assets/model-budget/report.json",
+                    "modelKey": budget_row["id"],
+                    "role": budget_row["role"],
+                    "verdicts": budget_row["verdicts"],
+                },
+            },
         },
         "status": {
             "sourcePreserved": True,
@@ -121,7 +181,7 @@ def outputs(local: Path) -> dict[Path, bytes]:
             "threeViewRendered": True,
             "ownerRequirementApplied": True,
             "ownerVisualReviewPending": True,
-            "centralIndexesModified": False,
+            "centralIndexesUpdated": True,
             "promotedToGit": True,
             "runtimeRegistered": True,
             "runtimeSelectable": True,
@@ -160,7 +220,7 @@ def outputs(local: Path) -> dict[Path, bytes]:
         "python3 tools/hero-model-library/source-workflows/bojji-crown-v1/build_inventory.py",
         "```",
         "",
-        "本批保留原有 5 個模型選項，新增一個獨立完整王冠候選並設為 automatic 目前預選。未改中央索引，也沒有宣稱正式站已部署。",
+        "本批保留原有 5 個模型選項，新增一個獨立完整王冠候選並設為 automatic 目前預選。中央模型盤點與 `current-resources.json` 已登記該候選；正式站仍為未部署。",
         "",
     ]).encode()
     return {

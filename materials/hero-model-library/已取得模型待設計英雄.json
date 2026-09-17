@@ -740,7 +740,11 @@
     },
     {
       "path": "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
-      "sha256": "9df3050aa1923e9fd2beb5cd780e6d70d070d172b9885fa43a074f8f04859a1d"
+      "sha256": "3b5ecd29672ddfd8ec9e32cbe5926da311d4ea4bf341aef265c7e9674011e32e"
+    },
+    {
+      "path": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json",
+      "sha256": "467aadd4cab673f2958d8ef0b7ad0e82af930bc60dc862ddf7be22e533cec228"
     }
   ],
   "characters": [
@@ -202120,13 +202124,14 @@
         "motion": "原生 token 群索引 82 筆；尚未解碼成可播動作",
         "vfx": "原生 token 群索引 63 筆；技能事件映射待解碼",
         "sfx": "原生 token 群索引 5 筆；音效尚未解碼聽審",
-        "voice": "原生 token 群索引 5 筆；說話者與語言待確認",
-        "voiceGroupIds": [],
-        "indexedAudioFileCount": 0,
-        "unclassifiedAudioFileCount": 0,
-        "sourceAudioGroupsNotAssignedToCharacter": [
-          "owner-jstars-victory-vs-plus-20260917:012"
+        "voice": "日文 CV/PV 已解碼 399 段 HCA＋WAV；逐段說話者與事件待 owner 聽審",
+        "voiceGroupIds": [
+          "owner-jstars-victory-vs-plus-20260917:012:CV",
+          "owner-jstars-victory-vs-plus-20260917:012:PV"
         ],
+        "indexedAudioFileCount": 399,
+        "unclassifiedAudioFileCount": 399,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
         "sourceLabels": [
           "J-STARS 勝利對決+ PS3 原作"
         ],
@@ -202135,7 +202140,8 @@
         "motionCandidateCounts": [],
         "nativeMotionSources": [],
         "evidencePaths": [
-          "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+          "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+          "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -202757,13 +202763,14 @@
         "motion": "原生 token 群索引 82 筆；尚未解碼成可播動作",
         "vfx": "原生 token 群索引 63 筆；技能事件映射待解碼",
         "sfx": "原生 token 群索引 5 筆；音效尚未解碼聽審",
-        "voice": "原生 token 群索引 5 筆；說話者與語言待確認",
-        "voiceGroupIds": [],
-        "indexedAudioFileCount": 0,
-        "unclassifiedAudioFileCount": 0,
-        "sourceAudioGroupsNotAssignedToCharacter": [
-          "owner-jstars-victory-vs-plus-20260917:017"
+        "voice": "日文 CV/PV 已解碼 399 段 HCA＋WAV；逐段說話者與事件待 owner 聽審",
+        "voiceGroupIds": [
+          "owner-jstars-victory-vs-plus-20260917:017:CV",
+          "owner-jstars-victory-vs-plus-20260917:017:PV"
         ],
+        "indexedAudioFileCount": 399,
+        "unclassifiedAudioFileCount": 399,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
         "sourceLabels": [
           "J-STARS 勝利對決+ PS3 原作"
         ],
@@ -202772,7 +202779,8 @@
         "motionCandidateCounts": [],
         "nativeMotionSources": [],
         "evidencePaths": [
-          "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+          "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+          "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -202896,13 +202904,14 @@
         "motion": "原生 token 群索引 82 筆；尚未解碼成可播動作",
         "vfx": "原生 token 群索引 63 筆；技能事件映射待解碼",
         "sfx": "原生 token 群索引 5 筆；音效尚未解碼聽審",
-        "voice": "原生 token 群索引 5 筆；說話者與語言待確認",
-        "voiceGroupIds": [],
-        "indexedAudioFileCount": 0,
-        "unclassifiedAudioFileCount": 0,
-        "sourceAudioGroupsNotAssignedToCharacter": [
-          "owner-jstars-victory-vs-plus-20260917:018"
+        "voice": "日文 CV/PV 已解碼 399 段 HCA＋WAV；逐段說話者與事件待 owner 聽審",
+        "voiceGroupIds": [
+          "owner-jstars-victory-vs-plus-20260917:018:CV",
+          "owner-jstars-victory-vs-plus-20260917:018:PV"
         ],
+        "indexedAudioFileCount": 399,
+        "unclassifiedAudioFileCount": 399,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
         "sourceLabels": [
           "J-STARS 勝利對決+ PS3 原作"
         ],
@@ -202911,7 +202920,8 @@
         "motionCandidateCounts": [],
         "nativeMotionSources": [],
         "evidencePaths": [
-          "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+          "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+          "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -204150,13 +204160,14 @@
         "motion": "原生 token 群索引 76 筆；尚未解碼成可播動作",
         "vfx": "原生 token 群索引 57 筆；技能事件映射待解碼",
         "sfx": "原生 token 群索引 5 筆；音效尚未解碼聽審",
-        "voice": "原生 token 群索引 5 筆；說話者與語言待確認",
-        "voiceGroupIds": [],
-        "indexedAudioFileCount": 0,
-        "unclassifiedAudioFileCount": 0,
-        "sourceAudioGroupsNotAssignedToCharacter": [
-          "owner-jstars-victory-vs-plus-20260917:028"
+        "voice": "日文 CV/PV 已解碼 399 段 HCA＋WAV；逐段說話者與事件待 owner 聽審",
+        "voiceGroupIds": [
+          "owner-jstars-victory-vs-plus-20260917:028:CV",
+          "owner-jstars-victory-vs-plus-20260917:028:PV"
         ],
+        "indexedAudioFileCount": 399,
+        "unclassifiedAudioFileCount": 399,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
         "sourceLabels": [
           "J-STARS 勝利對決+ PS3 原作"
         ],
@@ -204165,7 +204176,8 @@
         "motionCandidateCounts": [],
         "nativeMotionSources": [],
         "evidencePaths": [
-          "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+          "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+          "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -205283,13 +205295,14 @@
         "motion": "原生 token 群索引 82 筆；尚未解碼成可播動作",
         "vfx": "原生 token 群索引 63 筆；技能事件映射待解碼",
         "sfx": "原生 token 群索引 5 筆；音效尚未解碼聽審",
-        "voice": "原生 token 群索引 5 筆；說話者與語言待確認",
-        "voiceGroupIds": [],
-        "indexedAudioFileCount": 0,
-        "unclassifiedAudioFileCount": 0,
-        "sourceAudioGroupsNotAssignedToCharacter": [
-          "owner-jstars-victory-vs-plus-20260917:037"
+        "voice": "日文 CV/PV 已解碼 399 段 HCA＋WAV；逐段說話者與事件待 owner 聽審",
+        "voiceGroupIds": [
+          "owner-jstars-victory-vs-plus-20260917:037:CV",
+          "owner-jstars-victory-vs-plus-20260917:037:PV"
         ],
+        "indexedAudioFileCount": 399,
+        "unclassifiedAudioFileCount": 399,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
         "sourceLabels": [
           "J-STARS 勝利對決+ PS3 原作"
         ],
@@ -205298,7 +205311,8 @@
         "motionCandidateCounts": [],
         "nativeMotionSources": [],
         "evidencePaths": [
-          "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+          "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+          "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -205794,13 +205808,14 @@
         "motion": "原生 token 群索引 82 筆；尚未解碼成可播動作",
         "vfx": "原生 token 群索引 63 筆；技能事件映射待解碼",
         "sfx": "原生 token 群索引 5 筆；音效尚未解碼聽審",
-        "voice": "原生 token 群索引 5 筆；說話者與語言待確認",
-        "voiceGroupIds": [],
-        "indexedAudioFileCount": 0,
-        "unclassifiedAudioFileCount": 0,
-        "sourceAudioGroupsNotAssignedToCharacter": [
-          "owner-jstars-victory-vs-plus-20260917:041"
+        "voice": "日文 CV/PV 已解碼 399 段 HCA＋WAV；逐段說話者與事件待 owner 聽審",
+        "voiceGroupIds": [
+          "owner-jstars-victory-vs-plus-20260917:041:CV",
+          "owner-jstars-victory-vs-plus-20260917:041:PV"
         ],
+        "indexedAudioFileCount": 399,
+        "unclassifiedAudioFileCount": 399,
+        "sourceAudioGroupsNotAssignedToCharacter": [],
         "sourceLabels": [
           "J-STARS 勝利對決+ PS3 原作"
         ],
@@ -205809,7 +205824,8 @@
         "motionCandidateCounts": [],
         "nativeMotionSources": [],
         "evidencePaths": [
-          "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+          "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+          "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json"
         ],
         "classificationIsAcquisitionSnapshot": true
       }
@@ -208211,7 +208227,7 @@
         "motion": "原生 motion 容器索引 4180 筆；$CH0／PS3 SRD 尚待解碼，可播動作 0。",
         "vfx": "原生 VFX 容器索引 3242 筆；技能事件映射與 GGD 轉換尚未完成。",
         "sfx": "原生 SFX 容器索引 294 筆；已解碼可聽及已審核 0。",
-        "voice": "原生 voice 容器索引 294 筆；說話者、語言與台詞事件待確認。",
+        "voice": "原生 voice 容器索引 294 筆；六名優先角 CV/PV 已解碼 2394 段日文 WAV，逐段說話者與事件待 owner 聽審。",
         "links": [
           [
             "原始包／ISO 收據",
@@ -208228,6 +208244,10 @@
           [
             "六名優先角對應",
             "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json"
+          ],
+          [
+            "六名日文音訊解碼收據",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json"
           ]
         ]
       }
@@ -216543,8 +216563,9 @@
     "Mechanics present is not proof of faithful design, balance or gameplay acceptance.",
     "Unknown source identity is not a confirmed undesigned hero.",
     "Local file size presence is not full model conversion acceptance.",
+    "J-Stars owner PS3 rows are tracked token groups backed by a shared CPK; internal STPK names and six confirmed GGD mappings do not prove decoded bodies, runtime options or deployment.",
     "MBA pilot components passed policy and static visual review only; motion semantics, hero design, dropdown registration and deployment remain pending.",
-    "J-Stars owner PS3 rows are tracked token groups backed by a shared CPK; internal STPK names and six confirmed GGD mappings do not prove decoded bodies, runtime options or deployment."
+    "J-Stars owner PS3 rows are tracked token groups backed by a shared CPK; internal STPK names and six confirmed GGD mappings do not prove decoded bodies, runtime options or deployment. Six priority CV/PV banks are decoded for review, but numeric cues do not prove speaker or GGD event bindings."
   ],
   "portableOverlay": {
     "schema": "ggd-fateubw-backlog-overlay@1",
@@ -216573,7 +216594,8 @@
         "701"
       ],
       "payloadsMaterialized": true,
-      "runtimeRegistered": 0
+      "runtimeRegistered": 0,
+      "decodedJapaneseAudioFiles": 2394
     }
   }
 }

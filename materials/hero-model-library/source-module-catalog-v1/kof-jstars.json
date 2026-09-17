@@ -607,16 +607,17 @@
       "sourceId": "owner-jstars-victory-vs-plus-20260917",
       "title": "J-Stars Victory VS+",
       "platform": "PS3",
-      "version": "PS3 BLUS31519 APP_VER 01.00",
+      "version": "PS3 disc build; APP_VER/VERSION pending PARAM.SFO read",
       "status": "blocked-upstream-extraction",
       "evidencePaths": [
         "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
         "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
         "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json",
         "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
-        "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json"
+        "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json",
+        "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json"
       ],
-      "summary": "名單含 39 名可操作角色與 13 名支援角色；owner archive 狀態為 inventoried-read-only。owner 指定六名已排入 model/motion/vfx/sfx/voice 優先轉換與預設來源計畫；第一優先來源查核確認原生 ID 6 名、runtime-ready 模組 0；獨立選項註冊 0、已套用預設 0、正式部署 0。",
+      "summary": "名單含 39 名可操作角色與 13 名支援角色；owner archive 狀態為 inventoried-read-only。owner 指定六名已排入 model/motion/vfx/sfx/voice 優先轉換與預設來源計畫；第一優先來源查核確認原生 ID 6 名、runtime-ready 模組 0；日文 CV/PV WAV 候選 2394 段；獨立選項註冊 0、已套用預設 0、正式部署 0。",
       "candidates": [
         {
           "character": "殺老師",
@@ -1313,9 +1314,9 @@
             "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "voice": {
-            "stage": "native-containers-present-hashed-conversion-blocked",
-            "count": 1,
-            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
+            "stage": "decoded-wav-candidates-owner-event-speaker-review-pending",
+            "count": 399,
+            "note": "CV/PV AFS2 banks are split to HCA and deterministic WAV listening copies; numeric cue names are not runtime events, and every clip still needs owner event/speaker review"
           },
           "registration": {
             "stage": "not-registered",
@@ -1332,7 +1333,8 @@
             "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
             "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json",
             "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
-            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json"
+            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json"
           ],
           "ggdHeroIds": [
             "community-review-23-20260907"
@@ -1390,9 +1392,9 @@
             "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "voice": {
-            "stage": "native-containers-present-hashed-conversion-blocked",
-            "count": 1,
-            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
+            "stage": "decoded-wav-candidates-owner-event-speaker-review-pending",
+            "count": 399,
+            "note": "CV/PV AFS2 banks are split to HCA and deterministic WAV listening copies; numeric cue names are not runtime events, and every clip still needs owner event/speaker review"
           },
           "registration": {
             "stage": "not-registered",
@@ -1409,7 +1411,8 @@
             "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
             "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json",
             "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
-            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json"
+            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json"
           ],
           "ggdHeroIds": [
             "b2-nube"
@@ -1467,9 +1470,9 @@
             "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "voice": {
-            "stage": "native-containers-present-hashed-conversion-blocked",
-            "count": 1,
-            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
+            "stage": "decoded-wav-candidates-owner-event-speaker-review-pending",
+            "count": 399,
+            "note": "CV/PV AFS2 banks are split to HCA and deterministic WAV listening copies; numeric cue names are not runtime events, and every clip still needs owner event/speaker review"
           },
           "registration": {
             "stage": "not-registered",
@@ -1486,7 +1489,8 @@
             "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
             "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json",
             "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
-            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json"
+            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json"
           ],
           "ggdHeroIds": [
             "godie-ucrl"
@@ -1544,9 +1548,9 @@
             "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "voice": {
-            "stage": "native-containers-present-hashed-conversion-blocked",
-            "count": 1,
-            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
+            "stage": "decoded-wav-candidates-owner-event-speaker-review-pending",
+            "count": 399,
+            "note": "CV/PV AFS2 banks are split to HCA and deterministic WAV listening copies; numeric cue names are not runtime events, and every clip still needs owner event/speaker review"
           },
           "registration": {
             "stage": "not-registered",
@@ -1563,7 +1567,8 @@
             "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
             "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json",
             "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
-            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json"
+            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json"
           ],
           "ggdHeroIds": [
             "community-review-24-20260907"
@@ -2556,9 +2561,9 @@
             "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "voice": {
-            "stage": "native-containers-present-hashed-conversion-blocked",
-            "count": 1,
-            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
+            "stage": "decoded-wav-candidates-owner-event-speaker-review-pending",
+            "count": 399,
+            "note": "CV/PV AFS2 banks are split to HCA and deterministic WAV listening copies; numeric cue names are not runtime events, and every clip still needs owner event/speaker review"
           },
           "registration": {
             "stage": "not-registered",
@@ -2575,7 +2580,8 @@
             "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
             "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json",
             "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
-            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json"
+            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json"
           ],
           "ggdHeroIds": [
             "b2-luckyman"
@@ -2798,9 +2804,9 @@
             "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
           },
           "voice": {
-            "stage": "native-containers-present-hashed-conversion-blocked",
-            "count": 1,
-            "note": "owner disc CPK members are identified and hashed; $CMP/$CH0 and PS3 SRD decoding, runtime conversion, visual validation and event binding remain incomplete"
+            "stage": "decoded-wav-candidates-owner-event-speaker-review-pending",
+            "count": 399,
+            "note": "CV/PV AFS2 banks are split to HCA and deterministic WAV listening copies; numeric cue names are not runtime events, and every clip still needs owner event/speaker review"
           },
           "registration": {
             "stage": "not-registered",
@@ -2817,7 +2823,8 @@
             "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
             "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json",
             "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json",
-            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json"
+            "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/pipeline-receipt.json",
+            "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json"
           ],
           "ggdHeroIds": [
             "godie-u010",

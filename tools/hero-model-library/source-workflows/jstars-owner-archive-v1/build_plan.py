@@ -16,6 +16,7 @@ ROSTER_REFERENCE_URL = "https://en.wikipedia.org/wiki/J-Stars_Victory_VS"
 EXTRACT_RECEIPT = Path("materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json")
 CPK_RECEIPT = Path("materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json")
 IDENTITY_RECEIPT = Path("materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/identity-probe.json")
+AUDIO_RECEIPT = Path("materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json")
 PRIORITY_SOURCE_RECEIPT = Path("materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json")
 SOURCE_REFERENCES = [
     {
@@ -270,7 +271,8 @@ def build() -> dict:
     found_archive = next((p for p in archive_candidates(workspace) if p.is_file()), None)
     tracked = {}
     for key, rel in (("extract", EXTRACT_RECEIPT), ("cpk", CPK_RECEIPT),
-                     ("identity", IDENTITY_RECEIPT), ("priority", PRIORITY_SOURCE_RECEIPT)):
+                     ("identity", IDENTITY_RECEIPT), ("audio", AUDIO_RECEIPT),
+                     ("priority", PRIORITY_SOURCE_RECEIPT)):
         path = repo / rel
         if path.is_file(): tracked[key] = json.loads(path.read_text())
     inventoried = (
@@ -318,6 +320,20 @@ def build() -> dict:
                     "default": False,
                     "blocker": blocker,
                 },
+                "decodedJapaneseAudioCandidates": next(
+                    (
+                        int(character.get("decodedAudioFiles", 0))
+                        for character in tracked.get("audio", {}).get("characters", [])
+                        if character.get("nativeId") == native_id
+                    ),
+                    0,
+                ),
+                "audioReviewStatus": (
+                    "decoded-wav-candidates-owner-event-speaker-review-pending"
+                    if tracked.get("audio", {}).get("status")
+                    == "priority-six-japanese-audio-decoded-owner-review-pending"
+                    else "native-audio-container-only"
+                ),
             }
         record = {
             "rosterOrder": roster_order,
@@ -373,6 +389,8 @@ def build() -> dict:
                 "jumpForceAudioFiles": receipts["gintokiGonKillua"]["summary"]["jumpForceAudioFiles"],
                 "hieiAlternateDecodedAudioFiles": receipts["nubeLuckymanHiei"]["summary"]["alternateDecodedAudioFiles"],
             },
+            "jstarsDecodedJapaneseAudioFiles": tracked.get("audio", {}).get("summary", {}).get("decodedWavFiles", 0),
+            "jstarsDecodedJapaneseAudioDurationSeconds": tracked.get("audio", {}).get("summary", {}).get("durationSeconds", 0),
             "jstarsConverted": 0,
             "jstarsRegistered": 0,
             "jstarsDeployed": 0,
@@ -384,6 +402,7 @@ def build() -> dict:
     archive_source = tracked.get("extract", {}).get("source", {})
     cpk_summary = tracked.get("cpk", {}).get("summary", {})
     identity_summary = tracked.get("identity", {}).get("summary", {})
+    audio_summary = tracked.get("audio", {}).get("summary", {})
     return {
         "schema": "ggd.jstars-owner-archive-plan@1",
         "sourceId": SOURCE_ID,
@@ -402,6 +421,8 @@ def build() -> dict:
             "membersHashed": cpk_summary.get("membersHashed", 0),
             "characterTokensWithInternalIdentity": identity_summary.get("tokensWithInternalIdentity", 0),
             "priorityNativeIdsConfirmed": tracked.get("priority", {}).get("summary", {}).get("nativeIdsConfirmed", 0),
+            "priorityJapaneseAudioDecoded": audio_summary.get("decodedWavFiles", 0),
+            "priorityJapaneseAudioDurationSeconds": audio_summary.get("durationSeconds", 0),
         },
         "sourceReferences": SOURCE_REFERENCES,
         "rosterCounts": {"total": len(rows), "playable": sum(r["role"] == "playable" for r in rows), "support": sum(r["role"] == "support" for r in rows)},
@@ -459,6 +480,7 @@ def markdown(plan: dict) -> str:
             "### 本輪平行執行收據",
             "",
             f"- J-Stars 六名：已轉換 {execution['jstarsConverted']}、已註冊 {execution['jstarsRegistered']}、已部署 {execution['jstarsDeployed']}。",
+            f"- 日文 CV/PV 音訊：已解碼 {execution['jstarsDecodedJapaneseAudioFiles']:,} 段 WAV（{execution['jstarsDecodedJapaneseAudioDurationSeconds'] / 60:.1f} 分鐘），全部仍待 owner 逐檔事件／說話者審查。",
             f"- 實檔證據只確認奇犎 native `018`；owner archive 狀態 `{execution['ownerArchiveStatus']}`。",
             f"- 可先保留的替代資源：{fallback['validatedModels']} 個既有／靜態模型通過 Khronos；小傑／奇犎 JUMP FORCE 音訊 {fallback['jumpForceAudioFiles']} 檔；飛影 JUMP FORCE 解碼音訊 {fallback['hieiAlternateDecodedAudioFiles']} 檔。這些都不冒稱 J-Stars 原作轉換。",
             f"- 實質阻擋：{execution['blockingConverter']}。",
@@ -520,7 +542,7 @@ def master_section(plan: dict) -> str:
         "",
         f"J-Stars 名單重新核對為 **{plan['rosterCounts']['playable']} 名可操作角色＋{plan['rosterCounts']['support']} 名支援角色，共 {plan['rosterCounts']['total']} 名**。現有 GGD 可直接增加獨立 J-Stars 模型選項者為 {len(existing_playable)} 名可操作角；另有 {len(existing_support)} 名支援角已有英雄定義，但支援角不能因有模型或單一支援技就算完整英雄。",
         "",
-        f"owner archive `{plan['archiveFileName']}` 已盤點：{archive.get('bytes', 0):,} bytes，SHA-256 `{str(archive.get('sha256') or '')[:16]}…`，平台 `{archive.get('platformVersion')}`。已建立 {archive.get('cpkContainers', 0)} 個 CPK、{archive.get('membersHashed', 0):,} 筆成員雜湊，{archive.get('characterTokensWithInternalIdentity', 0)} 組角色 token 內部名索引。取得與解包已完成；轉換／註冊／部署仍為 0。",
+        f"owner archive `{plan['archiveFileName']}` 已盤點：{archive.get('bytes', 0):,} bytes，SHA-256 `{str(archive.get('sha256') or '')[:16]}…`，平台 `{archive.get('platformVersion')}`。已建立 {archive.get('cpkContainers', 0)} 個 CPK、{archive.get('membersHashed', 0):,} 筆成員雜湊，{archive.get('characterTokensWithInternalIdentity', 0)} 組角色 token 內部名索引；六名 CV/PV 已解碼 {archive.get('priorityJapaneseAudioDecoded', 0):,} 段日文 WAV。模型等 runtime 轉換／註冊／部署仍為 0。",
         "",
         f"優先六名已由 partial STPK 內部成員名唯一確認：" + "、".join(f"{r['nameZhTW']}=`{r['nativeId']}`" for r in known_ids if r.get('priorityRank')) + "。其餘 token 保留內部名與待對照狀態，不以名單順序猜 ID。",
         "",
@@ -541,7 +563,7 @@ def master_section(plan: dict) -> str:
     if execution:
         fallback = execution["fallbackEvidence"]
         lines += [
-            "本輪已將六名分成三條腳本工作流實際執行。J-Stars 原生成果仍是 **已轉換 0／已註冊 0／已部署 0**；銀時、神眉、小傑、奇犎、幸運超人、飛影均已取得並雜湊模型／骨架／貼圖、動作、VFX、SFX 與日語語音容器候選。現在的共同阻擋是 `$CH0` 完整解碼與 PS3 SRD／SRDI／SRDV 轉換，不冒稱已有 GLB 或可播成品。",
+            f"本輪已將六名分成腳本工作流實際執行。J-Stars 六名 CV/PV 已解碼 {execution['jstarsDecodedJapaneseAudioFiles']:,} 段日文 WAV（{execution['jstarsDecodedJapaneseAudioDurationSeconds'] / 60:.1f} 分鐘），可直接製作聽審清單；逐檔 owner 核准前仍不綁 runtime。模型、動作與 VFX 成果仍是 **已轉換 0／已註冊 0／已部署 0**，共同阻擋是 `$CH0` 完整解碼與 PS3 SRD／SRDI／SRDV 轉換。",
             "",
             f"現有替代資源另行保留：銀時 300 本尊與奇犎 300 本尊已註冊，小傑社群靜態候選未註冊；三個模型 Khronos {fallback['validatedModels']}/{fallback['validatedModels']} 零錯誤。小傑／奇犎 JUMP FORCE 解碼音訊共 {fallback['jumpForceAudioFiles']} 檔，飛影替代 JUMP FORCE 音訊 {fallback['hieiAlternateDecodedAudioFiles']} 檔，全部仍待 owner 逐檔聽審與事件綁定，不寫成 J-Stars 已上架。",
             "",

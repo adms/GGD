@@ -10,6 +10,8 @@
 4. SFX 與 voice 的每一個來源檔必須有 `ownerReview`：`reviewer=owner`、`decision=approve`、已確認 `event`；voice 另需 `speaker` 與 `language`。一檔未核准就阻擋該角色預設採用。
 5. 共用管線先以 `automaticEligible=false` 註冊獨立模型選項。七個模組與註冊 gate 全通過後，`pipeline_promote.mts` 才新增可自動選用的不可變模型版本。若英雄目前是 `modelSelectionMode=manual`，作用中的 `modelKey` 保持不變；若為 automatic，J-Stars canonical-game 版本才成為預設。
 
+owner archive lane 已能直接處理不受 `$CMP` 影響的 `sound/JP/CV_*`、`PV_*` ACB/AWB。六名的 HCA 與 WAV 候選由 `audio_extract.py` 產生，來源摘要會顯示已解碼數；數字 cue 在逐檔 owner 聽審、說話者確認及事件綁定完成前，仍不通過本 lane 的 audio gate。
+
 `moduleEvidence` 是來源 receipt 每個角色上的 checked-binder 索引，格式如下：
 
 ```json

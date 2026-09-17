@@ -183,7 +183,37 @@
           ]
         }
       }
-    ]
+    ],
+    "centralIndexes": {
+      "modelInventory": {
+        "gitPath": "materials/hero-model-library/inventory.json",
+        "heroId": "b2-bojji",
+        "checkoutSelection": {
+          "modelKey": "version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673",
+          "mode": "automatic"
+        },
+        "sourceModelKey": "community.body.46cab3416f3f164ca9fa27dbb1ad88e9f2c1b2ce5163e23c"
+      },
+      "currentResources": {
+        "gitPath": "materials/asset-library/current-resources.json",
+        "sourceModelKey": "community.body.46cab3416f3f164ca9fa27dbb1ad88e9f2c1b2ce5163e23c",
+        "runtimeDropdownRegistered": true,
+        "registeredVersionModelKeys": [
+          "version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673"
+        ]
+      },
+      "modelBudget": {
+        "gitPath": "content/assets/model-budget/report.json",
+        "modelKey": "version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673",
+        "role": "champion",
+        "verdicts": {
+          "triangles": "ok",
+          "drawCalls": "ok",
+          "maxTextureEdge": "ok",
+          "animChannels": "ok"
+        }
+      }
+    }
   },
   "status": {
     "sourcePreserved": true,
@@ -192,7 +222,7 @@
     "threeViewRendered": true,
     "ownerRequirementApplied": true,
     "ownerVisualReviewPending": true,
-    "centralIndexesModified": false,
+    "centralIndexesUpdated": true,
     "promotedToGit": true,
     "runtimeRegistered": true,
     "runtimeSelectable": true,

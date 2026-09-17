@@ -38,6 +38,9 @@ JSTARS_PLAN = Path(
 JSTARS_EXTRACT = Path(
     "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json"
 )
+JSTARS_AUDIO = Path(
+    "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json"
+)
 JSTARS_PIPELINE = Path(
     "materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1/pipeline-receipt.json"
 )
@@ -398,7 +401,11 @@ def jstars_group(repo: Path) -> dict[str, Any]:
                 source_module = source_row["modules"][kind]
                 candidate[kind] = module(
                     source_module["status"],
-                    1 if source_module.get("candidateContainerFound") else 0,
+                    (
+                        int(source_module.get("decodedCandidateFiles", 0))
+                        if kind == "voice" and source_module.get("decodedCandidateFiles") is not None
+                        else 1 if source_module.get("candidateContainerFound") else 0
+                    ),
                     source_module["reason"],
                 )
             candidate["registration"] = module(
@@ -411,7 +418,7 @@ def jstars_group(repo: Path) -> dict[str, Any]:
                 0,
                 "第一優先六名 pipeline receipt 明列 productionDeploymentVerified=false。",
             )
-            candidate["evidence"].extend([str(JSTARS_PRIORITY_SOURCE), str(JSTARS_PRIORITY_PIPELINE)])
+            candidate["evidence"].extend([str(JSTARS_PRIORITY_SOURCE), str(JSTARS_PRIORITY_PIPELINE), str(JSTARS_AUDIO)])
         candidates.append(candidate)
     return {
         "sourceId": plan["sourceId"],
@@ -421,7 +428,7 @@ def jstars_group(repo: Path) -> dict[str, Any]:
         "status": pipeline["status"],
         "evidencePaths": [
             str(JSTARS_PLAN), str(JSTARS_EXTRACT), str(JSTARS_PIPELINE),
-            str(JSTARS_PRIORITY_SOURCE), str(JSTARS_PRIORITY_PIPELINE),
+            str(JSTARS_PRIORITY_SOURCE), str(JSTARS_PRIORITY_PIPELINE), str(JSTARS_AUDIO),
         ],
         "summary": (
             f"名單含 {plan['rosterCounts']['playable']} 名可操作角色與 "
@@ -429,6 +436,7 @@ def jstars_group(repo: Path) -> dict[str, Any]:
             "owner 指定六名已排入 model/motion/vfx/sfx/voice 優先轉換與預設來源計畫；"
             f"第一優先來源查核確認原生 ID {priority_source['summary']['nativeIdsConfirmed']} 名、"
             f"runtime-ready 模組 {priority_source['summary']['runtimeReadyModules']}；"
+            f"日文 CV/PV WAV 候選 {priority_source['summary'].get('decodedJapaneseAudioFiles', 0)} 段；"
             f"獨立選項註冊 {priority_pipeline['counts']['registeredOptions']}、"
             f"已套用預設 {priority_pipeline['counts']['automaticDefaultsApplied']}、正式部署 0。"
         ),

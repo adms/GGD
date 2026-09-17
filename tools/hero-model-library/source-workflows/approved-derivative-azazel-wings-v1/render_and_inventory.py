@@ -19,6 +19,9 @@ BASELINE = ASSETS / "validation/approved-derivatives-v1/batch-v1/azazel-current"
 EVIDENCE = ROOT / "materials/hero-model-library/priority-evidence/approved-derivative-azazel-wings-v1"
 REFERENCE_INPUT = Path("/var/folders/nh/0xwcm79d52v3qyr1ntzqvwnc0000gq/T/codex-clipboard-fe2b40b4-e33c-47c2-873c-c29902f2f2a3.png")
 REFERENCE_LOCAL = ASSETS / "references/approved-derivative-azazel-wings-v1/owner-appearance-reference.png"
+CENTRAL_INVENTORY = ROOT / "materials/hero-model-library/inventory.json"
+CURRENT_RESOURCES = ROOT / "materials/asset-library/current-resources.json"
+MODEL_BUDGET_REPORT = ROOT / "content/assets/model-budget/report.json"
 
 
 def digest(path: Path) -> str:
@@ -66,6 +69,9 @@ def main() -> None:
     publication = read(STAGE / "azazel-wings-v1.publish.json")
     registration = read(STAGE / "azazel-wings-v1.registration.json")
     registration_validation = read(STAGE / "azazel-wings-v1.registration-validation.json")
+    central_inventory = read(CENTRAL_INVENTORY)
+    current_resources = read(CURRENT_RESOURCES)
+    model_budget = read(MODEL_BUDGET_REPORT)
     render = STAGE / "render-v2"
     proof = read(render / "proof.json"); run = read(render / "run.json")
     assert build["output"]["sha256"] == validation["candidate"]["sha256"] == publication["candidate"]["sha256"] == digest(candidate)
@@ -84,6 +90,25 @@ def main() -> None:
     for folder in (BASELINE, render):
         for view in ("front", "back", "isometric"):
             assert (folder / f"{view}.png").is_file()
+
+    source_model_key = publication["sourceModel"]["modelKey"]
+    version_model_key = registration["addedVersion"]["modelKey"]
+    hero_inventory = next(row for row in central_inventory["heroes"] if row.get("id") == "community-review-32-20260907")
+    assert hero_inventory["checkoutSelection"] == {"modelKey": version_model_key, "mode": "automatic"}
+    hero_option = next(row for row in hero_inventory["options"] if row.get("asset", {}).get("modelKey") == source_model_key)
+    assert hero_option["asset"]["sha256"] == validation["candidate"]["sha256"]
+    resource_row = next(row for row in current_resources["models"] if row.get("modelKey") == source_model_key)
+    assert resource_row["sha256"] == validation["candidate"]["sha256"]
+    assert resource_row["registeredFor"] == ["community-review-32-20260907"]
+    assert resource_row["runtimeDropdownRegistered"] is True
+    assert resource_row["registrationEvidence"]["versionModelKeys"] == [version_model_key]
+    budget_row = next(row for row in model_budget["models"] if row.get("id") == version_model_key)
+    assert budget_row["role"] == "champion"
+    assert budget_row["triangles"] == validation["metrics"]["triangles"]
+    assert budget_row["drawCalls"] == validation["metrics"]["drawPrimitives"]
+    assert budget_row["maxTextureEdge"] == validation["metrics"]["maxTextureEdge"]
+    assert budget_row["animChannels"] == validation["metrics"]["maxChannelsPerClip"]
+    assert budget_row["verdicts"] == {"triangles": "ok", "drawCalls": "ok", "maxTextureEdge": "ok", "animChannels": "ok"}
 
     if not REFERENCE_LOCAL.is_file():
         if not REFERENCE_INPUT.is_file():
@@ -133,6 +158,26 @@ def main() -> None:
             "technicalReview": "front/back/isometric all show the complete body and two attached wings; no missing texture or detached rest-pose component observed",
             "ownerAcceptance": "pending",
         },
+        "centralIndexes": {
+            "modelInventory": {
+                "gitPath": "materials/hero-model-library/inventory.json",
+                "heroId": "community-review-32-20260907",
+                "checkoutSelection": hero_inventory["checkoutSelection"],
+                "sourceModelKey": hero_option["asset"]["modelKey"],
+            },
+            "currentResources": {
+                "gitPath": "materials/asset-library/current-resources.json",
+                "sourceModelKey": resource_row["modelKey"],
+                "runtimeDropdownRegistered": resource_row["runtimeDropdownRegistered"],
+                "registeredVersionModelKeys": resource_row["registrationEvidence"]["versionModelKeys"],
+            },
+            "modelBudget": {
+                "gitPath": "content/assets/model-budget/report.json",
+                "modelKey": budget_row["id"],
+                "role": budget_row["role"],
+                "verdicts": budget_row["verdicts"],
+            },
+        },
         "status": {
             "converted": True, "policyValidated": True, "khronosValidated": True,
             "threeViewEvidence": True, "sourceModelPublishedToGit": True,
@@ -152,7 +197,7 @@ def main() -> None:
         "![原版與加工版三視圖 A/B](azazel-wings-ab.jpg)", "",
         f"新候選 `{inventory['candidate']['sha256']}` 為 **{validation['metrics']['triangles']:,} 面／{validation['metrics']['drawPrimitives']} draw／最大 {validation['metrics']['maxTextureEdge']}px／單段最多 {validation['metrics']['maxChannelsPerClip']} 通道**；Khronos 0 error / 0 warning。",
         "", "翅膀為 10 面的小型深紅／紫色雙面 primitive，全部頂點以 100% 權重綁定 `Bip01 Spine1`。來源身體 primitive、骨架、節點和五段借用動作保留；已核准的咖啡色／深咖啡色 atlas 只做 512→256 Lanczos 縮圖。原候選仍留在原路徑。",
-        "", f"新 source model 已透過 `ModelVersions` 註冊為 `{registration['addedVersion']['modelKey']}`；原有 {registration['before']['versionCount']} 個選項全數保留，目前共 {registration['after']['versionCount']} 個。新版 `automaticEligible=true`，英雄保持 automatic 模式並預選新版。ModelVersions 與內容模型窄測試共 {registration_validation['summary']['testsPassed']} 項通過，11 組加工副本稽核 11/11 通過。目前是**已轉換、政策/Khronos/靜態三視圖通過、已註冊可切換且自動預選、正式站未部署**。", "",
+        "", f"新 source model 已透過 `ModelVersions` 註冊為 `{registration['addedVersion']['modelKey']}`；原有 {registration['before']['versionCount']} 個選項全數保留，目前共 {registration['after']['versionCount']} 個。新版 `automaticEligible=true`，英雄保持 automatic 模式並預選新版；中央模型盤點、`current-resources.json` 與 model-budget 均已核對。ModelVersions 與內容模型窄測試共 {registration_validation['summary']['testsPassed']} 項通過，11 組加工副本稽核 11/11 通過。目前是**已轉換、政策/Khronos/靜態三視圖通過、已註冊可切換且自動預選、正式站未部署**。", "",
     ]).encode()
     expected = {EVIDENCE / "inventory.json": inventory_bytes, EVIDENCE / "README.md": readme}
     for path, data in expected.items():

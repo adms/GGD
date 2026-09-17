@@ -344,6 +344,7 @@ def build_character_receipt(
     analysis: dict[str, Any] | None,
     owner_archive_found: bool,
     cpk_character: dict[str, Any] | None = None,
+    audio_character: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     modules = {name: blocked_module() for name in MODULES}
     public_row = find_public_character(analysis, str(character["slug"]))
@@ -430,6 +431,37 @@ def build_character_receipt(
                     "evidence": evidence,
                 }
 
+    if audio_character and str(audio_character.get("nativeId")) == native_id:
+        banks = audio_character.get("banks", [])
+        decoded = sum(
+            int(row.get("decodedWavCount", 0))
+            for row in banks
+            if isinstance(row, dict)
+        )
+        if decoded:
+            modules["voice"] = {
+                "candidateContainerFound": True,
+                "decodedCandidateFiles": decoded,
+                "language": audio_character.get("language"),
+                "runtimeReady": False,
+                "status": "decoded-wav-candidates-owner-event-speaker-review-pending",
+                "reason": (
+                    "CV/PV AFS2 banks are split to HCA and deterministic WAV listening copies; "
+                    "numeric cue names are not runtime events, and every clip still needs owner event/speaker review"
+                ),
+                "evidence": [
+                    {
+                        "bank": row.get("bank"),
+                        "acb": row.get("acb"),
+                        "awb": row.get("awb"),
+                        "decodedWavCount": row.get("decodedWavCount"),
+                        "durationSeconds": row.get("durationSeconds"),
+                    }
+                    for row in banks
+                    if isinstance(row, dict)
+                ],
+            }
+
     if owner_archive_found and native_id is None:
         identity_status = "archive-present-inventory-required-native-id-still-unproven"
         for module in modules.values():
@@ -454,15 +486,22 @@ def build_receipt(repo: Path, roots: list[dict[str, Any]] | None = None) -> dict
     scan = scan_roots(roots)
     owner_receipt_rel = "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json"
     cpk_inventory_rel = "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
+    audio_extract_rel = "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json"
     analysis_rel = "materials/hero-model-library/source-inventories/jstars-stpk-research-v1/analysis.json"
     owner_receipt = load_json(repo / owner_receipt_rel)
     cpk_inventory = load_json(repo / cpk_inventory_rel)
+    audio_extract = load_json(repo / audio_extract_rel)
     analysis = load_json(repo / analysis_rel)
     owner_receipt_status = owner_receipt.get("status") if owner_receipt else "missing-receipt"
     owner_archive_found = bool(scan["ownerArchiveFound"]) or owner_receipt_status == "inventoried-read-only"
     cpk_by_slug = {
         str(row.get("slug")): row
         for row in (cpk_inventory or {}).get("priorityCharacters", [])
+        if isinstance(row, dict)
+    }
+    audio_by_slug = {
+        str(row.get("slug")): row
+        for row in (audio_extract or {}).get("characters", [])
         if isinstance(row, dict)
     }
     characters = [
@@ -472,6 +511,7 @@ def build_receipt(repo: Path, roots: list[dict[str, Any]] | None = None) -> dict
             analysis,
             owner_archive_found,
             cpk_by_slug.get(str(character["slug"])),
+            audio_by_slug.get(str(character["slug"])),
         )
         for character in PRIORITY_CHARACTERS
     ]
@@ -522,6 +562,13 @@ def build_receipt(repo: Path, roots: list[dict[str, Any]] | None = None) -> dict
             "summary": cpk_inventory.get("summary", {}) if cpk_inventory else {},
             "fullMemberManifest": cpk_inventory.get("fullMemberManifest") if cpk_inventory else None,
         },
+        "priorityAudioExtraction": {
+            "path": audio_extract_rel,
+            "exists": audio_extract is not None,
+            "status": audio_extract.get("status") if audio_extract else "missing-receipt",
+            "summary": audio_extract.get("summary", {}) if audio_extract else {},
+            "fullAudioManifest": audio_extract.get("fullAudioManifest") if audio_extract else None,
+        },
         "publicSample": {
             "analysisPath": analysis_rel,
             "analysisExists": analysis is not None,
@@ -544,6 +591,7 @@ def build_receipt(repo: Path, roots: list[dict[str, Any]] | None = None) -> dict
             "moduleCandidateContainersObserved": module_candidates,
             "runtimeReadyModules": 0,
             "defaultUseEligibleCharacters": 0,
+            "decodedJapaneseAudioFiles": int((audio_extract or {}).get("summary", {}).get("decodedWavFiles", 0)),
         },
         "blockers": [
             {
@@ -570,6 +618,15 @@ def build_receipt(repo: Path, roots: list[dict[str, Any]] | None = None) -> dict
                 ),
                 "unblocks": "six-state motion mapping and per-event audio review",
             },
+            {
+                "id": "decoded-audio-owner-review-and-event-binding",
+                "applies": bool(audio_extract),
+                "reason": (
+                    "CV/PV Japanese HCA and WAV candidates are decoded, but numeric cues still need per-file owner "
+                    "listening approval, speaker confirmation and GGD event binding"
+                ),
+                "unblocks": "checked voice/SFX binder and runtime audio use",
+            },
         ],
         "rerun": {
             "sourceAudit": (
@@ -583,6 +640,10 @@ def build_receipt(repo: Path, roots: list[dict[str, Any]] | None = None) -> dict
             "ownerArchiveInventory": (
                 "python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/"
                 "inventory.py --archive \"/absolute/path/J-Stars Victory Vs+.7z\""
+            ),
+            "priorityAudioExtraction": (
+                "python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/"
+                "audio_extract.py"
             ),
         },
         "safety": {
@@ -599,6 +660,7 @@ def render_summary(receipt: dict[str, Any]) -> str:
         "native-model-containers-present-split-not-converted": "容器有／未轉換",
         "embedded-color-effect-member-observed-unverified": "內嵌成員有／未驗證",
         "lip-sync-or-reference-member-observed-not-voice-confirmed": "只見 LPS 成員／非語音證據",
+        "decoded-wav-candidates-owner-event-speaker-review-pending": "日文 WAV 已解碼／待逐檔聽審",
         "blocked-source-container-not-observed": "未見容器",
         "pending-owner-archive-inventory": "待 archive inventory",
     }
@@ -609,6 +671,7 @@ def render_summary(receipt: dict[str, Any]) -> str:
         f"- owner archive 精確檔名命中：{receipt['archiveSearch']['ownerArchiveExactNameCount']}",
         f"- 原生 ID 已證明：{receipt['summary']['nativeIdsConfirmed']} / {receipt['summary']['characters']}",
         f"- 可直接上架預設：{receipt['summary']['defaultUseEligibleCharacters']} / {receipt['summary']['characters']}",
+        f"- 已解碼日文音訊候選：{receipt['summary'].get('decodedJapaneseAudioFiles', 0)} 段",
         "",
         (
             "owner archive 與 7 個 CPK 已盤點；六名原生 ID 均已由 partial STPK 內部成員名唯一對應，"
@@ -637,8 +700,8 @@ def render_summary(receipt: dict[str, Any]) -> str:
             "## 精確 blocker",
             "",
             "1. 六名原生 ID 已確證：銀時 `028`、神眉 `041`、小傑 `017`、奇犍 `018`、幸運超人 `037`、飛影 `012`。",
-            "2. 六名的模型、動作、VFX、SFX 與語音容器候選已逐檔雜湊；它們仍是原生容器，不是 runtime 成品。",
-            "3. 原生資料尚受 `$CMP/$CH0` 完整解碼與 PS3 SRD/SRDI/SRDV 轉換器驗證所擋，所以不能標示已轉換、已上架或可預設。",
+            f"2. 六名 CV/PV 已解碼 {receipt['summary'].get('decodedJapaneseAudioFiles', 0)} 段日文 WAV；數字 cue 仍須逐檔 owner 聽審、說話者確認與事件綁定。",
+            "3. 模型、動作、VFX 與另一路 battle sound PAK 仍受 `$CMP/$CH0` 完整解碼及 PS3 SRD/SRDI/SRDV 轉換器驗證所擋，所以不能標示已上架或可預設。",
             "",
             "## 來源完整性",
             "",

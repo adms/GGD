@@ -35,7 +35,9 @@ class CatalogTest(unittest.TestCase):
         self.assertIn("13 組來源、537 筆角色／容器候選", text)
         self.assertIn("正式站部署為 **0**", text)
         self.assertIn("不會因名稱相同", text)
-        self.assertIn("blocked-archive-not-found", text)
+        self.assertIn("owner-cpk-inventoried-native-id-unmapped", text)
+        self.assertIn("日文 CV/PV WAV 候選 2394 段", text)
+        self.assertIn("已解碼／待審（399）", text)
 
 
 if __name__ == "__main__":

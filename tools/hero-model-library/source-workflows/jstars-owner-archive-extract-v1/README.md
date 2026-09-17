@@ -49,6 +49,16 @@ python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v
 
 目前六名唯一對應是銀時 `028`、神眉 `041`、小傑 `017`、奇犍 `018`、幸運超人 `037`、飛影 `012`。這只確立原生 token 身分；六名的完整模型仍受 `$CMP/$CH0` 與 PS3 SRD/SRDI/SRDV 轉換擋住。
 
+六名的 `sound/JP/CV_*`、`PV_*` ACB/AWB 不經 `$CMP`。`audio_extract.py` 會安全拆分 AFS2、保留 HCA，並用本機 FFmpeg HCA decoder 產生確定性的 PCM WAV 聽審副本。ACB 內的數字 cue 名會逐檔保留，但程式不猜技能事件或說話者；在 owner 聽審前仍不可寫 runtime 綁定。
+
+```bash
+python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/audio_extract.py
+python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/audio_extract.py --check
+python3 -m unittest tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/test_audio_extract.py
+```
+
+完整 HCA、WAV 與逐檔 manifest 保留於 `GGD-Asset-Library/conversions/jstars-priority-audio-v1/`；Git 只存摘要收據與其 SHA-256。
+
 沒有檔案時仍會產生 `blocked-archive-not-found` 收據與完整重跑指令。檔案出現後重跑同一指令即可更新。
 
 驗證：
@@ -58,10 +68,12 @@ python3 -m unittest tools/hero-model-library/source-workflows/jstars-owner-archi
 python3 -m unittest tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/test_cpk_inventory.py
 python3 -m unittest tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/test_cmp_probe.py
 python3 -m unittest tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/test_identity_probe.py
+python3 -m unittest tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/test_audio_extract.py
 python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/inventory.py --check
 python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/cpk_inventory.py --check
 python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/cmp_probe.py --check
 python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/identity_probe.py --check
+python3 tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/audio_extract.py --check
 ```
 
 固定產出：
@@ -71,4 +83,5 @@ materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/
 materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json
 materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cmp-probe.json
 materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/identity-probe.json
+materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json
 ```

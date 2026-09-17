@@ -16,7 +16,9 @@
     "cpkContainers": 7,
     "membersHashed": 19471,
     "characterTokensWithInternalIdentity": 56,
-    "priorityNativeIdsConfirmed": 6
+    "priorityNativeIdsConfirmed": 6,
+    "priorityJapaneseAudioDecoded": 2394,
+    "priorityJapaneseAudioDurationSeconds": 2660.992
   },
   "sourceReferences": [
     {
@@ -109,6 +111,8 @@
       "jumpForceAudioFiles": 494,
       "hieiAlternateDecodedAudioFiles": 239
     },
+    "jstarsDecodedJapaneseAudioFiles": 2394,
+    "jstarsDecodedJapaneseAudioDurationSeconds": 2660.992,
     "jstarsConverted": 0,
     "jstarsRegistered": 0,
     "jstarsDeployed": 0,
@@ -417,7 +421,9 @@
         "registered": false,
         "default": false,
         "blocker": "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
-      }
+      },
+      "decodedJapaneseAudioCandidates": 399,
+      "audioReviewStatus": "decoded-wav-candidates-owner-event-speaker-review-pending"
     },
     {
       "rosterOrder": 14,
@@ -457,7 +463,9 @@
         "registered": false,
         "default": false,
         "blocker": "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
-      }
+      },
+      "decodedJapaneseAudioCandidates": 399,
+      "audioReviewStatus": "decoded-wav-candidates-owner-event-speaker-review-pending"
     },
     {
       "rosterOrder": 15,
@@ -497,7 +505,9 @@
         "registered": false,
         "default": false,
         "blocker": "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
-      }
+      },
+      "decodedJapaneseAudioCandidates": 399,
+      "audioReviewStatus": "decoded-wav-candidates-owner-event-speaker-review-pending"
     },
     {
       "rosterOrder": 16,
@@ -537,7 +547,9 @@
         "registered": false,
         "default": false,
         "blocker": "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
-      }
+      },
+      "decodedJapaneseAudioCandidates": 399,
+      "audioReviewStatus": "decoded-wav-candidates-owner-event-speaker-review-pending"
     },
     {
       "rosterOrder": 17,
@@ -939,7 +951,9 @@
         "registered": false,
         "default": false,
         "blocker": "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
-      }
+      },
+      "decodedJapaneseAudioCandidates": 399,
+      "audioReviewStatus": "decoded-wav-candidates-owner-event-speaker-review-pending"
     },
     {
       "rosterOrder": 35,
@@ -1043,7 +1057,9 @@
         "registered": false,
         "default": false,
         "blocker": "原生容器樣本尚未完成解碼、標準化轉換與逐模組驗收"
-      }
+      },
+      "decodedJapaneseAudioCandidates": 399,
+      "audioReviewStatus": "decoded-wav-candidates-owner-event-speaker-review-pending"
     },
     {
       "rosterOrder": 39,

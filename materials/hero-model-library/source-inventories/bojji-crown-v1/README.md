@@ -26,4 +26,4 @@ node --import tsx tools/hero-model-library/source-workflows/bojji-crown-v1/promo
 python3 tools/hero-model-library/source-workflows/bojji-crown-v1/build_inventory.py
 ```
 
-本批保留原有 5 個模型選項，新增一個獨立完整王冠候選並設為 automatic 目前預選。未改中央索引，也沒有宣稱正式站已部署。
+本批保留原有 5 個模型選項，新增一個獨立完整王冠候選並設為 automatic 目前預選。中央模型盤點與 `current-resources.json` 已登記該候選；正式站仍為未部署。

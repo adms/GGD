@@ -22,6 +22,7 @@
 ### 本輪平行執行收據
 
 - J-Stars 六名：已轉換 0、已註冊 0、已部署 0。
+- 日文 CV/PV 音訊：已解碼 2,394 段 WAV（44.3 分鐘），全部仍待 owner 逐檔事件／說話者審查。
 - 實檔證據只確認奇犎 native `018`；owner archive 狀態 `archive-iso-seven-cpk-inventoried-conversion-blocked`。
 - 可先保留的替代資源：3 個既有／靜態模型通過 Khronos；小傑／奇犎 JUMP FORCE 音訊 494 檔；飛影 JUMP FORCE 解碼音訊 239 檔。這些都不冒稱 J-Stars 原作轉換。
 - 實質阻擋：PS3 SRD/SRDI/SRDV and $CH0 to skinned GLB is not yet validated。

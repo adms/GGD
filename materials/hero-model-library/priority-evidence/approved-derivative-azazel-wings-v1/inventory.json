@@ -217,6 +217,36 @@
     "technicalReview": "front/back/isometric all show the complete body and two attached wings; no missing texture or detached rest-pose component observed",
     "ownerAcceptance": "pending"
   },
+  "centralIndexes": {
+    "modelInventory": {
+      "gitPath": "materials/hero-model-library/inventory.json",
+      "heroId": "community-review-32-20260907",
+      "checkoutSelection": {
+        "modelKey": "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439",
+        "mode": "automatic"
+      },
+      "sourceModelKey": "community.body.ba1abbbdb25444e61533ab7354ebd85125ffa860763b86ee"
+    },
+    "currentResources": {
+      "gitPath": "materials/asset-library/current-resources.json",
+      "sourceModelKey": "community.body.ba1abbbdb25444e61533ab7354ebd85125ffa860763b86ee",
+      "runtimeDropdownRegistered": true,
+      "registeredVersionModelKeys": [
+        "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439"
+      ]
+    },
+    "modelBudget": {
+      "gitPath": "content/assets/model-budget/report.json",
+      "modelKey": "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439",
+      "role": "champion",
+      "verdicts": {
+        "triangles": "ok",
+        "drawCalls": "ok",
+        "maxTextureEdge": "ok",
+        "animChannels": "ok"
+      }
+    }
+  },
   "status": {
     "converted": true,
     "policyValidated": true,

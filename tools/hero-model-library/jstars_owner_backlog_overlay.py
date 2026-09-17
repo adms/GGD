@@ -21,6 +21,7 @@ RECEIPT = "materials/hero-model-library/source-inventories/jstars-owner-archive-
 INVENTORY = "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json"
 IDENTITY = "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/identity-probe.json"
 PRIORITY = "materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json"
+AUDIO = "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json"
 PRIORITY_WORKS = {
     "028": "銀魂", "041": "靈異教師神眉", "017": "HUNTER×HUNTER",
     "018": "HUNTER×HUNTER", "037": "幸運超人", "012": "幽遊白書",
@@ -40,28 +41,35 @@ def _require(condition: bool, message: str) -> None:
         raise ValueError("J-Stars owner backlog overlay rejected: " + message)
 
 
-def _resources(group: dict) -> dict:
+def _resources(group: dict, audio: dict | None = None) -> dict:
     modules = group["moduleCounts"]
+    decoded_audio = int(audio.get("decodedAudioFiles", 0)) if audio else 0
     return {
         "motion": f"原生 token 群索引 {modules.get('motion', 0)} 筆；尚未解碼成可播動作",
         "vfx": f"原生 token 群索引 {modules.get('vfx', 0)} 筆；技能事件映射待解碼",
         "sfx": f"原生 token 群索引 {modules.get('sfx', 0)} 筆；音效尚未解碼聽審",
-        "voice": f"原生 token 群索引 {modules.get('voice', 0)} 筆；說話者與語言待確認",
-        "voiceGroupIds": [],
-        "indexedAudioFileCount": 0,
-        "unclassifiedAudioFileCount": 0,
-        "sourceAudioGroupsNotAssignedToCharacter": [SOURCE_ID + ":" + group["nativeToken"]],
+        "voice": (
+            f"日文 CV/PV 已解碼 {decoded_audio} 段 HCA＋WAV；逐段說話者與事件待 owner 聽審"
+            if decoded_audio else
+            f"原生 token 群索引 {modules.get('voice', 0)} 筆；說話者與語言待確認"
+        ),
+        "voiceGroupIds": ([f"{SOURCE_ID}:{group['nativeToken']}:CV", f"{SOURCE_ID}:{group['nativeToken']}:PV"]
+                          if decoded_audio else []),
+        "indexedAudioFileCount": decoded_audio,
+        "unclassifiedAudioFileCount": decoded_audio,
+        "sourceAudioGroupsNotAssignedToCharacter": ([] if decoded_audio else [SOURCE_ID + ":" + group["nativeToken"]]),
         "sourceLabels": ["J-STARS 勝利對決+ PS3 原作"],
         "voiceIndex": "materials/hero-model-library/voice-index.json",
         "audioFileIndex": "materials/hero-model-library/voice-files.jsonl.gz",
         "motionCandidateCounts": [],
         "nativeMotionSources": [],
-        "evidencePaths": [INVENTORY],
+        "evidencePaths": [INVENTORY, *([AUDIO] if decoded_audio else [])],
         "classificationIsAcquisitionSnapshot": True,
     }
 
 
 def _row(group: dict, container: dict, identity: dict, priority: dict | None,
+         audio: dict | None,
          repo: Path) -> dict:
     token = group["nativeToken"]
     absolute = str(Path(container["absolutePath"]).resolve())
@@ -174,18 +182,18 @@ def _row(group: dict, container: dict, identity: dict, priority: dict | None,
                                  else "partial STPK internal identity name; Chinese roster mapping pending"),
         "workTranslationBasis": "owner archive, PS3 PARAM.SFO and confirmed priority roster mapping",
         "localizationChangesIdentity": False,
-        "resources": _resources(group),
+        "resources": _resources(group, audio),
     }
 
 
 def apply_jstars_owner_overlay(data: dict, repo: Path) -> dict:
     repo = Path(repo)
     receipt_path, inventory_path = repo / RECEIPT, repo / INVENTORY
-    identity_path, priority_path = repo / IDENTITY, repo / PRIORITY
-    if not all(p.is_file() for p in (receipt_path, inventory_path, identity_path, priority_path)):
+    identity_path, priority_path, audio_path = repo / IDENTITY, repo / PRIORITY, repo / AUDIO
+    if not all(p.is_file() for p in (receipt_path, inventory_path, identity_path, priority_path, audio_path)):
         return data
     receipt, inventory = _read(receipt_path), _read(inventory_path)
-    identity, priority = _read(identity_path), _read(priority_path)
+    identity, priority, audio = _read(identity_path), _read(priority_path), _read(audio_path)
     _require(receipt.get("sourceId") == SOURCE_ID, "archive source ID drift")
     _require(receipt.get("status") == "inventoried-read-only", "archive inventory is incomplete")
     _require(inventory.get("sourceId") == SOURCE_ID, "CPK source ID drift")
@@ -200,6 +208,10 @@ def apply_jstars_owner_overlay(data: dict, repo: Path) -> dict:
     _require(priority.get("sourceId", SOURCE_ID) == SOURCE_ID and
              priority.get("summary", {}).get("nativeIdsConfirmed") == 6,
              "priority-six identity receipt drift")
+    _require(audio.get("sourceId") == SOURCE_ID and
+             audio.get("summary", {}).get("priorityCharacters") == 6 and
+             audio.get("summary", {}).get("decodedWavFiles") == 2394,
+             "priority-six audio extraction receipt drift")
     groups = inventory.get("nativeCharacterGroups", [])
     _require(len(groups) == 58 and len({g["nativeToken"] for g in groups}) == 58,
              "native token group set is incomplete or duplicated")
@@ -212,6 +224,8 @@ def apply_jstars_owner_overlay(data: dict, repo: Path) -> dict:
     priority_by_token = {row["nativeId"]: row for row in priority.get("characters", [])}
     _require(len(priority_by_token) == 6 and set(priority_by_token) <= set(identity_by_token),
              "priority-six token set is incomplete")
+    audio_by_token = {row["nativeId"]: row for row in audio.get("characters", [])}
+    _require(set(audio_by_token) == set(priority_by_token), "priority-six audio token set is incomplete")
     matches = [c for c in inventory.get("containers", [])
                if c.get("fileName") == "partition_op_character_ps3.cpk"]
     _require(len(matches) == 1, "character CPK must occur exactly once")
@@ -225,7 +239,7 @@ def apply_jstars_owner_overlay(data: dict, repo: Path) -> dict:
     for row in result["characters"]:
         (removed if row.get("id", "").startswith(PREFIX) else retained).append(row)
     rows = [_row(group_by_token[token], container, identity_by_token[token],
-                 priority_by_token.get(token), repo)
+                 priority_by_token.get(token), audio_by_token.get(token), repo)
             for token in sorted(identity_by_token)]
     result["characters"] = retained + rows
     result["sourceIdentityCount"] = len(result["characters"])
@@ -236,12 +250,13 @@ def apply_jstars_owner_overlay(data: dict, repo: Path) -> dict:
     }
 
     for rel, path in ((RECEIPT, receipt_path), (INVENTORY, inventory_path),
-                      (IDENTITY, identity_path), (PRIORITY, priority_path)):
+                      (IDENTITY, identity_path), (PRIORITY, priority_path), (AUDIO, audio_path)):
         result.setdefault("inputs", [])[:] = [i for i in result["inputs"] if i.get("path") != rel]
         result["inputs"].append({"path": rel, "sha256": _sha(path)})
     boundary = ("J-Stars owner PS3 rows are tracked token groups backed by a shared CPK; "
                 "internal STPK names and six confirmed GGD mappings do not prove decoded bodies, "
-                "runtime options or deployment.")
+                "runtime options or deployment. Six priority CV/PV banks are decoded for review, "
+                "but numeric cues do not prove speaker or GGD event bindings.")
     result.setdefault("boundaries", [])[:] = [b for b in result["boundaries"] if b != boundary]
     result["boundaries"].append(boundary)
     result.setdefault("portableOverlay", {})["jstarsOwnerArchive"] = {
@@ -252,6 +267,7 @@ def apply_jstars_owner_overlay(data: dict, repo: Path) -> dict:
         "additionalNonCharacterTokenGroups": ["700", "701"],
         "payloadsMaterialized": inventory["safety"]["memberPayloadsMaterialized"],
         "runtimeRegistered": inventory["summary"]["runtimeRegistered"],
+        "decodedJapaneseAudioFiles": audio["summary"]["decodedWavFiles"],
     }
     source_families = result.setdefault("resourceCoverage", {}).setdefault("sourceFamilies", [])
     source_families[:] = [family for family in source_families
@@ -271,12 +287,14 @@ def apply_jstars_owner_overlay(data: dict, repo: Path) -> dict:
         "motion": f"原生 motion 容器索引 {module_totals['motion']} 筆；$CH0／PS3 SRD 尚待解碼，可播動作 0。",
         "vfx": f"原生 VFX 容器索引 {module_totals['vfx']} 筆；技能事件映射與 GGD 轉換尚未完成。",
         "sfx": f"原生 SFX 容器索引 {module_totals['sfx']} 筆；已解碼可聽及已審核 0。",
-        "voice": f"原生 voice 容器索引 {module_totals['voice']} 筆；說話者、語言與台詞事件待確認。",
+        "voice": (f"原生 voice 容器索引 {module_totals['voice']} 筆；六名優先角 CV/PV 已解碼 "
+                  f"{audio['summary']['decodedWavFiles']} 段日文 WAV，逐段說話者與事件待 owner 聽審。"),
         "links": [
             ["原始包／ISO 收據", RECEIPT],
             ["CPK 逐檔索引", INVENTORY],
             ["56 組原生 token 身分收據", IDENTITY],
             ["六名優先角對應", PRIORITY],
+            ["六名日文音訊解碼收據", AUDIO],
         ],
     })
     return result
