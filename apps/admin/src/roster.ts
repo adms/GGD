@@ -21,6 +21,7 @@
  * 所以同一個 id 同時填進兩張＝自相矛盾，{@link rosterConflicts} 把它擋在儲存之前。
  */
 import {
+  DEFAULT_BOT_TEAM_DISTINCT_CHAMPIONS,
   DEFAULT_HIDDEN_CHAMPIONS_IN_MOB_POOL,
   DEFAULT_HIDDEN_CHAMPIONS,
   type HiddenInValhallaMode,
@@ -57,6 +58,11 @@ export interface RosterLists {
    *   伺服器替沒鎖英雄的座位隨機配角（逾時／bot）照舊抽得到（這三條都是 #336 的既有語意，這一格一條都沒動）。
    */
   hiddenInValhalla: HiddenInValhallaMode;
+  /**
+   * 伺服器替沒鎖英雄的座位（BOT／逾時）抽英雄時同隊不重複（GH#1273）。出貨 `true`。
+   * owner 2026-09-15「BOT 不要三人同隊選一樣的角色避免過度失衡」；關掉＝回到放回抽。
+   */
+  botTeamDistinct: boolean;
   /** 文件自己的說明。⚠️ 不編輯，但**一定要帶著走**，否則存一次就把它刪掉了。 */
   note?: string;
 }
@@ -88,6 +94,9 @@ export function extractRoster(doc: unknown): RosterLists | null {
       : DEFAULT_HIDDEN_CHAMPIONS_IN_MOB_POOL,
     hidden: ids(d.hiddenChampions, DEFAULT_HIDDEN_CHAMPIONS),
     hiddenInValhalla: hiddenInValhallaFromDoc(doc),
+    botTeamDistinct: typeof d.botTeamDistinctChampions === "boolean"
+      ? d.botTeamDistinctChampions
+      : DEFAULT_BOT_TEAM_DISTINCT_CHAMPIONS,
     ...(typeof d.note === "string" ? { note: d.note } : {}),
   };
 }
@@ -123,6 +132,8 @@ export function rosterDocFor(lists: RosterLists): Record<string, unknown> {
     hiddenChampionsInMobPool: lists.hiddenInMobPool,
     // ⚠️ 同一條理由（GH#1251）：漏寫 ⇒ 讀端退回 "show" ⇒ 操作者切成 "exclude" 存完自己彈回去。
     hiddenInValhalla: lists.hiddenInValhalla,
+    // ⚠️ 同一條理由（GH#1273）：漏寫 ⇒ 讀端退回 true ⇒ 操作者關掉存完自己彈回去。
+    botTeamDistinctChampions: lists.botTeamDistinct,
   };
 }
 

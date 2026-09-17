@@ -13,7 +13,7 @@ import { Panel, Btn } from "./widgets";
 import { ChampionIdList, useChampionLabelIndex } from "./ChampionIdList";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 import { getOverlayDoc, getShippedDoc, getWhitelist, putOverlayDoc } from "../api";
-import { DEFAULT_HIDDEN_IN_VALHALLA, type HiddenInValhallaMode } from "@ggd/shared/content/schema/config";
+import { DEFAULT_BOT_TEAM_DISTINCT_CHAMPIONS, DEFAULT_HIDDEN_IN_VALHALLA, type HiddenInValhallaMode } from "@ggd/shared/content/schema/config";
 import {
   ROSTER_COLLECTION,
   ROSTER_DOC_ID,
@@ -51,6 +51,8 @@ export function RosterPage(): JSX.Element {
   const [hiddenInMobPool, setHiddenInMobPool] = useState(false);
   /** GH#1251 —— 英靈殿要不要展示隱藏英雄；初值與 SHIPPED 同一份（`DEFAULT_HIDDEN_IN_VALHALLA`）。 */
   const [hiddenInValhalla, setHiddenInValhalla] = useState<HiddenInValhallaMode>(DEFAULT_HIDDEN_IN_VALHALLA);
+  /** GH#1273 —— BOT／逾時座位同隊不重複；初值與 SHIPPED 同一份。 */
+  const [botTeamDistinct, setBotTeamDistinct] = useState(DEFAULT_BOT_TEAM_DISTINCT_CHAMPIONS);
   const [roster, setRoster] = useState<string[] | null>(null);
   const [busy, setBusy] = useState(false);
   const [apiErr, setApiErr] = useState<string | null>(null);
@@ -71,6 +73,7 @@ export function RosterPage(): JSX.Element {
           setHiddenText(idListText(lists.hidden));
           setHiddenInMobPool(lists.hiddenInMobPool);
           setHiddenInValhalla(lists.hiddenInValhalla);
+          setBotTeamDistinct(lists.botTeamDistinct);
         }
       } catch (err) {
         setApiErr(errText(err));
@@ -103,6 +106,7 @@ export function RosterPage(): JSX.Element {
         hidden: hidden.ids,
         hiddenInMobPool,
         hiddenInValhalla,
+        botTeamDistinct,
         ...(loaded.note !== undefined ? { note: loaded.note } : {}),
       }
     : null;
@@ -114,7 +118,8 @@ export function RosterPage(): JSX.Element {
       // ⭐ 少了這一項，勾了 checkbox 之後「儲存」是**灰的** —— 一格存不下去的開關
       //    與沒有那格開關**在畫面上一模一樣**（GH#348 的第一守則那一半）。
       hiddenInMobPool !== loaded.hiddenInMobPool ||
-      hiddenInValhalla !== loaded.hiddenInValhalla);
+      hiddenInValhalla !== loaded.hiddenInValhalla ||
+      botTeamDistinct !== loaded.botTeamDistinct);
 
   const save = async (): Promise<void> => {
     if (!preview || conflicts.length > 0) return;
@@ -129,6 +134,7 @@ export function RosterPage(): JSX.Element {
       setHiddenText(idListText(preview.hidden));
       setHiddenInMobPool(preview.hiddenInMobPool);
       setHiddenInValhalla(preview.hiddenInValhalla);
+      setBotTeamDistinct(preview.botTeamDistinct);
       setFlash(`✓ 已寫入耐久覆蓋層（generation ${head.generation}）`);
     } catch (err) {
       setFlash(null);
@@ -145,6 +151,7 @@ export function RosterPage(): JSX.Element {
     // ⭐「回到出貨值」漏掉一格 = 那一格**回不到出貨值**，而按鈕看起來成功了。
     setHiddenInMobPool(shipped.hiddenInMobPool);
     setHiddenInValhalla(shipped.hiddenInValhalla);
+    setBotTeamDistinct(shipped.botTeamDistinct);
     setFlash(null);
   };
 
@@ -258,6 +265,23 @@ export function RosterPage(): JSX.Element {
         <span style={{ color: TEXT_DIM, fontSize: 11 }}>
           ⭐ 出貨開（GH#1251，owner 2026-09-14「隱藏角色要顯示」，節錄）。取消勾選＝英靈殿不再輪播隱藏英雄（回到舊行為）。
           ⛔ 只管英靈殿 —— 選人格子、玩家自己按的 🎲、商店照舊看不到；伺服器替沒鎖英雄的座位隨機配角（逾時／bot）照舊抽得到。
+        </span>
+      </label>
+
+      <label
+        style={{ display: "flex", alignItems: "center", gap: 8, margin: "10px 0 0", cursor: "pointer" }}
+      >
+        <input
+          type="checkbox"
+          aria-label="BOT 同隊不抽到重複英雄"
+          data-field="botTeamDistinctChampions"
+          checked={botTeamDistinct}
+          onChange={(e) => setBotTeamDistinct(e.target.checked)}
+        />
+        <span style={{ color: TEXT_MAIN, fontSize: 13 }}>BOT／逾時座位同隊不抽到重複英雄</span>
+        <span style={{ color: TEXT_DIM, fontSize: 11 }}>
+          ⭐ 出貨開（GH#1273，owner 2026-09-15「BOT 不要三人同隊選一樣的角色避免過度失衡」）。先保留真人選好的，再替其餘座位抽隊友沒拿到的。
+          取消勾選＝回到每個座位各自隨機（可能同隊重複）。⚠️ 可抽的英雄比一隊人數還少時照樣會重複（比賽不會因此開不起來）。
         </span>
       </label>
 

@@ -321,7 +321,7 @@ import { Ownership } from "../curation/ownership";
 // ⛔ 刻意**不**走 `Whitelist.allowsChampion` —— 那個 seam 同時餵隨機池
 // (`filterChampions` → `randomChampionPool`)，放進去就等於把隱藏做成下架。
 import { hiddenChampionIds, isHiddenChampionId, ROSTER_DOC_ID } from "@ggd/shared/content/championRetirement";
-import { DEFAULT_HIDDEN_CHAMPIONS_IN_MOB_POOL } from "@ggd/shared/content/schema/config/roster";
+import { DEFAULT_BOT_TEAM_DISTINCT_CHAMPIONS, DEFAULT_HIDDEN_CHAMPIONS_IN_MOB_POOL } from "@ggd/shared/content/schema/config/roster";
 import { PhaseMachine, type MatchPhase, type PhaseConfig, DEFAULT_PHASE_CONFIG } from "./PhaseMachine";
 import { resolveVsBotPacing, type VsBotPacing } from "./phaseConfig";
 import { roundCapReached } from "@ggd/shared/roomSettings";
@@ -1923,6 +1923,27 @@ export class MatchController {
     // 隱藏英雄（彩蛋）**留在池子裡** —— 這條路（沒鎖英雄／逾時／bot）正是 owner
     // 說的「可以隨機到」。讀一次給下面每個座位共用。
     const hidden = hiddenChampionIds();
+    // ⭐ GH#1273 —— 同隊不重複（owner 2026-09-15「BOT 不要三人同隊選一樣的角色避免過度失衡」）。
+    //   ⚠️ 先收**手動鎖定**（真人選好、而且這一場生得出來的），再替其餘座位抽 ⇒ 後面座位的真人鎖 X
+    //   不會撞到前面座位 BOT 抽到的 X。每個系統座位仍然只呼叫一次 `rng.int`（在排除後的池子上抽）。
+    //   🔙 `config.roster@1` 的 `botTeamDistinctChampions: false` ⇒ 回到每個座位各自放回抽。
+    const distinctPerTeam =
+      (Configs.tryGet(ROSTER_DOC_ID) as { botTeamDistinctChampions?: boolean } | undefined)
+        ?.botTeamDistinctChampions ?? DEFAULT_BOT_TEAM_DISTINCT_CHAMPIONS;
+    const takenByTeam = new Map<number, Set<string>>();
+    const taken = (teamId: number): Set<string> => {
+      let s = takenByTeam.get(teamId);
+      if (!s) takenByTeam.set(teamId, (s = new Set()));
+      return s;
+    };
+    if (distinctPerTeam) {
+      for (const seat of this.seats.values()) {
+        const isDummy = this.isPracticeDummySeat(seat);
+        if (this.practice && seat.teamId !== PRACTICE_TEAM && !isDummy) continue;
+        const cid = isDummy && this.practice?.dummyChampionId ? this.practice.dummyChampionId : seat.championId;
+        if (this.isEnabledSpawnablePick(cid, seat.accountId)) taken(seat.teamId).add(cid);
+      }
+    }
     for (const [seatId, seat] of this.seats) {
       // 練習房（GH#343「進入不會有對戰」）：⛔ 只有練習席上場，其餘座位連英雄都不抽，
       // `entityId` 永遠是 null。這是「場上沒有敵方隊伍」**最強的那個形式** —— 它們不是
@@ -1966,7 +1987,12 @@ export class MatchController {
             ? owned
             : [...owned, ...pool.filter((id) => hidden.has(id) && !owned.includes(id))];
         const drawPool = eligible.length > 0 ? eligible : pool;
-        seat.championId = drawPool[this.world.rng.int(drawPool.length)]!;
+        // GH#1273：排除隊友已經拿到的；排除後沒得抽 ⇒ 退回不排除（⛔ 比賽不可以因此開不起來）。
+        const teamTaken = distinctPerTeam ? taken(seat.teamId) : undefined;
+        const fresh = teamTaken ? drawPool.filter((id) => !teamTaken.has(id)) : drawPool;
+        const finalPool = fresh.length > 0 ? fresh : drawPool;
+        seat.championId = finalPool[this.world.rng.int(finalPool.length)]!;
+        teamTaken?.add(seat.championId);
       }
       // 開場擺位（GH#422）：⛔ 不是 `zone = 0 · side = teamId % 2` —— 那把四隊
       // 折成兩側、兩個分區只用一個，於是 12 個座位落在 6 個點上（seat 0 與

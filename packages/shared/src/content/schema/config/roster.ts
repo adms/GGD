@@ -112,11 +112,29 @@ export const zConfigRosterDoc = z
           "exclude＝排除（回到舊行為）。⛔ 只管英靈殿：選人格子、玩家自己按的 🎲、商店照舊排除；" +
           "伺服器替沒鎖英雄的座位隨機配角（逾時／bot）照舊抽得到。",
       ),
+    /**
+     * 伺服器替沒鎖英雄的座位（BOT／逾時）抽英雄時，**同隊不重複**（GH#1273）。**出貨 `true`。**
+     *
+     * owner 2026-09-15（逐字）：「BOT 不要三人同隊選一樣的角色避免過度失衡」
+     * ⭐ 先收手動鎖定的，再替其餘座位從「排除隊友已拿到的」池子抽；排除後沒得抽 ⇒ 退回不排除（比賽照開）。
+     * 消費端：`apps/game-server/src/match/MatchController.ts` 的 `autoPickAndSpawn`。
+     * ⚠️ **必須 `.optional()`**：理由同 `hiddenChampions`（線上已有耐久覆蓋層）。
+     */
+    botTeamDistinctChampions: z
+      .boolean()
+      .optional()
+      .describe(
+        "伺服器替沒鎖英雄的座位（BOT／逾時）抽英雄時，同隊不重複。⭐ 出貨開（owner 2026-09-15「BOT 不要三人同隊選一樣的角色」）；" +
+          "關掉＝回到每個座位各自放回抽。⚠️ 可抽池比一隊人數還小時照樣會重複（比賽不能因此開不起來）。",
+      ),
   })
   .strict();
 
 /** 出貨值：殭屍**不**穿隱藏英雄的皮（GH#348）。 */
 export const DEFAULT_HIDDEN_CHAMPIONS_IN_MOB_POOL = false;
+
+/** 出貨值：BOT／逾時座位抽英雄時同隊不重複（owner 2026-09-15，GH#1273）。 */
+export const DEFAULT_BOT_TEAM_DISTINCT_CHAMPIONS = true;
 
 /** 英靈殿對隱藏英雄的兩種處理（GH#1251）。 */
 export type HiddenInValhallaMode = "exclude" | "show";
