@@ -3,9 +3,9 @@
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
 > 產生自 contentVersion **`cv_8fb669ec1434`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
-> 資料列：**190**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-10T06:39:58.329461Z`；英雄 130 · 道具 116 · 技能 650）；即時名單 `GET /api/v1/curation/whitelist`
+> 資料列：**190**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-17T06:56:17.345668599Z`；英雄 167 · 道具 98 · 技能 885）；即時名單 `GET /api/v1/curation/whitelist`
 
-`content/champions/*.json` 共 **190** 名英雄，其中 **130** 名在開放名單（OPEN roster）內。開放名單是營運策展狀態，不是程式常數：真相是 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供，由 game-server 在建房時執行；本檔印的是它進版控的快照（表頭有 updatedAt）。
+`content/champions/*.json` 共 **190** 名英雄，其中 **167** 名在開放名單（OPEN roster）內。開放名單是營運策展狀態，不是程式常數：真相是 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供，由 game-server 在建房時執行；本檔印的是它進版控的快照（表頭有 updatedAt）。
 
 > 本檔的數值是 `content/` 的**原始值**，未套用 `combat-env` 全域倍率（`content/config/combat-env.json`）。遊戲內顯示的一律是乘算後的最終值，所以畫面上的冷卻／傷害／生命與這裡不會相同 —— 那是預期行為，不是資料錯誤。
 >
@@ -17,10 +17,36 @@
 
 ---
 
-## 1. 開放名單 OPEN roster（130）
+## 1. 開放名單 OPEN roster（167）
 
 | id | 全名 | 稱號 | role | 攻擊 | 開放 | 一句話說明 | 技能 id（天生 Q W E R EX） |
 |---|---|---|---|---|---|---|---|
+| `acquired-alice` | 愛麗絲·滋貝魯庫（Alice Zuberg） | — | tank | 近戰 | ✅ | 金木樨花瓣像罰單：先把人留下，再讓花瓣包圍；隊友的安全由騎士簽收。 | `acquired-alice.passive` `acquired-alice.q` `acquired-alice.w` `acquired-alice.e` `acquired-alice.r` `acquired-alice.ex` |
+| `acquired-astralym` | 枯星龍 | — | mage | 遠程 | ✅ | 以枯星與失重意象改編的中距離咒龍；先留下星蝕印，再用拘束收割。星辰會毀滅，排班表卻不會。 | `acquired-astralym.passive` `acquired-astralym.q` `acquired-astralym.w` `acquired-astralym.e` `acquired-astralym.r` `acquired-astralym.ex` |
+| `acquired-asuna` | 亞絲娜／結城明日奈 | — | fighter | 近戰 | ✅ | 閃光劍士趕著吃晚餐：加速靠近、細劍連刺，把黏人的敵人切成排隊狀態。 | `acquired-asuna.passive` `acquired-asuna.q` `acquired-asuna.w` `acquired-asuna.e` `acquired-asuna.r` `acquired-asuna.ex` |
+| `acquired-beatrice` | 碧翠絲 | — | mage | 遠程 | ✅ | 用書庫護盾存一頁術式，再以陰影砲兌現的法師；短距換位避開近戰。借書能延期，挨打不能。 | `acquired-beatrice.passive` `acquired-beatrice.q` `acquired-beatrice.w` `acquired-beatrice.e` `acquired-beatrice.r` `acquired-beatrice.ex` |
+| `acquired-cattiva` | 搗蛋貓 | — | fighter | 近戰 | ✅ | 先挑釁再溜走的近戰搗蛋手；挨打加速、短躍換位，再以連爪搶回節奏。行李不一定幫你背，罐頭一定… | `acquired-cattiva.passive` `acquired-cattiva.q` `acquired-cattiva.w` `acquired-cattiva.e` `acquired-cattiva.r` `acquired-cattiva.ex` |
+| `acquired-dio` | DIO | — | fighter | 近戰 | ✅ | 將『世界』的壓迫感改成短暫停格與近身連打；命中停格者可續戰。真正最長的時間，是他報招式名字… | `acquired-dio.passive` `acquired-dio.q` `acquired-dio.w` `acquired-dio.e` `acquired-dio.r` `acquired-dio.ex` |
+| `acquired-emilia` | 愛蜜莉雅 | — | mage | 遠程 | ✅ | 以冰術控制距離的法師；冰槍減速留霜，普攻碎霜爭取一次束縛。她認真解釋招式，敵人只想知道能不… | `acquired-emilia.passive` `acquired-emilia.q` `acquired-emilia.w` `acquired-emilia.e` `acquired-emilia.r` `acquired-emilia.ex` |
+| `acquired-inuyasha` | 犬夜叉 | — | fighter | 近戰 | ✅ | 鐵碎牙拆快遞，風之傷清走廊；被打痛就露出半妖的火氣。 | `acquired-inuyasha.passive` `acquired-inuyasha.q` `acquired-inuyasha.w` `acquired-inuyasha.e` `acquired-inuyasha.r` `acquired-inuyasha.ex` |
+| `acquired-jetragon` | 空渦龍 | — | marksman | 遠程 | ✅ | 把競技場當跑道的高速龍砲手；衝刺蓄能，再用定點連續轟擊逼敵人換位。笑點是起飛前還要排隊驗票。 | `acquired-jetragon.passive` `acquired-jetragon.q` `acquired-jetragon.w` `acquired-jetragon.e` `acquired-jetragon.r` `acquired-jetragon.ex` |
+| `acquired-kita-kita` | 吉他吉他老伯（阿德巴古·艾魯多魯） | — | fighter | 近戰 | ✅ | 舞蹈不是傷害，但敵人很想閉眼：舞台致盲保護隊友，連跳把觀眾困在舞步裡。 | `acquired-kita-kita.passive` `acquired-kita-kita.q` `acquired-kita-kita.w` `acquired-kita-kita.e` `acquired-kita-kita.r` `acquired-kita-kita.ex` |
+| `acquired-kuroyukihime` | 黑雪姬 | — | fighter | 近戰 | ✅ | 黑蓮把延遲當仇人：短移切進、斷線留人、低血收尾，但再快也有冷卻。 | `acquired-kuroyukihime.passive` `acquired-kuroyukihime.q` `acquired-kuroyukihime.w` `acquired-kuroyukihime.e` `acquired-kuroyukihime.r` `acquired-kuroyukihime.ex` |
+| `acquired-leafa` | 莉法 | — | fighter | 近戰 | ✅ | 風精靈的外送服務：回血送到人、護盾送到區域，把敵人吹離取餐區。 | `acquired-leafa.passive` `acquired-leafa.q` `acquired-leafa.w` `acquired-leafa.e` `acquired-leafa.r` `acquired-leafa.ex` |
+| `acquired-lord-nightmares` | 金色魔王／惡夢之王 | — | mage | 遠程 | ✅ | 宇宙級客服也得先集單：每次施法累積工單，三張一起結案。 | `acquired-lord-nightmares.passive` `acquired-lord-nightmares.q` `acquired-lord-nightmares.w` `acquired-lord-nightmares.e` `acquired-lord-nightmares.r` `acquired-lord-nightmares.ex` |
+| `acquired-mario` | Mario | — | fighter | 近戰 | ✅ | 以火球牽制、跳躍踩踏與披風推移作戰的管線專家；跳躍存硬幣，EX 換一份防護午餐。這次公主不… | `acquired-mario.passive` `acquired-mario.q` `acquired-mario.w` `acquired-mario.e` `acquired-mario.r` `acquired-mario.ex` |
+| `acquired-mewtwo` | Mewtwo | — | mage | 遠程 | ✅ | 以念力護盾蓄勢、暗影球遠攻與瞬移換位的法師。存在的意義還沒找到，排位配對先找到了。 | `acquired-mewtwo.passive` `acquired-mewtwo.q` `acquired-mewtwo.w` `acquired-mewtwo.e` `acquired-mewtwo.r` `acquired-mewtwo.ex` |
+| `acquired-minecraft` | Steve／Alex | — | fighter | 近戰 | ✅ | 普攻挖材料，再決定用於鎬擊、護甲還是 TNT 的資源鬥士。Steve 與 Alex 共用同… | `acquired-minecraft.passive` `acquired-minecraft.q` `acquired-minecraft.w` `acquired-minecraft.e` `acquired-minecraft.r` `acquired-minecraft.ex` |
+| `acquired-morgiana` | 摩尔迦娜 | — | fighter | 近戰 | ✅ | 以法納利斯腳力與鎖鏈意象構成的進身鬥士；短躍積勢，拉近敵人再踢開。她的掃地效率以地板是否還… | `acquired-morgiana.passive` `acquired-morgiana.q` `acquired-morgiana.w` `acquired-morgiana.e` `acquired-morgiana.r` `acquired-morgiana.ex` |
+| `acquired-naruto` | 漩渦鳴人 | — | fighter | 近戰 | ✅ | 分身負責排隊、本體負責插隊：先拉麵加速接近，再把螺旋丸送到面前。 | `acquired-naruto.passive` `acquired-naruto.q` `acquired-naruto.w` `acquired-naruto.e` `acquired-naruto.r` `acquired-naruto.ex` |
+| `acquired-pokemon-trainer` | Pokémon Trainer | — | mage | 遠程 | ✅ | 把水、草、火三種指令編成連動的戰術手；先施放三種小招，再把徽記換成 R 的不同追加效果。包… | `acquired-pokemon-trainer.passive` `acquired-pokemon-trainer.q` `acquired-pokemon-trainer.w` `acquired-pokemon-trainer.e` `acquired-pokemon-trainer.r` `acquired-pokemon-trainer.ex` |
+| `acquired-ram` | 拉姆 | — | mage | 遠程 | ✅ | 以風刃、挪位和拉扯維持輸出窗口的女僕；E 後接 Q 補一道風刃。掃除只做最低限度，嘲諷倒是… | `acquired-ram.passive` `acquired-ram.q` `acquired-ram.w` `acquired-ram.e` `acquired-ram.r` `acquired-ram.ex` |
+| `acquired-rim` | 莉姆（Rim；粉紅魔龍） | — | fighter | 近戰 | ✅ | 粉紅魔龍的加班便當：低血獵物比較香，撲上去吃完再吵著加薪。 | `acquired-rim.passive` `acquired-rim.q` `acquired-rim.w` `acquired-rim.e` `acquired-rim.r` `acquired-rim.ex` |
+| `acquired-ryu` | Ryu | — | fighter | 近戰 | ✅ | 以波動拳試探、升龍拳收招、旋風腿進場的格鬥家；Q 後短窗口強化 W。流浪修行的最大敵人，是… | `acquired-ryu.passive` `acquired-ryu.q` `acquired-ryu.w` `acquired-ryu.e` `acquired-ryu.r` `acquired-ryu.ex` |
+| `acquired-saya` | 沙耶 | — | mage | 遠程 | ✅ | 把戰場當廚房，菜色看起來不對勁；黏住客人、持續汲取，拒絕用餐的會嚇跑。 | `acquired-saya.passive` `acquired-saya.q` `acquired-saya.w` `acquired-saya.e` `acquired-saya.r` `acquired-saya.ex` |
+| `acquired-wargreymon` | 戰鬥暴龍獸 | — | fighter | 近戰 | ✅ | 背盾像鍋蓋、蓋亞能量像外送：先貼身拆包，再把火球送到收件地。 | `acquired-wargreymon.passive` `acquired-wargreymon.q` `acquired-wargreymon.w` `acquired-wargreymon.e` `acquired-wargreymon.r` `acquired-wargreymon.ex` |
+| `acquired-xiaodangjia` | 小當家 | — | fighter | 近戰 | ✅ | 料理會發光，對手真的看不到：上菜回血、鍋蓋護友，發光料理替隊伍爭取輸出時間。 | `acquired-xiaodangjia.passive` `acquired-xiaodangjia.q` `acquired-xiaodangjia.w` `acquired-xiaodangjia.e` `acquired-xiaodangjia.r` `acquired-xiaodangjia.ex` |
+| `acquired-zero` | Zero | — | fighter | 近戰 | ✅ | 用光劍近斬換來下一發蓄力砲，再靠短衝切換近遠距離。系統更新永遠挑他準備放大招時跳出。 | `acquired-zero.passive` `acquired-zero.q` `acquired-zero.w` `acquired-zero.e` `acquired-zero.r` `acquired-zero.ex` |
 | `b2-aladdin` | 阿拉丁 | — | mage | 遠程 | ✅ | 魔笛MAGI｜魔笛像大型吹風機，想幫忙卻把代理樂團叫來加班。GGD 惡搞改編，角色辨識元素… | `b2-aladdin.passive` `b2-aladdin.q` `b2-aladdin.w` `b2-aladdin.e` `b2-aladdin.r` `b2-aladdin.ex` |
 | `b2-albus` | 阿爾巴斯 | — | fighter | 近戰 | ✅ | 勇者再次啟程｜勇者速通，NPC台詞一律跳過。GGD 惡搞改編，角色辨識元素與招式創編分開。 | `b2-albus.passive` `b2-albus.q` `b2-albus.w` `b2-albus.e` `b2-albus.r` `b2-albus.ex` |
 | `b2-bojji` | 波吉 | — | fighter | 近戰 | ✅ | 國王排名｜你認真揮大刀，他認真幫你戳笑穴。GGD 惡搞改編，角色辨識元素與招式創編分開。 | `b2-bojji.passive` `b2-bojji.q` `b2-bojji.w` `b2-bojji.e` `b2-bojji.r` `b2-bojji.ex` |
@@ -144,46 +170,31 @@
 | `godie-umal` | 拳四郎 | 北斗神拳掌門人 | fighter | 近戰 | ✅ | 北斗神拳的唯一傳人，使用難以置信的秘穴(!?)拳法致敵人於死地。由於北斗星是不祥之星，與拳… | `godie-umal.passive` `godie-umal.q` `godie-umal.w` `godie-umal.e` `godie-umal.r` `godie-umal.ex` |
 | `godie-uvng` | 飛影 | 邪眼師 | fighter | 近戰 | ✅ | 在魔界中有名的盜賊妖怪，除了是一位邪王炎殺拳的高手之外，也是一位用劍的高手。為了尋找妹妹雪… | `godie-uvng.passive` `godie-uvng.q` `godie-uvng.w` `godie-uvng.e` `godie-uvng.r` `godie-uvng.ex` |
 | `godie-zombiex` | 喪標麥可 | 聖杯黑泥醬 | tank | 近戰 | ✅ | 黑化聖杯溢出的惡意黑泥受肉凝聚，本來在美國重生，但不小心被印度工程師當成咖喱帶回家鄉，成了… | `godie-zombiex.passive` `godie-zombiex.q` `godie-zombiex.w` `godie-zombiex.e` `godie-zombiex.r` `godie-zombiex.ex` |
+| `lol-ahri` | 阿璃 | — | mage | 遠程 | ✅ | 方向法球、魅惑接輸出與短衝換位 | `lol-ahri.passive` `lol-ahri.q` `lol-ahri.w` `lol-ahri.e` `lol-ahri.r` `lol-ahri.ex` |
+| `lol-ashe` | 艾希 | — | marksman | 遠程 | ✅ | 普攻黏人、四層專注與遠距先手 | `lol-ashe.passive` `lol-ashe.q` `lol-ashe.w` `lol-ashe.e` `lol-ashe.r` `lol-ashe.ex` |
+| `lol-blitzcrank` | 布里姿 | — | tank | 近戰 | ✅ | 拉人、過熱衝刺與打斷連招 | `lol-blitzcrank.passive` `lol-blitzcrank.q` `lol-blitzcrank.w` `lol-blitzcrank.e` `lol-blitzcrank.r` `lol-blitzcrank.ex` |
+| `lol-chogath` | 科加斯 | — | tank | 近戰 | ✅ | 擊殺補給、前排控制與低血吞噬 | `lol-chogath.passive` `lol-chogath.q` `lol-chogath.w` `lol-chogath.e` `lol-chogath.r` `lol-chogath.ex` |
+| `lol-fiddlesticks` | 稻草人 | — | mage | 近戰 | ✅ | 恐懼接近、近身汲取與進場風暴 | `lol-fiddlesticks.passive` `lol-fiddlesticks.q` `lol-fiddlesticks.w` `lol-fiddlesticks.e` `lol-fiddlesticks.r` `lol-fiddlesticks.ex` |
+| `lol-garen` | 蓋倫 | — | fighter | 近戰 | ✅ | 脫戰續航、沉默旋轉與低血收尾 | `lol-garen.passive` `lol-garen.q` `lol-garen.w` `lol-garen.e` `lol-garen.r` `lol-garen.ex` |
 | `lol-karthus` | 卡爾瑟斯 | — | mage | 遠程 | ✅ | 在陣地間敲響暮鐘，使用延遲爆破、持續領域與有預警的遠端轟擊。 | `lol-karthus.passive` `lol-karthus.q` `lol-karthus.w` `lol-karthus.e` `lol-karthus.r` `lol-karthus.ex` |
 | `lol-leesin` | 李星 | — | fighter | 近戰 | ✅ | 以聲波探擊、短程進身、護身與踢離敵人的連續節奏作戰。 | `lol-leesin.passive` `lol-leesin.q` `lol-leesin.w` `lol-leesin.e` `lol-leesin.r` `lol-leesin.ex` |
 | `lol-lux` | 拉克絲 | — | fighter | 遠程 | ✅ | 結合光束、短效束縛與護盾，以清楚的施法提示協助隊伍創造進攻空間。 | `lol-lux.passive` `lol-lux.q` `lol-lux.w` `lol-lux.e` `lol-lux.r` `lol-lux.ex` |
+| `lol-malphite` | 墨菲特 | — | tank | 近戰 | ✅ | 岩盾換血、減攻速與落點擊飛坦克 | `lol-malphite.passive` `lol-malphite.q` `lol-malphite.w` `lol-malphite.e` `lol-malphite.r` `lol-malphite.ex` |
 | `lol-missfortune` | 好運姐 | — | marksman | 遠程 | ✅ | 以雙重射擊、機動增益與持續彈雨控制交戰區域。 | `lol-missfortune.passive` `lol-missfortune.q` `lol-missfortune.w` `lol-missfortune.e` `lol-missfortune.r` `lol-missfortune.ex` |
+| `lol-ornn` | 鄂爾 | — | tank | 近戰 | ✅ | 焦化接重擊與直線開戰坦克 | `lol-ornn.passive` `lol-ornn.q` `lol-ornn.w` `lol-ornn.e` `lol-ornn.r` `lol-ornn.ex` |
+| `lol-sett` | 賽特 | — | fighter | 近戰 | ✅ | 受擊蓄勢、短手摔投鬥士 | `lol-sett.passive` `lol-sett.q` `lol-sett.w` `lol-sett.e` `lol-sett.r` `lol-sett.ex` |
+| `lol-thresh` | 瑟雷西 | — | fighter | 遠程 | ✅ | 鉤鎖控距、燈籠救援與區域封鎖 | `lol-thresh.passive` `lol-thresh.q` `lol-thresh.w` `lol-thresh.e` `lol-thresh.r` `lol-thresh.ex` |
+| `lol-velkoz` | 威寇茲 | — | mage | 遠程 | ✅ | 三次命中拆解與直線追打砲台 | `lol-velkoz.passive` `lol-velkoz.q` `lol-velkoz.w` `lol-velkoz.e` `lol-velkoz.r` `lol-velkoz.ex` |
 | `lol-warwick` | 沃維克 | — | fighter | 近戰 | ✅ | 循血追擊的近戰獵手，以短程撲擊、持續汲取與壓制連段作戰。 | `lol-warwick.passive` `lol-warwick.q` `lol-warwick.w` `lol-warwick.e` `lol-warwick.r` `lol-warwick.ex` |
 | `lol-xerath` | 齊勒斯 | — | mage | 遠程 | ✅ | 以蓄能光路、落點爆破與定身咒彈控制距離，施放有限次數的奧術轟擊。 | `lol-xerath.passive` `lol-xerath.q` `lol-xerath.w` `lol-xerath.e` `lol-xerath.r` `lol-xerath.ex` |
 | `lol-yasuo` | 犽宿 | — | fighter | 近戰 | ✅ | 以短程穿行與風刃連擊掌握距離，使用防護姿態承受反擊。 | `lol-yasuo.passive` `lol-yasuo.q` `lol-yasuo.w` `lol-yasuo.e` `lol-yasuo.r` `lol-yasuo.ex` |
 
-## 2. 未開放 not in the open roster（60）
+## 2. 未開放 not in the open roster（23）
 
 文件存在、資料完整，但白名單沒放行，所以選角畫面看不到、bot 也不會抽到。
 
 | id | 全名 | 稱號 | role | 攻擊 | 開放 | 一句話說明 | 技能 id（天生 Q W E R EX） |
 |---|---|---|---|---|---|---|---|
-| `acquired-alice` | 愛麗絲·滋貝魯庫（Alice Zuberg） | — | tank | 近戰 | — | 金木樨花瓣像罰單：先把人留下，再讓花瓣包圍；隊友的安全由騎士簽收。 | `acquired-alice.passive` `acquired-alice.q` `acquired-alice.w` `acquired-alice.e` `acquired-alice.r` `acquired-alice.ex` |
-| `acquired-astralym` | 枯星龍 | — | mage | 遠程 | — | 以枯星與失重意象改編的中距離咒龍；先留下星蝕印，再用拘束收割。星辰會毀滅，排班表卻不會。 | `acquired-astralym.passive` `acquired-astralym.q` `acquired-astralym.w` `acquired-astralym.e` `acquired-astralym.r` `acquired-astralym.ex` |
-| `acquired-asuna` | 亞絲娜／結城明日奈 | — | fighter | 近戰 | — | 閃光劍士趕著吃晚餐：加速靠近、細劍連刺，把黏人的敵人切成排隊狀態。 | `acquired-asuna.passive` `acquired-asuna.q` `acquired-asuna.w` `acquired-asuna.e` `acquired-asuna.r` `acquired-asuna.ex` |
-| `acquired-beatrice` | 碧翠絲 | — | mage | 遠程 | — | 用書庫護盾存一頁術式，再以陰影砲兌現的法師；短距換位避開近戰。借書能延期，挨打不能。 | `acquired-beatrice.passive` `acquired-beatrice.q` `acquired-beatrice.w` `acquired-beatrice.e` `acquired-beatrice.r` `acquired-beatrice.ex` |
-| `acquired-cattiva` | 搗蛋貓 | — | fighter | 近戰 | — | 先挑釁再溜走的近戰搗蛋手；挨打加速、短躍換位，再以連爪搶回節奏。行李不一定幫你背，罐頭一定… | `acquired-cattiva.passive` `acquired-cattiva.q` `acquired-cattiva.w` `acquired-cattiva.e` `acquired-cattiva.r` `acquired-cattiva.ex` |
-| `acquired-dio` | DIO | — | fighter | 近戰 | — | 將『世界』的壓迫感改成短暫停格與近身連打；命中停格者可續戰。真正最長的時間，是他報招式名字… | `acquired-dio.passive` `acquired-dio.q` `acquired-dio.w` `acquired-dio.e` `acquired-dio.r` `acquired-dio.ex` |
-| `acquired-emilia` | 愛蜜莉雅 | — | mage | 遠程 | — | 以冰術控制距離的法師；冰槍減速留霜，普攻碎霜爭取一次束縛。她認真解釋招式，敵人只想知道能不… | `acquired-emilia.passive` `acquired-emilia.q` `acquired-emilia.w` `acquired-emilia.e` `acquired-emilia.r` `acquired-emilia.ex` |
-| `acquired-inuyasha` | 犬夜叉 | — | fighter | 近戰 | — | 鐵碎牙拆快遞，風之傷清走廊；被打痛就露出半妖的火氣。 | `acquired-inuyasha.passive` `acquired-inuyasha.q` `acquired-inuyasha.w` `acquired-inuyasha.e` `acquired-inuyasha.r` `acquired-inuyasha.ex` |
-| `acquired-jetragon` | 空渦龍 | — | marksman | 遠程 | — | 把競技場當跑道的高速龍砲手；衝刺蓄能，再用定點連續轟擊逼敵人換位。笑點是起飛前還要排隊驗票。 | `acquired-jetragon.passive` `acquired-jetragon.q` `acquired-jetragon.w` `acquired-jetragon.e` `acquired-jetragon.r` `acquired-jetragon.ex` |
-| `acquired-kita-kita` | 吉他吉他老伯（阿德巴古·艾魯多魯） | — | fighter | 近戰 | — | 舞蹈不是傷害，但敵人很想閉眼：舞台致盲保護隊友，連跳把觀眾困在舞步裡。 | `acquired-kita-kita.passive` `acquired-kita-kita.q` `acquired-kita-kita.w` `acquired-kita-kita.e` `acquired-kita-kita.r` `acquired-kita-kita.ex` |
-| `acquired-kuroyukihime` | 黑雪姬 | — | fighter | 近戰 | — | 黑蓮把延遲當仇人：短移切進、斷線留人、低血收尾，但再快也有冷卻。 | `acquired-kuroyukihime.passive` `acquired-kuroyukihime.q` `acquired-kuroyukihime.w` `acquired-kuroyukihime.e` `acquired-kuroyukihime.r` `acquired-kuroyukihime.ex` |
-| `acquired-leafa` | 莉法 | — | fighter | 近戰 | — | 風精靈的外送服務：回血送到人、護盾送到區域，把敵人吹離取餐區。 | `acquired-leafa.passive` `acquired-leafa.q` `acquired-leafa.w` `acquired-leafa.e` `acquired-leafa.r` `acquired-leafa.ex` |
-| `acquired-lord-nightmares` | 金色魔王／惡夢之王 | — | mage | 遠程 | — | 宇宙級客服也得先集單：每次施法累積工單，三張一起結案。 | `acquired-lord-nightmares.passive` `acquired-lord-nightmares.q` `acquired-lord-nightmares.w` `acquired-lord-nightmares.e` `acquired-lord-nightmares.r` `acquired-lord-nightmares.ex` |
-| `acquired-mario` | Mario | — | fighter | 近戰 | — | 以火球牽制、跳躍踩踏與披風推移作戰的管線專家；跳躍存硬幣，EX 換一份防護午餐。這次公主不… | `acquired-mario.passive` `acquired-mario.q` `acquired-mario.w` `acquired-mario.e` `acquired-mario.r` `acquired-mario.ex` |
-| `acquired-mewtwo` | Mewtwo | — | mage | 遠程 | — | 以念力護盾蓄勢、暗影球遠攻與瞬移換位的法師。存在的意義還沒找到，排位配對先找到了。 | `acquired-mewtwo.passive` `acquired-mewtwo.q` `acquired-mewtwo.w` `acquired-mewtwo.e` `acquired-mewtwo.r` `acquired-mewtwo.ex` |
-| `acquired-minecraft` | Steve／Alex | — | fighter | 近戰 | — | 普攻挖材料，再決定用於鎬擊、護甲還是 TNT 的資源鬥士。Steve 與 Alex 共用同… | `acquired-minecraft.passive` `acquired-minecraft.q` `acquired-minecraft.w` `acquired-minecraft.e` `acquired-minecraft.r` `acquired-minecraft.ex` |
-| `acquired-morgiana` | 摩尔迦娜 | — | fighter | 近戰 | — | 以法納利斯腳力與鎖鏈意象構成的進身鬥士；短躍積勢，拉近敵人再踢開。她的掃地效率以地板是否還… | `acquired-morgiana.passive` `acquired-morgiana.q` `acquired-morgiana.w` `acquired-morgiana.e` `acquired-morgiana.r` `acquired-morgiana.ex` |
-| `acquired-naruto` | 漩渦鳴人 | — | fighter | 近戰 | — | 分身負責排隊、本體負責插隊：先拉麵加速接近，再把螺旋丸送到面前。 | `acquired-naruto.passive` `acquired-naruto.q` `acquired-naruto.w` `acquired-naruto.e` `acquired-naruto.r` `acquired-naruto.ex` |
-| `acquired-pokemon-trainer` | Pokémon Trainer | — | mage | 遠程 | — | 把水、草、火三種指令編成連動的戰術手；先施放三種小招，再把徽記換成 R 的不同追加效果。包… | `acquired-pokemon-trainer.passive` `acquired-pokemon-trainer.q` `acquired-pokemon-trainer.w` `acquired-pokemon-trainer.e` `acquired-pokemon-trainer.r` `acquired-pokemon-trainer.ex` |
-| `acquired-ram` | 拉姆 | — | mage | 遠程 | — | 以風刃、挪位和拉扯維持輸出窗口的女僕；E 後接 Q 補一道風刃。掃除只做最低限度，嘲諷倒是… | `acquired-ram.passive` `acquired-ram.q` `acquired-ram.w` `acquired-ram.e` `acquired-ram.r` `acquired-ram.ex` |
-| `acquired-rim` | 莉姆（Rim；粉紅魔龍） | — | fighter | 近戰 | — | 粉紅魔龍的加班便當：低血獵物比較香，撲上去吃完再吵著加薪。 | `acquired-rim.passive` `acquired-rim.q` `acquired-rim.w` `acquired-rim.e` `acquired-rim.r` `acquired-rim.ex` |
-| `acquired-ryu` | Ryu | — | fighter | 近戰 | — | 以波動拳試探、升龍拳收招、旋風腿進場的格鬥家；Q 後短窗口強化 W。流浪修行的最大敵人，是… | `acquired-ryu.passive` `acquired-ryu.q` `acquired-ryu.w` `acquired-ryu.e` `acquired-ryu.r` `acquired-ryu.ex` |
-| `acquired-saya` | 沙耶 | — | mage | 遠程 | — | 把戰場當廚房，菜色看起來不對勁；黏住客人、持續汲取，拒絕用餐的會嚇跑。 | `acquired-saya.passive` `acquired-saya.q` `acquired-saya.w` `acquired-saya.e` `acquired-saya.r` `acquired-saya.ex` |
-| `acquired-wargreymon` | 戰鬥暴龍獸 | — | fighter | 近戰 | — | 背盾像鍋蓋、蓋亞能量像外送：先貼身拆包，再把火球送到收件地。 | `acquired-wargreymon.passive` `acquired-wargreymon.q` `acquired-wargreymon.w` `acquired-wargreymon.e` `acquired-wargreymon.r` `acquired-wargreymon.ex` |
-| `acquired-xiaodangjia` | 小當家 | — | fighter | 近戰 | — | 料理會發光，對手真的看不到：上菜回血、鍋蓋護友，發光料理替隊伍爭取輸出時間。 | `acquired-xiaodangjia.passive` `acquired-xiaodangjia.q` `acquired-xiaodangjia.w` `acquired-xiaodangjia.e` `acquired-xiaodangjia.r` `acquired-xiaodangjia.ex` |
-| `acquired-zero` | Zero | — | fighter | 近戰 | — | 用光劍近斬換來下一發蓄力砲，再靠短衝切換近遠距離。系統更新永遠挑他準備放大招時跳出。 | `acquired-zero.passive` `acquired-zero.q` `acquired-zero.w` `acquired-zero.e` `acquired-zero.r` `acquired-zero.ex` |
 | `b2-maple-alt-9769eb88b85b` | 梅普露（變身） | — | tank | 近戰 | — | 怕痛的我把防禦力點滿｜不想被打，所以先把附近的人通通變奇怪。GGD 惡搞改編，角色辨識元素… | `b2-maple.passive` `b2-maple.q` `b2-maple.w` `b2-maple.e` `b2-maple.r` `b2-maple.ex` |
 | `godie-e007` | 天地志狼 | 龍之子 | marksman | 遠程 | — | 本是平凡的國中二年級學生，因為母親項鍊的神奇力量來到三國時代，而被當做龍之子，跟仙人學習仙… | `godie-e007.passive` `godie-e007.q` `godie-e007.w` `godie-e007.e` `godie-e007.r` `godie-e007.ex` |
 | `godie-e00l` | Saber | 亞瑟王 | fighter | 近戰 | — | — | `godie-e00l.passive` `godie-e00l.q` `godie-e00l.w` `godie-e00l.e` `godie-e00l.r` `godie-e00l.ex` |
@@ -205,17 +216,6 @@
 | `godie-u010` | 飛影 | 邪眼師 | fighter | 近戰 | — | 在魔界中有名的盜賊妖怪，除了是一位邪王炎殺拳的高手之外，也是一位用劍的高手。為了尋找妹妹雪… | `godie-u010.passive` `godie-u010.q` `godie-u010.w` `godie-u010.e` `godie-u010.r` `godie-u010.ex` |
 | `godie-u01u` | 索隆 | 三刀流劍士 | fighter | 近戰 | — | 夢想成為世界第一的大劍客，使用自創的三刀流劍術擊遍天下劍客。為了在戰鬥中追尋武藝的卓越加入… | `godie-u01u.passive` `godie-u01u.q` `godie-u01u.w` `godie-u01u.e` `godie-u01u.r` `godie-u01u.ex` |
 | `godie-u034` | 傑 富力士 | 職業獵人 | fighter | 近戰 | — | 出身於鯨魚島，從小就在大自然中成長，鍛鍊出他一身恐怖的能力。在尋找父親的旅程中，莫名其妙捲… | `godie-u034.passive` `godie-u034.q` `godie-u034.w` `godie-u034.e` `godie-u034.r` `godie-u034.ex` |
-| `lol-ahri` | 阿璃 | — | mage | 遠程 | — | 方向法球、魅惑接輸出與短衝換位 | `lol-ahri.passive` `lol-ahri.q` `lol-ahri.w` `lol-ahri.e` `lol-ahri.r` `lol-ahri.ex` |
-| `lol-ashe` | 艾希 | — | marksman | 遠程 | — | 普攻黏人、四層專注與遠距先手 | `lol-ashe.passive` `lol-ashe.q` `lol-ashe.w` `lol-ashe.e` `lol-ashe.r` `lol-ashe.ex` |
-| `lol-blitzcrank` | 布里姿 | — | tank | 近戰 | — | 拉人、過熱衝刺與打斷連招 | `lol-blitzcrank.passive` `lol-blitzcrank.q` `lol-blitzcrank.w` `lol-blitzcrank.e` `lol-blitzcrank.r` `lol-blitzcrank.ex` |
-| `lol-chogath` | 科加斯 | — | tank | 近戰 | — | 擊殺補給、前排控制與低血吞噬 | `lol-chogath.passive` `lol-chogath.q` `lol-chogath.w` `lol-chogath.e` `lol-chogath.r` `lol-chogath.ex` |
-| `lol-fiddlesticks` | 稻草人 | — | mage | 近戰 | — | 恐懼接近、近身汲取與進場風暴 | `lol-fiddlesticks.passive` `lol-fiddlesticks.q` `lol-fiddlesticks.w` `lol-fiddlesticks.e` `lol-fiddlesticks.r` `lol-fiddlesticks.ex` |
-| `lol-garen` | 蓋倫 | — | fighter | 近戰 | — | 脫戰續航、沉默旋轉與低血收尾 | `lol-garen.passive` `lol-garen.q` `lol-garen.w` `lol-garen.e` `lol-garen.r` `lol-garen.ex` |
-| `lol-malphite` | 墨菲特 | — | tank | 近戰 | — | 岩盾換血、減攻速與落點擊飛坦克 | `lol-malphite.passive` `lol-malphite.q` `lol-malphite.w` `lol-malphite.e` `lol-malphite.r` `lol-malphite.ex` |
-| `lol-ornn` | 鄂爾 | — | tank | 近戰 | — | 焦化接重擊與直線開戰坦克 | `lol-ornn.passive` `lol-ornn.q` `lol-ornn.w` `lol-ornn.e` `lol-ornn.r` `lol-ornn.ex` |
-| `lol-sett` | 賽特 | — | fighter | 近戰 | — | 受擊蓄勢、短手摔投鬥士 | `lol-sett.passive` `lol-sett.q` `lol-sett.w` `lol-sett.e` `lol-sett.r` `lol-sett.ex` |
-| `lol-thresh` | 瑟雷西 | — | fighter | 遠程 | — | 鉤鎖控距、燈籠救援與區域封鎖 | `lol-thresh.passive` `lol-thresh.q` `lol-thresh.w` `lol-thresh.e` `lol-thresh.r` `lol-thresh.ex` |
-| `lol-velkoz` | 威寇茲 | — | mage | 遠程 | — | 三次命中拆解與直線追打砲台 | `lol-velkoz.passive` `lol-velkoz.q` `lol-velkoz.w` `lol-velkoz.e` `lol-velkoz.r` `lol-velkoz.ex` |
 | `sela` | Sela, the Ember Sage | — | mage | 遠程 | — | — | `sela.q` `sela.w` `sela.e` `sela.r` |
 | `thorne` | Thorne, the Bramble Knight | — | bruiser | 近戰 | — | — | `thorne.q` `thorne.w` `thorne.e` `thorne.r` |
 

@@ -316,19 +316,34 @@ ALL_HEROES_DOC = "docs/全英雄列表.md"
 PENDING_JSON = "docs/_data/pending-heroes.json"
 
 
-def pending_heroes():
-    """⭐ 還沒進 `content/champions/` 的那些（待上架）—— 讀**進版控的快照**。
+def pending_heroes(ctx):
+    """⭐ 還沒進 `content/champions/` 的那些（待上架）—— 讀**進版控的快照**，再扣掉**已經進來的**。
 
     ⛔ 不直接讀來源 repo：它不保證在這台機器上（CLAUDE.md「換機時：有文件不等於有素材」），
     而這份文件必須在每一台機器上算出同樣的位元組。
     唯一的寫入端是 `tools/reference/sync_pending_heroes.py`。
     ⚠️ 快照不在 ⇒ 回 `None`，⭐ 而下面會**印一行說它不在**（⛔ 不是安靜地少印 45 名）。
+
+    ⭐⭐ 算繪當下扣掉「卡已經在 `content/champions/`」的列（2026-09-17）。
+    ⛔ 在此之前這裡原樣印快照 ⇒ 快照日之後才上架的英雄**同時**出現在全英雄列表與「還沒進」表：
+      量到快照 45 名裡 37 名的卡早就進來了，而標題仍寫「⛔ 還沒進 `content/champions/`」。
+    ⭐ 快照本身不動（它是來源 repo 狀態頁的原樣副本）；「進來了沒」只問這個 repo 自己的
+      `content/`，⛔ 不問來源 repo —— 兩邊的快照日不同，答得準的只有這棵樹。
     """
     path = os.path.join(G.REPO, PENDING_JSON)
     if not os.path.exists(path):
         return None
     with open(path, encoding="utf-8") as f:
-        return json.load(f)
+        doc = json.load(f)
+    have = {c["id"] for c in ctx["champions"]}
+    groups, landed = [], []
+    for g in doc["groups"]:
+        landed += [r["id"] for r in g["rows"] if r["id"] in have]
+        groups.append({**g, "listed": len(g["rows"]),
+                       "rows": [r for r in g["rows"] if r["id"] not in have]})
+    return {**doc, "groups": groups, "landed": landed,
+            "counts": {**doc["counts"], "listed": sum(g["listed"] for g in groups),
+                       "pending": sum(len(g["rows"]) for g in groups)}}
 
 
 def _pending_block(doc, heading_level):
@@ -342,6 +357,9 @@ def _pending_block(doc, heading_level):
         f"狀態的權威來源是 `{doc['source']['repo']}` 的 `{doc['source']['path']}`"
         f"（快照日 {doc['source']['snapshotDate']}）。",
         "",
+        *([f"⭐ 快照列了 {doc['counts']['listed']} 名，其中 **{len(doc['landed'])} 名的卡已經進 "
+           "`content/champions/`**（上面的全英雄列表印得到它們）⇒ 這裡不再重印。"
+           "扣除是產生器算繪當下做的，⛔ 快照本身沒改。", ""] if doc["landed"] else []),
         f"⭐ 那份文件的狀態定義逐字：**{doc['statusDefinition']}**",
         "",
         "`追蹤鍵` 原樣保存來源快照的值；英雄卡尚未進 `content/champions/` 時，"
@@ -350,7 +368,12 @@ def _pending_block(doc, heading_level):
         "⚠️ ⛔ 技能名稱這裡印不出來 —— 技能文件與英雄卡一起還沒進來。",
     ])
     for g in doc["groups"]:
-        out += [f"**{g['batch']}**（{len(g['rows'])} 名 · {g['ticket']}）", "",
+        if not g["rows"]:
+            out += [f"**{g['batch']}**（快照 {g['listed']} 名 · {g['ticket']}）—— ✅ 全部已進 `content/champions/`", ""]
+            continue
+        size = (f"{len(g['rows'])} 名" if len(g["rows"]) == g["listed"]
+                else f"尚未進來 {len(g['rows'])} 名／快照 {g['listed']} 名")
+        out += [f"**{g['batch']}**（{size} · {g['ticket']}）", "",
                 "| # | 追蹤鍵 | 角色 | 狀態 |", "| ---: | --- | --- | --- |"]
         for i, r in enumerate(g["rows"], 1):
             out.append(f"| {i} | `{r['id']}` | {G.cell(r['name'])} | {G.cell(r['status'])} |")
@@ -364,6 +387,8 @@ HERO_GROUPS = (
     ("b2-", "第二批社群英雄"),
     ("community-review", "第一批社群英雄"),
     ("lol-", "英雄聯盟"),
+    # ⭐ 2026-09-17：GH#1205 那 26 名在此之前落進「其他」，與骨架替身 sela／thorne 擠在同一組。
+    ("acquired-", "已取得模型英雄"),
 )
 
 
@@ -511,7 +536,7 @@ def gen_all_heroes(ctx):
     ])
     out += _all_heroes_table(rows, flags)
     out += [""]
-    pend = pending_heroes()
+    pend = pending_heroes(ctx)
     out += _pending_block(pend, "#####")
     extra = f"全量 {len(rows)} 名，其中開放 {opened} 名。"
     if pend:
@@ -556,7 +581,7 @@ def gen_all_heroes_doc(ctx):
     rest = [r for r in rows if r["group"] == "其他"]
     if rest:
         out += [f"## 其他（{len(rest)} 名）", ""] + _all_heroes_table(rest, flags) + [""]
-    out += _pending_block(pending_heroes(), "##")
+    out += _pending_block(pending_heroes(ctx), "##")
     return "\n".join(out) + "\n"
 
 def gen_abilities(ctx):
