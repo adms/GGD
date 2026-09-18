@@ -1,4 +1,4 @@
-<title>GGD 戰情版 · 2026-09-17 19:21 (GMT+8)</title>
+<title>GGD 戰情版 · 2026-09-18 12:49 (GMT+8)</title>
 <style>:root{--ground:#f6f5f2;--panel:#fffefb;--rule:#ddd9d0;--rule-soft:#eae6dd;
 --ink:#1b1917;--ink-2:#565049;--ink-3:#8a827a;--accent:#c2521c;--accent-soft:#f6e6dc;
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -37,7 +37,7 @@ b{color:var(--ink)}
 blockquote{margin:9px 0;padding:9px 0 9px 15px;border-left:3px solid var(--accent);color:var(--ink);font-size:14.5px}
 footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
 </style>
-<div class="wrap"><header><p class="eyebrow">線上 v0.46.1 · 資料截至 2026-09-17 19:21 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-17 19:21 (GMT+8)</h1><div class="meta"><span>帳本 <b>30</b> 份</span><span>點名票號 <b>494</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
+<div class="wrap"><header><p class="eyebrow">線上 v0.46.1 · 資料截至 2026-09-18 12:49 (GMT+8)</p><h1>GGD 戰情版 · 2026-09-18 12:49 (GMT+8)</h1><div class="meta"><span>帳本 <b>31</b> 份</span><span>點名票號 <b>494</b> 張</span><span>區塊 <b>7</b> 節</span></div></header>
 <section><p class="eyebrow">這一版在做什麼</p><h2>這一版在做什麼</h2><blockquote><b>把「技能是資料」這件事從口號變成可驗證的東西</b>，</blockquote>
 <blockquote>並且把三筆已經量到、但玩家還拿不到的債還掉。</blockquote>
 <p>三筆債各自的形狀不同，這是為什麼這一版看起來很雜：</p>
@@ -1885,6 +1885,29 @@ footer{border-top:1px solid var(--rule);padding-top:14px;font-size:12px;color:va
 <tr><td>19:18</td><td>所以你這次會合併完所有分支 或是至少標注怎麼完成? 或是驗收關閉?</td><td>— 提問（這一版合併範圍與收尾方式），⛔ 不是需求</td></tr>
 <tr><td>19:20</td><td>你先照開票守則開票</td><td>#1287</td></tr>
 <tr><td>19:21</td><td>好 照這樣做 部署完接著收尾</td><td>— 維運裁決（部署完接著收尾分支），⛔ 不開票</td></tr>
+<tr><td>23:42</td><td>我們先討論一個基本的事情，變身是否真的必要佔一個角色，還是只是一個技能狀態/標籤 就足夠，因為連模型不一樣、縮放、變色 這些其實都不需要獨立一個角色</td><td>#1286 #1287</td></tr>
+<tr><td>23:52</td><td>已合併了，檢查一下主線的 README</td><td>#1232</td></tr>
+<tr><td>23:56</td><td>好 改掉戳記 推到分支給我一鍵複製</td><td>#1232</td></tr>
+<tr><td>23:57</td><td>沒關係 算了停下來吧</td><td>— 流程指示（叫 README 那條 session 停下），不是需求</td></tr>
+<tr><td>23:58</td><td>收尾停下來吧 讓主線合併</td><td>#1232</td></tr>
+<tr><td>23:58</td><td>readme 那條支線怎麼還沒合併掉? 【給主線】README PR #1232 收尾，請主線合併：https://github.com/adms/GGD/pull/1232 head 3aae77f98（= 遠端分支），包含： - 90f7ecdcf：併入 PR #1284 到 bdd19be75（README 產生器衝突已解，兩個呼叫都留） - 3aae77f98：README §7 新增「已取得素材庫」一節（804 個來源身分，跟 #1284 產物逐項對過） 先前 881e1d35c 以前的內容已由 1f7c1243d2 併進 main。 合併注意： 1. 建議先合 #1284，再合 #…</td><td>#1232 #1284</td></tr>
+</table></div>
+<p># 2026-09-18</p>
+<blockquote>⭐ 這張表由 <code>scripts/message-ledger.sh</code> 從 session transcript <b>逐則</b>撈出來對帳，</blockquote>
+<blockquote><code>scripts/ruling.sh</code> 收到裁決時也寫進同一張表。</blockquote>
+<blockquote>表格那一格是<b>截斷</b>過的；⛔ 全文沒有被壓縮取代，它在 <code>ledger-source_temp_*.md</code>。</blockquote>
+<blockquote>票號那一格 ⛔ 不可以留空：對不到票就寫 <code>⏸ 未對票</code>，<code>--check</code> 會紅。</blockquote>
+<div class="scroll"><table><tr><th>時間</th><th>owner 說了什麼（逐字）</th><th>票</th></tr>
+<tr><td>00:05</td><td>那我們討論真的必要的</td><td>⏸ 未對票</td></tr>
+<tr><td>00:09</td><td>我說的是乾淨完整退場，不再被任何地方計算、參考、引用，僅存在備份 legacy 區域 寫成變身退場計畫{timestamp}.md給我</td><td>⏸ 未對票</td></tr>
+<tr><td>00:35</td><td>你根本還沒做什麼事情又要跑一大包 BMPNDD ?</td><td>⏸ 未對票</td></tr>
+<tr><td>00:35</td><td>我等下就要出門關機 沒空讓你跑那麼一大包</td><td>⏸ 未對票</td></tr>
+<tr><td>00:35</td><td>你合併 readme 就好了</td><td>⏸ 未對票</td></tr>
+<tr><td>00:38</td><td>我只剩3分鐘了</td><td>⏸ 未對票</td></tr>
+<tr><td>00:43</td><td>你也太多次 BMPNDD 了吧</td><td>⏸ 未對票</td></tr>
+<tr><td>00:49</td><td>please 準備 hard stop</td><td>⏸ 未對票</td></tr>
+<tr><td>00:51</td><td>hard stop</td><td>⏸ 未對票</td></tr>
+<tr><td>12:49</td><td>back</td><td>⏸ 未對票</td></tr>
 </table></div></section>
 <section><p class="eyebrow">三個轉折</p><h2>⚠️ 三個轉折</h2><p class="li">1. <b>#444 錨點作廢</b> —— 五級距原本靠「決鬥區半徑 24」這把尺推導，</p>
 <p>而場地已經擴充到 <b>24–42（1.75×）</b>。⇒ 三張範圍表的絕對值全部要重推。</p>

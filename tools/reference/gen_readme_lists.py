@@ -314,6 +314,7 @@ def gen_roster(ctx):
 
 ALL_HEROES_DOC = "docs/全英雄列表.md"
 PENDING_JSON = "docs/_data/pending-heroes.json"
+ACQUIRED_MODEL_BACKLOG_JSON = "materials/hero-model-library/已取得模型待設計英雄.json"
 
 
 def pending_heroes(ctx):
@@ -378,6 +379,83 @@ def _pending_block(doc, heading_level):
         for i, r in enumerate(g["rows"], 1):
             out.append(f"| {i} | `{r['id']}` | {G.cell(r['name'])} | {G.cell(r['status'])} |")
         out.append("")
+    return out
+
+
+def acquired_model_candidates():
+    """已取得實檔、但仍待英雄設計或轉換的候選。
+
+    這裡直接讀素材庫的固定 JSON 入口；Markdown 與這份英雄清單都是產物，
+    因此不再手寫第二份角色清單。只列身份已確認的角色來源；身份待核、
+    道具與配件仍保留在素材庫索引，不冒稱為候選英雄。
+    """
+    path = os.path.join(G.REPO, ACQUIRED_MODEL_BACKLOG_JSON)
+    if not os.path.exists(path):
+        return None
+    with open(path, encoding="utf-8") as f:
+        doc = json.load(f)
+    rows = []
+    for row in doc.get("characters", []):
+        if row.get("designStatus") not in {"not-defined", "definitions-incomplete"}:
+            continue
+        candidates = [
+            c for c in row.get("modelCandidates", [])
+            if c.get("existsLocal") is True and c.get("localSizeMatches", True) is True
+        ]
+        if not candidates:
+            continue
+        rows.append({**row, "localCandidates": candidates})
+    return {"source": doc, "rows": rows}
+
+
+def _candidate_conversion_stage(candidates):
+    states = {str(c.get("readiness", "unknown")) for c in candidates}
+    if any("backend-standardized-option" in state for state in states):
+        return "已標準化為後台候選"
+    if any(
+        token in state
+        for state in states
+        for token in ("accepted", "validated", "glb", "shared-upload-and-runtime-motion")
+    ):
+        return "已有轉換／驗收候選，待英雄綁定"
+    if any("parsed" in state for state in states):
+        return "已解析，待標準化轉換"
+    return "原始素材已取得，待轉換"
+
+
+def _acquired_candidate_block(doc, heading_level):
+    if doc is None:
+        return [f"{heading_level} 已取得素材候選（索引不在）", "",
+                f"> ⚠️ 找不到 `{ACQUIRED_MODEL_BACKLOG_JSON}`，本次無法產生候選英雄表。", ""]
+    rows = doc["rows"]
+    source = doc["source"]
+    out = [f"{heading_level} 已取得素材／待轉換候選（{len(rows)} 筆來源身份）", ""]
+    out += note([
+        "這些記錄已有本機實檔，但不等於已建立新英雄、可在後台切換或已部署。",
+        "",
+        f"權威來源是 `{ACQUIRED_MODEL_BACKLOG_JSON}`；完整模型、動作、特效、音訊、路徑與 SHA 請查同名 JSON 及 `materials/hero-model-library/已取得模型待設計英雄.md`。",
+        "",
+        f"本表只列 `not-defined` 與 `definitions-incomplete`；另有 {source.get('counts', {}).get('identity-review', 0)} 筆身份待核來源仍在中央索引，不先猜成英雄。",
+    ])
+    out += ["| 來源 ID | 角色 | 作品 | 本機候選 | 目前階段 | 英雄設計 |",
+            "| --- | --- | --- | ---: | --- | --- |"]
+    for row in sorted(rows, key=lambda r: (
+        str(r.get("displayWork") or r.get("work") or ""),
+        str(r.get("displayName") or r.get("name") or ""),
+        str(r.get("id") or ""),
+    )):
+        design = ("已有定義，待補查／實作"
+                  if row.get("designStatus") == "definitions-incomplete"
+                  else "尚未建立對應英雄")
+        out.append("| " + " | ".join([
+            f"`{G.cell(row.get('id', ''))}`",
+            G.cell(row.get("displayName") or row.get("name") or "待確認"),
+            G.cell(row.get("displayWork") or row.get("work") or "待確認"),
+            str(len(row["localCandidates"])),
+            _candidate_conversion_stage(row["localCandidates"]),
+            design,
+        ]) + " |")
+    out.append("")
     return out
 
 
@@ -538,6 +616,12 @@ def gen_all_heroes(ctx):
     out += [""]
     pend = pending_heroes(ctx)
     out += _pending_block(pend, "#####")
+    candidates = acquired_model_candidates()
+    if candidates is not None:
+        out += note([
+            f"另有 **{len(candidates['rows'])} 筆已取得素材／待轉換的已確認來源身份**，"
+            f"完整候選表見 `{ALL_HEROES_DOC}`。"
+        ])
     extra = f"全量 {len(rows)} 名，其中開放 {opened} 名。"
     if pend:
         extra += f"另有 {pend['counts']['pending']} 名待上架（卡還沒進 repo）。"
@@ -582,6 +666,7 @@ def gen_all_heroes_doc(ctx):
     if rest:
         out += [f"## 其他（{len(rest)} 名）", ""] + _all_heroes_table(rest, flags) + [""]
     out += _pending_block(pending_heroes(ctx), "##")
+    out += _acquired_candidate_block(acquired_model_candidates(), "##")
     return "\n".join(out) + "\n"
 
 def gen_abilities(ctx):

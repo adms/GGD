@@ -1,0 +1,37 @@
+{
+  "schema": "ggd.jump-force-gon-runtime-candidate-registration@1",
+  "heroId": "godie-ucrl",
+  "nativeCharacterId": "chr0300",
+  "sourceGame": "JUMP FORCE",
+  "candidateManifest": {
+    "gitPath": "materials/hero-model-library/priority-evidence/jump-force-gon-audio-v1/files.jsonl.gz",
+    "sha256": "4fea7a44bfd634359eea594094213d1374cfbcd30a851f31e6eac39b8003b4ba"
+  },
+  "candidateGroups": [
+    {
+      "groupId": "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+      "sourceClass": "ActVoice",
+      "candidateClass": "character-action-voice-unclassified",
+      "files": 225,
+      "ownerGroupDecision": "approve",
+      "runtimeBindingState": "blocked-pending-per-clip-event-review"
+    },
+    {
+      "groupId": "steam-jump-force-streaming-audio-816020-build-8523149:chr0300",
+      "sourceClass": "EvnVoice",
+      "candidateClass": "character-event-voice-unclassified",
+      "files": 25,
+      "ownerGroupDecision": "approve",
+      "runtimeBindingState": "blocked-pending-per-clip-event-review"
+    }
+  ],
+  "activeBindings": [],
+  "runtimeBindingAuthorized": false,
+  "runtimeSelectable": false,
+  "productionDeployed": false,
+  "blockers": [
+    "owner approval covers group classification only",
+    "per-clip speaker and language are not reviewed",
+    "no clip has an approved GGD event or skill target"
+  ]
+}

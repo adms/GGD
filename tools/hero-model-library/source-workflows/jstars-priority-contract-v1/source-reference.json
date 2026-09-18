@@ -1,0 +1,63 @@
+{
+  "schema": "ggd.jstars-priority-contract-source@1",
+  "sourceId": "owner-jstars-victory-vs-plus-20260917",
+  "sourceGame": "J-Stars Victory VS+",
+  "platform": "PlayStation 3",
+  "archiveFileName": "J-Stars Victory Vs+.7z",
+  "characters": [
+    {
+      "priority": 1,
+      "slug": "gintoki",
+      "nameZhTW": "坂田銀時",
+      "nameEnglish": "Gintoki Sakata",
+      "workZhTW": "銀魂",
+      "heroIds": ["community-review-23-20260907"]
+    },
+    {
+      "priority": 2,
+      "slug": "nube",
+      "nameZhTW": "鵺野鳴介／神眉",
+      "nameEnglish": "Meisuke Nueno",
+      "workZhTW": "靈異教師神眉",
+      "heroIds": ["b2-nube"]
+    },
+    {
+      "priority": 3,
+      "slug": "gon",
+      "nameZhTW": "小傑·富力士",
+      "nameEnglish": "Gon Freecss",
+      "workZhTW": "HUNTER×HUNTER",
+      "heroIds": ["godie-ucrl"]
+    },
+    {
+      "priority": 4,
+      "slug": "killua",
+      "nameZhTW": "奇犽·揍敵客",
+      "nameEnglish": "Killua Zoldyck",
+      "workZhTW": "HUNTER×HUNTER",
+      "heroIds": ["community-review-24-20260907"]
+    },
+    {
+      "priority": 5,
+      "slug": "luckyman",
+      "nameZhTW": "幸運超人",
+      "nameEnglish": "Luckyman",
+      "workZhTW": "幸運超人",
+      "heroIds": ["b2-luckyman"]
+    },
+    {
+      "priority": 6,
+      "slug": "hiei",
+      "nameZhTW": "飛影",
+      "nameEnglish": "Hiei",
+      "workZhTW": "幽遊白書",
+      "heroIds": ["godie-u010", "godie-uvng"]
+    }
+  ],
+  "authoritativeInputs": {
+    "ownerPlan": "materials/hero-model-library/source-inventories/jstars-owner-archive-v1/plan.json",
+    "ownerArchiveReceipt": "materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+    "publicSampleAnalysis": "materials/hero-model-library/source-inventories/jstars-stpk-research-v1/analysis.json",
+    "adoptionPolicy": "packages/shared/src/content/modelUpload/adoptionPolicy.json"
+  }
+}

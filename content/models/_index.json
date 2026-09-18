@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "5ab0a3342afb",
+  "hash": "49be2a6c8b2a",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -361,6 +361,12 @@
       "path": "models/community.body.46bbbdc1e995f678c7fceabcb6732470c89a64dd2a05d567.json",
       "hash": "fb6203960445",
       "size": 423
+    },
+    {
+      "id": "community.body.46cab3416f3f164ca9fa27dbb1ad88e9f2c1b2ce5163e23c",
+      "path": "models/community.body.46cab3416f3f164ca9fa27dbb1ad88e9f2c1b2ce5163e23c.json",
+      "hash": "d52c2afb0f50",
+      "size": 439
     },
     {
       "id": "community.body.47698b71404dc0b8c0b72ac6b084d916e1861f6340c9ce02",
@@ -823,6 +829,12 @@
       "path": "models/community.body.b603c017d0f77565784aeb490fd0525ecac875ac62ab2ed9.json",
       "hash": "88dc90fc5871",
       "size": 487
+    },
+    {
+      "id": "community.body.ba1abbbdb25444e61533ab7354ebd85125ffa860763b86ee",
+      "path": "models/community.body.ba1abbbdb25444e61533ab7354ebd85125ffa860763b86ee.json",
+      "hash": "3373a9ce34e2",
+      "size": 455
     },
     {
       "id": "community.body.ba5a88c157203ca6d4a5ae6aa5419cc2fef3ca8d8072c569",
@@ -3441,6 +3453,12 @@
       "size": 520
     },
     {
+      "id": "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439",
+      "path": "models/version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439.json",
+      "hash": "69c3464435c2",
+      "size": 605
+    },
+    {
       "id": "version.body.2cd8263fe794211d10db3b4f1074534395a911318ba1a17d",
       "path": "models/version.body.2cd8263fe794211d10db3b4f1074534395a911318ba1a17d.json",
       "hash": "f19d94be786f",
@@ -5353,6 +5371,12 @@
       "path": "models/version.body.b69a76d67bde479201fb1082753b71c102634a883af5cbb2.json",
       "hash": "412adbf8cc73",
       "size": 579
+    },
+    {
+      "id": "version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673",
+      "path": "models/version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673.json",
+      "hash": "47dbd7c6c8b1",
+      "size": 589
     },
     {
       "id": "version.body.b7be82ea1fd14a9f5916b8b76515e1e428124a6dbbf664f3",

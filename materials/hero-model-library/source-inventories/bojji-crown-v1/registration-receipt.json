@@ -1,0 +1,98 @@
+{
+  "schema": "ggd.bojji-crown-registration-receipt@1",
+  "heroId": "b2-bojji",
+  "ownerDecision": "add a small gold crown and use the completed candidate as the current automatic Bojji model",
+  "input": {
+    "candidate": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bojji-crown-v1/candidate.glb",
+      "bytes": 832496,
+      "sha256": "16ffc917be1fc86a9710c1e35bd181659292f17d7c54f3285026e204cd7f0e28"
+    },
+    "validation": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bojji-crown-v1/validation.json",
+      "bytes": 2589,
+      "sha256": "7b40982ca0e392e08eb23fff24f11f2a7c668b40cacb43e16f8f88cc99abb74f"
+    },
+    "buildReceipt": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bojji-crown-v1/build-receipt.json",
+      "bytes": 1257,
+      "sha256": "ba3e481c98c70d03fd9375adf351957472c5a55964baf03ca2e140dcb949a6b3"
+    },
+    "visualEvidence": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/bojji-crown-v1/visual-evidence.json",
+      "bytes": 4580,
+      "sha256": "993eb36bb5d182832f0a35d0ef9b76ecdd8834a30dfae5124b769673b739bd0b"
+    }
+  },
+  "sourceModel": {
+    "modelKey": "community.body.46cab3416f3f164ca9fa27dbb1ad88e9f2c1b2ce5163e23c",
+    "modelDocument": {
+      "gitPath": "content/models/community.body.46cab3416f3f164ca9fa27dbb1ad88e9f2c1b2ce5163e23c.json",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/models/community.body.46cab3416f3f164ca9fa27dbb1ad88e9f2c1b2ce5163e23c.json",
+      "bytes": 439,
+      "sha256": "24b0d0a89bfcb52966af5ccefbb5fb6978432780df34ab29d4b9eec953922626"
+    },
+    "glb": {
+      "gitPath": "content/assets/models/community/16ffc917be1fc86a9710c1e35bd181659292f17d7c54f3285026e204cd7f0e28.glb",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/models/community/16ffc917be1fc86a9710c1e35bd181659292f17d7c54f3285026e204cd7f0e28.glb",
+      "bytes": 832496,
+      "sha256": "16ffc917be1fc86a9710c1e35bd181659292f17d7c54f3285026e204cd7f0e28"
+    }
+  },
+  "registeredVersion": {
+    "modelKey": "version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673",
+    "sourceModelKey": "community.body.46cab3416f3f164ca9fa27dbb1ad88e9f2c1b2ce5163e23c",
+    "label": "波吉（王冠版／獨立完整副本）",
+    "automaticEligible": true,
+    "registeredAt": "2026-09-17T09:57:29.170Z",
+    "source": {
+      "kind": "style-proxy",
+      "character": "波吉（王冠版／獨立完整副本）",
+      "work": "國王排名；來源替身為 300英雄小桐人寵物",
+      "library": "300heroes",
+      "reference": "derivative:bojji-crown-v1",
+      "tier": "300heroes",
+      "selectionClass": "manual",
+      "sourceGame": "300英雄",
+      "sourcePlatform": "Windows"
+    },
+    "modelDocument": {
+      "gitPath": "content/models/version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673.json",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/models/version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673.json",
+      "bytes": 589,
+      "sha256": "7dcc54290881b16efea502068216d239b91383f94d5cd6f1536a331c0e879f7c"
+    }
+  },
+  "preservation": {
+    "previousDefaultModelKey": "version.body.b642b184775bed085cd81e19b4617e4e56d1355f2411010a",
+    "previousDefaultRetained": true,
+    "allPriorVersionModelKeysRetained": true,
+    "registeredReferenceCount": 1,
+    "versionCountAfter": 6
+  },
+  "selection": {
+    "mode": "automatic",
+    "activeModelKey": "version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673",
+    "crownCandidateSelected": true,
+    "runtimeSelectable": true
+  },
+  "validation": {
+    "triangles": 7229,
+    "ownerMaximumTriangles": 8000,
+    "drawPrimitives": 3,
+    "maxTextureEdge": 256,
+    "maxChannelsPerClip": 66,
+    "khronosErrors": 0,
+    "khronosWarnings": 0,
+    "ggdBudgetErrors": [],
+    "allCrownVerticesWeightOneToHead": true
+  },
+  "status": {
+    "promotedToGit": true,
+    "registered": true,
+    "runtimeSelectable": true,
+    "automaticEligible": true,
+    "currentAutomaticSelected": true,
+    "productionDeployed": false
+  }
+}

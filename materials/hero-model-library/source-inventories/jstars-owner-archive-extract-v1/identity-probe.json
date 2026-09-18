@@ -1,0 +1,2659 @@
+{
+  "method": {
+    "commandTemplate": [
+      "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/QuickBMS-complete-mirror/prebuilt-macos-0.12.0/quickbms",
+      "-Y",
+      "-o",
+      "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-009-20260911-v1/reference-tools/cmp_scz.bms",
+      "<character_model_ID_m.pak>",
+      "<temporary-output>"
+    ],
+    "completeNativeDecodeClaimed": false,
+    "description": "QuickBMS cmp_scz.bms partial STPK index only; identities come from internal <id>_<name> member strings",
+    "quickBms": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/QuickBMS-complete-mirror/prebuilt-macos-0.12.0/quickbms",
+      "sha256": "b0de6d55029bd00cd7cbb7ef1ad2509352c5bcd5c2ffa65d7dafbe9666997694"
+    },
+    "script": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-009-20260911-v1/reference-tools/cmp_scz.bms",
+      "sha256": "587f8af589765fb1823a700a6c248a72256171556d66fa30ea853bd13841ea23"
+    }
+  },
+  "priorityCharacters": [
+    {
+      "expectedInternalAlias": "gintoki",
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "matchingNativeTokens": [
+        "028"
+      ],
+      "nativeId": "028",
+      "slug": "gintoki"
+    },
+    {
+      "expectedInternalAlias": "nueno",
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "matchingNativeTokens": [
+        "041"
+      ],
+      "nativeId": "041",
+      "slug": "nube"
+    },
+    {
+      "expectedInternalAlias": "gon",
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "matchingNativeTokens": [
+        "017"
+      ],
+      "nativeId": "017",
+      "slug": "gon"
+    },
+    {
+      "expectedInternalAlias": "killua",
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "matchingNativeTokens": [
+        "018"
+      ],
+      "nativeId": "018",
+      "slug": "killua"
+    },
+    {
+      "expectedInternalAlias": "luckyman",
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "matchingNativeTokens": [
+        "037"
+      ],
+      "nativeId": "037",
+      "slug": "luckyman"
+    },
+    {
+      "expectedInternalAlias": "hiei",
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "matchingNativeTokens": [
+        "012"
+      ],
+      "nativeId": "012",
+      "slug": "hiei"
+    }
+  ],
+  "rows": [
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 528448,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "luffy"
+      ],
+      "internalMemberNameSamples": [
+        "000_luffy_new_01p_PS3.srd",
+        "000_luffy_new_01p_PS3_ability.sr",
+        "000_luffy_new_01p_PS3_facial_eye",
+        "000_luffy_new_01p_PS3_facial_mou",
+        "000_luffy_new_01p_PS3_shader.srd",
+        "000_luffy_new_01p_PS3_texture.sr",
+        "000_luffy_new_01p_ps3.srd",
+        "000_luffy_new_01p_ps3_shader.srd",
+        "000_luffy_new_1_01p_PS3.srd",
+        "000_luffy_new_1_01p_PS3_facial_e",
+        "000_luffy_new_1_01p_PS3_facial_m",
+        "000_luffy_new_1_01p_PS3_shader.s",
+        "000_luffy_new_2_01p_PS3.srd",
+        "000_luffy_new_2_01p_PS3_facial_e",
+        "000_luffy_new_2_01p_PS3_facial_m",
+        "000_luffy_new_2_01p_PS3_shader.s",
+        "000_luffy_new_3_01p_PS3.srd",
+        "000_luffy_new_3_01p_PS3_facial_e",
+        "000_luffy_new_3_01p_PS3_facial_m",
+        "000_luffy_new_3_01p_PS3_shader.s"
+      ],
+      "nativeToken": "000",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/000/character_model_000_m.stp",
+          "bytes": 335861,
+          "fileName": "character_model_000_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "4c70c5481368b87fd23d2d2e1e28d88b7e10cf1cb605483ef435279010f93a5f"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/000/partition_op_character_ps3.cpk/character/model/character_model_000_m.pak",
+        "bytes": 213616,
+        "sha256": "8801c47001e0c30c9fdfdf2ad7e48e4f562255195a69f5bacc5baa84f5ba0992"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 458816,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "ace"
+      ],
+      "internalMemberNameSamples": [
+        "001_ace_01p_PS3.srd",
+        "001_ace_01p_PS3_ability.srd",
+        "001_ace_01p_PS3_facial_eye.san",
+        "001_ace_01p_PS3_facial_mouth.san",
+        "001_ace_01p_PS3_shader.srd",
+        "001_ace_01p_PS3_texture.srd",
+        "001_ace_1_01p_PS3.srd",
+        "001_ace_1_01p_PS3_facial_eye.san",
+        "001_ace_1_01p_PS3_facial_mouth.s",
+        "001_ace_1_01p_PS3_shader.srd",
+        "001_ace_2_01p_PS3.srd",
+        "001_ace_2_01p_PS3_facial_eye.san",
+        "001_ace_2_01p_PS3_facial_mouth.s",
+        "001_ace_2_01p_PS3_shader.srd",
+        "001_ace_3_01p_PS3.srd",
+        "001_ace_3_01p_PS3_facial_eye.san",
+        "001_ace_3_01p_PS3_facial_mouth.s",
+        "001_ace_3_01p_PS3_shader.srd",
+        "001_ace_stream_00_jp_lps_ps3.pakSTPK",
+        "001_ace_stream_jp_lps_PS3.pak"
+      ],
+      "nativeToken": "001",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/001/character_model_001_m.stp",
+          "bytes": 285238,
+          "fileName": "character_model_001_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "75da0dab3e54d5ea6d8e32605a9164825659ab21f5596b19909fde05a0360ee4"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/001/partition_op_character_ps3.cpk/character/model/character_model_001_m.pak",
+        "bytes": 194304,
+        "sha256": "17ff221fe94b6bdd3cf3d0fe1209c063ed950d257358844585a1affc950cd020"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 548928,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "hancock"
+      ],
+      "internalMemberNameSamples": [
+        "002_hancock_01p_PS3.srd",
+        "002_hancock_01p_PS3_ability.srd",
+        "002_hancock_01p_PS3_facial_eye.s",
+        "002_hancock_01p_PS3_facial_mouth",
+        "002_hancock_01p_PS3_shader.srd",
+        "002_hancock_01p_PS3_texture.srd",
+        "002_hancock_1_01p_PS3.srd",
+        "002_hancock_1_01p_PS3_facial_eye",
+        "002_hancock_1_01p_PS3_facial_mou",
+        "002_hancock_1_01p_PS3_shader.srd",
+        "002_hancock_2_01p_PS3.srd",
+        "002_hancock_2_01p_PS3_facial_eye",
+        "002_hancock_2_01p_PS3_facial_mou",
+        "002_hancock_2_01p_PS3_shader.srd",
+        "002_hancock_3_01p_PS3.srd",
+        "002_hancock_3_01p_PS3_facial_eye",
+        "002_hancock_3_01p_PS3_facial_mou",
+        "002_hancock_3_01p_PS3_shader.srd",
+        "002_hancock_stream_00_jp_lps_ps3STPK",
+        "002_hancock_stream_jp_lps_PS3.pa"
+      ],
+      "nativeToken": "002",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/002/character_model_002_m.stp",
+          "bytes": 339621,
+          "fileName": "character_model_002_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "070a0bfb57f38ac366c6c4da8e3c31c29c2a8929f878f63752feb7ed3cbf665d"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/002/partition_op_character_ps3.cpk/character/model/character_model_002_m.pak",
+        "bytes": 233184,
+        "sha256": "0d38f55a767149afb3e88cf78b89636a1f20096066ea63acfdb47b530a352353"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 497728,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "akainu"
+      ],
+      "internalMemberNameSamples": [
+        "003_akainu_01p_PS3.srd",
+        "003_akainu_01p_PS3_ability.srd",
+        "003_akainu_01p_PS3_facial_eye.sa",
+        "003_akainu_01p_PS3_facial_mouth.",
+        "003_akainu_01p_PS3_shader.srd",
+        "003_akainu_01p_PS3_texture.srd",
+        "003_akainu_01p_ps3.srd",
+        "003_akainu_1_01p_PS3.srd",
+        "003_akainu_1_01p_PS3_facial_eye.",
+        "003_akainu_1_01p_PS3_facial_mout",
+        "003_akainu_1_01p_PS3_shader.srd",
+        "003_akainu_2_01p_PS3.srd",
+        "003_akainu_2_01p_PS3_facial_eye.",
+        "003_akainu_2_01p_PS3_facial_mout",
+        "003_akainu_2_01p_PS3_shader.srd",
+        "003_akainu_3_01p_PS3.srd",
+        "003_akainu_3_01p_PS3_facial_eye.",
+        "003_akainu_3_01p_PS3_facial_mout",
+        "003_akainu_3_01p_PS3_shader.srd",
+        "003_akainu_stream_00_jp_lps_ps3.STPK"
+      ],
+      "nativeToken": "003",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/003/character_model_003_m.stp",
+          "bytes": 313872,
+          "fileName": "character_model_003_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "261f0d6a7da62ebe03b596f7e2124d5b26e4bcdd219e94208b92559a2f5684ac"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/003/partition_op_character_ps3.cpk/character/model/character_model_003_m.pak",
+        "bytes": 205264,
+        "sha256": "0aa47ca9ca877b5c571e4b32b4d35b73dae66cb7bf092d7abc544e4fbe906bfa"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 907328,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "naruto"
+      ],
+      "internalMemberNameSamples": [
+        "004_naruto_01p_PS3.srd",
+        "004_naruto_01p_PS3_ability.srd",
+        "004_naruto_01p_PS3_facial_eye.sa",
+        "004_naruto_01p_PS3_facial_mouth.",
+        "004_naruto_01p_PS3_shader.srd",
+        "004_naruto_01p_PS3_texture.srd",
+        "004_naruto_01p_ps3.srd",
+        "004_naruto_01p_ps3_texture.srd",
+        "004_naruto_1_01p_PS3.srd",
+        "004_naruto_1_01p_PS3_facial_eye.",
+        "004_naruto_1_01p_PS3_facial_mout",
+        "004_naruto_1_01p_PS3_shader.srd",
+        "004_naruto_1_01p_ps3.srd",
+        "004_naruto_2_01p_PS3.srd",
+        "004_naruto_2_01p_PS3_facial_eye.",
+        "004_naruto_2_01p_PS3_facial_mout",
+        "004_naruto_2_01p_PS3_shader.srd",
+        "004_naruto_3_01p_PS3.srd",
+        "004_naruto_3_01p_PS3_facial_eye.",
+        "004_naruto_3_01p_PS3_facial_mout"
+      ],
+      "nativeToken": "004",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/004/character_model_004_m.stp",
+          "bytes": 532126,
+          "fileName": "character_model_004_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "b785dc2aea81b74b3420626c81c4df9f28a196d9ae01b5883078b1b89f8f9427"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/004/partition_op_character_ps3.cpk/character/model/character_model_004_m.pak",
+        "bytes": 380048,
+        "sha256": "df266844ec5ace241692bf8947a7097f7b01bdcdad83516c552a3ea3683d6b9e"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 538688,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "sasuke"
+      ],
+      "internalMemberNameSamples": [
+        "005_sasuke_01p_PS3.srd",
+        "005_sasuke_01p_PS3_ability.srd",
+        "005_sasuke_01p_PS3_facial_eye.sa",
+        "005_sasuke_01p_PS3_facial_mouth.",
+        "005_sasuke_01p_PS3_shader.srd",
+        "005_sasuke_01p_PS3_texture.srd",
+        "005_sasuke_1_01p_PS3.srd",
+        "005_sasuke_1_01p_PS3_facial_eye.",
+        "005_sasuke_1_01p_PS3_facial_mout",
+        "005_sasuke_1_01p_PS3_shader.srd",
+        "005_sasuke_2_01p_PS3.srd",
+        "005_sasuke_2_01p_PS3_facial_eye.",
+        "005_sasuke_2_01p_PS3_facial_mout",
+        "005_sasuke_2_01p_PS3_shader.srd",
+        "005_sasuke_3_01p_PS3.srd",
+        "005_sasuke_3_01p_PS3_facial_eye.",
+        "005_sasuke_3_01p_PS3_facial_mout",
+        "005_sasuke_3_01p_PS3_shader.srd",
+        "005_sasuke_arm_c.tga",
+        "005_sasuke_arm_n.tga"
+      ],
+      "nativeToken": "005",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/005/character_model_005_m.stp",
+          "bytes": 334883,
+          "fileName": "character_model_005_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "b353ba280f8a6244ad0db5af0c9e3d7c2246252a6a849e9324ac7f3099d0c57e"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/005/partition_op_character_ps3.cpk/character/model/character_model_005_m.pak",
+        "bytes": 224496,
+        "sha256": "a32085fe96aeb880ae58d93e24d06010b295dc5f12f34bb464eb1e396b6b3631"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 624704,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "madara"
+      ],
+      "internalMemberNameSamples": [
+        "006_madara_01p_PS3.srd",
+        "006_madara_01p_PS3_ability.srd",
+        "006_madara_01p_PS3_facial_eye.sa",
+        "006_madara_01p_PS3_facial_mouth.",
+        "006_madara_01p_PS3_shader.srd",
+        "006_madara_01p_PS3_texture.srd",
+        "006_madara_01p_ps3.srd",
+        "006_madara_01p_ps3_shader.srd",
+        "006_madara_1_01p_PS3.srd",
+        "006_madara_1_01p_PS3_facial_eye.",
+        "006_madara_1_01p_PS3_facial_mout",
+        "006_madara_1_01p_PS3_shader.srd",
+        "006_madara_1_01p_ps3.srd",
+        "006_madara_2_01p_PS3.srd",
+        "006_madara_2_01p_PS3_facial_eye.",
+        "006_madara_2_01p_PS3_facial_mout",
+        "006_madara_2_01p_PS3_shader.srd",
+        "006_madara_3_01p_PS3.srd",
+        "006_madara_3_01p_PS3_facial_eye.",
+        "006_madara_3_01p_PS3_facial_mout"
+      ],
+      "nativeToken": "006",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/006/character_model_006_m.stp",
+          "bytes": 387058,
+          "fileName": "character_model_006_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "0fc24b0be3cd76211dffe855f429793362797c1951654b6906505fbe1cd1444e"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/006/partition_op_character_ps3.cpk/character/model/character_model_006_m.pak",
+        "bytes": 266512,
+        "sha256": "df9d3bec1ce0b0aaf1780aa1247126ca510d906654afecdc8ca912aaf6adcd60"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 936000,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "goku"
+      ],
+      "internalMemberNameSamples": [
+        "007_goku_01p_PS3.srd",
+        "007_goku_01p_PS3_ability.srd",
+        "007_goku_01p_PS3_facial_eye.san",
+        "007_goku_01p_PS3_facial_mouth.sa",
+        "007_goku_01p_PS3_shader.srd",
+        "007_goku_01p_PS3_texture.srd",
+        "007_goku_01p_ps3.srd",
+        "007_goku_01p_ps3_texture.srd",
+        "007_goku_1_01p_PS3.srd",
+        "007_goku_1_01p_PS3_facial_eye.sa",
+        "007_goku_1_01p_PS3_facial_mouth.",
+        "007_goku_1_01p_PS3_shader.srd",
+        "007_goku_1_01p_ps3.srd",
+        "007_goku_2_01p_PS3.srd",
+        "007_goku_2_01p_PS3_facial_eye.sa",
+        "007_goku_2_01p_PS3_facial_mouth.",
+        "007_goku_2_01p_PS3_shader.srd",
+        "007_goku_3_01p_PS3.srd",
+        "007_goku_3_01p_PS3_facial_eye.sa",
+        "007_goku_3_01p_PS3_facial_mouth."
+      ],
+      "nativeToken": "007",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/007/character_model_007_m.stp",
+          "bytes": 541605,
+          "fileName": "character_model_007_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "847722d1d1f2e9da39802a3c90f7b97478040e8fdad5ca9a74a9ea6349b07eed"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/007/partition_op_character_ps3.cpk/character/model/character_model_007_m.pak",
+        "bytes": 397504,
+        "sha256": "d2d22507235a3ad1a46bb79c57696b41a569e8a8f813fd4389db829f79f597f2"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 413760,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "frieza"
+      ],
+      "internalMemberNameSamples": [
+        "008_frieza_01p_PS3.srd",
+        "008_frieza_01p_PS3_ability.srd",
+        "008_frieza_01p_PS3_facial_eye.sa",
+        "008_frieza_01p_PS3_facial_mouth.",
+        "008_frieza_01p_PS3_shader.srd",
+        "008_frieza_01p_PS3_texture.srd",
+        "008_frieza_01p_ps3.srd",
+        "008_frieza_01p_ps3_shader.srd",
+        "008_frieza_1_01p_PS3.srd",
+        "008_frieza_1_01p_PS3_facial_eye.",
+        "008_frieza_1_01p_PS3_facial_mout",
+        "008_frieza_1_01p_PS3_shader.srd",
+        "008_frieza_2_01p_PS3.srd",
+        "008_frieza_2_01p_PS3_facial_eye.",
+        "008_frieza_2_01p_PS3_facial_mout",
+        "008_frieza_2_01p_PS3_shader.srd",
+        "008_frieza_3_01p_PS3.srd",
+        "008_frieza_3_01p_PS3_facial_eye.",
+        "008_frieza_3_01p_PS3_facial_mout",
+        "008_frieza_3_01p_PS3_shader.srd"
+      ],
+      "nativeToken": "008",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/008/character_model_008_m.stp",
+          "bytes": 269046,
+          "fileName": "character_model_008_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "26ee9f75c6236b5a3988a08432d472860967d1dbd0fb900af407bdd9b12add9e"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/008/partition_op_character_ps3.cpk/character/model/character_model_008_m.pak",
+        "bytes": 167600,
+        "sha256": "c7f016840116be357912cf5c65aee8b02c579296c7f5a4def831700354f77c77"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 671808,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "vegeta"
+      ],
+      "internalMemberNameSamples": [
+        "009_vegeta_01p_PS3.srd",
+        "009_vegeta_01p_PS3_ability.srd",
+        "009_vegeta_01p_PS3_facial_eye.sa",
+        "009_vegeta_01p_PS3_facial_mouth.",
+        "009_vegeta_01p_PS3_shader.srd",
+        "009_vegeta_01p_PS3_texture.srd",
+        "009_vegeta_1_01p_PS3.srd",
+        "009_vegeta_1_01p_PS3_facial_eye.",
+        "009_vegeta_1_01p_PS3_facial_mout",
+        "009_vegeta_1_01p_PS3_shader.srd",
+        "009_vegeta_2_01p_PS3.srd",
+        "009_vegeta_2_01p_PS3_facial_eye.",
+        "009_vegeta_2_01p_PS3_facial_mout",
+        "009_vegeta_2_01p_PS3_shader.srd",
+        "009_vegeta_3_01p_PS3.srd",
+        "009_vegeta_3_01p_PS3_facial_eye.",
+        "009_vegeta_3_01p_PS3_facial_mout",
+        "009_vegeta_3_01p_PS3_shader.srd",
+        "009_vegeta_stream_00_jp_lps_ps3.STPK",
+        "009_vegeta_stream_jp_lps_PS3.pak"
+      ],
+      "nativeToken": "009",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/009/character_model_009_m.stp",
+          "bytes": 405220,
+          "fileName": "character_model_009_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "ead6bf6714e770e0f07fc1e5be80ad63cb820f8620ba041d412cdba47017a6de"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/009/partition_op_character_ps3.cpk/character/model/character_model_009_m.pak",
+        "bytes": 287408,
+        "sha256": "804288516207ee498fed227ddfa0ce1f6ad86754588730b562642760a39f3b43"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 452672,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "yusuke"
+      ],
+      "internalMemberNameSamples": [
+        "010_yusuke_01p_PS3.srd",
+        "010_yusuke_01p_PS3_ability.srd",
+        "010_yusuke_01p_PS3_facial_eye.sa",
+        "010_yusuke_01p_PS3_facial_mouth.",
+        "010_yusuke_01p_PS3_shader.srd",
+        "010_yusuke_01p_PS3_texture.srd",
+        "010_yusuke_1_01p_PS3.srd",
+        "010_yusuke_1_01p_PS3_facial_eye.",
+        "010_yusuke_1_01p_PS3_facial_mout",
+        "010_yusuke_1_01p_PS3_shader.srd",
+        "010_yusuke_2_01p_PS3.srd",
+        "010_yusuke_2_01p_PS3_facial_eye.",
+        "010_yusuke_2_01p_PS3_facial_mout",
+        "010_yusuke_2_01p_PS3_shader.srd",
+        "010_yusuke_3_01p_PS3.srd",
+        "010_yusuke_3_01p_PS3_facial_eye.",
+        "010_yusuke_3_01p_PS3_facial_mout",
+        "010_yusuke_3_01p_PS3_shader.srd",
+        "010_yusuke_body_c.tga",
+        "010_yusuke_body_n.tga"
+      ],
+      "nativeToken": "010",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/010/character_model_010_m.stp",
+          "bytes": 274734,
+          "fileName": "character_model_010_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "56cbc7893658d27f600442f90c99c78ec08691de92dfad45472b751966d17b2d"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/010/partition_op_character_ps3.cpk/character/model/character_model_010_m.pak",
+        "bytes": 184400,
+        "sha256": "96d4b7ce3574b4f7295ca1a59ed0686b50abd132e7ef26f8d4e738488eeac795"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 927808,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "toguro"
+      ],
+      "internalMemberNameSamples": [
+        "011_toguro_01p_PS3.srd",
+        "011_toguro_01p_PS3_ability.srd",
+        "011_toguro_01p_PS3_facial_eye.sa",
+        "011_toguro_01p_PS3_facial_mouth.",
+        "011_toguro_01p_PS3_shader.srd",
+        "011_toguro_01p_PS3_texture.srd",
+        "011_toguro_01p_ps3.srd",
+        "011_toguro_1_01p_PS3.srd",
+        "011_toguro_1_01p_PS3_facial_eye.",
+        "011_toguro_1_01p_PS3_facial_mout",
+        "011_toguro_1_01p_PS3_shader.srd",
+        "011_toguro_1_01p_ps3.srd",
+        "011_toguro_1_body_c.tga",
+        "011_toguro_1_body_n.tga",
+        "011_toguro_1_skin_c.tga",
+        "011_toguro_1_skin_n.tga",
+        "011_toguro_1_skin_s.tga",
+        "011_toguro_2_01p_PS3.srd",
+        "011_toguro_2_01p_PS3_facial_eye.",
+        "011_toguro_2_01p_PS3_facial_mout"
+      ],
+      "nativeToken": "011",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/011/character_model_011_m.stp",
+          "bytes": 560324,
+          "fileName": "character_model_011_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "40c1e5e750ae49cbf31e54b3ec465876c40857b475f249f26827110207e478a0"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/011/partition_op_character_ps3.cpk/character/model/character_model_011_m.pak",
+        "bytes": 398912,
+        "sha256": "14acf84eea523fe6500083e1e862c047629d98059ca5c501d6c85c7f98a619ca"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 749632,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "hiei"
+      ],
+      "internalMemberNameSamples": [
+        "012_hiei_01p_PS3.srd",
+        "012_hiei_01p_PS3_ability.srd",
+        "012_hiei_01p_PS3_facial_eye.san",
+        "012_hiei_01p_PS3_facial_mouth.sa",
+        "012_hiei_01p_PS3_shader.srd",
+        "012_hiei_01p_PS3_texture.srd",
+        "012_hiei_1_01p_PS3.srd",
+        "012_hiei_1_01p_PS3_facial_eye.sa",
+        "012_hiei_1_01p_PS3_facial_mouth.",
+        "012_hiei_1_01p_PS3_shader.srd",
+        "012_hiei_2_01p_PS3.srd",
+        "012_hiei_2_01p_PS3_facial_eye.sa",
+        "012_hiei_2_01p_PS3_facial_mouth.",
+        "012_hiei_2_01p_PS3_shader.srd",
+        "012_hiei_3_01p_PS3.srd",
+        "012_hiei_3_01p_PS3_facial_eye.sa",
+        "012_hiei_3_01p_PS3_facial_mouth.",
+        "012_hiei_3_01p_PS3_shader.srd",
+        "012_hiei_acc_c.tga",
+        "012_hiei_acc_n.tga"
+      ],
+      "nativeToken": "012",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/012/character_model_012_m.stp",
+          "bytes": 450121,
+          "fileName": "character_model_012_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "0515f1ef9850dc0ca21433b719ac624b740f9669de24d216f1790f7b158b4e62"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/012/partition_op_character_ps3.cpk/character/model/character_model_012_m.pak",
+        "bytes": 320720,
+        "sha256": "4b28c6418940b05f77044fb700c37a5f6925637d0ab99eabf5ad08c2a8476fa0"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 737344,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "toriko"
+      ],
+      "internalMemberNameSamples": [
+        "013_toriko_01p_PS3.srd",
+        "013_toriko_01p_PS3_ability.srd",
+        "013_toriko_01p_PS3_facial_eye.sa",
+        "013_toriko_01p_PS3_facial_mouth.",
+        "013_toriko_01p_PS3_shader.srd",
+        "013_toriko_01p_PS3_texture.srd",
+        "013_toriko_01p_ps3.srd",
+        "013_toriko_1_01p_PS3.srd",
+        "013_toriko_1_01p_PS3_facial_eye.",
+        "013_toriko_1_01p_PS3_facial_mout",
+        "013_toriko_1_01p_PS3_shader.srd",
+        "013_toriko_2_01p_PS3.srd",
+        "013_toriko_2_01p_PS3_facial_eye.",
+        "013_toriko_2_01p_PS3_facial_mout",
+        "013_toriko_2_01p_PS3_shader.srd",
+        "013_toriko_3_01p_PS3.srd",
+        "013_toriko_3_01p_PS3_facial_eye.",
+        "013_toriko_3_01p_PS3_facial_mout",
+        "013_toriko_3_01p_PS3_shader.srd",
+        "013_toriko_stream_jp_lps_PS3.pak"
+      ],
+      "nativeToken": "013",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/013/character_model_013_m.stp",
+          "bytes": 430118,
+          "fileName": "character_model_013_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "86093175164ef01fd16d1e077fbf5a1a03fef83d1401786b83942744129dfb72"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/013/partition_op_character_ps3.cpk/character/model/character_model_013_m.pak",
+        "bytes": 318224,
+        "sha256": "81fb906fdfbd4228841944cd340bafae7893771dc622aab60bc3ef4aa4cc4042"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 501824,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "zebra",
+        "zebura"
+      ],
+      "internalMemberNameSamples": [
+        "014_zebra_01p_PS3.srd",
+        "014_zebra_01p_PS3_ability.srd",
+        "014_zebra_01p_PS3_facial_eye.san",
+        "014_zebra_01p_PS3_facial_mouth.s",
+        "014_zebra_01p_PS3_shader.srd",
+        "014_zebra_01p_PS3_texture.srd",
+        "014_zebra_01p_ps3.srd",
+        "014_zebra_1_01p_PS3.srd",
+        "014_zebra_1_01p_PS3_facial_eye.s",
+        "014_zebra_1_01p_PS3_facial_mouth",
+        "014_zebra_1_01p_PS3_shader.srd",
+        "014_zebra_2_01p_PS3.srd",
+        "014_zebra_2_01p_PS3_facial_eye.s",
+        "014_zebra_2_01p_PS3_facial_mouth",
+        "014_zebra_2_01p_PS3_shader.srd",
+        "014_zebra_3_01p_PS3.srd",
+        "014_zebra_3_01p_PS3_facial_eye.s",
+        "014_zebra_3_01p_PS3_facial_mouth",
+        "014_zebra_3_01p_PS3_shader.srd",
+        "014_zebra_eye_a.tga"
+      ],
+      "nativeToken": "014",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/014/character_model_014_m.stp",
+          "bytes": 303219,
+          "fileName": "character_model_014_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "2e322c0965915ef7c8f5a871fdea7239020995204c393f66bc64c0ca67b7f871"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/014/partition_op_character_ps3.cpk/character/model/character_model_014_m.pak",
+        "bytes": 209216,
+        "sha256": "d6244c918232ac1f9b50e733c42d8044290196076b428f2189ea0e8131f83847"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 567360,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "ichigo"
+      ],
+      "internalMemberNameSamples": [
+        "015_ichigo_01p_PS3.srd",
+        "015_ichigo_01p_PS3_ability.srd",
+        "015_ichigo_01p_PS3_facial_eye.sa",
+        "015_ichigo_01p_PS3_facial_mouth.",
+        "015_ichigo_01p_PS3_shader.srd",
+        "015_ichigo_01p_PS3_texture.srd",
+        "015_ichigo_1_01p_PS3.srd",
+        "015_ichigo_1_01p_PS3_facial_eye.",
+        "015_ichigo_1_01p_PS3_facial_mout",
+        "015_ichigo_1_01p_PS3_shader.srd",
+        "015_ichigo_2_01p_PS3.srd",
+        "015_ichigo_2_01p_PS3_facial_eye.",
+        "015_ichigo_2_01p_PS3_facial_mout",
+        "015_ichigo_2_01p_PS3_shader.srd",
+        "015_ichigo_3_01p_PS3.srd",
+        "015_ichigo_3_01p_PS3_facial_eye.",
+        "015_ichigo_3_01p_PS3_facial_mout",
+        "015_ichigo_3_01p_PS3_shader.srd",
+        "015_ichigo_bodya_c.tga",
+        "015_ichigo_bodya_n.tga"
+      ],
+      "nativeToken": "015",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/015/character_model_015_m.stp",
+          "bytes": 326711,
+          "fileName": "character_model_015_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "440e8b284173916ad5757640887038bab9785cba43d3db33db38e470e025cbe7"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/015/partition_op_character_ps3.cpk/character/model/character_model_015_m.pak",
+        "bytes": 225504,
+        "sha256": "cdeb9784d7a58895b15d76cd04f93216840f3e92a61abae58fd0ba238fa33a24"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 473152,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "aizen"
+      ],
+      "internalMemberNameSamples": [
+        "016_aizen_01p_PS3.srd",
+        "016_aizen_01p_PS3_ability.srd",
+        "016_aizen_01p_PS3_facial_eye.san",
+        "016_aizen_01p_PS3_facial_mouth.s",
+        "016_aizen_01p_PS3_shader.srd",
+        "016_aizen_01p_PS3_texture.srd",
+        "016_aizen_01p_ps3.srd",
+        "016_aizen_1_01p_PS3.srd",
+        "016_aizen_1_01p_PS3_facial_eye.s",
+        "016_aizen_1_01p_PS3_facial_mouth",
+        "016_aizen_1_01p_PS3_shader.srd",
+        "016_aizen_2_01p_PS3.srd",
+        "016_aizen_2_01p_PS3_facial_eye.s",
+        "016_aizen_2_01p_PS3_facial_mouth",
+        "016_aizen_2_01p_PS3_shader.srd",
+        "016_aizen_3_01p_PS3.srd",
+        "016_aizen_3_01p_PS3_facial_eye.s",
+        "016_aizen_3_01p_PS3_facial_mouth",
+        "016_aizen_3_01p_PS3_shader.srd",
+        "016_aizen_body1_c.tga"
+      ],
+      "nativeToken": "016",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/016/character_model_016_m.stp",
+          "bytes": 298060,
+          "fileName": "character_model_016_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "fe5ee2b5c42a957b6b8d986be979d9aa489205ba1bf832972836f94c91635c56"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/016/partition_op_character_ps3.cpk/character/model/character_model_016_m.pak",
+        "bytes": 195344,
+        "sha256": "f9032ec48a72881afe5e7ae34b8da0267f13b8ecf22743587a6a43bf6488d116"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 723008,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "gon"
+      ],
+      "internalMemberNameSamples": [
+        "017_gon_01p_PS3.srd",
+        "017_gon_01p_PS3_ability.srd",
+        "017_gon_01p_PS3_facial_eye.san",
+        "017_gon_01p_PS3_facial_mouth.san",
+        "017_gon_01p_PS3_shader.srd",
+        "017_gon_01p_PS3_texture.srd",
+        "017_gon_01p_ps3.srd",
+        "017_gon_01p_ps3_shader.srd",
+        "017_gon_1_01p_PS3.srd",
+        "017_gon_1_01p_PS3_facial_eye.san",
+        "017_gon_1_01p_PS3_facial_mouth.s",
+        "017_gon_1_01p_PS3_shader.srd",
+        "017_gon_2_01p_PS3.srd",
+        "017_gon_2_01p_PS3_facial_eye.san",
+        "017_gon_2_01p_PS3_facial_mouth.s",
+        "017_gon_2_01p_PS3_shader.srd",
+        "017_gon_3_01p_PS3.srd",
+        "017_gon_3_01p_PS3_facial_eye.san",
+        "017_gon_3_01p_PS3_facial_mouth.s",
+        "017_gon_3_01p_PS3_shader.srd"
+      ],
+      "nativeToken": "017",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/017/character_model_017_m.stp",
+          "bytes": 425568,
+          "fileName": "character_model_017_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "a5536decba6f8a5defc453c3b3378720f925e1277fe9f16bd7b370db7dd2c73f"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/017/partition_op_character_ps3.cpk/character/model/character_model_017_m.pak",
+        "bytes": 302528,
+        "sha256": "a217adbce70d569f3dc3e9776fee4c55579fd0e1e004389cdaa54afb4298af7b"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 534592,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "killua"
+      ],
+      "internalMemberNameSamples": [
+        "018_killua_01p_PS3.srd",
+        "018_killua_01p_PS3_ability.srd",
+        "018_killua_01p_PS3_facial_eye.sa",
+        "018_killua_01p_PS3_facial_mouth.",
+        "018_killua_01p_PS3_shader.srd",
+        "018_killua_01p_PS3_texture.srd",
+        "018_killua_01p_ps3.srd",
+        "018_killua_1_01p_PS3.srd",
+        "018_killua_1_01p_PS3_facial_eye.",
+        "018_killua_1_01p_PS3_facial_mout",
+        "018_killua_1_01p_PS3_shader.srd",
+        "018_killua_2_01p_PS3.srd",
+        "018_killua_2_01p_PS3_facial_eye.",
+        "018_killua_2_01p_PS3_facial_mout",
+        "018_killua_2_01p_PS3_shader.srd",
+        "018_killua_3_01p_PS3.srd",
+        "018_killua_3_01p_PS3_facial_eye.",
+        "018_killua_3_01p_PS3_facial_mout",
+        "018_killua_3_01p_PS3_shader.srd",
+        "018_killua_body_c.tga"
+      ],
+      "nativeToken": "018",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/018/character_model_018_m.stp",
+          "bytes": 322198,
+          "fileName": "character_model_018_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "deea9b8a0035e60b8a89304b76359b7972bdcace46c59895c1b669a30478b13c"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/018/partition_op_character_ps3.cpk/character/model/character_model_018_m.pak",
+        "bytes": 224048,
+        "sha256": "d74ee55d8bef76d7f689948c16397cea0d3651dfbcd09c9da0479b5caf15ce5c"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 16448,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "jotaro"
+      ],
+      "internalMemberNameSamples": [
+        "019_jotaro_01p_PS3.srd",
+        "019_jotaro_01p_PS3_ability.srd",
+        "019_jotaro_01p_PS3_facial_eye.sa",
+        "019_jotaro_01p_PS3_facial_mouth.",
+        "019_jotaro_01p_PS3_shader.srd",
+        "019_jotaro_01p_PS3_texture.srd",
+        "019_jotaro_1_01p_PS3.srd",
+        "019_jotaro_1_01p_PS3_facial_eye.",
+        "019_jotaro_1_01p_PS3_facial_mout",
+        "019_jotaro_1_01p_PS3_shader.srd",
+        "019_jotaro_2_01p_PS3.srd",
+        "019_jotaro_2_01p_PS3_facial_eye.",
+        "019_jotaro_2_01p_PS3_facial_mout",
+        "019_jotaro_2_01p_PS3_shader.srd",
+        "019_jotaro_3_01p_PS3.srd",
+        "019_jotaro_3_01p_PS3_facial_eye.",
+        "019_jotaro_3_01p_PS3_facial_mout",
+        "019_jotaro_3_01p_PS3_shader.srd",
+        "019_jotaro_stream_jp_lps_PS3.pak"
+      ],
+      "nativeToken": "019",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/019/character_model_019_m.stp",
+          "bytes": 15360,
+          "fileName": "character_model_019_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "4d8edd1e55b05e7e2858c1c78bcce855a82a3810d4a742166126168f55164591"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/019/partition_op_character_ps3.cpk/character/model/character_model_019_m.pak",
+        "bytes": 2112,
+        "sha256": "79d9db8eee2b51b53bee2fbba6236c67afdc11b62975d3a7bd1127a9b9485dbe"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 16448,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "dio"
+      ],
+      "internalMemberNameSamples": [
+        "020_dio_01p_PS3.srd",
+        "020_dio_01p_PS3_ability.srd",
+        "020_dio_01p_PS3_facial_eye.san",
+        "020_dio_01p_PS3_facial_mouth.san",
+        "020_dio_01p_PS3_shader.srd",
+        "020_dio_01p_PS3_texture.srd",
+        "020_dio_1_01p_PS3.srd",
+        "020_dio_1_01p_PS3_facial_eye.san",
+        "020_dio_1_01p_PS3_facial_mouth.s",
+        "020_dio_1_01p_PS3_shader.srd",
+        "020_dio_2_01p_PS3.srd",
+        "020_dio_2_01p_PS3_facial_eye.san",
+        "020_dio_2_01p_PS3_facial_mouth.s",
+        "020_dio_2_01p_PS3_shader.srd",
+        "020_dio_3_01p_PS3.srd",
+        "020_dio_3_01p_PS3_facial_eye.san",
+        "020_dio_3_01p_PS3_facial_mouth.s",
+        "020_dio_3_01p_PS3_shader.srd",
+        "020_dio_stream_jp_lps_PS3.pak"
+      ],
+      "nativeToken": "020",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/020/character_model_020_m.stp",
+          "bytes": 15360,
+          "fileName": "character_model_020_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "94d53277884b2bf68a0634bb1b3d6bbf052e4de8ffdb1a9905fb1ce62a882dc5"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/020/partition_op_character_ps3.cpk/character/model/character_model_020_m.pak",
+        "bytes": 2112,
+        "sha256": "7a4fe23f76500a76022eb021d5bd3e88f755bda63cb2500331cd08386834e6d6"
+      }
+    },
+    {
+      "completeNativeDecode": true,
+      "declaredDecodedBytes": 12352,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "dai"
+      ],
+      "internalMemberNameSamples": [
+        "021_dai_01p_PS3.srd",
+        "021_dai_01p_PS3_ability.srd",
+        "021_dai_01p_PS3_facial_eye.san",
+        "021_dai_01p_PS3_facial_mouth.san",
+        "021_dai_01p_PS3_shader.srd",
+        "021_dai_01p_PS3_texture.srd",
+        "021_dai_1_01p_PS3.srd",
+        "021_dai_1_01p_PS3_facial_eye.san",
+        "021_dai_1_01p_PS3_facial_mouth.s",
+        "021_dai_1_01p_PS3_shader.srd",
+        "021_dai_2_01p_PS3.srd",
+        "021_dai_2_01p_PS3_facial_eye.san",
+        "021_dai_2_01p_PS3_facial_mouth.s",
+        "021_dai_2_01p_PS3_shader.srd",
+        "021_dai_3_01p_PS3.srd",
+        "021_dai_3_01p_PS3_facial_eye.san",
+        "021_dai_3_01p_PS3_facial_mouth.s",
+        "021_dai_3_01p_PS3_shader.srd",
+        "021_dai_stream_jp_lps_PS3.pak"
+      ],
+      "nativeToken": "021",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/021/character_model_021_m.stp",
+          "bytes": 12352,
+          "fileName": "character_model_021_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "69b92e41bb89e1ac96edf769bc0a0b7226393e5b8daef2cb12da73d9dcc13a3f"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/021/partition_op_character_ps3.cpk/character/model/character_model_021_m.pak",
+        "bytes": 1824,
+        "sha256": "92bfe6ecb50319a80c76503cb581545843fb75fcc2f6ca331be91c9fe7e1e494"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 608320,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "kenshin"
+      ],
+      "internalMemberNameSamples": [
+        "022_kenshin_01p_PS3.srd",
+        "022_kenshin_01p_PS3_ability.srd",
+        "022_kenshin_01p_PS3_facial_eye.s",
+        "022_kenshin_01p_PS3_facial_mouth",
+        "022_kenshin_01p_PS3_shader.srd",
+        "022_kenshin_01p_PS3_texture.srd",
+        "022_kenshin_01p_ps3.srd",
+        "022_kenshin_1_01p_PS3.srd",
+        "022_kenshin_1_01p_PS3_facial_eye",
+        "022_kenshin_1_01p_PS3_facial_mou",
+        "022_kenshin_1_01p_PS3_shader.srd",
+        "022_kenshin_2_01p_PS3.srd",
+        "022_kenshin_2_01p_PS3_facial_eye",
+        "022_kenshin_2_01p_PS3_facial_mou",
+        "022_kenshin_2_01p_PS3_shader.srd",
+        "022_kenshin_3_01p_PS3.srd",
+        "022_kenshin_3_01p_PS3_facial_eye",
+        "022_kenshin_3_01p_PS3_facial_mou",
+        "022_kenshin_3_01p_PS3_shader.srd",
+        "022_kenshin_body1_c.tga"
+      ],
+      "nativeToken": "022",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/022/character_model_022_m.stp",
+          "bytes": 374649,
+          "fileName": "character_model_022_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "86705b024b4c505b558078cce3ba8222ae5570506337ae69857a51d0c9432881"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/022/partition_op_character_ps3.cpk/character/model/character_model_022_m.pak",
+        "bytes": 253952,
+        "sha256": "d8c34b569505866fe1dcb4c42fe7e567581f33b15995a787aa22c5b9c58c0162"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 630848,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "shishio"
+      ],
+      "internalMemberNameSamples": [
+        "023_shishio_01p_PS3.srd",
+        "023_shishio_01p_PS3_ability.srd",
+        "023_shishio_01p_PS3_facial_eye.s",
+        "023_shishio_01p_PS3_facial_mouth",
+        "023_shishio_01p_PS3_shader.srd",
+        "023_shishio_01p_PS3_texture.srd",
+        "023_shishio_1_01p_PS3.srd",
+        "023_shishio_1_01p_PS3_facial_eye",
+        "023_shishio_1_01p_PS3_facial_mou",
+        "023_shishio_1_01p_PS3_shader.srd",
+        "023_shishio_2_01p_PS3.srd",
+        "023_shishio_2_01p_PS3_facial_eye",
+        "023_shishio_2_01p_PS3_facial_mou",
+        "023_shishio_2_01p_PS3_shader.srd",
+        "023_shishio_3_01p_PS3.srd",
+        "023_shishio_3_01p_PS3_facial_eye",
+        "023_shishio_3_01p_PS3_facial_mou",
+        "023_shishio_3_01p_PS3_shader.srd",
+        "023_shishio_body1_c.tga",
+        "023_shishio_body1_n.tga"
+      ],
+      "nativeToken": "023",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/023/character_model_023_m.stp",
+          "bytes": 369278,
+          "fileName": "character_model_023_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "37c19753d6a61ff4447a0ad7f0821d8a7c1a9367d784c667b4079cb082fb60aa"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/023/partition_op_character_ps3.cpk/character/model/character_model_023_m.pak",
+        "bytes": 265264,
+        "sha256": "609dd75fe70405cb4b3117e878d6e1c1b1622b615e055335fb621a2746a8b09a"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 723008,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "seiya"
+      ],
+      "internalMemberNameSamples": [
+        "024_seiya_01p_PS3.srd",
+        "024_seiya_01p_PS3_ability.srd",
+        "024_seiya_01p_PS3_facial_eye.san",
+        "024_seiya_01p_PS3_facial_mouth.s",
+        "024_seiya_01p_PS3_shader.srd",
+        "024_seiya_01p_PS3_texture.srd",
+        "024_seiya_1_01p_PS3.srd",
+        "024_seiya_1_01p_PS3_facial_eye.s",
+        "024_seiya_1_01p_PS3_facial_mouth",
+        "024_seiya_1_01p_PS3_shader.srd",
+        "024_seiya_2_01p_PS3.srd",
+        "024_seiya_2_01p_PS3_facial_eye.s",
+        "024_seiya_2_01p_PS3_facial_mouth",
+        "024_seiya_2_01p_PS3_shader.srd",
+        "024_seiya_3_01p_PS3.srd",
+        "024_seiya_3_01p_PS3_facial_eye.s",
+        "024_seiya_3_01p_PS3_facial_mouth",
+        "024_seiya_3_01p_PS3_shader.srd",
+        "024_seiya_armor_01.tga",
+        "024_seiya_armor_01_n.tga"
+      ],
+      "nativeToken": "024",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/024/character_model_024_m.stp",
+          "bytes": 441236,
+          "fileName": "character_model_024_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "20932002fd265465ce2931b3b1811fda82af3f362586e9ea040aa29d21b4156c"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/024/partition_op_character_ps3.cpk/character/model/character_model_024_m.pak",
+        "bytes": 305504,
+        "sha256": "9a65f6c83e97051adaa01d882725b82298cd1845abdead0381c3b836b85ffa47"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 442432,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "kenshiro"
+      ],
+      "internalMemberNameSamples": [
+        "025_kenshiro_01p_PS3.srd",
+        "025_kenshiro_01p_PS3_ability.srd",
+        "025_kenshiro_01p_PS3_facial_eye.",
+        "025_kenshiro_01p_PS3_facial_mout",
+        "025_kenshiro_01p_PS3_shader.srd",
+        "025_kenshiro_01p_PS3_texture.srd",
+        "025_kenshiro_1_01p_PS3.srd",
+        "025_kenshiro_1_01p_PS3_facial_ey",
+        "025_kenshiro_1_01p_PS3_facial_mo",
+        "025_kenshiro_1_01p_PS3_shader.sr",
+        "025_kenshiro_2_01p_PS3.srd",
+        "025_kenshiro_2_01p_PS3_facial_ey",
+        "025_kenshiro_2_01p_PS3_facial_mo",
+        "025_kenshiro_2_01p_PS3_shader.sr",
+        "025_kenshiro_3_01p_PS3.srd",
+        "025_kenshiro_3_01p_PS3_facial_ey",
+        "025_kenshiro_3_01p_PS3_facial_mo",
+        "025_kenshiro_3_01p_PS3_shader.sr",
+        "025_kenshiro_acc_c.tga",
+        "025_kenshiro_acc_n.tga"
+      ],
+      "nativeToken": "025",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/025/character_model_025_m.stp",
+          "bytes": 289305,
+          "fileName": "character_model_025_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "00e25c70cf8c0ca639abc8731c0f48ea4dfa4e5f63b9030629a4590deb3c7ab6"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/025/partition_op_character_ps3.cpk/character/model/character_model_025_m.pak",
+        "bytes": 176160,
+        "sha256": "89c1226b105b569c26c176426a791c5e3efbd29763ec4b7a0c1c9f973e6f2872"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 475200,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "raoh",
+        "raou"
+      ],
+      "internalMemberNameSamples": [
+        "026_raoh_01p_PS3.srd",
+        "026_raoh_01p_PS3_ability.srd",
+        "026_raoh_01p_PS3_facial_eye.san",
+        "026_raoh_01p_PS3_facial_mouth.sa",
+        "026_raoh_01p_PS3_shader.srd",
+        "026_raoh_01p_PS3_texture.srd",
+        "026_raoh_1_01p_PS3.srd",
+        "026_raoh_1_01p_PS3_facial_eye.sa",
+        "026_raoh_1_01p_PS3_facial_mouth.",
+        "026_raoh_1_01p_PS3_shader.srd",
+        "026_raoh_2_01p_PS3.srd",
+        "026_raoh_2_01p_PS3_facial_eye.sa",
+        "026_raoh_2_01p_PS3_facial_mouth.",
+        "026_raoh_2_01p_PS3_shader.srd",
+        "026_raoh_3_01p_PS3.srd",
+        "026_raoh_3_01p_PS3_facial_eye.sa",
+        "026_raoh_3_01p_PS3_facial_mouth.",
+        "026_raoh_3_01p_PS3_shader.srd",
+        "026_raoh_acc_c.tga",
+        "026_raoh_acc_n.tga"
+      ],
+      "nativeToken": "026",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/026/character_model_026_m.stp",
+          "bytes": 297021,
+          "fileName": "character_model_026_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "fdc724ad1f8f9480974b1306820cb322ba0b3ce77fc2d5906b65adfbe95ff0d0"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/026/partition_op_character_ps3.cpk/character/model/character_model_026_m.pak",
+        "bytes": 192928,
+        "sha256": "6f4a3e58a9a3ecd25c0120f25cb70082f5f5a86421497d74a87789e3b7cb2306"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 694336,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "tatsumi"
+      ],
+      "internalMemberNameSamples": [
+        "027_tatsumi_01p_PS3.srd",
+        "027_tatsumi_01p_PS3_ability.srd",
+        "027_tatsumi_01p_PS3_facial_eye.s",
+        "027_tatsumi_01p_PS3_facial_mouth",
+        "027_tatsumi_01p_PS3_shader.srd",
+        "027_tatsumi_01p_PS3_texture.srd",
+        "027_tatsumi_01p_ps3_shader.srd",
+        "027_tatsumi_1_01p_PS3.srd",
+        "027_tatsumi_1_01p_PS3_facial_eye",
+        "027_tatsumi_1_01p_PS3_facial_mou",
+        "027_tatsumi_1_01p_PS3_shader.srd",
+        "027_tatsumi_2_01p_PS3.srd",
+        "027_tatsumi_2_01p_PS3_facial_eye",
+        "027_tatsumi_2_01p_PS3_facial_mou",
+        "027_tatsumi_2_01p_PS3_shader.srd",
+        "027_tatsumi_3_01p_PS3.srd",
+        "027_tatsumi_3_01p_PS3_facial_eye",
+        "027_tatsumi_3_01p_PS3_facial_mou",
+        "027_tatsumi_3_01p_PS3_shader.srd",
+        "027_tatsumi_acc_c.tga"
+      ],
+      "nativeToken": "027",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/027/character_model_027_m.stp",
+          "bytes": 416836,
+          "fileName": "character_model_027_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "19959aaa1ad8439259ad53b8a8e06599fc1d08c913f028c82493219df1e5df29"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/027/partition_op_character_ps3.cpk/character/model/character_model_027_m.pak",
+        "bytes": 295520,
+        "sha256": "1b159b58605d2f414b5d370c11b221a6ab0fad464829f138904e58b269be6446"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 1081408,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "gintoki"
+      ],
+      "internalMemberNameSamples": [
+        "028_gintoki_01p_PS3.srd",
+        "028_gintoki_01p_PS3_ability.srd",
+        "028_gintoki_01p_PS3_facial_eye.s",
+        "028_gintoki_01p_PS3_facial_mouth",
+        "028_gintoki_01p_PS3_shader.srd",
+        "028_gintoki_01p_PS3_texture.srd",
+        "028_gintoki_1_01p_PS3.srd",
+        "028_gintoki_1_01p_PS3_facial_eye",
+        "028_gintoki_1_01p_PS3_facial_mou",
+        "028_gintoki_1_01p_PS3_shader.srd",
+        "028_gintoki_2_01p_PS3.srd",
+        "028_gintoki_2_01p_PS3_facial_eye",
+        "028_gintoki_2_01p_PS3_facial_mou",
+        "028_gintoki_2_01p_PS3_shader.srd",
+        "028_gintoki_3_01p_PS3.srd",
+        "028_gintoki_3_01p_PS3_facial_eye",
+        "028_gintoki_3_01p_PS3_facial_mou",
+        "028_gintoki_3_01p_PS3_shader.srd",
+        "028_gintoki_acc_c.tga",
+        "028_gintoki_acc_n.tga"
+      ],
+      "nativeToken": "028",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/028/character_model_028_m.stp",
+          "bytes": 634725,
+          "fileName": "character_model_028_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "1b99c5b656c4b80c012ef05cb0c591e8ab38cbf5d40ff4d90035dd90f4029971"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/028/partition_op_character_ps3.cpk/character/model/character_model_028_m.pak",
+        "bytes": 469216,
+        "sha256": "ea1babdefd8a050e5a702154b92a09858f030a444d696f96d6846f0eb9cee198"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 579648,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "medaka"
+      ],
+      "internalMemberNameSamples": [
+        "029_medaka_01p_PS3.srd",
+        "029_medaka_01p_PS3_ability.srd",
+        "029_medaka_01p_PS3_facial_eye.sa",
+        "029_medaka_01p_PS3_facial_mouth.",
+        "029_medaka_01p_PS3_shader.srd",
+        "029_medaka_01p_PS3_texture.srd",
+        "029_medaka_01p_ps3.srd",
+        "029_medaka_1_01p_PS3.srd",
+        "029_medaka_1_01p_PS3_facial_eye.",
+        "029_medaka_1_01p_PS3_facial_mout",
+        "029_medaka_1_01p_PS3_shader.srd",
+        "029_medaka_2_01p_PS3.srd",
+        "029_medaka_2_01p_PS3_facial_eye.",
+        "029_medaka_2_01p_PS3_facial_mout",
+        "029_medaka_2_01p_PS3_shader.srd",
+        "029_medaka_3_01p_PS3.srd",
+        "029_medaka_3_01p_PS3_facial_eye.",
+        "029_medaka_3_01p_PS3_facial_mout",
+        "029_medaka_3_01p_PS3_shader.srd",
+        "029_medaka_body2_c2.tga"
+      ],
+      "nativeToken": "029",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/029/character_model_029_m.stp",
+          "bytes": 369423,
+          "fileName": "character_model_029_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "8c02adbfc18c7cb72524a06c17f68d218571500c947587529ba8bed47f6183f7"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/029/partition_op_character_ps3.cpk/character/model/character_model_029_m.pak",
+        "bytes": 240208,
+        "sha256": "5c4fc26a9a57f579f75f6582dad54f1b3d19be9d76665465ace071f56899782e"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 778304,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "kankichi"
+      ],
+      "internalMemberNameSamples": [
+        "030_kankichi_01p_PS3.srd",
+        "030_kankichi_01p_PS3_ability.srd",
+        "030_kankichi_01p_PS3_facial_eye.",
+        "030_kankichi_01p_PS3_facial_mout",
+        "030_kankichi_01p_PS3_shader.srd",
+        "030_kankichi_01p_PS3_texture.srd",
+        "030_kankichi_01p_ps3.srd",
+        "030_kankichi_01p_ps3_shader.srd",
+        "030_kankichi_1_01p_PS3.srd",
+        "030_kankichi_1_01p_PS3_facial_ey",
+        "030_kankichi_1_01p_PS3_facial_mo",
+        "030_kankichi_1_01p_PS3_shader.sr",
+        "030_kankichi_1_01p_ps3.srd",
+        "030_kankichi_2_01p_PS3.srd",
+        "030_kankichi_2_01p_PS3_facial_ey",
+        "030_kankichi_2_01p_PS3_facial_mo",
+        "030_kankichi_2_01p_PS3_shader.sr",
+        "030_kankichi_3_01p_PS3.srd",
+        "030_kankichi_3_01p_PS3_facial_ey",
+        "030_kankichi_3_01p_PS3_facial_mo"
+      ],
+      "nativeToken": "030",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/030/character_model_030_m.stp",
+          "bytes": 489632,
+          "fileName": "character_model_030_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "12f6277b326f8c92f71be28feae5fb0fa1f9032dedfaf9c30075f8548372d8a0"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/030/partition_op_character_ps3.cpk/character/model/character_model_030_m.pak",
+        "bytes": 337680,
+        "sha256": "7d169951d2a4234c92107d884b43ceb7f409635a2166100a705b31e2743adced"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 884800,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "arale",
+        "gajira"
+      ],
+      "internalMemberNameSamples": [
+        "031_arale_01p_PS3.srd",
+        "031_arale_01p_PS3_ability.srd",
+        "031_arale_01p_PS3_facial_eye.san",
+        "031_arale_01p_PS3_facial_mouth.s",
+        "031_arale_01p_PS3_shader.srd",
+        "031_arale_01p_PS3_texture.srd",
+        "031_arale_01p_ps3.srd",
+        "031_arale_1_01p_PS3.srd",
+        "031_arale_1_01p_PS3_facial_eye.s",
+        "031_arale_1_01p_PS3_facial_mouth",
+        "031_arale_1_01p_PS3_shader.srd",
+        "031_arale_1_01p_ps3.srd",
+        "031_arale_2_01p_PS3.srd",
+        "031_arale_2_01p_PS3_facial_eye.s",
+        "031_arale_2_01p_PS3_facial_mouth",
+        "031_arale_2_01p_PS3_shader.srd",
+        "031_arale_3_01p_PS3.srd",
+        "031_arale_3_01p_PS3_facial_eye.s",
+        "031_arale_3_01p_PS3_facial_mouth",
+        "031_arale_3_01p_PS3_shader.srd"
+      ],
+      "nativeToken": "031",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/031/character_model_031_m.stp",
+          "bytes": 514596,
+          "fileName": "character_model_031_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "0110b8359edc3859a7aca0949d01c605cc68a74ef55efe06008a3fcf7d54dfda"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/031/partition_op_character_ps3.cpk/character/model/character_model_031_m.pak",
+        "bytes": 371376,
+        "sha256": "fddfbffc88ccb80389073b8cbc1472e30d81978b0ef93ca1dde9add38cdc6a77"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 481344,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "korosensei"
+      ],
+      "internalMemberNameSamples": [
+        "032_korosensei_01p_PS3.srd",
+        "032_korosensei_01p_PS3_ability.s",
+        "032_korosensei_01p_PS3_facial_ey",
+        "032_korosensei_01p_PS3_facial_mo",
+        "032_korosensei_01p_PS3_shader.sr",
+        "032_korosensei_01p_PS3_texture.s",
+        "032_korosensei_1_01p_PS3.srd",
+        "032_korosensei_1_01p_PS3_facial_",
+        "032_korosensei_1_01p_PS3_shader.",
+        "032_korosensei_2_01p_PS3.srd",
+        "032_korosensei_2_01p_PS3_facial_",
+        "032_korosensei_2_01p_PS3_shader.",
+        "032_korosensei_3_01p_PS3.srd",
+        "032_korosensei_3_01p_PS3_facial_",
+        "032_korosensei_3_01p_PS3_shader.",
+        "032_korosensei_stream_jp_lps_PS3"
+      ],
+      "nativeToken": "032",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/032/character_model_032_m.stp",
+          "bytes": 288451,
+          "fileName": "character_model_032_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "0a3846eb5a9affdcf935c32d50cf350bb5c14c5354a0041ada1a68c2eb4b3f02"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/032/partition_op_character_ps3.cpk/character/model/character_model_032_m.pak",
+        "bytes": 200352,
+        "sha256": "8042147f436ac14549f78bbb1d4415406e80d7ec587446a4ace0c56d93a57f4f"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 553024,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "kusuo"
+      ],
+      "internalMemberNameSamples": [
+        "033_kusuo_01p_PS3.srd",
+        "033_kusuo_01p_PS3_ability.srd",
+        "033_kusuo_01p_PS3_facial_eye.san",
+        "033_kusuo_01p_PS3_facial_mouth.s",
+        "033_kusuo_01p_PS3_shader.srd",
+        "033_kusuo_01p_PS3_texture.srd",
+        "033_kusuo_01p_ps3.srd",
+        "033_kusuo_01p_ps3_shader.srd",
+        "033_kusuo_1_01p_PS3.srd",
+        "033_kusuo_1_01p_PS3_facial_eye.s",
+        "033_kusuo_1_01p_PS3_facial_mouth",
+        "033_kusuo_1_01p_PS3_shader.srd",
+        "033_kusuo_2_01p_PS3.srd",
+        "033_kusuo_2_01p_PS3_facial_eye.s",
+        "033_kusuo_2_01p_PS3_facial_mouth",
+        "033_kusuo_2_01p_PS3_shader.srd",
+        "033_kusuo_3_01p_PS3.srd",
+        "033_kusuo_3_01p_PS3_facial_eye.s",
+        "033_kusuo_3_01p_PS3_facial_mouth",
+        "033_kusuo_3_01p_PS3_shader.srd"
+      ],
+      "nativeToken": "033",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/033/character_model_033_m.stp",
+          "bytes": 332012,
+          "fileName": "character_model_033_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "af0aa1e05eccb745baed3e34ce82d5af2adc4585d0c25f6844dffd197005b58d"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/033/partition_op_character_ps3.cpk/character/model/character_model_033_m.pak",
+        "bytes": 235664,
+        "sha256": "5151de370ed56a6c001a5fe4f8b2d8593c8fc1301a25a08c301f02f53cb7f92e"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 710720,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "momotaro"
+      ],
+      "internalMemberNameSamples": [
+        "034_momotaro_01p_PS3.srd",
+        "034_momotaro_01p_PS3_ability.srd",
+        "034_momotaro_01p_PS3_facial_eye.",
+        "034_momotaro_01p_PS3_facial_mout",
+        "034_momotaro_01p_PS3_shader.srd",
+        "034_momotaro_01p_PS3_texture.srd",
+        "034_momotaro_01p_ps3.srd",
+        "034_momotaro_1_01p_PS3.srd",
+        "034_momotaro_1_01p_PS3_facial_ey",
+        "034_momotaro_1_01p_PS3_facial_mo",
+        "034_momotaro_1_01p_PS3_shader.sr",
+        "034_momotaro_2_01p_PS3.srd",
+        "034_momotaro_2_01p_PS3_facial_ey",
+        "034_momotaro_2_01p_PS3_facial_mo",
+        "034_momotaro_2_01p_PS3_shader.sr",
+        "034_momotaro_3_01p_PS3.srd",
+        "034_momotaro_3_01p_PS3_facial_ey",
+        "034_momotaro_3_01p_PS3_facial_mo",
+        "034_momotaro_3_01p_PS3_shader.sr",
+        "034_momotaro_stream_jp_lps_PS3.p"
+      ],
+      "nativeToken": "034",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/034/character_model_034_m.stp",
+          "bytes": 415734,
+          "fileName": "character_model_034_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "33949893570ae631c17626434142a8d3c99a1314928db5402d1a523ff1666ede"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/034/partition_op_character_ps3.cpk/character/model/character_model_034_m.pak",
+        "bytes": 303680,
+        "sha256": "95a7c107dd57d0a2a2cf21de07edc50a3aeaa3d14b8eb66fcf5dc2bb8653e20a"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 833600,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "bobobo"
+      ],
+      "internalMemberNameSamples": [
+        "035_bobobo_01p_PS3.srd",
+        "035_bobobo_01p_PS3_ability.srd",
+        "035_bobobo_01p_PS3_facial_eye.sa",
+        "035_bobobo_01p_PS3_facial_mouth.",
+        "035_bobobo_01p_PS3_shader.srd",
+        "035_bobobo_01p_PS3_texture.srd",
+        "035_bobobo_01p_ps3.srd",
+        "035_bobobo_1_01p_PS3.srd",
+        "035_bobobo_1_01p_PS3_facial_eye.",
+        "035_bobobo_1_01p_PS3_facial_mout",
+        "035_bobobo_1_01p_PS3_shader.srd",
+        "035_bobobo_1_01p_ps3.srd",
+        "035_bobobo_1_head_c.tga",
+        "035_bobobo_1_teshi_c.tga",
+        "035_bobobo_2_01p_PS3.srd",
+        "035_bobobo_2_01p_PS3_facial_eye.",
+        "035_bobobo_2_01p_PS3_facial_mout",
+        "035_bobobo_2_01p_PS3_shader.srd",
+        "035_bobobo_3_01p_PS3.srd",
+        "035_bobobo_3_01p_PS3_facial_eye."
+      ],
+      "nativeToken": "035",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/035/character_model_035_m.stp",
+          "bytes": 484740,
+          "fileName": "character_model_035_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "d58fa64dcd48775038d0134a93a01c2af7b310788120ab0698e66a17fab2a92a"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/035/partition_op_character_ps3.cpk/character/model/character_model_035_m.pak",
+        "bytes": 343744,
+        "sha256": "353b233ea4acd2838fae4220eef2e872791136be857e4adccf939ffb47e390a2"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 727104,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "tsuna"
+      ],
+      "internalMemberNameSamples": [
+        "036_tsuna_01p_PS3.srd",
+        "036_tsuna_01p_PS3_ability.srd",
+        "036_tsuna_01p_PS3_facial_eye.san",
+        "036_tsuna_01p_PS3_facial_mouth.s",
+        "036_tsuna_01p_PS3_shader.srd",
+        "036_tsuna_01p_PS3_texture.srd",
+        "036_tsuna_1_01p_PS3.srd",
+        "036_tsuna_1_01p_PS3_facial_eye.s",
+        "036_tsuna_1_01p_PS3_facial_mouth",
+        "036_tsuna_1_01p_PS3_shader.srd",
+        "036_tsuna_2_01p_PS3.srd",
+        "036_tsuna_2_01p_PS3_facial_eye.s",
+        "036_tsuna_2_01p_PS3_facial_mouth",
+        "036_tsuna_2_01p_PS3_shader.srd",
+        "036_tsuna_3_01p_PS3.srd",
+        "036_tsuna_3_01p_PS3_facial_eye.s",
+        "036_tsuna_3_01p_PS3_facial_mouth",
+        "036_tsuna_3_01p_PS3_shader.srd",
+        "036_tsuna_acc_01_c.tga",
+        "036_tsuna_acc_02_c.tga"
+      ],
+      "nativeToken": "036",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/036/character_model_036_m.stp",
+          "bytes": 443971,
+          "fileName": "character_model_036_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "541d721299347e103699ee1664d0ef623d2470c8e3d5d20fc6ed975998ccf1f7"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/036/partition_op_character_ps3.cpk/character/model/character_model_036_m.pak",
+        "bytes": 305648,
+        "sha256": "800fcffc19ab7137f3060135a633aed84c8c2c836edf5bb0b5703ee71646b2b4"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 450624,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "luckyman"
+      ],
+      "internalMemberNameSamples": [
+        "037_luckyman_01p_PS3.srd",
+        "037_luckyman_01p_PS3_ability.srd",
+        "037_luckyman_01p_PS3_facial_eye.",
+        "037_luckyman_01p_PS3_facial_mout",
+        "037_luckyman_01p_PS3_shader.srd",
+        "037_luckyman_01p_PS3_texture.srd",
+        "037_luckyman_01p_ps3.srd",
+        "037_luckyman_01p_ps3_shader.srd",
+        "037_luckyman_1_01p_PS3.srd",
+        "037_luckyman_1_01p_PS3_facial_ey",
+        "037_luckyman_1_01p_PS3_facial_mo",
+        "037_luckyman_1_01p_PS3_shader.sr",
+        "037_luckyman_2_01p_PS3.srd",
+        "037_luckyman_2_01p_PS3_facial_ey",
+        "037_luckyman_2_01p_PS3_facial_mo",
+        "037_luckyman_2_01p_PS3_shader.sr",
+        "037_luckyman_3_01p_PS3.srd",
+        "037_luckyman_3_01p_PS3_facial_ey",
+        "037_luckyman_3_01p_PS3_facial_mo",
+        "037_luckyman_3_01p_PS3_shader.sr"
+      ],
+      "nativeToken": "037",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/037/character_model_037_m.stp",
+          "bytes": 277336,
+          "fileName": "character_model_037_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "ad73503ca74fefab0804a70a539f83e8060b7e6696359409ad680bccf5207c46"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/037/partition_op_character_ps3.cpk/character/model/character_model_037_m.pak",
+        "bytes": 185056,
+        "sha256": "9887c6699e914577db93903dd05fee70f361d8a698e27d5f0d4e10422090db52"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 655424,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "yamada"
+      ],
+      "internalMemberNameSamples": [
+        "038_yamada_01p_PS3.srd",
+        "038_yamada_01p_PS3_ability.srd",
+        "038_yamada_01p_PS3_facial_eye.sa",
+        "038_yamada_01p_PS3_facial_mouth.",
+        "038_yamada_01p_PS3_shader.srd",
+        "038_yamada_01p_PS3_texture.srd",
+        "038_yamada_01p_ps3.srd",
+        "038_yamada_01p_ps3_shader.srd",
+        "038_yamada_1_01p_PS3.srd",
+        "038_yamada_1_01p_PS3_facial_eye.",
+        "038_yamada_1_01p_PS3_facial_mout",
+        "038_yamada_1_01p_PS3_shader.srd",
+        "038_yamada_2_01p_PS3.srd",
+        "038_yamada_2_01p_PS3_facial_eye.",
+        "038_yamada_2_01p_PS3_facial_mout",
+        "038_yamada_2_01p_PS3_shader.srd",
+        "038_yamada_3_01p_PS3.srd",
+        "038_yamada_3_01p_PS3_facial_eye.",
+        "038_yamada_3_01p_PS3_facial_mout",
+        "038_yamada_3_01p_PS3_shader.srd"
+      ],
+      "nativeToken": "038",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/038/character_model_038_m.stp",
+          "bytes": 404034,
+          "fileName": "character_model_038_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "12fb2af47c5771f91b1cc2730691134a1063d21854e3649286a212bf3c864196"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/038/partition_op_character_ps3.cpk/character/model/character_model_038_m.pak",
+        "bytes": 262304,
+        "sha256": "815147d5aa6a40d06ccbf77e915c41e577a879ef80370d1b3240ea3909800da2"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 524352,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "jonathan"
+      ],
+      "internalMemberNameSamples": [
+        "039_jonathan_01p_PS3.srd",
+        "039_jonathan_01p_PS3_ability.srd",
+        "039_jonathan_01p_PS3_facial_eye.",
+        "039_jonathan_01p_PS3_facial_mout",
+        "039_jonathan_01p_PS3_shader.srd",
+        "039_jonathan_01p_PS3_texture.srd",
+        "039_jonathan_1_01p_PS3.srd",
+        "039_jonathan_1_01p_PS3_facial_ey",
+        "039_jonathan_1_01p_PS3_facial_mo",
+        "039_jonathan_1_01p_PS3_shader.sr",
+        "039_jonathan_2_01p_PS3.srd",
+        "039_jonathan_2_01p_PS3_facial_ey",
+        "039_jonathan_2_01p_PS3_facial_mo",
+        "039_jonathan_2_01p_PS3_shader.sr",
+        "039_jonathan_3_01p_PS3.srd",
+        "039_jonathan_3_01p_PS3_facial_ey",
+        "039_jonathan_3_01p_PS3_facial_mo",
+        "039_jonathan_3_01p_PS3_shader.sr",
+        "039_jonathan_acc_c.tga",
+        "039_jonathan_acc_n.tga"
+      ],
+      "nativeToken": "039",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/039/character_model_039_m.stp",
+          "bytes": 313940,
+          "fileName": "character_model_039_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "9cf214668c90a2a9fbbde9afde7d80d3576f9d9adfd42bbd0c16bb55c10a4c77"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/039/partition_op_character_ps3.cpk/character/model/character_model_039_m.pak",
+        "bytes": 215328,
+        "sha256": "76ceefadcab05b026366524dfdffc3452a1577b60297d02acf2b11623abd9652"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 520256,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "joseph"
+      ],
+      "internalMemberNameSamples": [
+        "040_joseph_01p_PS3.srd",
+        "040_joseph_01p_PS3_ability.srd",
+        "040_joseph_01p_PS3_facial_eye.sa",
+        "040_joseph_01p_PS3_facial_mouth.",
+        "040_joseph_01p_PS3_shader.srd",
+        "040_joseph_01p_PS3_texture.srd",
+        "040_joseph_01p_ps3_shader.srd",
+        "040_joseph_1_01p_PS3.srd",
+        "040_joseph_1_01p_PS3_facial_eye.",
+        "040_joseph_1_01p_PS3_facial_mout",
+        "040_joseph_1_01p_PS3_shader.srd",
+        "040_joseph_2_01p_PS3.srd",
+        "040_joseph_2_01p_PS3_facial_eye.",
+        "040_joseph_2_01p_PS3_facial_mout",
+        "040_joseph_2_01p_PS3_shader.srd",
+        "040_joseph_3_01p_PS3.srd",
+        "040_joseph_3_01p_PS3_facial_eye.",
+        "040_joseph_3_01p_PS3_facial_mout",
+        "040_joseph_3_01p_PS3_shader.srd",
+        "040_joseph_acc1_c.tga"
+      ],
+      "nativeToken": "040",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/040/character_model_040_m.stp",
+          "bytes": 334022,
+          "fileName": "character_model_040_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "240a3a08db97c31035d44dd5b168c13195f03b14855e368e8a3ca1c174ced59b"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/040/partition_op_character_ps3.cpk/character/model/character_model_040_m.pak",
+        "bytes": 217888,
+        "sha256": "6c70651669bd499d487b18426e32fc57744b5b26c611ff65a08adaaa3a3d9438"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 837696,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "nueno"
+      ],
+      "internalMemberNameSamples": [
+        "041_nueno_01p_PS3.srd",
+        "041_nueno_01p_PS3_ability.srd",
+        "041_nueno_01p_PS3_facial_eye.san",
+        "041_nueno_01p_PS3_facial_mouth.s",
+        "041_nueno_01p_PS3_shader.srd",
+        "041_nueno_01p_PS3_texture.srd",
+        "041_nueno_1_01p_PS3.srd",
+        "041_nueno_1_01p_PS3_facial_eye.s",
+        "041_nueno_1_01p_PS3_facial_mouth",
+        "041_nueno_1_01p_PS3_shader.srd",
+        "041_nueno_2_01p_PS3.srd",
+        "041_nueno_2_01p_PS3_facial_eye.s",
+        "041_nueno_2_01p_PS3_facial_mouth",
+        "041_nueno_2_01p_PS3_shader.srd",
+        "041_nueno_3_01p_PS3.srd",
+        "041_nueno_3_01p_PS3_facial_eye.s",
+        "041_nueno_3_01p_PS3_facial_mouth",
+        "041_nueno_3_01p_PS3_shader.srd",
+        "041_nueno_acc01_c.tga",
+        "041_nueno_acc01_n.tga"
+      ],
+      "nativeToken": "041",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/041/character_model_041_m.stp",
+          "bytes": 489725,
+          "fileName": "character_model_041_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "390b9ac6e58b66d315d556c6abc4f5ef07c722c345f0bcae1e72d128fed39b9b"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/041/partition_op_character_ps3.cpk/character/model/character_model_041_m.pak",
+        "bytes": 362560,
+        "sha256": "95e87eaecb50fb794cc2edc73b04991fe694a5d741975d193eb7de206c62460f"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 487488,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "neuro"
+      ],
+      "internalMemberNameSamples": [
+        "200_neuro_01p_PS3.srd",
+        "200_neuro_01p_PS3_ability.srd",
+        "200_neuro_01p_PS3_facial_eye.san",
+        "200_neuro_01p_PS3_facial_mouth.s",
+        "200_neuro_01p_PS3_shader.srd",
+        "200_neuro_01p_PS3_texture.srd",
+        "200_neuro_1_01p_PS3.srd",
+        "200_neuro_1_01p_PS3_facial_eye.s",
+        "200_neuro_1_01p_PS3_facial_mouth",
+        "200_neuro_1_01p_PS3_shader.srd",
+        "200_neuro_2_01p_PS3.srd",
+        "200_neuro_2_01p_PS3_facial_eye.s",
+        "200_neuro_2_01p_PS3_facial_mouth",
+        "200_neuro_2_01p_PS3_shader.srd",
+        "200_neuro_3_01p_PS3.srd",
+        "200_neuro_3_01p_PS3_facial_eye.s",
+        "200_neuro_3_01p_PS3_facial_mouth",
+        "200_neuro_3_01p_PS3_shader.srd",
+        "200_neuro_body_c.tga",
+        "200_neuro_body_n.tga"
+      ],
+      "nativeToken": "200",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/200/character_model_200_m.stp",
+          "bytes": 295296,
+          "fileName": "character_model_200_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "4f36787bb4626e54a997f2fe3381cd90d99bf8086509731531a5705c32335c7f"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/200/partition_op_character_ps3.cpk/character/model/character_model_200_m.pak",
+        "bytes": 201952,
+        "sha256": "2cd3c5457714e9e1c8e2e936209c4d75357db5dcba6535c3773e1ea1070f7700"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 391232,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "misogi"
+      ],
+      "internalMemberNameSamples": [
+        "201_misogi_01p_PS3.srd",
+        "201_misogi_01p_PS3_ability.srd",
+        "201_misogi_01p_PS3_facial_eye.sa",
+        "201_misogi_01p_PS3_facial_mouth.",
+        "201_misogi_01p_PS3_shader.srd",
+        "201_misogi_01p_PS3_texture.srd",
+        "201_misogi_1_01p_PS3.srd",
+        "201_misogi_1_01p_PS3_facial_eye.",
+        "201_misogi_1_01p_PS3_facial_mout",
+        "201_misogi_1_01p_PS3_shader.srd",
+        "201_misogi_2_01p_PS3.srd",
+        "201_misogi_2_01p_PS3_facial_eye.",
+        "201_misogi_2_01p_PS3_facial_mout",
+        "201_misogi_2_01p_PS3_shader.srd",
+        "201_misogi_3_01p_PS3.srd",
+        "201_misogi_3_01p_PS3_facial_eye.",
+        "201_misogi_3_01p_PS3_facial_mout",
+        "201_misogi_3_01p_PS3_shader.srd",
+        "201_misogi_env_02_c.tga",
+        "201_misogi_env_c.tga"
+      ],
+      "nativeToken": "201",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/201/character_model_201_m.stp",
+          "bytes": 242373,
+          "fileName": "character_model_201_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "311bcbf98f38016521c1e194435813ab58384edda318f4fc33f669b34b6539a6"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/201/partition_op_character_ps3.cpk/character/model/character_model_201_m.pak",
+        "bytes": 159808,
+        "sha256": "95aeab935eb2d68ecfd93600493f1aa65c28ec283e32a8e585133c89e9a0005a"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 378944,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "rukia"
+      ],
+      "internalMemberNameSamples": [
+        "202_rukia_01p_PS3.srd",
+        "202_rukia_01p_PS3_ability.srd",
+        "202_rukia_01p_PS3_facial_eye.san",
+        "202_rukia_01p_PS3_facial_mouth.s",
+        "202_rukia_01p_PS3_shader.srd",
+        "202_rukia_01p_PS3_texture.srd",
+        "202_rukia_01p_ps3.srd",
+        "202_rukia_1_01p_PS3.srd",
+        "202_rukia_1_01p_PS3_facial_eye.s",
+        "202_rukia_1_01p_PS3_facial_mouth",
+        "202_rukia_1_01p_PS3_shader.srd",
+        "202_rukia_2_01p_PS3.srd",
+        "202_rukia_2_01p_PS3_facial_eye.s",
+        "202_rukia_2_01p_PS3_facial_mouth",
+        "202_rukia_2_01p_PS3_shader.srd",
+        "202_rukia_3_01p_PS3.srd",
+        "202_rukia_3_01p_PS3_facial_eye.s",
+        "202_rukia_3_01p_PS3_facial_mouth",
+        "202_rukia_3_01p_PS3_shader.srd",
+        "202_rukia_body_c.tga"
+      ],
+      "nativeToken": "202",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/202/character_model_202_m.stp",
+          "bytes": 238283,
+          "fileName": "character_model_202_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "be78b37ddbce6e3362003bff5c78750191f0dbf2aa9c40cf0d9b19cbddbac65a"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/202/partition_op_character_ps3.cpk/character/model/character_model_202_m.pak",
+        "bytes": 152576,
+        "sha256": "d7f59d2d001803a423323bba659fd753853edb27ec72f4e4575b97b49520033e"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 469056,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "chitoge"
+      ],
+      "internalMemberNameSamples": [
+        "203_chitoge_01p_PS3.srd",
+        "203_chitoge_01p_PS3_ability.srd",
+        "203_chitoge_01p_PS3_facial_eye.s",
+        "203_chitoge_01p_PS3_facial_mouth",
+        "203_chitoge_01p_PS3_shader.srd",
+        "203_chitoge_01p_PS3_texture.srd",
+        "203_chitoge_1_01p_PS3.srd",
+        "203_chitoge_1_01p_PS3_facial_eye",
+        "203_chitoge_1_01p_PS3_facial_mou",
+        "203_chitoge_1_01p_PS3_shader.srd",
+        "203_chitoge_2_01p_PS3.srd",
+        "203_chitoge_2_01p_PS3_facial_eye",
+        "203_chitoge_2_01p_PS3_facial_mou",
+        "203_chitoge_2_01p_PS3_shader.srd",
+        "203_chitoge_3_01p_PS3.srd",
+        "203_chitoge_3_01p_PS3_facial_eye",
+        "203_chitoge_3_01p_PS3_facial_mou",
+        "203_chitoge_3_01p_PS3_shader.srd",
+        "203_chitoge_body_c.tga",
+        "203_chitoge_body_n.tga"
+      ],
+      "nativeToken": "203",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/203/character_model_203_m.stp",
+          "bytes": 298802,
+          "fileName": "character_model_203_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "740df2e69b045a4b9ef0944e2f30685492538a81ee2eed1da06cc60cd6ffc062"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/203/partition_op_character_ps3.cpk/character/model/character_model_203_m.pak",
+        "bytes": 191952,
+        "sha256": "1559f1357cd9c5e13b932d8171901e1f16619205f4ba1fee71d6a02875567108"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 553024,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "hisoka"
+      ],
+      "internalMemberNameSamples": [
+        "204_hisoka_01p_PS3.srd",
+        "204_hisoka_01p_PS3_ability.srd",
+        "204_hisoka_01p_PS3_facial_eye.sa",
+        "204_hisoka_01p_PS3_facial_mouth.",
+        "204_hisoka_01p_PS3_shader.srd",
+        "204_hisoka_01p_PS3_texture.srd",
+        "204_hisoka_01p_ps3.srd",
+        "204_hisoka_1_01p_PS3.srd",
+        "204_hisoka_1_01p_PS3_facial_eye.",
+        "204_hisoka_1_01p_PS3_facial_mout",
+        "204_hisoka_1_01p_PS3_shader.srd",
+        "204_hisoka_2_01p_PS3.srd",
+        "204_hisoka_2_01p_PS3_facial_eye.",
+        "204_hisoka_2_01p_PS3_facial_mout",
+        "204_hisoka_2_01p_PS3_shader.srd",
+        "204_hisoka_3_01p_PS3.srd",
+        "204_hisoka_3_01p_PS3_facial_eye.",
+        "204_hisoka_3_01p_PS3_facial_mout",
+        "204_hisoka_3_01p_PS3_shader.srd",
+        "204_hisoka_boots_c.tga"
+      ],
+      "nativeToken": "204",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/204/character_model_204_m.stp",
+          "bytes": 320724,
+          "fileName": "character_model_204_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "02396f10e566fc32ab5450aad180ad6bd001965f955383d00e65b08c42fb8923"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/204/partition_op_character_ps3.cpk/character/model/character_model_204_m.pak",
+        "bytes": 233968,
+        "sha256": "1ff16c2b658697b4a962900d026d61a05c5d680ff3c4deccd086bc0b707104d4"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 301120,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "heihachi"
+      ],
+      "internalMemberNameSamples": [
+        "205_heihachi_01p_PS3.srd",
+        "205_heihachi_01p_PS3_ability.srd",
+        "205_heihachi_01p_PS3_facial_eye.",
+        "205_heihachi_01p_PS3_facial_mout",
+        "205_heihachi_01p_PS3_shader.srd",
+        "205_heihachi_01p_PS3_texture.srd",
+        "205_heihachi_1_01p_PS3.srd",
+        "205_heihachi_1_01p_PS3_facial_ey",
+        "205_heihachi_1_01p_PS3_facial_mo",
+        "205_heihachi_1_01p_PS3_shader.sr",
+        "205_heihachi_2_01p_PS3.srd",
+        "205_heihachi_2_01p_PS3_facial_ey",
+        "205_heihachi_2_01p_PS3_facial_mo",
+        "205_heihachi_2_01p_PS3_shader.sr",
+        "205_heihachi_3_01p_PS3.srd",
+        "205_heihachi_3_01p_PS3_facial_ey",
+        "205_heihachi_3_01p_PS3_facial_mo",
+        "205_heihachi_3_01p_PS3_shader.sr",
+        "205_heihachi_body_c.tga",
+        "205_heihachi_body_n.tga"
+      ],
+      "nativeToken": "205",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/205/character_model_205_m.stp",
+          "bytes": 202660,
+          "fileName": "character_model_205_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "bae3123d5457632d95ed3c791fc4f2dbc6611a07a89ef8852d18890d42c00783"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/205/partition_op_character_ps3.cpk/character/model/character_model_205_m.pak",
+        "bytes": 115104,
+        "sha256": "697df3c456783783415a8f6cdf5928a10aceaa50fbf0a2e028e69af0d8198380"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 528448,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "kagura"
+      ],
+      "internalMemberNameSamples": [
+        "206_kagura_01p_PS3.srd",
+        "206_kagura_01p_PS3_ability.srd",
+        "206_kagura_01p_PS3_facial_eye.sa",
+        "206_kagura_01p_PS3_facial_mouth.",
+        "206_kagura_01p_PS3_shader.srd",
+        "206_kagura_01p_PS3_texture.srd",
+        "206_kagura_01p_ps3.srd",
+        "206_kagura_1_01p_PS3.srd",
+        "206_kagura_1_01p_PS3_facial_eye.",
+        "206_kagura_1_01p_PS3_facial_mout",
+        "206_kagura_1_01p_PS3_shader.srd",
+        "206_kagura_1_body_c.tga",
+        "206_kagura_1_body_n.tga",
+        "206_kagura_1_body_s.tga",
+        "206_kagura_1_head_c.tga",
+        "206_kagura_1_head_s.tga",
+        "206_kagura_2_01p_PS3.srd",
+        "206_kagura_2_01p_PS3_facial_eye.",
+        "206_kagura_2_01p_PS3_facial_mout",
+        "206_kagura_2_01p_PS3_shader.srd"
+      ],
+      "nativeToken": "206",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/206/character_model_206_m.stp",
+          "bytes": 320077,
+          "fileName": "character_model_206_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "f14a75eaa1b36f758052c4306a1a69cad7928a6abeab99ad3257b5baaad77a06"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/206/partition_op_character_ps3.cpk/character/model/character_model_206_m.pak",
+        "bytes": 224240,
+        "sha256": "10f3387f4eb66f30b35c438f223b98446b65b16a329e40c4a61e7839b87bd19c"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 434240,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "jaguar"
+      ],
+      "internalMemberNameSamples": [
+        "207_jaguar_01p_PS3.srd",
+        "207_jaguar_01p_PS3_ability.srd",
+        "207_jaguar_01p_PS3_facial_eye.sa",
+        "207_jaguar_01p_PS3_facial_mouth.",
+        "207_jaguar_01p_PS3_shader.srd",
+        "207_jaguar_01p_PS3_texture.srd",
+        "207_jaguar_1_01p_PS3.srd",
+        "207_jaguar_1_01p_PS3_facial_eye.",
+        "207_jaguar_1_01p_PS3_facial_mout",
+        "207_jaguar_1_01p_PS3_shader.srd",
+        "207_jaguar_2_01p_PS3.srd",
+        "207_jaguar_2_01p_PS3_facial_eye.",
+        "207_jaguar_2_01p_PS3_facial_mout",
+        "207_jaguar_2_01p_PS3_shader.srd",
+        "207_jaguar_3_01p_PS3.srd",
+        "207_jaguar_3_01p_PS3_facial_eye.",
+        "207_jaguar_3_01p_PS3_facial_mout",
+        "207_jaguar_3_01p_PS3_shader.srd",
+        "207_jaguar_body_c.tga",
+        "207_jaguar_body_n.tga"
+      ],
+      "nativeToken": "207",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/207/character_model_207_m.stp",
+          "bytes": 259975,
+          "fileName": "character_model_207_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "7954c42080b755c847cac6dbd257064c070f7e37499633d603769aadc41f7422"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/207/partition_op_character_ps3.cpk/character/model/character_model_207_m.pak",
+        "bytes": 180784,
+        "sha256": "5e131a4e611c6d4d71cdba21871af27cd125a06cc4af9551d4aafdbfe7b2f9e0"
+      }
+    },
+    {
+      "completeNativeDecode": true,
+      "declaredDecodedBytes": 14400,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "asakurayoh"
+      ],
+      "internalMemberNameSamples": [
+        "208_asakurayoh_01p_PS3.srd",
+        "208_asakurayoh_01p_PS3_ability.s",
+        "208_asakurayoh_01p_PS3_facial_ey",
+        "208_asakurayoh_01p_PS3_facial_mo",
+        "208_asakurayoh_01p_PS3_shader.sr",
+        "208_asakurayoh_01p_PS3_texture.s",
+        "208_asakurayoh_1_01p_PS3.srd",
+        "208_asakurayoh_1_01p_PS3_facial_",
+        "208_asakurayoh_1_01p_PS3_shader.",
+        "208_asakurayoh_2_01p_PS3.srd",
+        "208_asakurayoh_2_01p_PS3_facial_",
+        "208_asakurayoh_2_01p_PS3_shader.",
+        "208_asakurayoh_3_01p_PS3.srd",
+        "208_asakurayoh_3_01p_PS3_facial_",
+        "208_asakurayoh_3_01p_PS3_shader.",
+        "208_asakurayoh_stream_jp_lps_PS3"
+      ],
+      "nativeToken": "208",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/208/character_model_208_m.stp",
+          "bytes": 14400,
+          "fileName": "character_model_208_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "afeccadc9ca5115192e01559714974df487a84d5c7c45ec26ded5acb31aab3b2"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/208/partition_op_character_ps3.cpk/character/model/character_model_208_m.pak",
+        "bytes": 1984,
+        "sha256": "83f9a6667357aa35ee7d3cc6c656fb6aef85946fe38edea94de08772cdaa6d9f"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 327744,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "kuroko"
+      ],
+      "internalMemberNameSamples": [
+        "209_kuroko_01p_PS3.srd",
+        "209_kuroko_01p_PS3_ability.srd",
+        "209_kuroko_01p_PS3_facial_eye.sa",
+        "209_kuroko_01p_PS3_facial_mouth.",
+        "209_kuroko_01p_PS3_shader.srd",
+        "209_kuroko_01p_PS3_texture.srd",
+        "209_kuroko_01p_ps3.srd",
+        "209_kuroko_1_01p_PS3.srd",
+        "209_kuroko_1_01p_PS3_facial_eye.",
+        "209_kuroko_1_01p_PS3_facial_mout",
+        "209_kuroko_1_01p_PS3_shader.srd",
+        "209_kuroko_2_01p_PS3.srd",
+        "209_kuroko_2_01p_PS3_facial_eye.",
+        "209_kuroko_2_01p_PS3_facial_mout",
+        "209_kuroko_2_01p_PS3_shader.srd",
+        "209_kuroko_3_01p_PS3.srd",
+        "209_kuroko_3_01p_PS3_facial_eye.",
+        "209_kuroko_3_01p_PS3_facial_mout",
+        "209_kuroko_3_01p_PS3_shader.srd",
+        "209_kuroko_ball_c.tga"
+      ],
+      "nativeToken": "209",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/209/character_model_209_m.stp",
+          "bytes": 198073,
+          "fileName": "character_model_209_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "4d5084b7ce74de363bf916cf3cde830f80d65c5bb741653beac77f4e031bbe93"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/209/partition_op_character_ps3.cpk/character/model/character_model_209_m.pak",
+        "bytes": 133696,
+        "sha256": "b5e7b069ff1e243361d49fdb8b6974ec814187b1a3d7e8404b2732eb41f2d5ed"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 1085504,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "sket",
+        "sketdan",
+        "sketodan"
+      ],
+      "internalMemberNameSamples": [
+        "210_sket_bo_glass_c.tga",
+        "210_sket_bo_glass_s.tga",
+        "210_sketdan_01p_PS3.srd",
+        "210_sketdan_01p_PS3_ability.srd",
+        "210_sketdan_01p_PS3_facial_eye.s",
+        "210_sketdan_01p_PS3_facial_mouth",
+        "210_sketdan_01p_PS3_shader.srd",
+        "210_sketdan_01p_PS3_texture.srd",
+        "210_sketdan_01p_ps3_shader.srd",
+        "210_sketdan_1_01p_PS3.srd",
+        "210_sketdan_1_01p_PS3_facial_eye",
+        "210_sketdan_1_01p_PS3_facial_mou",
+        "210_sketdan_1_01p_PS3_shader.srd",
+        "210_sketdan_2_01p_PS3.srd",
+        "210_sketdan_2_01p_PS3_facial_eye",
+        "210_sketdan_2_01p_PS3_facial_mou",
+        "210_sketdan_2_01p_PS3_shader.srd",
+        "210_sketdan_3_01p_PS3.srd",
+        "210_sketdan_3_01p_PS3_facial_eye",
+        "210_sketdan_3_01p_PS3_facial_mou"
+      ],
+      "nativeToken": "210",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/210/character_model_210_m.stp",
+          "bytes": 612637,
+          "fileName": "character_model_210_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "1246fc021a6a3be64d2fc039a6d5df8555a5f9515c205defba51d014fe8183c7"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/210/partition_op_character_ps3.cpk/character/model/character_model_210_m.pak",
+        "bytes": 455776,
+        "sha256": "3f530bff64dc1249e90c0e66d6314768b039f47c8fc77133282e5b2481dbb2e2"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 626752,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "lala"
+      ],
+      "internalMemberNameSamples": [
+        "211_lala_01p_PS3.srd",
+        "211_lala_01p_PS3_ability.srd",
+        "211_lala_01p_PS3_facial_eye.san",
+        "211_lala_01p_PS3_facial_mouth.sa",
+        "211_lala_01p_PS3_shader.srd",
+        "211_lala_01p_PS3_texture.srd",
+        "211_lala_01p_ps3.srd",
+        "211_lala_1_01p_PS3.srd",
+        "211_lala_1_01p_PS3_facial_eye.sa",
+        "211_lala_1_01p_PS3_facial_mouth.",
+        "211_lala_1_01p_PS3_shader.srd",
+        "211_lala_2_01p_PS3.srd",
+        "211_lala_2_01p_PS3_facial_eye.sa",
+        "211_lala_2_01p_PS3_facial_mouth.",
+        "211_lala_2_01p_PS3_shader.srd",
+        "211_lala_3_01p_PS3.srd",
+        "211_lala_3_01p_PS3_facial_eye.sa",
+        "211_lala_3_01p_PS3_facial_mouth.",
+        "211_lala_3_01p_PS3_shader.srd",
+        "211_lala_eye_a.tga"
+      ],
+      "nativeToken": "211",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/211/character_model_211_m.stp",
+          "bytes": 369228,
+          "fileName": "character_model_211_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "332ab367c24ce83f52f35a38170f664c628155328c2dcf20f0430dcb4cea44ab"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/211/partition_op_character_ps3.cpk/character/model/character_model_211_m.pak",
+        "bytes": 267296,
+        "sha256": "ba8e6a2aabf04feb59c580985954bc75f2f0095aece6f8a7b438249ca7ce2bb6"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 434240,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "allen"
+      ],
+      "internalMemberNameSamples": [
+        "212_allen_01p_PS3.srd",
+        "212_allen_01p_PS3_ability.srd",
+        "212_allen_01p_PS3_facial_eye.san",
+        "212_allen_01p_PS3_facial_mouth.s",
+        "212_allen_01p_PS3_shader.srd",
+        "212_allen_01p_PS3_texture.srd",
+        "212_allen_01p_ps3.srd",
+        "212_allen_1_01p_PS3.srd",
+        "212_allen_1_01p_PS3_facial_eye.s",
+        "212_allen_1_01p_PS3_facial_mouth",
+        "212_allen_1_01p_PS3_shader.srd",
+        "212_allen_2_01p_PS3.srd",
+        "212_allen_2_01p_PS3_facial_eye.s",
+        "212_allen_2_01p_PS3_facial_mouth",
+        "212_allen_2_01p_PS3_shader.srd",
+        "212_allen_3_01p_PS3.srd",
+        "212_allen_3_01p_PS3_facial_eye.s",
+        "212_allen_3_01p_PS3_facial_mouth",
+        "212_allen_3_01p_PS3_shader.srd",
+        "212_allen_stream_jp_lps_PS3.pak"
+      ],
+      "nativeToken": "212",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/212/character_model_212_m.stp",
+          "bytes": 250341,
+          "fileName": "character_model_212_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "0e67fc7a00dbf883f7c80b2ded192c5af3e11beaf9a28783e56171e459761e94"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/212/partition_op_character_ps3.cpk/character/model/character_model_212_m.pak",
+        "bytes": 179488,
+        "sha256": "9668c3142f3d3d4ab4cb988df3b704ec2ed42dff1a4149980b45ba8e75023223"
+      }
+    },
+    {
+      "completeNativeDecode": false,
+      "declaredDecodedBytes": 337984,
+      "identityStatus": "internal-stpk-member-name-observed-from-partial-index-not-complete-decode",
+      "internalIdentityNames": [
+        "hinata"
+      ],
+      "internalMemberNameSamples": [
+        "213_hinata_01p_PS3.srd",
+        "213_hinata_01p_PS3_ability.srd",
+        "213_hinata_01p_PS3_facial_eye.sa",
+        "213_hinata_01p_PS3_facial_mouth.",
+        "213_hinata_01p_PS3_shader.srd",
+        "213_hinata_01p_PS3_texture.srd",
+        "213_hinata_01p_ps3.srd",
+        "213_hinata_1_01p_PS3.srd",
+        "213_hinata_1_01p_PS3_facial_eye.",
+        "213_hinata_1_01p_PS3_facial_mout",
+        "213_hinata_1_01p_PS3_shader.srd",
+        "213_hinata_2_01p_PS3.srd",
+        "213_hinata_2_01p_PS3_facial_eye.",
+        "213_hinata_2_01p_PS3_facial_mout",
+        "213_hinata_2_01p_PS3_shader.srd",
+        "213_hinata_3_01p_PS3.srd",
+        "213_hinata_3_01p_PS3_facial_eye.",
+        "213_hinata_3_01p_PS3_facial_mout",
+        "213_hinata_3_01p_PS3_shader.srd",
+        "213_hinata_stream_jp_lps_PS3.pak"
+      ],
+      "nativeToken": "213",
+      "outputs": [
+        {
+          "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/identity-probe/partial-stpk/213/character_model_213_m.stp",
+          "bytes": 190355,
+          "fileName": "character_model_213_m.stp",
+          "magicHex": "5354504b",
+          "sha256": "5738d2a043f3bc45430e326798245c18b00fa437e47214f281c0f0b1ee8871ee"
+        }
+      ],
+      "returnCode": 0,
+      "source": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-owner-archive-extract-v1/native-token-members/213/partition_op_character_ps3.cpk/character/model/character_model_213_m.pak",
+        "bytes": 138016,
+        "sha256": "f4e7d98dbafac844671d19514472c5f2628a0e6ce3c7ce9fa6f534278f2c128d"
+      }
+    }
+  ],
+  "schema": "ggd.jstars-owner-identity-probe@1",
+  "sourceId": "owner-jstars-victory-vs-plus-20260917",
+  "status": "priority-identities-confirmed-partial-index-native-decode-incomplete",
+  "summary": {
+    "completeNativeDecodes": 2,
+    "nativeTokensProbed": 56,
+    "priorityIdentitiesConfirmed": 6,
+    "tokensWithInternalIdentity": 56
+  }
+}

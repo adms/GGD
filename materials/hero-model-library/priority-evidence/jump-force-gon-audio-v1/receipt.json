@@ -1,0 +1,64 @@
+{
+  "schema": "ggd.jump-force-gon-audio-candidates@1",
+  "asOfDate": "2026-09-17",
+  "heroId": "godie-ucrl",
+  "nativeCharacterId": "chr0300",
+  "sourceGame": "JUMP FORCE",
+  "sourceGroups": [
+    "parallel-ps-jumpforce-local-next32:jumpforce-gon",
+    "steam-jump-force-streaming-audio-816020-build-8523149:chr0300"
+  ],
+  "inputs": {
+    "voiceIndex": {
+      "gitPath": "materials/hero-model-library/voice-index.json",
+      "sha256": "6c1414a7b9bc1680d229ea9d01ed33a8e9bb8e83462ef72ea12d20b2900a8c97"
+    },
+    "voiceFiles": {
+      "gitPath": "materials/hero-model-library/voice-files.jsonl.gz",
+      "sha256": "d50fb514de209397632ea9b4a5263cb90b545de139aed19347b2f62033dcb80d"
+    },
+    "identityBindings": {
+      "gitPath": "materials/hero-model-library/priority-evidence/jump-force-full-roster-v1/audio-identity-bindings.json",
+      "sha256": "f410f11cd2b567da4d177b3df67585f73d09065f854fc605f9a7016a95e8bdb0"
+    },
+    "ownerGroupDecisions": {
+      "gitPath": "materials/hero-model-library/review/asset-review-portal-v1/owner-decisions.json",
+      "sha256": "fb55bc1d0feed268d902aed09aec7cba738e089b441785626ac880cebf39e8a7"
+    },
+    "centralManifestDeclaredSha256": "d50fb514de209397632ea9b4a5263cb90b545de139aed19347b2f62033dcb80d"
+  },
+  "identityEvidence": "verified-character-family-source-association",
+  "ownerApprovalScope": "group-sample-classification-only",
+  "filesManifest": {
+    "gitPath": "materials/hero-model-library/priority-evidence/jump-force-gon-audio-v1/files.jsonl.gz",
+    "sha256": "4fea7a44bfd634359eea594094213d1374cfbcd30a851f31e6eac39b8003b4ba"
+  },
+  "summary": {
+    "files": 250,
+    "bytes": 13345854,
+    "durationSeconds": 439.726187,
+    "actVoiceFiles": 225,
+    "eventVoiceFiles": 25,
+    "perClipSpeakerApproved": 0,
+    "perClipLanguageApproved": 0,
+    "perClipEventBindingsApproved": 0,
+    "runtimeBindingsCreated": 0,
+    "productionDeployments": 0
+  },
+  "localVerification": {
+    "verified": true,
+    "files": 250,
+    "bytes": 13345854,
+    "sha256Recomputed": 250
+  },
+  "stageBoundary": {
+    "sourceFilesDecodedAndIndexed": true,
+    "characterFamilyLinked": true,
+    "ownerGroupSampleApproved": true,
+    "perClipListeningReview": "pending",
+    "speakerLanguageTranscriptReview": "pending",
+    "eventAndSkillBinding": "pending",
+    "runtimeSelectable": false,
+    "productionDeployed": false
+  }
+}

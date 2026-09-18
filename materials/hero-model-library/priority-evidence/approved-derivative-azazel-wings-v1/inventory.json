@@ -1,0 +1,267 @@
+{
+  "schema": "ggd.approved-azazel-wings-inventory@1",
+  "workflowId": "approved-derivative-azazel-wings-v1",
+  "scope": {
+    "heroId": "community-review-32-20260907",
+    "nameZh": "阿薩謝爾",
+    "approvedDerivativeId": "derivative:azazel",
+    "expandedToOtherCharacters": false
+  },
+  "source": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/models/community/7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2.glb",
+    "gitPath": "content/assets/models/community/7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2.glb",
+    "sha256": "7727100cdc5fa23b58e173d2cdbd7ca9a08f7c6034e6fc31060e91463603a9a2",
+    "bytes": 679728
+  },
+  "reference": {
+    "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/references/approved-derivative-azazel-wings-v1/owner-appearance-reference.png",
+    "bytes": 443264,
+    "sha256": "0a93f42dfcb8317a60b1c532bc4f4fdfdf39f49618ff23ee38d1ca38322733ae",
+    "role": "owner appearance reference only"
+  },
+  "candidate": {
+    "modelKey": "community.body.ba1abbbdb25444e61533ab7354ebd85125ffa860763b86ee",
+    "modelDocumentPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/models/community.body.ba1abbbdb25444e61533ab7354ebd85125ffa860763b86ee.json",
+    "modelDocumentSha256": "e7c05ae9b001c166a57b04872326a79390a541f5f3042fb2bddccbe089863b22",
+    "glbPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/content/assets/models/community/acbc5a0cd8880ef835cfc0bb59011f59fbca3c053f7e0902c5d7df5cae5e166a.glb",
+    "gitGlbPath": "content/assets/models/community/acbc5a0cd8880ef835cfc0bb59011f59fbca3c053f7e0902c5d7df5cae5e166a.glb",
+    "sha256": "acbc5a0cd8880ef835cfc0bb59011f59fbca3c053f7e0902c5d7df5cae5e166a",
+    "localPath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivative-azazel-wings-v1/azazel-wings-v1.glb",
+    "metrics": {
+      "triangles": 5691,
+      "drawPrimitives": 2,
+      "skinnedPrimitives": 2,
+      "skins": 1,
+      "joints": 42,
+      "textures": [
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 83431,
+          "sha256": "397b86eae10a543e6131c010dcef4e1fb505682d37f7cd74351b61062980899f"
+        },
+        {
+          "width": 256,
+          "height": 256,
+          "bytes": 6397,
+          "sha256": "f76fad97b1d5762ea486516c10849b542ffd480f61899ced86c120cf518f0135"
+        }
+      ],
+      "maxTextureEdge": 256,
+      "clips": [
+        {
+          "index": 0,
+          "name": "bat_idle",
+          "duration": 0.90625,
+          "channels": 42
+        },
+        {
+          "index": 1,
+          "name": "single_run",
+          "duration": 0.59375,
+          "channels": 42
+        },
+        {
+          "index": 2,
+          "name": "single_attack_attcom_1",
+          "duration": 0.90625,
+          "channels": 42
+        },
+        {
+          "index": 3,
+          "name": "single_skill_01",
+          "duration": 0.28125,
+          "channels": 42
+        },
+        {
+          "index": 4,
+          "name": "dead",
+          "duration": 1.0625,
+          "channels": 42
+        }
+      ],
+      "maxChannelsPerClip": 42
+    },
+    "khronos": {
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
+      "hints": 0,
+      "truncated": false
+    },
+    "bodyAtlas": {
+      "sourceSha256": "256e971b9bf38f19f70ea87c1ffd805a78d45dc5090e28aaaa8f0b83b6c36da2",
+      "sourceSize": [
+        512,
+        512
+      ],
+      "outputSha256": "397b86eae10a543e6131c010dcef4e1fb505682d37f7cd74351b61062980899f",
+      "outputSize": [
+        256,
+        256
+      ],
+      "operation": "Pillow Lanczos resize only; approved colour treatment retained"
+    },
+    "wingAttachment": {
+      "triangles": 10,
+      "vertices": 14,
+      "drawPrimitivesAdded": 1,
+      "binding": {
+        "skin": 0,
+        "jointSlot": 37,
+        "jointNode": 37,
+        "jointName": "Bip01 Spine1",
+        "weight": 1.0
+      },
+      "texture": {
+        "sha256": "f76fad97b1d5762ea486516c10849b542ffd480f61899ced86c120cf518f0135",
+        "size": [
+          256,
+          256
+        ],
+        "palette": "deep burgundy and muted violet"
+      },
+      "material": {
+        "doubleSided": true,
+        "metallicFactor": 0,
+        "roughnessFactor": 0.82
+      }
+    }
+  },
+  "preservation": {
+    "bodyPrimitiveJsonUnchanged": true,
+    "skinJsonUnchanged": true,
+    "nodeJsonUnchanged": true,
+    "animationJsonUnchanged": true,
+    "sourceClipInventoryUnchanged": true,
+    "independentEmbeddedCopy": true,
+    "sourceCandidateRetained": true,
+    "sourceAccessorsPreserved": 222,
+    "byteIdenticalRebuild": true,
+    "receipt": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivative-azazel-wings-v1/azazel-wings-v1.preservation.json",
+      "bytes": 30781,
+      "sha256": "8bc9e41153a22a708a6eb5f7175af8e76d372e7d9859ea426afa660810550edf"
+    }
+  },
+  "registration": {
+    "versionModelKey": "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439",
+    "receipt": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivative-azazel-wings-v1/azazel-wings-v1.registration.json",
+      "bytes": 3212,
+      "sha256": "191ea875657242e41479ffc4b449efa14dcf092c1205c3bb911286ed8f37b285"
+    },
+    "validationReceipt": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivative-azazel-wings-v1/azazel-wings-v1.registration-validation.json",
+      "bytes": 4990,
+      "sha256": "84774c6840d00b484edbf2882a2e352e0e91853b68618bba94686b904856b68e"
+    },
+    "previousVersionCount": 5,
+    "currentVersionCount": 6,
+    "allPreviousVersionsRetained": true,
+    "selectionMode": "automatic",
+    "activeModelKey": "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439"
+  },
+  "visualEvidence": {
+    "baselineViews": [
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/azazel-current/front.png",
+        "bytes": 334850,
+        "sha256": "5e25bfeee060ac6d3dba07ebc9b4db82d18702c50e4d3c9e303e0fb005a98d50",
+        "view": "front"
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/azazel-current/back.png",
+        "bytes": 294484,
+        "sha256": "6cdccd94d082b42924e61f5fbacc967f16608f6c28240b8820d0d66e408fd635",
+        "view": "back"
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/validation/approved-derivatives-v1/batch-v1/azazel-current/isometric.png",
+        "bytes": 308282,
+        "sha256": "54bb3c9aed67486b8d3b1e1d5e83b01fa5f02889cc61872e2cc567732f496727",
+        "view": "isometric"
+      }
+    ],
+    "candidateViews": [
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivative-azazel-wings-v1/render-v2/front.png",
+        "bytes": 325601,
+        "sha256": "1fd2d7e089dc311ad7686fa7419752fa913d5cf3dbd4f8e67a2f52cffb417c83",
+        "view": "front"
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivative-azazel-wings-v1/render-v2/back.png",
+        "bytes": 285494,
+        "sha256": "c13326dee6e7ddd0e7abc18e55d9a135b7120cf5a04d3730458a225841a0c89b",
+        "view": "back"
+      },
+      {
+        "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivative-azazel-wings-v1/render-v2/isometric.png",
+        "bytes": 291759,
+        "sha256": "2b5772ba90b1e2eeb6b163ea2769ee7121a6a91bb751e3e619495a41e3938c91",
+        "view": "isometric"
+      }
+    ],
+    "webglProof": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/approved-derivative-azazel-wings-v1/render-v2/proof.json",
+      "bytes": 3466,
+      "sha256": "6f869c40fba5afc056af1d0963a27b67421c38370c593639c31eead5e9bcd739"
+    },
+    "abSheet": {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/priority-evidence/approved-derivative-azazel-wings-v1/azazel-wings-ab.jpg",
+      "bytes": 185872,
+      "sha256": "a3f8eace697a47e0d4e612a885f95fd5f4a686fbc482226312feccb3e028edb4",
+      "gitPath": "materials/hero-model-library/priority-evidence/approved-derivative-azazel-wings-v1/azazel-wings-ab.jpg"
+    },
+    "technicalReview": "front/back/isometric all show the complete body and two attached wings; no missing texture or detached rest-pose component observed",
+    "ownerAcceptance": "pending"
+  },
+  "centralIndexes": {
+    "modelInventory": {
+      "gitPath": "materials/hero-model-library/inventory.json",
+      "heroId": "community-review-32-20260907",
+      "checkoutSelection": {
+        "modelKey": "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439",
+        "mode": "automatic"
+      },
+      "sourceModelKey": "community.body.ba1abbbdb25444e61533ab7354ebd85125ffa860763b86ee"
+    },
+    "currentResources": {
+      "gitPath": "materials/asset-library/current-resources.json",
+      "sourceModelKey": "community.body.ba1abbbdb25444e61533ab7354ebd85125ffa860763b86ee",
+      "runtimeDropdownRegistered": true,
+      "registeredVersionModelKeys": [
+        "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439"
+      ]
+    },
+    "modelBudget": {
+      "gitPath": "content/assets/model-budget/report.json",
+      "modelKey": "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439",
+      "role": "champion",
+      "verdicts": {
+        "triangles": "ok",
+        "drawCalls": "ok",
+        "maxTextureEdge": "ok",
+        "animChannels": "ok"
+      }
+    }
+  },
+  "status": {
+    "converted": true,
+    "policyValidated": true,
+    "khronosValidated": true,
+    "threeViewEvidence": true,
+    "sourceModelPublishedToGit": true,
+    "dropdownRegistered": true,
+    "selectable": true,
+    "automaticEligible": true,
+    "automaticSelected": true,
+    "productionDeployed": false
+  },
+  "limitations": [
+    "Wings are a GGD-authored procedural attachment based on the owner-provided appearance reference, not source-game native geometry.",
+    "Five retained clips are source-model motion borrowed for the target hero; they are not Azazel-native motion.",
+    "Three-view evidence is static rest-pose evidence. Owner appearance acceptance, motion playback and production deployment remain pending."
+  ]
+}

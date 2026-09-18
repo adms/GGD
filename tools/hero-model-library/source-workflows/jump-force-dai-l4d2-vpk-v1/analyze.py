@@ -454,7 +454,7 @@ def sourceio_intermediate(workspace: Path, item: dict[str, Any], stem: str, sour
                     or not output.is_file()
                     or output.stat().st_size != attempt["output"]["bytes"]
                     or sha256(output) != attempt["output"]["sha256"]
-                    or attempt.get("trianglesAfter", 8000) >= 8000):
+                    or attempt.get("trianglesAfter", 8001) > 8000):
                 raise ValueError(f"invalid topology decimation receipt: {attempt_path}")
             visual = json.loads(review.read_text(encoding="utf-8"))
             proof = review.parent / "proof.json"
