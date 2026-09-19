@@ -199,7 +199,7 @@
       "why": "owner 2026-08-23：「系統技能倍率設定成 0.3 ，我說錯了請你還原1x，我說的是冷卻時間0.3」"
     }
   ],
-  "fingerprint": "a6ccefcf6be9",
+  "fingerprint": "4b28da2ee688",
   "capabilityFingerprint": "96994f3b",
   "required": [
     {
@@ -12376,6 +12376,11 @@
     {
       "group": "configField",
       "name": "legendaryShelf.sellRefundPct",
+      "owner": "config.arena-rules@1"
+    },
+    {
+      "group": "configField",
+      "name": "legendaryShelf.skipWhenFull",
       "owner": "config.arena-rules@1"
     },
     {
@@ -25685,9 +25690,9 @@
     "projectileField": 21,
     "skinField": 11,
     "vfxScriptField": 8,
-    "configField": 4118,
+    "configField": 4119,
     "_notRequired": 15,
-    "_total": 5277,
+    "_total": 5278,
     "_ownerOnly": 39
   }
 }

@@ -183,9 +183,9 @@ hand-edit between the markers):
 
 <!-- BEGIN GENERATED:editor-coverage-receipt -->
 ```text
-editor coverage fingerprint     a6ccefcf6be9
+editor coverage fingerprint     4b28da2ee688
 capability fingerprint          96994f3b
-required cells                  5277
+required cells                  5278
 nested effect paths             462
 ```
 <!-- END GENERATED:editor-coverage-receipt -->
