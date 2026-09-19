@@ -51,7 +51,58 @@ export type CompiledHeroDraft = Omit<GeneratedHeroDraft, "vfxScripts"> & {
    * ⇒ ⭐ 七名 LOL 英雄的 `.r` 一上架就是烘平的，⛔ 而作者稿裡明明寫著 `call`。
    */
   authoredVfxScripts: readonly VfxScriptAuthoredDoc[];
+  /**
+   * ⭐⭐ **英雄的作者稿**（`origin` 模板 ref ＋ `statOverrides` 微調覆寫）——
+   * ⭐ GH#1024 B2：投稿包要送的是**這一份**，⛔ 不是 `champion`。
+   *
+   * ⚠️⚠️ ⭐ 這一格與上面的 `authoredVfxScripts` 是**同一個病的第二個載體**，
+   * 而在它出現之前只有特效那一半被治好了：`champion` 是
+   * `resolveChampionRuntimeStats()` 的**輸出** —— 它把十一屬性烘成
+   * `baseStats`／`growth`／`attributes`（2026-09-19 量到 **30 格算好的數字**）
+   * 並且 **`delete out.statOverrides`** ⇒ ⭐ 出身表從此有了第二個住處，
+   * 而 `stat-normalization.json` 改了之後那一份**不會跟著動**（第〇·四守則）。
+   *
+   * ⭐ 送作者稿出去，玩家看到的東西**一模一樣** —— 因為匯入端跑的是
+   * `resolveAuthoredHeroBodies()`，而 `compileGeneratedHeroDraft()` 自己也跑它
+   * （⛔ 不是兩份會各自漂的實作）。守衛：`authoredChampionRoundTrip.test.ts`。
+   */
+  authoredBodies: AuthoredHeroBodies;
 };
+
+/**
+ * ⭐ 英雄層「模板 ref ＋ 微調覆寫」的**作者稿**單位。
+ *
+ * ⚠️ `needsCounterpart` 必須跟著走：少了它，匯入端重建不出變身態那一具，
+ * ⇒ ⭐ 「逐位元組相同」就只對單體英雄成立 —— 一把只驗過單邊的尺。
+ */
+export interface AuthoredHeroBodies {
+  /** 稀疏：`origin` ＋（可選）`statOverrides`；⛔ `baseStats`／`growth`／`attributes` 一律不烘。 */
+  readonly champion: ChampionDoc;
+  readonly relatedChampions: readonly ChampionDoc[];
+  readonly needsCounterpart: boolean;
+}
+
+/**
+ * ⭐ **匯入那一側**：把作者稿解析回出貨的 runtime 文件。
+ *
+ * ⛔ 這是唯一的住處 —— `compileGeneratedHeroDraft()` 也呼叫它，
+ * 所以守衛量到的「匯出→匯入逐位元組相同」量的是**出貨的那條路**（失敗形態⑤）。
+ */
+export function resolveAuthoredHeroBodies(
+  authored: AuthoredHeroBodies,
+  configs: readonly { schema?: string }[] = [],
+): { champion: ChampionDoc; relatedChampions: ChampionDoc[] } {
+  const roster = championRoster([authored.champion, ...authored.relatedChampions]);
+  const resolved = resolveChampionRuntimeStats(authored.champion, configs, roster);
+  // Start both bodies from the resolved base. Transform bonuses live in skills;
+  // the shared resolver still applies the configured form/origin policy.
+  const runtimeBodies = instantiateHeroBodies(resolved, authored.needsCounterpart);
+  const runtimeRoster = championRoster([runtimeBodies.champion, ...runtimeBodies.relatedChampions]);
+  return {
+    champion: runtimeBodies.champion,
+    relatedChampions: runtimeBodies.relatedChampions.map((body) => resolveChampionRuntimeStats(body, configs, runtimeRoster)),
+  };
+}
 
 export interface HeroDraftCompileFailure {
   slot: HeroSlot;
@@ -244,12 +295,9 @@ export function compileGeneratedHeroDraft(
   // Planned capabilities are hints; the compiled executable graph is authoritative.
   const needsCounterpart = heroNeedsCounterpart(Object.values(abilityDrafts));
   const bodies = instantiateHeroBodies(champion, needsCounterpart);
-  const roster = championRoster([bodies.champion, ...bodies.relatedChampions]);
-  const resolved = resolveChampionRuntimeStats(bodies.champion, configs, roster);
-  // Start both bodies from the resolved base. Transform bonuses live in skills;
-  // the shared resolver still applies the configured form/origin policy.
-  const runtimeBodies = instantiateHeroBodies(resolved, needsCounterpart);
-  const runtimeRoster = championRoster([runtimeBodies.champion, ...runtimeBodies.relatedChampions]);
+  // ⭐ 作者稿 —— `origin` 仍是 ref、`statOverrides` 仍在；⛔ 十一屬性還沒被烘。
+  const authoredBodies: AuthoredHeroBodies = { ...bodies, needsCounterpart };
+  const runtimeBodies = resolveAuthoredHeroBodies(authoredBodies, configs);
   return {
     ok: true,
     draft: {
@@ -257,8 +305,9 @@ export function compileGeneratedHeroDraft(
       vfxScripts,
       // ⭐ 作者稿原樣帶出去 —— ⛔ 出貨要用這一份（見型別上的說明）。
       authoredVfxScripts: generated.vfxScripts,
+      authoredBodies,
       champion: runtimeBodies.champion,
-      relatedChampions: runtimeBodies.relatedChampions.map((body) => resolveChampionRuntimeStats(body, configs, runtimeRoster)),
+      relatedChampions: runtimeBodies.relatedChampions,
       abilityDrafts,
       standaloneAbilities: [abilityDrafts.PASSIVE, abilityDrafts.EX],
     },
