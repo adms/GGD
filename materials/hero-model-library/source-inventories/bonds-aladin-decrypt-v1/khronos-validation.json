@@ -1,0 +1,1723 @@
+{
+  "schema": "ggd.heros-bonds-khronos-gltf-validation@1",
+  "validatorPackage": "gltf-validator",
+  "validatorVersion": "2.0.0-dev.3.10",
+  "assets": [
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005800/ch027005800-rigged.glb",
+      "bytes": 3212492,
+      "sha256": "5ddd579834884f286ae04134de6b7e16abbf622a003c0f9081fa16019ffd6322",
+      "validatorReport": {
+        "uri": "ch027005800-rigged.glb",
+        "mimeType": "model/gltf-binary",
+        "validatorVersion": "2.0.0-dev.3.10",
+        "issues": {
+          "numErrors": 0,
+          "numWarnings": 6,
+          "numInfos": 0,
+          "numHints": 0,
+          "messages": [
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/70"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/85"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/116"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/120"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_LOCAL_TRANSFORMS",
+              "message": "Local transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/120"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/136"
+            }
+          ],
+          "truncated": false
+        },
+        "info": {
+          "version": "2.0",
+          "generator": "GGD bonds-aladin-decrypt-v1 rigged exporter",
+          "resources": [
+            {
+              "pointer": "/buffers/0",
+              "mimeType": "application/gltf-buffer",
+              "storage": "glb",
+              "byteLength": 3158360
+            },
+            {
+              "pointer": "/images/0",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 1024,
+                "height": 1024,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/1",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/2",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 1024,
+                "height": 1024,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/3",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 1024,
+                "height": 1024,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/4",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/5",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            }
+          ],
+          "animationCount": 0,
+          "materialCount": 11,
+          "hasMorphTargets": false,
+          "hasSkins": true,
+          "hasTextures": true,
+          "hasDefaultScene": true,
+          "drawCallCount": 13,
+          "totalVertexCount": 99279,
+          "totalTriangleCount": 29990,
+          "maxUVs": 1,
+          "maxInfluences": 4,
+          "maxAttributes": 5
+        }
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005800/ch027005800-runtime-lod.glb",
+      "bytes": 2239896,
+      "sha256": "c846587e618d95609025236321fe83adf1b1592545c1ca78289bb169cf081a14",
+      "validatorReport": {
+        "uri": "ch027005800-runtime-lod.glb",
+        "mimeType": "model/gltf-binary",
+        "validatorVersion": "2.0.0-dev.3.10",
+        "issues": {
+          "numErrors": 0,
+          "numWarnings": 5,
+          "numInfos": 34,
+          "numHints": 0,
+          "messages": [
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/0"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/3"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/6"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/9"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/15"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/18"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/21"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/24"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/33"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/35"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/39"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/43"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/47"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/48"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/60"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/63"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/66"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/70"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/72"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/77"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/82"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/84"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/86"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/88"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/96"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/102"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/104"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/108"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/112"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/116"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/117"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/127"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/128"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/129"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/130"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/131"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/132"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/133"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/135"
+            }
+          ],
+          "truncated": false
+        },
+        "info": {
+          "version": "2.0",
+          "generator": "Khronos glTF Blender I/O v5.2.40",
+          "resources": [
+            {
+              "pointer": "/buffers/0",
+              "mimeType": "application/gltf-buffer",
+              "storage": "glb",
+              "byteLength": 2192580
+            },
+            {
+              "pointer": "/images/0",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 1024,
+                "height": 1024,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/1",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 1024,
+                "height": 1024,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/2",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/3",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 1024,
+                "height": 1024,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/4",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/5",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            }
+          ],
+          "animationCount": 0,
+          "materialCount": 10,
+          "hasMorphTargets": false,
+          "hasSkins": true,
+          "hasTextures": true,
+          "hasDefaultScene": true,
+          "drawCallCount": 12,
+          "totalVertexCount": 9547,
+          "totalTriangleCount": 7898,
+          "maxUVs": 1,
+          "maxInfluences": 4,
+          "maxAttributes": 5
+        }
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005800/ch027005800-runtime-v2.glb",
+      "bytes": 913220,
+      "sha256": "a79a5471d0ef01fb6091ff26457327379ab972bcd33fcffbf062a77b782505f6",
+      "validatorReport": {
+        "uri": "ch027005800-runtime-v2.glb",
+        "mimeType": "model/gltf-binary",
+        "validatorVersion": "2.0.0-dev.3.10",
+        "issues": {
+          "numErrors": 0,
+          "numWarnings": 5,
+          "numInfos": 34,
+          "numHints": 0,
+          "messages": [
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/0"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/3"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/6"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/9"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/15"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/18"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/21"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/24"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/33"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/35"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/39"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/43"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/47"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/48"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/60"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/63"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/66"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/70"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/72"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/77"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/82"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/84"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/86"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/88"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/96"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/102"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/104"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/108"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/112"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/116"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/117"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/127"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/128"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/129"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/130"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/131"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/132"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/133"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/135"
+            }
+          ],
+          "truncated": false
+        },
+        "info": {
+          "version": "2.0",
+          "generator": "Khronos glTF Blender I/O v5.2.40",
+          "resources": [
+            {
+              "pointer": "/buffers/0",
+              "mimeType": "application/gltf-buffer",
+              "storage": "glb",
+              "byteLength": 874588
+            },
+            {
+              "pointer": "/images/0",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/1",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/2",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/3",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/4",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            }
+          ],
+          "animationCount": 0,
+          "materialCount": 5,
+          "hasMorphTargets": false,
+          "hasSkins": true,
+          "hasTextures": true,
+          "hasDefaultScene": true,
+          "drawCallCount": 5,
+          "totalVertexCount": 9560,
+          "totalTriangleCount": 7898,
+          "maxUVs": 1,
+          "maxInfluences": 4,
+          "maxAttributes": 5
+        }
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005801/ch027005801-rigged.glb",
+      "bytes": 3213348,
+      "sha256": "9669b3d57efdeb3368311ad9538065d5fba70ec0ab0114a042e931d923443add",
+      "validatorReport": {
+        "uri": "ch027005801-rigged.glb",
+        "mimeType": "model/gltf-binary",
+        "validatorVersion": "2.0.0-dev.3.10",
+        "issues": {
+          "numErrors": 0,
+          "numWarnings": 6,
+          "numInfos": 0,
+          "numHints": 0,
+          "messages": [
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/26"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/46"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_LOCAL_TRANSFORMS",
+              "message": "Local transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/46"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/74"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/108"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/119"
+            }
+          ],
+          "truncated": false
+        },
+        "info": {
+          "version": "2.0",
+          "generator": "GGD bonds-aladin-decrypt-v1 rigged exporter",
+          "resources": [
+            {
+              "pointer": "/buffers/0",
+              "mimeType": "application/gltf-buffer",
+              "storage": "glb",
+              "byteLength": 3158868
+            },
+            {
+              "pointer": "/images/0",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 1024,
+                "height": 1024,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/1",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/2",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 1024,
+                "height": 1024,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/3",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 1024,
+                "height": 1024,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/4",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/5",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            }
+          ],
+          "animationCount": 0,
+          "materialCount": 12,
+          "hasMorphTargets": false,
+          "hasSkins": true,
+          "hasTextures": true,
+          "hasDefaultScene": true,
+          "drawCallCount": 13,
+          "totalVertexCount": 99324,
+          "totalTriangleCount": 29990,
+          "maxUVs": 1,
+          "maxInfluences": 4,
+          "maxAttributes": 5
+        }
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005801/ch027005801-runtime-lod.glb",
+      "bytes": 2240128,
+      "sha256": "ed67057231f78bc4c6e7409f9e47170db8b5eb17efeb6cf62d69737d1ca0f051",
+      "validatorReport": {
+        "uri": "ch027005801-runtime-lod.glb",
+        "mimeType": "model/gltf-binary",
+        "validatorVersion": "2.0.0-dev.3.10",
+        "issues": {
+          "numErrors": 0,
+          "numWarnings": 5,
+          "numInfos": 34,
+          "numHints": 0,
+          "messages": [
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/0"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/3"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/6"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/9"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/15"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/18"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/21"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/24"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/33"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/35"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/39"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/43"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/47"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/48"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/60"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/63"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/66"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/70"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/72"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/77"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/82"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/84"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/86"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/88"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/96"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/102"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/104"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/108"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/112"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/116"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/117"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/127"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/128"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/129"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/130"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/131"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/132"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/133"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/135"
+            }
+          ],
+          "truncated": false
+        },
+        "info": {
+          "version": "2.0",
+          "generator": "Khronos glTF Blender I/O v5.2.40",
+          "resources": [
+            {
+              "pointer": "/buffers/0",
+              "mimeType": "application/gltf-buffer",
+              "storage": "glb",
+              "byteLength": 2192732
+            },
+            {
+              "pointer": "/images/0",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 1024,
+                "height": 1024,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/1",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 1024,
+                "height": 1024,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/2",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/3",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 1024,
+                "height": 1024,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/4",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/5",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            }
+          ],
+          "animationCount": 0,
+          "materialCount": 11,
+          "hasMorphTargets": false,
+          "hasSkins": true,
+          "hasTextures": true,
+          "hasDefaultScene": true,
+          "drawCallCount": 12,
+          "totalVertexCount": 9550,
+          "totalTriangleCount": 7897,
+          "maxUVs": 1,
+          "maxInfluences": 4,
+          "maxAttributes": 5
+        }
+      }
+    },
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005801/ch027005801-runtime-v2.glb",
+      "bytes": 913464,
+      "sha256": "14623eaa192b8e798f398271575bb1f396d7f5975e55a2b366c2ba923ff7f97d",
+      "validatorReport": {
+        "uri": "ch027005801-runtime-v2.glb",
+        "mimeType": "model/gltf-binary",
+        "validatorVersion": "2.0.0-dev.3.10",
+        "issues": {
+          "numErrors": 0,
+          "numWarnings": 5,
+          "numInfos": 34,
+          "numHints": 0,
+          "messages": [
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/0"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/3"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/6"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/9"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/15"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/18"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/21"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/24"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/33"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/35"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/39"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/43"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/47"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/48"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/60"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/63"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/66"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/70"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/72"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/77"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/82"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/84"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/86"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/88"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/96"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/102"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/104"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/108"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/112"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/116"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/117"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/127"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/128"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/129"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/130"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/131"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/132"
+            },
+            {
+              "code": "NODE_SKINNED_MESH_NON_ROOT",
+              "message": "Node with a skinned mesh is not root. Parent transforms will not affect a skinned mesh.",
+              "severity": 1,
+              "pointer": "/nodes/133"
+            },
+            {
+              "code": "NODE_EMPTY",
+              "message": "Empty node encountered.",
+              "severity": 2,
+              "pointer": "/nodes/135"
+            }
+          ],
+          "truncated": false
+        },
+        "info": {
+          "version": "2.0",
+          "generator": "Khronos glTF Blender I/O v5.2.40",
+          "resources": [
+            {
+              "pointer": "/buffers/0",
+              "mimeType": "application/gltf-buffer",
+              "storage": "glb",
+              "byteLength": 875052
+            },
+            {
+              "pointer": "/images/0",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/1",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/2",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/3",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            },
+            {
+              "pointer": "/images/4",
+              "mimeType": "image/png",
+              "storage": "buffer-view",
+              "image": {
+                "width": 256,
+                "height": 256,
+                "format": "rgba",
+                "primaries": "srgb",
+                "transfer": "srgb",
+                "bits": 8
+              }
+            }
+          ],
+          "animationCount": 0,
+          "materialCount": 5,
+          "hasMorphTargets": false,
+          "hasSkins": true,
+          "hasTextures": true,
+          "hasDefaultScene": true,
+          "drawCallCount": 5,
+          "totalVertexCount": 9569,
+          "totalTriangleCount": 7897,
+          "maxUVs": 1,
+          "maxInfluences": 4,
+          "maxAttributes": 5
+        }
+      }
+    }
+  ],
+  "summary": {
+    "assetCount": 6,
+    "errorCount": 0,
+    "warningCount": 32,
+    "informationCount": 136,
+    "hintCount": 0,
+    "passed": true
+  }
+}

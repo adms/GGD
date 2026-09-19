@@ -1,0 +1,258 @@
+{
+  "schema": "ggd.heros-bonds-cri-audio-extraction@1",
+  "sourceManifest": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/manifest.json",
+  "clipCount": 7,
+  "decodedWavCount": 7,
+  "totalDurationSeconds": 19.648001,
+  "cueNamesByCharacterContainer": {
+    "ch027003700": [
+      "se_in_0258_ui_enemy_blow_away",
+      "se_in_14430_ach027003700_Away",
+      "se_in_14431_ach027003700_Attack_01",
+      "se_in_14432_ach027003700_Attack_02",
+      "se_in_14433_ach027003700_Attack_03",
+      "se_in_14434_ach027003700_Cloth_01",
+      "se_in_14435_ach027003700_Cloth_02",
+      "se_in_14436_ach027003700_Cloth_03",
+      "se_in_14437_ach027003700_Damage_big_01",
+      "se_in_14438_ach027003700_Damage_small_01",
+      "se_in_14439_ach027003700_Down_01",
+      "se_in_14440_ach027003700_Down_02",
+      "se_in_14441_ach027003700_Footsteps_01",
+      "se_in_14442_ach027003700_Land_01",
+      "se_in_14443_ach027003700_Movement_01",
+      "se_in_14444_ach027003700_Movement_02",
+      "se_in_14445_ach027003700_Movement_03",
+      "se_in_14446_ach027003700_Step_01",
+      "se_in_14447_ach027003700_Step_02",
+      "se_in_14448_ach027003700_Swing_01",
+      "se_in_14449_ach027003700_Swing_02",
+      "se_in_14450_ach027003700_Whoosh_01",
+      "se_in_14451_ach027003700_Whoosh_02",
+      "se_in_14452_Vearn_apperance",
+      "se_in_14453_Vearn_defeat",
+      "vo_ch027003700_0007",
+      "vo_ch027003700_0011",
+      "vo_ch027003700_0032",
+      "vo_ch027003700_0036",
+      "vo_ch027003700_0042",
+      "vo_ch027003700_0055",
+      "vo_ch027003700_0056",
+      "vo_ch027003700_0063",
+      "vo_ch027003700_0072",
+      "vo_ch027003700_0073",
+      "vo_ch027003700_0076",
+      "vo_ch027003700_Attack_L1",
+      "vo_ch027003700_Attack_L2",
+      "vo_ch027003700_Attack_R1",
+      "vo_ch027003700_Attack_R2",
+      "vo_ch027003700_Attack_counter",
+      "vo_ch027003700_Attack_iora_01",
+      "vo_ch027003700_Attack_iora_02",
+      "vo_ch027003700_ChargeIng_01",
+      "vo_ch027003700_Charge_Attack",
+      "vo_ch027003700_Damage_01",
+      "vo_ch027003700_Damage_02",
+      "vo_ch027003700_Damage_03",
+      "vo_ch027003700_Death_01",
+      "vo_ch027003700_Faceup_01",
+      "vo_ch027003700_Heal_01",
+      "vo_ch027003700_Heat_01",
+      "vo_ch027003700_Heat_02",
+      "vo_ch027003700_Miss_01",
+      "vo_ch027003700_Setup_02",
+      "vo_ch027003700_sp_0007",
+      "vo_ch027003700_sp_0009",
+      "vo_ch027003700_sp_0014",
+      "vo_ch027003700_sp_0015",
+      "vo_ch027003700_sp_0123"
+    ],
+    "ch027003800": [
+      "se_in_0258_ui_enemy_blow_away",
+      "se_in_14150_ach027003800_Away",
+      "se_in_14151_ach027003800_Attack_01",
+      "se_in_14152_ach027003800_Attack_02",
+      "se_in_14153_ach027003800_Attack_03",
+      "se_in_14154_ach027003800_Damage_big_01",
+      "se_in_14155_ach027003800_Damage_small_01",
+      "se_in_14156_ach027003800_Down_01",
+      "se_in_14157_ach027003800_Down_02",
+      "se_in_14158_ach027003800_Footsteps_01",
+      "se_in_14159_ach027003800_Land_01",
+      "se_in_14160_ach027003800_Movement_01",
+      "se_in_14161_ach027003800_Movement_02",
+      "se_in_14162_ach027003800_Step_01",
+      "se_in_14163_ach027003800_Step_02",
+      "se_in_14164_ach027003800_Stomp_01",
+      "se_in_14165_ach027003800_Swing_01",
+      "se_in_14166_ach027003800_Swing_02",
+      "se_in_14167_ach027003800_Whoosh_01",
+      "se_in_14168_ach027003800_Whoosh_02",
+      "se_in_14169_Zaboera_apperance",
+      "se_in_14170_Zaboera_defeat",
+      "se_in_14171_kioku_defeat",
+      "vo_ch027000900_Miss_01",
+      "vo_ch027000900_Setup_01",
+      "vo_ch027003800_0013",
+      "vo_ch027003800_0040",
+      "vo_ch027003800_Attack_01",
+      "vo_ch027003800_Attack_02",
+      "vo_ch027003800_Attack_03",
+      "vo_ch027003800_ChargeIng_01",
+      "vo_ch027003800_Charge_Attack_01",
+      "vo_ch027003800_Damage_01",
+      "vo_ch027003800_Damage_02",
+      "vo_ch027003800_Damage_03",
+      "vo_ch027003800_Death_01",
+      "vo_ch027003800_Faceup_01",
+      "vo_ch027003800_Heat_01"
+    ]
+  },
+  "cueEvidence": {
+    "ch027003700": "cue names include Iora attacks; path evidence links this ID to shinBurn",
+    "ch027003800": "cue names include Stomp and combat voice cues; this supports a large boss hypothesis but does not prove Ghost-Eye King identity"
+  },
+  "warning": "Streams are decoded but speaker and combat-event bindings remain unverified until listening review.",
+  "files": [
+    {
+      "characterContainerId": "ch027003700",
+      "streamIndex": 0,
+      "sourceAwbLogicalPath": "Common/Sounds/ch027003700.awb",
+      "sourceAwbSha256": "cd6df56bfebd38583c6f33cb17fa8fd26d074afbf60ae3cba13242c8f9bdb749",
+      "hca": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/audio/ch027003700/000.hca",
+        "bytes": 102055,
+        "sha256": "d213050e6b19e6fceda99c6900034a05fe765dcf6f5515f976b47d0c1d032677"
+      },
+      "wav": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/audio/ch027003700/000.wav",
+        "bytes": 1224782,
+        "sha256": "8ede0f331716570c745842530fd8533187c441905b049c40b33ddb6cf7fd47a9",
+        "durationSeconds": 6.378667
+      },
+      "decodeStatus": "decoded-unbound-numbered-stream",
+      "speakerStatus": "unverified",
+      "eventBindingStatus": "unverified"
+    },
+    {
+      "characterContainerId": "ch027003700",
+      "streamIndex": 1,
+      "sourceAwbLogicalPath": "Common/Sounds/ch027003700.awb",
+      "sourceAwbSha256": "cd6df56bfebd38583c6f33cb17fa8fd26d074afbf60ae3cba13242c8f9bdb749",
+      "hca": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/audio/ch027003700/001.hca",
+        "bytes": 17436,
+        "sha256": "37282c1be7745f57d0cbe89bdc89c3531466731f7def8e2284f7423ae3d8a761"
+      },
+      "wav": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/audio/ch027003700/001.wav",
+        "bytes": 174158,
+        "sha256": "4eb6028053cdc944a26ad521827b8200397839a7b1885e022288bb22585fef3b",
+        "durationSeconds": 1.813333
+      },
+      "decodeStatus": "decoded-unbound-numbered-stream",
+      "speakerStatus": "unverified",
+      "eventBindingStatus": "unverified"
+    },
+    {
+      "characterContainerId": "ch027003700",
+      "streamIndex": 2,
+      "sourceAwbLogicalPath": "Common/Sounds/ch027003700.awb",
+      "sourceAwbSha256": "cd6df56bfebd38583c6f33cb17fa8fd26d074afbf60ae3cba13242c8f9bdb749",
+      "hca": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/audio/ch027003700/002.hca",
+        "bytes": 14580,
+        "sha256": "0ddaa1c364049855e64aae4349232a5ab16020663f8daddfa2421a169ab39514"
+      },
+      "wav": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/audio/ch027003700/002.wav",
+        "bytes": 145486,
+        "sha256": "7d9d8cbae5e7d29155d92a306fdb04d1e9eab21045934cc547b0e5f0c7e4d352",
+        "durationSeconds": 1.514667
+      },
+      "decodeStatus": "decoded-unbound-numbered-stream",
+      "speakerStatus": "unverified",
+      "eventBindingStatus": "unverified"
+    },
+    {
+      "characterContainerId": "ch027003700",
+      "streamIndex": 3,
+      "sourceAwbLogicalPath": "Common/Sounds/ch027003700.awb",
+      "sourceAwbSha256": "cd6df56bfebd38583c6f33cb17fa8fd26d074afbf60ae3cba13242c8f9bdb749",
+      "hca": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/audio/ch027003700/003.hca",
+        "bytes": 6012,
+        "sha256": "f45e32b7dda5f93951d2b13b1a5d2ac037c0fa6d2e2395455f3dd41ecb4a58a9"
+      },
+      "wav": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/audio/ch027003700/003.wav",
+        "bytes": 59470,
+        "sha256": "84f1f5404b8cd2bb7cdaa381460ad0c8c5f75071190afd8ea2e88c59f18143dc",
+        "durationSeconds": 0.618667
+      },
+      "decodeStatus": "decoded-unbound-numbered-stream",
+      "speakerStatus": "unverified",
+      "eventBindingStatus": "unverified"
+    },
+    {
+      "characterContainerId": "ch027003800",
+      "streamIndex": 0,
+      "sourceAwbLogicalPath": "Common/Sounds/ch027003800.awb",
+      "sourceAwbSha256": "1c1199031eaf7f35fc87e515507e4e018c99f160f261ca3e27960ad29a2174c0",
+      "hca": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/audio/ch027003800/000.hca",
+        "bytes": 102055,
+        "sha256": "d213050e6b19e6fceda99c6900034a05fe765dcf6f5515f976b47d0c1d032677"
+      },
+      "wav": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/audio/ch027003800/000.wav",
+        "bytes": 1224782,
+        "sha256": "8ede0f331716570c745842530fd8533187c441905b049c40b33ddb6cf7fd47a9",
+        "durationSeconds": 6.378667
+      },
+      "decodeStatus": "decoded-unbound-numbered-stream",
+      "speakerStatus": "unverified",
+      "eventBindingStatus": "unverified"
+    },
+    {
+      "characterContainerId": "ch027003800",
+      "streamIndex": 1,
+      "sourceAwbLogicalPath": "Common/Sounds/ch027003800.awb",
+      "sourceAwbSha256": "1c1199031eaf7f35fc87e515507e4e018c99f160f261ca3e27960ad29a2174c0",
+      "hca": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/audio/ch027003800/001.hca",
+        "bytes": 6012,
+        "sha256": "f45e32b7dda5f93951d2b13b1a5d2ac037c0fa6d2e2395455f3dd41ecb4a58a9"
+      },
+      "wav": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/audio/ch027003800/001.wav",
+        "bytes": 59470,
+        "sha256": "84f1f5404b8cd2bb7cdaa381460ad0c8c5f75071190afd8ea2e88c59f18143dc",
+        "durationSeconds": 0.618667
+      },
+      "decodeStatus": "decoded-unbound-numbered-stream",
+      "speakerStatus": "unverified",
+      "eventBindingStatus": "unverified"
+    },
+    {
+      "characterContainerId": "ch027003800",
+      "streamIndex": 2,
+      "sourceAwbLogicalPath": "Common/Sounds/ch027003800.awb",
+      "sourceAwbSha256": "1c1199031eaf7f35fc87e515507e4e018c99f160f261ca3e27960ad29a2174c0",
+      "hca": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/audio/ch027003800/002.hca",
+        "bytes": 22332,
+        "sha256": "a158f3915eed6c389358e9925585be8624f6393afe17f7cd91628a8c9885aefa"
+      },
+      "wav": {
+        "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/audio/ch027003800/002.wav",
+        "bytes": 223310,
+        "sha256": "0477b465fea7adea8d7fe0ebdd7c6dcc70756f81430931ab17dcf8a9cf6c5455",
+        "durationSeconds": 2.325333
+      },
+      "decodeStatus": "decoded-unbound-numbered-stream",
+      "speakerStatus": "unverified",
+      "eventBindingStatus": "unverified"
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "schema": "ggd.heros-bonds-runtime-v2@1",
+  "blenderVersion": "5.2.1 LTS",
+  "inputRuntimeV1AbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005801/ch027005801-runtime-lod.glb",
+  "inputRuntimeV1Sha256": "ed67057231f78bc4c6e7409f9e47170db8b5eb17efeb6cf62d69737d1ca0f051",
+  "outputRuntimeV2AbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005801/ch027005801-runtime-v2.glb",
+  "outputRuntimeV2Bytes": 913464,
+  "outputRuntimeV2Sha256": "14623eaa192b8e798f398271575bb1f396d7f5975e55a2b366c2ba923ff7f97d",
+  "triangleCount": 7897,
+  "meshCount": 5,
+  "skinnedPrimitiveCount": 5,
+  "embeddedImageCount": 5,
+  "maxTextureDimension": 256,
+  "skinCount": 1,
+  "armatureObjectCount": 1,
+  "animationCount": 0,
+  "meshes": [
+    {
+      "meshObjectName": "RealbodyGeo",
+      "triangleCount": 549,
+      "sourceMaterialSlotCount": 1,
+      "runtimeMaterialSlotCount": 1,
+      "atlasName": "RealbodyGeo_runtime_v2_atlas",
+      "atlasWidth": 256,
+      "atlasHeight": 256,
+      "atlasCells": [
+        {
+          "sourceImage": "tch0270058_v00_shinBurn_body_co__-5299249033991879465",
+          "column": 0,
+          "row": 0,
+          "width": 256,
+          "height": 256
+        }
+      ],
+      "vertexGroupCount": 96,
+      "armatureModifierCount": 1
+    },
+    {
+      "meshObjectName": "WeaponGEO",
+      "triangleCount": 350,
+      "sourceMaterialSlotCount": 2,
+      "runtimeMaterialSlotCount": 1,
+      "atlasName": "WeaponGEO_runtime_v2_atlas",
+      "atlasWidth": 256,
+      "atlasHeight": 256,
+      "atlasCells": [
+        {
+          "sourceImage": "tch0270058_v00_newDaiKen_co__-1187270363181514847",
+          "column": 0,
+          "row": 0,
+          "width": 256,
+          "height": 256
+        }
+      ],
+      "vertexGroupCount": 96,
+      "armatureModifierCount": 1
+    },
+    {
+      "meshObjectName": "bodyGeo",
+      "triangleCount": 5499,
+      "sourceMaterialSlotCount": 4,
+      "runtimeMaterialSlotCount": 1,
+      "atlasName": "bodyGeo_runtime_v2_atlas",
+      "atlasWidth": 256,
+      "atlasHeight": 256,
+      "atlasCells": [
+        {
+          "sourceImage": "tch0270058_v00_kiganBurn_body_co__8479874845593258001",
+          "column": 0,
+          "row": 0,
+          "width": 128,
+          "height": 256
+        },
+        {
+          "sourceImage": "tch0270058_v00_kiganBurnHead_body_co__-7046760515054005308",
+          "column": 1,
+          "row": 0,
+          "width": 128,
+          "height": 256
+        }
+      ],
+      "vertexGroupCount": 96,
+      "armatureModifierCount": 1
+    },
+    {
+      "meshObjectName": "faceGeo",
+      "triangleCount": 799,
+      "sourceMaterialSlotCount": 4,
+      "runtimeMaterialSlotCount": 1,
+      "atlasName": "faceGeo_runtime_v2_atlas",
+      "atlasWidth": 256,
+      "atlasHeight": 256,
+      "atlasCells": [
+        {
+          "sourceImage": "tch0270058_v00_attach_co__-6735469837138678342",
+          "column": 0,
+          "row": 0,
+          "width": 128,
+          "height": 128
+        },
+        {
+          "sourceImage": "tch0270058_v00_shinBurn_body_co__-5299249033991879465",
+          "column": 1,
+          "row": 0,
+          "width": 128,
+          "height": 128
+        },
+        {
+          "sourceImage": "tch0270058_v00_shinBurn_eye_co__8421981590862939002",
+          "column": 0,
+          "row": 1,
+          "width": 128,
+          "height": 128
+        }
+      ],
+      "vertexGroupCount": 96,
+      "armatureModifierCount": 1
+    },
+    {
+      "meshObjectName": "hairGeo",
+      "triangleCount": 700,
+      "sourceMaterialSlotCount": 1,
+      "runtimeMaterialSlotCount": 1,
+      "atlasName": "hairGeo_runtime_v2_atlas",
+      "atlasWidth": 256,
+      "atlasHeight": 256,
+      "atlasCells": [
+        {
+          "sourceImage": "tch0270058_v00_shinBurn_body_co__-5299249033991879465",
+          "column": 0,
+          "row": 0,
+          "width": 256,
+          "height": 256
+        }
+      ],
+      "vertexGroupCount": 96,
+      "armatureModifierCount": 1
+    }
+  ],
+  "status": "runtime-v2-exported-awaiting-khronos-and-visual-validation"
+}

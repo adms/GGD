@@ -1,0 +1,57 @@
+{
+  "schema": "ggd.heros-bonds-animation-clip-index@1",
+  "variants": [
+    {
+      "characterId": "ch027005800",
+      "sourceUnityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/37/3757005bb1aa80be.unityfs",
+      "sourceUnityFsSha256": "866e2624fc186452bd64898239c43976bc211f2667cdf7177989dffb031a463f",
+      "clipCount": 1,
+      "clips": [
+        {
+          "name": "ach027005800_DeathcutDaiWin",
+          "objectPathId": -7705193290194834653,
+          "sampleRate": 30.0,
+          "legacy": false,
+          "stopTimeSeconds": 79.46666717529297,
+          "status": "source-clip-preserved-not-converted-to-gltf"
+        }
+      ]
+    },
+    {
+      "characterId": "ch027005801",
+      "sourceUnityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/28/289f45e65feea2d7.unityfs",
+      "sourceUnityFsSha256": "e2531f65cbfa873caa9728288de8a0de30305b899efd9a5d43b3e03518058c77",
+      "clipCount": 3,
+      "clips": [
+        {
+          "name": "ach027005801_DeathcutDaiLose",
+          "objectPathId": -6839813009887916200,
+          "sampleRate": 30.0,
+          "legacy": false,
+          "stopTimeSeconds": 26.80000114440918,
+          "status": "source-clip-preserved-not-converted-to-gltf"
+        },
+        {
+          "name": "ach027005801_DeathcutDaiWin",
+          "objectPathId": 2304570544519510407,
+          "sampleRate": 30.0,
+          "legacy": false,
+          "stopTimeSeconds": 79.46666717529297,
+          "status": "source-clip-preserved-not-converted-to-gltf"
+        },
+        {
+          "name": "ach027005801_Eyecutin",
+          "objectPathId": 5526920660625850370,
+          "sampleRate": 30.0,
+          "legacy": false,
+          "stopTimeSeconds": 1.0,
+          "status": "source-clip-preserved-not-converted-to-gltf"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "clips use Unity's serialized/compressed AnimationClip data and are retained in decrypted UnityFS",
+    "no clip is claimed as a complete combat motion set"
+  ]
+}

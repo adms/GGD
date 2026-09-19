@@ -1,0 +1,1872 @@
+{
+  "schema": "ggd.heros-bonds-unity-object-export@1",
+  "unityPyVersion": "1.20.26",
+  "bundleCount": 51,
+  "objectCounts": {
+    "Animation": 2,
+    "AnimationClip": 148,
+    "Animator": 52,
+    "AssetBundle": 51,
+    "AudioListener": 6,
+    "Avatar": 1,
+    "Camera": 24,
+    "Canvas": 12,
+    "CanvasRenderer": 18,
+    "GameObject": 3172,
+    "Light": 14,
+    "Material": 41,
+    "Mesh": 19,
+    "MonoBehaviour": 1785,
+    "MonoScript": 195,
+    "ParticleSystem": 1081,
+    "ParticleSystemRenderer": 1081,
+    "PlayableDirector": 24,
+    "PositionConstraint": 2,
+    "RectTransform": 30,
+    "Shader": 6,
+    "SkinnedMeshRenderer": 46,
+    "Sprite": 6,
+    "TextAsset": 149,
+    "Texture2D": 39,
+    "Transform": 3142
+  },
+  "exportedMeshCount": 19,
+  "exportedTextureCount": 39,
+  "exportedMeshes": [
+    {
+      "blobId": "f8c862e1204ef0c4",
+      "logicalPath": "Character/Model/Character/ch027003800/Meshes",
+      "objectPathId": -7148951139441055964,
+      "objectName": "knifeRGeo",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/f8c862e1204ef0c4/meshes/knifeRGeo__-7148951139441055964.obj",
+      "bytes": 5606,
+      "sha256": "b37ad5143db1d73ba5ddeebbb79decb5a8fadc5d08f5a33a944568811fe27c99"
+    },
+    {
+      "blobId": "f8c862e1204ef0c4",
+      "logicalPath": "Character/Model/Character/ch027003800/Meshes",
+      "objectPathId": -1700207835963909611,
+      "objectName": "transverse_swordRGeo",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/f8c862e1204ef0c4/meshes/transverse_swordRGeo__-1700207835963909611.obj",
+      "bytes": 8154,
+      "sha256": "c28224aaa7a67a584c0c6cb2f8386ce3a66527ce58f236544337adf87cb1c980"
+    },
+    {
+      "blobId": "f8c862e1204ef0c4",
+      "logicalPath": "Character/Model/Character/ch027003800/Meshes",
+      "objectPathId": 524093532521957597,
+      "objectName": "bodyGeo",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/f8c862e1204ef0c4/meshes/bodyGeo__524093532521957597.obj",
+      "bytes": 1238119,
+      "sha256": "f5616166796fa1e0baee4a376d72dff0b023b459edabb0f4c5aac992bbe291dd"
+    },
+    {
+      "blobId": "f8c862e1204ef0c4",
+      "logicalPath": "Character/Model/Character/ch027003800/Meshes",
+      "objectPathId": 2207553323105643437,
+      "objectName": "faceGeo",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/f8c862e1204ef0c4/meshes/faceGeo__2207553323105643437.obj",
+      "bytes": 239428,
+      "sha256": "ded1981b340e0de400233a171919360232bc0fe974bbfe8e557d524f51c94132"
+    },
+    {
+      "blobId": "f8c862e1204ef0c4",
+      "logicalPath": "Character/Model/Character/ch027003800/Meshes",
+      "objectPathId": 4452033728991053393,
+      "objectName": "transverse_swordLGeo",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/f8c862e1204ef0c4/meshes/transverse_swordLGeo__4452033728991053393.obj",
+      "bytes": 8090,
+      "sha256": "da9c0ff1aa0a4db7b05709626781034bca6120e807d4c9fa54508abaa14f25ae"
+    },
+    {
+      "blobId": "f8c862e1204ef0c4",
+      "logicalPath": "Character/Model/Character/ch027003800/Meshes",
+      "objectPathId": 8758699572432447946,
+      "objectName": "knifeLGeo",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/f8c862e1204ef0c4/meshes/knifeLGeo__8758699572432447946.obj",
+      "bytes": 5537,
+      "sha256": "5f51db4ea8d6c45ff6d37add569c61de1218ee790903bc57de7636f57e139310"
+    },
+    {
+      "blobId": "544099f1eaf4e227",
+      "logicalPath": "Character/Model/Character/ch027005800/Meshes",
+      "objectPathId": -5637804247480337302,
+      "objectName": "hairGeo",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/544099f1eaf4e227/meshes/hairGeo__-5637804247480337302.obj",
+      "bytes": 387922,
+      "sha256": "ae9b53990cf57ab842d66f9401a1fede29b2414ce2bdcc2ae09e8f0c4ed43a01"
+    },
+    {
+      "blobId": "544099f1eaf4e227",
+      "logicalPath": "Character/Model/Character/ch027005800/Meshes",
+      "objectPathId": -4305708660599037067,
+      "objectName": "faceGeo",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/544099f1eaf4e227/meshes/faceGeo__-4305708660599037067.obj",
+      "bytes": 268216,
+      "sha256": "8c0b3a69266d37fa53411404a059fe69da19bdf6fdf77b48fcaa158aa73ae7a0"
+    },
+    {
+      "blobId": "544099f1eaf4e227",
+      "logicalPath": "Character/Model/Character/ch027005800/Meshes",
+      "objectPathId": 4699214077512931752,
+      "objectName": "RealbodyGeo",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/544099f1eaf4e227/meshes/RealbodyGeo__4699214077512931752.obj",
+      "bytes": 142952,
+      "sha256": "0e58bd19f13b80d42a419441defc5078462410c082a7456108b1b238ae21f303"
+    },
+    {
+      "blobId": "544099f1eaf4e227",
+      "logicalPath": "Character/Model/Character/ch027005800/Meshes",
+      "objectPathId": 7188481861486364755,
+      "objectName": "bodyGeo",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/544099f1eaf4e227/meshes/bodyGeo__7188481861486364755.obj",
+      "bytes": 2992284,
+      "sha256": "eb50b29bd6832d3f99dc228bd95eeb0f844433a518e759b407b4c700f3019bd9"
+    },
+    {
+      "blobId": "544099f1eaf4e227",
+      "logicalPath": "Character/Model/Character/ch027005800/Meshes",
+      "objectPathId": 8241932408795903678,
+      "objectName": "WeaponGEO",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/544099f1eaf4e227/meshes/WeaponGEO__8241932408795903678.obj",
+      "bytes": 112431,
+      "sha256": "6f558d8778ebbfc8d6a0d6ceb4b9db44f9e141ef79380a25d5a7d810a618b30a"
+    },
+    {
+      "blobId": "801894f6d2cf6e30",
+      "logicalPath": "Character/Model/Character/ch027005801/Meshes",
+      "objectPathId": -7146499460182303802,
+      "objectName": "faceGeo",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/801894f6d2cf6e30/meshes/faceGeo__-7146499460182303802.obj",
+      "bytes": 268510,
+      "sha256": "0ea814aa6f7bd1fefe3ed343514accb3cf488d8d7aeeec5bf05940f28c8397cc"
+    },
+    {
+      "blobId": "801894f6d2cf6e30",
+      "logicalPath": "Character/Model/Character/ch027005801/Meshes",
+      "objectPathId": -7016990570851713840,
+      "objectName": "RealbodyGeo",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/801894f6d2cf6e30/meshes/RealbodyGeo__-7016990570851713840.obj",
+      "bytes": 143110,
+      "sha256": "607d698bbeb77b1fa509edf0a49c53855d8d40f549a1c99ae73917433908d03b"
+    },
+    {
+      "blobId": "801894f6d2cf6e30",
+      "logicalPath": "Character/Model/Character/ch027005801/Meshes",
+      "objectPathId": 1451088981875816082,
+      "objectName": "WeaponGEO",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/801894f6d2cf6e30/meshes/WeaponGEO__1451088981875816082.obj",
+      "bytes": 112394,
+      "sha256": "f63c13e8dcec4797d66e2c9ef94e44682655276cddac646fdb0d498b3aaedc28"
+    },
+    {
+      "blobId": "801894f6d2cf6e30",
+      "logicalPath": "Character/Model/Character/ch027005801/Meshes",
+      "objectPathId": 3089916402940445005,
+      "objectName": "hairGeo",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/801894f6d2cf6e30/meshes/hairGeo__3089916402940445005.obj",
+      "bytes": 388904,
+      "sha256": "180394f257c7148a1e3071f6f9f39007c8b85299598eade023f90e56d9c5c930"
+    },
+    {
+      "blobId": "801894f6d2cf6e30",
+      "logicalPath": "Character/Model/Character/ch027005801/Meshes",
+      "objectPathId": 8724334355723820693,
+      "objectName": "bodyGeo",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/801894f6d2cf6e30/meshes/bodyGeo__8724334355723820693.obj",
+      "bytes": 3000380,
+      "sha256": "e676232b34e41c71434367e245a265b075b70e6a0c7e3338f6081c2d403b0939"
+    },
+    {
+      "blobId": "21f913d8a67ad9bf",
+      "logicalPath": "Character/Model/Skin/sk027003700/Meshes",
+      "objectPathId": 3400037695709828511,
+      "objectName": "hairGeo",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/21f913d8a67ad9bf/meshes/hairGeo__3400037695709828511.obj",
+      "bytes": 394552,
+      "sha256": "f1b13cc462f139cf1f23bc3f6066f85bd7b10a7b1d54b805c41fa25c15801ac5"
+    },
+    {
+      "blobId": "21f913d8a67ad9bf",
+      "logicalPath": "Character/Model/Skin/sk027003700/Meshes",
+      "objectPathId": 5406014978616662752,
+      "objectName": "skirtGeo",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/21f913d8a67ad9bf/meshes/skirtGeo__5406014978616662752.obj",
+      "bytes": 71526,
+      "sha256": "9b676ea5cc74ee2346e456ef3c3aa1488c58f55f08eb6f3250ff9f69bd039ea9"
+    },
+    {
+      "blobId": "21f913d8a67ad9bf",
+      "logicalPath": "Character/Model/Skin/sk027003700/Meshes",
+      "objectPathId": 7474484202560162266,
+      "objectName": "bodyGeo",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/21f913d8a67ad9bf/meshes/bodyGeo__7474484202560162266.obj",
+      "bytes": 677998,
+      "sha256": "4b30c7f6000935486b58f9f256883eccb7682017a637f100c55836cb2009b8f5"
+    }
+  ],
+  "exportedTextures": [
+    {
+      "blobId": "14a5d9656d2f70d3",
+      "logicalPath": "Character/Model/Character/ch027003800/Textures",
+      "objectPathId": -8932725962524076996,
+      "objectName": "tch027003800_chyoZaboera_body_co",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/14a5d9656d2f70d3/textures/tch027003800_chyoZaboera_body_co__-8932725962524076996.png",
+      "bytes": 253692,
+      "sha256": "3b35765f2dbc19cb0d374f7d9c5fdb3045e753bdbd56cbd9ccf396e5e5f9a5c5"
+    },
+    {
+      "blobId": "14a5d9656d2f70d3",
+      "logicalPath": "Character/Model/Character/ch027003800/Textures",
+      "objectPathId": -6968740451462515995,
+      "objectName": "tch027003800_chyoZaboera_jewel_fak",
+      "width": 128,
+      "height": 128,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/14a5d9656d2f70d3/textures/tch027003800_chyoZaboera_jewel_fak__-6968740451462515995.png",
+      "bytes": 6422,
+      "sha256": "de0641598fae4bb053e08f4c0a32104e6c26323250ed14f87f7e2c33f359e34b"
+    },
+    {
+      "blobId": "14a5d9656d2f70d3",
+      "logicalPath": "Character/Model/Character/ch027003800/Textures",
+      "objectPathId": -4949347860669352374,
+      "objectName": "tch027003800_chyoZaboera_body_mk",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/14a5d9656d2f70d3/textures/tch027003800_chyoZaboera_body_mk__-4949347860669352374.png",
+      "bytes": 233020,
+      "sha256": "6b367dee3e15a87f1c57f637de9f8ed4b70592aef8cafe09eae010c1f18ecb34"
+    },
+    {
+      "blobId": "14a5d9656d2f70d3",
+      "logicalPath": "Character/Model/Character/ch027003800/Textures",
+      "objectPathId": 3354026700962076375,
+      "objectName": "tch027003800_chyoZaboera_body_sh",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/14a5d9656d2f70d3/textures/tch027003800_chyoZaboera_body_sh__3354026700962076375.png",
+      "bytes": 278338,
+      "sha256": "b3b3543cfb3ff67807f248a90dd9f2931fa8f0d68e0db62e787f8312a426ae62"
+    },
+    {
+      "blobId": "14a5d9656d2f70d3",
+      "logicalPath": "Character/Model/Character/ch027003800/Textures",
+      "objectPathId": 3434923571528095267,
+      "objectName": "tch027003800_chyoZaboera_body_fak",
+      "width": 128,
+      "height": 128,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/14a5d9656d2f70d3/textures/tch027003800_chyoZaboera_body_fak__3434923571528095267.png",
+      "bytes": 756,
+      "sha256": "5ac4c141c803e52087e403f57545e2f5896c39857606f7fd475bfda4cf578fca"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": -8375790117564797082,
+      "objectName": "tch0270058_v00_newDaiKen_sh",
+      "width": 256,
+      "height": 256,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_newDaiKen_sh__-8375790117564797082.png",
+      "bytes": 34718,
+      "sha256": "461fcd39d8b19329da00996e1f31139b0089fc2ba237171f4daf7a0a4d43406a"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": -7673761859057840256,
+      "objectName": "tch0270058_v00_kiganBurn_body_sh",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_kiganBurn_body_sh__-7673761859057840256.png",
+      "bytes": 658870,
+      "sha256": "f3e4902bef66de9e3f0d90c1885a334b235b19e0e9c74eba8a13d3f1b9fd1ad6"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": -7046760515054005308,
+      "objectName": "tch0270058_v00_kiganBurnHead_body_co",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_kiganBurnHead_body_co__-7046760515054005308.png",
+      "bytes": 633743,
+      "sha256": "62936331e83f91f9d8f1c6f77556066c8ca72fd5d257213e96bdc23dd34246e9"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": -6735469837138678342,
+      "objectName": "tch0270058_v00_attach_co",
+      "width": 256,
+      "height": 256,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_attach_co__-6735469837138678342.png",
+      "bytes": 859,
+      "sha256": "68a12cfc3ff741e5822f3fd3b9e49323d34e627e5e23e80de56106944a4862a7"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": -6133630543355229871,
+      "objectName": "tch0270058_v00_attach_mk",
+      "width": 256,
+      "height": 256,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_attach_mk__-6133630543355229871.png",
+      "bytes": 10542,
+      "sha256": "19d2658187574f1b90398a02393d484126de3aa7a4420b093fa60c3aa07e61be"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": -5299249033991879465,
+      "objectName": "tch0270058_v00_shinBurn_body_co",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_shinBurn_body_co__-5299249033991879465.png",
+      "bytes": 249018,
+      "sha256": "b4799d4cb770b7d38b2a0608fbac12910cf669f41ba47ca01adb28f6f4df6e2f"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": -5280883679351865947,
+      "objectName": "tch0270058_v00_shinBurn_eye_sh",
+      "width": 256,
+      "height": 256,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_shinBurn_eye_sh__-5280883679351865947.png",
+      "bytes": 3112,
+      "sha256": "50a7cafd6f9036853ec17095f093cd42a823319eed39b4c1209a9de2325cad77"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": -1187270363181514847,
+      "objectName": "tch0270058_v00_newDaiKen_co",
+      "width": 256,
+      "height": 256,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_newDaiKen_co__-1187270363181514847.png",
+      "bytes": 34223,
+      "sha256": "d478890a1550d01e6ce073c4359699fc501a91f1d17d9d39923e4c895ddc1299"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": 442621188859715840,
+      "objectName": "tch0270058_v00_shinBurn_body_sh",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_shinBurn_body_sh__442621188859715840.png",
+      "bytes": 272757,
+      "sha256": "4257d53ef0f2e5d670c822a8413e636b978d456e10bef3c1c652ca5e5d8b318f"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": 799622396981032355,
+      "objectName": "tch0270058_v00_shinBurn_body_mk",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_shinBurn_body_mk__799622396981032355.png",
+      "bytes": 168211,
+      "sha256": "7b5cfe4b727bc74586be4fdb2d65b79e135fc5b45877c11ffa292ca14468d42f"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": 1983277197002621127,
+      "objectName": "tch0270058_v00_kiganBurn_body_mk",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_kiganBurn_body_mk__1983277197002621127.png",
+      "bytes": 422458,
+      "sha256": "6a21d0aa6b25537d8f2931966b89473fe7128f87e4813f1e7a54bfb58d697eb4"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": 2092885699606074450,
+      "objectName": "tch0270058_v00_newDaiKen_fak",
+      "width": 64,
+      "height": 64,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_newDaiKen_fak__2092885699606074450.png",
+      "bytes": 256,
+      "sha256": "7c976ebd8f6ce9d29af717238e16290fd3213b0b357f0b43a04b92b8344a591b"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": 2794716949668092056,
+      "objectName": "tch0270058_v00_kiganBurnHead_body_sh",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_kiganBurnHead_body_sh__2794716949668092056.png",
+      "bytes": 647720,
+      "sha256": "60d03b84cf4f1b3bd704da7743ec060137c50e1317a93c2299dba07fe218ace2"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": 6169831910536550149,
+      "objectName": "tch0270058_v00_jewel_fak",
+      "width": 64,
+      "height": 64,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_jewel_fak__6169831910536550149.png",
+      "bytes": 1357,
+      "sha256": "89a3704b7194c0a95686d1935d3e19d4c7596a5370b32ca8f2a269b2982cb917"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": 6812354086347004950,
+      "objectName": "tch0270058_v00_kiganBurnHead_body_mk",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_kiganBurnHead_body_mk__6812354086347004950.png",
+      "bytes": 436739,
+      "sha256": "8c3e843674e16b3dc2f559556310b30b61e6aa4191e564836a8ca2863820f3ab"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": 7357275170237762125,
+      "objectName": "tch0270058_v00_newDaiKen_mk",
+      "width": 256,
+      "height": 256,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_newDaiKen_mk__7357275170237762125.png",
+      "bytes": 16407,
+      "sha256": "5c040e5518c89542a816bc1e32a8dcdd09b479c6a570fabbb451a75c1cbe1d35"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": 7780693793604256144,
+      "objectName": "tch0270058_v00_fak",
+      "width": 128,
+      "height": 128,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_fak__7780693793604256144.png",
+      "bytes": 2009,
+      "sha256": "a916ce981349b5edf0820c04a8941be52d3d092e648aa4a65547c7d9a7826b6f"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": 8421981590862939002,
+      "objectName": "tch0270058_v00_shinBurn_eye_co",
+      "width": 256,
+      "height": 256,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_shinBurn_eye_co__8421981590862939002.png",
+      "bytes": 3081,
+      "sha256": "21e0cf7287f470daeb82dfdf686d5ee5c975d9ce5a4aae12c816a3fbdf0caf47"
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "objectPathId": 8479874845593258001,
+      "objectName": "tch0270058_v00_kiganBurn_body_co",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_kiganBurn_body_co__8479874845593258001.png",
+      "bytes": 721658,
+      "sha256": "961928a398138e609bf330f030d9e3ed28e90a831f8253cfb5cc88344b29a419"
+    },
+    {
+      "blobId": "1c667865430ec646",
+      "logicalPath": "Character/Model/Skin/sk027003700/Textures",
+      "objectPathId": -9002345303270045333,
+      "objectName": "tsk027003700_shinBurn_body_mk",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/1c667865430ec646/textures/tsk027003700_shinBurn_body_mk__-9002345303270045333.png",
+      "bytes": 278703,
+      "sha256": "3ac291366e7cb42e8cce42ed107c6da4f02e719547cd830d30c9593ff6aeff7c"
+    },
+    {
+      "blobId": "1c667865430ec646",
+      "logicalPath": "Character/Model/Skin/sk027003700/Textures",
+      "objectPathId": -8937401233231007902,
+      "objectName": "tch027003700_shinBurn_jewel_fak",
+      "width": 64,
+      "height": 64,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/1c667865430ec646/textures/tch027003700_shinBurn_jewel_fak__-8937401233231007902.png",
+      "bytes": 2565,
+      "sha256": "524ec3547c7aafed0471acce1890966460f47c0992d9975597e9f3c46e698b0b"
+    },
+    {
+      "blobId": "1c667865430ec646",
+      "logicalPath": "Character/Model/Skin/sk027003700/Textures",
+      "objectPathId": -3878869060631985655,
+      "objectName": "tsk027003700_shinBurn_body_sh",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/1c667865430ec646/textures/tsk027003700_shinBurn_body_sh__-3878869060631985655.png",
+      "bytes": 254590,
+      "sha256": "d4fd14fbd58036f09dc95b8c9f74135b52136c6c53da950241f4dcef93c22b51"
+    },
+    {
+      "blobId": "1c667865430ec646",
+      "logicalPath": "Character/Model/Skin/sk027003700/Textures",
+      "objectPathId": -2276841313643299206,
+      "objectName": "tsk027003700_shinBurn_body_co",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/1c667865430ec646/textures/tsk027003700_shinBurn_body_co__-2276841313643299206.png",
+      "bytes": 307213,
+      "sha256": "c425fbbe32149d447ac2eaf56fa11f42a1ffeebcb489b6a165cb2c931f06129a"
+    },
+    {
+      "blobId": "1c667865430ec646",
+      "logicalPath": "Character/Model/Skin/sk027003700/Textures",
+      "objectPathId": 4544151345612156575,
+      "objectName": "tsk027003700_shinBurn_body_fak",
+      "width": 128,
+      "height": 128,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/1c667865430ec646/textures/tsk027003700_shinBurn_body_fak__4544151345612156575.png",
+      "bytes": 775,
+      "sha256": "3e39feaa4376ae213b26548b4d40b168d844381ee53f9178688cb4064206ce30"
+    },
+    {
+      "blobId": "98467202fd77416e",
+      "logicalPath": "Effect/Particles/Battle/Chara/shinBurn00/SkillSP/TenchiMatonoKamae/Textures",
+      "objectPathId": 3831033007591336455,
+      "objectName": "Tx_ShinBurnTenchiMato_Eff01",
+      "width": 512,
+      "height": 512,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/98467202fd77416e/textures/Tx_ShinBurnTenchiMato_Eff01__3831033007591336455.png",
+      "bytes": 30143,
+      "sha256": "9d9170f4f6243264506ead69189f1ae7e4dd270234bc287431b6549f271960c0"
+    },
+    {
+      "blobId": "98467202fd77416e",
+      "logicalPath": "Effect/Particles/Battle/Chara/shinBurn00/SkillSP/TenchiMatonoKamae/Textures",
+      "objectPathId": 4194254075126180072,
+      "objectName": "Tx_ShinBurnTenchiMato_Eff02",
+      "width": 512,
+      "height": 512,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/98467202fd77416e/textures/Tx_ShinBurnTenchiMato_Eff02__4194254075126180072.png",
+      "bytes": 115894,
+      "sha256": "eaf25ef56d9c76f5e4705642c9fbe1b1916fe54f8031d53671a454d9fc383219"
+    },
+    {
+      "blobId": "971b5295309a3ee1",
+      "logicalPath": "Effect/Particles/Battle/Enemy/kiganohburn/CutScene",
+      "objectPathId": 1565090765613426694,
+      "objectName": "Tx_UNQ_KingBurnImage00",
+      "width": 1024,
+      "height": 2048,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/971b5295309a3ee1/textures/Tx_UNQ_KingBurnImage00__1565090765613426694.png",
+      "bytes": 670923,
+      "sha256": "92a7f4949beb0e3f38639e034d5ba71670be1fb31464fcca1ec08dc8774de2a3"
+    },
+    {
+      "blobId": "971b5295309a3ee1",
+      "logicalPath": "Effect/Particles/Battle/Enemy/kiganohburn/CutScene",
+      "objectPathId": 7713655975568145637,
+      "objectName": "Tx_UNQ_KingBurnImage01",
+      "width": 1024,
+      "height": 2048,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/971b5295309a3ee1/textures/Tx_UNQ_KingBurnImage01__7713655975568145637.png",
+      "bytes": 1100911,
+      "sha256": "6dd2556e324cdd7c9d59d38d9aa062f134a5e0c363592c1f3a5e5135fbbcf192"
+    },
+    {
+      "blobId": "4dc80b00cf39153b",
+      "logicalPath": "UI/Runtime/Textures/Scenario/Bg/bg010_kiganjou_01.png",
+      "objectPathId": -8672487983514242357,
+      "objectName": "bg010_kiganjou_01",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/4dc80b00cf39153b/textures/bg010_kiganjou_01__-8672487983514242357.png",
+      "bytes": 925634,
+      "sha256": "a9ce36ce324bfa20de9da6c214f04a6b05d6a420496eef4554be1a49e57c99d4"
+    },
+    {
+      "blobId": "0f247b5ecc471aee",
+      "logicalPath": "UI/Runtime/Textures/Scenario/Bg/bg045_ kiganjo_attack_01.png",
+      "objectPathId": -6612517811353600915,
+      "objectName": "bg045_ kiganjo_attack_01",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/0f247b5ecc471aee/textures/bg045__kiganjo_attack_01__-6612517811353600915.png",
+      "bytes": 964670,
+      "sha256": "fcda9fffb2fca41ccd97fab4b80b7ffb95b4c7647014c53b9ca73b4ba6656d79"
+    },
+    {
+      "blobId": "885fcf458fcdd741",
+      "logicalPath": "UI/Runtime/Textures/Scenario/Bg/bg045_ kiganjo_collapse_01.png",
+      "objectPathId": -5226653139384041194,
+      "objectName": "bg045_ kiganjo_collapse_01",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/885fcf458fcdd741/textures/bg045__kiganjo_collapse_01__-5226653139384041194.png",
+      "bytes": 900402,
+      "sha256": "49cba7d24f0d8b2bfd5c74776a379cb131da36c0b2bcc68d62d27947ea777a22"
+    },
+    {
+      "blobId": "243273a5a4f368a1",
+      "logicalPath": "UI/Runtime/Textures/Scenario/Bg/bg045_ kiganjo_truth_01.png",
+      "objectPathId": -7317071976540603198,
+      "objectName": "bg045_ kiganjo_truth_01",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/243273a5a4f368a1/textures/bg045__kiganjo_truth_01__-7317071976540603198.png",
+      "bytes": 925623,
+      "sha256": "90dce36cdbe6a36ee13a9f457c8923a63035e28040f9156bf532cc4c4986033e"
+    },
+    {
+      "blobId": "c0460955b1711a3e",
+      "logicalPath": "UI/Runtime/Textures/Scenario/Bg/bg129_kiganou_01.png",
+      "objectPathId": 5281768396344071953,
+      "objectName": "bg129_kiganou_01",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/c0460955b1711a3e/textures/bg129_kiganou_01__5281768396344071953.png",
+      "bytes": 765742,
+      "sha256": "411154d69c76a6bffcfbf64dde1da7add4b9635b70d1be9ef91922f79498e6f0"
+    },
+    {
+      "blobId": "fadea487706ecf92",
+      "logicalPath": "UI/Static/Textures/Home/QuestSelectVearn",
+      "objectPathId": -7623482574310027447,
+      "objectName": "bg_vearn",
+      "width": 1024,
+      "height": 1024,
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/fadea487706ecf92/textures/bg_vearn__-7623482574310027447.png",
+      "bytes": 828439,
+      "sha256": "2d2432a00fa07ed31aca0885180df0e3f9e112bdc242953cef314bb1bc3fc26c"
+    }
+  ],
+  "bundles": [
+    {
+      "blobId": "527c9850ed111c0c",
+      "logicalPath": "ActiveSkill/ActiveSkillCutScene/Timeline/SkillOugishinBurnFs",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/52/527c9850ed111c0c.unityfs",
+      "objectCounts": {
+        "AnimationClip": 11,
+        "Animator": 10,
+        "AssetBundle": 1,
+        "AudioListener": 1,
+        "Camera": 4,
+        "Canvas": 2,
+        "CanvasRenderer": 3,
+        "GameObject": 244,
+        "Light": 2,
+        "MonoBehaviour": 197,
+        "MonoScript": 25,
+        "ParticleSystem": 79,
+        "ParticleSystemRenderer": 79,
+        "PlayableDirector": 4,
+        "RectTransform": 5,
+        "SkinnedMeshRenderer": 1,
+        "Transform": 239
+      },
+      "selectedObjectNames": {
+        "AnimationClip": [
+          "Recorded",
+          "Recorded (1)",
+          "Recorded (2)",
+          "Recorded (3)",
+          "alpha",
+          "alpha",
+          "alpha",
+          "alpha",
+          "alpha",
+          "alpha",
+          "alpha"
+        ],
+        "AssetBundle": [
+          "ActiveSkill/ActiveSkillCutScene/Timeline/SkillOugishinBurnFs@"
+        ]
+      }
+    },
+    {
+      "blobId": "529d6d17efd884aa",
+      "logicalPath": "ActiveSkill/ActiveSkillCutScene/Timeline/SkillOugishinBurnFs",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/52/529d6d17efd884aa.unityfs",
+      "objectCounts": {
+        "AnimationClip": 3,
+        "AssetBundle": 1,
+        "MonoBehaviour": 24,
+        "MonoScript": 6
+      },
+      "selectedObjectNames": {
+        "AnimationClip": [
+          "acam_SkillOugishinBurnFsPart1",
+          "acam_SkillOugishinBurnFsPart2",
+          "acam_SkillOugishinBurnFsPart3"
+        ],
+        "AssetBundle": [
+          "ActiveSkill/ActiveSkillCutScene/Timeline/SkillOugishinBurnFs!"
+        ]
+      }
+    },
+    {
+      "blobId": "b2605530a5d2f96e",
+      "logicalPath": "Character/AnimationClip/ch027003700",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/b2/b2605530a5d2f96e.unityfs",
+      "objectCounts": {
+        "AnimationClip": 75,
+        "AssetBundle": 1,
+        "MonoScript": 2,
+        "TextAsset": 15
+      },
+      "selectedObjectNames": {
+        "AnimationClip": [
+          "ach027003700_Appear",
+          "ach027003700_AttackL1End",
+          "ach027003700_AttackL1Start",
+          "ach027003700_AttackL2End",
+          "ach027003700_AttackL2EndC",
+          "ach027003700_AttackL2Start",
+          "ach027003700_AttackR1End",
+          "ach027003700_AttackR1Start",
+          "ach027003700_AttackR2End",
+          "ach027003700_AttackR2Start",
+          "ach027003700_AttackcounterEnd",
+          "ach027003700_AttackcounterStart",
+          "ach027003700_AttackioraEnd",
+          "ach027003700_AttackioraIngLoop",
+          "ach027003700_AttackioraStart",
+          "ach027003700_Attackkaiserphoenix",
+          "ach027003700_AttackshotLEnd",
+          "ach027003700_AttackshotREnd",
+          "ach027003700_BossbreakEnd",
+          "ach027003700_BossbreakIngLoop",
+          "ach027003700_BossbreakStart",
+          "ach027003700_BossbreaksmallAdd",
+          "ach027003700_CalamityWall",
+          "ach027003700_DamageAdd",
+          "ach027003700_DamageblowBEnd",
+          "ach027003700_DamageblowBIng",
+          "ach027003700_DamageblowBStart",
+          "ach027003700_DamagelargeB",
+          "ach027003700_DamagesmallB",
+          "ach027003700_DeathIngLoop",
+          "ach027003700_DeathStart",
+          "ach027003700_DeathbackIng",
+          "ach027003700_DeathbackStart",
+          "ach027003700_Deathcut",
+          "ach027003700_DownfaceupIngLoop",
+          "ach027003700_Eyecutin",
+          "ach027003700_Heatup",
+          "ach027003700_IdleLoop",
+          "ach027003700_LEtoL1S",
+          "ach027003700_LEtoL2S",
+          "ach027003700_LEtoR1S",
+          "ach027003700_LEtoR2S",
+          "ach027003700_LEtoShotLS",
+          "ach027003700_LEtoShotRS",
+          "ach027003700_ParalysisLoop",
+          "ach027003700_R1EtoL1S",
+          "ach027003700_R1EtoL2S",
+          "ach027003700_R1EtoR1S",
+          "ach027003700_R1EtoR2S",
+          "ach027003700_R1EtoShotLS",
+          "ach027003700_R1EtoShotRS",
+          "ach027003700_R2EtoL1S",
+          "ach027003700_R2EtoL2S",
+          "ach027003700_R2EtoR1S",
+          "ach027003700_R2EtoR2S",
+          "ach027003700_R2EtoShotLS",
+          "ach027003700_R2EtoShotRS",
+          "ach027003700_Recoverfaceup",
+          "ach027003700_ShotLEtoLS",
+          "ach027003700_ShotLEtoRS",
+          "ach027003700_ShotREtoLS",
+          "ach027003700_ShotREtoRS",
+          "ach027003700_SkillOugishinBurnFs",
+          "ach027003700_SkillOugishinBurnFsMov",
+          "ach027003700_SleepLoop",
+          "ach027003700_SpchargeEnd",
+          "ach027003700_SpchargeIngLoop",
+          "ach027003700_SpchargeStart",
+          "ach027003700_StepB",
+          "ach027003700_StepF",
+          "ach027003700_StepL",
+          "ach027003700_StepR",
+          "ach027003700_TenchimatoIngLoop",
+          "ach027003700_TenchimatoStart",
+          "ach027003700_WalkLoop"
+        ],
+        "AssetBundle": [
+          "Character/AnimationClip/ch027003700!"
+        ]
+      }
+    },
+    {
+      "blobId": "c39877db50fd51c9",
+      "logicalPath": "Character/AnimationClip/ch027003800",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/c3/c39877db50fd51c9.unityfs",
+      "objectCounts": {
+        "AnimationClip": 38,
+        "AssetBundle": 1,
+        "TextAsset": 6
+      },
+      "selectedObjectNames": {
+        "AnimationClip": [
+          "ach027003800_Appear",
+          "ach027003800_AttackCombo1End",
+          "ach027003800_AttackCombo1Start",
+          "ach027003800_AttackCombo2End",
+          "ach027003800_AttackCombo2Start",
+          "ach027003800_AttackhookLEnd",
+          "ach027003800_AttackhookLStart",
+          "ach027003800_AttackhookREnd",
+          "ach027003800_AttackhookRStart",
+          "ach027003800_AttackhookcomboEnd",
+          "ach027003800_AttackjumpEnd",
+          "ach027003800_AttackjumpStart",
+          "ach027003800_Attackknockdown",
+          "ach027003800_AttackkonshinEnd",
+          "ach027003800_AttackkonshinStart",
+          "ach027003800_Attackrock",
+          "ach027003800_BossbreakEnd",
+          "ach027003800_BossbreakIngLoop",
+          "ach027003800_BossbreakStart",
+          "ach027003800_BossbreaksmallAdd",
+          "ach027003800_DamageAdd",
+          "ach027003800_DamageblowBEnd",
+          "ach027003800_DamageblowBIng",
+          "ach027003800_DamageblowBStart",
+          "ach027003800_DamagelargeB",
+          "ach027003800_DamagesmallB",
+          "ach027003800_DeathIngLoop",
+          "ach027003800_DeathStart",
+          "ach027003800_DeathbackIng",
+          "ach027003800_DeathbackStart",
+          "ach027003800_Deathcut",
+          "ach027003800_DownfaceupIngLoop",
+          "ach027003800_Heatup",
+          "ach027003800_IdleLoop",
+          "ach027003800_ParalysisLoop",
+          "ach027003800_Recoverfaceup",
+          "ach027003800_RunLoop",
+          "ach027003800_SleepLoop"
+        ],
+        "AssetBundle": [
+          "Character/AnimationClip/ch027003800!"
+        ]
+      }
+    },
+    {
+      "blobId": "3757005bb1aa80be",
+      "logicalPath": "Character/AnimationClip/ch027005800",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/37/3757005bb1aa80be.unityfs",
+      "objectCounts": {
+        "AnimationClip": 1,
+        "AssetBundle": 1,
+        "MonoScript": 2
+      },
+      "selectedObjectNames": {
+        "AnimationClip": [
+          "ach027005800_DeathcutDaiWin"
+        ],
+        "AssetBundle": [
+          "Character/AnimationClip/ch027005800!"
+        ]
+      }
+    },
+    {
+      "blobId": "289f45e65feea2d7",
+      "logicalPath": "Character/AnimationClip/ch027005801",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/28/289f45e65feea2d7.unityfs",
+      "objectCounts": {
+        "AnimationClip": 3,
+        "AssetBundle": 1,
+        "MonoScript": 2
+      },
+      "selectedObjectNames": {
+        "AnimationClip": [
+          "ach027005801_DeathcutDaiLose",
+          "ach027005801_DeathcutDaiWin",
+          "ach027005801_Eyecutin"
+        ],
+        "AssetBundle": [
+          "Character/AnimationClip/ch027005801!"
+        ]
+      }
+    },
+    {
+      "blobId": "0ca94c08651a5dd6",
+      "logicalPath": "Character/AnimationEvent/ach027003700",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/0c/0ca94c08651a5dd6.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "TextAsset": 72
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/AnimationEvent/ach027003700!"
+        ]
+      }
+    },
+    {
+      "blobId": "77717415907e2340",
+      "logicalPath": "Character/AnimationEvent/ach027003800",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/77/77717415907e2340.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "TextAsset": 56
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/AnimationEvent/ach027003800!"
+        ]
+      }
+    },
+    {
+      "blobId": "c257c096c9018c25",
+      "logicalPath": "Character/AttackDefinition/adbc027003700",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/c2/c257c096c9018c25.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "MonoBehaviour": 47,
+        "MonoScript": 1
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/AttackDefinition/adbc027003700!"
+        ]
+      }
+    },
+    {
+      "blobId": "ae1abcad0e48d763",
+      "logicalPath": "Character/AttackDefinition/adbc027003800",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/ae/ae1abcad0e48d763.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "MonoBehaviour": 39,
+        "MonoScript": 1
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/AttackDefinition/adbc027003800!"
+        ]
+      }
+    },
+    {
+      "blobId": "e4d0dd023d7120c0",
+      "logicalPath": "Character/Model/Character/ch027003700/Meshes",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/e4/e4d0dd023d7120c0.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "GameObject": 122,
+        "Transform": 122
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/Model/Character/ch027003700/Meshes!"
+        ]
+      }
+    },
+    {
+      "blobId": "e995c79981d8fc5c",
+      "logicalPath": "Character/Model/Character/ch027003700/Prefabs",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/e9/e995c79981d8fc5c.unityfs",
+      "objectCounts": {
+        "Animator": 1,
+        "AssetBundle": 1,
+        "GameObject": 123,
+        "MonoBehaviour": 5,
+        "MonoScript": 5,
+        "PositionConstraint": 1,
+        "Transform": 123
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/Model/Character/ch027003700/Prefabs@"
+        ]
+      }
+    },
+    {
+      "blobId": "cda74280ad0b5bb0",
+      "logicalPath": "Character/Model/Character/ch027003800/Materials",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/cd/cda74280ad0b5bb0.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "Material": 2
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/Model/Character/ch027003800/Materials@"
+        ],
+        "Material": [
+          "mch027003800_chyoZaboera",
+          "mch027003800_chyoZaboera_jewel"
+        ]
+      }
+    },
+    {
+      "blobId": "f8c862e1204ef0c4",
+      "logicalPath": "Character/Model/Character/ch027003800/Meshes",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/f8/f8c862e1204ef0c4.unityfs",
+      "objectCounts": {
+        "Animator": 1,
+        "AssetBundle": 1,
+        "Avatar": 1,
+        "GameObject": 109,
+        "Mesh": 6,
+        "SkinnedMeshRenderer": 6,
+        "Transform": 109
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/Model/Character/ch027003800/Meshes!"
+        ],
+        "Avatar": [
+          "ch027003800_fbxAvatar"
+        ],
+        "Mesh": [
+          "bodyGeo",
+          "faceGeo",
+          "knifeLGeo",
+          "knifeRGeo",
+          "transverse_swordLGeo",
+          "transverse_swordRGeo"
+        ]
+      }
+    },
+    {
+      "blobId": "aeff348043f42694",
+      "logicalPath": "Character/Model/Character/ch027003800/Prefabs",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/ae/aeff348043f42694.unityfs",
+      "objectCounts": {
+        "Animator": 1,
+        "AssetBundle": 1,
+        "GameObject": 110,
+        "MonoBehaviour": 5,
+        "MonoScript": 5,
+        "PositionConstraint": 1,
+        "SkinnedMeshRenderer": 6,
+        "Transform": 110
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/Model/Character/ch027003800/Prefabs@"
+        ]
+      }
+    },
+    {
+      "blobId": "14a5d9656d2f70d3",
+      "logicalPath": "Character/Model/Character/ch027003800/Textures",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/14/14a5d9656d2f70d3.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "Texture2D": 5
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/Model/Character/ch027003800/Textures!"
+        ],
+        "Texture2D": [
+          "tch027003800_chyoZaboera_body_co",
+          "tch027003800_chyoZaboera_body_fak",
+          "tch027003800_chyoZaboera_body_mk",
+          "tch027003800_chyoZaboera_body_sh",
+          "tch027003800_chyoZaboera_jewel_fak"
+        ]
+      }
+    },
+    {
+      "blobId": "07c59c1313ab7776",
+      "logicalPath": "Character/Model/Character/ch027005800/Materials",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/07/07c59c1313ab7776.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "Material": 12
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/Model/Character/ch027005800/Materials@"
+        ],
+        "Material": [
+          "mch027005800_kiganBurnHead_body",
+          "mch027005800_kiganBurn_body",
+          "mch027005800_kiganBurn_eye",
+          "mch027005800_kiganBurn_kata",
+          "mch027005800_kiganBurn_sphere",
+          "mch027005800_newDaiKen_body",
+          "mch027005800_newDaiKen_jewl",
+          "mch027005800_shinBurn_alp",
+          "mch027005800_shinBurn_body",
+          "mch027005800_shinBurn_eyeL",
+          "mch027005800_shinBurn_eyeR",
+          "mch027005800_shinBurn_hair"
+        ]
+      }
+    },
+    {
+      "blobId": "544099f1eaf4e227",
+      "logicalPath": "Character/Model/Character/ch027005800/Meshes",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/54/544099f1eaf4e227.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "GameObject": 137,
+        "Material": 11,
+        "Mesh": 5,
+        "Shader": 2,
+        "SkinnedMeshRenderer": 5,
+        "Transform": 137
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/Model/Character/ch027005800/Meshes!"
+        ],
+        "Material": [
+          "mch0270037_v00_shinBurnFace_attach",
+          "mch0270058_v00_kiganBurnHead_body",
+          "mch0270058_v00_kiganBurn_body",
+          "mch0270058_v00_kiganBurn_eye",
+          "mch0270058_v00_kiganBurn_kata",
+          "mch0270058_v00_kiganBurn_sphere",
+          "mch0270058_v00_shinBurn_Leye",
+          "mch0270058_v00_shinBurn_Reye",
+          "mch0270058_v00_shinBurn_body",
+          "mch2700058_v00_newDaiKen",
+          "mch2700058_v00_newDaiKenjewel"
+        ],
+        "Mesh": [
+          "RealbodyGeo",
+          "WeaponGEO",
+          "bodyGeo",
+          "faceGeo",
+          "hairGeo"
+        ]
+      }
+    },
+    {
+      "blobId": "f761de4e6c2abff5",
+      "logicalPath": "Character/Model/Character/ch027005800/Prefabs",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/f7/f761de4e6c2abff5.unityfs",
+      "objectCounts": {
+        "Animator": 1,
+        "AssetBundle": 1,
+        "GameObject": 137,
+        "MonoBehaviour": 5,
+        "MonoScript": 5,
+        "SkinnedMeshRenderer": 5,
+        "Transform": 137
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/Model/Character/ch027005800/Prefabs@"
+        ]
+      }
+    },
+    {
+      "blobId": "039d49dda77bbdbd",
+      "logicalPath": "Character/Model/Character/ch027005800/Textures",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/03/039d49dda77bbdbd.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "Texture2D": 19
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/Model/Character/ch027005800/Textures!"
+        ],
+        "Texture2D": [
+          "tch0270058_v00_attach_co",
+          "tch0270058_v00_attach_mk",
+          "tch0270058_v00_fak",
+          "tch0270058_v00_jewel_fak",
+          "tch0270058_v00_kiganBurnHead_body_co",
+          "tch0270058_v00_kiganBurnHead_body_mk",
+          "tch0270058_v00_kiganBurnHead_body_sh",
+          "tch0270058_v00_kiganBurn_body_co",
+          "tch0270058_v00_kiganBurn_body_mk",
+          "tch0270058_v00_kiganBurn_body_sh",
+          "tch0270058_v00_newDaiKen_co",
+          "tch0270058_v00_newDaiKen_fak",
+          "tch0270058_v00_newDaiKen_mk",
+          "tch0270058_v00_newDaiKen_sh",
+          "tch0270058_v00_shinBurn_body_co",
+          "tch0270058_v00_shinBurn_body_mk",
+          "tch0270058_v00_shinBurn_body_sh",
+          "tch0270058_v00_shinBurn_eye_co",
+          "tch0270058_v00_shinBurn_eye_sh"
+        ]
+      }
+    },
+    {
+      "blobId": "801894f6d2cf6e30",
+      "logicalPath": "Character/Model/Character/ch027005801/Meshes",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/80/801894f6d2cf6e30.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "GameObject": 137,
+        "Material": 12,
+        "Mesh": 5,
+        "Shader": 2,
+        "SkinnedMeshRenderer": 5,
+        "Transform": 137
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/Model/Character/ch027005801/Meshes!"
+        ],
+        "Material": [
+          "mch0270037_v00_shin_attach",
+          "mch0270058_v00_kigan_Head",
+          "mch0270058_v00_kigan_body",
+          "mch0270058_v00_kigan_eye",
+          "mch0270058_v00_kigan_kata",
+          "mch0270058_v00_kigan_sphere",
+          "mch0270058_v00_shin_Leye",
+          "mch0270058_v00_shin_Reye",
+          "mch0270058_v00_shin_body",
+          "mch0270058_v00_shin_hair",
+          "mch2700058_v00_newDaiKen",
+          "mch2700058_v00_newDaiKenjewel"
+        ],
+        "Mesh": [
+          "RealbodyGeo",
+          "WeaponGEO",
+          "bodyGeo",
+          "faceGeo",
+          "hairGeo"
+        ]
+      }
+    },
+    {
+      "blobId": "a117ca1fab9c303c",
+      "logicalPath": "Character/Model/Character/ch027005801/Prefabs",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/a1/a117ca1fab9c303c.unityfs",
+      "objectCounts": {
+        "Animation": 1,
+        "Animator": 1,
+        "AssetBundle": 1,
+        "GameObject": 137,
+        "MonoBehaviour": 7,
+        "MonoScript": 7,
+        "SkinnedMeshRenderer": 5,
+        "Transform": 137
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/Model/Character/ch027005801/Prefabs@"
+        ]
+      }
+    },
+    {
+      "blobId": "ad0b67c8975507db",
+      "logicalPath": "Character/Model/Skin/sk027003700/Materials",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/ad/ad0b67c8975507db.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "Material": 2
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/Model/Skin/sk027003700/Materials@"
+        ],
+        "Material": [
+          "msk0270037_v00_shinBurn_body",
+          "msk0270037_v00_shinBurn_jewel"
+        ]
+      }
+    },
+    {
+      "blobId": "21f913d8a67ad9bf",
+      "logicalPath": "Character/Model/Skin/sk027003700/Meshes",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/21/21f913d8a67ad9bf.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "GameObject": 125,
+        "Material": 2,
+        "Mesh": 3,
+        "Shader": 2,
+        "SkinnedMeshRenderer": 3,
+        "Transform": 125
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/Model/Skin/sk027003700/Meshes!"
+        ],
+        "Material": [
+          "msk0270037_v00_shinBurn_body",
+          "msk0270037_v00_shinBurn_jewel"
+        ],
+        "Mesh": [
+          "bodyGeo",
+          "hairGeo",
+          "skirtGeo"
+        ]
+      }
+    },
+    {
+      "blobId": "4dd3e3d3d15b197b",
+      "logicalPath": "Character/Model/Skin/sk027003700/Prefabs",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/4d/4dd3e3d3d15b197b.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "GameObject": 125,
+        "SkinnedMeshRenderer": 3,
+        "Transform": 125
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/Model/Skin/sk027003700/Prefabs@"
+        ]
+      }
+    },
+    {
+      "blobId": "1c667865430ec646",
+      "logicalPath": "Character/Model/Skin/sk027003700/Textures",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/1c/1c667865430ec646.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "Texture2D": 5
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Character/Model/Skin/sk027003700/Textures!"
+        ],
+        "Texture2D": [
+          "tch027003700_shinBurn_jewel_fak",
+          "tsk027003700_shinBurn_body_co",
+          "tsk027003700_shinBurn_body_fak",
+          "tsk027003700_shinBurn_body_mk",
+          "tsk027003700_shinBurn_body_sh"
+        ]
+      }
+    },
+    {
+      "blobId": "37192bcc8041d72c",
+      "logicalPath": "CutScene/BossAppearCutScene/Timeline/cba027003700",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/37/37192bcc8041d72c.unityfs",
+      "objectCounts": {
+        "AnimationClip": 3,
+        "Animator": 8,
+        "AssetBundle": 1,
+        "AudioListener": 1,
+        "Camera": 4,
+        "Canvas": 2,
+        "CanvasRenderer": 3,
+        "GameObject": 26,
+        "Light": 2,
+        "MonoBehaviour": 27,
+        "MonoScript": 15,
+        "ParticleSystem": 3,
+        "ParticleSystemRenderer": 3,
+        "PlayableDirector": 4,
+        "RectTransform": 5,
+        "Transform": 21
+      },
+      "selectedObjectNames": {
+        "AnimationClip": [
+          "Recorded",
+          "Recorded (2)",
+          "Recorded (5)"
+        ],
+        "AssetBundle": [
+          "CutScene/BossAppearCutScene/Timeline/cba027003700@"
+        ]
+      }
+    },
+    {
+      "blobId": "4e05dd7d42223438",
+      "logicalPath": "CutScene/BossAppearCutScene/Timeline/cba027003700",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/4e/4e05dd7d42223438.unityfs",
+      "objectCounts": {
+        "AnimationClip": 1,
+        "AssetBundle": 1,
+        "MonoBehaviour": 25,
+        "MonoScript": 10
+      },
+      "selectedObjectNames": {
+        "AnimationClip": [
+          "acam_shinBurnBossAppear"
+        ],
+        "AssetBundle": [
+          "CutScene/BossAppearCutScene/Timeline/cba027003700!"
+        ]
+      }
+    },
+    {
+      "blobId": "15ca4c3c7f11f2ea",
+      "logicalPath": "CutScene/BossAppearCutScene/Timeline/cba027003800",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/15/15ca4c3c7f11f2ea.unityfs",
+      "objectCounts": {
+        "AnimationClip": 3,
+        "Animator": 7,
+        "AssetBundle": 1,
+        "AudioListener": 1,
+        "Camera": 4,
+        "Canvas": 2,
+        "CanvasRenderer": 3,
+        "GameObject": 22,
+        "Light": 2,
+        "MonoBehaviour": 23,
+        "MonoScript": 12,
+        "PlayableDirector": 4,
+        "RectTransform": 5,
+        "Transform": 17
+      },
+      "selectedObjectNames": {
+        "AnimationClip": [
+          "Recorded (1)",
+          "Recorded (2)",
+          "Recorded (3)"
+        ],
+        "AssetBundle": [
+          "CutScene/BossAppearCutScene/Timeline/cba027003800@"
+        ]
+      }
+    },
+    {
+      "blobId": "3e96309491d0026e",
+      "logicalPath": "CutScene/BossAppearCutScene/Timeline/cba027003800",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/3e/3e96309491d0026e.unityfs",
+      "objectCounts": {
+        "AnimationClip": 1,
+        "AssetBundle": 1,
+        "MonoBehaviour": 19,
+        "MonoScript": 7
+      },
+      "selectedObjectNames": {
+        "AnimationClip": [
+          "acam_chyoZaboeraBossAppear"
+        ],
+        "AssetBundle": [
+          "CutScene/BossAppearCutScene/Timeline/cba027003800!"
+        ]
+      }
+    },
+    {
+      "blobId": "6e701323a82168bb",
+      "logicalPath": "CutScene/BossDeadCutScene/Timeline/cbd027003700",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/6e/6e701323a82168bb.unityfs",
+      "objectCounts": {
+        "AnimationClip": 3,
+        "Animator": 7,
+        "AssetBundle": 1,
+        "AudioListener": 1,
+        "Camera": 4,
+        "Canvas": 2,
+        "CanvasRenderer": 3,
+        "GameObject": 22,
+        "Light": 2,
+        "MonoBehaviour": 22,
+        "MonoScript": 13,
+        "PlayableDirector": 4,
+        "RectTransform": 5,
+        "Transform": 17
+      },
+      "selectedObjectNames": {
+        "AnimationClip": [
+          "Recorded",
+          "Recorded (2)",
+          "Recorded (3)"
+        ],
+        "AssetBundle": [
+          "CutScene/BossDeadCutScene/Timeline/cbd027003700@"
+        ]
+      }
+    },
+    {
+      "blobId": "a929fadba4d3c962",
+      "logicalPath": "CutScene/BossDeadCutScene/Timeline/cbd027003700",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/a9/a929fadba4d3c962.unityfs",
+      "objectCounts": {
+        "AnimationClip": 1,
+        "AssetBundle": 1,
+        "MonoBehaviour": 24,
+        "MonoScript": 8
+      },
+      "selectedObjectNames": {
+        "AnimationClip": [
+          "acam_shinBurnBossDeathcut"
+        ],
+        "AssetBundle": [
+          "CutScene/BossDeadCutScene/Timeline/cbd027003700!"
+        ]
+      }
+    },
+    {
+      "blobId": "1093d80fe211b3b0",
+      "logicalPath": "CutScene/BossDeadCutScene/Timeline/cbd027003800",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/10/1093d80fe211b3b0.unityfs",
+      "objectCounts": {
+        "AnimationClip": 3,
+        "Animator": 7,
+        "AssetBundle": 1,
+        "AudioListener": 1,
+        "Camera": 4,
+        "Canvas": 2,
+        "CanvasRenderer": 3,
+        "GameObject": 22,
+        "Light": 2,
+        "MonoBehaviour": 24,
+        "MonoScript": 13,
+        "PlayableDirector": 4,
+        "RectTransform": 5,
+        "Transform": 17
+      },
+      "selectedObjectNames": {
+        "AnimationClip": [
+          "Recorded",
+          "Recorded (1)",
+          "Recorded (2)"
+        ],
+        "AssetBundle": [
+          "CutScene/BossDeadCutScene/Timeline/cbd027003800@"
+        ]
+      }
+    },
+    {
+      "blobId": "ebfb35016453828e",
+      "logicalPath": "CutScene/BossDeadCutScene/Timeline/cbd027003800",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/eb/ebfb35016453828e.unityfs",
+      "objectCounts": {
+        "AnimationClip": 1,
+        "AssetBundle": 1,
+        "MonoBehaviour": 19,
+        "MonoScript": 6
+      },
+      "selectedObjectNames": {
+        "AnimationClip": [
+          "acam_chyoZaboeraBossDeathcut"
+        ],
+        "AssetBundle": [
+          "CutScene/BossDeadCutScene/Timeline/cbd027003800!"
+        ]
+      }
+    },
+    {
+      "blobId": "7f365c64acda9a02",
+      "logicalPath": "CutScene/EyeCutScene/Timeline/KiganouBurnHead",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/7f/7f365c64acda9a02.unityfs",
+      "objectCounts": {
+        "Animation": 1,
+        "Animator": 6,
+        "AssetBundle": 1,
+        "AudioListener": 1,
+        "Camera": 4,
+        "Canvas": 2,
+        "CanvasRenderer": 3,
+        "GameObject": 164,
+        "Light": 2,
+        "MonoBehaviour": 37,
+        "MonoScript": 18,
+        "ParticleSystem": 7,
+        "ParticleSystemRenderer": 7,
+        "PlayableDirector": 4,
+        "RectTransform": 5,
+        "SkinnedMeshRenderer": 5,
+        "Transform": 159
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "CutScene/EyeCutScene/Timeline/KiganouBurnHead@"
+        ]
+      }
+    },
+    {
+      "blobId": "ce0bcab27c2b8efa",
+      "logicalPath": "CutScene/EyeCutScene/Timeline/KiganouBurnHead",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/ce/ce0bcab27c2b8efa.unityfs",
+      "objectCounts": {
+        "AnimationClip": 1,
+        "AssetBundle": 1,
+        "MonoBehaviour": 22,
+        "MonoScript": 9
+      },
+      "selectedObjectNames": {
+        "AnimationClip": [
+          "Recorded"
+        ],
+        "AssetBundle": [
+          "CutScene/EyeCutScene/Timeline/KiganouBurnHead!"
+        ]
+      }
+    },
+    {
+      "blobId": "76ef95c8627ec39f",
+      "logicalPath": "Effect/Particles/Battle/Chara/shinBurn00/SkillSP/TenchiMatonoKamae",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/76/76ef95c8627ec39f.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "GameObject": 88,
+        "MonoBehaviour": 102,
+        "MonoScript": 3,
+        "ParticleSystem": 72,
+        "ParticleSystemRenderer": 72,
+        "Transform": 88
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Effect/Particles/Battle/Chara/shinBurn00/SkillSP/TenchiMatonoKamae@"
+        ]
+      }
+    },
+    {
+      "blobId": "98467202fd77416e",
+      "logicalPath": "Effect/Particles/Battle/Chara/shinBurn00/SkillSP/TenchiMatonoKamae/Textures",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/98/98467202fd77416e.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "Texture2D": 2
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Effect/Particles/Battle/Chara/shinBurn00/SkillSP/TenchiMatonoKamae/Textures!"
+        ],
+        "Texture2D": [
+          "Tx_ShinBurnTenchiMato_Eff01",
+          "Tx_ShinBurnTenchiMato_Eff02"
+        ]
+      }
+    },
+    {
+      "blobId": "f28fa66504958154",
+      "logicalPath": "Effect/Particles/Battle/Enemy/kiganohburn",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/f2/f28fa66504958154.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "GameObject": 133,
+        "MonoBehaviour": 142,
+        "MonoScript": 3,
+        "ParticleSystem": 124,
+        "ParticleSystemRenderer": 124,
+        "Transform": 133
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Effect/Particles/Battle/Enemy/kiganohburn@"
+        ]
+      }
+    },
+    {
+      "blobId": "971b5295309a3ee1",
+      "logicalPath": "Effect/Particles/Battle/Enemy/kiganohburn/CutScene",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/97/971b5295309a3ee1.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "Texture2D": 2
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Effect/Particles/Battle/Enemy/kiganohburn/CutScene!"
+        ],
+        "Texture2D": [
+          "Tx_UNQ_KingBurnImage00",
+          "Tx_UNQ_KingBurnImage01"
+        ]
+      }
+    },
+    {
+      "blobId": "bb5f258265cbb429",
+      "logicalPath": "Effect/Particles/Battle/Enemy/kiganohburn/CutScene",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/bb/bb5f258265cbb429.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "GameObject": 162,
+        "MonoBehaviour": 184,
+        "MonoScript": 3,
+        "ParticleSystem": 140,
+        "ParticleSystemRenderer": 140,
+        "Transform": 162
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Effect/Particles/Battle/Enemy/kiganohburn/CutScene@"
+        ]
+      }
+    },
+    {
+      "blobId": "30b1428c53915f40",
+      "logicalPath": "Effect/Particles/Battle/Enemy/killburn",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/30/30b1428c53915f40.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "GameObject": 466,
+        "Light": 2,
+        "MonoBehaviour": 427,
+        "MonoScript": 3,
+        "ParticleSystem": 381,
+        "ParticleSystemRenderer": 381,
+        "Transform": 466
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Effect/Particles/Battle/Enemy/killburn@"
+        ]
+      }
+    },
+    {
+      "blobId": "cb673d21f2f8fc40",
+      "logicalPath": "Effect/Particles/Battle/Enemy/oldBurn",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/cb/cb673d21f2f8fc40.unityfs",
+      "objectCounts": {
+        "Animator": 1,
+        "AssetBundle": 1,
+        "GameObject": 267,
+        "MonoBehaviour": 165,
+        "MonoScript": 4,
+        "ParticleSystem": 124,
+        "ParticleSystemRenderer": 124,
+        "SkinnedMeshRenderer": 1,
+        "Transform": 267
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Effect/Particles/Battle/Enemy/oldBurn@"
+        ]
+      }
+    },
+    {
+      "blobId": "6f1f80a1a62aee5f",
+      "logicalPath": "Effect/Particles/Battle/Enemy/shinBurn",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/6f/6f1f80a1a62aee5f.unityfs",
+      "objectCounts": {
+        "Animator": 1,
+        "AssetBundle": 1,
+        "GameObject": 290,
+        "MonoBehaviour": 189,
+        "MonoScript": 4,
+        "ParticleSystem": 148,
+        "ParticleSystemRenderer": 148,
+        "SkinnedMeshRenderer": 1,
+        "Transform": 290
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Effect/Particles/Battle/Enemy/shinBurn@"
+        ]
+      }
+    },
+    {
+      "blobId": "dd1d3cf550872549",
+      "logicalPath": "Effect/Particles/Battle/Enemy/shinBurn/CutScene/cba027003700",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/dd/dd1d3cf550872549.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "GameObject": 4,
+        "MonoBehaviour": 5,
+        "MonoScript": 3,
+        "ParticleSystem": 3,
+        "ParticleSystemRenderer": 3,
+        "Transform": 4
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "Effect/Particles/Battle/Enemy/shinBurn/CutScene/cba027003700@"
+        ]
+      }
+    },
+    {
+      "blobId": "4dc80b00cf39153b",
+      "logicalPath": "UI/Runtime/Textures/Scenario/Bg/bg010_kiganjou_01.png",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/4d/4dc80b00cf39153b.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "Sprite": 1,
+        "Texture2D": 1
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "UI/Runtime/Textures/Scenario/Bg/bg010_kiganjou_01.png!"
+        ],
+        "Texture2D": [
+          "bg010_kiganjou_01"
+        ]
+      }
+    },
+    {
+      "blobId": "0f247b5ecc471aee",
+      "logicalPath": "UI/Runtime/Textures/Scenario/Bg/bg045_ kiganjo_attack_01.png",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/0f/0f247b5ecc471aee.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "Sprite": 1,
+        "Texture2D": 1
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "UI/Runtime/Textures/Scenario/Bg/bg045_ kiganjo_attack_01.png!"
+        ],
+        "Texture2D": [
+          "bg045_ kiganjo_attack_01"
+        ]
+      }
+    },
+    {
+      "blobId": "885fcf458fcdd741",
+      "logicalPath": "UI/Runtime/Textures/Scenario/Bg/bg045_ kiganjo_collapse_01.png",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/88/885fcf458fcdd741.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "Sprite": 1,
+        "Texture2D": 1
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "UI/Runtime/Textures/Scenario/Bg/bg045_ kiganjo_collapse_01.png!"
+        ],
+        "Texture2D": [
+          "bg045_ kiganjo_collapse_01"
+        ]
+      }
+    },
+    {
+      "blobId": "243273a5a4f368a1",
+      "logicalPath": "UI/Runtime/Textures/Scenario/Bg/bg045_ kiganjo_truth_01.png",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/24/243273a5a4f368a1.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "Sprite": 1,
+        "Texture2D": 1
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "UI/Runtime/Textures/Scenario/Bg/bg045_ kiganjo_truth_01.png!"
+        ],
+        "Texture2D": [
+          "bg045_ kiganjo_truth_01"
+        ]
+      }
+    },
+    {
+      "blobId": "c0460955b1711a3e",
+      "logicalPath": "UI/Runtime/Textures/Scenario/Bg/bg129_kiganou_01.png",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/c0/c0460955b1711a3e.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "Sprite": 1,
+        "Texture2D": 1
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "UI/Runtime/Textures/Scenario/Bg/bg129_kiganou_01.png!"
+        ],
+        "Texture2D": [
+          "bg129_kiganou_01"
+        ]
+      }
+    },
+    {
+      "blobId": "fadea487706ecf92",
+      "logicalPath": "UI/Static/Textures/Home/QuestSelectVearn",
+      "unityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/fa/fadea487706ecf92.unityfs",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "Sprite": 1,
+        "Texture2D": 1
+      },
+      "selectedObjectNames": {
+        "AssetBundle": [
+          "UI/Static/Textures/Home/QuestSelectVearn!"
+        ],
+        "Texture2D": [
+          "bg_vearn"
+        ]
+      }
+    }
+  ],
+  "limits": [
+    "OBJ exports preserve geometry and UVs but do not preserve skeleton skinning or animation binding",
+    "AnimationClip objects are inventoried but require a later rig-aware exporter",
+    "Character identity remains pending visual review"
+  ]
+}

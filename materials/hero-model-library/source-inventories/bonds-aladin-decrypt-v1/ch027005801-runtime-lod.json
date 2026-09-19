@@ -1,0 +1,65 @@
+{
+  "schema": "ggd.heros-bonds-runtime-lod@1",
+  "blenderVersion": "5.2.1 LTS",
+  "policy": {
+    "sourceThresholdTriangles": 10000,
+    "targetMinimumTriangles": 7500,
+    "targetMaximumTriangles": 8000
+  },
+  "inputGlbAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005801/ch027005801-rigged.glb",
+  "inputGlbSha256": "9669b3d57efdeb3368311ad9538065d5fba70ec0ab0114a042e931d923443add",
+  "outputGlbAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005801/ch027005801-runtime-lod.glb",
+  "outputGlbBytes": 2240128,
+  "outputGlbSha256": "ed67057231f78bc4c6e7409f9e47170db8b5eb17efeb6cf62d69737d1ca0f051",
+  "armatureObjectCount": 1,
+  "sourceTriangleCount": 29990,
+  "runtimeTriangleCount": 7897,
+  "meshes": [
+    {
+      "meshObjectName": "RealbodyGeo",
+      "sourceTriangleCount": 1338,
+      "runtimeTriangleCount": 549,
+      "budget": 550,
+      "vertexGroupCount": 15,
+      "armatureModifierCount": 1,
+      "materialSlotCount": 1
+    },
+    {
+      "meshObjectName": "WeaponGEO",
+      "sourceTriangleCount": 756,
+      "runtimeTriangleCount": 350,
+      "budget": 350,
+      "vertexGroupCount": 1,
+      "armatureModifierCount": 1,
+      "materialSlotCount": 2
+    },
+    {
+      "meshObjectName": "bodyGeo",
+      "sourceTriangleCount": 23854,
+      "runtimeTriangleCount": 5499,
+      "budget": 5500,
+      "vertexGroupCount": 61,
+      "armatureModifierCount": 1,
+      "materialSlotCount": 5
+    },
+    {
+      "meshObjectName": "faceGeo",
+      "sourceTriangleCount": 1982,
+      "runtimeTriangleCount": 799,
+      "budget": 800,
+      "vertexGroupCount": 1,
+      "armatureModifierCount": 1,
+      "materialSlotCount": 4
+    },
+    {
+      "meshObjectName": "hairGeo",
+      "sourceTriangleCount": 2060,
+      "runtimeTriangleCount": 700,
+      "budget": 700,
+      "vertexGroupCount": 20,
+      "armatureModifierCount": 1,
+      "materialSlotCount": 1
+    }
+  ],
+  "status": "runtime-lod-exported-awaiting-khronos-and-visual-validation"
+}

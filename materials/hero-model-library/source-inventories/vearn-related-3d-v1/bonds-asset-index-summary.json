@@ -1,0 +1,77 @@
+{
+  "schema": "ggd.heros-bonds-ali2-index@1",
+  "inputs": [
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/extracted/cache-v1/sdcard/Android/data/com.square_enix.android_googleplay.dqdaihb/files/downloaded/files",
+      "kind": "downloaded-cache"
+    },
+    {
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/extracted/xapk/bundledtree.apk",
+      "kind": "bundledtree-apk",
+      "bytes": 266576850,
+      "sha256": "db407447a49f309c4ca737ac8f35ad485887f6e96e72dbcd804824135a093b9e"
+    }
+  ],
+  "indexes": [
+    {
+      "source": "downloaded-cache",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/extracted/cache-v1/sdcard/Android/data/com.square_enix.android_googleplay.dqdaihb/files/downloaded/files/index/00/0000000000000000",
+      "sha256": "f8f6307298389aabb1732040d08863d559cf77136a541ae4a9cc31dbbc9ff4f7",
+      "bytes": 40312,
+      "version": 4,
+      "entryCount": 382
+    },
+    {
+      "source": "downloaded-cache",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/extracted/cache-v1/sdcard/Android/data/com.square_enix.android_googleplay.dqdaihb/files/downloaded/files/index/09/09710b5cd3bc17f7",
+      "sha256": "b98f59f6a212cd4993131e686ed1a339e0e922ee66ef13b5b6e3734a505937d2",
+      "bytes": 13544,
+      "version": 4,
+      "entryCount": 143
+    },
+    {
+      "source": "downloaded-cache",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/extracted/cache-v1/sdcard/Android/data/com.square_enix.android_googleplay.dqdaihb/files/downloaded/files/index/a9/a99b4207244ef9b2",
+      "sha256": "7b41c805af35b97b18ca96f0fcc9d3211d5da5391c1372536a889c537eb4ebec",
+      "bytes": 1920064,
+      "version": 4,
+      "entryCount": 17317
+    },
+    {
+      "source": "bundledtree-apk",
+      "path": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/extracted/xapk/bundledtree.apk!/assets/assetpack/index/00/0000000000000000",
+      "sha256": "f8f6307298389aabb1732040d08863d559cf77136a541ae4a9cc31dbbc9ff4f7",
+      "bytes": 40312,
+      "version": 4,
+      "entryCount": 382
+    }
+  ],
+  "entryCount": 18224,
+  "uniqueLogicalPathCount": 17205,
+  "blobPresentCount": 17570,
+  "missingBlobCount": 654,
+  "sizeMismatchCount": 0,
+  "searchTerms": [
+    "vearn",
+    "burn",
+    "bahn",
+    "kigan",
+    "バーン",
+    "鬼眼"
+  ],
+  "characterIdCandidates": [
+    "027003700",
+    "027003800",
+    "027005800",
+    "027005801"
+  ],
+  "candidateCount": 55,
+  "fullIndex": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/indexes/heros-bonds-v1/bonds-assets.jsonl.gz",
+    "bytes": 1015062,
+    "sha256": "6a444753245c86a1cd6327055c065a07607175c0c40f58d2cf3948adff27684f"
+  },
+  "identityConclusion": "direct-path-candidates-require-object-and-visual-verification",
+  "modelConverted": false,
+  "runtimeRegistered": false
+}

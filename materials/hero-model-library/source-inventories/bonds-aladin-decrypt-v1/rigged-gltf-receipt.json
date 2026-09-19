@@ -1,0 +1,320 @@
+{
+  "schema": "ggd.heros-bonds-rigged-gltf-export@1",
+  "unityPyVersion": "1.20.26",
+  "variants": [
+    {
+      "characterId": "ch027005800",
+      "status": "rigged-textured-glb-exported-awaiting-owner-visual-approval",
+      "sourceMeshUnityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/54/544099f1eaf4e227.unityfs",
+      "sourceMeshUnityFsSha256": "24717f0f8ef4692091cfcd17bae45e316a0cfecd4da43888c62740db663fe286",
+      "textureLogicalPath": "Character/Model/Character/ch027005800/Textures",
+      "textureReuseNote": null,
+      "outputGlbAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005800/ch027005800-rigged.glb",
+      "outputGlbBytes": 3212492,
+      "outputGlbSha256": "5ddd579834884f286ae04134de6b7e16abbf622a003c0f9081fa16019ffd6322",
+      "transformNodeCount": 137,
+      "skinnedMeshCount": 5,
+      "vertexCount": 23742,
+      "triangleCount": 29990,
+      "maxJointCountPerSkin": 61,
+      "meshes": [
+        {
+          "meshName": "RealbodyGeo",
+          "vertexCount": 896,
+          "triangleCount": 1338,
+          "submeshCount": 1,
+          "jointCount": 15,
+          "weightedVertexCount": 896,
+          "materialNames": [
+            "mch0270058_v00_shinBurn_body"
+          ]
+        },
+        {
+          "meshName": "WeaponGEO",
+          "vertexCount": 884,
+          "triangleCount": 756,
+          "submeshCount": 2,
+          "jointCount": 1,
+          "weightedVertexCount": 884,
+          "materialNames": [
+            "mch2700058_v00_newDaiKen",
+            "mch2700058_v00_newDaiKenjewel"
+          ]
+        },
+        {
+          "meshName": "bodyGeo",
+          "vertexCount": 17341,
+          "triangleCount": 23854,
+          "submeshCount": 5,
+          "jointCount": 61,
+          "weightedVertexCount": 17341,
+          "materialNames": [
+            "mch0270058_v00_kiganBurn_sphere",
+            "mch0270058_v00_kiganBurn_kata",
+            "mch0270058_v00_kiganBurn_body",
+            "mch0270058_v00_kiganBurnHead_body",
+            "mch0270058_v00_kiganBurn_eye"
+          ]
+        },
+        {
+          "meshName": "faceGeo",
+          "vertexCount": 1763,
+          "triangleCount": 1982,
+          "submeshCount": 4,
+          "jointCount": 1,
+          "weightedVertexCount": 1763,
+          "materialNames": [
+            "mch0270037_v00_shinBurnFace_attach",
+            "mch0270058_v00_shinBurn_body",
+            "mch0270058_v00_shinBurn_Leye",
+            "mch0270058_v00_shinBurn_Reye"
+          ]
+        },
+        {
+          "meshName": "hairGeo",
+          "vertexCount": 2858,
+          "triangleCount": 2060,
+          "submeshCount": 1,
+          "jointCount": 20,
+          "weightedVertexCount": 2858,
+          "materialNames": [
+            "mch0270058_v00_shinBurn_body"
+          ]
+        }
+      ],
+      "materialTextureMappings": [
+        {
+          "materialName": "mch0270058_v00_shinBurn_body",
+          "textureRule": "tch0270058_v00_shinburn_body_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_shinBurn_body_co__-5299249033991879465.png",
+          "textureSha256": "b4799d4cb770b7d38b2a0608fbac12910cf669f41ba47ca01adb28f6f4df6e2f"
+        },
+        {
+          "materialName": "mch2700058_v00_newDaiKen",
+          "textureRule": "tch0270058_v00_newdaiken_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_newDaiKen_co__-1187270363181514847.png",
+          "textureSha256": "d478890a1550d01e6ce073c4359699fc501a91f1d17d9d39923e4c895ddc1299"
+        },
+        {
+          "materialName": "mch2700058_v00_newDaiKenjewel",
+          "textureRule": "tch0270058_v00_newdaiken_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_newDaiKen_co__-1187270363181514847.png",
+          "textureSha256": "d478890a1550d01e6ce073c4359699fc501a91f1d17d9d39923e4c895ddc1299"
+        },
+        {
+          "materialName": "mch0270058_v00_kiganBurn_sphere",
+          "textureRule": "tch0270058_v00_kiganburn_body_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_kiganBurn_body_co__8479874845593258001.png",
+          "textureSha256": "961928a398138e609bf330f030d9e3ed28e90a831f8253cfb5cc88344b29a419"
+        },
+        {
+          "materialName": "mch0270058_v00_kiganBurn_kata",
+          "textureRule": "tch0270058_v00_kiganburn_body_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_kiganBurn_body_co__8479874845593258001.png",
+          "textureSha256": "961928a398138e609bf330f030d9e3ed28e90a831f8253cfb5cc88344b29a419"
+        },
+        {
+          "materialName": "mch0270058_v00_kiganBurn_body",
+          "textureRule": "tch0270058_v00_kiganburn_body_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_kiganBurn_body_co__8479874845593258001.png",
+          "textureSha256": "961928a398138e609bf330f030d9e3ed28e90a831f8253cfb5cc88344b29a419"
+        },
+        {
+          "materialName": "mch0270058_v00_kiganBurnHead_body",
+          "textureRule": "tch0270058_v00_kiganburnhead_body_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_kiganBurnHead_body_co__-7046760515054005308.png",
+          "textureSha256": "62936331e83f91f9d8f1c6f77556066c8ca72fd5d257213e96bdc23dd34246e9"
+        },
+        {
+          "materialName": "mch0270058_v00_kiganBurn_eye",
+          "textureRule": "tch0270058_v00_kiganburnhead_body_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_kiganBurnHead_body_co__-7046760515054005308.png",
+          "textureSha256": "62936331e83f91f9d8f1c6f77556066c8ca72fd5d257213e96bdc23dd34246e9"
+        },
+        {
+          "materialName": "mch0270037_v00_shinBurnFace_attach",
+          "textureRule": "tch0270058_v00_attach_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_attach_co__-6735469837138678342.png",
+          "textureSha256": "68a12cfc3ff741e5822f3fd3b9e49323d34e627e5e23e80de56106944a4862a7"
+        },
+        {
+          "materialName": "mch0270058_v00_shinBurn_Leye",
+          "textureRule": "tch0270058_v00_shinburn_eye_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_shinBurn_eye_co__8421981590862939002.png",
+          "textureSha256": "21e0cf7287f470daeb82dfdf686d5ee5c975d9ce5a4aae12c816a3fbdf0caf47"
+        },
+        {
+          "materialName": "mch0270058_v00_shinBurn_Reye",
+          "textureRule": "tch0270058_v00_shinburn_eye_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_shinBurn_eye_co__8421981590862939002.png",
+          "textureSha256": "21e0cf7287f470daeb82dfdf686d5ee5c975d9ce5a4aae12c816a3fbdf0caf47"
+        }
+      ],
+      "limitations": [
+        "GLB contains the source bind pose; AnimationClip curves are indexed separately and are not embedded",
+        "custom Unity shaders were approximated as glTF metallic-roughness materials",
+        "this is the source-resolution extraction, not the <=8000 triangle game candidate"
+      ]
+    },
+    {
+      "characterId": "ch027005801",
+      "status": "rigged-textured-glb-exported-awaiting-owner-visual-approval",
+      "sourceMeshUnityFsAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/80/801894f6d2cf6e30.unityfs",
+      "sourceMeshUnityFsSha256": "22ebad91900b73994852a434b1428654930a251af3d28f23d3478a42b5afce51",
+      "textureLogicalPath": "Character/Model/Character/ch027005800/Textures",
+      "textureReuseNote": "ch027005801 has no separate texture bundle; original material names map to the ch027005800 texture family",
+      "outputGlbAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005801/ch027005801-rigged.glb",
+      "outputGlbBytes": 3213348,
+      "outputGlbSha256": "9669b3d57efdeb3368311ad9538065d5fba70ec0ab0114a042e931d923443add",
+      "transformNodeCount": 137,
+      "skinnedMeshCount": 5,
+      "vertexCount": 23751,
+      "triangleCount": 29990,
+      "maxJointCountPerSkin": 61,
+      "meshes": [
+        {
+          "meshName": "RealbodyGeo",
+          "vertexCount": 896,
+          "triangleCount": 1338,
+          "submeshCount": 1,
+          "jointCount": 15,
+          "weightedVertexCount": 896,
+          "materialNames": [
+            "mch0270058_v00_shin_body"
+          ]
+        },
+        {
+          "meshName": "WeaponGEO",
+          "vertexCount": 884,
+          "triangleCount": 756,
+          "submeshCount": 2,
+          "jointCount": 1,
+          "weightedVertexCount": 884,
+          "materialNames": [
+            "mch2700058_v00_newDaiKen",
+            "mch2700058_v00_newDaiKenjewel"
+          ]
+        },
+        {
+          "meshName": "bodyGeo",
+          "vertexCount": 17350,
+          "triangleCount": 23854,
+          "submeshCount": 5,
+          "jointCount": 61,
+          "weightedVertexCount": 17350,
+          "materialNames": [
+            "mch0270058_v00_kigan_sphere",
+            "mch0270058_v00_kigan_kata",
+            "mch0270058_v00_kigan_body",
+            "mch0270058_v00_kigan_Head",
+            "mch0270058_v00_kigan_eye"
+          ]
+        },
+        {
+          "meshName": "faceGeo",
+          "vertexCount": 1763,
+          "triangleCount": 1982,
+          "submeshCount": 4,
+          "jointCount": 1,
+          "weightedVertexCount": 1763,
+          "materialNames": [
+            "mch0270037_v00_shin_attach",
+            "mch0270058_v00_shin_body",
+            "mch0270058_v00_shin_Leye",
+            "mch0270058_v00_shin_Reye"
+          ]
+        },
+        {
+          "meshName": "hairGeo",
+          "vertexCount": 2858,
+          "triangleCount": 2060,
+          "submeshCount": 1,
+          "jointCount": 20,
+          "weightedVertexCount": 2858,
+          "materialNames": [
+            "mch0270058_v00_shin_hair"
+          ]
+        }
+      ],
+      "materialTextureMappings": [
+        {
+          "materialName": "mch0270058_v00_shin_body",
+          "textureRule": "tch0270058_v00_shinburn_body_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_shinBurn_body_co__-5299249033991879465.png",
+          "textureSha256": "b4799d4cb770b7d38b2a0608fbac12910cf669f41ba47ca01adb28f6f4df6e2f"
+        },
+        {
+          "materialName": "mch2700058_v00_newDaiKen",
+          "textureRule": "tch0270058_v00_newdaiken_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_newDaiKen_co__-1187270363181514847.png",
+          "textureSha256": "d478890a1550d01e6ce073c4359699fc501a91f1d17d9d39923e4c895ddc1299"
+        },
+        {
+          "materialName": "mch2700058_v00_newDaiKenjewel",
+          "textureRule": "tch0270058_v00_newdaiken_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_newDaiKen_co__-1187270363181514847.png",
+          "textureSha256": "d478890a1550d01e6ce073c4359699fc501a91f1d17d9d39923e4c895ddc1299"
+        },
+        {
+          "materialName": "mch0270058_v00_kigan_sphere",
+          "textureRule": "tch0270058_v00_kiganburn_body_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_kiganBurn_body_co__8479874845593258001.png",
+          "textureSha256": "961928a398138e609bf330f030d9e3ed28e90a831f8253cfb5cc88344b29a419"
+        },
+        {
+          "materialName": "mch0270058_v00_kigan_kata",
+          "textureRule": "tch0270058_v00_kiganburn_body_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_kiganBurn_body_co__8479874845593258001.png",
+          "textureSha256": "961928a398138e609bf330f030d9e3ed28e90a831f8253cfb5cc88344b29a419"
+        },
+        {
+          "materialName": "mch0270058_v00_kigan_body",
+          "textureRule": "tch0270058_v00_kiganburn_body_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_kiganBurn_body_co__8479874845593258001.png",
+          "textureSha256": "961928a398138e609bf330f030d9e3ed28e90a831f8253cfb5cc88344b29a419"
+        },
+        {
+          "materialName": "mch0270058_v00_kigan_Head",
+          "textureRule": "tch0270058_v00_kiganburnhead_body_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_kiganBurnHead_body_co__-7046760515054005308.png",
+          "textureSha256": "62936331e83f91f9d8f1c6f77556066c8ca72fd5d257213e96bdc23dd34246e9"
+        },
+        {
+          "materialName": "mch0270058_v00_kigan_eye",
+          "textureRule": "tch0270058_v00_kiganburnhead_body_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_kiganBurnHead_body_co__-7046760515054005308.png",
+          "textureSha256": "62936331e83f91f9d8f1c6f77556066c8ca72fd5d257213e96bdc23dd34246e9"
+        },
+        {
+          "materialName": "mch0270037_v00_shin_attach",
+          "textureRule": "tch0270058_v00_attach_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_attach_co__-6735469837138678342.png",
+          "textureSha256": "68a12cfc3ff741e5822f3fd3b9e49323d34e627e5e23e80de56106944a4862a7"
+        },
+        {
+          "materialName": "mch0270058_v00_shin_Leye",
+          "textureRule": "tch0270058_v00_shinburn_eye_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_shinBurn_eye_co__8421981590862939002.png",
+          "textureSha256": "21e0cf7287f470daeb82dfdf686d5ee5c975d9ce5a4aae12c816a3fbdf0caf47"
+        },
+        {
+          "materialName": "mch0270058_v00_shin_Reye",
+          "textureRule": "tch0270058_v00_shinburn_eye_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_shinBurn_eye_co__8421981590862939002.png",
+          "textureSha256": "21e0cf7287f470daeb82dfdf686d5ee5c975d9ce5a4aae12c816a3fbdf0caf47"
+        },
+        {
+          "materialName": "mch0270058_v00_shin_hair",
+          "textureRule": "tch0270058_v00_shinburn_body_co",
+          "textureAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-unity-objects-v1/039d49dda77bbdbd/textures/tch0270058_v00_shinBurn_body_co__-5299249033991879465.png",
+          "textureSha256": "b4799d4cb770b7d38b2a0608fbac12910cf669f41ba47ca01adb28f6f4df6e2f"
+        }
+      ],
+      "limitations": [
+        "GLB contains the source bind pose; AnimationClip curves are indexed separately and are not embedded",
+        "custom Unity shaders were approximated as glTF metallic-roughness materials",
+        "this is the source-resolution extraction, not the <=8000 triangle game candidate"
+      ]
+    }
+  ]
+}

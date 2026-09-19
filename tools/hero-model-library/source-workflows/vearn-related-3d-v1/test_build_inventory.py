@@ -23,12 +23,16 @@ class VearnRelatedInventoryTest(unittest.TestCase):
         self.assertEqual(sum(row["bytes"] for row in ia["files"]), 2_098_263_630)
         self.assertTrue(all(len(row["sha1"]) == 40 and len(row["md5"]) == 32 for row in ia["files"]))
 
-    def test_status_language_does_not_claim_runtime_or_identity(self) -> None:
+    def test_status_language_distinguishes_identity_from_runtime(self) -> None:
         source = (HERE / "build_inventory.py").read_text()
-        self.assertIn('"kiganKingPayloadIdentified": False', source)
+        self.assertIn('"kiganKingPayloadIdentified": bool(aladin_decrypt)', source)
         self.assertIn('"runtimeStatus": "not-registered"', source)
         self.assertIn('"motionStatus": "no-native-motion-acquired"', source)
         self.assertIn('"isNewYoungOrKiganCandidate": False', source)
+        self.assertIn('"directKiganEffectFamilyIdentified"', source)
+        self.assertIn('["ch027005800", "ch027005801"]', source)
+        self.assertIn("super-mage-zaboera-chyoZaboera-not-Vearn", source)
+        self.assertIn("direct-kiganBurn-object-names-confirmed", source)
 
 
 if __name__ == "__main__":

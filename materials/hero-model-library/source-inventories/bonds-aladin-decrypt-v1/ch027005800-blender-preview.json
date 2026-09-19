@@ -1,0 +1,40 @@
+{
+  "schema": "ggd.heros-bonds-blender-preview@1",
+  "blenderVersion": "5.2.1 LTS",
+  "inputGlbAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005800/ch027005800-runtime-lod.glb",
+  "inputGlbSha256": "c846587e618d95609025236321fe83adf1b1592545c1ca78289bb169cf081a14",
+  "meshObjectCount": 5,
+  "armatureObjectCount": 1,
+  "bounds": {
+    "minimum": [
+      -27.50465202331543,
+      -24.75550079345703,
+      -0.03693613409996033
+    ],
+    "maximum": [
+      43.47035217285156,
+      5.386868476867676,
+      56.88856887817383
+    ]
+  },
+  "views": [
+    {
+      "view": "front",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005800/runtime-previews/ch027005800-runtime-lod-front.png",
+      "bytes": 469397,
+      "sha256": "390856747577e3145d6817e2c218ba3e3d0094f6f0f1f7c13acbde49bda45145"
+    },
+    {
+      "view": "side",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005800/runtime-previews/ch027005800-runtime-lod-side.png",
+      "bytes": 437412,
+      "sha256": "a54c66b0a323f7c503618a85b935dc85acd0e26ee41d21c096b3105d5bfe8195"
+    },
+    {
+      "view": "back",
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005800/runtime-previews/ch027005800-runtime-lod-back.png",
+      "bytes": 481983,
+      "sha256": "6d966f01821359bc0a6c57f50e32ff5c7781541e75403600893b519735c2db04"
+    }
+  ]
+}

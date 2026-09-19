@@ -67862,14 +67862,20 @@
       "platform": "Android archived cache",
       "accessStatus": "public-archive-downloaded",
       "acquisitionStatus": "downloaded-verified",
-      "readiness": "archived-awaiting-asset-identification",
-      "resourceRole": "game-resource-archive",
+      "readiness": "runtime-v2-git-candidates-published-animation-clips-not-embedded-awaiting-owner-approval-and-game-registration",
+      "resourceRole": "decrypted-game-resource-candidate",
       "assetKinds": [
         "game-container",
+        "model-container",
+        "animation-container",
+        "effect-container",
         "audio-container"
       ],
-      "modelCount": 0,
-      "modelCandidates": [],
+      "modelCount": 2,
+      "modelCandidates": [
+        "ch027005800",
+        "ch027005801"
+      ],
       "defaultEligible": false,
       "localPath": "GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/original",
       "files": [
@@ -67906,7 +67912,7 @@
           }
         }
       ],
-      "verification": "Both archives match the published byte counts, SHA-1 and MD5; SHA-256 recorded. Kigan King model identity remains unverified.",
+      "verification": "Both archives match published hashes; 51/51 encrypted blobs decode as UnityFS. ch027005800/01 directly name kiganBurn model parts; runtime-v2 rigged GLBs pass static model limits, while AnimationClip embedding, owner approval and registration remain.",
       "ownerDecision": {
         "date": "2026-09-17",
         "instruction": "巴恩大魔王相關的 3d model 都可以抓取 我來人工視覺鑑定就好",
@@ -67915,7 +67921,7 @@
       },
       "backendIntegration": {
         "required": true,
-        "state": "pending-asset-identification",
+        "state": "pending-animation-embedding-owner-approval-and-registration",
         "selectionVerified": false,
         "registered": false,
         "productionDeployed": false

@@ -1,0 +1,820 @@
+{
+  "schema": "ggd.heros-bonds-aladin-decrypt-inventory@1",
+  "status": "runtime-v2-git-candidates-published-animation-clips-not-embedded-awaiting-owner-approval-and-game-registration",
+  "decryptedUnityFsCount": 51,
+  "decryptedBytes": 22536492,
+  "allContainersRecognized": true,
+  "modelUnityFsCount": 16,
+  "animationUnityFsCount": 6,
+  "directKiganohburnUnityFsCount": 3,
+  "directKiganohburnFiles": [
+    {
+      "logicalPath": "Effect/Particles/Battle/Enemy/kiganohburn",
+      "pathHash": "ed4ab9446dff009b",
+      "blobId": "f28fa66504958154",
+      "groupHash": "00a664ec4f522a35",
+      "bytes": 108893,
+      "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/f2/f28fa66504958154",
+      "inputSha256": "6bfe073ea3ed826f1f1e16b1f292abfcf327db29068a1835d590ea10e13cdb37",
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/f2/f28fa66504958154.unityfs",
+      "outputSha256": "2d38ff628873561d86d23411df737b9a3e75fa6727a19a90489aa32ac1694026",
+      "container": "unityfs",
+      "header16Hex": "556e69747946530000000007352e782e",
+      "acpbTurnIndex": 5,
+      "acpbTurns": 6
+    },
+    {
+      "logicalPath": "Effect/Particles/Battle/Enemy/kiganohburn/CutScene",
+      "pathHash": "3927551ef44b4f55",
+      "blobId": "971b5295309a3ee1",
+      "groupHash": "00a664ec4f522a35",
+      "bytes": 1280933,
+      "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/97/971b5295309a3ee1",
+      "inputSha256": "23e25b8c52965c041843fbbb31d68cb5e1ecf9424346613f0f0bc3e919d86c9d",
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/97/971b5295309a3ee1.unityfs",
+      "outputSha256": "f03f90449a16a7ae414b58c5442145bff858912b181f4515480d87c86aca0406",
+      "container": "unityfs",
+      "header16Hex": "556e69747946530000000007352e782e",
+      "acpbTurnIndex": 12,
+      "acpbTurns": 5
+    },
+    {
+      "logicalPath": "Effect/Particles/Battle/Enemy/kiganohburn/CutScene",
+      "pathHash": "f48d82c1f95a7735",
+      "blobId": "bb5f258265cbb429",
+      "groupHash": "00a664ec4f522a35",
+      "bytes": 108181,
+      "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/bb/bb5f258265cbb429",
+      "inputSha256": "7c4b5da717f1aacd21658e083ce43c332b0b9a7c7657ff1a0c0116c696ab6059",
+      "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/bb/bb5f258265cbb429.unityfs",
+      "outputSha256": "545db5e84bbfe4c14c0f72a11101a779e4e703fe1a563c0778d9dfcc4a086955",
+      "container": "unityfs",
+      "header16Hex": "556e69747946530000000007352e782e",
+      "acpbTurnIndex": 13,
+      "acpbTurns": 6
+    }
+  ],
+  "characterCandidates": {
+    "ch027003700": {
+      "unityFsCount": 4,
+      "bytes": 7207600,
+      "kinds": {
+        "animation": 2,
+        "mesh": 1,
+        "prefab": 1
+      },
+      "files": [
+        {
+          "logicalPath": "Character/AnimationClip/ch027003700",
+          "pathHash": "e677dcb85f65dff6",
+          "blobId": "b2605530a5d2f96e",
+          "groupHash": "00a664ec4f522a35",
+          "bytes": 7173891,
+          "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/b2/b2605530a5d2f96e",
+          "inputSha256": "7bedb4af2e4d834af578f8e56d95351bea1215d4e0e3278bf4d511e54d47a6fa",
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/b2/b2605530a5d2f96e.unityfs",
+          "outputSha256": "9daabc5d561c3b73131ade6bbc1bcf366e827bfc0fb362e87d9b24e06c17f77e",
+          "container": "unityfs",
+          "header16Hex": "556e69747946530000000007352e782e",
+          "acpbTurnIndex": 7,
+          "acpbTurns": 6
+        },
+        {
+          "logicalPath": "Character/AnimationEvent/ach027003700",
+          "pathHash": "4c545185cfa4ca00",
+          "blobId": "0ca94c08651a5dd6",
+          "groupHash": "00a664ec4f522a35",
+          "bytes": 8852,
+          "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/0c/0ca94c08651a5dd6",
+          "inputSha256": "fd8ec87c9ab5ed2ac9b20d19dc614d1393364eaac4dd40094a8daab51c621617",
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/0c/0ca94c08651a5dd6.unityfs",
+          "outputSha256": "8c5e2cfcfddcdc12446e15154df9849838bdad9058c01f3e47c8235aabca1b14",
+          "container": "unityfs",
+          "header16Hex": "556e69747946530000000007352e782e",
+          "acpbTurnIndex": 9,
+          "acpbTurns": 6
+        },
+        {
+          "logicalPath": "Character/Model/Character/ch027003700/Meshes",
+          "pathHash": "b3ec111e8c5c7911",
+          "blobId": "e4d0dd023d7120c0",
+          "groupHash": "00a664ec4f522a35",
+          "bytes": 10563,
+          "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/e4/e4d0dd023d7120c0",
+          "inputSha256": "302b39686d9054f462503c892d54c4d9ccbac72ab3ca74f405223d898ce87797",
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/e4/e4d0dd023d7120c0.unityfs",
+          "outputSha256": "42df5e2412cb2de79ac42658c20cb9cfe51fcf26f8a5a75d374249f2a7e8e070",
+          "container": "unityfs",
+          "header16Hex": "556e69747946530000000007352e782e",
+          "acpbTurnIndex": 5,
+          "acpbTurns": 6
+        },
+        {
+          "logicalPath": "Character/Model/Character/ch027003700/Prefabs",
+          "pathHash": "e16695fdf5517778",
+          "blobId": "e995c79981d8fc5c",
+          "groupHash": "00a664ec4f522a35",
+          "bytes": 14294,
+          "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/e9/e995c79981d8fc5c",
+          "inputSha256": "4706f4b3c9c93c5c2bb35dc70104acfa9d1f815183027e57c203b7daa99a304d",
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/e9/e995c79981d8fc5c.unityfs",
+          "outputSha256": "f2a9f41ce7b69773d96abb9e256e59bc4b9aaef9a71115fe0b0eb8815ba85299",
+          "container": "unityfs",
+          "header16Hex": "556e69747946530000000007352e782e",
+          "acpbTurnIndex": 11,
+          "acpbTurns": 5
+        }
+      ],
+      "identityStatus": "true-vearn-shinBurn-family-not-Ghost-Eye",
+      "identityEvidence": [
+        "ach027003700_Attackkaiserphoenix",
+        "ach027003700_SkillOugishinBurnFs"
+      ]
+    },
+    "ch027003800": {
+      "unityFsCount": 6,
+      "bytes": 3856851,
+      "kinds": {
+        "animation": 2,
+        "material": 1,
+        "mesh": 1,
+        "prefab": 1,
+        "texture": 1
+      },
+      "files": [
+        {
+          "logicalPath": "Character/AnimationClip/ch027003800",
+          "pathHash": "c4b07a9460985cab",
+          "blobId": "c39877db50fd51c9",
+          "groupHash": "00a664ec4f522a35",
+          "bytes": 2931011,
+          "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/c3/c39877db50fd51c9",
+          "inputSha256": "e16021fa45365de65fcbadaf2bf157498bacbf0c3a19b73d10f9775786c97d5f",
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/c3/c39877db50fd51c9.unityfs",
+          "outputSha256": "6cda1ae7e7aa1eff067f8e0e05465b7563a90cd3138f74286fdba0824c2f8294",
+          "container": "unityfs",
+          "header16Hex": "556e69747946530000000007352e782e",
+          "acpbTurnIndex": 15,
+          "acpbTurns": 5
+        },
+        {
+          "logicalPath": "Character/AnimationEvent/ach027003800",
+          "pathHash": "d753b66386a99d48",
+          "blobId": "77717415907e2340",
+          "groupHash": "00a664ec4f522a35",
+          "bytes": 7503,
+          "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/77/77717415907e2340",
+          "inputSha256": "de1108db1f43190d94407d13c9290f316f372a80edac197511c20b7be4e19e42",
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/77/77717415907e2340.unityfs",
+          "outputSha256": "a54952e6aed402e3c176c7ebea8b158a8f4707054b6fc5d2ce3b36145e28dbc3",
+          "container": "unityfs",
+          "header16Hex": "556e69747946530000000007352e782e",
+          "acpbTurnIndex": 0,
+          "acpbTurns": 6
+        },
+        {
+          "logicalPath": "Character/Model/Character/ch027003800/Materials",
+          "pathHash": "2205ada4eaf64dfd",
+          "blobId": "cda74280ad0b5bb0",
+          "groupHash": "00a664ec4f522a35",
+          "bytes": 3482,
+          "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/cd/cda74280ad0b5bb0",
+          "inputSha256": "c367f625bdf58e7a1d0f3c06505982e7b80e149aee87530b34ace639732cde3b",
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/cd/cda74280ad0b5bb0.unityfs",
+          "outputSha256": "d798a0f6b9e78673153e49de89c33c39cbb81f183f20540ff8b829743f142306",
+          "container": "unityfs",
+          "header16Hex": "556e69747946530000000007352e782e",
+          "acpbTurnIndex": 4,
+          "acpbTurns": 5
+        },
+        {
+          "logicalPath": "Character/Model/Character/ch027003800/Meshes",
+          "pathHash": "604876c7cf056202",
+          "blobId": "f8c862e1204ef0c4",
+          "groupHash": "00a664ec4f522a35",
+          "bytes": 322424,
+          "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/f8/f8c862e1204ef0c4",
+          "inputSha256": "46a91301fa0304015030ba649bc1a634404fbd0f6c87997b321174a96efae559",
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/f8/f8c862e1204ef0c4.unityfs",
+          "outputSha256": "d6d98053a4eff62f35c7f61f4bb7409ce046167e1a368e0a40899bc001dee3e0",
+          "container": "unityfs",
+          "header16Hex": "556e69747946530000000007352e782e",
+          "acpbTurnIndex": 14,
+          "acpbTurns": 6
+        },
+        {
+          "logicalPath": "Character/Model/Character/ch027003800/Prefabs",
+          "pathHash": "c052eecba344acd5",
+          "blobId": "aeff348043f42694",
+          "groupHash": "00a664ec4f522a35",
+          "bytes": 15513,
+          "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/ae/aeff348043f42694",
+          "inputSha256": "5c4fd9e0a7f652abee390c418a5a124e47bf2063cb6d8e73850b7f45cd4197db",
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/ae/aeff348043f42694.unityfs",
+          "outputSha256": "cc4d73bd1e9aeec34bf6ca344608da946975fc42e0f481c6bcffa51bff939e3a",
+          "container": "unityfs",
+          "header16Hex": "556e69747946530000000007352e782e",
+          "acpbTurnIndex": 4,
+          "acpbTurns": 5
+        },
+        {
+          "logicalPath": "Character/Model/Character/ch027003800/Textures",
+          "pathHash": "229c9084e25b0d73",
+          "blobId": "14a5d9656d2f70d3",
+          "groupHash": "00a664ec4f522a35",
+          "bytes": 576918,
+          "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/14/14a5d9656d2f70d3",
+          "inputSha256": "9ac97bd85ab830d9fc5b2593bce1d676c3ff0e3fec6e433e8af36a68835a27a9",
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/14/14a5d9656d2f70d3.unityfs",
+          "outputSha256": "9567a1fd9d3b400e2a4b419e3fe2fae59e2f8497daa0d40e9ba8d6ce8ed19af6",
+          "container": "unityfs",
+          "header16Hex": "556e69747946530000000007352e782e",
+          "acpbTurnIndex": 13,
+          "acpbTurns": 6
+        }
+      ],
+      "identityStatus": "super-mage-zaboera-chyoZaboera-not-Vearn",
+      "identityEvidence": [
+        "mch027003800_chyoZaboera",
+        "tch027003800_chyoZaboera_body_co"
+      ]
+    },
+    "ch027005800": {
+      "unityFsCount": 5,
+      "bytes": 3672731,
+      "kinds": {
+        "animation": 1,
+        "material": 1,
+        "mesh": 1,
+        "prefab": 1,
+        "texture": 1
+      },
+      "files": [
+        {
+          "logicalPath": "Character/AnimationClip/ch027005800",
+          "pathHash": "6abae129222e03f9",
+          "blobId": "3757005bb1aa80be",
+          "groupHash": "00a664ec4f522a35",
+          "bytes": 97235,
+          "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/37/3757005bb1aa80be",
+          "inputSha256": "a3b3514deb3583576781dbfbdf7a08d2113b5e74fe67de54df1d59565d772124",
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/37/3757005bb1aa80be.unityfs",
+          "outputSha256": "866e2624fc186452bd64898239c43976bc211f2667cdf7177989dffb031a463f",
+          "container": "unityfs",
+          "header16Hex": "556e69747946530000000007352e782e",
+          "acpbTurnIndex": 2,
+          "acpbTurns": 6
+        },
+        {
+          "logicalPath": "Character/Model/Character/ch027005800/Materials",
+          "pathHash": "4cd15b33e87f4158",
+          "blobId": "07c59c1313ab7776",
+          "groupHash": "00a664ec4f522a35",
+          "bytes": 5163,
+          "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/07/07c59c1313ab7776",
+          "inputSha256": "72fd8c4b1ca987eab33da0da04edf98a6bb45e4c14ccb61b7248e6c247c4cb8f",
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/07/07c59c1313ab7776.unityfs",
+          "outputSha256": "b88f17af8a423e297540193819e45827b74d3e0b9213a3c82643512dff0b230e",
+          "container": "unityfs",
+          "header16Hex": "556e69747946530000000007352e782e",
+          "acpbTurnIndex": 14,
+          "acpbTurns": 6
+        },
+        {
+          "logicalPath": "Character/Model/Character/ch027005800/Meshes",
+          "pathHash": "b213004d5c22026a",
+          "blobId": "544099f1eaf4e227",
+          "groupHash": "00a664ec4f522a35",
+          "bytes": 799772,
+          "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/54/544099f1eaf4e227",
+          "inputSha256": "a6c39640ef5afa5de2c0b3dcf23825fd2e3f520249676846b8ea9ab0d9a62f7d",
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/54/544099f1eaf4e227.unityfs",
+          "outputSha256": "24717f0f8ef4692091cfcd17bae45e316a0cfecd4da43888c62740db663fe286",
+          "container": "unityfs",
+          "header16Hex": "556e69747946530000000007352e782e",
+          "acpbTurnIndex": 11,
+          "acpbTurns": 5
+        },
+        {
+          "logicalPath": "Character/Model/Character/ch027005800/Prefabs",
+          "pathHash": "ec1693666b4aa4e5",
+          "blobId": "f761de4e6c2abff5",
+          "groupHash": "00a664ec4f522a35",
+          "bytes": 17207,
+          "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/f7/f761de4e6c2abff5",
+          "inputSha256": "3603bc85c33e2890470b950d07aee97fa9b5dc353f2203d5619e302433579863",
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/f7/f761de4e6c2abff5.unityfs",
+          "outputSha256": "4cd15c6bf0aa660130920f6c3726dec491eb43f31577766a04a310075a713129",
+          "container": "unityfs",
+          "header16Hex": "556e69747946530000000007352e782e",
+          "acpbTurnIndex": 8,
+          "acpbTurns": 6
+        },
+        {
+          "logicalPath": "Character/Model/Character/ch027005800/Textures",
+          "pathHash": "7bd36d607249dc7c",
+          "blobId": "039d49dda77bbdbd",
+          "groupHash": "00a664ec4f522a35",
+          "bytes": 2753354,
+          "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/03/039d49dda77bbdbd",
+          "inputSha256": "e2ccad5d412b0209db2b825c524744b9cc393de4ca7ebb7acf3fefa7abf72fc3",
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/03/039d49dda77bbdbd.unityfs",
+          "outputSha256": "edc514b223b9bf60e6cdfe576336abc394bbde1a20ef5e6ea261532bbee58557",
+          "container": "unityfs",
+          "header16Hex": "556e69747946530000000007352e782e",
+          "acpbTurnIndex": 1,
+          "acpbTurns": 5
+        }
+      ],
+      "identityStatus": "Ghost-Eye-Vearn-kiganBurn-parts-directly-named",
+      "identityEvidence": [
+        "mch027005800_kiganBurnHead_body",
+        "mch027005800_kiganBurn_body",
+        "mch027005800_kiganBurn_eye",
+        "tch0270058_v00_kiganBurnHead_body_co"
+      ]
+    },
+    "ch027005801": {
+      "unityFsCount": 3,
+      "bytes": 1631854,
+      "kinds": {
+        "animation": 1,
+        "mesh": 1,
+        "prefab": 1
+      },
+      "files": [
+        {
+          "logicalPath": "Character/AnimationClip/ch027005801",
+          "pathHash": "4d764c47b3ecaf7e",
+          "blobId": "289f45e65feea2d7",
+          "groupHash": "00a664ec4f522a35",
+          "bytes": 815124,
+          "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/28/289f45e65feea2d7",
+          "inputSha256": "11dcb9cf289b7414a9c4419a036c6b7349ee4a2981cd65ec5e8bdaca6e9ae44e",
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/28/289f45e65feea2d7.unityfs",
+          "outputSha256": "e2531f65cbfa873caa9728288de8a0de30305b899efd9a5d43b3e03518058c77",
+          "container": "unityfs",
+          "header16Hex": "556e69747946530000000007352e782e",
+          "acpbTurnIndex": 13,
+          "acpbTurns": 6
+        },
+        {
+          "logicalPath": "Character/Model/Character/ch027005801/Meshes",
+          "pathHash": "8d356652dff03f74",
+          "blobId": "801894f6d2cf6e30",
+          "groupHash": "00a664ec4f522a35",
+          "bytes": 797251,
+          "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/80/801894f6d2cf6e30",
+          "inputSha256": "904a84309fb13095aa09dd88bdf642f27c808db1c1ebad2fadcb0c9f9ddb41b6",
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/80/801894f6d2cf6e30.unityfs",
+          "outputSha256": "22ebad91900b73994852a434b1428654930a251af3d28f23d3478a42b5afce51",
+          "container": "unityfs",
+          "header16Hex": "556e69747946530000000007352e782e",
+          "acpbTurnIndex": 13,
+          "acpbTurns": 6
+        },
+        {
+          "logicalPath": "Character/Model/Character/ch027005801/Prefabs",
+          "pathHash": "45fafb0a06af512d",
+          "blobId": "a117ca1fab9c303c",
+          "groupHash": "00a664ec4f522a35",
+          "bytes": 19479,
+          "inputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-vearn-candidates-v1/blobs/a1/a117ca1fab9c303c",
+          "inputSha256": "c661c1c923860603f23f2d696f539ff1f502df0d8cee3582ad19bbb80273b23c",
+          "outputAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-aladin-decrypted-v1/a1/a117ca1fab9c303c.unityfs",
+          "outputSha256": "b55f5d8fde4850800b018782e916460bf2b570348e9314ebfc51bef9fc8dedf8",
+          "container": "unityfs",
+          "header16Hex": "556e69747946530000000007352e782e",
+          "acpbTurnIndex": 9,
+          "acpbTurns": 6
+        }
+      ],
+      "identityStatus": "Ghost-Eye-Vearn-kigan-variant-directly-named",
+      "identityEvidence": [
+        "mch0270058_v00_kigan_Head",
+        "mch0270058_v00_kigan_body",
+        "mch0270058_v00_kigan_eye"
+      ]
+    }
+  },
+  "algorithm": {
+    "provider": "Aladin.Core.Crypto.ChaCha20BurstCryptProvider",
+    "cipher": "Acpb custom-sigma reduced-round ChaCha20",
+    "sigmaAscii": "A3AxwtfWD<PbxMx$",
+    "nonce": "little-endian ALI2 pathHash + little-endian 0x63686368",
+    "initialCounter": 1,
+    "sectorBytes": 32768,
+    "turnTableHex": "06050605050605060606050505060605"
+  },
+  "source": {
+    "baseApk": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/public-game-archives-20260917/heros-bonds-final-cache-1.17.0.121/extracted/xapk/com.square_enix.android_googleplay.dqdaihb.apk",
+    "baseApkSha256": "96948dbbfc2bcca1828d51670c757196ef42e20a43483f5dbe570a7fb95141de",
+    "catalogSha256": "a3b78fab53caadc6aeade3321e3352418f51f01a1a0d87908c1d9ddf787abd89",
+    "aladinKeyGroupCount": 3,
+    "keyGroups": {
+      "00a664ec4f522a35": {
+        "keyBytes": 32,
+        "keySha256": "3044d7567f7d9a78521dc03bf553c67be6bf64095e2de7d8dea58de4fc006c9d"
+      },
+      "4c2ee1b66034892d": {
+        "keyBytes": 32,
+        "keySha256": "f20e31d0fa603738d3d15ab61330a5b545bbb563be3422e8ea1e278cb4757e1a"
+      },
+      "bb2d9c410bae1b33": {
+        "keyBytes": 32,
+        "keySha256": "c36cf5cefdafc6dc57a4e4d802c0994e9902b04398111a537773711f8faa89ed"
+      }
+    }
+  },
+  "limits": [
+    "source rigged GLBs preserve the 29990-triangle originals; runtime-v1 is a triangle-only intermediate with 12 draws and 1024px textures",
+    "runtime-v2 has <=8000 triangles, 5 draws, 5 embedded images, 256px maximum textures, and one skin",
+    "AnimationClip sources are preserved and indexed but their curves are not embedded in the GLBs",
+    "Blender three-view previews exist; owner visual approval is still pending",
+    "game registration, dropdown availability, and deployment are all 0"
+  ],
+  "unityObjectExport": {
+    "unityPyVersion": "1.20.26",
+    "bundleCount": 51,
+    "objectCounts": {
+      "Animation": 2,
+      "AnimationClip": 148,
+      "Animator": 52,
+      "AssetBundle": 51,
+      "AudioListener": 6,
+      "Avatar": 1,
+      "Camera": 24,
+      "Canvas": 12,
+      "CanvasRenderer": 18,
+      "GameObject": 3172,
+      "Light": 14,
+      "Material": 41,
+      "Mesh": 19,
+      "MonoBehaviour": 1785,
+      "MonoScript": 195,
+      "ParticleSystem": 1081,
+      "ParticleSystemRenderer": 1081,
+      "PlayableDirector": 24,
+      "PositionConstraint": 2,
+      "RectTransform": 30,
+      "Shader": 6,
+      "SkinnedMeshRenderer": 46,
+      "Sprite": 6,
+      "TextAsset": 149,
+      "Texture2D": 39,
+      "Transform": 3142
+    },
+    "exportedMeshCount": 19,
+    "exportedTextureCount": 39
+  },
+  "riggedExport": {
+    "schema": "ggd.heros-bonds-rigged-gltf-export@1",
+    "variants": {
+      "ch027005800": {
+        "sourceGlb": {
+          "outputGlbAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005800/ch027005800-rigged.glb",
+          "outputGlbBytes": 3212492,
+          "outputGlbSha256": "5ddd579834884f286ae04134de6b7e16abbf622a003c0f9081fa16019ffd6322",
+          "transformNodeCount": 137,
+          "skinnedMeshCount": 5,
+          "vertexCount": 23742,
+          "triangleCount": 29990,
+          "maxJointCountPerSkin": 61
+        },
+        "runtimeV1Intermediate": {
+          "outputGlbAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005800/ch027005800-runtime-lod.glb",
+          "outputGlbBytes": 2239896,
+          "outputGlbSha256": "c846587e618d95609025236321fe83adf1b1592545c1ca78289bb169cf081a14",
+          "sourceTriangleCount": 29990,
+          "runtimeTriangleCount": 7898,
+          "armatureObjectCount": 1
+        },
+        "runtimeGlb": {
+          "outputRuntimeV2AbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005800/ch027005800-runtime-v2.glb",
+          "outputRuntimeV2Bytes": 913220,
+          "outputRuntimeV2Sha256": "a79a5471d0ef01fb6091ff26457327379ab972bcd33fcffbf062a77b782505f6",
+          "triangleCount": 7898,
+          "meshCount": 5,
+          "skinnedPrimitiveCount": 5,
+          "embeddedImageCount": 5,
+          "maxTextureDimension": 256,
+          "skinCount": 1,
+          "animationCount": 0,
+          "armatureObjectCount": 1
+        },
+        "animationClips": {
+          "clipCount": 1,
+          "clips": [
+            {
+              "name": "ach027005800_DeathcutDaiWin",
+              "objectPathId": -7705193290194834653,
+              "sampleRate": 30.0,
+              "legacy": false,
+              "stopTimeSeconds": 79.46666717529297,
+              "status": "source-clip-preserved-not-converted-to-gltf"
+            }
+          ],
+          "embeddedInGlb": false
+        },
+        "visualReview": {
+          "status": "three-view-generated-awaiting-owner-approval",
+          "receiptInputGlbSha256": "a79a5471d0ef01fb6091ff26457327379ab972bcd33fcffbf062a77b782505f6",
+          "views": [
+            {
+              "view": "front",
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005800/runtime-v2-previews/ch027005800-runtime-v2-front.png",
+              "bytes": 470039,
+              "sha256": "098d15fc09fc4f3680e09ee09053228ec948b0389bd5a8099b3d5aaf09d09a58"
+            },
+            {
+              "view": "side",
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005800/runtime-v2-previews/ch027005800-runtime-v2-side.png",
+              "bytes": 426708,
+              "sha256": "04e1280d6a30dde14c6a68a519352019cd507913a7523c0042d62839854bb5ff"
+            },
+            {
+              "view": "back",
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005800/runtime-v2-previews/ch027005800-runtime-v2-back.png",
+              "bytes": 491032,
+              "sha256": "6d476ed04c165dc0a8a0c71c0d2d56eb1f8b1cebcf26c82d640b564fd3f0e28d"
+            }
+          ]
+        },
+        "registered": false,
+        "deployed": false
+      },
+      "ch027005801": {
+        "sourceGlb": {
+          "outputGlbAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005801/ch027005801-rigged.glb",
+          "outputGlbBytes": 3213348,
+          "outputGlbSha256": "9669b3d57efdeb3368311ad9538065d5fba70ec0ab0114a042e931d923443add",
+          "transformNodeCount": 137,
+          "skinnedMeshCount": 5,
+          "vertexCount": 23751,
+          "triangleCount": 29990,
+          "maxJointCountPerSkin": 61
+        },
+        "runtimeV1Intermediate": {
+          "outputGlbAbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005801/ch027005801-runtime-lod.glb",
+          "outputGlbBytes": 2240128,
+          "outputGlbSha256": "ed67057231f78bc4c6e7409f9e47170db8b5eb17efeb6cf62d69737d1ca0f051",
+          "sourceTriangleCount": 29990,
+          "runtimeTriangleCount": 7897,
+          "armatureObjectCount": 1
+        },
+        "runtimeGlb": {
+          "outputRuntimeV2AbsolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005801/ch027005801-runtime-v2.glb",
+          "outputRuntimeV2Bytes": 913464,
+          "outputRuntimeV2Sha256": "14623eaa192b8e798f398271575bb1f396d7f5975e55a2b366c2ba923ff7f97d",
+          "triangleCount": 7897,
+          "meshCount": 5,
+          "skinnedPrimitiveCount": 5,
+          "embeddedImageCount": 5,
+          "maxTextureDimension": 256,
+          "skinCount": 1,
+          "animationCount": 0,
+          "armatureObjectCount": 1
+        },
+        "animationClips": {
+          "clipCount": 3,
+          "clips": [
+            {
+              "name": "ach027005801_DeathcutDaiLose",
+              "objectPathId": -6839813009887916200,
+              "sampleRate": 30.0,
+              "legacy": false,
+              "stopTimeSeconds": 26.80000114440918,
+              "status": "source-clip-preserved-not-converted-to-gltf"
+            },
+            {
+              "name": "ach027005801_DeathcutDaiWin",
+              "objectPathId": 2304570544519510407,
+              "sampleRate": 30.0,
+              "legacy": false,
+              "stopTimeSeconds": 79.46666717529297,
+              "status": "source-clip-preserved-not-converted-to-gltf"
+            },
+            {
+              "name": "ach027005801_Eyecutin",
+              "objectPathId": 5526920660625850370,
+              "sampleRate": 30.0,
+              "legacy": false,
+              "stopTimeSeconds": 1.0,
+              "status": "source-clip-preserved-not-converted-to-gltf"
+            }
+          ],
+          "embeddedInGlb": false
+        },
+        "visualReview": {
+          "status": "three-view-generated-awaiting-owner-approval",
+          "receiptInputGlbSha256": "14623eaa192b8e798f398271575bb1f396d7f5975e55a2b366c2ba923ff7f97d",
+          "views": [
+            {
+              "view": "front",
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005801/runtime-v2-previews/ch027005801-runtime-v2-front.png",
+              "bytes": 470172,
+              "sha256": "8f0915f30c16f766ff0854797806fa93f55be848f90766aa41e3d376620e5be6"
+            },
+            {
+              "view": "side",
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005801/runtime-v2-previews/ch027005801-runtime-v2-side.png",
+              "bytes": 426932,
+              "sha256": "3260b392bba8c7a940a3204f8fa0a7be468d62d66fcf69e52dbd2da536217cdf"
+            },
+            {
+              "view": "back",
+              "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/heros-bonds-rigged-v1/ch027005801/runtime-v2-previews/ch027005801-runtime-v2-back.png",
+              "bytes": 491022,
+              "sha256": "091e43ce4c894fc9a5cd2fe5b7e5d29ff7bfc513ba6bdd5b5d3ae5a67e1b1bca"
+            }
+          ]
+        },
+        "registered": false,
+        "deployed": false
+      }
+    },
+    "registrationCount": 0,
+    "deploymentCount": 0
+  },
+  "khronosValidation": {
+    "validatorVersion": "2.0.0-dev.3.10",
+    "assetCount": 6,
+    "errorCount": 0,
+    "warningCount": 32,
+    "passed": true,
+    "assets": {
+      "ch027005800-rigged.glb": {
+        "sha256": "5ddd579834884f286ae04134de6b7e16abbf622a003c0f9081fa16019ffd6322",
+        "errorCount": 0,
+        "warningCount": 6,
+        "drawCallCount": 13,
+        "totalTriangleCount": 29990,
+        "imageCount": 6,
+        "maxTextureDimension": 1024,
+        "animationCount": 0,
+        "hasSkins": true
+      },
+      "ch027005800-runtime-lod.glb": {
+        "sha256": "c846587e618d95609025236321fe83adf1b1592545c1ca78289bb169cf081a14",
+        "errorCount": 0,
+        "warningCount": 5,
+        "drawCallCount": 12,
+        "totalTriangleCount": 7898,
+        "imageCount": 6,
+        "maxTextureDimension": 1024,
+        "animationCount": 0,
+        "hasSkins": true
+      },
+      "ch027005800-runtime-v2.glb": {
+        "sha256": "a79a5471d0ef01fb6091ff26457327379ab972bcd33fcffbf062a77b782505f6",
+        "errorCount": 0,
+        "warningCount": 5,
+        "drawCallCount": 5,
+        "totalTriangleCount": 7898,
+        "imageCount": 5,
+        "maxTextureDimension": 256,
+        "animationCount": 0,
+        "hasSkins": true
+      },
+      "ch027005801-rigged.glb": {
+        "sha256": "9669b3d57efdeb3368311ad9538065d5fba70ec0ab0114a042e931d923443add",
+        "errorCount": 0,
+        "warningCount": 6,
+        "drawCallCount": 13,
+        "totalTriangleCount": 29990,
+        "imageCount": 6,
+        "maxTextureDimension": 1024,
+        "animationCount": 0,
+        "hasSkins": true
+      },
+      "ch027005801-runtime-lod.glb": {
+        "sha256": "ed67057231f78bc4c6e7409f9e47170db8b5eb17efeb6cf62d69737d1ca0f051",
+        "errorCount": 0,
+        "warningCount": 5,
+        "drawCallCount": 12,
+        "totalTriangleCount": 7897,
+        "imageCount": 6,
+        "maxTextureDimension": 1024,
+        "animationCount": 0,
+        "hasSkins": true
+      },
+      "ch027005801-runtime-v2.glb": {
+        "sha256": "14623eaa192b8e798f398271575bb1f396d7f5975e55a2b366c2ba923ff7f97d",
+        "errorCount": 0,
+        "warningCount": 5,
+        "drawCallCount": 5,
+        "totalTriangleCount": 7897,
+        "imageCount": 5,
+        "maxTextureDimension": 256,
+        "animationCount": 0,
+        "hasSkins": true
+      }
+    }
+  },
+  "publishedCandidates": {
+    "schema": "ggd.heros-bonds-published-candidates@1",
+    "status": "published-to-git-candidates-owner-visual-pending-not-registered-not-deployed",
+    "candidates": [
+      {
+        "characterId": "ch027005800",
+        "candidate": {
+          "gitPath": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/candidates/ch027005800-runtime-v2.glb",
+          "bytes": 913220,
+          "sha256": "a79a5471d0ef01fb6091ff26457327379ab972bcd33fcffbf062a77b782505f6"
+        },
+        "constraints": {
+          "triangleCount": 7898,
+          "meshCount": 5,
+          "skinnedPrimitiveCount": 5,
+          "embeddedImageCount": 5,
+          "maxTextureDimension": 256,
+          "skinCount": 1,
+          "animationCount": 0
+        },
+        "khronos": {
+          "validatorVersion": "2.0.0-dev.3.10",
+          "errors": 0,
+          "warnings": 5
+        },
+        "previews": [
+          {
+            "view": "front",
+            "gitPath": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/previews/ch027005800-front.png",
+            "bytes": 470039,
+            "sha256": "098d15fc09fc4f3680e09ee09053228ec948b0389bd5a8099b3d5aaf09d09a58"
+          },
+          {
+            "view": "side",
+            "gitPath": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/previews/ch027005800-side.png",
+            "bytes": 426708,
+            "sha256": "04e1280d6a30dde14c6a68a519352019cd507913a7523c0042d62839854bb5ff"
+          },
+          {
+            "view": "back",
+            "gitPath": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/previews/ch027005800-back.png",
+            "bytes": 491032,
+            "sha256": "6d476ed04c165dc0a8a0c71c0d2d56eb1f8b1cebcf26c82d640b564fd3f0e28d"
+          }
+        ],
+        "sourceReceipts": {
+          "runtimeV2": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/ch027005800-runtime-v2.json",
+          "preview": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/ch027005800-runtime-v2-preview.json",
+          "khronos": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/khronos-validation.json"
+        },
+        "ownerVisualStatus": "pending",
+        "registered": false,
+        "deployed": false
+      },
+      {
+        "characterId": "ch027005801",
+        "candidate": {
+          "gitPath": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/candidates/ch027005801-runtime-v2.glb",
+          "bytes": 913464,
+          "sha256": "14623eaa192b8e798f398271575bb1f396d7f5975e55a2b366c2ba923ff7f97d"
+        },
+        "constraints": {
+          "triangleCount": 7897,
+          "meshCount": 5,
+          "skinnedPrimitiveCount": 5,
+          "embeddedImageCount": 5,
+          "maxTextureDimension": 256,
+          "skinCount": 1,
+          "animationCount": 0
+        },
+        "khronos": {
+          "validatorVersion": "2.0.0-dev.3.10",
+          "errors": 0,
+          "warnings": 5
+        },
+        "previews": [
+          {
+            "view": "front",
+            "gitPath": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/previews/ch027005801-front.png",
+            "bytes": 470172,
+            "sha256": "8f0915f30c16f766ff0854797806fa93f55be848f90766aa41e3d376620e5be6"
+          },
+          {
+            "view": "side",
+            "gitPath": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/previews/ch027005801-side.png",
+            "bytes": 426932,
+            "sha256": "3260b392bba8c7a940a3204f8fa0a7be468d62d66fcf69e52dbd2da536217cdf"
+          },
+          {
+            "view": "back",
+            "gitPath": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/previews/ch027005801-back.png",
+            "bytes": 491022,
+            "sha256": "091e43ce4c894fc9a5cd2fe5b7e5d29ff7bfc513ba6bdd5b5d3ae5a67e1b1bca"
+          }
+        ],
+        "sourceReceipts": {
+          "runtimeV2": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/ch027005801-runtime-v2.json",
+          "preview": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/ch027005801-runtime-v2-preview.json",
+          "khronos": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/khronos-validation.json"
+        },
+        "ownerVisualStatus": "pending",
+        "registered": false,
+        "deployed": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,332 @@
+{
+  "appVersion": "01.00",
+  "audioRerunRequired": false,
+  "captureReceipts": [
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-rpcs3-memory-capture-v1/baseline-title-screen-20260919-1400/capture-receipt.json",
+      "bytes": 11017365,
+      "existsLocal": true,
+      "sha256": "36461f3e24eebe8f639f110d78db8968458b4e9e242d5301063e5e0e75d31d78"
+    }
+  ],
+  "captureSummaries": [
+    {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-rpcs3-memory-capture-v1/baseline-title-screen-20260919-1400/capture-receipt.json",
+      "characterNativeId": null,
+      "emulator": {
+        "gameVersion": "01.00",
+        "status": 0,
+        "title": "J-STARS Victory VS+",
+        "titleId": "BLUS31519",
+        "version": "RPCS3 0.0.42-20023"
+      },
+      "label": "baseline-title-screen-20260919-1400",
+      "sha256": "36461f3e24eebe8f639f110d78db8968458b4e9e242d5301063e5e0e75d31d78",
+      "summary": {
+        "bytes": 268369920,
+        "carvedStpk": 0,
+        "failedRanges": 62592,
+        "ranges": 1
+      }
+    }
+  ],
+  "characters": [
+    {
+      "heroIds": [
+        "godie-ucrl"
+      ],
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "modelConverted": false,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nameZhTW": "小傑·富力士",
+      "nativeId": "017",
+      "nativeMotionsConverted": false,
+      "ownerContainerFiles": 89,
+      "productionDeploymentVerified": false,
+      "runtimeRegistered": false,
+      "slug": "gon",
+      "vfxConverted": false
+    },
+    {
+      "heroIds": [
+        "b2-nube"
+      ],
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "modelConverted": false,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nameZhTW": "鵺野鳴介／神眉",
+      "nativeId": "041",
+      "nativeMotionsConverted": false,
+      "ownerContainerFiles": 89,
+      "productionDeploymentVerified": false,
+      "runtimeRegistered": false,
+      "slug": "nube",
+      "vfxConverted": false
+    },
+    {
+      "heroIds": [
+        "b2-luckyman"
+      ],
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "modelConverted": false,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nameZhTW": "幸運超人",
+      "nativeId": "037",
+      "nativeMotionsConverted": false,
+      "ownerContainerFiles": 89,
+      "productionDeploymentVerified": false,
+      "runtimeRegistered": false,
+      "slug": "luckyman",
+      "vfxConverted": false
+    },
+    {
+      "heroIds": [
+        "godie-u010",
+        "godie-uvng"
+      ],
+      "identityStatus": "confirmed-unique-internal-stpk-member-name",
+      "modelConverted": false,
+      "moduleCounts": {
+        "model": 3,
+        "motion": 82,
+        "sfx": 5,
+        "skeleton": 3,
+        "texture": 3,
+        "vfx": 63,
+        "voice": 5
+      },
+      "nameZhTW": "飛影",
+      "nativeId": "012",
+      "nativeMotionsConverted": false,
+      "ownerContainerFiles": 89,
+      "productionDeploymentVerified": false,
+      "runtimeRegistered": false,
+      "slug": "hiei",
+      "vfxConverted": false
+    }
+  ],
+  "commands": {
+    "capture": "python3 tools/hero-model-library/source-workflows/jstars-rpcs3-memory-capture-v1/pine_dump.py --output <GGD-Asset-Library/conversions/jstars-rpcs3-memory-capture-v1/CHARACTER-TIMESTAMP>",
+    "enableIpc": "python3 tools/hero-model-library/source-workflows/jstars-rpcs3-memory-capture-v1/configure_ipc.py",
+    "installFirmwareIfMissing": "<RPCS3 executable> --installfw <preserved PS3UPDAT.PUP>",
+    "launchGame": "<RPCS3 executable> --no-gui /Volumes/PS3VOLUME/PS3_GAME/USRDIR/EBOOT.BIN",
+    "refresh": "python3 tools/hero-model-library/source-workflows/jstars-rpcs3-memory-capture-v1/build_inventory.py",
+    "setupTool": "python3 tools/hero-model-library/source-workflows/jstars-rpcs3-memory-capture-v1/setup_rpcs3.py",
+    "verifyRuntime": "python3 tools/hero-model-library/source-workflows/jstars-rpcs3-memory-capture-v1/verify_runtime.py"
+  },
+  "mountedVolume": "/Volumes/PS3VOLUME",
+  "notes": [
+    "The existing 1,596 decoded priority audio candidates remain authoritative and are not rerun here.",
+    "PINE capture uses read-only memory opcodes and refuses any title ID other than BLUS31519.",
+    "Capture and STPK carving are evidence stages; they do not prove runtime GLB conversion or deployment.",
+    "The title-screen baseline captured 268,369,920 bytes with 62,592 unmapped 4 KiB pages and carved 0 STPK; the full failed-page list stays in the local receipt and is not copied into Git.",
+    "The remaining runtime input dependency is loading each named priority character in game before a character-tagged PINE capture."
+  ],
+  "pipeline": [
+    {
+      "id": "source-preservation",
+      "reason": null,
+      "status": "complete"
+    },
+    {
+      "id": "rpcs3-tool",
+      "reason": null,
+      "status": "complete"
+    },
+    {
+      "id": "firmware-install",
+      "reason": null,
+      "status": "complete"
+    },
+    {
+      "id": "character-load",
+      "reason": "runtime setup is complete, but each priority character must be selected and fully loaded before a tagged capture",
+      "status": "pending"
+    },
+    {
+      "id": "guest-memory-capture",
+      "reason": "title-screen baseline receipts=1; character-tagged receipts=0",
+      "status": "pending"
+    },
+    {
+      "id": "stpk-srd-conversion",
+      "reason": "captured STPK/SRD members are not yet converted to runtime GLB",
+      "status": "pending"
+    },
+    {
+      "id": "runtime-registration",
+      "reason": "no validated model/motion/VFX output exists",
+      "status": "pending"
+    }
+  ],
+  "requiredSystemVersion": "04.7000",
+  "schema": "ggd.jstars-rpcs3-memory-capture-readiness@1",
+  "sourceId": "owner-jstars-victory-vs-plus-20260917",
+  "sources": {
+    "bootPreservationReceipt": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/boot-inputs/receipt.json",
+      "bytes": 1447,
+      "existsLocal": true,
+      "sha256": "cfed28497e1c0cd5d34ba7a38e6dcd7d80541a8906872ea6c2c430a8f1d22243"
+    },
+    "cpkInventory": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/cpk-inventory.json",
+      "bytes": 51811,
+      "existsLocal": true,
+      "sha256": "5b9ac593bb3ca9b2c031608a228d1d11aa5c37648de4fb0828e1a96e2105979a"
+    },
+    "ipcConfigReceipt": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-rpcs3-memory-capture-v1/ipc-config-receipt.json",
+      "bytes": 429,
+      "existsLocal": true,
+      "sha256": "92b558ce04eee1d86552c78b3c005582d6a619f522fe1334b3fcebc2d7ab3e5d"
+    },
+    "mountedBundledFirmware": {
+      "absolutePath": "/Volumes/PS3VOLUME/PS3_UPDATE/PS3UPDAT.PUP",
+      "bytes": 268435456,
+      "existsLocal": true,
+      "expected": {
+        "bytes": 268435456,
+        "sha256": "b0064cb5a019856bdcf91c28c7806f5565b3e16ccf5070607e04d3ac967fa515"
+      },
+      "sha256": "b0064cb5a019856bdcf91c28c7806f5565b3e16ccf5070607e04d3ac967fa515",
+      "verified": true
+    },
+    "mountedEboot": {
+      "absolutePath": "/Volumes/PS3VOLUME/PS3_GAME/USRDIR/EBOOT.BIN",
+      "bytes": 9725496,
+      "existsLocal": true,
+      "expected": {
+        "bytes": 9725496,
+        "sha256": "1e71ce86047f7cf99f29904a9fd045e818730425be76b4c780f42a3d8d8975f1"
+      },
+      "sha256": "1e71ce86047f7cf99f29904a9fd045e818730425be76b4c780f42a3d8d8975f1",
+      "verified": true
+    },
+    "mountedParamSfo": {
+      "absolutePath": "/Volumes/PS3VOLUME/PS3_GAME/PARAM.SFO",
+      "bytes": 1396,
+      "existsLocal": true,
+      "expected": {
+        "bytes": 1396,
+        "sha256": "522e138818ccf177044ce5dc3ecacfc0087a42e5154b19f9a3e8805ba1e317bc"
+      },
+      "sha256": "522e138818ccf177044ce5dc3ecacfc0087a42e5154b19f9a3e8805ba1e317bc",
+      "verified": true
+    },
+    "preservedBundledFirmware": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/boot-inputs/PS3_UPDATE/PS3UPDAT.PUP",
+      "bytes": 268435456,
+      "existsLocal": true,
+      "expected": {
+        "bytes": 268435456,
+        "sha256": "b0064cb5a019856bdcf91c28c7806f5565b3e16ccf5070607e04d3ac967fa515"
+      },
+      "sha256": "b0064cb5a019856bdcf91c28c7806f5565b3e16ccf5070607e04d3ac967fa515",
+      "verified": true
+    },
+    "preservedEboot": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/boot-inputs/PS3_GAME/USRDIR/EBOOT.BIN",
+      "bytes": 9725496,
+      "existsLocal": true,
+      "expected": {
+        "bytes": 9725496,
+        "sha256": "1e71ce86047f7cf99f29904a9fd045e818730425be76b4c780f42a3d8d8975f1"
+      },
+      "sha256": "1e71ce86047f7cf99f29904a9fd045e818730425be76b4c780f42a3d8d8975f1",
+      "verified": true
+    },
+    "preservedParamSfo": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/boot-inputs/PS3_GAME/PARAM.SFO",
+      "bytes": 1396,
+      "existsLocal": true,
+      "expected": {
+        "bytes": 1396,
+        "sha256": "522e138818ccf177044ce5dc3ecacfc0087a42e5154b19f9a3e8805ba1e317bc"
+      },
+      "sha256": "522e138818ccf177044ce5dc3ecacfc0087a42e5154b19f9a3e8805ba1e317bc",
+      "verified": true
+    },
+    "rpcs3Package": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/rpcs3-macos-arm64/rpcs3-v0.0.42-20023-f4a74819_macos.7z",
+      "bytes": 40231415,
+      "existsLocal": true,
+      "expected": {
+        "bytes": 40231415,
+        "sha256": "bb789a07dd60353d8cbf3806f0eef4c7c5440c1cbe89f198b6856803068ead9f"
+      },
+      "sha256": "bb789a07dd60353d8cbf3806f0eef4c7c5440c1cbe89f198b6856803068ead9f",
+      "verified": true
+    },
+    "rpcs3SetupReceipt": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/tools/rpcs3-macos-arm64/setup-receipt.json",
+      "bytes": 17575,
+      "existsLocal": true,
+      "sha256": "6748b16368cfe972cb78193a11ca6cdd61d8514f9fa28f3f23144df7cede1424"
+    },
+    "runtimeVerificationReceipt": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-rpcs3-memory-capture-v1/runtime-verification-receipt.json",
+      "bytes": 1146,
+      "existsLocal": true,
+      "sha256": "b61ed3a5fd7610018dce5d5fc2211d77aba021666b3c1c10b21bbd44fa9c5799"
+    }
+  },
+  "summary": {
+    "baselineTitleScreen": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/conversions/jstars-rpcs3-memory-capture-v1/baseline-title-screen-20260919-1400/capture-receipt.json",
+      "characterNativeId": null,
+      "emulator": {
+        "gameVersion": "01.00",
+        "status": 0,
+        "title": "J-STARS Victory VS+",
+        "titleId": "BLUS31519",
+        "version": "RPCS3 0.0.42-20023"
+      },
+      "label": "baseline-title-screen-20260919-1400",
+      "sha256": "36461f3e24eebe8f639f110d78db8968458b4e9e242d5301063e5e0e75d31d78",
+      "summary": {
+        "bytes": 268369920,
+        "carvedStpk": 0,
+        "failedRanges": 62592,
+        "ranges": 1
+      }
+    },
+    "bootInputsVerified": true,
+    "characterTaggedMemoryCaptures": 0,
+    "characters": 4,
+    "convertedModels": 0,
+    "convertedMotions": 0,
+    "convertedVfx": 0,
+    "firmwareInstalledVerified": true,
+    "memoryCaptures": 1,
+    "ownerContainerFiles": 356,
+    "rpcs3PackageStatus": "verified",
+    "rpcs3ToolSetupVerified": true,
+    "runtimeRegistrations": 0
+  },
+  "titleId": "BLUS31519"
+}

@@ -24,8 +24,8 @@
     },
     {
       "path": "materials/hero-model-library/source-module-catalog-v1/kof-jstars.json",
-      "bytes": 188211,
-      "sha256": "7d32a6f28644e53cf0c746433f3493d06cf1f803baf03386526d0e9098e632e4",
+      "bytes": 188174,
+      "sha256": "43c51ba713d18c6db420fbfd6fb9dd973e25ba49fc8efb380add6ff6098894b0",
       "sourceGroups": 5,
       "candidates": 62
     }
@@ -321,7 +321,7 @@
       "sourceId": "owner-jstars-victory-vs-plus-20260917",
       "title": "J-Stars Victory VS+",
       "platform": "PS3",
-      "version": "PS3 disc build; APP_VER/VERSION pending PARAM.SFO read",
+      "version": "BLUS31519 / 01.00",
       "status": "blocked-upstream-extraction",
       "candidateCount": 52,
       "summary": "名單含 39 名可操作角色與 13 名支援角色；owner archive 狀態為 inventoried-read-only。owner 指定六名已排入 model/motion/vfx/sfx/voice 優先轉換與預設來源計畫；第一優先來源查核確認原生 ID 6 名、runtime-ready 模組 0；日文 CV/PV WAV 候選 2394 段；獨立選項註冊 0、已套用預設 0、正式部署 0。",

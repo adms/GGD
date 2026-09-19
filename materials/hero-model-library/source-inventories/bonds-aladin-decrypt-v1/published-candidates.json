@@ -1,0 +1,106 @@
+{
+  "schema": "ggd.heros-bonds-published-candidates@1",
+  "status": "published-to-git-candidates-owner-visual-pending-not-registered-not-deployed",
+  "candidates": [
+    {
+      "characterId": "ch027005800",
+      "candidate": {
+        "gitPath": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/candidates/ch027005800-runtime-v2.glb",
+        "bytes": 913220,
+        "sha256": "a79a5471d0ef01fb6091ff26457327379ab972bcd33fcffbf062a77b782505f6"
+      },
+      "constraints": {
+        "triangleCount": 7898,
+        "meshCount": 5,
+        "skinnedPrimitiveCount": 5,
+        "embeddedImageCount": 5,
+        "maxTextureDimension": 256,
+        "skinCount": 1,
+        "animationCount": 0
+      },
+      "khronos": {
+        "validatorVersion": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 5
+      },
+      "previews": [
+        {
+          "view": "front",
+          "gitPath": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/previews/ch027005800-front.png",
+          "bytes": 470039,
+          "sha256": "098d15fc09fc4f3680e09ee09053228ec948b0389bd5a8099b3d5aaf09d09a58"
+        },
+        {
+          "view": "side",
+          "gitPath": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/previews/ch027005800-side.png",
+          "bytes": 426708,
+          "sha256": "04e1280d6a30dde14c6a68a519352019cd507913a7523c0042d62839854bb5ff"
+        },
+        {
+          "view": "back",
+          "gitPath": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/previews/ch027005800-back.png",
+          "bytes": 491032,
+          "sha256": "6d476ed04c165dc0a8a0c71c0d2d56eb1f8b1cebcf26c82d640b564fd3f0e28d"
+        }
+      ],
+      "sourceReceipts": {
+        "runtimeV2": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/ch027005800-runtime-v2.json",
+        "preview": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/ch027005800-runtime-v2-preview.json",
+        "khronos": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/khronos-validation.json"
+      },
+      "ownerVisualStatus": "pending",
+      "registered": false,
+      "deployed": false
+    },
+    {
+      "characterId": "ch027005801",
+      "candidate": {
+        "gitPath": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/candidates/ch027005801-runtime-v2.glb",
+        "bytes": 913464,
+        "sha256": "14623eaa192b8e798f398271575bb1f396d7f5975e55a2b366c2ba923ff7f97d"
+      },
+      "constraints": {
+        "triangleCount": 7897,
+        "meshCount": 5,
+        "skinnedPrimitiveCount": 5,
+        "embeddedImageCount": 5,
+        "maxTextureDimension": 256,
+        "skinCount": 1,
+        "animationCount": 0
+      },
+      "khronos": {
+        "validatorVersion": "2.0.0-dev.3.10",
+        "errors": 0,
+        "warnings": 5
+      },
+      "previews": [
+        {
+          "view": "front",
+          "gitPath": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/previews/ch027005801-front.png",
+          "bytes": 470172,
+          "sha256": "8f0915f30c16f766ff0854797806fa93f55be848f90766aa41e3d376620e5be6"
+        },
+        {
+          "view": "side",
+          "gitPath": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/previews/ch027005801-side.png",
+          "bytes": 426932,
+          "sha256": "3260b392bba8c7a940a3204f8fa0a7be468d62d66fcf69e52dbd2da536217cdf"
+        },
+        {
+          "view": "back",
+          "gitPath": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/previews/ch027005801-back.png",
+          "bytes": 491022,
+          "sha256": "091e43ce4c894fc9a5cd2fe5b7e5d29ff7bfc513ba6bdd5b5d3ae5a67e1b1bca"
+        }
+      ],
+      "sourceReceipts": {
+        "runtimeV2": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/ch027005801-runtime-v2.json",
+        "preview": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/ch027005801-runtime-v2-preview.json",
+        "khronos": "materials/hero-model-library/source-inventories/bonds-aladin-decrypt-v1/khronos-validation.json"
+      },
+      "ownerVisualStatus": "pending",
+      "registered": false,
+      "deployed": false
+    }
+  ]
+}

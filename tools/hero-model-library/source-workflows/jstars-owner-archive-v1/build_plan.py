@@ -18,6 +18,7 @@ CPK_RECEIPT = Path("materials/hero-model-library/source-inventories/jstars-owner
 IDENTITY_RECEIPT = Path("materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/identity-probe.json")
 AUDIO_RECEIPT = Path("materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/audio-extract.json")
 PRIORITY_SOURCE_RECEIPT = Path("materials/hero-model-library/priority-evidence/jstars-priority-six-v1/source-receipt.json")
+RUNTIME_CAPTURE_RECEIPT = Path("materials/hero-model-library/source-inventories/jstars-rpcs3-memory-capture-v1/inventory.json")
 SOURCE_REFERENCES = [
     {
         "label": "VIZ J-Stars VICTORY VS+ overview",
@@ -272,7 +273,8 @@ def build() -> dict:
     tracked = {}
     for key, rel in (("extract", EXTRACT_RECEIPT), ("cpk", CPK_RECEIPT),
                      ("identity", IDENTITY_RECEIPT), ("audio", AUDIO_RECEIPT),
-                     ("priority", PRIORITY_SOURCE_RECEIPT)):
+                     ("priority", PRIORITY_SOURCE_RECEIPT),
+                     ("runtime", RUNTIME_CAPTURE_RECEIPT)):
         path = repo / rel
         if path.is_file(): tracked[key] = json.loads(path.read_text())
     inventoried = (
@@ -403,12 +405,18 @@ def build() -> dict:
     cpk_summary = tracked.get("cpk", {}).get("summary", {})
     identity_summary = tracked.get("identity", {}).get("summary", {})
     audio_summary = tracked.get("audio", {}).get("summary", {})
+    runtime = tracked.get("runtime", {})
+    platform_version = (
+        f"{runtime.get('titleId')} / {runtime.get('appVersion')}"
+        if runtime.get("titleId") and runtime.get("appVersion")
+        else tracked.get("extract", {}).get("identification", {}).get("platformVersion")
+    )
     return {
         "schema": "ggd.jstars-owner-archive-plan@1",
         "sourceId": SOURCE_ID,
         "sourceGame": "J-Stars Victory VS+",
         "platformRequested": tracked.get("extract", {}).get("identification", {}).get("platform", "PS3 archive; platform verification pending"),
-        "platformVersion": tracked.get("extract", {}).get("identification", {}).get("platformVersion"),
+        "platformVersion": platform_version,
         "archiveFileName": ARCHIVE_NAME,
         "preferredIntakePath": str(archive_candidates(workspace)[0]),
         "archiveFound": bool(found_archive or inventoried),
@@ -416,7 +424,7 @@ def build() -> dict:
         "archiveInventory": {
             "status": tracked.get("extract", {}).get("status", "missing"),
             "bytes": archive_source.get("bytes"), "sha256": archive_source.get("sha256"),
-            "platformVersion": tracked.get("extract", {}).get("identification", {}).get("platformVersion"),
+            "platformVersion": platform_version,
             "cpkContainers": cpk_summary.get("containersInventoried", 0),
             "membersHashed": cpk_summary.get("membersHashed", 0),
             "characterTokensWithInternalIdentity": identity_summary.get("tokensWithInternalIdentity", 0),
