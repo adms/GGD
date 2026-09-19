@@ -1,0 +1,304 @@
+{
+  "archiveListing": {
+    "entries": [
+      {
+        "bytes": 3978559488,
+        "crc32": "F9D0A4FE",
+        "folder": false,
+        "packedBytes": 2979983917,
+        "path": "J-Stars Victory Vs+.iso"
+      },
+      {
+        "bytes": 706,
+        "crc32": "9A4B719E",
+        "folder": false,
+        "packedBytes": null,
+        "path": "readme.html"
+      }
+    ],
+    "entryCount": 2,
+    "mode": "7zip-slt",
+    "tool": "/Applications/Parallels Desktop.app/Contents/MacOS/7z"
+  },
+  "blockers": [],
+  "characterContainerTokens": [],
+  "identification": {
+    "edition": "VS+",
+    "evidence": [
+      "PS3_DISC.SFB or PS3_GAME/ observed in ISO listing",
+      "owner archive filename identifies J-Stars Victory VS+"
+    ],
+    "platform": "PS3",
+    "platformVersion": "PS3 disc build; APP_VER/VERSION pending PARAM.SFO read",
+    "title": "J-Stars Victory VS+"
+  },
+  "isoListings": [
+    {
+      "entries": [
+        {
+          "bytes": 1536,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 1536,
+          "path": "PS3_DISC.SFB"
+        },
+        {
+          "bytes": null,
+          "crc32": null,
+          "folder": true,
+          "packedBytes": null,
+          "path": "PS3_GAME"
+        },
+        {
+          "bytes": 65928,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 65928,
+          "path": "PS3_GAME/ICON0.PNG"
+        },
+        {
+          "bytes": 1994752,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 1994752,
+          "path": "PS3_GAME/ICON1.PAM"
+        },
+        {
+          "bytes": null,
+          "crc32": null,
+          "folder": true,
+          "packedBytes": null,
+          "path": "PS3_GAME/LICDIR"
+        },
+        {
+          "bytes": 65536,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 65536,
+          "path": "PS3_GAME/LICDIR/LIC.DAT"
+        },
+        {
+          "bytes": 1396,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 1396,
+          "path": "PS3_GAME/PARAM.SFO"
+        },
+        {
+          "bytes": 2250644,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 2250644,
+          "path": "PS3_GAME/PIC1.PNG"
+        },
+        {
+          "bytes": 5120,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 5120,
+          "path": "PS3_GAME/PS3LOGO.DAT"
+        },
+        {
+          "bytes": null,
+          "crc32": null,
+          "folder": true,
+          "packedBytes": null,
+          "path": "PS3_GAME/TROPDIR"
+        },
+        {
+          "bytes": null,
+          "crc32": null,
+          "folder": true,
+          "packedBytes": null,
+          "path": "PS3_GAME/TROPDIR/NPWR08138_00"
+        },
+        {
+          "bytes": 3881712,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 3881712,
+          "path": "PS3_GAME/TROPDIR/NPWR08138_00/TROPHY.TRP"
+        },
+        {
+          "bytes": null,
+          "crc32": null,
+          "folder": true,
+          "packedBytes": null,
+          "path": "PS3_GAME/USRDIR"
+        },
+        {
+          "bytes": 9725496,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 9725496,
+          "path": "PS3_GAME/USRDIR/EBOOT.BIN"
+        },
+        {
+          "bytes": null,
+          "crc32": null,
+          "folder": true,
+          "packedBytes": null,
+          "path": "PS3_GAME/USRDIR/data"
+        },
+        {
+          "bytes": null,
+          "crc32": null,
+          "folder": true,
+          "packedBytes": null,
+          "path": "PS3_GAME/USRDIR/data/PS3"
+        },
+        {
+          "bytes": null,
+          "crc32": null,
+          "folder": true,
+          "packedBytes": null,
+          "path": "PS3_GAME/USRDIR/data/PS3/install"
+        },
+        {
+          "bytes": 4290400,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 4290400,
+          "path": "PS3_GAME/USRDIR/data/PS3/install/install_JP_m.pak"
+        },
+        {
+          "bytes": null,
+          "crc32": null,
+          "folder": true,
+          "packedBytes": null,
+          "path": "PS3_GAME/USRDIR/data/PS3/movie"
+        },
+        {
+          "bytes": null,
+          "crc32": null,
+          "folder": true,
+          "packedBytes": null,
+          "path": "PS3_GAME/USRDIR/data/PS3/movie/US"
+        },
+        {
+          "bytes": 245499883,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 245499883,
+          "path": "PS3_GAME/USRDIR/data/PS3/movie/US/opening_movie_US.m2v"
+        },
+        {
+          "bytes": 767499880,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 767499880,
+          "path": "PS3_GAME/USRDIR/data/PS3/movie/US/staffroll_US.m2v"
+        },
+        {
+          "bytes": 12499877,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 12499877,
+          "path": "PS3_GAME/USRDIR/data/PS3/movie/mainmode.m2v"
+        },
+        {
+          "bytes": 89771504,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 89771504,
+          "path": "PS3_GAME/USRDIR/data/PS3/partition_op_battle_ps3.cpk"
+        },
+        {
+          "bytes": 705762768,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 705762768,
+          "path": "PS3_GAME/USRDIR/data/PS3/partition_op_character_ps3.cpk"
+        },
+        {
+          "bytes": 11499960,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 11499960,
+          "path": "PS3_GAME/USRDIR/data/PS3/partition_op_game_ps3.cpk"
+        },
+        {
+          "bytes": 701705192,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 701705192,
+          "path": "PS3_GAME/USRDIR/data/PS3/partition_op_map_ps3.cpk"
+        },
+        {
+          "bytes": 8320,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 8320,
+          "path": "PS3_GAME/USRDIR/data/PS3/partition_op_patch_ps3.cpk"
+        },
+        {
+          "bytes": 752591160,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 752591160,
+          "path": "PS3_GAME/USRDIR/data/PS3/partition_op_progress_ps3.cpk"
+        },
+        {
+          "bytes": 399969288,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 399969288,
+          "path": "PS3_GAME/USRDIR/data/PS3/partition_op_sound_ps3.cpk"
+        },
+        {
+          "bytes": null,
+          "crc32": null,
+          "folder": true,
+          "packedBytes": null,
+          "path": "PS3_UPDATE"
+        },
+        {
+          "bytes": 268435456,
+          "crc32": null,
+          "folder": false,
+          "packedBytes": 268435456,
+          "path": "PS3_UPDATE/PS3UPDAT.PUP"
+        }
+      ],
+      "entryCount": 32,
+      "member": "J-Stars Victory Vs+.iso",
+      "mode": "7zip-slt",
+      "tool": "/Applications/Parallels Desktop.app/Contents/MacOS/7z"
+    }
+  ],
+  "materializedIso": {
+    "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-Asset-Library/intake/owner-jstars-victory-vs-plus-20260917/extracted/J-Stars Victory Vs+.iso",
+    "bytes": 3978559488,
+    "sha256": "7323b1c03d17b79a7f208a10d71d4130686685a4b5391e707c21e9c0849f6322",
+    "sourceArchiveMember": "J-Stars Victory Vs+.iso"
+  },
+  "mode": "read-only-inventory",
+  "paramSfo": null,
+  "rerunCommand": "python3 \"/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/inventory.py\" --archive \"/absolute/path/J-Stars Victory Vs+.7z\" --output \"/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json\"",
+  "safety": {
+    "fullArchiveExtracted": true,
+    "largePayloadCopied": true,
+    "nestedIsoInspectionMode": "materialized-local-read",
+    "sourceModified": false
+  },
+  "schema": "ggd.jstars-owner-archive-extraction-receipt@1",
+  "source": {
+    "absolutePath": "/Users/Takuro/J-Stars Victory Vs+.7z",
+    "bytes": 2979984140,
+    "fileName": "J-Stars Victory Vs+.7z",
+    "sha256": "72f18422f88f84d007b4e51d8fa18d8cc83a7480e0969adb82cdf23862ca9636"
+  },
+  "sourceId": "owner-jstars-victory-vs-plus-20260917",
+  "status": "inventoried-read-only",
+  "summary": {
+    "archiveEntries": 2,
+    "characterTokens": 0,
+    "embeddedIsoMembers": 1,
+    "isoEntries": 32,
+    "isoListings": 1
+  },
+  "toolAvailability": {
+    "bsdtar": "/usr/bin/bsdtar",
+    "sevenZip": "/Applications/Parallels Desktop.app/Contents/MacOS/7z"
+  }
+}

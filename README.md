@@ -6,6 +6,7 @@
 > 英雄 **190** 名（正式站白名單開放 167）· 技能 **1129** · 道具 **142**（另 112 件退場在 `_legacy/`）· 競技場 **13** 張 · 模型文件 1,063 · 特效 726。
 > 賽制打到**第 10 回合四隊同場大亂鬥**決冠軍；**第 11 回合・生存模式**（500 隻殭屍上限、總分加倍）於 2026-09-10 開啟。
 > LoL 第二批 11 名（GH#1185）與已取得模型 26 名（GH#1205）已隨 **v0.46.0** 上架（正式站白名單 130→167）；還沒進 `content/` 的只剩 **8** 名 JASS 舊角重上架（§7 有名單）。
+> 已取得素材庫另有 **804** 個來源身分待整理，其中 397 個還沒有英雄 —— ⛔ 那不是英雄數（§7）。
 > ⚠️ 這一格與 §7 的內容表是刻意抄了數字的散文 —— 它們一定會過期；每一節底下的**產生區塊**才是可信的。
 
 - [1. 這是什麼 / What this is](#1-這是什麼--what-this-is)
@@ -14,7 +15,7 @@
 - [4. 有哪些頁面 / Feature pages](#4-有哪些頁面--feature-pages)
 - [5. 怎麼玩 / How to play](#5-怎麼玩--how-to-play)
 - [6. 各平台操作 / Controls](#6-各平台操作--controls)
-- [7. 內容 / Content](#7-內容--content) — 含**完整的英雄 / 技能 / 道具清單**、**60 張聖杯願望三選一**、以及**技能機制詞彙**（效果 / 觸發 / 條件 / 標籤 / 特效）
+- [7. 內容 / Content](#7-內容--content) — 含**完整的英雄 / 技能 / 道具清單**、**60 張聖杯願望三選一**、以及**技能機制詞彙**（效果 / 觸發 / 條件 / 標籤 / 特效）與**已取得素材庫**
 - [8. 架構 / Architecture](#8-架構--architecture)
 - [9. 開發 / Development](#9-開發--development)
 - [10. 社群 / Community](#10-社群--community)
@@ -460,7 +461,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 
 其餘 **18** 項是 1.0（不動）：`abilityDamage`、`abilityPower`、`attackDamage`、`attackSpeed`、`critChance`、`critDamage`、`damageDealt`、`defense`、`goldHeroKill`、`goldQuest`、`goldRoundPayout`、`healing`、`healthRegen`、`itemCooldown`、`lifesteal`、`maxMana`、`moveSpeed`、`shield`。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_89ab3ace1640` 產生。 倍率讀 `content/config/combat-env.json`（version 9）。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_af6a9c7e1f47` 產生。 倍率讀 `content/config/combat-env.json`（version 9）。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:combat-env -->
 
 倍率表在 tick 0 之前注入模擬並隨快照下發，兩邊用同一支正規化函式，所以預測與伺服器永遠對得上。技能卡面上的冷卻／距離／傷害怎麼過這張表，見 [⭐ 技能五級距](#-技能五級距)。
@@ -496,7 +497,7 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 | `arena.skeleton` | 新手競技場 | 🔁 | 24 | 2 | 4 | 12 | `stone` | — | 24+20 | — |
 | `arena.world-tree` | 世界樹核心 | 🔁 | 30 | 2 | 28 | 12 | `grass` | ✅ | 29+36 | 區域×10、互動×16、機關門 |
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_89ab3ace1640` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_af6a9c7e1f47` 產生。 輪替 12 / 全 13 張。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:arenas -->
 
 ### 設定陷阱（改了不會生效）
@@ -638,6 +639,38 @@ make lan-probe
 
 上面那張表數的是**已經在 repo 裡**的東西。9/11 那份待上架快照列了 45 名 —— LoL 第二批 11 名（[GH#1185](https://github.com/adms/GGD/issues/1185)）＋ 已取得模型／重上架舊角 34 名（[GH#1205](https://github.com/adms/GGD/issues/1205)：新增 26 ＋ JASS 舊角重上架 8）。其中 **37 名已隨 v0.46.0 上架**（卡進了 `content/champions/`、正式站白名單 130→167），**還沒進來的只剩 8 名 JASS 舊角**：7 名的卡躺在 `_legacy/champions/`，`godie-eevi` 兩邊都沒有（2026-09-17 實測 origin/main）。⭐ **逐名表在下面的產生區塊**（「全英雄列表」那一段末尾的「待上架」小節），⛔ 這裡不再手抄一份：來源是 `docs/_data/pending-heroes.json`（`python3 tools/reference/sync_pending_heroes.py` 從 `GGD-community-acquired-heroes` 的 `社群英雄126名上架狀態.md` 重抽的快照），而產生器在算繪當下會**扣掉卡已經進 `content/champions/` 的列** —— 來源狀態頁停在 9/11，不扣的話已上架的 37 名會被印成「還沒進」（守衛 `ops/readmePendingHeroesNotLanded.test.ts`）。**以兩張票與那份快照為準。**
 
+### 🗃 已取得素材庫：還沒變成英雄的來源（隨 PR #1284 併入）
+
+素材庫記的是**模型、動作、特效或音訊已經拿到，但還沒有對應英雄**的來源，⛔ 不是英雄名冊。**已取得、已轉換、已設計、已上架是四件事，分開記。**
+
+- **固定入口**：[`materials/hero-model-library/已取得模型待設計英雄.md`](materials/hero-model-library/已取得模型待設計英雄.md)，完整候選、檔案路徑與 SHA 在同名 `.json`。兩份都是 `tools/hero-model-library/build_model_design_backlog.py` 的產物，⛔ 不要手改。
+- **近期新增**：[`materials/hero-model-library/近四日新增模型動作特效清單.md`](materials/hero-model-library/近四日新增模型動作特效清單.md)。
+- **英雄清單裡看得到的部分**：`docs/全英雄列表.md` 末尾的「已取得素材／待轉換候選」一節，由 README 產生器讀同一份 JSON，只列下表前兩種狀態。
+
+| 狀態 | 來源身分數 |
+| --- | ---: |
+| 尚未建立英雄 | 397 |
+| 已有定義，需補查或實作 | 17 |
+| 身分待確認 | 297 |
+| 已對應到現有英雄 | 93 |
+| **合計** | **804** |
+
+⚠️ 同一個角色在不同素材庫會各算一筆，形態也還沒合併，所以 804 **不是**去重後的新英雄數。
+
+| 來源 | 已取得 | 還差什麼 |
+| --- | --- | --- |
+| 300英雄 | 276 個來源 ID，整理成 265 個身分列；3 個技能道具與 3 個缺本體另記 | 音訊索引 70,395 檔，音效與語音還沒分型 |
+| 拳皇 XIV／XV | 不知火舞、八神庵、阿修的模型與 410 段主要音訊候選 | 原生動作 0；Maximum Impact 還沒有核實過的包 |
+| 任天堂明星大亂鬥 | NS Ultimate Worldblender 整庫、社群 MOD、日語音包、GameCube Melee 與 Wii Brawl 音訊，各自分開登記 | 整庫 1,793 個 Blender 檔的動作數是 0；N64 只有來源線索 |
+| 無限神速斬 | Git 已登記 11 個原作模型版本：達伊 4、何布 5、老年巴恩 2 | 年輕巴恩完整身體 0；MystVearn 與巴蘭分開記錄 |
+| JUMP FORCE | 緋村劍心 1 個已解析本體、大傑 1 個未解析 PAK、達伊的 Daz 部件 | 達伊缺人體基底；58 個音訊包不算模型 |
+| J‑STARS 勝利對決+ | 7 個 CPK、19,471 筆成員、56 個角色／模型 token；六名優先角已確認身分，日文語音已解碼 2,394 段 | 轉換完成 0、後台註冊 0，動作待解碼，語音待聽審 |
+| 其他 | 魔法少女武鬥祭、Fate／unlimited codes、Unlimited Block Works MOD、幻獸帕魯 4 個身分 | 逐項看入口檔 |
+
+同一批也把兩個**模型選項**註冊進 Git：波吉的皇冠版（`b2-bojji`）與阿薩謝爾的翅膀版（`community-review-32-20260907`），A/B 比對圖在 `materials/hero-model-library/` 底下。
+
+⚠️ 上面兩張表抄自 PR #1284 最新 commit `bdd19be75` 的產物，**一定會過期**，以入口檔為準。入口檔裡寫的「專案 153 名英雄、白名單 130 名」是 9/10 的舊快照，目前是 190 名與 167 名。
+
 ### ⭐ 英雄定位與屬性級距 —— 機制參考表
 
 英雄的數值**不是逐隻手填的**。一位英雄只要指定**出身**（十選一），
@@ -712,7 +745,7 @@ make lan-probe
 >
 > ⚠️ 所以調 `combat-env` 的 `intToAbilityPower` **不會**讓法強終值變高 —— 它只改「等級 1 拿到多少」，反解把差額從每級成長裡等量扣掉，等級 99 逐位元不變。要改法強終值只有一格：上表的 `bands.ap`。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_89ab3ace1640` 產生。 級距與 `appliesTo` 讀 `content/config/stat-normalization.json`、上限讀 `stat-caps.json`、成長現況現場數 `content/champions/`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_af6a9c7e1f47` 產生。 級距與 `appliesTo` 讀 `content/config/stat-normalization.json`、上限讀 `stat-caps.json`、成長現況現場數 `content/champions/`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:stat-bands -->
 
 **可選英雄的逐隻對照**（出身 / 普攻距離 / 核心玩法 / 選角說明）在
@@ -878,7 +911,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 >
 > 逐格推導、三個錨點（LV30 hard / LV50 soft / LV99 極限）的達成率、以及兩個「空間」（純基礎 ↔ 引擎最終）的對照表在 [`docs/平衡錨點量測.md`](./docs/平衡錨點量測.md)；與 w3x 的逐支對照與梯子推導在 [`docs/editor-contract/ggd-skill-tiers.md`](./docs/editor-contract/ggd-skill-tiers.md)。兩份都是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_89ab3ace1640` 產生。 級距讀 `content/config/*-tiers.json`（9 張表）、母體讀 `docs/平衡錨點量測.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_af6a9c7e1f47` 產生。 級距讀 `content/config/*-tiers.json`（9 張表）、母體讀 `docs/平衡錨點量測.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:tiers -->
 
 ### 開放清單（以下預設展開，不用點）
@@ -2398,7 +2431,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **完整 190 名英雄**（含 23 名未開放）與逐欄資料（開放旗標、技能 id、攻擊類型…）在 [`docs/reference/roster.md`](./docs/reference/roster.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_89ab3ace1640` 產生。 開放 167 / 全 190 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_af6a9c7e1f47` 產生。 開放 167 / 全 190 名。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:roster -->
 
 <!-- BEGIN GENERATED:all-heroes -->
@@ -2630,7 +2663,9 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 | 7 | `godie-e00t` | 貞子七夜怪談 | 待上架（本機發布已通過） |
 | 8 | `godie-h021` | 阿強一號破銅爛鐵 | 待上架（本機發布已通過） |
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_89ab3ace1640` 產生。 全量 190 名，其中開放 167 名。另有 8 名待上架（卡還沒進 repo）。 完整清單另見 `docs/全英雄列表.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+> 另有 **414 筆已取得素材／待轉換的已確認來源身份**，完整候選表見 `docs/全英雄列表.md`。
+
+*由 `pnpm docs:readme` 從 contentVersion `cv_af6a9c7e1f47` 產生。 全量 190 名，其中開放 167 名。另有 8 名待上架（卡還沒進 repo）。 完整清單另見 `docs/全英雄列表.md`。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:all-heroes -->
 
 <!-- BEGIN GENERATED:abilities -->
@@ -2646,7 +2681,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 > 📖 **全 1129 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、完整短效果）在 [`docs/reference/abilities.md`](./docs/reference/abilities.md)；互動版在 <http://localhost:39527/#codex>。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_89ab3ace1640` 產生。 開放英雄技能 1001 / 全 1129 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_af6a9c7e1f47` 產生。 開放英雄技能 1001 / 全 1129 個。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:abilities -->
 
 <!-- BEGIN GENERATED:items -->
@@ -2822,7 +2857,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 > 📖 **全 142 件道具依 craftRole 的完整分類表**（component 16 / token 0 / none 24 …）在 [`docs/reference/items.md`](./docs/reference/items.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_89ab3ace1640` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_af6a9c7e1f47` 產生。 可取得 130 / 全 142 件。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:items -->
 
 <!-- BEGIN GENERATED:grail -->
@@ -2911,7 +2946,7 @@ owner 2026-08-18：「他有個舊標籤叫做任務道具，但在競技場新�
 
 逐張的完整 JSON（每一格參數、每一個 hook、每一條條件）在 [`docs/reference/grail-wishes.md`](docs/reference/grail-wishes.md)。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_89ab3ace1640` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_af6a9c7e1f47` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:grail -->
 
 ### ⭐ 2026-08-17／18 這一批新加的機制（GH#354）
@@ -3058,7 +3093,7 @@ payload 帶著是哪一條 `stat`。⚠️ 它是**少數會在戰鬥外發射**
 
 完整的參數與上下界（每個效果每一格能填什麼）在 [`docs/技能標記機制與效果規則.md`](docs/技能標記機制與效果規則.md)，同樣是產生的。
 
-*由 `pnpm docs:readme` 從 contentVersion `cv_89ab3ace1640` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
+*由 `pnpm docs:readme` 從 contentVersion `cv_af6a9c7e1f47` 產生。 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*
 <!-- END GENERATED:mechanics -->
 
 

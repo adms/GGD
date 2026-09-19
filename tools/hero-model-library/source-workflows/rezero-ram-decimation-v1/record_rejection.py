@@ -39,7 +39,7 @@ def build() -> tuple[dict, dict]:
         raise ValueError("Ram conversion attempt evidence is stale or overclaims acceptance")
     for attempt in attempts["attempts"]:
         if (attempt.get("accepted") is not False
-                or attempt.get("decimation", {}).get("candidateTriangles", 8000) >= 8000
+                or attempt.get("decimation", {}).get("candidateTriangles", 8001) > 8000
                 or attempt.get("structuralValidation", {}).get("passed") is not True
                 or attempt.get("visualEvidence", {}).get("withinThreshold") is not False
                 or attempt.get("visualEvidence", {}).get("maxSilhouetteXorUnionPct", 0) <= 5):

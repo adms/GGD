@@ -1,0 +1,37 @@
+{
+  "schema": "ggd.jstars-conversion-runtime-contract@1",
+  "pipelineId": "jstars-conversion-runtime-v1",
+  "inputSchemas": [
+    "ggd.jstars-extraction-receipt@1",
+    "ggd.jstars-owner-archive-extraction-receipt@1"
+  ],
+  "stages": [
+    { "id": "extraction", "dependsOn": [] },
+    { "id": "model", "dependsOn": ["extraction"] },
+    { "id": "texture", "dependsOn": ["model"] },
+    { "id": "skeleton", "dependsOn": ["model"] },
+    { "id": "motion", "dependsOn": ["skeleton"] },
+    { "id": "vfx", "dependsOn": ["extraction"] },
+    { "id": "sfx", "dependsOn": ["extraction"] },
+    { "id": "voice", "dependsOn": ["extraction"] },
+    { "id": "model-registration", "dependsOn": ["model", "texture", "skeleton", "motion"] }
+  ],
+  "authorities": {
+    "trianglePolicy": "packages/shared/src/content/modelUpload/adoptionPolicy.json",
+    "runtimeBudget": "packages/shared/src/content/modelUpload/budget.ts",
+    "modelPreparation": "packages/shared/src/content/modelUpload/heroModel.ts::prepareUploadedHeroModel",
+    "modelVerification": "packages/shared/src/content/modelUpload/heroModel.ts::verifyUploadedHeroModel",
+    "modelOptimizer": "tools/model-budget/optimize.ts",
+    "modelRegistration": "apps/content-api/src/modelVersions.ts::ModelVersions.prepare",
+    "contentContract": "packages/shared/src/content/schema/championModelVersions.ts"
+  },
+  "failClosed": {
+    "missingExtractionReceipt": true,
+    "unverifiedIdentity": true,
+    "missingRiggedAnimatedGlb": true,
+    "missingSixStateSelection": true,
+    "unreviewedAudioRuntimeBinding": true,
+    "defaultModelPromotion": true,
+    "productionDeploymentClaim": true
+  }
+}

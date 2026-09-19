@@ -1,0 +1,144 @@
+{
+  "characters": [],
+  "counts": {
+    "extractedCharacters": 0,
+    "identifiedNativeTokens": 0,
+    "preparedModels": 0,
+    "registeredModels": 0,
+    "runtimeAudioBindings": 0
+  },
+  "input": {
+    "receipt": {
+      "absolutePath": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json",
+      "bytes": 1786,
+      "sha256": "9ece9038444343dc4c1469f8023aa88ab248704e7c70fc573cc330ec2cee87de"
+    },
+    "schema": "ggd.jstars-owner-archive-extraction-receipt@1",
+    "sourceId": "owner-jstars-victory-vs-plus-20260917",
+    "upstreamBlockers": [
+      {
+        "action": "inventory owner archive",
+        "reason": "archive is not visible at the supplied or standard local paths",
+        "resource": "J-Stars Victory Vs+.7z"
+      }
+    ],
+    "upstreamRerunCommand": "python3 \"/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/tools/hero-model-library/source-workflows/jstars-owner-archive-extract-v1/inventory.py\" --archive \"/absolute/path/J-Stars Victory Vs+.7z\" --output \"/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/source-inventories/jstars-owner-archive-extract-v1/receipt.json\"",
+    "upstreamStatus": "blocked-archive-not-found"
+  },
+  "mode": "plan",
+  "output": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/ABxVFX_EDIT/GGD-pr1152-final/materials/hero-model-library/priority-evidence/jstars-conversion-runtime-v1",
+  "pipelineId": "jstars-conversion-runtime-v1",
+  "productionDeploymentVerified": false,
+  "schema": "ggd.jstars-conversion-runtime-receipt@1",
+  "stages": [
+    {
+      "id": "extraction",
+      "reason": "upstream extraction lane is blocked-archive-not-found",
+      "status": "blocked",
+      "upstreamBlockers": [
+        {
+          "action": "inventory owner archive",
+          "reason": "archive is not visible at the supplied or standard local paths",
+          "resource": "J-Stars Victory Vs+.7z"
+        }
+      ]
+    },
+    {
+      "id": "model",
+      "reason": "upstream extraction lane is blocked-archive-not-found",
+      "status": "blocked",
+      "upstreamBlockers": [
+        {
+          "action": "inventory owner archive",
+          "reason": "archive is not visible at the supplied or standard local paths",
+          "resource": "J-Stars Victory Vs+.7z"
+        }
+      ]
+    },
+    {
+      "id": "texture",
+      "reason": "upstream extraction lane is blocked-archive-not-found",
+      "status": "blocked",
+      "upstreamBlockers": [
+        {
+          "action": "inventory owner archive",
+          "reason": "archive is not visible at the supplied or standard local paths",
+          "resource": "J-Stars Victory Vs+.7z"
+        }
+      ]
+    },
+    {
+      "id": "skeleton",
+      "reason": "upstream extraction lane is blocked-archive-not-found",
+      "status": "blocked",
+      "upstreamBlockers": [
+        {
+          "action": "inventory owner archive",
+          "reason": "archive is not visible at the supplied or standard local paths",
+          "resource": "J-Stars Victory Vs+.7z"
+        }
+      ]
+    },
+    {
+      "id": "motion",
+      "reason": "upstream extraction lane is blocked-archive-not-found",
+      "status": "blocked",
+      "upstreamBlockers": [
+        {
+          "action": "inventory owner archive",
+          "reason": "archive is not visible at the supplied or standard local paths",
+          "resource": "J-Stars Victory Vs+.7z"
+        }
+      ]
+    },
+    {
+      "id": "vfx",
+      "reason": "upstream extraction lane is blocked-archive-not-found",
+      "status": "blocked",
+      "upstreamBlockers": [
+        {
+          "action": "inventory owner archive",
+          "reason": "archive is not visible at the supplied or standard local paths",
+          "resource": "J-Stars Victory Vs+.7z"
+        }
+      ]
+    },
+    {
+      "id": "sfx",
+      "reason": "upstream extraction lane is blocked-archive-not-found",
+      "status": "blocked",
+      "upstreamBlockers": [
+        {
+          "action": "inventory owner archive",
+          "reason": "archive is not visible at the supplied or standard local paths",
+          "resource": "J-Stars Victory Vs+.7z"
+        }
+      ]
+    },
+    {
+      "id": "voice",
+      "reason": "upstream extraction lane is blocked-archive-not-found",
+      "status": "blocked",
+      "upstreamBlockers": [
+        {
+          "action": "inventory owner archive",
+          "reason": "archive is not visible at the supplied or standard local paths",
+          "resource": "J-Stars Victory Vs+.7z"
+        }
+      ]
+    },
+    {
+      "id": "model-registration",
+      "reason": "upstream extraction lane is blocked-archive-not-found",
+      "status": "blocked",
+      "upstreamBlockers": [
+        {
+          "action": "inventory owner archive",
+          "reason": "archive is not visible at the supplied or standard local paths",
+          "resource": "J-Stars Victory Vs+.7z"
+        }
+      ]
+    }
+  ],
+  "status": "blocked-upstream-extraction"
+}

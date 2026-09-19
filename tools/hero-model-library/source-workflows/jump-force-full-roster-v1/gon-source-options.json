@@ -1,0 +1,49 @@
+{
+  "schema": "ggd.gon-original-game-source-options@1",
+  "heroId": "godie-ucrl",
+  "character": "傑・富力士",
+  "work": "HUNTER×HUNTER",
+  "sources": [
+    {
+      "id": "steam-jump-force-priority-original-assets-build-8523149:chr0300",
+      "label": "JUMP FORCE 小傑 chr0300",
+      "sourceGame": "JUMP FORCE",
+      "sourcePlatform": "Windows (Steam)",
+      "nativeCharacterId": "chr0300",
+      "identityState": "verified-high-confidence-character-family",
+      "identityVerified": true,
+      "reference": "materials/hero-model-library/source-inventories/jump-force-full-roster-v1/plan.json#chr0300",
+      "selectionClass": "canonical-game",
+      "tier": "original",
+      "extraction": {
+        "receipt": "../GGD-Asset-Library/extracted/jump-force-full-roster-v1/receipts/chr0300.json",
+        "blockedState": "blocked-awaiting-owner-or-runtime-key-injection",
+        "command": "UNREAL_PAK_AES_KEY=<authorized-key> python3 tools/hero-model-library/source-workflows/jump-force-full-roster-v1/extract_batch.py --repak <repak> --native-id chr0300 --receipt ../GGD-Asset-Library/extracted/jump-force-full-roster-v1/receipts/chr0300.json"
+      }
+    },
+    {
+      "id": "owner-jstars-victory-vs-plus-20260917:gon",
+      "label": "J-STARS 勝利對決+ 小傑",
+      "sourceGame": "J-STARS Victory VS+",
+      "sourcePlatform": "PS3 ISO owner archive",
+      "nativeCharacterId": null,
+      "identityState": "pending-container-character-id-verification",
+      "identityVerified": false,
+      "reference": "owner:J-Stars Victory Vs+.7z",
+      "selectionClass": "canonical-game",
+      "tier": "original",
+      "extraction": {
+        "receipt": "../GGD-Asset-Library/extracted/jstars-victory-vs-plus-20260917/gon/extraction-receipt.json",
+        "blockedState": "pending-archive-inventory-and-character-id-verification",
+        "command": null
+      }
+    }
+  ],
+  "separationPolicy": {
+    "independentSourceIds": true,
+    "independentModelVersions": true,
+    "independentMotionAndAudioEvidence": true,
+    "identicalGlbBytesRemainSeparateOptionsByProvenance": true,
+    "neverOverwriteAnotherSource": true
+  }
+}

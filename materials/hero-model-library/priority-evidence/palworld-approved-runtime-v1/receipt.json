@@ -28,11 +28,11 @@
   },
   "manifest": {
     "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/approved-components.json",
-    "sha256": "0c18c9e16adb729eea4d986b89a15cbf315c65b7c8376617b70d002cc24a821f"
+    "sha256": "7bef3d00ef9742a53012b0bf91445425b14166427d77dba2675654777369ae79"
   },
   "runtimeBindings": {
     "gitPath": "materials/hero-model-library/priority-evidence/palworld-approved-runtime-v1/runtime-bindings.json",
-    "sha256": "bcddbd83461dbc4ea6cceeb98da879b11032477073ca3b185f4fc43ab2b7f73b"
+    "sha256": "d8e9dd16b6ffdbe9cd18f48a8f8a50ebb755a5635472a2e8e0fdde08e0b429fe"
   },
   "remaining": [
     "Acquire and convert original standalone Palworld skill VFX and skill-specific SFX.",
