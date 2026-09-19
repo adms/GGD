@@ -17,10 +17,11 @@ import {
   OWNER_SETUP_TITLE,
   OWNER_SETUP_HELP,
   OWNER_TOKEN_LABEL,
-  INVITE_HELP,
   OFFLINE_PLATFORM_NOTE,
   registerArgs,
+  inviteFieldPlan,
 } from "./firstOwner";
+import { registrationPolicy, type RegistrationPolicy } from "./api";
 import { ErrorToast } from "./LobbyScreen";
 import { shouldReleaseEnterGuard, ENTER_FAILED_NOTE } from "./enterGuard";
 import { Btn, TextInput, FieldError, Panel, CodeBox, ACCENT } from "./widgets";
@@ -155,6 +156,20 @@ export function AuthScreen(): React.JSX.Element {
   // First-owner state (T0 / #180): true only on a brand-new gated deploy with no
   // admin yet — flips the register form into "首位管理員設定" mode.
   const firstOwner = useApp((s) => s.bootstrapNeedsOwner);
+  /**
+   * ⭐ GH#1274 —— 邀請碼**必填還是選填**（後台那一格，存檔即生效）。
+   * ⚠️ `null` ＝ 還沒讀到／那支 API 掛了 ⇒ `inviteFieldPlan` 照舊當成必填（fail-closed）。
+   * ⛔ 權威仍在伺服器：這一格只決定畫面怎麼寫，送出去照樣由 `/auth/register` 判。
+   */
+  const [invitePolicy, setInvitePolicy] = useState<RegistrationPolicy | null>(null);
+  useEffect(() => {
+    let live = true;
+    registrationPolicy()
+      .then((p) => { if (live) setInvitePolicy(p); })
+      .catch(() => { /* ⛔ 不擋註冊：讀不到就維持必填的樣子 */ });
+    return () => { live = false; };
+  }, []);
+  const invitePlan = inviteFieldPlan(invitePolicy);
   // A successful-but-PENDING registration (#126 gate): the form is replaced by an
   // "awaiting approval" card that also surfaces the #203 referral code.
   const pendingRegistration = useApp((s) => s.pendingRegistration);
@@ -716,7 +731,7 @@ export function AuthScreen(): React.JSX.Element {
                   {!reducedMotion && <span ref={inviteSparkRef} aria-hidden className="ggd-key-spark" />}
                 </div>
               </div>
-            ) : (
+            ) : !invitePlan.show ? null : (
               <div onMouseEnter={playHover}>
                 <div style={{ position: "relative" }}>
                   <TextInput
@@ -726,7 +741,9 @@ export function AuthScreen(): React.JSX.Element {
                     // Cosmetic only: the server normalises case, spaces and
                     // hyphens itself.
                     onChange={onType((v) => setInviteCode(v.toUpperCase()), inviteSparkRef)}
-                    placeholder="邀請碼 invite code (GGD-XXXX-XXXX)"
+                    // ⭐ GH#1274 —— 必填／選填由後台決定（`/auth/registration-policy`），
+                    //   ⛔ 不是寫死的一句話。政策讀不到 ⇒ 照舊當必填（fail-closed）。
+                    placeholder={invitePlan.placeholder}
                     onEnter={submit}
                     // THE FIELD THAT CAUSED THE BUG. Unnamed, it is the text
                     // input immediately before the password, so Chrome's
@@ -743,7 +760,7 @@ export function AuthScreen(): React.JSX.Element {
                   />
                   {!reducedMotion && <span ref={inviteSparkRef} aria-hidden className="ggd-key-spark" />}
                 </div>
-                <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 4, lineHeight: 1.5 }}>{INVITE_HELP}</div>
+                <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 4, lineHeight: 1.5 }}>{invitePlan.help}</div>
               </div>
             ))}
           <div onMouseEnter={playHover}>

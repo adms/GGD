@@ -31,6 +31,34 @@ export const OWNER_TOKEN_LABEL = "主機 owner 開通碼（在主機 DATA_DIR/ow
 /** The normal gated-deploy invite help — the family/non-first case. */
 export const INVITE_HELP = "內測期間需要邀請碼才能註冊，請向管理員索取。";
 
+/** 選填模式（GH#1274）—— 沒有碼也註冊得了，但要等批核；有推薦碼則介紹人自動批准。 */
+export const INVITE_HELP_OPTIONAL =
+  "邀請碼可以不填：沒有碼也能註冊，管理員批核後開通；填了朋友的推薦碼，他會自動通過。";
+
+/**
+ * 邀請碼那一格**要不要畫、旁邊寫什麼**（GH#1274）。
+ *
+ * ⚠️ ⭐ 它在此之前是**寫死的**：後台切到選填，畫面上仍然寫「需要邀請碼才能註冊」
+ * ⇒ 開關轉了而玩家**看不到**（CLAUDE.md「第四個住處是消費端」的形狀）。
+ *
+ * ⛔ fail-closed：政策還沒讀到（`null` ＝ 剛開頁、或那支 API 掛了）⇒ 照舊當成**必填**
+ * —— ⭐ 猜成選填會讓玩家以為留白送得出去，而伺服器仍然會 403。
+ */
+export function inviteFieldPlan(
+  policy: { inviteCodeSupported: boolean; inviteCodeRequired: boolean } | null,
+): { show: boolean; required: boolean; help: string; placeholder: string } {
+  const required = policy ? policy.inviteCodeRequired : true;
+  return {
+    // 這台根本沒裝邀請碼系統 ⇒ 整格不畫（⛔ 不是畫一個按了也沒用的欄位）
+    show: policy ? policy.inviteCodeSupported : true,
+    required,
+    help: required ? INVITE_HELP : INVITE_HELP_OPTIONAL,
+    placeholder: required
+      ? "邀請碼 invite code (GGD-XXXX-XXXX)"
+      : "邀請碼（可不填） invite code (GGD-XXXX-XXXX)",
+  };
+}
+
 /**
  * Shown under the "Play offline vs bots" button. Honest on every deploy: offline
  * direct-join is a local-test path, and a real (secured) host refuses

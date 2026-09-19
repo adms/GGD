@@ -93,6 +93,24 @@ export function bootstrapState(): Promise<BootstrapState> {
   return api.request<BootstrapState>("/auth/bootstrap-state", { auth: false });
 }
 
+/**
+ * 公開的 GET `/auth/registration-policy`（GH#1274）——「這台要不要邀請碼」。
+ *
+ * ⭐ `inviteCodeSupported` ＝ 這台有沒有裝邀請碼系統；`inviteCodeRequired` ＝ **必填還是選填**
+ * （後台那一格，存檔即生效）。⛔ 它⛔ 不回答「這個碼有沒有效」——那會變成一台碼的神諭。
+ * ⚠️ 伺服器從**同一個** `RegistrationInviteState` 推導這兩格 ⇒ 它與 `/auth/register` 的行為
+ * 不可能互相矛盾（消費端 `handlers.go:142`）。
+ */
+export interface RegistrationPolicy {
+  inviteCodeSupported: boolean;
+  inviteCodeRequired: boolean;
+}
+
+/** GET /auth/registration-policy —— 讓註冊畫面把邀請碼欄標成必填／選填，或整格不畫。 */
+export function registrationPolicy(): Promise<RegistrationPolicy> {
+  return api.request<RegistrationPolicy>("/auth/registration-policy", { auth: false });
+}
+
 export function login(username: string, password: string): Promise<SessionResp> {
   return api.request<SessionResp>("/auth/login", { body: { username, password }, auth: false });
 }
