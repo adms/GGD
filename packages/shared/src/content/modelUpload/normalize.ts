@@ -210,7 +210,7 @@ export async function normalizeUploadedModel(
     for (const [at, prim] of mesh.primitives.entries()) {
       const material = (prim as { material?: number }).material;
       // ⭐ GH#1283 —— 半透明每一塊自己一組（＝不動它），⛔ 不是跟同畫法的接起來（見 `isBlend`）。
-      const key = isBlend(json, material) ? ` blend${at}` : renderKey(json, material);
+      const key = isBlend(json, material) ? `blend${at}` : renderKey(json, material);
       groups.set(key, [...groups.get(key) ?? [], prim]);
     }
     if (groups.size < mesh.primitives.length) {

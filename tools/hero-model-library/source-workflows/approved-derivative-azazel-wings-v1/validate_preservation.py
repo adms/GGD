@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import tempfile
 from hashlib import sha256
 import json
 from pathlib import Path
@@ -45,7 +46,8 @@ def values(doc: dict, binary: bytes, index: int) -> np.ndarray:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--candidate", type=Path, default=STAGE / "azazel-wings-v1.glb")
-    parser.add_argument("--rebuild", type=Path, default=Path("/private/tmp/azazel-wings-v1-rebuild.glb"))
+    # ⛔ 不可以寫死 macOS 的 /private/tmp（GH#1003：Linux 上建不出來 ⇒ 靜默失敗）
+    parser.add_argument("--rebuild", type=Path, default=Path(tempfile.gettempdir()) / "azazel-wings-v1-rebuild.glb")
     parser.add_argument("--output", type=Path, default=STAGE / "azazel-wings-v1.preservation.json")
     args = parser.parse_args()
     source_doc, source_bin = read_glb(SOURCE)

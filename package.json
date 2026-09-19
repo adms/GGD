@@ -335,8 +335,9 @@
     "w3a:build": "bash scripts/genrun.sh w3a:build w3a:build:raw",
     "w3a:build:raw": "python3 tools/w3a-translate/gen.py",
     "w3a:check": "python3 tools/w3a-translate/gen.py --check",
-    "credits:build": "python3 tools/credits/model_provenance.py --write",
-    "credits:check": "python3 tools/credits/model_provenance.py --check"
+    "credits:build": "bash scripts/genrun.sh credits:build credits:build:raw",
+    "credits:check": "python3 tools/credits/model_provenance.py --check",
+    "credits:build:raw": "python3 tools/credits/model_provenance.py --write"
   },
   "devDependencies": {
     "@eslint/js": "^10",

@@ -390,6 +390,13 @@ func TestEveryGoContentConfigReadIsRegistered(t *testing.T) {
 			return err
 		}
 		for _, m := range contentConfigRead.FindAllStringSubmatch(string(raw), -1) {
+			// GH#1274: DATA_DIR/config/*.json is a DURABLE PER-DEPLOY SETTING (the registration
+			// policy), not a doc from the shipped content tree — the overlay census does not
+			// apply to it and registering it would be a lie. The discriminator is the join base:
+			// content reads join the content root, durable settings join dataDir.
+			if strings.Contains(m[0], "dataDir") {
+				continue
+			}
 			key := "config/" + m[1]
 			found[key] = append(found[key], path)
 		}
