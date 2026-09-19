@@ -12,7 +12,7 @@
   },
   "totals": {
     "distinct": 275,
-    "uses": 2551,
+    "uses": 2553,
     "byGroup": {
       "activation": 17,
       "scaling": 17,
@@ -76,7 +76,7 @@
     },
     {
       "token": "普攻時",
-      "uses": 40,
+      "uses": 42,
       "group": "event"
     },
     {
@@ -1400,5 +1400,5 @@
       "group": "scaling"
     }
   ],
-  "digest": "c7fe7e8ec185d865"
+  "digest": "01bbf60a92047e3c"
 }

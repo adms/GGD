@@ -2,7 +2,7 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_3120c9ef725d`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 產生自 contentVersion **`cv_050a8e5461d9`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
 > 資料列：**1129**　·　開放名單來源：快照 `docs/reference/_curation-snapshot.json`（whitelist updatedAt `2026-09-17T06:56:17.345668599Z`；英雄 167 · 道具 98 · 技能 885）；即時名單 `GET /api/v1/curation/whitelist`
 
 `content/abilities/*.json` 共 **1129** 份，每個英雄每個 slot 一份：天生 PASSIVE 187　·　Q 189　·　W 189　·　E 189　·　R 189　·　EX 186。
@@ -775,7 +775,7 @@
 | `godie-h02v.q` | 92-01 臥草泥馬 | Q | 主動 | 92-01 | `godie-h02v` 草泥馬 | ✅ | [主動][變身][週期] |
 | `godie-h02v.w` | 92-03 狂草泥馬 | W | 被動 | 92-03 | `godie-h02v` 草泥馬 | ✅ | [被動][屬性門檻][普攻時][吞噬][層數累積] |
 | `godie-h02v.e` | 92-02 消化液 | E | 被動 | 92-02 | `godie-h02v` 草泥馬 | ✅ | [被動][指向][範圍][破魔][AP加成][機率][週期] |
-| `godie-h02v.r` | 92-04 馬勒戈壁 | R | 被動 | 92-04 | `godie-h02v` 草泥馬 | ✅ | [主動][範圍][AP加成] |
+| `godie-h02v.r` | 92-04 馬勒戈壁 | R | 被動 | 92-04 | `godie-h02v` 草泥馬 | ✅ | [主動][範圍][普攻時][AP加成] |
 | `godie-h02v.ex` | 92-002 最終戈壁 | EX | 被動 | 92-002 | `godie-h02v` 草泥馬 | ✅ | [被動][週期][回復][範圍][AP加成] |
 | `godie-hapm.passive` | 52-00 十二道試煉 | PASSIVE | 天生·被動 | 52-00 | `godie-hapm` Berserker | — | [被動][範圍][暈眩] |
 | `godie-hapm.q` | 52-01 狂戰士之怒 | Q | 被動 | 52-01 | `godie-hapm` Berserker | ✅ | [主動][輔助] |
