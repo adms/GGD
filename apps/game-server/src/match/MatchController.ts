@@ -1047,6 +1047,17 @@ export class MatchController {
   /** ⭐ 第十一回合已經發出去幾個波次事件（`round11EventsDue` 回的是**應該發幾個**）。 */
   private round11EventsFired = 0;
 
+  /**
+   * ⭐ **只給測試**：正在飛的那一發（GH#1196 H⑤ 的「預警圈歸零」）。
+   *
+   * ⚠️ 它存在是為了讓那條斷言有一個**非空前提** —— ⛔ 沒有它，「結束後是 null」量不出
+   * 「回合結束時它本來非 null」，⇒ 那條斷言在任何實作下都會綠（形態④）。
+   * ⛔ 出貨路徑仍是唯一的寫入端。
+   */
+  get round11BombardForTest(): { startTick: number; x: number; z: number } | null {
+    return this.round11Bombard;
+  }
+
   /** ⭐ **只給測試**：換邊狀態（⛔ 出貨路徑仍是唯一的寫入端）。 */
   get round11PossessionsForTest(): ReadonlyMap<
     SeatId,
@@ -3910,6 +3921,14 @@ export class MatchController {
       for (const [offerId, offer] of [...this.offers]) {
         this.applyPick(offerId, offer, this.autoPickIndex(offerId, offer), true);
       }
+      // ⭐⭐ GH#1196 H⑤「結束後⋯**預警圈歸零**」—— ⛔ 回合收掉了，那一發就不再屬於任何人。
+      //
+      // ⚠️ 它與隔壁那一排 `endCombat*` 是**同一件事**（回合邊界把 within-round 的狀態收乾淨），
+      //   ⛔ 只是它住在 controller 的私有欄位而不是 world 的表裡 ⇒ 沒有 `endCombatX` 可以呼叫。
+      // ⭐ 在此之前它只在**進**第十一回合與**結算完**那兩刻歸零 ⇒ 回合在倒數中途收掉時它留著。
+      //   ⚠️ 今天沒有玩家看得到的後果（第十一回合之後沒有 combat，⛔ 而兩個讀者都只在 combat 跑）——
+      //   ⭐ 而那是**別的東西**在擋，⛔ 不是這一格是對的：一張 AC 說「歸零」而它沒有歸零。
+      this.round11Bombard = null;
     }
     endCombatFlowers(this.world); // round over: all flowers despawn
     endCombatRevives(this.world); // …and every circle + in-flight channel dies
@@ -4755,9 +4774,17 @@ export class MatchController {
     const at = pickBombardmentTarget(candidates, cfg.radius, cfg.crowdBias, this.world.rng.next());
     if (at === null) return; // ⛔ 場上沒有活人 ⇒ 不炸空地
     this.round11Bombard = { startTick: this.world.tick, x: at.x, z: at.z };
-    // ⭐ 預警圈 —— ⚠️ 今天**沒有客戶端在讀這一則**（client UI 還沒做）。
-    //   ⛔ 而它仍然要發：它是這個事件唯一的「⭐ 我在這裡倒數」訊號，
-    //   ⭐ 錄影與後台重播讀得到它。（⛔ 這不是「玩家看得到了」——第一·五守則。）
+    // ⭐ 預警圈 —— 它是這個事件唯一的「⭐ 我在這裡倒數」訊號。
+    //
+    // ⛔⛔ **更正**（GH#1196，2026-09-19）：這三行在此之前寫著「今天**沒有客戶端在讀這一則**
+    //   （client UI 還沒做）」—— ⭐ **那句話是假的**，而它活到了今天（第三守則：
+    //   一句在它到期之後還活著的散文，⛔ 而沒有任何東西變紅）。
+    //   ⭐ 今天出貨的消費端，逐個查證過（⛔ 不是推論）：
+    //     · `net/eventFanout.ts:871`            —— 過白名單（⛔ 沒有它，下面三個都收不到）
+    //     · `apps/client/src/net/RoomStore.ts:1595` —— 投影進 `hudStore.round11Bombard`
+    //     · `apps/client/src/ui/hud/Round11Overlay.tsx:173` —— 場上那一圈紅
+    //     · `apps/client/src/ui/hud/Minimap.tsx:216`        —— 小地圖上的落點
+    //   ⇒ ⭐ 改這一則的欄位＝**改玩家看得到的東西**，⛔ 不再是「只有錄影讀得到」。
     this.world.emit("round11Bombardment", {
       x: at.x,
       z: at.z,

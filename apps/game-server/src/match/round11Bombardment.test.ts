@@ -130,6 +130,34 @@ describe("大轟炸真的在跑（GH#1151 F）", () => {
     expect(trace(ctl, TELEGRAPH + 3), "⛔ 整段完全安靜").toEqual([]);
   });
 
+  /**
+   * ⭐⭐ GH#1196 H⑤ 第三軸：AC 逐字「結束後實體／排程／**預警圈**歸零」。
+   * ⚠️ 在此之前它**未驗**（理由記在 `round11Stress.test.ts` 檔頭：那一版的斷言結構上永遠綠）。
+   * ⭐ 倒數 30s ＞ 收回合要的秒數 ⇒ 回合結束那一刻手上**一定**還有一發在飛，⛔ 那是非空前提。
+   */
+  it("⭐⭐ 回合收掉時手上那一發**被收走** —— ⛔ 不是留著一個倒數到一半的紅圈", () => {
+    const ctl = new MatchController("bomb-clear", SEED, allBots(), FAST, undefined, rules({ telegraphSec: 30 }));
+    toRound11(ctl);
+    let guard = 0;
+    while (ctl.round11BombardForTest === null && guard++ < 40000) ctl.tick(); // ⭐ 出貨排程自己發
+    expect(ctl.round11BombardForTest, "⛔ 一發都沒開 ⇒ 下面兩條是空的").not.toBeNull();
+    // ⭐ 走出貨的出口收回合：英雄全滅 ⇒「活著的英雄歸零」（`round11End.test.ts` 釘住的那一條）。
+    for (const [, seat] of ctl.seats) {
+      const hp = seat.entityId === null ? undefined : ctl.world.health.get(seat.entityId);
+      if (!hp) continue;
+      hp.hp = 0;
+      hp.alive = false;
+    }
+    let inFlightEnteringLastCombatTick = false;
+    while (ctl.phase.phase === "combat" && guard++ < 40000) {
+      inFlightEnteringLastCombatTick = ctl.round11BombardForTest !== null;
+      ctl.tick();
+    }
+    expect(inFlightEnteringLastCombatTick, "⛔ 收回合那一 tick 手上沒有一發在飛 ⇒ 下面那條是空的").toBe(true);
+    while (ctl.phase.phase !== "matchEnd" && guard++ < 40000) ctl.tick();
+    expect(ctl.round11BombardForTest, "⛔ 比賽結束後還留著一發在倒數的轟炸（預警圈沒歸零）").toBeNull();
+  });
+
   it("⛔ 半徑 0 ⇒ 有預警**而沒有人被打到**（⭐ 證明命中真的吃那一格）", () => {
     const ctl = new MatchController("bomb-r0", SEED, allBots(), FAST, undefined, rules({ radius: 0 }));
     toRound11(ctl);
