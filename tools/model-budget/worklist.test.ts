@@ -1,14 +1,19 @@
 /**
  * mbudget-worklist — the offline batch-optimiser entrypoint classifies the
  *                    report's verdicts into the only buckets a batch pass can
- *                    act on: an oversized texture or too much geometry becomes
- *                    an ACTION with a concrete target; a draw-call / anim-channel
- *                    breach is named as re-authoring, never dressed up as
- *                    "optimise"; a broken emitter is set aside. The queue is
+ *                    act on: an oversized texture, too much geometry, or too many
+ *                    draw calls becomes an ACTION with a concrete target; an
+ *                    anim-channel breach is named as re-authoring, never dressed
+ *                    up as "optimise"; a broken emitter is set aside. The queue is
  *                    ordered heaviest-first and each item carries a real .glb
  *                    path the optimiser can consume.
  * mbudget-worklist-real — the same builder run over the SHIPPED report produces
  *                    a valid, non-empty worklist whose every item is a real file.
+ *
+ * ⭐ GH#1198／#1175 —— **跨住處**的那一條在最底下：「哪些軸修得了」同時住在
+ * `worklist.ts` 的 `AXIS` 與 `apps/admin/src/assets/modelBudget.ts` 的
+ * `OPTIMISABLE`／`MANUAL_AXES`（後台在瀏覽器跑同一份分類，⛔ import 不到這一支）。
+ * ⇒ 它們在 2026-09-19 之前**互相矛盾都不會有東西紅**。這條守衛把兩張表逐軸比。
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -16,8 +21,17 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { cover } from "../../packages/shared/testkit/cover";
 
+import { MANUAL_AXES as ADMIN_MANUAL_AXES, OPTIMISABLE as ADMIN_OPTIMISABLE } from "../../apps/admin/src/assets/modelBudget";
 import { GATES as LIVE_GATES } from "./limits";
-import { WORKLIST_SCHEMA, buildWorklist, type BudgetReportLike } from "./worklist";
+import {
+  AXIS,
+  WORKLIST_SCHEMA,
+  buildWorklist,
+  optimiserFlags,
+  type BudgetReportLike,
+  type WorklistAction,
+  type WorklistItem,
+} from "./worklist";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "../..");
@@ -115,8 +129,17 @@ describe("mbudget-worklist", () => {
       const ratio = championGate.texEdge.warn / (championGate.texEdge.warn + 1);
       expect(tex.estVramSavedBytes).toBe(Math.round(5_592_405 * (1 - ratio * ratio)));
     }
-    // and the champion still carries its un-fixable breaches as manual work
-    expect(champ.manual.sort()).toEqual(["animChannels", "drawCalls"]);
+    // GH#1198／#1175：draw call 現在是**可自動處理的候選**（合併畫法相同的 primitive）
+    const draws = champ.actions.find((a) => a.kind === "draw-merge");
+    expect(draws).toMatchObject({
+      kind: "draw-merge",
+      fromDraws: championGate.meshes.limit + 1,
+      targetDraws: championGate.meshes.warn,
+    });
+    // ⭐ 而它要說得出「可能接不動」—— ⛔ 一句只講做得到的話會被讀成「已解決」
+    if (draws && draws.kind === "draw-merge") expect(draws.requires).toContain("候選");
+    // 只剩動畫通道是真的沒有自動解（批次沒有 trim stage）
+    expect(champ.manual.sort()).toEqual(["animChannels"]);
 
     const prop = w.items.find((i) => i.id === "prop.statue")!;
     const geo = prop.actions.find((a) => a.kind === "geometry-decimate");
@@ -136,10 +159,59 @@ describe("mbudget-worklist", () => {
   it("--over-only drops warning-line candidates (the champion's texture is only a warning)", () => {
     const over = buildWorklist(REPORT, { threshold: "over" });
     const ids = over.items.map((i) => i.id);
-    // the champion's texture sat at WARN, so with over-only it has no action and
-    // falls to re-authoring (its draw-calls/channels are over); the prop stays.
-    expect(ids).toEqual(["prop.statue"]);
-    expect(over.needsReauthor.map((r) => r.id).sort()).toEqual(["champ.big", "champ.dancer"]);
+    // the champion's texture sat at WARN so it loses the resize, ⭐ but its draw
+    // calls are OVER ⇒ it stays queued on the merge candidate alone; the prop stays.
+    expect(ids).toEqual(["champ.big", "prop.statue"]);
+    expect(over.items[0]!.actions.map((a) => a.kind)).toEqual(["draw-merge"]);
+    // only the anim-channel-only model is left with nothing a batch pass can try
+    expect(over.needsReauthor.map((r) => r.id).sort()).toEqual(["champ.dancer"]);
+    cover("mbudget-worklist");
+  });
+
+  /**
+   * ⭐ 跨住處的承重守衛（GH#1198／#1175）。⛔ 它⛔ 不比對「兩邊都寫了 drawCalls」
+   * 這種名詞，⭐ 它比對的是**關係**：每一個軸在兩處的**歸類**要一樣 ——
+   * 一邊說「修得了」而另一邊說「只能重做」就紅，⛔ 兩個方向都紅。
+   *
+   * ⚠️ 這正是 2026-09-19 之前的實況：CLI 把 drawCalls 歸在 `fix: null`，
+   * 後台把它歸在 `MANUAL_AXES` —— 兩邊**一起**是錯的，⛔ 而「一致」本身
+   * 從來沒有被任何東西量過（CLAUDE.md：同步之後兩邊一致⛔ 不是成功的證據）。
+   */
+  it("CLI 與後台的『哪些軸修得了』逐軸一致（兩處，⛔ 沒有第三個住處）", () => {
+    const cliAutomated = Object.entries(AXIS).filter(([, s]) => s.fix !== null).map(([k]) => k);
+    const cliManual = Object.entries(AXIS).filter(([, s]) => s.fix === null).map(([k]) => k);
+
+    expect(cliAutomated.sort()).toEqual(Object.keys(ADMIN_OPTIMISABLE).sort());
+    expect(cliManual.sort()).toEqual([...ADMIN_MANUAL_AXES].sort());
+    // 每一個軸剛好屬於其中一邊 —— ⛔ 不可以同時是兩邊,也⛔ 不可以兩邊都不是
+    for (const axis of Object.keys(AXIS)) {
+      expect((axis in ADMIN_OPTIMISABLE) !== (ADMIN_MANUAL_AXES as readonly string[]).includes(axis)).toBe(true);
+    }
+    // ⭐ 而修法本身也要對得上（texture/geometry/draws 三種,⛔ 不是只有名字一樣）
+    for (const [axis, spec] of Object.entries(AXIS)) {
+      if (spec.fix !== null) expect(ADMIN_OPTIMISABLE[axis]).toBe(spec.fix);
+    }
+    // 這一天的事實：draw call 修得了（合併）,動畫通道還沒有（批次沒有 trim stage）
+    expect(AXIS["drawCalls"]!.fix).toBe("draws");
+    expect(AXIS["animChannels"]!.fix).toBeNull();
+    cover("mbudget-worklist");
+  });
+
+  /**
+   * ⭐ 接線守衛：排了合併候選就**一定**要把 `--merge` 交給優化器。
+   * ⚠️ **兩個方向都驗** —— 只驗「該有的時候有」的尺，在它最需要說話的時候是瞎的。
+   */
+  it("排了 draw-merge 就把 --merge 交給優化器；沒排就⛔ 不帶", () => {
+    const item = (kind: WorklistAction["kind"]): WorklistItem =>
+      ({ actions: [{ kind }] }) as unknown as WorklistItem;
+    // 該有的時候有
+    expect(optimiserFlags([item("draw-merge")], { apply: false, geometry: false })).toEqual(["--merge"]);
+    expect(optimiserFlags([item("texture-resize"), item("draw-merge")], { apply: true, geometry: false }))
+      .toEqual(["--apply", "--merge"]);
+    // ⛔ 不該有的時候沒有（⛔ 否則每一批都白花一次 python 探針）
+    expect(optimiserFlags([item("texture-resize"), item("geometry-decimate")], { apply: true, geometry: true }))
+      .toEqual(["--apply", "--geometry"]);
+    expect(optimiserFlags([], { apply: false, geometry: false })).toEqual([]);
     cover("mbudget-worklist");
   });
 

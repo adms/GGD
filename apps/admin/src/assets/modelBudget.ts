@@ -149,6 +149,8 @@ export interface BudgetGate {
   readonly role: string;
   readonly texEdgeWarn: number | null;
   readonly trisWarn: number | null;
+  /** GH#1198／#1175 —— 合併 stage 的目標 draw call 數（⭐ 與另外兩條一樣取 `warn`）。 */
+  readonly meshesWarn: number | null;
 }
 
 /** A budget line: the limit and the warning line that go with a metric. */
@@ -296,10 +298,12 @@ function readGate(raw: unknown): BudgetGate | null {
   if (role === "") return null;
   const texEdge = rec(d["texEdge"]);
   const tris = rec(d["tris"]);
+  const meshes = rec(d["meshes"]);
   return {
     role,
     texEdgeWarn: texEdge ? pickNum(texEdge, ["warn"]) : pickNum(d, ["texEdgeWarn"]),
     trisWarn: tris ? pickNum(tris, ["warn"]) : pickNum(d, ["trisWarn"]),
+    meshesWarn: meshes ? pickNum(meshes, ["warn"]) : pickNum(d, ["meshesWarn"]),
   };
 }
 
@@ -608,7 +612,9 @@ export const OPTIMISE_WORKLIST_SCHEMA = "model-budget/optimise-worklist@1";
 
 export type OptimiseAction =
   | { readonly kind: "texture-resize"; readonly fromEdge: number; readonly targetEdge: number; readonly estVramSavedBytes: number }
-  | { readonly kind: "geometry-decimate"; readonly fromTris: number; readonly targetTris: number; readonly requires: string };
+  | { readonly kind: "geometry-decimate"; readonly fromTris: number; readonly targetTris: number; readonly requires: string }
+  /** GH#1198／#1175 —— ⭐ 候選,⛔ 不是承諾（接不接得動由離線 worker 的探針說了算）。 */
+  | { readonly kind: "draw-merge"; readonly fromDraws: number; readonly targetDraws: number; readonly requires: string };
 
 export interface OptimiseItem {
   readonly id: string;
@@ -618,7 +624,7 @@ export interface OptimiseItem {
   readonly vramBytes: number | null;
   readonly triangles: number | null;
   readonly actions: readonly OptimiseAction[];
-  /** breached axes no automated pass fixes (draw calls / anim channels) */
+  /** breached axes no automated pass fixes (today: anim channels only) */
   readonly manual: readonly string[];
 }
 
@@ -634,22 +640,47 @@ export interface OptimiseWorklist {
 
 const floorPow2 = (n: number): number => (n < 1 ? 1 : 1 << Math.floor(Math.log2(n)));
 
-/** Which report verdict keys the offline optimiser can act on, and how. */
-const OPTIMISABLE: Record<string, "texture" | "geometry"> = {
+/**
+ * Which report verdict keys the offline optimiser can act on, and how.
+ *
+ * ⭐ ⛔ 這張表有**第二個住處** —— `tools/model-budget/worklist.ts` 的 `AXIS`
+ * （CLI 用同一份分類產同一份 schema）。⛔ 這一頁不能 import 那一支（它吃 `node:fs`／
+ * `node:child_process`，進不了瀏覽器 bundle）⇒ 兩處一致由一條會紅的守衛釘住：
+ * `tools/model-budget/worklist.test.ts` 的「兩處的軸表逐軸一致」。
+ *
+ * ⚠️ `drawCalls` 在 GH#1198／#1175 之前逐字寫在下面的 `MANUAL_AXES` 裡,
+ * 理由是「沒有任何自動流程修得了」—— ⭐ 而合併 stage 出貨之後那句話就過期了,
+ * ⛔ 且沒有任何東西變紅（CLAUDE.md 第三守則）。今天它是**候選**：
+ * `--merge` 接畫法相同的 primitive（⭐ 像素不變）,接不動就誠實拒絕。
+ */
+export const OPTIMISABLE: Record<string, "texture" | "geometry" | "draws"> = {
   maxTextureEdge: "texture",
   triangles: "geometry",
+  drawCalls: "draws",
 };
-/** Axes no automated pass fixes — carried as manual re-authoring work. */
-const MANUAL_AXES = ["drawCalls", "animChannels"] as const;
+/**
+ * Axes no automated pass fixes — carried as manual re-authoring work.
+ * ⚠️ `trimClips.ts` 存在,⛔ 但它**沒有接進 `optimize.ts`** ⇒ 對批次而言仍然無解。
+ */
+export const MANUAL_AXES = ["animChannels"] as const;
+
+/** ⭐ 與 CLI 同一句話：要說出**這件事可能不成立**,⛔ 不是只說指令。 */
+const MERGE_REQUIRES = "optimize.ts --merge（⭐ 像素不變）—— ⚠️ 候選：接不動時優化器會誠實拒絕";
 
 /**
  * Classify the report into the optimiser's actionable queue. Candidacy is the
  * WARNING LINE by default (matching "a warning line, and optimise anything over
- * the threshold"); a model is queued only when the optimiser can actually shrink
- * it (oversized texture or excess geometry). A model that is over budget only on
- * draw calls or animation channels is NOT queued — decimating a texture cannot
- * remove a mesh, and pretending otherwise is the silent lie the whole console
- * exists to avoid.
+ * the threshold"); a model is queued only when the offline pass can actually act
+ * on it — an oversized texture (resize), excess geometry (decimate) or, since
+ * GH#1198／#1175, too many draw calls (merge same-render-state primitives).
+ *
+ * ⚠️⚠️ ⭐ 「排進來」⛔ 不等於「壓得下去」：能不能接只有離線 worker 的乾跑探針答得出來,
+ * 而這一頁是**純函式、⛔ 不跑任何東西** ⇒ `draw-merge` 是**候選**。接不動（每塊畫法
+ * 都不同／全是半透明）時優化器會誠實拒絕，⛔ 一個位元組都不寫。
+ * ⇒ ⛔ 不要把佇列數讀成「已解決幾顆」。
+ *
+ * ⛔ 只在**動畫通道**上超標的模型仍然不排 —— 批次沒有 trim stage,
+ * 把它寫成「optimise」就是這整頁存在的理由要防的那種靜默謊話。
  *
  * Pure and deterministic: the same report yields the same worklist as
  * tools/model-budget/worklist.ts.
@@ -688,6 +719,13 @@ export function buildOptimiseWorklist(
           fromTris: m.triangles,
           targetTris: gate.trisWarn,
           requires: "geometry deps (#115)",
+        });
+      } else if (fix === "draws" && gate?.meshesWarn != null && m.drawCalls != null && m.drawCalls > gate.meshesWarn) {
+        actions.push({
+          kind: "draw-merge",
+          fromDraws: m.drawCalls,
+          targetDraws: gate.meshesWarn,
+          requires: MERGE_REQUIRES,
         });
       }
     }

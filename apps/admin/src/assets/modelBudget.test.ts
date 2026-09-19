@@ -219,8 +219,10 @@ const SCORED = {
   schema: "model-budget@1",
   sourcesDigest: "aaaabbbbccccdddd",
   gates: [
-    { role: "champion", tris: { warn: 16000, limit: 28000 }, texEdge: { warn: 512, limit: 1024 } },
-    { role: "arena-decor", tris: { warn: 4000, limit: 8000 }, texEdge: { warn: 512, limit: 1024 } },
+    // ⭐ `meshes` 是 GH#1198／#1175 之後合併 stage 的目標（出貨報告一直都有這一格,
+    //   ⛔ 只是後台在那之前沒有讀它）。
+    { role: "champion", tris: { warn: 16000, limit: 28000 }, meshes: { warn: 3, limit: 6 }, texEdge: { warn: 512, limit: 1024 } },
+    { role: "arena-decor", tris: { warn: 4000, limit: 8000 }, meshes: { warn: 12, limit: 20 }, texEdge: { warn: 512, limit: 1024 } },
   ],
   screens: [{ id: "combat", label: "戰鬥", triangles: 1, verdicts: { drawCalls: "over" } }],
   models: [
@@ -232,7 +234,7 @@ const SCORED = {
     { id: "decor.tower", path: "hex/tower.glb", role: "arena-decor", triangles: 5659, vramBytes: 1_000_000,
       drawCalls: 1, maxTextureEdge: 256, worstCount: 2,
       verdicts: { triangles: "over", drawCalls: "ok", maxTextureEdge: "ok" } },
-    // over ONLY on draw calls — not queueable, but still over threshold
+    // over ONLY on draw calls — ⭐ GH#1198／#1175 之後這是合併的候選（在此之前不排）
     { id: "champ.busy", path: "champions/busy.glb", role: "champion", triangles: 5000, vramBytes: 800_000,
       drawCalls: 20, maxTextureEdge: 256, worstCount: 12,
       verdicts: { triangles: "ok", drawCalls: "over", maxTextureEdge: "ok" } },
@@ -270,17 +272,24 @@ describe("adminui-model-budget-optimise", () => {
     const r = parseBudgetReport(SCORED, "/s.json") as BudgetReport;
     const wl = buildOptimiseWorklist(r, { now: "2026-07-22T10:00:00Z" });
     expect(wl.schema).toBe(OPTIMISE_WORKLIST_SCHEMA);
-    // champion (texture) + decor (geometry) queue; draw-call-only + broken do not
-    expect(wl.items.map((i) => i.id)).toEqual(["champ.big", "decor.tower"]);
+    // champion (texture + merge) + decor (geometry) + draw-call-only (merge) queue;
+    // ⭐ the broken emitter never does
+    expect(wl.items.map((i) => i.id)).toEqual(["champ.big", "decor.tower", "champ.busy"]);
 
     const champ = wl.items[0]!;
     expect(champ.actions[0]).toMatchObject({ kind: "texture-resize", fromEdge: 1024, targetEdge: 512 });
     expect((champ.actions[0] as { estVramSavedBytes: number }).estVramSavedBytes).toBe(Math.round(5_592_405 * 0.75));
-    expect([...champ.manual].sort()).toEqual(["animChannels", "drawCalls"]);
+    // GH#1198／#1175：draw call 是**合併候選**,⛔ 不再是「只能重做」
+    expect(champ.actions.find((a) => a.kind === "draw-merge")).toMatchObject({ fromDraws: 13, targetDraws: 3 });
+    expect([...champ.manual].sort()).toEqual(["animChannels"]);
+    // 只在 draw call 上超標的那一顆也排得進來（在此之前它一個桶都進不去）
+    expect(wl.items[2]!.actions).toEqual([
+      { kind: "draw-merge", fromDraws: 20, targetDraws: 3, requires: expect.stringContaining("候選") },
+    ]);
 
     const decor = wl.items[1]!;
     expect(decor.actions[0]).toMatchObject({ kind: "geometry-decimate", fromTris: 5659, targetTris: 4000 });
-    expect(wl.totals.queued).toBe(2);
+    expect(wl.totals.queued).toBe(3);
     expect(wl.totals.estVramSavedBytes).toBe(Math.round(5_592_405 * 0.75));
     expect(wl.source).toMatchObject({ sourcesDigest: "aaaabbbbccccdddd", schema: "model-budget@1" });
     cover("adminui-model-budget-optimise");
@@ -288,8 +297,11 @@ describe("adminui-model-budget-optimise", () => {
 
   it("--over-only drops warning-line textures, and an id filter narrows the queue", () => {
     const r = parseBudgetReport(SCORED, "/s.json") as BudgetReport;
-    // champion texture was WARN → gone under over-only; decor geometry was over → stays
-    expect(buildOptimiseWorklist(r, { threshold: "over" }).items.map((i) => i.id)).toEqual(["decor.tower"]);
+    // champion texture was WARN → the resize is gone under over-only, ⭐ but its
+    // draw calls are OVER so it stays on the merge candidate; decor geometry stays.
+    const overOnly = buildOptimiseWorklist(r, { threshold: "over" });
+    expect(overOnly.items.map((i) => i.id)).toEqual(["champ.big", "decor.tower", "champ.busy"]);
+    expect(overOnly.items[0]!.actions.map((a) => a.kind)).toEqual(["draw-merge"]);
     // an explicit selection queues only the chosen model
     expect(buildOptimiseWorklist(r, { ids: ["champ.big"] }).items.map((i) => i.id)).toEqual(["champ.big"]);
     // a null report yields an empty, still-valid worklist (page never crashes)

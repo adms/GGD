@@ -15,16 +15,41 @@
  * classifies those verdicts into the only two buckets that matter for a batch
  * pass:
  *
- *   items[]          assets the offline optimiser can actually shrink — an
- *                    oversized TEXTURE (resize) or too much GEOMETRY (decimate,
- *                    #115's stage). Each carries the concrete action + target.
+ *   items[]          assets the offline optimiser can actually act on — an
+ *                    oversized TEXTURE (resize), too much GEOMETRY (decimate,
+ *                    #115's stage), or too many DRAW CALLS (merge, GH#1198 /
+ *                    #1175). Each carries the concrete action + target.
  *   needsReauthor[]  assets that ARE over budget but on an axis no automated
- *                    pass can fix — draw-call count or per-frame animation
- *                    channels. Decimating a texture will not remove a mesh; the
- *                    only fix is re-authoring. Listing these as "optimise" work
- *                    would be a lie, so they are named separately.
+ *                    pass can fix — today that is per-frame ANIMATION CHANNELS
+ *                    only: `optimize.ts` has no trim stage, so the only fix is
+ *                    re-authoring. Listing these as "optimise" work would be a
+ *                    lie, so they are named separately.
  *   broken[]         zero-/near-zero-geometry emitters: pure draw-call overhead,
  *                    nothing to optimise. Named so they are not silently dropped.
+ *
+ * ─ ⛔⛔ 「draw call 沒有自動解」在 GH#1198／#1175 之後是**假的** ────────────────
+ * ⚠️ 這份檔頭在 2026-09-19 之前逐字寫著 draw call「no automated pass can fix」,
+ * 而那句話在合併 stage 出貨之後就過期了 —— ⭐ 而**沒有任何東西變紅**
+ * （CLAUDE.md 第三守則：一句在它到期之後還活著的散文）。今天的事實是：
+ *
+ * | stage | 它做什麼 | 畫面 | 誰在用 |
+ * |---|---|---|---|
+ * | `--merge` | 把**渲染狀態逐位元組相同**的 primitive 接成一塊 | ⭐ **一個像素都不變** | ⭐ 本檔排的 `draw-merge` |
+ * | `--atlas` | 重排貼圖版面再縮小每一格 | ⛔ **會變**（要人審） | ⛔ 本檔**不排**（見下） |
+ *
+ * ⇒ ⭐ 一個 draw call 超標的模型現在排進 `items[]`，動作是 `draw-merge`，
+ *   而 `--optimize` 會**真的帶上 `--merge`** 去跑它（⛔ 不帶就是 CLAUDE.md 失敗形態⑧：
+ *   工單說得出這件事做得到，而它叫的那支指令從來不做）。
+ *
+ * ⚠️⚠️ ⭐ **「排得進來」⛔ 不等於「接得動」**：接不接得起來只有 worker 的乾跑探針
+ * 答得出來（判準住上游 `glb_draw_state`），而本檔是**純函式、⛔ 不跑 exec**。
+ * ⇒ `draw-merge` 是一個**候選**：優化器探針說接不動（每塊畫法都不同／全是半透明）
+ * 就會誠實拒絕，⛔ 一個位元組都不寫。⭐ 被拒絕的那些**真的**只剩 `--atlas` 或重做 ——
+ * 2026-09-19 實測：#1198 那 8 顆 ou99 全部落在這一格（17/10/10/9/9/8/8/7 draws，
+ * `--merge` 救回 **0** 顆）。⇒ ⛔ 不要把「已排入」讀成「已解決」。
+ *
+ * ⛔ `--atlas` 刻意**不**排進工單：它會改變畫面 ⇒ 依 CLAUDE.md 第一·四之零，
+ * 它要走人審，⛔ 不屬於「按一下就跑完」的批次。
  *
  * The candidacy threshold is the WARNING LINE by default (matching the user's
  * ask: "a warning line, and offline-optimise anything over the threshold"), so
@@ -70,12 +95,24 @@ export const WORKLIST_SCHEMA = "model-budget/optimise-worklist@1";
 
 type Verdict = "ok" | "warn" | "over";
 
-/** Which gate axis each report verdict key maps to, and how the optimiser (if
- *  at all) addresses it. `null` fix ⇒ no automated pass can help. */
-const AXIS: Record<string, { gate: "tris" | "meshes" | "texEdge" | "channels"; fix: "geometry" | "texture" | null }> = {
+/** How the optimiser (if at all) addresses one breached axis. */
+export type AxisFix = "geometry" | "texture" | "draws" | null;
+
+/**
+ * Which gate axis each report verdict key maps to, and how the optimiser
+ * addresses it. `null` fix ⇒ no automated pass can help, ⇒ `needsReauthor`.
+ *
+ * ⭐ ⛔ 這張表有**第二個住處** —— `apps/admin/src/assets/modelBudget.ts` 的
+ * `OPTIMISABLE` ＋ `MANUAL_AXES`（後台那一頁在瀏覽器裡跑同一份分類，⛔ 不能 import
+ * 這一支：本檔吃 `node:fs`／`node:child_process`）。⇒ 兩處一致由一條會紅的守衛釘住：
+ * `worklist.test.ts` 的「兩處的軸表逐軸一致」。⛔ 改一邊而不改另一邊 ⇒ 紅。
+ */
+export const AXIS: Record<string, { gate: "tris" | "meshes" | "texEdge" | "channels"; fix: AxisFix }> = {
   triangles: { gate: "tris", fix: "geometry" },
-  drawCalls: { gate: "meshes", fix: null },
+  // GH#1198／#1175：合併 stage 出貨之後這一格⛔ 不再是 null（檔頭有完整理由）。
+  drawCalls: { gate: "meshes", fix: "draws" },
   maxTextureEdge: { gate: "texEdge", fix: "texture" },
+  // ⚠️ `trimClips.ts` 存在,⛔ 但它**沒有接進 optimize.ts** ⇒ 對批次而言仍然無解。
   animChannels: { gate: "channels", fix: null },
 };
 
@@ -124,7 +161,9 @@ export interface WorklistBreach {
 }
 export type WorklistAction =
   | { kind: "texture-resize"; fromEdge: number; targetEdge: number; estVramSavedBytes: number }
-  | { kind: "geometry-decimate"; fromTris: number; targetTris: number; requires: string };
+  | { kind: "geometry-decimate"; fromTris: number; targetTris: number; requires: string }
+  /** GH#1198／#1175 —— ⭐ 候選,⛔ 不是承諾（接不接得動由 worker 探針說了算,見檔頭）。 */
+  | { kind: "draw-merge"; fromDraws: number; targetDraws: number; requires: string };
 export interface WorklistItem {
   id: string;
   path: string;
@@ -135,7 +174,7 @@ export interface WorklistItem {
   breaches: WorklistBreach[];
   /** what the offline optimiser will attempt — always ≥ 1 for an item */
   actions: WorklistAction[];
-  /** breached axes no automated pass can fix (draw calls / anim channels) */
+  /** breached axes no automated pass can fix (today: anim channels only) */
   manual: string[];
 }
 export interface Worklist {
@@ -159,6 +198,14 @@ export interface Worklist {
 }
 
 // ---- pure builder -----------------------------------------------------------
+
+/**
+ * ⭐ 合併候選的 `requires` —— ⛔ 它要說出**這件事可能不成立**，⛔ 不是只說指令。
+ * （CLAUDE.md：一個只講「做得到」的欄位會被下一輪讀成「已解決」。）
+ */
+export const MERGE_REQUIRES =
+  "optimize.ts --merge（接畫法相同的 primitive，⭐ 像素不變）—— " +
+  "⚠️ 候選：接不動（每塊畫法都不同／全是半透明）時優化器會誠實拒絕，那時只剩 --atlas 或重做";
 
 /** Largest power of two ≤ n — the resize target must be a real mip-friendly edge. */
 const floorPow2 = (n: number): number => 1 << Math.floor(Math.log2(Math.max(1, n)));
@@ -240,6 +287,12 @@ export function buildWorklist(
             requires: "geometry deps (#115) — tools/model-budget/optimize/bootstrap-geometry.sh",
           });
         }
+      } else if (spec.fix === "draws" && gate) {
+        const fromDraws = m.drawCalls ?? 0;
+        const targetDraws = gate.meshes.warn;
+        if (fromDraws > targetDraws) {
+          actions.push({ kind: "draw-merge", fromDraws, targetDraws, requires: MERGE_REQUIRES });
+        }
       }
     }
 
@@ -304,6 +357,23 @@ export function buildWorklist(
       estVramSavedBytes,
     },
   };
+}
+
+/**
+ * ⭐ 工單 → 優化器 CLI 旗標。⛔ 它抽成純函式**只為了一件事：讓這條接線有守衛** ——
+ * 住在 `main()` 裡的時候沒有任何測試碰得到它，⛔ 而它正是 CLAUDE.md 第二守則
+ * 失敗形態⑧的形狀：**工單說得出「draw call 修得了」，而它叫的那支指令從來不帶
+ * `--merge`** ⇒ 排進去的每一顆都靜靜地什麼都不做，⭐ 而兩邊看起來都是對的。
+ */
+export function optimiserFlags(
+  items: readonly WorklistItem[],
+  opts: { apply: boolean; geometry: boolean },
+): string[] {
+  const flags: string[] = [];
+  if (opts.apply) flags.push("--apply");
+  if (opts.geometry) flags.push("--geometry");
+  if (items.some((it) => it.actions.some((a) => a.kind === "draw-merge"))) flags.push("--merge");
+  return flags;
 }
 
 // ---- CLI --------------------------------------------------------------------
@@ -392,11 +462,12 @@ function main(): void {
     );
     for (const it of worklist.items.slice(0, 20)) {
       const acts = it.actions
-        .map((a) =>
-          a.kind === "texture-resize"
-            ? `texture ${a.fromEdge}²→${a.targetEdge}² (~${mb(a.estVramSavedBytes)} MB)`
-            : `geometry ${a.fromTris}→≤${a.targetTris} tris (#115)`,
-        )
+        .map((a) => {
+          if (a.kind === "texture-resize") return `texture ${a.fromEdge}²→${a.targetEdge}² (~${mb(a.estVramSavedBytes)} MB)`;
+          if (a.kind === "geometry-decimate") return `geometry ${a.fromTris}→≤${a.targetTris} tris (#115)`;
+          // ⭐ 「候選」兩個字是刻意的 —— 接不接得動只有 worker 探針答得出來。
+          return `draws ${a.fromDraws}→≤${a.targetDraws} merge 候選 (#1198)`;
+        })
         .join(", ");
       const manual = it.manual.length > 0 ? `  [also needs re-author: ${it.manual.join(", ")}]` : "";
       process.stdout.write(`• ${it.path}  [${it.role} ×${it.worstCount}]  ${acts}${manual}\n`);
@@ -415,11 +486,13 @@ function main(): void {
       process.stderr.write("worklist: none of the queued .glb paths exist on disk — nothing to optimise\n");
       process.exit(1);
     }
-    const optArgs = [OPTIMIZE, ...paths];
-    if (args.apply) optArgs.push("--apply");
-    if (args.geometry) optArgs.push("--geometry");
+    // ⭐ 排了 `draw-merge` 就**一定**要帶 `--merge` —— optimize.ts 的合併 stage 只在
+    //   `args.merge` 為真時才跑（判準住 `optimiserFlags`，⛔ 這裡沒有第二份）。
+    const flags = optimiserFlags(worklist.items, { apply: args.apply, geometry: args.geometry });
+    const optArgs = [OPTIMIZE, ...paths, ...flags];
+    const wantsMerge = flags.includes("--merge");
     process.stdout.write(
-      `\ninvoking optimiser on ${paths.length} queued model(s) (${args.apply ? "APPLY" : "dry run"}${args.geometry ? ", +geometry" : ""})…\n`,
+      `\ninvoking optimiser on ${paths.length} queued model(s) (${args.apply ? "APPLY" : "dry run"}${args.geometry ? ", +geometry" : ""}${wantsMerge ? ", +merge" : ""})…\n`,
     );
     try {
       execFileSync(process.execPath, ["--import", "tsx", ...optArgs], { cwd: ROOT, stdio: "inherit" });
