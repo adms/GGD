@@ -37,13 +37,9 @@ const shippedShelf = (
     // 同一條金流決定）。`world.legendaryShelf` 是**整塊**指派的，所以這裡的
     // 形狀少一格就會 tsc 紅 —— 這正是我們要的：config 長出新欄位時，
     // 「world 預設 === 出貨 config」那一條不會靜靜地只比對舊的兩格。
-    legendaryShelf?: {
-      open: boolean;
-      priceMultiplier: number;
-      sellRefundPct: number;
-      randomOnlyTables: string[];
-      swapWhenFull: boolean;
-    };
+    // ⭐ 形狀直接引用引擎那一份（`SimWorld["legendaryShelf"]`）——⛔ 不抄第二份：
+    //   在此之前這裡是手寫的欄位表，GH#1271 加一格 `skipWhenFull` 就讓三支測試的 tsc 一起紅。
+    legendaryShelf?: SimWorld["legendaryShelf"];
   }
 ).legendaryShelf;
 

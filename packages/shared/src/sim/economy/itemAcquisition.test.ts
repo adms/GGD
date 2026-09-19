@@ -34,13 +34,9 @@ const CONTENT_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../.
 /** 出貨的那一份設定。⛔ 不重打 —— 讀 `content/config/arena-rules.json`。 */
 const shipped = (
   JSON.parse(readFileSync(join(CONTENT_DIR, "config/arena-rules.json"), "utf8")) as {
-    legendaryShelf?: {
-      open: boolean;
-      priceMultiplier: number;
-      sellRefundPct: number;
-      randomOnlyTables: string[];
-      swapWhenFull: boolean;
-    };
+    // ⭐ 形狀直接引用引擎那一份（`SimWorld["legendaryShelf"]`）——⛔ 不抄第二份：
+    //   在此之前這裡是手寫的欄位表，GH#1271 加一格 `skipWhenFull` 就讓三支測試的 tsc 一起紅。
+    legendaryShelf?: SimWorld["legendaryShelf"];
   }
 ).legendaryShelf;
 
