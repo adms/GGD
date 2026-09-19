@@ -57,7 +57,15 @@ let digestReads = 0;
 /** 測試用：到目前為止真的讀檔算雜湊的次數（快取命中不算）。 */
 export const addressedDigestReads = () => digestReads;
 
-const statKey = (file: string) => {
+/**
+ * ⭐ 「這個檔有沒有被動過」的**唯一**判準住處（⛔ 不要在別處再寫一份）——
+ * `catalogVersions.ts` 的保存期間防競態也用它（GH#1178）。
+ *
+ * ⚠️ 為什麼 `ctimeNs` 是關鍵：使用者空間**沒有** API 可以把 ctime 設回去，
+ * 任何一次寫入都會被核心改掉 ⇒ ⛔ 一般的寫入端偽造不了這個指紋。
+ * （`size`＋`mtimeNs` 自己可以被 `utimes` 還原，`ino`／`dev` 擋的是換檔／換掛載點。）
+ */
+export const statKey = (file: string) => {
   const s = statSync(file, { bigint: true });
   return `${s.size}:${s.mtimeNs}:${s.ctimeNs}:${s.ino}:${s.dev}`;
 };
