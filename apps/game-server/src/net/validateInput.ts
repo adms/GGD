@@ -175,6 +175,9 @@ export function sanitizeCommand(raw: unknown): Command | undefined {
       if (offerId === undefined) return undefined;
       // GH#1110 B —— 背包滿時要換掉哪一格（選填）。給了卻不是合法格號 ⇒ 整個指令丟掉
       // （同 `useItem.target`）：⛔ 不可以悄悄降級成「不換」的那一次選取。
+      // GH#1271 —— 放棄這張卡（選填）。⭐ 只收 `true`：給了別的值（字串 "false"、0、物件⋯）
+      //   ⇒ 整個指令丟掉，⛔ 不可以悄悄降級成一次「普通選取」。`skip` 贏過 `swapSlot`（互斥）。
+      if (c.skip !== undefined) return c.skip === true ? { kind: "pickOffer", offerId, skip: true } : undefined;
       if (c.swapSlot === undefined) return { kind: "pickOffer", offerId };
       const swapSlot = toItemSlot(c.swapSlot);
       return swapSlot !== undefined ? { kind: "pickOffer", offerId, swapSlot } : undefined;

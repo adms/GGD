@@ -19,3 +19,16 @@ export function swapWhenFullEnabled(): boolean {
   const v = doc?.legendaryShelf?.swapWhenFull;
   return typeof v === "boolean" ? v : DEFAULT_LEGENDARY_SHELF.swapWhenFull === true;
 }
+
+/**
+ * 這一刻生效的「背包滿時可以放棄這張卡」（GH#1271，同上懶讀）。
+ *
+ * ⚠️ 這一格只決定**畫不畫那顆「放棄」**；權威一樣在伺服器
+ * （`apps/game-server/src/match/MatchController.ts` 的 `pickOffer` 分支讀開場凍結的 `world.legendaryShelf`）
+ * ⇒ 兩邊不一致時卡片留著，⛔ 不會發生「畫面說丟了而其實沒丟」。
+ */
+export function skipWhenFullEnabled(): boolean {
+  const doc = Configs.tryGet(ARENA_RULES_DOC_ID) as { legendaryShelf?: { skipWhenFull?: unknown } } | undefined;
+  const v = doc?.legendaryShelf?.skipWhenFull;
+  return typeof v === "boolean" ? v : DEFAULT_LEGENDARY_SHELF.skipWhenFull === true;
+}

@@ -4343,11 +4343,22 @@ export class MatchController {
     choiceIdx: number,
     auto: boolean,
     swapSlot?: number,
+    skip = false,
   ): void {
     const choice = offer.choices[choiceIdx] ?? offer.choices[0]!;
     /** 道具卡背包滿、而且是**系統代選**:這張卡給不出去,消耗掉(帳本記 picked=null)。 */
     let landedNowhere = false;
-    if (offer.kind === "item") {
+    // ⭐⭐ GH#1271【放棄】—— 玩家自己按「我不要這張」:⛔ 不發道具、⛔ 不動背包,卡片消耗掉。
+    //   ⚠️ 三個條件缺一不可:**玩家按的**(`!auto` —— 系統代選永遠走原本那條路,⛔ 不替人放棄)、
+    //   後台開關開著(`world.legendaryShelf.skipWhenFull`,開場就凍結了)、而且是**道具卡**
+    //   (增益卡沒有「背包滿」這件事,⛔ 不順手擴大範圍)。
+    //   ⚠️ ⛔ 這裡**不驗背包滿不滿**:背包在卡片開著的期間會變(賣掉一件、換裝),
+    //   而「他不要這張」從來不是漏洞 —— 驗它等於把一個畫面條件在伺服器再推導一次(第二個住處)。
+    //   ⚠️ 寶玉卡佔著的那一格要在這裡還回去:這條分支繞過了下面 `offer.kind === "item"` 的 release。
+    if (skip && !auto && offer.kind === "item" && this.world.legendaryShelf.skipWhenFull) {
+      if (offer.reservesSlot) releaseOrbSlot(this.world, offer.entity);
+      landedNowhere = true;
+    } else if (offer.kind === "item") {
       // A 傳說寶玉 card holds an inventory slot from the moment it is rolled
       // (task #82). Release it FIRST so the grant below can use the very slot
       // the reservation was protecting, and release it on every exit path —
@@ -4355,7 +4366,9 @@ export class MatchController {
       // outlived its card would cost the player a slot for the rest of the
       // match.
       if (offer.reservesSlot) releaseOrbSlot(this.world, offer.entity);
-      const picked = applyItemPick(this.world, offer, choice as ItemId, swapSlot);
+      // ⭐ `auto` 只決定**玩家看到哪一句**（GH#1271 AC6）：代選撞上滿背包 ⇒「這張獎勵作廢了」，
+      //   玩家自己按的 ⇒ 照舊「道具欄已滿（先賣掉一件）」而且卡片留著。
+      const picked = applyItemPick(this.world, offer, choice as ItemId, swapSlot, auto);
       // ⭐⭐ GH#1110（owner 2026-09-06「A ＋ B 開票」的 A）——
       //   背包滿的時候**留著這張卡**，⛔ 不消耗那次機會。
       //   ⚠️ 在此之前這個方法無條件 `offers.delete` ⇒ 玩家點了一張卡、
@@ -5582,7 +5595,9 @@ export class MatchController {
           // auto = false —— 這是玩家(或 AI 的 brain)真的按下去的那一張。
           // swapSlot(GH#1110 B)—— 背包滿時要換掉哪一格,`validateInput` 已驗過格號。
           const swapSlot = typeof ev.data.swapSlot === "number" ? ev.data.swapSlot : undefined;
-          this.applyPick(offerId, offer, Number.isInteger(choiceIdx) ? choiceIdx : 0, false, swapSlot);
+          // skip（GH#1271 放棄）—— 與 swapSlot 互斥：帶了 skip 就⛔ 不帶格號。
+          const skip = ev.data.skip === true;
+          this.applyPick(offerId, offer, Number.isInteger(choiceIdx) ? choiceIdx : 0, false, skip ? undefined : swapSlot, skip);
         }
       } else if (ev.type === "legendaryOrbRolled") {
         // 傳說寶玉 (task #82): the SIM rolled the 3-choose-1 (so it rides

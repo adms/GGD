@@ -399,6 +399,17 @@ export const SWAP_WHEN_FULL_LABEL: FieldLabel & { group: "shelf" } = Object.free
   group: "shelf",
 });
 
+export const SKIP_WHEN_FULL_LABEL: FieldLabel & { group: "shelf" } = Object.freeze({
+  zh: "背包滿時可以放棄這張卡",
+  note:
+    "三選一發到手而**背包已經滿**的時候，卡上多一個「放棄」：⭐ 開著＝按下去卡片就消失、背包六格不動、可以按 Ready；" +
+    "關著＝沒有這個按鈕（卡片得等換裝或逾時代選才會走）。" +
+    "⚠️ 放棄**算用掉**這一輪的機會：帳本記 `picked=null, auto=false`，⛔ 與「時間到系統代選」（`auto=true`）分得開。" +
+    "⚠️ 它與上面那一格是**兩個問題**：上面是「要這張卡、換掉一件」，這一格是「不要這張卡」。兩格都關 ⇒ 背包滿時那張卡是死的（GH#1271 的原症狀）。" +
+    "⭐ 出貨**開著** —— ⛔ 引用不到 owner 對這一格的原話，是 Claude 依「自己判斷 但是留後台開關可以簡易 rollback」挑的。",
+  group: "shelf",
+});
+
 export const RANDOM_ONLY_TABLES_LABEL: FieldLabel & { group: "shelf" } = Object.freeze({
   zh: "隨機限定抽獎表",
   note:
@@ -490,6 +501,9 @@ export function readLegendaryShelf(doc: unknown): LegendaryShelfConfig {
     //   ⚠️ 缺欄位 → 出貨值（false），⛔ 不退回 `undefined`（同下面那格的理由）。
     swapWhenFull:
       typeof b.swapWhenFull === "boolean" ? b.swapWhenFull : SHIPPED_LEGENDARY_SHELF.swapWhenFull,
+    // ⭐ GH#1271 —— 背包滿時給不給「放棄」（同上：缺欄位 → 出貨值）。
+    skipWhenFull:
+      typeof b.skipWhenFull === "boolean" ? b.skipWhenFull : SHIPPED_LEGENDARY_SHELF.skipWhenFull,
     // 缺欄位 → 出貨值（空陣列）。⛔ 不要退回 `undefined`：畫面上那格輸入框
     // 會變成 uncontrolled，而操作者存檔時會不小心把整格刪掉。
     randomOnlyTables: Array.isArray(b.randomOnlyTables)

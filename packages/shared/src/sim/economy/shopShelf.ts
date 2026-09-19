@@ -132,6 +132,19 @@ export const DEFAULT_SELL_REFUND_PCT = 0.4;
 export const SWAP_WHEN_FULL = true;
 
 /**
+ * 背包滿時，三選一給不給「放棄」（GH#1271）。後台欄位是 `config.arena-rules@1` 的
+ * `legendaryShelf.skipWhenFull`，執行期讀 `world.legendaryShelf.skipWhenFull`
+ * （消費端 `apps/game-server/src/match/MatchController.ts` 的 `pickOffer` 分支）。
+ *
+ * ⚠️ 與上面那一格是**兩個問題**：`SWAP_WHEN_FULL` 是「換掉一件」（他要這張卡），
+ * 這一格是「丟掉這張卡」（他不要，而卡片不走就按不了 Ready）。
+ *
+ * ⭐ 出貨 **true** —— ⛔ 引用不到 owner 對這一格的原話，是 Claude 依 2026-08-23 常設指令
+ * 「自己判斷 但是留後台開關可以簡易 rollback」自己挑的。⛔ 一鍵回頭：後台取消勾選。
+ */
+export const SKIP_WHEN_FULL = true;
+
+/**
  * 「寶具」的出貨定義 = `legendary-weapons` 那張表**整張**（49 把）。
  *
  * ⚠️ 這一支回答的是「**貨架**上有哪些」，⛔ 不是「玩家**拿得到**哪些」（GH#1030 假前提 #1

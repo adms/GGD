@@ -681,6 +681,22 @@ export const zLegendaryShelfConfig = z
      */
     swapWhenFull: z.boolean().optional(),
     /**
+     * ⭐⭐ **背包滿的時候，三選一給不給「放棄」**（GH#1271）。
+     *
+     * ⚠️ 這一格與上面那一格是**兩個不同的問題**，⛔ 不是同一個開關的兩半：
+     *   `swapWhenFull` 問「能不能換掉一件」（玩家**要**這張卡）；
+     *   這一格問「能不能**丟掉這張卡**」（玩家**不要**它，而卡片不走就按不了 Ready）。
+     * ⇒ 兩格都關 ⇒ 背包滿時那張卡是死的（GH#1271 的原始症狀：卡上叫玩家先賣掉一件，而商店被遮罩擋住）。
+     *
+     * ⭐ 出貨 `true`（Claude 依 owner 2026-08-23 常設指令「自己判斷 但是留後台開關可以簡易 rollback」自己挑的，
+     *   ⛔ 引用不到 owner 對這一格的原話）—— ⛔ 一鍵回頭：取消勾選 ⇒ 卡片不能放棄（回到 GH#1271 之前的行為）。
+     *
+     * ⭐ 放棄**不消耗**那一輪的獎勵機會嗎？⛔ 消耗：帳本那一筆是 `picked=null, auto=false`
+     *   （消費端 `apps/game-server/src/match/MatchController.ts` 的 `pickOffer` 分支），
+     *   與「時間到系統代選」的 `auto=true` 刻意分得開 —— 那是玩家的決定，⛔ 不是逾時。
+     */
+    skipWhenFull: z.boolean().optional(),
+    /**
      * ⭐ **隨機限定階層**（owner 2026-08-17：「仍然可以有寶具是隨機才能取得的，
      * 我預計是新增的 50~70 個⋯」）。⚠️ owner 2026-08-17 稍後**正式廢除**了他當時用的
      * 「EX理外」這個名字，改成 **EX ＜ [EX解放] ＜ [EX∅ 根源]** —— 理由是玩家拿到的是
@@ -1086,6 +1102,8 @@ export const DEFAULT_LEGENDARY_SHELF: LegendaryShelfConfig = {
   sellRefundPct: 0.4,
   // ⭐ 出貨 true（Claude 依 owner 2026-09-08「A ＋ B 開票」推論；B 的定義是 Claude 補的，見上面 swapWhenFull 的註解）。GH#1110。
   swapWhenFull: true,
+  // ⭐ 出貨 true —— GH#1271「放棄」。⛔ 引用不到 owner 對這一格的原話，是 Claude 依 2026-08-23 常設指令自己挑的，開關在後台。
+  skipWhenFull: true,
   // ⭐ GH#1111（owner 2026-09-06:「開票 確保所有EX都進隨機清單」）——
   //   [EX解放] 與 [EX∅ 根源] 兩階**只能隨機**,而在此之前那件事是靠
   //   ⛔ **`cost: 0` 的副作用**達成的（`shop.ts:199-202` 算不出價 ⇒ `"not-purchasable"`）。

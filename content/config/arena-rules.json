@@ -39,7 +39,8 @@
       "ex-release-weapons",
       "ex-origin-weapons"
     ],
-    "swapWhenFull": true
+    "swapWhenFull": true,
+    "skipWhenFull": true
   },
   "weaponShelfOpen": false,
   "vision": {

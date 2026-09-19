@@ -23,7 +23,7 @@ import { ContentLoader } from "@ggd/shared/content/loader";
 import { shippedContentSource } from "@ggd/shared/content/__fixtures__/shippedContent";
 import { registerAll } from "@ggd/shared/content/registries";
 import { Items } from "@ggd/shared/sim/content/registry";
-import { isItemChoice } from "./draftCardStyle";
+import { CARD_BAG_FULL_TEXT, isItemChoice } from "./draftCardStyle";
 import { REJECT_TEXT } from "./shopFeedback";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../../..");
@@ -45,17 +45,34 @@ describe("🎒 三選一的道具卡：背包滿要事先看得出來（GH#1110 
     expect(isItemChoice("zz-not-a-real-choice"), "⛔ 非道具回了 true ⇒ 增益卡會被誤判成滿").toBe(false);
   });
 
-  it("★★ ⭐ 卡面那句話與商店那句話是**同一個字串**（⛔ 不是第二份文案）", () => {
+  /**
+   * ⚠️ ⭐ **這一條在 GH#1271 被推翻了一半**，留著更正的理由（⛔ 不要再改回去）：
+   *
+   * 舊規則是「卡面那句話與商店那句話要是**同一個字串**」（第〇·四守則，一個值一個住處）。
+   * ⇒ 而 owner 回報的症狀正是它造成的：卡片開著時商店被**遮罩擋住**，
+   *   ⭐ 卡上卻寫著「道具欄已滿（**先賣掉一件**）」—— ⛔ 一件玩家當下**做不到**的事。
+   *
+   * ⇒ 更正：它們**不是同一個值**（回答的是不同的問題），所以是兩個字串：
+   *   · 商店（賣得掉）＝ `REJECT_TEXT["no-slot"]` —— ⛔ 一個字都不動
+   *   · 卡面（賣不掉）＝ `CARD_BAG_FULL_TEXT`（`draftCardStyle.ts`，理由寫在那個常數上）
+   * ⭐ 而這一條守衛現在守的是**那條界線**：卡面⛔ 不可以再借商店那一句。
+   */
+  it("★★ ⭐ 卡面⛔ 不再借商店那句「先賣掉一件」，而商店那句照舊（GH#1271）", () => {
     const src = readFileSync(
       join(REPO, "apps/client/src/ui/panels/AugmentDraftPanel.tsx"),
       "utf8",
     );
     expect(
       src,
-      '⛔ 卡面自己寫了一句「背包已滿」而不是引用 `REJECT_TEXT["no-slot"]`。\n' +
-        "⭐ 兩份文案會漂，⛔ 而漂掉時沒有東西會紅（第〇·四守則：一個值一個住處）。",
-    ).toContain('REJECT_TEXT["no-slot"]');
-    expect(REJECT_TEXT["no-slot"]).toContain("道具欄已滿");
+      "⛔ 卡面又借回商店那句了 —— 卡片開著時商店被遮罩擋住，「先賣掉一件」是玩家做不到的事（GH#1271）。",
+    ).not.toContain('REJECT_TEXT["no-slot"]');
+    expect(src, "⛔ 卡面沒有用 `CARD_BAG_FULL_TEXT` ⇒ 它自己寫了第三份文案").toContain("CARD_BAG_FULL_TEXT");
+    expect(CARD_BAG_FULL_TEXT, "⛔ 卡面那句混進了「賣」這個動作").not.toContain("賣");
+    expect(CARD_BAG_FULL_TEXT).toContain("道具欄已滿");
+    // ⭐ 商店那一句**不動**：在商店裡「先賣掉一件」是真的做得到的。
+    expect(REJECT_TEXT["no-slot"], "⛔ 商店那句被順手改掉了（它沒有錯）").toContain("先賣掉一件");
+    // ⭐ GH#1271 AC6 —— 逾時代選撞上滿背包是**作廢**，⛔ 不是「先賣掉一件」。
+    expect(REJECT_TEXT.voided, "⛔ 代選作廢那一句不見了 ⇒ 玩家又會看到叫他去賣東西").toContain("作廢");
   });
 
   it("★★ ⭐ `noSlot` 真的接上三個用點（游標／壓暗／⛔ 不送）", () => {

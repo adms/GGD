@@ -32,7 +32,7 @@ import {
   DEFAULT_DISADVANTAGE_WEIGHTS,
 } from "@ggd/shared/content";
 import type { WeaponTierRule } from "@ggd/shared/sim/economy/weaponTiers";
-import { DEFAULT_SELL_REFUND_PCT, SWAP_WHEN_FULL, WEAPON_SHELF_OPEN } from "@ggd/shared/sim/economy/shopShelf";
+import { DEFAULT_SELL_REFUND_PCT, SKIP_WHEN_FULL, SWAP_WHEN_FULL, WEAPON_SHELF_OPEN } from "@ggd/shared/sim/economy/shopShelf";
 import type { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { MAX_ROUNDS_UNLIMITED } from "@ggd/shared/roomSettings";
 import type {
@@ -90,6 +90,8 @@ export function legendaryShelfRules(cfg: LegendaryShelfConfig): LegendaryShelfRu
     //   而建它的這支函式沒補 ⇒ ⛔ **`pnpm typecheck` 一直是紅的**,而部署照樣成功
     //   （game-server 的映像不跑 tsc）⇒ ⭐ 「部署綠」與「typecheck 綠」是兩件事。
     swapWhenFull: cfg.swapWhenFull ?? SWAP_WHEN_FULL,
+    // ⭐ GH#1271 —— 背包滿時給不給「放棄」。同一條規則：缺席拿引擎常數。
+    skipWhenFull: cfg.skipWhenFull ?? SKIP_WHEN_FULL,
   };
 }
 

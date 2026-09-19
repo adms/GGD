@@ -31,6 +31,12 @@ export type ShopEventReason =
   // BuyResult values from sim/economy/shop.ts
   | "no-gold"
   | "no-slot"
+  /**
+   * ⭐ GH#1271 AC6 —— **系統代選**撞上背包滿：那張獎勵卡已經被消耗掉了。
+   * ⛔ 與 `no-slot` 刻意分開：`no-slot` 是「你按的這一下沒成功，卡片還在」，
+   * 這一個是「卡片已經走了」—— 兩句話要玩家做的事完全不同。
+   */
+  | "voided"
   | "unique-owned"
   | "unknown-item"
   /**
@@ -100,6 +106,7 @@ export interface ShopToast {
 export const REJECT_TEXT: Record<ShopEventReason, string> = {
   "no-gold": "金幣不足",
   "no-slot": "道具欄已滿（先賣掉一件）",
+  voided: "道具欄已滿，這張獎勵作廢了",
   "unique-owned": "已擁有這件唯一道具",
   "unknown-item": "找不到這件道具",
   "empty-pool": "寶具已無可顯現者（未扣除金幣）",

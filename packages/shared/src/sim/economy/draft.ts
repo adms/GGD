@@ -449,6 +449,13 @@ export function applyItemPick(
    *   活著的英雄在戰鬥中拿一張還開著的卡就能賣東西）。被擋 ⇒ 發拒絕原因、卡片留著。
    */
   swapSlot?: number,
+  /**
+   * ⭐ 這一次是**系統代選**嗎（GH#1271 AC6）—— ⛔ 只影響**玩家看到的那一句**：
+   * 代選撞上背包滿時那張卡是**作廢**的（他沒有按任何東西，卡片就消失了），
+   * 而在此之前他看到的是「道具欄已滿（**先賣掉一件**）」—— ⛔ 一句他當下做不到、
+   * 也不該去做的事（卡片已經走了）。⇒ 代選發 `voided`，玩家自己按的照舊 `no-slot`。
+   */
+  auto = false,
 ): ItemPickResult {
   if (offer.picked || !offer.choices.includes(pick)) return "invalid";
   let slot = grantItemFree(world, offer.entity, pick);
@@ -501,7 +508,9 @@ export function applyItemPick(
     // ⭐ 走**既有**的拒絕提示機制（`buyRejected` / `sellRejected` 那一族，
     //   它們在 `eventFanout.ts` 已經是送得到客戶端的）——
     //   ⛔ 不發明新的通道（第〇·五守則：機制在引擎，內容用既有的組）。
-    world.emit("itemPickRejected", { entity: offer.entity, itemId: pick, reason: "no-slot" });
+    //   ⭐ GH#1271 AC6 —— 系統代選撞上背包滿 ⇒ 那張卡是**作廢**，⛔ 不是「先賣掉一件」
+    //   （卡片已經被消耗掉，玩家就算真的去賣也換不回來）。
+    world.emit("itemPickRejected", { entity: offer.entity, itemId: pick, reason: auto ? "voided" : "no-slot" });
     return "no-slot";
   }
   offer.picked = pick;

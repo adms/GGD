@@ -76,6 +76,20 @@ export function isItemChoice(choice: string): boolean {
   return Items.tryGet(choice as ItemId) !== undefined;
 }
 
+/**
+ * ⭐⭐ 三選一**卡面上**的「背包滿」那一句（GH#1271）。
+ *
+ * ⛔ **不借商店那句** `REJECT_TEXT["no-slot"]`（「道具欄已滿（先賣掉一件）」）——
+ * 卡片開著的時候商店被遮罩擋住，⭐ 玩家**賣不掉**：那句話叫他去做一件當下做不到的事，
+ * 而 GH#1271 的原始回報就是這個（「卡上叫玩家先賣掉一件卻賣不了」）。
+ * ⚠️ 商店那一句**不動** —— 在商店裡「先賣掉一件」是真的做得到的。
+ * ⇒ 兩句話**不是同一個值**（⛔ 不是第〇·四守則說的「第二個住處」），它們回答不同的問題。
+ *
+ * ⭐ 玩家接下來能做什麼，由卡片下面那顆按鈕說（「放棄（背包已滿）」／點卡片換裝），
+ * ⛔ 不在這一句裡再寫一次（開關一改這裡就會變謊話）。
+ */
+export const CARD_BAG_FULL_TEXT = "道具欄已滿";
+
 /** Rarity/kind → accent colour. Mirrors LoL-Arena's silver/gold/prismatic. */
 export const DRAFT_TIER_COLOR: Record<string, string> = {
   silver: "#b8c4d6",

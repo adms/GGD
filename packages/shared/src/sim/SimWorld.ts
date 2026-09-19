@@ -87,6 +87,7 @@ import {
   DEFAULT_SELL_REFUND_PCT,
   LEGENDARY_PRICE_MULTIPLIER,
   LEGENDARY_SHELF_OPEN,
+  SKIP_WHEN_FULL,
   SWAP_WHEN_FULL,
   WEAPON_SHELF_OPEN,
 } from "./economy/shopShelf";
@@ -730,6 +731,8 @@ export class SimWorld {
     randomOnlyTables: string[];
     /** ⭐ GH#1110 B —— 背包滿時可不可以賣掉一件換上新的（出貨見 `SWAP_WHEN_FULL`）。 */
     swapWhenFull: boolean;
+    /** ⭐ GH#1271 —— 背包滿時給不給「放棄」這張卡（出貨見 `SKIP_WHEN_FULL`）。 */
+    skipWhenFull: boolean;
   } = {
     open: LEGENDARY_SHELF_OPEN,
     priceMultiplier: LEGENDARY_PRICE_MULTIPLIER,
@@ -741,6 +744,8 @@ export class SimWorld {
     randomOnlyTables: ["ex-release-weapons", "ex-origin-weapons"],
     // ⭐ GH#1110 B —— 引擎常數（出處與「預設開是 Claude 的推論」見 shopShelf.ts）。
     swapWhenFull: SWAP_WHEN_FULL,
+    // ⭐ GH#1271 —— 同上，「放棄」那一格。
+    skipWhenFull: SKIP_WHEN_FULL,
   };
 
   /**

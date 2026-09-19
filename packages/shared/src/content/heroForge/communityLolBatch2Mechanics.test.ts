@@ -227,7 +227,9 @@ describe("LoL batch 2 corrected recipe mechanics", () => {
   // GH#1191【持續引導】—— 正常指令開始 W／R；打斷的那一 tick 之後⛔ 一發都不再落下、⛔ 不收割；撐滿才收割；受傷不打斷。
   // ⭐ 打斷那幾臂的身體仍站在圈內（移動只橫移 1 格）⇒ 若波次沒作廢一定還打得到 —— 負向不是空轉。
   // ⭐ 修正輪：恐懼（方向盤被拿走）也要打斷 —— 引導把腳定住，少了這條恐懼打在引導中的人身上等於無效。
-  it.each(["complete", "whiff", "move", "stun", "fear"] as const)("channel: Fiddlesticks W %s", (arm) => {
+  // ⭐ GH#1191 驗收補洞：出貨政策 `DEFAULT_CHANNEL_CANCEL_ON` 有六條（move/stun/silence/knockdown/death/control），
+  //   ⛔ 而守衛只驗過其中兩條 —— **沉默**與**死亡**這兩行（`channel.ts:82`／`:85`）可以整段刪掉而一條測試都不會紅。
+  it.each(["complete", "whiff", "move", "stun", "fear", "silence", "death"] as const)("channel: Fiddlesticks W %s", (arm) => {
     withHero("fiddlesticks", [arm === "whiff" ? [6, 0] : [2, 0]], (rig) => {
       const { world, hero, foes, events } = rig;
       expect(rankUpAbility(world, hero, "W")).toBe(true);
@@ -243,19 +245,23 @@ describe("LoL batch 2 corrected recipe mechanics", () => {
       rig.step();
       const cut = world.tick;
       if (arm === "complete") runEffects([{ kind: "damage", damageType: "true", amount: { flat: 100 } }], { world, caster: foes[0]!, rank: 1, targets: [hero], origin: "fixture:poke", rng: world.rng });
-      if (arm === "stun" || arm === "fear") runEffects([{ kind: "applyStatus", statusId: `fixture.${arm}` as StatusId, duration: 0.3, ...(arm === "stun" ? { stun: true } : { feared: true }) }], { world, caster: foes[0]!, rank: 1, targets: [hero], origin: `fixture:${arm}`, rng: world.rng });
+      const CC = { stun: { stun: true }, fear: { feared: true }, silence: { silenced: true } } as const;
+      if (arm === "stun" || arm === "fear" || arm === "silence") runEffects([{ kind: "applyStatus", statusId: `fixture.${arm}` as StatusId, duration: 0.3, ...CC[arm] }], { world, caster: foes[0]!, rank: 1, targets: [hero], origin: `fixture:${arm}`, rng: world.rng });
+      // 死亡臂：⭐ 真的把人打死（⛔ 不是手寫 alive=false）—— 走出貨那條路，引導要在 channelSystem 看到 `!hp.alive` 的那一 tick 收掉
+      if (arm === "death") runEffects([{ kind: "damage", damageType: "true", amount: { flat: 10_000_000 } }], { world, caster: foes[0]!, rank: 1, targets: [hero], origin: "fixture:death", rng: world.rng });
       // 移動臂：像推著搖桿一樣連送一秒的 move（harness 預設每拍送 hold，只送一拍會被下一拍的 hold 取消）
       for (let t = 0; t < TICK_HZ; t++) rig.step(arm === "move" ? { commands: [], order: { kind: "move", point: { x: c.x, z: c.z + 1 } } } : undefined);
       settle(rig, 2 * TICK_HZ);
       const hits = damageFrom(rig, "W");
       const heals = events.filter((e) => e.type === "heal" && e.data.target === hero && String(e.data.origin).includes(rig.draft.abilityDrafts.W.id));
       const hp = world.health.get(hero)!;
-      expect(world.abilities.get(hero)!.channel, "結束後不留引導").toBeFalsy();
+      expect(world.abilities.get(hero)?.channel, "結束後不留引導").toBeFalsy();
       if (arm === "whiff") expect([hits.length, heals.length, hp.hp < hp.maxHp], "打空不回血（而且有得回）").toEqual([0, 0, true]);
       else if (arm === "complete") expect([hits.length, heals.length, hp.hp < hp.maxHp], "每波一命中一回血＋撐滿收割一次（不回血）；受傷不打斷").toEqual([waves + 1, waves, true]);
       else {
         expect(hits.filter((e) => e.tick > cut), "打斷後排好的波次與收割⛔ 不落下").toEqual([]);
         if (arm === "move") expect(world.transform.get(hero)!.pos.z - c.z, "腳鬆開、走得出去").toBeGreaterThan(0.5);
+        if (arm === "death") expect(world.health.get(hero)?.alive, "死亡臂：人真的死了（⛔ 不是夾具空轉）").toBe(false);
       }
     });
   });

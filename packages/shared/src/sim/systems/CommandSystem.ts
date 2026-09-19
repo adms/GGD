@@ -116,11 +116,15 @@ export function commandSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Inte
           // offers are host-side state; surface the pick as an event.
           // `swapSlot` (GH#1110 B) rides along ONLY when present, so a plain pick's
           // payload stays byte-identical to every recorded replay.
+          // ⭐ `skip`（GH#1271 放棄）同一條規則：**有才帶**，而且與 `swapSlot` 互斥
+          //   （送了 skip 就不帶 swapSlot —— 兩個一起帶會讓 host 要決定誰贏，而那是第二個住處）。
           world.emit(
             "pickOffer",
-            cmd.swapSlot === undefined
-              ? { entity, seatId, offerId: cmd.offerId }
-              : { entity, seatId, offerId: cmd.offerId, swapSlot: cmd.swapSlot },
+            cmd.skip === true
+              ? { entity, seatId, offerId: cmd.offerId, skip: true }
+              : cmd.swapSlot === undefined
+                ? { entity, seatId, offerId: cmd.offerId }
+                : { entity, seatId, offerId: cmd.offerId, swapSlot: cmd.swapSlot },
           );
           break;
         case "ready":

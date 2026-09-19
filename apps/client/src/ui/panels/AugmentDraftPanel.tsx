@@ -60,12 +60,11 @@ import { SfxButton } from "../SfxButton";
 import { resolveChoice } from "./resolveChoice";
 import { statPathReadout } from "./statPathReadout";
 import { uiCues } from "../uiCuesConfig";
-import { DRAFT_CONFIRM_SFX, isItemChoice, tierColor, tierLabel, weaponEffectDescription } from "./draftCardStyle";
+import { CARD_BAG_FULL_TEXT, DRAFT_CONFIRM_SFX, isItemChoice, tierColor, tierLabel, weaponEffectDescription } from "./draftCardStyle";
 // owner 2026-08-02 的卡片排版,四個渲染點之一(三選一抽卡)。
 import { ItemCardBody } from "../components/ItemCardBody";
-import { REJECT_TEXT } from "./shopFeedback";
 import { DraftSwapPicker, SWAP_HINT } from "./draftSwapPicker";
-import { swapWhenFullEnabled } from "../legendaryShelfConfig";
+import { skipWhenFullEnabled, swapWhenFullEnabled } from "../legendaryShelfConfig";
 import { itemCardDescription } from "./draftCardStyle";
 import {
   draftChoiceSuffix,
@@ -525,10 +524,11 @@ export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
                   )}
                 </div>
                 {noSlot ? (
-                  // ⭐ GH#1110 A3 —— 沿用**既有**的那一句（`shopFeedback.REJECT_TEXT["no-slot"]`），
-                  //   ⛔ 不寫第二份文案：兩份文案會漂，而漂掉時沒有東西會紅。
+                  // ⭐ GH#1271 —— 卡面用**卡片自己的**那一句（`CARD_BAG_FULL_TEXT`），
+                  //   ⛔ 不再借商店的「道具欄已滿（先賣掉一件）」：卡片開著時商店被遮罩擋住，賣不了。
+                  //   （理由寫在 `draftCardStyle.ts` 那個常數上；商店那一句⛔ 不動。）
                   <span style={{ fontSize: 10, color: "#ff9a6b", fontWeight: 700 }}>
-                    {REJECT_TEXT["no-slot"]}
+                    {CARD_BAG_FULL_TEXT}
                   </span>
                 ) : canSwap ? (
                   <span style={{ fontSize: 10, color: "#ffd27a", fontWeight: 700 }}>{SWAP_HINT}</span>
@@ -538,6 +538,34 @@ export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
           );
         })}
       </div>
+      {/* ⭐⭐ GH#1271 —— 背包滿時的「放棄」。⛔ 在此之前那張卡**走不掉**：
+          卡片壓暗（A3）、商店被遮罩擋住（賣不掉）、Ready 也按不了 ⇒ 玩家卡在原地。
+          ⚠️ 只在**道具卡且背包滿**時出現（增益／技能卡不吃格子，⛔ 不順手擴大範圍），
+          而且要後台開關 `legendaryShelf.skipWhenFull` 開著；伺服器那側同一條規則再驗一次。 */}
+      {freeItemSlots === 0 && offer.choices.some((c) => isItemChoice(c)) && skipWhenFullEnabled() ? (
+        <div style={{ display: "flex", justifyContent: "center", marginTop: 8 }}>
+          <SfxButton
+            kind="ghost"
+            data-testid="draft-skip"
+            aria-label="放棄這張獎勵卡"
+            onClick={() => {
+              setSwapFor(null);
+              hudActions.sendCommand({ kind: "pickOffer", offerId: offer.offerId, skip: true });
+            }}
+            style={{
+              fontSize: 12,
+              padding: "6px 14px",
+              borderRadius: 8,
+              border: "1px solid #46506644",
+              background: "transparent",
+              color: TEXT_DIM,
+              cursor: "pointer",
+            }}
+          >
+            放棄（背包已滿）
+          </SfxButton>
+        </div>
+      ) : null}
       {/* ⭐ GH#1110 B —— 換裝介面。背包一旦不滿（伺服器狀態）就收起來：那張卡回到一般選取。 */}
       {swapFor !== null && freeItemSlots === 0 && offer.choices[swapFor] !== undefined ? (
         <DraftSwapPicker

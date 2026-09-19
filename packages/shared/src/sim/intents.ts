@@ -110,7 +110,12 @@ export type Command =
    * 只有 `legendaryShelf.swapWhenFull` 開著時伺服器才照做（`economy/draft.ts::applyItemPick`）。
    * ⚠️ 指令不是 Colyseus schema ⇒ 加一格選填欄位⛔ 不動 append-only 協定。
    */
-  | { kind: "pickOffer"; offerId: string; swapSlot?: number }
+  /**
+   * `skip`（GH#1271）：**放棄**這張卡（背包滿時卡片才走得掉，否則按不了 Ready）。
+   * 只有 `legendaryShelf.skipWhenFull` 開著時伺服器才照做；帳本記 `picked=null, auto=false`，
+   * ⛔ 與逾時代選（`auto=true`）分得開。⚠️ `skip` 與 `swapSlot` **互斥**（都送 ⇒ 伺服器只認 skip）。
+   */
+  | { kind: "pickOffer"; offerId: string; swapSlot?: number; skip?: true }
   | { kind: "rankUpAbility"; slot: AbilitySlot }
   /**
    * 【互動物】（GH#1189 瑟雷西 W 燈籠）：接受場上一個技能互動物（`objectId` ＝ `interactableSpawn.id`）。

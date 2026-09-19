@@ -55,6 +55,7 @@ import {
   RANDOM_ONLY_TABLES_LABEL,
   RANDOM_ONLY_TABLES_MAX,
   SELL_REFUND_PCT_LABEL,
+  SKIP_WHEN_FULL_LABEL,
   SWAP_WHEN_FULL_LABEL,
   SELL_REFUND_PCT_MAX,
   SELL_REFUND_PCT_MIN,
@@ -612,6 +613,31 @@ export function ItemDraftPage(): JSX.Element {
             </div>
             <div style={{ color: TEXT_DIM, fontSize: 11, marginTop: 3 }}>
               出貨值 {String(SHIPPED_LEGENDARY_SHELF.swapWhenFull ?? false)}
+            </div>
+          </div>
+        </div>
+        {/* 🗑 背包滿時可以放棄這張卡 —— GH#1271。⭐ 出貨開著；關掉＝回到「卡片不能丟」 */}
+        <div style={rowStyle}>
+          <span style={{ color: TEXT_MAIN, minWidth: 150 }}>{SKIP_WHEN_FULL_LABEL.zh}</span>
+          <code style={{ color: TEXT_DIM, fontSize: 11, minWidth: 150 }}>
+            legendaryShelf.skipWhenFull
+          </code>
+          <div style={{ flex: 1 }}>
+            <label style={{ display: "inline-flex", alignItems: "center", gap: 6, color: TEXT_MAIN }}>
+              <input
+                type="checkbox"
+                aria-label={SKIP_WHEN_FULL_LABEL.zh}
+                data-field="legendaryShelfSkipWhenFull"
+                checked={shelf.skipWhenFull ?? SHIPPED_LEGENDARY_SHELF.skipWhenFull ?? false}
+                onChange={(e) => setShelf({ ...shelf, skipWhenFull: e.target.checked })}
+              />
+              <span style={{ fontSize: 12 }}>可以放棄</span>
+            </label>
+            <div style={{ color: TEXT_DIM, fontSize: 11, marginTop: 4, lineHeight: 1.6 }}>
+              {SKIP_WHEN_FULL_LABEL.note}
+            </div>
+            <div style={{ color: TEXT_DIM, fontSize: 11, marginTop: 3 }}>
+              出貨值 {String(SHIPPED_LEGENDARY_SHELF.skipWhenFull ?? false)}
             </div>
           </div>
         </div>
