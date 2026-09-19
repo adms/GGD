@@ -50,12 +50,15 @@ import {
 } from "../../packages/shared/testkit/balancePopulation";
 import { Stat } from "../../packages/shared/src/sim/stats/statTypes";
 import { championStatBase } from "../../packages/shared/src/sim/stats/attributes";
+// ⭐ 出貨輸入的讀取器與那兩條算術住**一個**地方（GH#1224）——
+//    `card_template_census.ts` 量的是**同一把尺**，⛔ 不是自己再 parse 一次。
 import {
-  COMBAT_ENV_DEFAULTS,
-  STAT_ENV_CHAIN,
-  statEnvFactor,
-  type CombatEnvMultipliers,
-} from "../../packages/shared/src/sim/combatEnv";
+  envChain,
+  median,
+  shippedAnchors,
+  shippedBaseBonus,
+  shippedEnv,
+} from "./shippedInputs";
 import {
   ANCHOR_ROLE,
   BALANCE_ANCHOR_LEVELS,
@@ -80,25 +83,8 @@ const DERIVED_TS = "packages/shared/src/content/balanceAnchorsDerived.ts";
 const DOC_MD = "docs/平衡錨點量測.md";
 
 // ------------------------------------------------------------------ inputs --
-/** 出貨的戰鬥系統表 —— 引擎真的跑的那一份，⛔ 不是程式預設。 */
-function shippedEnv(): CombatEnvMultipliers {
-  const doc = JSON.parse(readFileSync(join(REPO, "content/config/combat-env.json"), "utf-8")) as {
-    multipliers?: Record<string, number>;
-  };
-  return Object.freeze({
-    ...COMBAT_ENV_DEFAULTS,
-    ...(doc.multipliers ?? {}),
-  }) as CombatEnvMultipliers;
-}
-
-/** 出貨的基礎加成 —— **倍率之外**的那一層扁平贈禮（owner #273）。 */
-function shippedBaseBonus(): Readonly<Record<string, number>> {
-  const doc = JSON.parse(readFileSync(join(REPO, "content/config/base-bonus.json"), "utf-8")) as {
-    bonus?: Record<string, number>;
-  };
-  return Object.freeze({ ...(doc.bonus ?? {}) });
-}
-
+// ⭐ `shippedEnv` / `shippedBaseBonus` / `shippedAnchors` / `median` / `envChain`
+//    住 `./shippedInputs.ts`（GH#1224）—— ⛔ 不在這裡第二次實作。
 /**
  * 母體 = **對戰可選名單**（`balancePopulationIds`），⛔ 不是 `readdirSync(content/champions)`。
  *
@@ -115,21 +101,9 @@ function population(): Record<string, unknown>[] {
   return balancePopulationDocs(REPO);
 }
 
-const median = (xs: number[]): number => {
-  const b = [...xs].sort((a, z) => a - z);
-  return b.length === 0 ? 0 : b[b.length >> 1]!;
-};
-
-/** env 鏈在這條屬性上的乘積 —— 純基礎 → 引擎最終的那**一次**倍率。 */
-function envChain(stat: Stat, env: CombatEnvMultipliers): number {
-  let k = 1;
-  for (const link of STAT_ENV_CHAIN[stat] ?? []) k *= statEnvFactor(link, env, undefined);
-  return k;
-}
-
 // ----------------------------------------------------------------- compute --
-const env = shippedEnv();
-const bonus = shippedBaseBonus();
+const env = shippedEnv(REPO);
+const bonus = shippedBaseBonus(REPO);
 const pop = population();
 
 const HP_MULT = envChain(Stat.MaxHealth, env);
@@ -161,28 +135,10 @@ const q = (n: number): number => Math.round(n * 10) / 10;
  */
 /**
  * ⭐ 從**出貨設定檔**讀（owner 2026-09-12：「這些常數是**可被編輯的設定檔** 而非寫死」）。
- * ⛔ 不在這裡寫死 —— 第一守則：owner 會改的東西住 `content/config/`。
+ * ⛔ 讀取器住 `./shippedInputs.ts` —— 稽核那一支用的是**同一支**（GH#1224）。
  * ⭐ `enabled:false` ⇒ 回傳 `undefined` ⇒ 下面退回取名單中位（＝一鍵 rollback）。
  */
-function shippedAnchors(): { baseHp?: Record<number, number>; baseMana?: Record<number, number> } {
-  try {
-    const d = JSON.parse(
-      readFileSync(join(REPO, "content/config/balance-anchors.json"), "utf-8"),
-    ) as { enabled?: boolean; baseHp?: Record<string, number>; baseMana?: Record<string, number> };
-    if (d.enabled === false) {
-      console.log("⚠️ `balance-anchors.enabled:false` ⇒ ⛔ 錨點**回到取名單中位** —— 刻度會隨上架名單漂。");
-      return {};
-    }
-    const n = (o?: Record<string, number>) =>
-      o === undefined ? undefined : Object.fromEntries(Object.entries(o).map(([k, v]) => [Number(k), v]));
-    return { baseHp: n(d.baseHp), baseMana: n(d.baseMana) };
-  } catch {
-    // ⭐ 設定檔不在（新分支／舊 checkout）⇒ 明說退回，⛔ 不靜默。
-    console.log("⚠️ 讀不到 `content/config/balance-anchors.json` ⇒ ⛔ 退回取名單中位（明說，⛔ 不是靜默）。");
-    return {};
-  }
-}
-const ANCHORS = shippedAnchors();
+const ANCHORS = shippedAnchors(REPO);
 const FIXED_BASE_HP = ANCHORS.baseHp;
 const FIXED_BASE_MANA = ANCHORS.baseMana;
 /** 量到的中位與固定值差超過這個比例 ⇒ 印一行（⛔ 不改值、⛔ 不回非零）。 */
