@@ -22,8 +22,27 @@ skipped — geometry/bones/animations only.
 轉出來之後仍然**每一個動作都在**（拳四郎 `ou99.464696` 那片 204 面的白光刃）。
 ⛔ 這一行在此之前寫的是「GEOA … are skipped」—— ⭐ 而那句話把「沒解析」與「沒翻譯」
 兩件事講成同一件，於是讀的人分不出缺的是哪一半（第三守則：註解會說謊）。
-⇒ ⭐ 翻譯要選路（material alpha 逐段軌 vs. 把 geoset 拆成自己的節點再 scale 歸零），
-⛔ 選之前要先量 83 份帶 GEOA 的會不會把 draw call 推過上限 —— 見 GH#1186 的 Known risks。
+⭐⭐ **路已經選好了，⛔ 不要再選一次**（2026-09-19 量完，GH#1186）——
+⚠️ 這一段在此之前寫著「翻譯要選路（material alpha 逐段軌 vs. 拆節點 scale 歸零），
+選之前要先量 83 份會不會把 draw call 推過上限」。⛔ **那句話已經過期**，
+而它真的又騙過一輪（一條 lane 照著它去量 draw call，⭐ 而答案早就不在那兩條路上）。
+⇒ ⭐ 出貨的做法是**第三條**：`restore_geoset_visibility.py`（commit 19b07ca85）——
+   在那一片**專用骨頭子樹**上方插一個顯示節點，每個動作一條 STEP scale 軌
+   ⇒ **0 個新 draw call、0 個新 primitive**（只追加 node／accessor／animation channel）。
+   ⛔ 它是**後處理**，⛔ 不在 `convert()` 裡 —— 所以上面那句「`convert()` 不看
+   `geoset_anims`」逐字仍然成立，⭐ 但它**不代表**這件事沒做。
+
+⛔ 另外兩條路**是量掉的，⛔ 不是沒試**（`geoa_translation_census.py`，可重跑）：
+  · **動材質 alpha**：5/31 份的 conditional 幾何與別的幾何**共用材質**
+    （`HeroIchigo` 卍解兩具身體共用 material 0／3）⇒ 會**一起**隱藏錯的東西。
+  · **拆節點 scale**：⛔⛔ **對蒙皮模型結構上無效** —— glTF 規範要求忽略蒙皮網格
+    自己節點的變換，Babylon 逐字「ignores the transform of the skinned mesh,
+    **as per spec**」（`glTFLoader.js:669`）⇒ ⭐ 縮節點**什麼都不會發生**
+    （合法 glTF、零報錯、畫面不變）。就算有效，9/31 份也會超過 draw call 上限 6。
+
+⭐ 母體也一起更正：「83 份帶 GEOA」回答的是「**chunk 在不在**」，⛔ 不是工作量 ——
+本樹實測 GEOA 377 筆裡 **215 筆 always-on（翻譯出來是空的）**，
+⇒ ⭐ 真正要翻的是 **31 份模型 / 80 片**（77 片滿足那支工具的前提）。
 """
 
 from __future__ import annotations
