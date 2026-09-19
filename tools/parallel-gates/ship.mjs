@@ -50,6 +50,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { cpus, tmpdir } from "node:os";
 import { packagesWithVitest, suitesForPaths } from "./packages.mjs";
 import { planFromPaths } from "./syncPlan.mjs";
+import { regenPlan, lintPlan } from "./shipTrim.mjs";
 import { emptyGateNote } from "./shipEmptyGate.mjs";
 import { appendStage } from "../deploy-timing/run.mjs";
 
@@ -292,6 +293,16 @@ const SYNC_STEP = process.env.GGD_SYNC_CONVERGE === "0" ? "skills:sync" : "sync:
 const SERIAL = syncTrim.steps ? ["content:build", ...syncTrim.steps] : ["content:build", SYNC_STEP];
 
 /**
+ * 🚦 lint 這一次掃什麼（`shipTrim.lintPlan`，兩個方向的判準寫在那裡）。
+ * ⚠️ 讀的是**同一份** `syncPaths`（⛔ 不是第二份「改了什麼」的定義）。
+ */
+const lintTrim = lintPlan({
+  paths: syncPaths,
+  exists: (p) => existsSync(`${REPO}/${p}`),
+  disabled: process.env.GGD_SHIP_LINT_TRIM === "0",
+});
+
+/**
  * 並行段。⭐ 每一格是「一件會回非零的事」,⛔ 不是「一個資料夾」。
  * `skills:check` 走 run.mjs（它自己再 LPT 並行 36 支）。
  */
@@ -315,7 +326,13 @@ const PARALLEL = [
   // 🚦 GH#1122 —— eslint 在 CI 的必跑清單裡,⛔ 而 `ship:check` 從來沒跑過它。
   //    ⭐ 2026-09-09 它抓到一個真的 `no-undef`（合併 PR 1118 時帶進來的),
   //    而我在本機宣告「全綠」之後被 CI 打回。~秒級,⛔ 不動地板（地板是 vitest ~220s）。
-  { name: "lint", cmd: ["pnpm", ["lint"]] },
+  //    ⭐ 2026-09-19：全掃 **381.8s**，而它掃的是**整個 apps packages tools** ——
+  //    這一次改到的檔通常只有幾個 ⇒ `lintTrim` 只餵改動的那幾個（判準一個字不動）。
+  //    ⛔ fail-closed：不知道改了哪些路徑、或動到規則層的檔（eslint config／tsconfig／
+  //    package.json／lockfile）⇒ 全掃。🔙 `GGD_SHIP_LINT_TRIM=0`。
+  ...(lintTrim.skip
+    ? []
+    : [{ name: "lint", cmd: lintTrim.files ? ["pnpm", ["exec", "eslint", ...lintTrim.files]] : ["pnpm", ["lint"]] }]),
   // 🗿 GH#1230 —— owner 2026-09-11 逐字:「請你更新 script **每次上架跟啟動自動化處理**」。
   //    ⭐ 「每次上架」的住處就是這裡（部署前的閘）。
   //    ⚠️ ⛔ 刻意**不是**直接跑 `model:intake:check`:641 顆裡 285 顆有存量問題
@@ -543,8 +560,34 @@ function run(name, bin, args, estMs = 0) {
 const results = [];
 const T0 = Date.now();
 
+// ── ⓪ 產物新鮮探針 ─────────────────────────────────────────────────────
+// ⭐ 序列段（`content:build` ＋ `sync:converge`）實測 **685.4s**，⛔ 而它**每次都無條件**
+//   重新產生一次 —— 出貨前本來就跑過 `pnpm skills:sync` ⇒ 多數情況那 11 分鐘在重做一件
+//   剛做完的事。⇒ 先跑**唯讀**的 `skills:check`（它逐位元比對產物↔來源）：
+//     · 綠 ⇒ 序列段整段跳過，而且並行段那一支 `skills:check` **不必再跑一次**（剛跑過）
+//     · 紅／沒跑起來 ⇒ ⛔ 照舊重新產生，再由並行段的 `skills:check` 驗一次（fail-closed）
+// ⚠️ 判準一個字都沒放寬：跳過的前提**就是**那條判準自己說「已經一致」。
+// ⚠️ 代價誠實寫著：產物真的過期時多付一次探針（探針 + 重新產生 + 再驗一次）。
+// 🔙 rollback：`GGD_SHIP_SKIP_FRESH_SYNC=0`
+let probeCode = null;
+if (!noSync && process.env.GGD_SHIP_SKIP_FRESH_SYNC !== "0") {
+  process.stdout.write("🔎 產物新鮮嗎（唯讀 skills:check）…");
+  const r = await run("skills_check_probe", "node", [`${HERE}run.mjs`, "skills:check"], estimateMs("skills:check"));
+  probeCode = r.code;
+  process.stdout.write(` ${(r.ms / 1000).toFixed(1)}s ${r.code === 0 ? "✓ 最新" : "✗ 過期"}\n`);
+  // ⭐ 綠的時候它**就是**這一輪的 skills:check（同一支、同一個判準）⇒ 記進成績單；
+  //   紅的時候⛔ 不記：那不是「閘紅」，是「該重新產生了」，權威的那一次在並行段。
+  if (r.code === 0) results.push({ ...r, name: "skills:check", phase: "probe" });
+}
+const regen = regenPlan({
+  probeCode,
+  disabled: process.env.GGD_SHIP_SKIP_FRESH_SYNC === "0",
+  noSync,
+});
+console.log(`🔎 序列段：${regen.run ? "要跑" : "跳過"} —— ${regen.why}`);
+
 // ── ① 序列段 ───────────────────────────────────────────────────────────
-if (!noSync) {
+if (regen.run) {
   console.log(`🔒 序列段 ${SERIAL.length} 支（全域鎖）· skills:sync 裁剪: ${syncTrim.why}`);
   // 🔒 產物隔離區:序列段跑**個別**產生器（content:build 等,不經過 sync.mjs 的
   //    解鎖）⇒ 這裡也要解鎖。⛔ 不鎖回去交給 sync.mjs 的 exit handler /
@@ -573,10 +616,13 @@ if (!noSync) {
 // ── ② 並行段 ───────────────────────────────────────────────────────────
 if (!onlySync) {
   const limit = SHIP_LIMIT;
+  // ⭐ 探針綠 ⇒ 這一輪的 `skills:check` 已經跑過（同一支、同一個判準，成績記在 ⓪）
+  //   ⇒ ⛔ 不再跑第二次。探針紅（產物剛重新產生）⇒ 這裡的那一次才是權威。
+  const plan = probeCode === 0 ? PARALLEL.filter((j) => j.name !== "skills:check") : PARALLEL;
   console.log(
-    `⚡ 並行段 ${PARALLEL.length} 支 · 上限 ${limit} · 每包 ${FORKS_PER_SUITE} forks（${cpus().length} 核 ÷ ${SUITE_COUNT} 包）· ⛔ 不 fail-fast\n   vitest 裁包: ${suiteTrim.why}`,
+    `⚡ 並行段 ${plan.length} 支 · 上限 ${limit} · 每包 ${FORKS_PER_SUITE} forks（${cpus().length} 核 ÷ ${SUITE_COUNT} 包）· ⛔ 不 fail-fast\n   vitest 裁包: ${suiteTrim.why}\n   lint: ${lintTrim.why}`,
   );
-  const queue = [...PARALLEL];
+  const queue = [...plan];
   const workers = Array.from({ length: Math.min(limit, queue.length) }, async () => {
     for (;;) {
       const job = queue.shift();
