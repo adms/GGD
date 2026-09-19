@@ -221,7 +221,28 @@ export function pickActiveScope(scopes: readonly { priority: number; order: numb
  * open the first B closed the shop and the second one hit Leave, which is the
  * "B backs out one level" reflex every pad player has.
  */
-export const BACK_ALLOW_RE = /取消|關閉|收起|返回|back|close|cancel|dismiss|✕|×|╳/i;
+export const BACK_ALLOW_RE = /取消|關閉|收起|返回|back|close|cancel|dismiss/i;
+
+/**
+ * ⭐ 關閉**符號**（✕ × ╳）—— 與上面的字分開，因為它們的**誤判成本完全不同**（GH#1276）。
+ *
+ * ⚠️ 量到的（2026-09-19，出貨內容）：`×` 是**乘號**，而卡面文案天天在用它 ——
+ * 道具 **20/142**、增益 **2/91** 的說明裡有 `×`
+ * （例：`content/augments/limit-breaker.json` 破限超頻「攻擊速度 **×2**，並將攻擊速度上限由 4.0 解鎖至 10.0。」）。
+ *
+ * ⛔ 而 {@link backControlIndex} 拿到的 label 是**整顆控制項的文字**
+ * （`aria-label + title + textContent`）—— 三選一的卡片是一顆真的 `<button>`，
+ * 說明文字整段都在它的 `textContent` 裡 ⇒ 舊的 allow-list 一碰到 `×` 就回那張卡
+ * ⇒ ⭐ **B 直接把那張卡選走**（三選一沒有 `data-pad-back`，所以一定走到這條啟發式）。
+ *
+ * ⭐ 判準：一顆真的關閉鈕，它的標籤**就是那個符號**（`✕`）；
+ * 一段說明文字裡的 `×` 是**句子的一部分**。
+ * ⇒ 符號只在「整個標籤修掉空白之後就只剩符號」時才算數，⛔ 不是「出現在文字裡」。
+ *
+ * ⚠️ ⛔ 不要把它併回 {@link BACK_ALLOW_RE}：那條是**子字串**比對（`關閉商店 ✕` 要被撿到），
+ * 而這條刻意是**整串**比對 —— 兩種語意住同一條正則就是這個缺陷的來源。
+ */
+export const BACK_GLYPH_ONLY_RE = /^[\s✕×╳]*[✕×╳][\s✕×╳]*$/;
 
 /**
  * …and the VETO, which beats the allow-list. A back button is a courtesy; it
@@ -248,7 +269,8 @@ export function backControlIndex(labels: readonly string[]): number {
   for (let i = 0; i < labels.length; i++) {
     const label = labels[i] ?? "";
     if (BACK_VETO_RE.test(label)) continue;
-    if (BACK_ALLOW_RE.test(label)) return i;
+    // 字：子字串（`關閉商店 ✕` 要被撿到）。符號：整串（⛔ 說明文字裡的乘號不算）。
+    if (BACK_ALLOW_RE.test(label) || BACK_GLYPH_ONLY_RE.test(label)) return i;
   }
   return -1;
 }

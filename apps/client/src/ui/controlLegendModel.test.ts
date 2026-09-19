@@ -47,6 +47,7 @@ import {
   probeMenuNavScroll,
   probeMenuNavStick,
   PAD_COMBAT_EXTRA,
+  hudFocusLegendRow,
   keyboardLegend,
   keyCodeFace,
   KEYBOARD_ORDER_BINDINGS,
@@ -493,7 +494,14 @@ describe("legendRows picks the binding set for the mode in play", () => {
     expect(kb.some((c) => c === "Back" || c === "十字鍵 ↑")).toBe(false);
     expect(pad).toContain("十字鍵 ↑");
     expect(pad).toContain("十字鍵 ↓");
-    expect(pad.some((c) => c === "Back")).toBe(false); // unbound since the remap
+    // ⭐ 2026-09-19（GH#1276）**前提更正**：這一行以前是
+    //   `expect(pad.some((c) => c === "Back")).toBe(false); // unbound since the remap`
+    // ⛔ 而「Back 沒有綁東西」在 GH#508/#502 之後就不成立了 —— 它綁的是
+    // **HUD 焦點模式**，只是住在焦點層（ui/hud/padHudFocus）而不是戰鬥表，
+    // ⇒ 戰鬥表的 probe 看不到它 ⇒ 圖例印不出來 ⇒ 玩家找不到戰鬥中的每一顆按鈕。
+    // ⚠️ 也就是說**這一行斷言本身是那個缺陷的執法者**（CLAUDE.md 失敗形態⑩：
+    // 守衛是靠缺陷才綠的；補起洞它就紅，⛔ 而那不是回歸，是前提消失）。
+    expect(pad, "Back = HUD 焦點模式，玩家要看得到它").toContain("Back");
     expect(pad.some((c) => c === "Q" || c === "滾輪")).toBe(false);
     expect(legendRows("touch").map((r) => r.control)).toContain("左側搖桿");
   });
@@ -601,10 +609,26 @@ describe("GH#506 legend ↔ implementation reconcile BOTH ways", () => {
   if (probeMenuNavStick()) boundMenu.add("左類比");
   if (probeMenuNavScroll()) boundMenu.add("右類比");
 
-  it("prints no combat key the pad map does not bind", () => {
+  /**
+   * ⭐ GH#1276：合法的鍵位 = 戰鬥表綁的 **∪** 宣告過住在戰鬥表外面的。
+   *
+   * ⚠️ 在此之前這條只有前半，於是它**禁止圖例提到 HUD 焦點模式那顆鍵** ——
+   * 而那顆鍵是戰鬥中碰到陣亡投幣／觀戰／記分板的唯一入口。
+   * ⇒ ⭐ 分母要**從出貨推導**（`hudFocusLegendRow()` 讀生效中的設定），
+   * ⛔ 不是在這裡補一個字面值 `"Back"`（後台一改 `toggleButton` 它就變成謊話）。
+   */
+  const legalCombat = (): Set<string> => {
+    const s = new Set(boundCombat);
+    const hud = hudFocusLegendRow();
+    if (hud) s.add(chip(hud.control));
+    return s;
+  };
+
+  it("prints no combat key the pad map does not bind (或沒有宣告在戰鬥表外)", () => {
     expect(boundCombat.size).toBeGreaterThan(0);
+    const legal = legalCombat();
     for (const row of legendLayerRows("combat", "gamepad")) {
-      expect(boundCombat, `combat legend prints "${row.control}"`).toContain(chip(row.control));
+      expect(legal, `combat legend prints "${row.control}"`).toContain(chip(row.control));
     }
   });
 

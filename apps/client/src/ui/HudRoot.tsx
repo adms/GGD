@@ -59,6 +59,8 @@ import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 import { hudActions } from "./actions";
 import { coinThrowAffordable, coinThrowGreysWhenPoor, coinThrowRules } from "./coinThrow";
 import { HudBoundaryGroup, type HudBoundaryLabels } from "./HudBoundaryGroup";
+import { useInputMode } from "./inputMode";
+import { deadCoinKeyHint } from "./controlLegendModel";
 
 /**
  * Death-spectator hint — shown while the LOCAL champion is dead (its camera
@@ -73,6 +75,9 @@ function SpectatorHint(): React.JSX.Element | null {
     s.localSeatId === null ? null : (s.seats.find((v) => v.seatId === s.localSeatId) ?? null),
   );
   const coinsLeft = seat?.coinsLeft ?? 0;
+  // ⭐ GH#1276：鍵位提示要跟著**手上拿的東西**走（⛔ 不是寫死的鍵盤 "(G)"）。
+  // ⚠️ hook 一律在 early return **之前**呼叫。
+  const inputMode = useInputMode();
   if (alive || !hasChampion) return null;
   // 陣亡投幣 (task #191): the dead player's one action, offered exactly when the
   // server would accept it — combat, dead, throws left. Gating on `!alive` alone
@@ -129,7 +134,7 @@ function SpectatorHint(): React.JSX.Element | null {
             cursor: poor ? "not-allowed" : "pointer",
           }}
         >
-          丟 {rules.coinValue}金 (G) {coinsLeft}/{rules.coinsPerRound}
+          丟 {rules.coinValue}金 {deadCoinKeyHint(inputMode)} {coinsLeft}/{rules.coinsPerRound}
         </button>
       )}
     </div>

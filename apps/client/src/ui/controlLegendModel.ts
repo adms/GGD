@@ -96,6 +96,7 @@ import {
   type HudViewport,
 } from "./hud/hudLayout";
 import { PASSIVE_SLOT_LABEL } from "./passiveSlot";
+import { padHudFocusTuning } from "./hud/padHudFocus";
 
 /* ═══════════════════════════════════════════════════════════════════════════
  * ROWS
@@ -401,6 +402,10 @@ export function gamepadLegend(): LegendRow[] {
       : legendActionLabel(action);
     rows.push({ id: `btn-${name}`, control: padFace(name), label });
   }
+  // ⭐ 上面那個迴圈**看不到只住焦點層的鍵**（見 hudFocusLegendRow 的檔頭）。
+  // 那一列要在這裡補，⛔ 不是在迴圈裡 —— 迴圈的入口條件就是「戰鬥表綁了它」。
+  const hudFocus = hudFocusLegendRow();
+  if (hudFocus) rows.push(hudFocus);
   rows.push(...controllerSchemeNotes());
   if (probeGamepadPan()) {
     rows.push({
@@ -625,6 +630,77 @@ export const PAD_COMBAT_EXTRA: Record<string, DeclaredBinding> = {
     source: 'new KeyboardEvent("keydown", { key: "Escape"',
   },
 };
+
+/* ── ⭐ 只住在焦點層的那一顆鍵（GH#1276） ─────────────────────────────────────
+ *
+ * ⛔⛔ **`PAD_COMBAT_EXTRA` 結構上看不到它。**
+ * {@link gamepadLegend} 的迴圈是
+ *
+ *     for (…of BTN) { const action = probeGamepadButton(i); if (!action) continue; … }
+ *
+ * ⇒ ⭐ 它**從「戰鬥表綁了的鍵」那一頭走** —— 而 `PAD_COMBAT_EXTRA` 只是替
+ * 已經有動作的鍵**加一句補述**。⇒ ⛔ 一顆**只**綁在焦點層、戰鬥表刻意留空的鍵
+ * （View/Back → HUD 焦點模式，`ui/hud/padHudFocus.ts`）**永遠進不了那個迴圈**，
+ * 於是圖例上**一列都沒有**。
+ *
+ * ⚠️ 這正是 CLAUDE.md「失敗形態⑫ —— 只驗名詞不驗關係的**反方向**」：
+ * 從「有戰鬥動作的鍵」走，一定漏掉「有動作而戰鬥表沒綁」的那些。
+ * ⭐ 而它的症狀在 GH#1276 逐字量到：戰鬥中陣亡投幣／觀戰／記分板／設定
+ * **只能**先按 View 進 HUD 模式才碰得到，⛔ 而畫面上沒有任何地方寫著這件事
+ * ——「一個看不出來的模式就是失敗形態①」（`padHudFocus.ts` 檔頭自己寫的）。
+ *
+ * ⭐ **鍵位從 {@link padHudFocusTuning} 推導，⛔ 不寫死 `Back`**：那一格是後台可調的
+ * （`toggleButton`，出貨 8 = Back/View）。寫死 ⇒ operator 改成 X 之後圖例變成謊話，
+ * 而那正是這個檔案的檔頭花了半頁在防的事。
+ */
+export const PAD_HUD_FOCUS_LEGEND_ID = "btn-hudfocus";
+
+/** 按鍵索引 → `BTN` 的名字（`padFace` 吃的那一個）；沒有這顆索引 ⇒ null。 */
+export function padNameForIndex(index: number): string | null {
+  return Object.entries(BTN).find(([, i]) => i === index)?.[0] ?? null;
+}
+
+/**
+ * ⭐ HUD 焦點模式那一列 —— 生效中的設定關掉、或那顆索引不是一顆真的鍵 ⇒ null
+ * （⛔ 不要印一列按了沒反應的鍵位）。
+ */
+export function hudFocusLegendRow(t = padHudFocusTuning()): LegendRow | null {
+  if (!t.enabled) return null;
+  const name = padNameForIndex(t.toggleButton);
+  if (!name) return null;
+  return {
+    id: PAD_HUD_FOCUS_LEGEND_ID,
+    control: padFace(name),
+    label: "操作介面模式：陣亡投幣 · 前往觀戰 · 記分板 · 設定（再按一次或 B 回到操控英雄）",
+  };
+}
+
+/** 陣亡投幣那顆鍵在 {@link KEYBOARD_ORDER_BINDINGS} 裡的 id（⛔ 不要在畫面上寫第二個 "G"）。 */
+export const DEAD_COIN_KEY_ID = "KeyG";
+
+/**
+ * ⭐ 陣亡投幣鈕上那半句鍵位提示 —— **按玩家手上拿的東西**給（GH#1276）。
+ *
+ * ⛔ 在此之前它是寫死的 `(G)`（`ui/HudRoot.tsx`）：
+ * ⚠️ 對手把玩家那是一句**確信的錯答案** —— 手把上沒有 G，
+ * ⭐ 而那顆鈕在手把上**真正的**走法是「先按 View 進 HUD 模式 → 焦點移過去 → A」，
+ * 也就是本票量到的「按鈕藏在沒有提示的 View 鍵後面」。
+ *
+ * ⭐ 三個模式的字全部**推導**：
+ *   · 鍵盤 → 從 {@link KEYBOARD_ORDER_BINDINGS} 讀（⛔ 不是第二個字面值 "G"）
+ *   · 手把 → 從 {@link hudFocusLegendRow} 讀（⇒ 後台改 `toggleButton` 它跟著改）
+ *   · 觸控 → 空字串：右下大圓鈕陣亡時**就是**投幣鈕（`TOUCH_BINDINGS`），
+ *            按鈕本身就在手指底下，⛔ 不需要鍵位提示
+ */
+export function deadCoinKeyHint(mode: "keyboard" | "gamepad" | "touch"): string {
+  if (mode === "touch") return "";
+  if (mode === "gamepad") {
+    const row = hudFocusLegendRow();
+    return row ? `(${row.control} → A)` : "";
+  }
+  const key = KEYBOARD_ORDER_BINDINGS.find((b) => b.id === DEAD_COIN_KEY_ID);
+  return key ? `(${key.control})` : "";
+}
 
 /**
  * The menu card. ⛔ NO `ready` ROW: in every menu-layer phase `GamepadInput`

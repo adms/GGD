@@ -217,4 +217,29 @@ describe("backControlIndex — B closes things, B never leaves", () => {
     expect(backControlIndex(["購買", "Ready", ""])).toBe(-1);
     expect(backControlIndex([])).toBe(-1);
   });
+
+  /**
+   * ⭐ GH#1276 —— 三選一按 B 會**直接選走一張卡**。
+   *
+   * ⚠️ label 是**整顆控制項的文字**（`aria-label + title + textContent`），
+   * 而三選一的卡片是一顆真的 `<button>`，說明整段都在它的 textContent 裡。
+   * ⇒ 舊的 allow-list 含**乘號 `×`** ⇒ 說明裡有 `×` 的卡片就是 B 的第一個命中。
+   *
+   * 量到的（2026-09-19，出貨內容）：道具 **20/142**、增益 **2/91** 的說明含 `×`。
+   * ⛔ 這不是「三選一」一個畫面的事 —— 任何**沒有** `data-pad-back` 的範圍都中。
+   */
+  it("⛔ 不把說明文字裡的乘號當成關閉鈕（GH#1276 三選一誤選卡）", () => {
+    cover("pad-back-no-destructive");
+    // content/augments/limit-breaker.json 逐字
+    expect(backControlIndex(["  破限超頻 攻擊速度 ×2，並將攻擊速度上限由 4.0 解鎖至 10.0。"])).toBe(-1);
+    // content/augments/grail-ex-20.json 逐字
+    expect(
+      backControlIndex(["  固有技能・魔力放出（雷）EX 每次普通攻擊追加等同「60 × 當前攻速」的魔法傷害。"]),
+    ).toBe(-1);
+    // content/items/fingerless-gloves.json 逐字（最終攻擊力再 ×1.03）
+    expect(backControlIndex(["  指貫手套 [計算式解放] 攻擊力每跨過一道門檻…最終攻擊力再 ×1.03，最多 10 段乘算"])).toBe(-1);
+    // ⭐ 而真的關閉鈕（標籤**就是**那個符號）照舊撿得到 —— 兩個方向都要驗
+    expect(backControlIndex(["  破限超頻 攻擊速度 ×2", " ✕ "])).toBe(1);
+    expect(backControlIndex(["×"])).toBe(0);
+  });
 });
