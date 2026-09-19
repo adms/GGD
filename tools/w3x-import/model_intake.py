@@ -4,7 +4,7 @@
 > owner 2026-09-10（逐字）：「類似這種錯誤 請你**寫成 script 把每個模型都掃過合併
 >  並檢查沒問題**吧 也寫到守則裡 **匯入模型都要跑一次檢查**」
 
-它問五件事，⛔ 每一件都是 2026-09-10 真的踩到的缺陷，⛔ 不是假想：
+它問六件事，⛔ 每一件都是真的踩到的缺陷，⛔ 不是假想（①–⑤＋⑦；⑥＝骨架綁定在 `file_issues()`）：
 
  ① **嚴格 glTF 驗證** —— 出貨的 506 顆裡有 **160 顆（32%）**過不了，錯誤集中在
     `ACCESSOR_MIN_MISMATCH` / `MAX_MISMATCH` / `ELEMENT_OUT_OF_BOUND` /
@@ -24,6 +24,13 @@
  ⑤ **正式採用與 runtime 診斷分流** —— 已註冊英雄身體或 `champions/` 路徑的模型，
     三角面正式採用門檻讀 `modelUpload/adoptionPolicy.json`；draw call、貼圖邊長、英雄貼圖 VRAM
     （GH#1174）與 28k runtime 容量仍對照 `HERO_MODEL_BUDGET`，但 runtime 上限不能代替正式採用門檻。
+ ⑦ **面向**（GH#1272 / GH#1266）—— ⭐ 這一顆的幾何**正面朝哪一邊**，與出貨文件的
+    `yawOffsetDeg` 對不對得上。⚠️ ⭐ 在此之前這支一行都沒問過它 ⇒ 轉向角度是
+    `prepareUploadedHeroModel(…, yawOffsetDeg = 0)` **人手填的**、多數填 0，
+    ⭐ 而 WC3 轉出來的模型多半要 90° ⇒ owner 2026-09-15 逐字：
+    「所有新的模組定位角度有問題-**螃蟹走路**」。量測住 `modelUpload/facing.ts`（見 `facing()`）。
+    ⚠️ ⭐ 編號 ⑥ 已經是**骨架綁定**（見 `file_issues()`）—— GH#1272 票文稱這一項為「第 ⑥ 項」，
+    ⛔ 那是票的編號，本檔往下接 ⑦。
 
 用法：
     python3 tools/w3x-import/model_intake.py <路徑…>            # 只檢查（預設）
@@ -493,6 +500,62 @@ def validate(paths):
             pass
 
 
+FACING_MTS = os.path.join(ROOT, "tools", "w3x-import", "model_facing.mts")
+
+
+def facing(paths):
+    """⑦ **面向** —— ⭐ 這一顆的幾何要的轉向，與出貨文件那一格對不對得上（GH#1272 / GH#1266）。
+
+    > owner 2026-09-15（逐字）：「所有新的模組定位角度有問題-螃蟹走路」
+
+    ⚠️ ⭐ **在此之前這支檢查一行都沒問過面向**（GH#1272 量到：本檔與 `normalize.ts`
+    搜 facing／yaw／orient／面向／轉向 **零命中**）⇒ 轉向角度是
+    `prepareUploadedHeroModel(…, yawOffsetDeg = 0)` **人手填的**，多數填 0，
+    ⭐ 而 WC3 轉出來的模型多半要 90° ⇒ **每一顆新模型都可能側著走**。
+    唯一會叫的是出貨普查（`apps/client/src/render/views/modelFacing.test.ts`）——
+    ⛔ 而它只看得到「已經進了 repo 的內容」，⭐ 後台／編輯器上傳的根本不經過它。
+
+    ⭐ 量測**一行都不在 python 裡**：它住 `packages/shared/src/content/modelUpload/facing.ts`，
+    與後台／編輯器匯入讀的是**同一份**（第〇·四守則）。⛔ 在這裡重寫一份就是第二個住處，
+    而兩份量尺會各自漂 —— ⚠️ 症狀是「入庫說 OK、普查說側著走」這種互相矛盾的綠燈。
+
+    ⛔ 跑不起來回 `(None, 錯誤)`：⚠️ **跑不起來與全部通過長得一樣**，⛔ 不靜默當成沒問題。
+    """
+    res = {}
+    for i in range(0, len(paths), 200):                    # ⛔ 一次全塞會爆 ARG_MAX
+        out = subprocess.run(["node", "--import", "tsx", FACING_MTS, CONTENT, *paths[i:i + 200]],
+                             cwd=ROOT, capture_output=True, text=True)
+        if out.returncode != 0:
+            return None, out.stderr[-400:]
+        res.update(json.loads(out.stdout))
+    return res, None
+
+
+def facing_rows(fac, files, heroes):
+    """把面向判定分成三格：⛔ 不一致 · ⚠️ 待人工確認（英雄身體才算）· ⭐ 量到且一致。
+
+    ⭐ 為什麼**分開**算、⛔ 不塞進 `file_issues()`：那一份餵的是角色棘輪（a／b／a_body_tex／
+    ab_gltf，基準線在 `tools/model-budget/intake-ratchet.txt`）。⚠️ 面向混進去會讓那幾個
+    數字一次跳動，⭐ 而棘輪要的是「同一把尺量同一件事隨時間變小」——
+    ⛔ 換了尺的棘輪讀起來跟回歸一模一樣（本檔上面 (a) 基準線那段就是這個教訓）。
+    ⇒ 面向自己一格、自己的離開碼。
+    """
+    bad, manual = [], []
+    for f in files:
+        v = fac.get(f)
+        if not v:
+            continue
+        if v["kind"] == "unreadable":
+            continue                                       # 讀不開已經由 `inspect()` 那一路報過
+        rel = os.path.relpath(f, ROOT)
+        if v["mismatch"]:
+            bad.append((rel, v))
+        elif v["kind"] != "measured" and f in heroes:
+            # ⛔ 量不出來**不擋入庫**（owner 要的是漏斗不是柵欄）—— 但英雄身體要進人工佇列。
+            manual.append((rel, v))
+    return bad, manual
+
+
 def merge(path):
     """就地合併「畫起來一樣」的 primitive。⭐ 覆蓋前一定留底。"""
     from merge_glb_prims import merge as _merge          # noqa: E402  (同目錄)
@@ -556,6 +619,7 @@ def main() -> int:
     ap.add_argument("--merge", action="store_true", help="⛔ 就地合併可合併的 primitive（會先留底）")
     ap.add_argument("--check", action="store_true", help="有問題就回非零（閘模式）")
     ap.add_argument("--no-validate", action="store_true", help="跳過嚴格 glTF 驗證（快）")
+    ap.add_argument("--no-facing", action="store_true", help="跳過 ⑦ 面向量測（快）")
     ap.add_argument("--ratchet", metavar="FILE", help="棘輪閘：(a)(b) 有問題顆數與基準線比（GH#1263）")
     ap.add_argument("--roles-json", metavar="OUT", help="逐顆寫出角色、理由與問題")
     ap.add_argument("--content", metavar="DIR", help="⚠️ 只給量尺自證的測試：換一棵內容樹")
@@ -605,8 +669,15 @@ def main() -> int:
         print("   ⇒ ⚠️ 跑不起來與全部通過**長得一樣** ⇒ 這裡刻意回非零，⛔ 不靜默跳過。")
         return 2
 
-    rows, codes = [], {}
     heroes = hero_body_glbs()
+    fac, ferr = (None, None) if a.no_facing else facing(files)
+    if ferr:
+        print(f"⛔ ⑦ 面向量測跑不起來：{ferr}")
+        print("   ⇒ ⚠️ 跑不起來與全部通過**長得一樣** ⇒ 這裡刻意回非零，⛔ 不靜默跳過。")
+        return 2
+    facing_bad, facing_manual = facing_rows(fac, files, heroes) if fac else ([], [])
+
+    rows, codes = [], {}
     for f in files:
         rel = os.path.relpath(f, ROOT)
         try:
@@ -637,8 +708,38 @@ def main() -> int:
                 print(f"      {i}")
         if len(bad) > 40:
             print(f"   …另外 {len(bad) - 40} 顆")
+
+    # ── ⑦ 面向（GH#1272）—— ⭐ 自己一格、自己的離開碼，⛔ 不進角色棘輪（見 `facing_rows`）
+    if fac is not None:
+        kinds = {}
+        for f in files:
+            v = fac.get(f)
+            if v:
+                kinds[v["kind"]] = kinds.get(v["kind"], 0) + 1
+        print(f"   ⑦ 面向：{kinds}（measured＝量得出正面朝哪 · no-skeleton＝結構性量不出來）")
+        if facing_manual:
+            print(f"   ⚠️ {len(facing_manual)} 顆**英雄身體**的面向量不出來 ⇒ 面向待人工確認"
+                  "（⛔ 不擋入庫：送批次審查頁按 0°／90°／180°／270°）：")
+            for rel, v in facing_manual[:10]:
+                pairs = "" if v["n"] is None else f"，{v['n']} 對骨頭"
+                print(f"      {rel}  [{v['docId']} {v['kind']}{pairs}]")
+            if len(facing_manual) > 10:
+                print(f"      …另外 {len(facing_manual) - 10} 顆")
+        if facing_bad:
+            print(f"\n⛔⛔ {len(facing_bad)} 顆的面向與出貨文件對不上 —— ⭐ 這正是 owner 說的「螃蟹走路」："
+                  "文件那一格是**人手填的**，而幾何要的是另一個角度。")
+            print("   修法：改 `content/models/<id>.json` 的 `yawOffsetDeg`（⭐ 轉向住 content，"
+                  "⛔ 不是客戶端例外表）；版本文件要重算 `modelSha256`。")
+            for rel, v in facing_bad[:30]:
+                print(f"   {rel}")
+                print(f"      ⛔ {v['docId']}：幾何要 {v['requiredYawOffsetDeg']}°、文件寫 {v['declaredYawOffsetDeg']}°"
+                      f"（{v['n']} 對骨頭，coherence {v['coherence']:.3f}"
+                      f"{'' if not v['axial'] else '，' + str(v['axial']['source']) + ' 線索 fx=' + str(v['axial']['fx'])}）")
+            if len(facing_bad) > 30:
+                print(f"   …另外 {len(facing_bad) - 30} 顆")
+
     if not (a.all or a.ratchet or a.roles_json):
-        return 1 if (a.check and bad) else 0
+        return 1 if (a.check and (bad or facing_bad)) else 0
 
     try:
         sel = model_selections()
@@ -694,9 +795,11 @@ def main() -> int:
         for r, rel, category, detail in gltf_bad[:30]:
             print(f"      ({r}) {rel}  [{category} {detail}]")
     if not base:
-        return 1 if (a.check and bad) else 0
+        return 1 if (a.check and (bad or facing_bad)) else 0
 
-    code = 0
+    # ⭐ 棘輪模式也要回非零 —— ⛔ 面向不進 a／b 的顆數（那會換掉棘輪的尺），
+    #    但「幾何與文件對不上」是**零容忍**的：今天量到 0 顆，⛔ 沒有存量要接受。
+    code = 1 if facing_bad else 0
     if count["a_body_tex"] > base["a_body_tex"]:
         code = 1
         print(f"\n⛔⛔ a_body_tex {A_BODY_TEX_TITLE}：{base['a_body_tex']} → {count['a_body_tex']} 格 —— 名單在上面。")

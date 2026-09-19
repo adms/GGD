@@ -1,7 +1,9 @@
 """MDX (Warcraft III model, version 800) chunk parser.
 
 Parses exactly what the glTF exporter needs: MODL/SEQS/TEXS/MTLS/GEOS/
-BONE/HELP/PIVT/ATCH + the KGTR/KGRT/KGSC node animation tracks.
+BONE/HELP/PIVT/ATCH + the KGTR/KGRT/KGSC node animation tracks,
+⭐ 以及 GEOA（逐 geoset 的逐序列可見度／顏色，GH#1186 —— 見 `GeosetAnim`；
+⚠️ 這裡只「讀得出來」，⛔ `gltf.convert()` 今天還沒有把它翻成 glTF）。
 Particle/ribbon/camera/light/event chunks are skipped (recorded by tag).
 """
 
@@ -57,6 +59,47 @@ class Track:
 
 
 @dataclass
+class GeosetAnim:
+    """GEOA —— 一個 geoset 的**逐序列**可見度／顏色（GH#1186）。
+
+    ⛔ 在此之前匯入器**完全不解析這個 chunk**：`mdx.py` 與 `particles.py` 各有一行
+    `p += 8` 把 `geosetId + geosetAnimId` **跳過**，⭐ 而沒有任何一行讀過 GEOA 的內容。
+    ⇒ 原作靠 GEOA alpha「只在某些動作出現」的部件，轉出來之後**每一個動作都在**。
+
+    ⚠️ 實拍確認的症狀（`ou99.464696` 拳四郎 → `godie-umal`）：一片 204 面的
+    `starflash` 透明面片在 stand／walk／attack／spell／death **五個動作下都量得到**
+    ⇒ 畫面上是一道比人還高的白光刃。⭐ 人體本身是好的。
+
+    ⛔⛔ 而今天沒有任何一條閘看得到它，因為它的症狀是**多**東西不是少東西：
+    嚴格 glTF 驗證說「多一片永遠可見的面片是完全合法的 glTF」· `model_intake.py`
+    說「204 面遠低於任何門檻」· 實拍亮像素說「⭐ **數字變大了**，看起來更有東西」。
+
+    ⚠️ ⭐ **這裡只做「讀得懂來源」那一半**（第〇·五守則的翻譯第 1 步：MDX 的動詞 →
+    JSON/glTF 的標籤）。把它翻成 glTF 是第 2 步，⛔ 今天還沒做 —— glTF 沒有
+    「per-clip 隱藏 mesh」這個概念，兩條路（material `baseColorFactor.a` 逐段軌 ·
+    把 geoset 拆成自己的節點再 scale 歸零）各有代價，⭐ 要先量過 83 份會不會把
+    draw call 推過上限才選得了。⛔ 不要「用現有參數湊一個看起來像的」。
+    ⇒ 見 `models.py` 檔頭與 GH#1186。
+
+    ⭐ 佈局是**逐位元組驗過的**，⛔ 不是憑記憶寫的：對 repo 裡 236 份 MDX 的
+    **全部 129 個 GEOA chunk** 跑過，每一筆的 `inclusiveSize` 都正好在
+    `28 + Σ(KGAO|KGAC)` 結束（0 份對不上、⛔ 沒有任何一份有剩餘位元組）。
+    """
+
+    geoset_id: int
+    #: 靜態 alpha（沒有 KGAO 軌時就是它）。
+    alpha: float
+    #: bit 0 = DropShadow · bit 1 = Color
+    flags: int
+    #: 靜態顏色（⚠️ MDX 存的是 **BGR**，⛔ 不是 RGB）。
+    color: tuple
+    #: KGAO —— 逐格 alpha（⭐ 「只在某些動作出現」就長在這裡）。
+    alpha_track: "Track | None" = None
+    #: KGAC —— 逐格顏色。
+    color_track: "Track | None" = None
+
+
+@dataclass
 class Node:
     name: str
     object_id: int
@@ -79,6 +122,8 @@ class MDXModel:
     geosets: list[Geoset] = field(default_factory=list)
     nodes: dict[int, Node] = field(default_factory=dict)
     pivots: list[tuple] = field(default_factory=list)
+    #: GEOA —— 逐 geoset 的可見度／顏色（GH#1186）。⛔ 在此之前這一格不存在。
+    geoset_anims: list[GeosetAnim] = field(default_factory=list)
     skipped_chunks: list[str] = field(default_factory=list)
     version: int = 800
 
@@ -196,6 +241,31 @@ def parse_mdx(data: bytes) -> MDXModel:
                         )
                     p = a_end
                 m.nodes[node.object_id] = node
+        elif tag == "GEOA":
+            # ⭐ GH#1186 —— 逐筆：incl(4) + alpha(4) + flags(4) + color[3](12)
+            #    + geosetId(4) = 28，之後是選用的 KGAO／KGAC，全部在 incl 之內。
+            p = body_start
+            while p + 28 <= body_end:
+                incl = struct.unpack_from("<I", data, p)[0]
+                a_end = min(p + incl, body_end)
+                if incl < 28:
+                    break                      # ⛔ 壞掉的長度：停，⛔ 不猜
+                alpha, flags = struct.unpack_from("<fI", data, p + 4)
+                color = struct.unpack_from("<3f", data, p + 12)
+                anim = GeosetAnim(
+                    struct.unpack_from("<I", data, p + 24)[0], alpha, flags, color
+                )
+                q = p + 28
+                while q + 4 <= a_end:
+                    sub = data[q : q + 4]
+                    if sub == b"KGAO":
+                        anim.alpha_track, q = _read_track(data, q + 4, 1)
+                    elif sub == b"KGAC":
+                        anim.color_track, q = _read_track(data, q + 4, 3)
+                    else:
+                        break                  # 未知子區段：跳到 incl 結尾
+                m.geoset_anims.append(anim)
+                p = a_end
         elif tag == "PIVT":
             for off in range(body_start, body_end, 12):
                 m.pivots.append(struct.unpack_from("<3f", data, off))

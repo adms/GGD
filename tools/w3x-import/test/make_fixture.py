@@ -307,10 +307,21 @@ def fixture_mdx() -> bytes:
     atch_entry = anode + apath + struct.pack("<I", 0)  # + attachmentId
     atch = struct.pack("<I", 4 + len(atch_entry)) + atch_entry
     pivt = struct.pack("<3f", 0, 0, 0) + struct.pack("<3f", 0, 0, 40)  # bone, weapon
+    # ⭐ GEOA（GH#1186）—— geoset 0 的逐序列可見度：Stand [0..1000] 看得到、
+    #    Walk [1100..2000] alpha 掉到 0 ⇒ ⭐ 這正是「只在某些動作出現」的形狀，
+    #    ⛔ 而匯入器在此之前**完全不解析這個 chunk**（拳四郎那 204 面的白光刃就是這樣來的）。
+    kgao = b"KGAO" + struct.pack("<IiI", 2, 1, 0xFFFFFFFF)
+    kgao += struct.pack("<if", 0, 1.0) + struct.pack("<if", 1100, 0.0)
+    geoa_entry = struct.pack("<I", 28 + len(kgao))      # inclusiveSize
+    geoa_entry += struct.pack("<fI", 1.0, 0)            # 靜態 alpha, flags
+    geoa_entry += struct.pack("<3f", 1.0, 1.0, 1.0)     # 靜態顏色（⚠️ MDX 存 BGR）
+    geoa_entry += struct.pack("<I", 0)                  # geosetId
+    geoa_entry += kgao
     return (b"MDLX" + chunk(b"VERS", struct.pack("<I", 800))
             + chunk(b"MODL", cstr("fixhero", 80) + b"\x00" * 292)
             + chunk(b"SEQS", seqs) + chunk(b"TEXS", texs)
             + chunk(b"MTLS", mtls) + chunk(b"GEOS", geos)
+            + chunk(b"GEOA", geoa_entry)
             + chunk(b"BONE", bone) + chunk(b"ATCH", atch)
             + chunk(b"PIVT", pivt))
 

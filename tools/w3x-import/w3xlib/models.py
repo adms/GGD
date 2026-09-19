@@ -13,8 +13,17 @@ default — 角色) blanks it, "lit" (GH#767 — 純特效模型) resolves the s
 TeamGlow art and luma-keys it like any other additive glow (see
 gltf.TEAM_GLOW_POLICIES / gltf._layer_material).
 Attachments: separate models referenced by ATCH nodes are baked into the
-parent at the attach-node transform. Particle emitters (PREM/PRE2/RIBB) and
-GEOA per-sequence visibility are skipped — geometry/bones/animations only.
+parent at the attach-node transform. Particle emitters (PREM/PRE2/RIBB) are
+skipped — geometry/bones/animations only.
+
+⚠️ GEOA（逐 geoset 的逐序列可見度）—— ⭐ **2026-09-19 起讀得出來了**
+（`mdx.py` 的 `GeosetAnim`，GH#1186），⛔ **但還沒有翻進 glTF**：
+`convert()` 今天**不看** `model.geoset_anims` ⇒ 原作只在某些動作出現的部件，
+轉出來之後仍然**每一個動作都在**（拳四郎 `ou99.464696` 那片 204 面的白光刃）。
+⛔ 這一行在此之前寫的是「GEOA … are skipped」—— ⭐ 而那句話把「沒解析」與「沒翻譯」
+兩件事講成同一件，於是讀的人分不出缺的是哪一半（第三守則：註解會說謊）。
+⇒ ⭐ 翻譯要選路（material alpha 逐段軌 vs. 把 geoset 拆成自己的節點再 scale 歸零），
+⛔ 選之前要先量 83 份帶 GEOA 的會不會把 draw call 推過上限 —— 見 GH#1186 的 Known risks。
 """
 
 from __future__ import annotations

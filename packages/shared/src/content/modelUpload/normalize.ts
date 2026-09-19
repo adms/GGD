@@ -1,5 +1,6 @@
 import { encodeUploadGlb, isModelUploadImageMimeType, parseUploadGlb, readFloatAccessor, type GlbDocument, type GlbPrimitive } from "./glb";
 import { HERO_MODEL_BUDGET } from "./budget";
+import { facingAutoApplyEnabled, facingIntake, type FacingIntake } from "./facing";
 import { sniffImageHeader } from "../icons/encodeIcon";
 
 /**
@@ -48,6 +49,18 @@ export interface NormalizeReport {
   resizedTextures: [number, number][];
   /** ⛔ 仍然超過上限的貼圖邊長（沒有注入縮圖器，或縮不動）。 */
   texturesOverCap: number[];
+  /**
+   * ⭐ ③ 面向（GH#1272 / GH#1266）—— **匯入的當下**量出正面朝哪一邊。
+   *
+   * ⚠️ ⭐ 在此之前這條路**一行都沒有量過面向** —— 轉向角度是
+   * `prepareUploadedHeroModel(…, yawOffsetDeg = 0)` **人手填的**、多數填 0，⭐ 而 WC3
+   * 轉出來的模型多半要 90° ⇒ owner 2026-09-15 逐字：「所有新的模組定位角度有問題-**螃蟹走路**」。
+   * ⛔ 唯一會叫的那支（出貨普查 `modelFacing.test.ts`）只看得到已經進 repo 的內容，
+   * ⭐ 後台／編輯器上傳的根本不經過它。
+   *
+   * ⛔ 它**不擋上架**：量不出來就 `needsManualReview`（送批次審查頁的四個角度按鈕）。
+   */
+  facing: FacingIntake;
   /** 位元組有沒有真的變 —— ⛔ false 時呼叫端應該沿用原本的 bytes。 */
   changed: boolean;
 }
@@ -115,10 +128,24 @@ export async function normalizeUploadedModel(
      * ⇒ 從它註冊新版本會把兩具身體接成一塊。⛔ 不重映射索引（保守：寧可少合併也不猜被藏的是哪一塊）。
      */
     preservePrimitiveIndices?: boolean;
+    /** 作者手填的轉向（`content/models/*.json` 的 `yawOffsetDeg`）；⭐ 量到的與它不同時以量到的為準。 */
+    yawOffsetDeg?: number;
+    /** ⛔ 關掉自動寫入（只警告）。預設讀 `GGD_MODEL_FACING_AUTO`，見 `facing.ts`。 */
+    autoApplyFacing?: boolean;
   } = {},
 ): Promise<{ bytes: Uint8Array; report: NormalizeReport }> {
   const cap = options.maxTextureEdge ?? HERO_MODEL_BUDGET.texEdge.limit;
   const { json, bin } = parseUploadGlb(bytes);
+  // ── ③ 面向 ──────────────────────────────────────────────────────────────
+  // ⭐ 在**動任何位元組之前**量 —— 面向只看 `nodes` 的變換，而下面三段（丟片段／縮貼圖／
+  //    合併 primitive）一個節點都不碰 ⇒ 這裡量與最後量是同一個答案，⛔ 而這裡量不會被
+  //    「合併失敗就提早 return」的那幾條路徑跳過（⚠️ 漏量與量到沒問題長得一樣）。
+  // ⛔ 沒傳 `yawOffsetDeg` ⇒ null（＝「沒有宣告」），⭐ 不是 0 —— 後台 `ModelVersions.prepare()`
+  //    走的正是這條：它只做正規化，轉向留給模型文件那一格。填 0 會讓整個 `imported.*`
+  //    家族（走家族預設 90°）每一次都被報成不一致。
+  const facing = facingIntake(json, options.yawOffsetDeg ?? null, {
+    autoApply: options.autoApplyFacing ?? facingAutoApplyEnabled(),
+  });
   const before = (json.nodes ?? []).reduce((n, node) =>
     n + (node.mesh === undefined ? 0 : json.meshes![node.mesh]!.primitives.length), 0);
 
@@ -200,7 +227,7 @@ export async function normalizeUploadedModel(
     return {
       bytes: changed ? encodeUploadGlb(doc, buffer) : bytes,
       report: { drawCalls: { before, after }, droppedZeroClips: dropped, clipIndexMap,
-                resizedTextures: resized, texturesOverCap: overCap, changed },
+                resizedTextures: resized, texturesOverCap: overCap, facing, changed },
     };
   }
 }

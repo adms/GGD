@@ -35,6 +35,9 @@ const FIXTURE_IDS = [
   "w3x-original-table-hero",
   "w3x-trigstr-resolve",
   "w3x-mdx-header-parse",
+  // ⭐ GH#1186 —— GEOA（逐 geoset 的逐序列可見度）真的被讀出來。
+  //    ⛔ 拿掉 `mdx.py` 的解析 ⇒ GEOA 退回 `skipped_chunks` ⇒ 這一條紅。
+  "w3x-geoa-parse",
   "w3x-gltf-writer-valid",
   "w3x-anim-timing",
   "w3x-clipmap-automap",

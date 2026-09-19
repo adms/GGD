@@ -66,7 +66,13 @@ export async function prepareUploadedHeroModel(rawSource: Uint8Array, selections
   if (originalIndices.some((index) => !Number.isInteger(index) || index < 0)) throw new Error("請為六項 GGD 動作指定片段；同一片段可重複使用。");
   // ⭐ owner 2026-09-10（逐字）：「**後台設定跟編輯器都要自動帶入這個檢查與修正 script**」
   // ⇒ 合併「畫起來一樣」的 primitive ＋ 丟掉長度為零的署名片段，⛔ 不要求作者自己先修。
-  const { bytes: source, report: normalized } = await normalizeUploadedModel(rawSource, { resizeImage: options.resizeImage });
+  // ⭐ GH#1272 —— `yawOffsetDeg` 這一格在此之前是**純手填**（簽名上的預設就是 0），
+  //    ⛔ 而沒有任何東西量過它 ⇒ owner 2026-09-15 逐字：「所有新的模組定位角度有問題-**螃蟹走路**」。
+  //    ⇒ 把作者填的值一起交給 `normalizeUploadedModel` 量：量得出來且不同 ⇒ 以**量到的**為準；
+  //    ⭐ 手填值留在 `normalized.facing.declaredYawOffsetDeg`（⛔ 不無聲覆蓋，審查頁要能一鍵退回）。
+  const { bytes: source, report: normalized } = await normalizeUploadedModel(rawSource, {
+    resizeImage: options.resizeImage, yawOffsetDeg,
+  });
   const indices = originalIndices.map((index) => {
     const retained = normalized.clipIndexMap[index];
     if (retained === null) throw new Error("選定的動作片段已因長度為零被移除，請重新選擇可播放片段。");
@@ -76,7 +82,10 @@ export async function prepareUploadedHeroModel(rawSource: Uint8Array, selections
   const chosen = [...new Set(indices)];
   const prepared = await selectModelAnimations(source, chosen);
   const clipMap = Object.fromEntries(HERO_MODEL_STATES.map((state, index) => [state, prepared.inspected.clips[chosen.indexOf(indices[index]!)]!.name]));
-  const model = zUploadedHeroModel.parse({ schema: "ggd-uploaded-hero-model@1", sha256: prepared.inspected.sha256, byteSize: prepared.bytes.length, clipMap, yawOffsetDeg });
+  // ⭐ 寫進文件的是**量到的**那一個（量不出來時它就等於手填值 —— 見 `facingIntake`）。
+  // ⭐ 寫進文件的是**量到的**那一個；量不出來時 `appliedYawOffsetDeg` 就等於作者填的值。
+  //    ⚠️ `?? yawOffsetDeg` 只是型別上的保險 —— 這條路一定有宣告值（本函式的參數預設 0）。
+  const model = zUploadedHeroModel.parse({ schema: "ggd-uploaded-hero-model@1", sha256: prepared.inspected.sha256, byteSize: prepared.bytes.length, clipMap, yawOffsetDeg: normalized.facing.appliedYawOffsetDeg ?? yawOffsetDeg });
   const budget = heroModelBudgetIssues(prepared.inspected);
   if (budget.errors.length) throw new Error(budget.errors.join("\n"));
   const notes = [
@@ -86,6 +95,9 @@ export async function prepareUploadedHeroModel(rawSource: Uint8Array, selections
     normalized.droppedZeroClips.length
       ? `已移除 ${normalized.droppedZeroClips.length} 段長度為零的片段（多半是作者署名）：${normalized.droppedZeroClips.slice(0, 3).join("、")}。`
       : null,
+    // ⭐ GH#1272 —— 面向一律回報：改了要說、待人工確認也要說。
+    // ⛔ 只在「改了」時說 = 「量不出來」與「量到而且一致」在報告上長得一樣（fail-open 沒錯，靜默才是缺陷）。
+    normalized.facing.mismatch || normalized.facing.needsManualReview ? `${normalized.facing.note}。` : null,
   ].filter((note): note is string => note !== null);
   return { ...prepared, model, document: uploadedHeroModelDoc(model), warnings: [...notes, ...budget.warnings], normalized };
 }

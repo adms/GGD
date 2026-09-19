@@ -95,6 +95,20 @@ def main(fixture: str, workdir: str) -> int:
     assert len(atch) == 1 and atch[0].attachment_path == "weapon.mdx", atch
     print("PASS w3x-mdx-header-parse")
 
+    # -- GEOA：逐 geoset 的逐序列可見度（GH#1186）-----------------------------
+    # ⛔ 在此之前匯入器**完全不解析 GEOA** ⇒ 原作只在某些動作出現的部件，轉出來之後
+    #    **每一個動作都在**（拳四郎 `ou99.464696` 那片 204 面的白光刃，五個動作下都量得到）。
+    # ⚠️ ⭐ 它的症狀是**多**東西不是少東西 ⇒ 每一把量「有沒有」的尺都會說它更好
+    #    （glTF 驗證說合法、面數遠低於門檻、實拍亮像素**變大**）⇒ ⛔ 只有這裡問得出來。
+    assert "GEOA" not in m.skipped_chunks, m.skipped_chunks   # ⭐ 拿掉解析就退回這裡
+    assert len(m.geoset_anims) == 1, m.geoset_anims
+    ga = m.geoset_anims[0]
+    assert ga.geoset_id == 0 and ga.alpha == 1.0, ga
+    assert ga.alpha_track is not None, "KGAO alpha 軌沒有被讀出來"
+    # Stand [0..1000] 看得到、Walk [1100..2000] alpha 掉到 0
+    assert [(f, v[0]) for f, v in ga.alpha_track.keys] == [(0, 1.0), (1100, 0.0)], ga.alpha_track
+    print("PASS w3x-geoa-parse")
+
     # -- full pipeline on the fixture (import_w3x.py, no content writes) -----
     out = os.path.join(workdir, "out")
     r = subprocess.run(
