@@ -1,0 +1,3835 @@
+{
+ "票": "GH#1199",
+ "量測日": "2026-09-19",
+ "上限": 256,
+ "重跑": "node --import tsx tools/model-fix/audit-texture-256.mts --json",
+ "說明": "『前』＝今天出貨樹量到的值。『後』欄位只有在這一輪真的註冊過新版本時才有 —— 本輪 0 筆(英雄身體已全部 ≤256)，所以是 null。",
+ "英雄作用中身體": {
+  "總數": 190,
+  "超過上限": 0,
+  "作用中是凍結副本versions": 114,
+  "最長邊分布": {
+   "0": 1,
+   "16": 6,
+   "128": 1,
+   "256": 182
+  },
+  "逐位": [
+   {
+    "英雄": "acquired-alice",
+    "名稱": "愛麗絲·滋貝魯庫（Alice Zuberg）",
+    "modelKey": "community.body.03dc001595fdf47a7011da8b58288435e1f0ea318af4c7fc",
+    "glb": "assets/models/community/724fd97d0a808efe71d9d35023d19ca146988a817f4a848b25b0349df2a841ed.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 2,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-astralym",
+    "名稱": "枯星龍",
+    "modelKey": "community.body.88f4f2cead78c695452d9c95429fe7478bd842dde8bc7b59",
+    "glb": "assets/models/community/39116de907f67f1e8f3868466d140ba6605f83c6737436f1eba5357e5a17b398.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 8,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-asuna",
+    "名稱": "亞絲娜／結城明日奈",
+    "modelKey": "community.body.63cd771d7c8c8fd33275dcc0b82b11301e408b1dbf5bb9a3",
+    "glb": "assets/models/community/f3c310011262f6a18bdf8ceb86d08b228695d949f8e32db1ca48fe2e0e1f4604.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 3,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-beatrice",
+    "名稱": "碧翠絲",
+    "modelKey": "champ.sela",
+    "glb": "assets/models/champions/blocky-mage.glb",
+    "前_最長邊": 16,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-cattiva",
+    "名稱": "搗蛋貓",
+    "modelKey": "community.body.c104c1aa6e80b7d8f09407abd06acdb19c05ac8f6248c1da",
+    "glb": "assets/models/community/3f4f764fc828f395a25bac8fe42f7426775ff188c8fa9bef4c6db1ee3bbe4d14.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 5,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-dio",
+    "名稱": "DIO",
+    "modelKey": "community.body.74e948ac3c3cf10e304061642ec30faeec3f77ea20d5af41",
+    "glb": "assets/models/community/fb40119b3d1dd96bb0af8374f69c028577093f8fbc2111ea8d4da1653b80a397.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-emilia",
+    "名稱": "愛蜜莉雅",
+    "modelKey": "community.body.8091dbb47e4b261f04939265ddb093e134df78ab83fe8944",
+    "glb": "assets/models/community/4a3a7ca9bdbf6181e5be31e7ac645bb92d564d0e95a3b0bb5bfacac87db002ea.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 2,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-inuyasha",
+    "名稱": "犬夜叉",
+    "modelKey": "ou99.452782",
+    "glb": "assets/models/ou99/ou99_452782.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 8,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-jetragon",
+    "名稱": "空渦龍",
+    "modelKey": "community.body.d5743afe53dd93c4e69d1f951702a55c1f9fe1ca04c3b9bb",
+    "glb": "assets/models/community/deab45770b45ad209de85193fd00a9688469828975c62518e2d688d7f977615a.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 7,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-kita-kita",
+    "名稱": "吉他吉他老伯（阿德巴古·艾魯多魯）",
+    "modelKey": "community.body.406ee3ab0b16edcacb05a529e166da3807848b6c0416848e",
+    "glb": "assets/models/community/be6148045377a8207a09f7bb5834f4e9104eaadc6822d8a94c315f4510c9740e.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-kuroyukihime",
+    "名稱": "黑雪姬",
+    "modelKey": "community.body.f8191c57f1a260f7f4eee7d4080ca56363ceebf5663e2de0",
+    "glb": "assets/models/community/e1e32ccdaace62784a340a57089ecab1b229c78aab7fb79259a187b7b84e8497.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 2,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-leafa",
+    "名稱": "莉法",
+    "modelKey": "community.body.61072328ed911554d41bf278c6f7aa7455a9f54f37ec2827",
+    "glb": "assets/models/community/30840177ea8381b807894377ac5b1a4a6e26f9fd0aa31a2e26044cacad5567d1.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 2,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-lord-nightmares",
+    "名稱": "金色魔王／惡夢之王",
+    "modelKey": "community.body.90ece6241bb7ea6061ad46fe3e3714cd6bd470b2d3589223",
+    "glb": "assets/models/community/98ba248a71e17db1bc3ac783d89d4f6aa1c683cd659ad0bd2d5ae89e32b49b8c.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-mario",
+    "名稱": "Mario",
+    "modelKey": "imported.linkstik",
+    "glb": "assets/models/imported/linkstik.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 3,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-mewtwo",
+    "名稱": "Mewtwo",
+    "modelKey": "imported.herobuu",
+    "glb": "assets/models/imported/herobuu.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-minecraft",
+    "名稱": "Steve／Alex",
+    "modelKey": "champ.thorne",
+    "glb": "assets/models/champions/blocky-knight.glb",
+    "前_最長邊": 16,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-morgiana",
+    "名稱": "摩尔迦娜",
+    "modelKey": "community.body.0406f2886692b6af087aa47bfef9ae1302ba4eab850a85fe",
+    "glb": "assets/models/community/f8a6fbd314d0ce662d74cd8167326a72fd3977175a7000e0658e6ef051247e30.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-naruto",
+    "名稱": "漩渦鳴人",
+    "modelKey": "community.body.eeb0a881aad51f872aa574bb2ce51fd9ec01db84bab87257",
+    "glb": "assets/models/community/e22f6ef3cf9273e90c3a64c24725738ea2520c5918c60bb7f065882a2f26cd78.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-pokemon-trainer",
+    "名稱": "Pokémon Trainer",
+    "modelKey": "imported.heropikachu",
+    "glb": "assets/models/imported/heropikachu.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-ram",
+    "名稱": "拉姆",
+    "modelKey": "imported.herooichi",
+    "glb": "assets/models/imported/herooichi.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-rim",
+    "名稱": "莉姆（Rim；粉紅魔龍）",
+    "modelKey": "community.body.a2148927a57f563f981a31ed471f5a4dcab83c591f1790dc",
+    "glb": "assets/models/community/0ee1fcac10c24ce171186e192bf491a836980632e14dcb166917509c7e06c99e.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-ryu",
+    "名稱": "Ryu",
+    "modelKey": "imported.herokyo",
+    "glb": "assets/models/imported/herokyo.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 3,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-saya",
+    "名稱": "沙耶",
+    "modelKey": "community.body.840f10bc960c8bdcc7ce7559a465540ed579e90956c28840",
+    "glb": "assets/models/community/eafbcc61633f853566a1517ae5fea6f495465425b24749ceb9da259407122070.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 2,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-wargreymon",
+    "名稱": "戰鬥暴龍獸",
+    "modelKey": "community.body.8a1fa8e9ab1b2e33ac02551ab5f2b34f4d2d2f434cc354b7",
+    "glb": "assets/models/community/11408a6a43c57f4905a0bb5175b824733aab0c1bf2625db4e08667438b8caaa4.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 2,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-xiaodangjia",
+    "名稱": "小當家",
+    "modelKey": "ou99.498407",
+    "glb": "assets/models/ou99/ou99_498407.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 2,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "acquired-zero",
+    "名稱": "Zero",
+    "modelKey": "imported.herosephiroth",
+    "glb": "assets/models/imported/herosephiroth.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 3,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "b2-aladdin",
+    "名稱": "阿拉丁",
+    "modelKey": "version.body.cbc0bb515c5d304e760f4758acb062addd7b08744d269931",
+    "glb": "assets/models/community/versions/ae5622c20dbec4745f5ce45f3765b13fb3d8908c012926a67d623dc22461f778.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 8,
+    "下拉版本數": 5
+   },
+   {
+    "英雄": "b2-albus",
+    "名稱": "阿爾巴斯",
+    "modelKey": "version.body.7af14a3cc233cf08ffe7d4e4ee3da21be03a7785d527fce3",
+    "glb": "assets/models/community/versions/fd74d7db8cdf6c740d6622b3ad49699eec93ba513e1a98e276d7f4fbd6161a93.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 4,
+    "下拉版本數": 5
+   },
+   {
+    "英雄": "b2-bojji",
+    "名稱": "波吉",
+    "modelKey": "version.body.b73694be2665676dbdc4b6a6f44e374fce4cb0e08b74a673",
+    "glb": "assets/models/community/versions/16ffc917be1fc86a9710c1e35bd181659292f17d7c54f3285026e204cd7f0e28.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 6
+   },
+   {
+    "英雄": "b2-boxxo",
+    "名稱": "阿箱＋拉蜜絲",
+    "modelKey": "version.body.71c301c8921460768d1bcf29863ce903bc588aa0cc5efdf8",
+    "glb": "assets/models/community/versions/9e40ae0f2a3737e534a529f2771b652e34d921edaa4b19199f50acdcacbbbde3.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 7,
+    "下拉版本數": 7
+   },
+   {
+    "英雄": "b2-elma",
+    "名稱": "艾爾瑪",
+    "modelKey": "version.body.2d3806f7cccee53c5a2e13d310cd187e75cb5062a1dca667",
+    "glb": "assets/models/community/versions/fe7cd323b9c43dd9be3ceb749f8d1af788d30f5f7ce1fa9b1f49a16e468a0834.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 5,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "b2-fushi",
+    "名稱": "不死",
+    "modelKey": "version.body.2664f94a3071ed917dd65c84d1ea72c276f8dea5df637484",
+    "glb": "assets/models/community/versions/fafbc4478af888660ffaf25e67cc620e107943ea0a21e056b144e1f5f2960618.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 4,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "b2-goblin",
+    "名稱": "哥布林殺手",
+    "modelKey": "version.body.060d462a0195d3dadfa7592b77ae7d86e438d6839437cffe",
+    "glb": "assets/models/community/versions/8302dd8e3ffd61904e5f346337235b232bb9a57a757ebb7dc064310bc0926de7.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 4,
+    "下拉版本數": 5
+   },
+   {
+    "英雄": "b2-guts",
+    "名稱": "凱茲",
+    "modelKey": "version.body.25f498ed0c7fb2f75164d585c89eb24a73fd7b9e52dbb5ad",
+    "glb": "assets/models/community/versions/d479729eac7f78640e9d9e5304b803dca05c25c9a91d1185a48c72a52101aae4.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 4,
+    "下拉版本數": 8
+   },
+   {
+    "英雄": "b2-haga",
+    "名稱": "羽賀",
+    "modelKey": "version.body.05b4fcfefeb5a9b7d33f1568bdd16402788a989a99a109f3",
+    "glb": "assets/models/community/versions/4c4c6b29b0a10ee3f95c2855c8417c318495a1a22ab9e924b61647d46d830702.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 12
+   },
+   {
+    "英雄": "b2-kaede",
+    "名稱": "楓",
+    "modelKey": "version.body.6240633d06d78d57bd168d8a6775e42915f3477448b0fbd5",
+    "glb": "assets/models/community/versions/319db4f84bd4eb6e3db37c4342fe9f762abc80b0eebf928fc016c1fd816b2009.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "b2-kaiji",
+    "名稱": "伊藤開司",
+    "modelKey": "version.body.90e1d0ec0bf4829a0d3ea279eead5fc5f8bf5627eaddea95",
+    "glb": "assets/models/community/versions/9a52fa1e9a122bc0ac37cd0819bed82d36b468cccfeec88dc4b012241765595a.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 3,
+    "下拉版本數": 8
+   },
+   {
+    "英雄": "b2-keyaru",
+    "名稱": "凱亞爾",
+    "modelKey": "version.body.10009b090c7d3728ebd4464f2941b23927408d67e5b11334",
+    "glb": "assets/models/community/versions/dc9feac3209d03e7a1d0d180c747a7de3d6d5f1d1636cc316ac61e0f750a5ff7.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 8,
+    "下拉版本數": 5
+   },
+   {
+    "英雄": "b2-kisaragi",
+    "名稱": "如月電車",
+    "modelKey": "version.body.1a87cfbf719afb88a1d7195443786a06c76fdcaa12245bd4",
+    "glb": "assets/models/community/versions/8641161932fdf75cb13cc1e76f6129a3c92e09be4f5f4e5e721a014061193607.glb",
+    "前_最長邊": 0,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 0,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "b2-klaus",
+    "名稱": "克勞斯",
+    "modelKey": "version.body.ab9d5c54fb910d8a7ba267b1078f811979824d9df1b14184",
+    "glb": "assets/models/community/versions/ef3e552823cbb52b03bd9ae414706cecf966e6a8f512264e9ae0789c1acaaeab.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 3,
+    "下拉版本數": 12
+   },
+   {
+    "英雄": "b2-kumoko",
+    "名稱": "蜘蛛子",
+    "modelKey": "version.body.60820e7ce0d81eebe5d8e5d8b4d790e4447e6f9ecc898f90",
+    "glb": "assets/models/community/versions/0de4625aa386a6965981791eacf24c4af80ca1defa7fae59e340bc731cf5bb47.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 3,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "b2-luckyman",
+    "名稱": "幸運超人",
+    "modelKey": "version.body.58e636bc24dc82f29b5d6d0bf706ba3cfd4c61b1e8df71e1",
+    "glb": "assets/models/community/versions/082a33c3666efe8a0aab97ea4c7d64db2627937f9fafca7f619c48e811723c10.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "b2-makoto",
+    "名稱": "深澄真",
+    "modelKey": "version.body.d15fb416b6164035ea35d7702f572e6c76fff6dae22b14f5",
+    "glb": "assets/models/community/versions/987b4bfc2dc9952c127b34498028c470c957cc65ac23a86a04a582ef8d57fa47.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "b2-maomao",
+    "名稱": "貓貓",
+    "modelKey": "version.body.a43aeca84d4fa764aa989d0a5c2300c86ac4807b7336dd88",
+    "glb": "assets/models/community/versions/1bf500cb324cfa320d89abe6e14ad366bf4bf2756d7b2240d9396305e4905839.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 6
+   },
+   {
+    "英雄": "b2-maple-alt-9769eb88b85b",
+    "名稱": "梅普露（變身）",
+    "modelKey": "version.body.d22d19470ad0865b4c109d97a88d977b2e57a369f69604d3",
+    "glb": "assets/models/community/versions/49ff3a50b773ffa837913ff512cd4fa008c8863c5f93b38b292116b041ee5a46.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 2
+   },
+   {
+    "英雄": "b2-maple",
+    "名稱": "梅普露",
+    "modelKey": "version.body.8e9a3c68ca92cb24f5e23b5f7462ef354e20aac42ec810e7",
+    "glb": "assets/models/community/versions/49ff3a50b773ffa837913ff512cd4fa008c8863c5f93b38b292116b041ee5a46.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 4
+   },
+   {
+    "英雄": "b2-matthias",
+    "名稱": "馬提亞斯",
+    "modelKey": "version.body.f91fa769b197ce0120c73d5fa5184710f67af9b05f1b1ecd",
+    "glb": "assets/models/community/versions/0b547fe6b46eee9671457b16fd6862dbe8d08be9bce62b0f8cda6e128a736717.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "b2-misery",
+    "名稱": "米瑟利",
+    "modelKey": "version.body.11170e4649b473029b1959f47c11608ebd631a0aeb3aa230",
+    "glb": "assets/models/community/versions/97d4dc973e3518acb77b623f46ef241409c2506263feaf37e817605601b963c1.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 5
+   },
+   {
+    "英雄": "b2-naofumi",
+    "名稱": "岩谷尚文",
+    "modelKey": "version.body.1e3c7caed18f4e9f6cad2da54bdcefcdc5e2749dce334744",
+    "glb": "assets/models/community/versions/a9d2c04742c6c03396c6658b86f711d54a7072e57477f3afb32d892527362597.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 4,
+    "下拉版本數": 8
+   },
+   {
+    "英雄": "b2-ned",
+    "名稱": "青蛙劍士 Ned",
+    "modelKey": "version.body.d57b7bedd7ee4ffc1cea387346be58a2552d2903d0e8d5db",
+    "glb": "assets/models/community/versions/a0ba6020b24e79da91c6f34d13c08095de0306df7efc4733577e0f4fb74fd20e.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 8
+   },
+   {
+    "英雄": "b2-noor",
+    "名稱": "諾爾",
+    "modelKey": "version.body.e09a5f5694bac4755857a324e2aca325164f40d65b387bf4",
+    "glb": "assets/models/community/versions/b50beb64d389e1274701d9816b91ba3978079910ad622218b26d565cb6805c97.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 5,
+    "下拉版本數": 11
+   },
+   {
+    "英雄": "b2-nube",
+    "名稱": "鵺野鳴介",
+    "modelKey": "version.body.1fcdb267648c607c33264d9519a46d4df9605968b63d0f0c",
+    "glb": "assets/models/community/versions/fdaf9dc376538d4f0fcb5ed906e76dd7cb0d65548db66b17bdf528cf7db4812b.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "b2-orphen",
+    "名稱": "歐菲",
+    "modelKey": "version.body.656e3f92200ed4f935ce9a93cba9a1d7995ee51bdd61d0c1",
+    "glb": "assets/models/community/versions/a54214d5d369371cda90c517de049880ae28c91ab7712d7cc80b26e71ec4a3a3.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "b2-popp",
+    "名稱": "何布",
+    "modelKey": "version.body.cb97bff0d821ef730fb1a9cb068c49960e45b8afd43c35ec",
+    "glb": "assets/models/community/versions/bc6580f18d01a2cd0bc8e212171f818067196d324cd94793d20945ca75f57a27.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 5,
+    "下拉版本數": 10
+   },
+   {
+    "英雄": "b2-rem",
+    "名稱": "蕾姆",
+    "modelKey": "version.body.6144e87f910f8aa85aecb3a5bcf9fdef606f24c5184a27fe",
+    "glb": "assets/models/community/versions/3734d48d4f190483fce8e45e809641f9325b7b0b77a1ba82f4c9a32a12a22189.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "b2-rin",
+    "名稱": "遠坂凜",
+    "modelKey": "version.body.e6df7d8cf0a8c4f060145282533e4f4d8fe0f6f31f02e801",
+    "glb": "assets/models/community/versions/ca651989ff9bdb2275b557b9671346544c4e0c0208b683f5a5b16cb2239bf721.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "b2-shadow",
+    "名稱": "闇影",
+    "modelKey": "version.body.ae9b304d0fccdf328681e449ae98f9989d07665dca98db12",
+    "glb": "assets/models/community/versions/b4592d8d0946b427f2a7b5659c199d290a0e95e1f6b20212f4bc833276660caf.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 4,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "b2-shinchan",
+    "名稱": "野原新之助",
+    "modelKey": "version.body.7b795f169f6491619c9410c3a158fc23b48dcee19fb59f55",
+    "glb": "assets/models/community/versions/6bdfc6166c36cd6554285cde127c665ac455fcf4420c9358a1d7c6a3b1e88769.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 8
+   },
+   {
+    "英雄": "b2-sinbad",
+    "名稱": "辛巴達",
+    "modelKey": "version.body.3f9cdcb4f0a29ad12e19d5506a02f38ff10e862948a1f534",
+    "glb": "assets/models/community/versions/8ceb588f8309374326aee986facfdfb240676925140fc1aaf8bd8fb0c5b0da93.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 5,
+    "下拉版本數": 12
+   },
+   {
+    "英雄": "b2-takopi",
+    "名稱": "章魚嗶",
+    "modelKey": "version.body.844b36e90ddd07845ad8b730383fa2a1cb57c7cff6ad3276",
+    "glb": "assets/models/community/versions/bdce60d0ca8b9de84ca8eb19db53308556ac11e90bcf11a439286a87bf06a717.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "b2-touka",
+    "名稱": "托卡・史考特",
+    "modelKey": "version.body.27ca9ab535eab2e0a5004f08937ea938a8221a7eb3bef181",
+    "glb": "assets/models/community/versions/686079d28d1ac9be4f39a930d232bc581907127a74b6091a2eb291fc656e9c6a.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 4,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "b2-uncle",
+    "名稱": "異世界舅舅",
+    "modelKey": "version.body.2cd8263fe794211d10db3b4f1074534395a911318ba1a17d",
+    "glb": "assets/models/community/versions/3f0238178247ba08f0c9e1bbef6388c73d115a38505247a41551ba1bdb57f9a6.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "b2-yogiri",
+    "名稱": "高遠夜霧",
+    "modelKey": "version.body.5d386a257e44a9cf176dfe7ec1886627e195437f847f95ec",
+    "glb": "assets/models/community/versions/fcc0b83b634ec8afc497fa58991c7321472df6aacfce6a93e7d538915d5cc689.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 5
+   },
+   {
+    "英雄": "b2-zenitsu",
+    "名稱": "我妻善逸",
+    "modelKey": "version.body.9c4d9c3355065e64f198441f13c422a3d012983f90c8939e",
+    "glb": "assets/models/community/versions/b26016f7a72a30a8a1cfc9d056b3de6b8621c2995d135b3026a912b25a6b88e5.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-01-20260907",
+    "名稱": "武藤遊戲",
+    "modelKey": "version.body.d96fb8c8e76139503a1b32cbbd7ea13f09c3ef20b3961f34",
+    "glb": "assets/models/community/versions/c0cf3aa2f7e436482459da0648a3490b07ac0de34f8eab60bf8e00c33e007f67.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-02-20260907",
+    "名稱": "八神庵",
+    "modelKey": "version.body.b47a423ca2a25a83e403c00fbbd131cc669368665eb63d61",
+    "glb": "assets/models/community/versions/8a8a5e0176f40b6a0a745cba9db5e2db092eda7c41a616cc7278804d7ad2664f.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "community-review-03-20260907",
+    "名稱": "不知火舞",
+    "modelKey": "version.body.077dd59b37855db20024b590e11ab48c8efbcc7e8523efa5",
+    "glb": "assets/models/community/versions/227cd7fadd66fa7c622f897b13ac6b93471347796034c9af7377f6803e6928e4.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 4,
+    "下拉版本數": 6
+   },
+   {
+    "英雄": "community-review-04-20260907",
+    "名稱": "空條承太郎",
+    "modelKey": "version.body.83f01042a132f529913ae4590a0b506ca5837604bcf41e47",
+    "glb": "assets/models/community/versions/46e2cf6860d7bf16258e90af87f192b44fb7377d064f076e0b44ff90f34511b0.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-05-20260907",
+    "名稱": "洛克人",
+    "modelKey": "version.body.94f8cbedbfe252d18277d8b57b4e580362de4b262490af53",
+    "glb": "assets/models/community/versions/1a17c7fc9c89bde158bd6f9d70c3a98761e7e02225f57a09b6c7ffc7e799f137.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "community-review-06-20260907",
+    "名稱": "卡比",
+    "modelKey": "version.body.79e1dba7dd1a95c11afa89ba46ab3a87b822c738eb1a3b2b",
+    "glb": "assets/models/community/versions/e99ca23f4890c44abb8dca39fbe988355c52e1070492b55e8858681461ede4d5.glb",
+    "前_最長邊": 16,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 6
+   },
+   {
+    "英雄": "community-review-07-20260907",
+    "名稱": "西索",
+    "modelKey": "version.body.c8395bd2baf507c8314fefd981c6695d7ad92edb3c270acc",
+    "glb": "assets/models/community/versions/b8c31fe5755371cb9e6137d6d2807943caa95f0b135f5772c9e061264ea8b56d.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 5,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "community-review-08-20260907",
+    "名稱": "米卡莎",
+    "modelKey": "version.body.5717cbb93bdda101452dbeb038bad9e482806acd06bfebf5",
+    "glb": "assets/models/community/versions/53d1306e08bd3b1cecc9b19f6f87233a1f3ff0a25bcb2471b96237002a0e3774.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-09-20260907",
+    "名稱": "赫蘿",
+    "modelKey": "version.body.2343b24bd3c6c12ff41437575b7a8c56f14dfb75e45c7b52",
+    "glb": "assets/models/community/versions/4a8310bcb32029b5c7b339424b81048b2c9aa0822bb97808c6dd02e878661e4f.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 3,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "community-review-10-20260907",
+    "名稱": "魯路修",
+    "modelKey": "version.body.3091a7751a9eb837445245a69561448610dc33d8287c7dbc",
+    "glb": "assets/models/community/versions/ade150afe0b6d690eef510559e854487440a8631d5469fe428763a81a96f8071.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-11-20260907",
+    "名稱": "利姆路",
+    "modelKey": "version.body.de07eb4d2080d69ca2438240aa358f37615fab1d4738d7b4",
+    "glb": "assets/models/community/versions/3cd679350750e51c41adf27072a9801e62476875284741ecdab74230af7f24ff.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "community-review-12-20260907",
+    "名稱": "衛宮士郎",
+    "modelKey": "version.body.6bc5b102e7e229b28612694c4c838637da5a87c9da9d1f62",
+    "glb": "assets/models/community/versions/a846b55907ace92d368cc8ee017adfee62e1a75c368ec39e09ce1eec4bcf595c.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-13-20260907",
+    "名稱": "朝田詩乃",
+    "modelKey": "version.body.7164669136e4906c9c2c897034171f6c2bf14990b24c604f",
+    "glb": "assets/models/community/versions/3ef2b3bae25e503327475832603544ba7fbd7badbd3bcf02e92b47a3253fc113.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-14-20260907",
+    "名稱": "殺老師",
+    "modelKey": "version.body.d0dc70e5443939df78aefa8d675b42099b02d517a3ae1b6e",
+    "glb": "assets/models/community/versions/1c2d04b9c7e961d9c02bf8412aaa2b664bdc52c27ef6fa228e64211c993564c8.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "community-review-15-20260907",
+    "名稱": "比利海靈頓",
+    "modelKey": "version.body.f41861e9ba552a2fb6b8702cf7c0b171a67b5fd32508e345",
+    "glb": "assets/models/community/versions/788c4948181c8ead81b94c64bc23db7bb816e8219dd880580a34a205b975b3b4.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 8
+   },
+   {
+    "英雄": "community-review-16-20260907",
+    "名稱": "魔法少女☆伊莉雅",
+    "modelKey": "version.body.1a27f5b34036e0d626f666116c6b43133f8eebef20c711f1",
+    "glb": "assets/models/community/versions/843b7fb65d1e88eaa8b1f0883d4df417b52715d3312badf1081611c7828edfda.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-17-20260907",
+    "名稱": "安茲·烏爾·恭",
+    "modelKey": "version.body.a2517c2e9cc3e09d66f8a4186195f4fc2b61cd7ed7766586",
+    "glb": "assets/models/community/versions/f587ad6c42e18456baa77d7a0f758270effea0e0248ab0ec0873fc58b08f9f89.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-18-20260907",
+    "名稱": "吉爾伽美什",
+    "modelKey": "version.body.849cb657c5a0d5d028f3340b76799e52a0194c614b082816",
+    "glb": "assets/models/community/versions/5d25c46a8fcc90ca7a2f7482c9dfe76f0e3513d9158911743d083bf2a8c981d8.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 4
+   },
+   {
+    "英雄": "community-review-19-20260907",
+    "名稱": "桐谷和人",
+    "modelKey": "version.body.e5f1ccacdc408d8fbd0e3958a8ac0e871fe6c828a991c558",
+    "glb": "assets/models/community/versions/07385f9d1f4ac95520ae6bfd53eda8f91336cc47abc5c3a15c452701fc95285b.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 3,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-20-20260907",
+    "名稱": "御坂美琴",
+    "modelKey": "version.body.971f83fb99ece1fb539c7383ee409e7827fe98ffb0f811af",
+    "glb": "assets/models/community/versions/26f2013bd53ae0a3eb1af8d8e1855990fab249c6b6a23c59b8afd906031af2ab.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-21-20260907",
+    "名稱": "鹿目圓",
+    "modelKey": "version.body.f25043a9b56b77ea13ea6399525dd26148e32ef5bbb4b81f",
+    "glb": "assets/models/community/versions/4171d5a997b5e010420a8395f7726b80d03cc84602d58f2f63f90c414505f874.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-22-20260907",
+    "名稱": "菜月昴",
+    "modelKey": "version.body.e9ad359ba08df5be99538a43207527153580435ced64a2cd",
+    "glb": "assets/models/community/versions/f26cc59dc0901c51e2e1858db05b80a792279d78c04f28f82c33e8f41758e36e.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "community-review-23-20260907",
+    "名稱": "坂田銀時",
+    "modelKey": "version.body.e034a4c068c9d6936a97d6d3b879cd38fd9c54b8c9a3887a",
+    "glb": "assets/models/community/versions/02b6cd26cdd988632f0d79a282b48d2f7f29603911654ba25c2fd5fbcf814d5d.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 5
+   },
+   {
+    "英雄": "community-review-24-20260907",
+    "名稱": "奇犽",
+    "modelKey": "version.body.78a22a94f2785d3bcd6e0ef32d8220dc88f398167a46ea8f",
+    "glb": "assets/models/community/versions/0c1d193db34f4e4fe24f58128a5a93f4028879ccf8f3a905a399220ab8c804e2.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-25-20260907",
+    "名稱": "一拳超人",
+    "modelKey": "version.body.a53e1d01b4bf47aa8794bb3ca64cefd57ff8c5b63116fd94",
+    "glb": "assets/models/community/versions/da62e201a55037f568c2ec533b5812422aa1d8588e81c690d4b46926c5001dc9.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-26-20260907",
+    "名稱": "名偵探柯南",
+    "modelKey": "version.body.75b0f70143afadc8a37a785e0706d60ad24c8b41159ff03c",
+    "glb": "assets/models/community/versions/a8e89599b26c580eaea5b267965ea8a54ae2763d38a74f12d9506c8e2156279d.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-27-20260907",
+    "名稱": "庫洛魔法使",
+    "modelKey": "version.body.f8311299c86c82ff2d915d0b144092596f21827e4d7bb33a",
+    "glb": "assets/models/community/versions/577637e6d556c50d4a6e9bae0e9da4684a712100a37c05ee9fc828eeccd4f9ed.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-28-20260907",
+    "名稱": "艾莉絲·伯雷亞斯·格雷拉特",
+    "modelKey": "version.body.c5f7c4c80e1920406ade7e578458ffd8d9721f3313de4ab8",
+    "glb": "assets/models/community/versions/2c8e4b37a672a7419f74c1ed8576f2f2d183883c6553e57055df66601a8c89c9.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-29-20260907",
+    "名稱": "芙莉蓮",
+    "modelKey": "version.body.584c8cd6112253d1b1f936db2cb3958aa58ad895f7859da8",
+    "glb": "assets/models/community/versions/cfa0f849e7463a4bf545dd225af430f2da04744a1c8ce9a65fb31f5e52a3a885.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-30-20260907",
+    "名稱": "尼古貓貓",
+    "modelKey": "version.body.b2772908591ba8d3dfa879382b8b99f03ab711f05d76e483",
+    "glb": "assets/models/community/versions/c6a382fc292875f298ec2fb04fe9b10c23e5704adc1a01d0f3c96f6364eaf7c2.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "community-review-31-20260907",
+    "名稱": "SUN樂",
+    "modelKey": "version.body.0ba9a895eadae18bf59fc8b3d44e9e4a346e5ab6ee7ead95",
+    "glb": "assets/models/community/versions/f5ee6f2f81183ff9c2c4448b9fbbce4aee7748da53bceccfdc888ea3abeb86ed.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 3,
+    "下拉版本數": 5
+   },
+   {
+    "英雄": "community-review-32-20260907",
+    "名稱": "阿薩謝爾",
+    "modelKey": "version.body.2c8f3fd1ec55b7d216e6668ee399c345c7bfe0da7891f439",
+    "glb": "assets/models/community/versions/acbc5a0cd8880ef835cfc0bb59011f59fbca3c053f7e0902c5d7df5cae5e166a.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 6
+   },
+   {
+    "英雄": "community-review-33-20260907",
+    "名稱": "近衛刀太",
+    "modelKey": "version.body.cefec22fb50f901f84f6dfa34b597f8d841c3656f69213d5",
+    "glb": "assets/models/community/versions/f9dc9cae5335d6348a05eb2c51e532f324657d8542e98b58eaad5493c0e8d44b.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "community-review-34-20260907",
+    "名稱": "高速婆婆",
+    "modelKey": "version.body.5acbcbb1ec33508f1648011f74264f8b52f8293e99b57e89",
+    "glb": "assets/models/community/versions/44e26dc2f25abaa22bd584364c06c4e3e7f9aa44dedc9bf079a9d7ba452c6ba0.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 6,
+    "下拉版本數": 12
+   },
+   {
+    "英雄": "community-review-35-20260907",
+    "名稱": "炭治郎",
+    "modelKey": "version.body.bd2331fe597877fb1cc1eccabb74caa5c1ec33080af02fa4",
+    "glb": "assets/models/community/versions/c1d2d01e174034e9923dc44a788f2c735cc99350d81c8ff4ca25605f2ba945ab.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "community-review-36-20260907",
+    "名稱": "鬼畜王蘭斯",
+    "modelKey": "version.body.970eff7fdab175a901b429a6a93f70f8d9d851b2c7fddbdd",
+    "glb": "assets/models/community/versions/69ee9104640e87d008606b8b74644bebe8ce34a10610e6c5cc898016d8ba2da8.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "community-review-37-20260907",
+    "名稱": "吉伊卡哇",
+    "modelKey": "version.body.9e4b7422fa7132ba5d34696e07939c21d559884e213e3cda",
+    "glb": "assets/models/community/versions/6ed4db99307c164bc9fcc7d24df6f11b4135e698ec244e58ddf8690c8e44d3be.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 9
+   },
+   {
+    "英雄": "godie-e001",
+    "名稱": "蟬在叫人壞掉 - 龍宮禮奈",
+    "modelKey": "imported.renaryugu2",
+    "glb": "assets/models/imported/renaryugu2.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-e002",
+    "名稱": "亞瑟王 - Saber",
+    "modelKey": "version.body.b675e6eae6b94cc1e13cb455da2a41d2af4d178844c543ac",
+    "glb": "assets/models/imported/versions/fdfc941cde9432c19a8046d45b3f4aa0abf0351649ff0f11a267c0ac4a1231eb.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "godie-e007",
+    "名稱": "龍之子 - 天地志狼",
+    "modelKey": "imported.herolingtong",
+    "glb": "assets/models/imported/herolingtong.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-e008",
+    "名稱": "火霧戰士 - 夏娜",
+    "modelKey": "version.body.e6739b661187272e1504d2eda1f8b11d4a9a9665d0987220",
+    "glb": "assets/models/imported/versions/22d5cd7a2c83ff1e5dae2b0f5432b6ef2c1044f40b21ae60c409fad776e05d44.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "godie-e00l",
+    "名稱": "亞瑟王 - Saber",
+    "modelKey": "version.body.b675e6eae6b94cc1e13cb455da2a41d2af4d178844c543ac",
+    "glb": "assets/models/imported/versions/fdfc941cde9432c19a8046d45b3f4aa0abf0351649ff0f11a267c0ac4a1231eb.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "godie-e00n",
+    "名稱": "蟬在叫人壞掉 - 龍宮禮奈",
+    "modelKey": "imported.renaryugu2",
+    "glb": "assets/models/imported/renaryugu2.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-e00r",
+    "名稱": "最終泛用人型決戰兵器 - 初號機",
+    "modelKey": "version.body.6762543e2beb02d969c86576c4f12079362e820376133999",
+    "glb": "assets/models/ou99/versions/ceee652e34be4500e33d90909ed912943bab55be90a50ee06217112822174bcd.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 4,
+    "下拉版本數": 2
+   },
+   {
+    "英雄": "godie-e00s",
+    "名稱": "白木老樹精 - 白木卡迪那",
+    "modelKey": "version.body.61c3d8d7a9fc3804811338e39436e64b01d8184fd64fd375",
+    "glb": "assets/models/ou99/versions/33a0ce0c407d2989a7654208f72d79ecce4f05883f369b9e6ff8d3725c22f8eb.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 2
+   },
+   {
+    "英雄": "godie-e00w",
+    "名稱": "神鳴流劍士 - 櫻綻剎那",
+    "modelKey": "imported.mfls",
+    "glb": "assets/models/imported/mfls.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-e00x",
+    "名稱": "神鳴流劍士 - 櫻綻剎那",
+    "modelKey": "imported.mfls",
+    "glb": "assets/models/imported/mfls.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-e010",
+    "名稱": "白木老樹精 - 白木卡迪那",
+    "modelKey": "version.body.61c3d8d7a9fc3804811338e39436e64b01d8184fd64fd375",
+    "glb": "assets/models/ou99/versions/33a0ce0c407d2989a7654208f72d79ecce4f05883f369b9e6ff8d3725c22f8eb.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 2
+   },
+   {
+    "英雄": "godie-edem",
+    "名稱": "寫輪眼復仇者 - 宇智波佐助",
+    "modelKey": "version.body.80bf9fc88e4c0b75200173260218c85045dcd0325755582f",
+    "glb": "assets/models/imported/versions/865a87dbf0a8d90d31ec20dfebeb846b932f10688948221b8c36d13a73148041.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "godie-efur",
+    "名稱": "揍敵客大家長 - 揍敵客桀諾",
+    "modelKey": "version.body.34dfbeece18295bcd6809d3e26694912a466542d9bf82c57",
+    "glb": "assets/models/ou99/versions/dc848d012c84362c811f570a9a58b3cb2371264bb5bb8b2ccc66ec4ab6f36e74.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 2
+   },
+   {
+    "英雄": "godie-emfr",
+    "名稱": "魔法老師 - 涅吉。史普林。菲爾德",
+    "modelKey": "imported.negi",
+    "glb": "assets/models/imported/negi.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 3,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-emns",
+    "名稱": "奇樂 - 夜神月",
+    "modelKey": "imported.herolight",
+    "glb": "assets/models/imported/herolight.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-etyr",
+    "名稱": "治癒系公主 - 木乃香",
+    "modelKey": "imported.herooichi",
+    "glb": "assets/models/imported/herooichi.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-ewar",
+    "名稱": "龍之子 - 天地志狼",
+    "modelKey": "imported.herolingtong",
+    "glb": "assets/models/imported/herolingtong.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-h00l",
+    "名稱": "時空勇者 - 林克",
+    "modelKey": "imported.linkstik",
+    "glb": "assets/models/imported/linkstik.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 3,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-h01n",
+    "名稱": "開外掛的死神 - 黑崎一護",
+    "modelKey": "version.body.0a0d16b904a2effafb841128d8dfc9630fc1001515087362",
+    "glb": "assets/models/imported/versions/fef752496517e9eb4f58573a99bba38bbac367872445be38409ebf3b77b310c2.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "godie-h01o",
+    "名稱": "外掛開很大的死神 - 黑崎一護",
+    "modelKey": "version.body.73aa5fc78ce78b9d886522a53d07ed7e4ffdc1d59d4d7984",
+    "glb": "assets/models/imported/versions/fef752496517e9eb4f58573a99bba38bbac367872445be38409ebf3b77b310c2.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "godie-h01u",
+    "名稱": "亂世癿王者 - 呂布奉先",
+    "modelKey": "version.body.65625f70066c08daf27aec96a0922bfe6500b3e6bbb95574",
+    "glb": "assets/models/imported/versions/bd61796f8fd7512fc674cb6f27958e21cbe65c6ebb7e49f4a27fc41db6de8ff1.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 2
+   },
+   {
+    "英雄": "godie-h020",
+    "名稱": "黑魔導士 - 莉娜因巴斯",
+    "modelKey": "version.body.2dfcbc4ab01184f5e44b70038569f9d6008f5f930068090d",
+    "glb": "assets/models/imported/versions/8791a3e65c3ef4063cb4b93dbe519008d44f4bcf2c4f61e575814d70460413df.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 5
+   },
+   {
+    "英雄": "godie-h02k",
+    "名稱": "國寶級的畜生 - 熊貓",
+    "modelKey": "version.body.901620ebf37529da8bf2db798210a9edd60bec9a9fc17f48",
+    "glb": "assets/models/ou99/versions/d6ceb6d75a5b078536a3dff8ea64550eef6755db25c1c7c5005ebe6bcd0e2958.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 2
+   },
+   {
+    "英雄": "godie-h02r",
+    "名稱": "種子神奇寶貝 - 妙蛙花",
+    "modelKey": "imported.bulbasaur",
+    "glb": "assets/models/imported/bulbasaur.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 3,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-h02u",
+    "名稱": "看似憂鬱的神獸 - 草泥馬",
+    "modelKey": "imported.horse",
+    "glb": "assets/models/imported/horse.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-h02v",
+    "名稱": "看似憂鬱的神獸 - 草泥馬",
+    "modelKey": "imported.horse",
+    "glb": "assets/models/imported/horse.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-hapm",
+    "名稱": "海克力斯 - Berserker",
+    "modelKey": "version.body.6c7076cb544f1812f857597fa1a58632c334a7aa3a0d13fe",
+    "glb": "assets/models/ou99/versions/a92a451d7f8d542acb998150eb65b906b63a91191c399c866d112c2e1bb796b5.glb",
+    "前_最長邊": 128,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 4,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "godie-hart",
+    "名稱": "最終幻想 - 克勞德",
+    "modelKey": "imported.cloud",
+    "glb": "assets/models/imported/cloud.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 4,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-hgam",
+    "名稱": "種子神奇寶貝 - 妙蛙種子",
+    "modelKey": "imported.bulbasaur",
+    "glb": "assets/models/imported/bulbasaur.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 3,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-hjai",
+    "名稱": "黑魔導士 - 莉娜因巴斯",
+    "modelKey": "version.body.2dfcbc4ab01184f5e44b70038569f9d6008f5f930068090d",
+    "glb": "assets/models/imported/versions/8791a3e65c3ef4063cb4b93dbe519008d44f4bcf2c4f61e575814d70460413df.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 5
+   },
+   {
+    "英雄": "godie-hpb1",
+    "名稱": "獸矛傳承使 - 蒼月潮",
+    "modelKey": "imported.herotoshiiemaeda",
+    "glb": "assets/models/imported/herotoshiiemaeda.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 2,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-huth",
+    "名稱": "超級普烏 - 魔人普烏",
+    "modelKey": "version.body.eca0d474c68963a7b7b2ea04f76d125dec059374a5fe7bfe",
+    "glb": "assets/models/imported/versions/6d1911e02127d385eeb87620fd79ddea42e918b95e870220ff6cda21b2aba41e.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 2
+   },
+   {
+    "英雄": "godie-hvsh",
+    "名稱": "梅杜莎 - Rider",
+    "modelKey": "version.body.f75717a5c4b2c345362a5ab098bc86709bb5606b882c714a",
+    "glb": "assets/models/imported/versions/0356ce4cd145672eaa66037cbc789cc293ab74726721b93007e5ebc9cc32b424.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 4
+   },
+   {
+    "英雄": "godie-hvwd",
+    "名稱": "除魔巫女 - 桔梗",
+    "modelKey": "imported.kikyou",
+    "glb": "assets/models/imported/kikyou.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-n003",
+    "名稱": "黑暗福音 - 依文潔琳",
+    "modelKey": "version.body.37495a6c82df5a85bb0a6b47b332baa584d2f0e0f16ae75b",
+    "glb": "assets/models/ou99/versions/becaad1c7979cdf85a472cd61fe33b487c76f458001b49969b24c44fd4a0a3d8.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "godie-n00b",
+    "名稱": "小叮噹 - 哆拉A夢",
+    "modelKey": "version.body.030a65e618ff28e6927aa337d9d2f367ad9769879716f25d",
+    "glb": "assets/models/imported/versions/b4a6bfdb1ef90074d990f541020ba135064ecc530d62228b7d41262ff9f9079b.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 3,
+    "下拉版本數": 2
+   },
+   {
+    "英雄": "godie-n00p",
+    "名稱": "妖狐藏馬 - 南野秀一",
+    "modelKey": "imported.fox",
+    "glb": "assets/models/imported/fox.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 2,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-n01c",
+    "名稱": "傳說的龍騎士 - 勇者小呆",
+    "modelKey": "imported.sd2",
+    "glb": "assets/models/imported/sd2.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 2,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-n01g",
+    "名稱": "黑暗福音 - 依文潔琳",
+    "modelKey": "imported.long",
+    "glb": "assets/models/imported/long.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-nbbc",
+    "名稱": "傳說的龍騎士 - 勇者小呆",
+    "modelKey": "version.body.5c60de5fb32a3dd6cf1cb605db7a61938343c1beb1bf65bc",
+    "glb": "assets/models/community/versions/5eb4e1322b17cd53b2a791af6c6728af26101c88e3b94f81e3104ccab9b31540.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 8,
+    "下拉版本數": 5
+   },
+   {
+    "英雄": "godie-nsjs",
+    "名稱": "妖狐藏馬 - 南野秀一",
+    "modelKey": "imported.fox2",
+    "glb": "assets/models/imported/fox2.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 2,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-o00k",
+    "名稱": "傲嬌電氣老鼠 - 皮卡娘",
+    "modelKey": "imported.pika",
+    "glb": "assets/models/imported/pika.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 4,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-o00l",
+    "名稱": "獸神官 - 傑洛士",
+    "modelKey": "imported.heroxelloss",
+    "glb": "assets/models/imported/heroxelloss.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-o00x",
+    "名稱": "超級賽亞人 - 悟空",
+    "modelKey": "imported.goku",
+    "glb": "assets/models/imported/goku.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 2,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-o02l",
+    "名稱": "神騎寶貝 - 皮卡丘",
+    "modelKey": "imported.picacugy",
+    "glb": "assets/models/imported/picacugy.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-o02p",
+    "名稱": "夢幻之星 - 初音",
+    "modelKey": "imported.heromiku",
+    "glb": "assets/models/imported/heromiku.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 2,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-o030",
+    "名稱": "電車癡漢 - 臭作",
+    "modelKey": "version.body.5a41242fa7e81b541b6932c154ec23ffa7fab0c2ba5c94fe",
+    "glb": "assets/models/ou99/versions/6fe36feda14cb204b1bee4c7bbf8dcb24c4419980a3d0b503d03e9cc1a8df38e.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 3,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "godie-ofar",
+    "名稱": "神奇寶貝兒 - 皮卡丘",
+    "modelKey": "imported.heropikachu",
+    "glb": "assets/models/imported/heropikachu.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-ogld",
+    "名稱": "美白大法師 - 黑人牙膏",
+    "modelKey": "version.body.d39ccfe076898ede67a391497a69f789d7023f8f7457ba24",
+    "glb": "assets/models/ou99/versions/9b37c1b932bcf45f612b3fd4412152c20736501929f5ae0297bfa4995f34a727.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 2
+   },
+   {
+    "英雄": "godie-ogrh",
+    "名稱": "賽亞人 - 悟空",
+    "modelKey": "imported.goku",
+    "glb": "assets/models/imported/goku.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 2,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-orkn",
+    "名稱": "電車癡漢 - 臭作",
+    "modelKey": "version.body.5a41242fa7e81b541b6932c154ec23ffa7fab0c2ba5c94fe",
+    "glb": "assets/models/ou99/versions/6fe36feda14cb204b1bee4c7bbf8dcb24c4419980a3d0b503d03e9cc1a8df38e.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 3,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "godie-osam",
+    "名稱": "犬妖 - 殺生丸",
+    "modelKey": "version.body.4e086c10afec8b5187e7de76b4308b21a6b784d0081c80d1",
+    "glb": "assets/models/imported/versions/5239e1d214e9a2e9829c646274d50392d1e52e0ef70abef1ceb568269cc848d3.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 3,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "godie-u00h",
+    "名稱": "鬼畜紅王 - 鬼畜狂刀KYO",
+    "modelKey": "imported.herokyo",
+    "glb": "assets/models/imported/herokyo.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 3,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-u00j",
+    "名稱": "神性的流失 - 賽菲洛斯",
+    "modelKey": "imported.herosephiroth",
+    "glb": "assets/models/imported/herosephiroth.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 3,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-u00k",
+    "名稱": "邪惡意念集合體 - 死之王",
+    "modelKey": "version.body.aa6f12b432d857065a345eb84d25df32b85ff785b3c741fa",
+    "glb": "assets/models/ou99/versions/e8b57b8054ce2589fe74e90273dbd39b4ae42d5490e119ee83015eff192ed4c7.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 3,
+    "下拉版本數": 2
+   },
+   {
+    "英雄": "godie-u00l",
+    "名稱": "北斗之鼠 - 拳四郎",
+    "modelKey": "imported.heropikachu",
+    "glb": "assets/models/imported/heropikachu.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-u00n",
+    "名稱": "草帽小子 - 蒙其.D.魯夫",
+    "modelKey": "version.body.8a8d08548c6b48fb2e6eff1e703f455aaa9b98fb20228246",
+    "glb": "assets/models/imported/versions/042e582a6e25415c0c5b5e3dce3581749e327b22aa874f078dad7cacefaef56f.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "godie-u00o",
+    "名稱": "草帽小子 - 蒙其.D.魯夫",
+    "modelKey": "version.body.8a8d08548c6b48fb2e6eff1e703f455aaa9b98fb20228246",
+    "glb": "assets/models/imported/versions/042e582a6e25415c0c5b5e3dce3581749e327b22aa874f078dad7cacefaef56f.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "godie-u00v",
+    "名稱": "黑手黨老大 - 基廉列克",
+    "modelKey": "imported.rabbit",
+    "glb": "assets/models/imported/rabbit.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-u010",
+    "名稱": "邪眼師 - 飛影",
+    "modelKey": "imported.herohehi",
+    "glb": "assets/models/imported/herohehi.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 2,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-u01u",
+    "名稱": "三刀流劍士 - 索隆",
+    "modelKey": "version.body.adca1efc61b1f51416e39c07f7b316bfc2e470676bbb9ea7",
+    "glb": "assets/models/imported/versions/0c2d3571839a78d707cc496596b7dd2c2f93514e3bf01b00c2cb52841c36e65f.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "godie-u034",
+    "名稱": "職業獵人 - 傑 富力士",
+    "modelKey": "imported.herobiggon",
+    "glb": "assets/models/imported/herobiggon.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-ubal",
+    "名稱": "魔界霸主 - 巴恩大魔王",
+    "modelKey": "version.body.2720d256116ac94d911e910d126ae25bb5cae67fcefd4442",
+    "glb": "assets/models/community/versions/97d9fb78fec6abbf162a75223132e92485e51958306a2563fe4f7189dab8dd00.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 8,
+    "下拉版本數": 4
+   },
+   {
+    "英雄": "godie-ucrl",
+    "名稱": "職業獵人 - 傑 富力士",
+    "modelKey": "imported.herobiggon",
+    "glb": "assets/models/imported/herobiggon.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-udea",
+    "名稱": "至尊學長 - 飛鼠先生",
+    "modelKey": "version.body.0fbe09b6c904a7c0ce7e0a710ae1a1d692f88b03ad995199",
+    "glb": "assets/models/ou99/versions/3719a18cd861533c7acc56d1b1a7ff30ba7ee13cd90ec9caef28f4cec15e8879.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 2
+   },
+   {
+    "英雄": "godie-udre",
+    "名稱": "三刀流劍士 - 索隆",
+    "modelKey": "version.body.adca1efc61b1f51416e39c07f7b316bfc2e470676bbb9ea7",
+    "glb": "assets/models/imported/versions/0c2d3571839a78d707cc496596b7dd2c2f93514e3bf01b00c2cb52841c36e65f.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 2,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "godie-umal",
+    "名稱": "北斗神拳掌門人 - 拳四郎",
+    "modelKey": "version.body.5a67646ce44f29294d86e43b6603a42cc8ffd5a9d0276675",
+    "glb": "assets/models/ou99/versions/92373809c93556b7b1a82a315df51071c5a65a11ebc1d240e4e2087bdf38403a.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 4,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "godie-uvng",
+    "名稱": "邪眼師 - 飛影",
+    "modelKey": "imported.herohehi",
+    "glb": "assets/models/imported/herohehi.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 2,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "godie-zombiex",
+    "名稱": "聖杯黑泥醬 - 喪標麥可",
+    "modelKey": "champ.godie-zombiex",
+    "glb": "assets/models/champions/blocky-undead.glb",
+    "前_最長邊": 16,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "lol-ahri",
+    "名稱": "阿璃",
+    "modelKey": "community.body.fc8ae8460374f5a9df00338cf93c74323c00bbbfc8bfedcc",
+    "glb": "assets/models/community/5d0b4cd061d6b40c9ecb0c62341e338459cedb64e75c0c2011549067aafc26c4.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 2,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "lol-ashe",
+    "名稱": "艾希",
+    "modelKey": "community.body.0fba948f704d352fb81c2afda4d8dd206de61e2733e8aa70",
+    "glb": "assets/models/community/c40ae2cebbe1abd1d9de755917e9e50503d13a49433624b774f097d81730fe06.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "lol-blitzcrank",
+    "名稱": "布里姿",
+    "modelKey": "community.body.ab29dff238c2e771e10e894702acc029d60c69c1efbbdfcc",
+    "glb": "assets/models/community/e3597608fc26e4f8f77e6e0bbc2e51cbaab9cd14f6a9d49c87a117abcf1130ce.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "lol-chogath",
+    "名稱": "科加斯",
+    "modelKey": "community.body.b603c017d0f77565784aeb490fd0525ecac875ac62ab2ed9",
+    "glb": "assets/models/community/75fbbe79eadaaabf64bad5242aa345447ca1b298884f9f4086dfb4f69707fd20.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "lol-fiddlesticks",
+    "名稱": "稻草人",
+    "modelKey": "community.body.36ba05ae68e89ed2f913ebb6618d63f36e6bc546d8095c99",
+    "glb": "assets/models/community/8d97ee1796d349f438988562d227b71a1ac12a0b8642144a90e922e9fc8f5c40.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 2,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "lol-garen",
+    "名稱": "蓋倫",
+    "modelKey": "community.body.1154f4db6e021c2671f95dfba066eb3da601efbc5779ab13",
+    "glb": "assets/models/community/09d3add420d8ba4b8275a207b69716382151d0b9ad7def47419f182bfbc85b22.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "lol-karthus",
+    "名稱": "卡爾瑟斯",
+    "modelKey": "version.body.36e538b4aa3d6bb68f748f9cf4af64f0393015ca7ca979c6",
+    "glb": "assets/models/community/versions/d66169544a7ab5104e5b41954c7f77ce414a79bd37fd4cdfc104a7840d396972.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 7
+   },
+   {
+    "英雄": "lol-leesin",
+    "名稱": "李星",
+    "modelKey": "version.body.2e5b778d3294cb5490ea04098c327159b92369e08ab2bf7b",
+    "glb": "assets/models/community/versions/326cedac0d487cf4e711da2f294f7770f884f40e5a69237289ee2aaab90356e1.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 4
+   },
+   {
+    "英雄": "lol-lux",
+    "名稱": "拉克絲",
+    "modelKey": "version.body.c55acb04a86281e81f22da8dfc65e01ef5ac8607d751f690",
+    "glb": "assets/models/community/versions/3638a0a5830a5b4d0f776d508a42592976239b555850030fa585c90d6dd161ea.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 7
+   },
+   {
+    "英雄": "lol-malphite",
+    "名稱": "墨菲特",
+    "modelKey": "community.body.bf5d1c1350a97aa76cd9edcf9e9f2d1cf1452626f91c489e",
+    "glb": "assets/models/community/b1e06122b8eba265ca311d257f4a2844628178aef36f256706550df9b5c428d9.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "lol-missfortune",
+    "名稱": "好運姐",
+    "modelKey": "version.body.69e09156dc9e456409f4c887b5a5f75f9d7b743f436c3c07",
+    "glb": "assets/models/community/versions/93812ba2f2635ce1c2efe26bb6c2b2b8f140021c4afe242f0f59bd489c7252fd.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 7
+   },
+   {
+    "英雄": "lol-ornn",
+    "名稱": "鄂爾",
+    "modelKey": "community.body.23b232debb6e8e2f8e9992680758ac840fa58f61fc18b4aa",
+    "glb": "assets/models/community/a792e0e23ec13a979c0be27560633cf8fad2130e87ea12dfb2f0c2a3ef48f8c5.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 3,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "lol-sett",
+    "名稱": "賽特",
+    "modelKey": "community.body.ceee63ad759e049903f88f10fa95671f562c06de48e790b7",
+    "glb": "assets/models/community/35c578dcf8197f08595d9f4de97399b2a570c59032b69bc81d540118cc8f9eaf.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 3,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "lol-thresh",
+    "名稱": "瑟雷西",
+    "modelKey": "community.body.91bb53c74fdca5cd643260d0f197733f14068f4a79a3e488",
+    "glb": "assets/models/community/c8c6a9f7b686a55e2c072e6010b1f061a40c7c7d08da6b2d8982639643171f5d.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "lol-velkoz",
+    "名稱": "威寇茲",
+    "modelKey": "community.body.d0d30f1ed7d6244e5f1bc646047a2d86d87a68bc5673f399",
+    "glb": "assets/models/community/f88ed18f5f257f70f1fd5f0b0a7041b4ce700c499985b90506f49a1806d48eb1.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "lol-warwick",
+    "名稱": "沃維克",
+    "modelKey": "version.body.889963a0992be9908ae8b739ff529da6223519deee3d5aa4",
+    "glb": "assets/models/community/versions/8b90fd472ee157c0ceb9ac9a2fb3cc20d0b7fc68f46a67748b18f308a1ada6e6.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "lol-xerath",
+    "名稱": "齊勒斯",
+    "modelKey": "version.body.f89f3e6d586e2e9052126517d3ef6935bb42634a94255856",
+    "glb": "assets/models/community/versions/d9eed6d2d6587925067bfb5ef49f4d678c7f3af604a727c7e45899e7f373e326.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 7
+   },
+   {
+    "英雄": "lol-yasuo",
+    "名稱": "犽宿",
+    "modelKey": "version.body.c88ba26c97973dd9b226b267f1cbcaec6a18bc8758a9f54f",
+    "glb": "assets/models/community/versions/1107a042a6dee7b30bde83f92e9fce7b62b1cb5ea153e10c64f52add2137145b.glb",
+    "前_最長邊": 256,
+    "後_最長邊": null,
+    "凍結副本": true,
+    "貼圖張數": 1,
+    "下拉版本數": 3
+   },
+   {
+    "英雄": "sela",
+    "名稱": "Sela, the Ember Sage",
+    "modelKey": "champ.sela",
+    "glb": "assets/models/champions/blocky-mage.glb",
+    "前_最長邊": 16,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   },
+   {
+    "英雄": "thorne",
+    "名稱": "Thorne, the Bramble Knight",
+    "modelKey": "champ.thorne",
+    "glb": "assets/models/champions/blocky-knight.glb",
+    "前_最長邊": 16,
+    "後_最長邊": null,
+    "凍結副本": false,
+    "貼圖張數": 1,
+    "下拉版本數": 0
+   }
+  ]
+ },
+ "全樹分類": {
+  "可達": 350,
+  "下拉舊版本": 242,
+  "沒有人引用": 562,
+  "超過上限": {
+   "可達": 73,
+   "下拉舊版本": 151,
+   "沒有人引用": 185
+  }
+ },
+ "可達且超標": [
+  {
+   "glb": "assets/models/hex/hex_grass.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "hexagons_medieval",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.world-tree.json",
+    "擺在 arenas/arena.dota.json",
+    "擺在 arenas/arena.world-tree.json"
+   ]
+  },
+  {
+   "glb": "assets/models/hex/hex_water.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "hexagons_medieval",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.infinity-castle.json",
+    "擺在 maps/map.world-tree.json",
+    "擺在 arenas/arena.dota.json",
+    "擺在 arenas/arena.infinity-castle.json",
+    "擺在 arenas/arena.world-tree.json"
+   ]
+  },
+  {
+   "glb": "assets/models/hex/rock.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "hexagons_medieval",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.frieren.json",
+    "擺在 maps/map.heavens-arena.json",
+    "擺在 maps/map.holy-grail.json",
+    "擺在 maps/map.infinity-castle.json",
+    "擺在 maps/map.nazarick.json",
+    "擺在 maps/map.shiganshina.json",
+    "擺在 maps/map.world-tree.json",
+    "擺在 arenas/arena.dota.json",
+    "擺在 arenas/arena.frieren.json",
+    "擺在 arenas/arena.godie.json",
+    "擺在 arenas/arena.heavens-arena.json",
+    "擺在 arenas/arena.holy-grail.json",
+    "擺在 arenas/arena.infinity-castle.json",
+    "擺在 arenas/arena.nazarick.json",
+    "擺在 arenas/arena.shiganshina.json",
+    "擺在 arenas/arena.world-tree.json"
+   ]
+  },
+  {
+   "glb": "assets/models/hex/tower_blue.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "hexagons_medieval",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 arenas/arena.dota.json"
+   ]
+  },
+  {
+   "glb": "assets/models/hex/tower_red.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "hexagons_medieval",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 arenas/arena.dota.json"
+   ]
+  },
+  {
+   "glb": "assets/models/hex/tree_single.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "hexagons_medieval",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.world-tree.json",
+    "擺在 arenas/arena.dota.json",
+    "擺在 arenas/arena.world-tree.json"
+   ]
+  },
+  {
+   "glb": "assets/models/hex/trees_large.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "hexagons_medieval",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.world-tree.json",
+    "擺在 arenas/arena.dota.json",
+    "擺在 arenas/arena.world-tree.json"
+   ]
+  },
+  {
+   "glb": "assets/models/hex/trees_medium.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "hexagons_medieval",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.world-tree.json",
+    "擺在 arenas/arena.dota.json",
+    "擺在 arenas/arena.world-tree.json"
+   ]
+  },
+  {
+   "glb": "assets/models/hex/waterlily.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "hexagons_medieval",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.infinity-castle.json",
+    "擺在 maps/map.world-tree.json",
+    "擺在 arenas/arena.dota.json",
+    "擺在 arenas/arena.infinity-castle.json",
+    "擺在 arenas/arena.world-tree.json"
+   ]
+  },
+  {
+   "glb": "assets/models/props/banner_shield_blue.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.heavens-arena.json",
+    "擺在 arenas/arena.castle.json",
+    "擺在 arenas/arena.colosseum.json",
+    "擺在 arenas/arena.heavens-arena.json",
+    "擺在 arenas/arena.skeleton.json"
+   ]
+  },
+  {
+   "glb": "assets/models/props/banner_shield_green.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 arenas/arena.castle.json",
+    "擺在 arenas/arena.colosseum.json",
+    "擺在 arenas/arena.skeleton.json"
+   ]
+  },
+  {
+   "glb": "assets/models/props/banner_shield_red.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.heavens-arena.json",
+    "擺在 arenas/arena.castle.json",
+    "擺在 arenas/arena.colosseum.json",
+    "擺在 arenas/arena.heavens-arena.json",
+    "擺在 arenas/arena.skeleton.json"
+   ]
+  },
+  {
+   "glb": "assets/models/props/banner_shield_yellow.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 arenas/arena.castle.json",
+    "擺在 arenas/arena.colosseum.json",
+    "擺在 arenas/arena.skeleton.json"
+   ]
+  },
+  {
+   "glb": "assets/models/props/barrel_small.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.heavens-arena.json",
+    "擺在 maps/map.shiganshina.json",
+    "擺在 arenas/arena.castle.json",
+    "擺在 arenas/arena.colosseum.json",
+    "擺在 arenas/arena.heavens-arena.json",
+    "擺在 arenas/arena.shiganshina.json"
+   ]
+  },
+  {
+   "glb": "assets/models/props/chest.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.frieren.json",
+    "擺在 maps/map.nazarick.json",
+    "擺在 maps/map.shiganshina.json",
+    "擺在 arenas/arena.castle.json",
+    "擺在 arenas/arena.frieren.json",
+    "擺在 arenas/arena.nazarick.json",
+    "擺在 arenas/arena.shiganshina.json"
+   ]
+  },
+  {
+   "glb": "assets/models/props/crates_stacked.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.frieren.json",
+    "擺在 maps/map.heavens-arena.json",
+    "擺在 maps/map.nazarick.json",
+    "擺在 maps/map.shiganshina.json",
+    "擺在 arenas/arena.castle.json",
+    "擺在 arenas/arena.colosseum.json",
+    "擺在 arenas/arena.frieren.json",
+    "擺在 arenas/arena.heavens-arena.json",
+    "擺在 arenas/arena.nazarick.json",
+    "擺在 arenas/arena.shiganshina.json"
+   ]
+  },
+  {
+   "glb": "assets/models/props/floor_tile_large.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.frieren.json",
+    "擺在 maps/map.heavens-arena.json",
+    "擺在 maps/map.holy-grail.json",
+    "擺在 maps/map.infinity-castle.json",
+    "擺在 maps/map.nazarick.json",
+    "擺在 maps/map.shiganshina.json",
+    "擺在 arenas/arena.frieren.json",
+    "擺在 arenas/arena.heavens-arena.json",
+    "擺在 arenas/arena.holy-grail.json",
+    "擺在 arenas/arena.infinity-castle.json",
+    "擺在 arenas/arena.nazarick.json",
+    "擺在 arenas/arena.shiganshina.json"
+   ]
+  },
+  {
+   "glb": "assets/models/props/pillar.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.frieren.json",
+    "擺在 maps/map.infinity-castle.json",
+    "擺在 maps/map.nazarick.json",
+    "擺在 arenas/arena.castle.json",
+    "擺在 arenas/arena.colosseum.json",
+    "擺在 arenas/arena.frieren.json",
+    "擺在 arenas/arena.infinity-castle.json",
+    "擺在 arenas/arena.nazarick.json",
+    "擺在 arenas/arena.royale.json",
+    "擺在 arenas/arena.skeleton.json"
+   ]
+  },
+  {
+   "glb": "assets/models/props/torch_mounted.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.frieren.json",
+    "擺在 maps/map.heavens-arena.json",
+    "擺在 maps/map.holy-grail.json",
+    "擺在 maps/map.infinity-castle.json",
+    "擺在 maps/map.nazarick.json",
+    "擺在 maps/map.shiganshina.json",
+    "擺在 arenas/arena.colosseum.json",
+    "擺在 arenas/arena.frieren.json",
+    "擺在 arenas/arena.heavens-arena.json",
+    "擺在 arenas/arena.holy-grail.json",
+    "擺在 arenas/arena.infinity-castle.json",
+    "擺在 arenas/arena.nazarick.json",
+    "擺在 arenas/arena.shiganshina.json"
+   ]
+  },
+  {
+   "glb": "assets/models/props/torch.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.frieren.json",
+    "擺在 maps/map.heavens-arena.json",
+    "擺在 maps/map.holy-grail.json",
+    "擺在 maps/map.infinity-castle.json",
+    "擺在 maps/map.nazarick.json",
+    "擺在 maps/map.shiganshina.json",
+    "擺在 maps/map.world-tree.json",
+    "擺在 arenas/arena.castle.json",
+    "擺在 arenas/arena.frieren.json",
+    "擺在 arenas/arena.heavens-arena.json",
+    "擺在 arenas/arena.holy-grail.json",
+    "擺在 arenas/arena.infinity-castle.json",
+    "擺在 arenas/arena.nazarick.json",
+    "擺在 arenas/arena.royale.json",
+    "擺在 arenas/arena.shiganshina.json",
+    "擺在 arenas/arena.skeleton.json",
+    "擺在 arenas/arena.world-tree.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/medieval-fair__Fair_Flags_Line.glb",
+   "前_最長邊": 1024,
+   "後_最長邊": null,
+   "超標貼圖張數": 6,
+   "貼圖張數": 6,
+   "貼圖": [
+    {
+     "名稱": "Grass_Normal",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Grass_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Atlas_05_Normal",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    },
+    {
+     "名稱": "Atlas_05_Albedo",
+     "寬": 1024,
+     "高": 1024,
+     "格式": "png"
+    },
+    {
+     "名稱": "Atlas_03_Normal",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Atlas_03_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.heavens-arena.json",
+    "擺在 arenas/arena.colosseum.json",
+    "擺在 arenas/arena.heavens-arena.json"
+   ]
+  },
+  {
+   "glb": "assets/models/hex/hex_grass-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "hexagons_medieval",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/hex/hex_grass.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/hex/hex_water-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "hexagons_medieval",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/hex/hex_water.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/hex/rock-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "hexagons_medieval",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/hex/rock.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/hex/tower_blue-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "hexagons_medieval",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/hex/tower_blue.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/hex/tower_red-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "hexagons_medieval",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/hex/tower_red.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/hex/tree_single-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "hexagons_medieval",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/hex/tree_single.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/hex/trees_large-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "hexagons_medieval",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/hex/trees_large.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/hex/trees_medium-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "hexagons_medieval",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/hex/trees_medium.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/hex/waterlily-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "hexagons_medieval",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/hex/waterlily.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/ou99/ou99_487191.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 2,
+   "貼圖張數": 6,
+   "貼圖": [
+    {
+     "名稱": null,
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": null,
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": null,
+     "寬": 128,
+     "高": 128,
+     "格式": "png"
+    },
+    {
+     "名稱": null,
+     "寬": 128,
+     "高": 128,
+     "格式": "png"
+    },
+    {
+     "名稱": null,
+     "寬": 256,
+     "高": 256,
+     "格式": "png"
+    },
+    {
+     "名稱": null,
+     "寬": 256,
+     "高": 256,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "皮膚 skin.godie-h01u.487191"
+   ]
+  },
+  {
+   "glb": "assets/models/props/banner_shield_blue-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/props/banner_shield_blue.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/props/banner_shield_green-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/props/banner_shield_green.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/props/banner_shield_red-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/props/banner_shield_red.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/props/banner_shield_yellow-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/props/banner_shield_yellow.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/props/barrel_small-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/props/barrel_small.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/props/chest-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/props/chest.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/props/crates_stacked-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/props/crates_stacked.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/props/floor_tile_large-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/props/floor_tile_large.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/props/pillar-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/props/pillar.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/props/torch_mounted-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/props/torch_mounted.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/props/torch-mid.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "dungeon_texture",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "assets/models/props/torch.glb 的 mid LOD"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/christmas__Fence.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "Fence_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.shiganshina.json",
+    "擺在 arenas/arena.shiganshina.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/christmas__Lamp01.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 2,
+   "貼圖張數": 2,
+   "貼圖": [
+    {
+     "名稱": "Atlas_02_Xmas.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "LampChain_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.shiganshina.json",
+    "擺在 arenas/arena.shiganshina.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/christmas__MiniTree.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "Atlas_02_Xmas.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.world-tree.json",
+    "擺在 arenas/arena.world-tree.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/christmas__SnowBall.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "Atlas_02_Xmas.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.holy-grail.json",
+    "擺在 arenas/arena.holy-grail.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/crystal-crossroads__Column_SmallBroken_01.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 2,
+   "貼圖張數": 2,
+   "貼圖": [
+    {
+     "名稱": "Atlas_01_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Atlas_01_Trans",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.infinity-castle.json",
+    "擺在 arenas/arena.infinity-castle.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Base.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "Seam_Sand_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.holy-grail.json",
+    "擺在 maps/map.world-tree.json",
+    "擺在 arenas/arena.holy-grail.json",
+    "擺在 arenas/arena.world-tree.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Cluster.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "Atlas_01_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 arenas/arena.dota.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_03.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "Atlas_01_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.holy-grail.json",
+    "擺在 arenas/arena.holy-grail.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/crystal-crossroads__Crystal_Small_04.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "Atlas_01_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.holy-grail.json",
+    "擺在 arenas/arena.holy-grail.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/crystal-crossroads__Stairs.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 2,
+   "貼圖張數": 2,
+   "貼圖": [
+    {
+     "名稱": "Atlas_01_Trans",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Atlas_01_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.world-tree.json",
+    "擺在 arenas/arena.world-tree.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/crystal-crossroads__Vase_Broken.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 2,
+   "貼圖張數": 2,
+   "貼圖": [
+    {
+     "名稱": "Atlas_01_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Atlas_01_Trans",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.infinity-castle.json",
+    "擺在 arenas/arena.infinity-castle.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/crystal-crossroads__Wall_Broken_01.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 2,
+   "貼圖張數": 2,
+   "貼圖": [
+    {
+     "名稱": "Atlas_01_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Atlas_01_Trans",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.infinity-castle.json",
+    "擺在 arenas/arena.infinity-castle.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/crystal-crossroads__Wall_CornerBroken.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 2,
+   "貼圖張數": 2,
+   "貼圖": [
+    {
+     "名稱": "Atlas_01_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Atlas_01_Trans",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.shiganshina.json",
+    "擺在 arenas/arena.shiganshina.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/crystal-crossroads__Wall_Small_01.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 2,
+   "貼圖張數": 2,
+   "貼圖": [
+    {
+     "名稱": "Atlas_01_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Atlas_01_Trans",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.shiganshina.json",
+    "擺在 arenas/arena.shiganshina.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/lunar-year__Banner.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 3,
+   "貼圖張數": 3,
+   "貼圖": [
+    {
+     "名稱": "ligth_albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Trim_01_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Atlas_01_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.heavens-arena.json",
+    "擺在 arenas/arena.heavens-arena.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/lunar-year__Bell.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 2,
+   "貼圖張數": 2,
+   "貼圖": [
+    {
+     "名稱": "Trim_03_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Atlas_01_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 arenas/arena.godie.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/lunar-year__Column.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 3,
+   "貼圖張數": 3,
+   "貼圖": [
+    {
+     "名稱": "Trim_01_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Trim_02_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Trim_03_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 arenas/arena.royale.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/lunar-year__ColumnBase.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "LunarYear_FloorBricks_2D_View",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 arenas/arena.royale.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/lunar-year__EntranceStairs.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 2,
+   "貼圖張數": 2,
+   "貼圖": [
+    {
+     "名稱": "Trim_01_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Trim_02_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.frieren.json",
+    "擺在 arenas/arena.frieren.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/lunar-year__Fence01.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 3,
+   "貼圖張數": 3,
+   "貼圖": [
+    {
+     "名稱": "Trim_01_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Trim_02_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Trim_03_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.frieren.json",
+    "擺在 arenas/arena.frieren.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/lunar-year__Lamp01.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 2,
+   "貼圖張數": 2,
+   "貼圖": [
+    {
+     "名稱": "Trim_04_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Alpha_Trim_01_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.frieren.json",
+    "擺在 arenas/arena.frieren.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/lunar-year__Lamp02.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 2,
+   "貼圖張數": 2,
+   "貼圖": [
+    {
+     "名稱": "Trim_04_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Alpha_Trim_01_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.frieren.json",
+    "擺在 arenas/arena.frieren.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/lunar-year__MainAltar.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 4,
+   "貼圖張數": 4,
+   "貼圖": [
+    {
+     "名稱": "Trim_03_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Trim_01_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Trim_02_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Atlas_01_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 arenas/arena.godie.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/lunar-year__OutterLamp.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 2,
+   "貼圖張數": 2,
+   "貼圖": [
+    {
+     "名稱": "Trim_03_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "LunarYear_FloorBricks_2D_View",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.infinity-castle.json",
+    "擺在 arenas/arena.infinity-castle.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/lunar-year__Rock01.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "Trim_02_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.world-tree.json",
+    "擺在 arenas/arena.world-tree.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/lunar-year__Rock02.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 1,
+   "貼圖張數": 1,
+   "貼圖": [
+    {
+     "名稱": "Trim_02_Albedo.tif",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 arenas/arena.dota.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/medieval-fair__Lamp.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 4,
+   "貼圖張數": 4,
+   "貼圖": [
+    {
+     "名稱": "BoardCutout_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Atlas_03_Normal",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Atlas_03_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Atlas_FX_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.heavens-arena.json",
+    "擺在 arenas/arena.castle.json",
+    "擺在 arenas/arena.heavens-arena.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/tomb-chaser-2__Shrine_Art.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 2,
+   "貼圖張數": 2,
+   "貼圖": [
+    {
+     "名稱": "Exterior_Atlas_01_Normal",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Exterior_Atlas_01_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.nazarick.json",
+    "擺在 arenas/arena.nazarick.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/tomb-chaser-2__TempleBaseStaircase_Art.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 5,
+   "貼圖張數": 5,
+   "貼圖": [
+    {
+     "名稱": "Floor_01_Normal",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Floor_01_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Floor_01_Metallic",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Rock_01_Normal",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Rock_01_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.nazarick.json",
+    "擺在 arenas/arena.nazarick.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/tomb-chaser-2__TempleColumn_Art.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 2,
+   "貼圖張數": 2,
+   "貼圖": [
+    {
+     "名稱": "Wood_01_Normal",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Wood_01_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.heavens-arena.json",
+    "擺在 maps/map.nazarick.json",
+    "擺在 arenas/arena.colosseum.json",
+    "擺在 arenas/arena.heavens-arena.json",
+    "擺在 arenas/arena.nazarick.json",
+    "擺在 arenas/arena.skeleton.json"
+   ]
+  },
+  {
+   "glb": "assets/models/scenery-cc0/tomb-chaser-2__TempleWall01_Art.glb",
+   "前_最長邊": 512,
+   "後_最長邊": null,
+   "超標貼圖張數": 2,
+   "貼圖張數": 2,
+   "貼圖": [
+    {
+     "名稱": "Wall_01_Normal",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    },
+    {
+     "名稱": "Wall_01_Albedo",
+     "寬": 512,
+     "高": 512,
+     "格式": "png"
+    }
+   ],
+   "為什麼載得到": [
+    "擺在 maps/map.nazarick.json",
+    "擺在 arenas/arena.castle.json",
+    "擺在 arenas/arena.nazarick.json",
+    "擺在 arenas/arena.skeleton.json"
+   ]
+  }
+ ],
+ "本機量不到_位元組在S3": [
+  "assets/models/community/01a0040e5b7b5a4053ca8431ffb00ca2b70baad9a9cfc4134681b46f3c4ace72.glb",
+  "assets/models/community/212742ce3f4270d9cdb8dc8a2a1940d032da026dea2f5df475b705281eb10e1c.glb",
+  "assets/models/community/40532a1478491e4f8fd0b05c3598e215da3a323c2af901f847d889d9d903f46f.glb",
+  "assets/models/community/42b8b816b13fcbd3faf4d7fe31a3120b4101dbc8fb163259ee0ec0c101149e39.glb"
+ ]
+}

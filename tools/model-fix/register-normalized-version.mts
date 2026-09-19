@@ -24,8 +24,10 @@
  * ⭐ 三種理由都**不合併半透明**：正規化後半透明塊數比來源少 ⇒ 自動改成 `preservePrimitives` 重來一次（保守：整顆不合併，
  *    ⛔ 不做「只合併不透明」—— 那要改 `normalizeUploadedModel`，屬另票）。
  *
- *   node --import tsx tools/model-fix/register-normalized-version.mts --reason gltf-valid|texture-256|blend-order [--write] [heroId…]
- *   （不帶 --write 只試算，⛔ 一個位元組都不寫；不帶 heroId 時 gltf-valid／blend-order 掃全部英雄，texture-256 用它原本的名單）
+ *   node --import tsx tools/model-fix/register-normalized-version.mts --reason gltf-valid|texture-256|blend-order [--write] [--no-activate] [heroId…]
+ *   （不帶 --write 只試算，⛔ 一個位元組都不寫；不帶 heroId 時**三種理由都掃全部英雄**）
+ *   ⭐ `--no-activate`：只把新版本註冊進下拉，⛔ 不動作用中 ⇒ **玩家看到的不變**（見下方旗標旁的註解）。
+ *      ⇒ 「要不要切過去」是一個會改變畫面的決定 ⇒ 留給人，⛔ 不由這支腳本順手做掉。
  *   ⚠️ blend-order 掃全部英雄時也會列出**不是這一輪造成的**（例：b2-klaus）—— 寫入請帶明確的 heroId。
  */
 import { randomUUID } from "node:crypto";
@@ -36,7 +38,7 @@ import { contentSha256 } from "../../packages/shared/src/content/import/jcs";
 import { spliceMembers } from "../../packages/shared/src/content/editModel";
 import { inspectModelUpload, validateModelUploadBytes } from "../../packages/shared/src/content/modelUpload/inspect";
 import { blendPrimitives, canon, primitiveCounts, renderSignature } from "./renderSignature.mts";
-import { zModelVersionCommand, type ChampionModelVersion } from "../../packages/shared/src/content/schema/championModelVersions";
+import { preferredModelVersion, zModelVersionCommand, type ChampionModelVersion } from "../../packages/shared/src/content/schema/championModelVersions";
 
 type Doc = Record<string, unknown> & { glbPath: string; hiddenPrimitives?: number[] };
 type Body = { doc: Doc; bytes: Uint8Array };
@@ -82,7 +84,13 @@ const allHeroes = () => readdirSync(resolve("content", "champions")).filter((f) 
 const REASONS: Record<string, Reason> = {
   "texture-256": {
     suffix: "（貼圖 256 正規化）",
-    defaultHeroes: () => ["b2-maple-alt-9769eb88b85b", "godie-h01u", "godie-huth", "godie-n003", "godie-n00b", "godie-o030", "godie-orkn", "godie-u00n", "godie-u00o"],
+    // ⭐ 掃**全部**英雄（GH#1199）。⛔ 在此之前這裡是一份寫死的 9 人名單 ——
+    //    那 9 位在 2026-09-15 那一輪修完之後,這支工具**每一次跑都回「作用中身體貼圖已是 256」**,
+    //    ⇒ ⭐ 它讀起來像「全部都乾淨」,而它其實只看了 190 位裡的 9 位。
+    //    ⚠️ 這正是 CLAUDE.md 形態⑨的反面：**一條永遠是綠的閘**,因為它的分母被寫死了。
+    //    （今天掃全部的答案仍是 0 位需要轉 —— ⭐ 但那現在是**量出來的**,⛔ 不是名單決定的。）
+    quietSkips: true,
+    defaultHeroes: allHeroes,
     needs: async (bytes) => { const e = await maxEdge(bytes); return e <= 256 ? { skip: `作用中身體貼圖已是 ${e}` } : { why: `貼圖 ${e}` }; },
     check: async (_before, after) => { const e = await maxEdge(after.bytes); return e > 256 ? `正規化後貼圖仍是 ${e}（縮圖器沒跑？）` : null; },
   },
@@ -134,6 +142,16 @@ const REASONS: Record<string, Reason> = {
 };
 
 const WRITE = process.argv.includes("--write");
+/**
+ * ⭐ `--no-activate`：**只註冊,⛔ 不切換作用中** —— 新版本進下拉,玩家看到的仍是舊的那一顆。
+ *
+ * ⚠️ 光是「不改 `champion.modelKey`」**不夠**：`modelVersionAutomaticEligible()`
+ *    （championModelVersions.ts:74）在沒有明講時**預設 true**,而自動模式的英雄由
+ *    `preferredModelVersion()` 挑排序第一個可自動選用的版本 ⇒ ⭐ 新註冊的那一顆會**自己**被選上。
+ * ⇒ 所以這個旗標同時做兩件事：①`automaticEligible: false` ②`modelKey` 原封不動。
+ *    ⛔ 少做第①件,「只註冊」就是一句假話 —— 而它看起來完全正確。
+ */
+const NO_ACTIVATE = process.argv.includes("--no-activate");
 const reasonName = process.argv[process.argv.indexOf("--reason") + 1];
 const reason = process.argv.includes("--reason") ? REASONS[reasonName!] : undefined;
 if (!reason) { console.error(`⛔ 要 --reason ${Object.keys(REASONS).join("|")}`); process.exit(2); }
@@ -174,7 +192,9 @@ for (const heroId of heroes.length ? heroes : reason.defaultHeroes()) {
   const automatic = (champion.modelSelectionMode ?? "automatic") === "automatic";
   const command = zModelVersionCommand.parse({
     action: "register", expectedHash: before.expectedHash, sourceModelKey, label, source,
-    ...(automatic ? { automaticEligible: true } : active?.automaticEligible !== undefined ? { automaticEligible: active.automaticEligible } : {}),
+    ...(NO_ACTIVATE ? { automaticEligible: false }
+      : automatic ? { automaticEligible: true }
+      : active?.automaticEligible !== undefined ? { automaticEligible: active.automaticEligible } : {}),
   });
   let prepared, preserved = reason.preservePrimitives === true;
   try {
@@ -192,13 +212,29 @@ for (const heroId of heroes.length ? heroes : reason.defaultHeroes()) {
   const blocked = await reason.check({ doc: activeDoc, bytes: activeBytes }, { doc: added.doc as unknown as Doc, bytes: added.bytes }, origin);
   if (blocked) { results.push({ heroId, why: need.why, blocked }); continue; }
   // ⭐ 新版本一定要是作用中：自動模式交給排序；沒選到（或手動模式）就明確切過去
+  // ⛔ 除非 --no-activate —— 那時 modelKey 原封不動（可自動選用已在上面關掉）
   let next = prepared.champion;
-  if (next.modelKey !== added.version.modelKey) {
+  if (NO_ACTIVATE) {
+    next = { ...next, modelKey: champion.modelKey };
+    // ⭐ 閘,⛔ 不是判準：真正要保證的是「**跑完之後自動模式仍然挑到舊的那一顆**」。
+    //    ⛔ 「我有設 automaticEligible: false」只是一個宣稱 —— 這裡拿出貨的 `preferredModelVersion()`
+    //    （英雄卡實際用來挑版本的那一支）問一次,不同就擋下,⛔ 不寫。
+    const preferred = preferredModelVersion(next.modelVersions ?? [])?.modelKey ?? next.modelKey;
+    if (preferred !== champion.modelKey) {
+      results.push({ heroId, why: need.why, blocked: `--no-activate 失效：自動模式會挑到 ${preferred}（原本 ${champion.modelKey}）` });
+      continue;
+    }
+  } else if (next.modelKey !== added.version.modelKey) {
     next = { ...next, modelKey: added.version.modelKey, modelSelectionMode: "manual" };
   }
   results.push({
     heroId, why: need.why, mode: `${champion.modelSelectionMode ?? "automatic"} → ${next.modelSelectionMode}`,
-    from: champion.modelKey, to: added.version.modelKey, glb: added.doc.glbPath, sourceModelKey, label, addedVersions: prepared.artifacts.length,
+    ...(NO_ACTIVATE ? { activated: "⛔ 只註冊,作用中不變（--no-activate）" } : {}),
+    // ⚠️ 三個 key 要分開印：`registered` 是這次**新增**的那一顆,`to` 是跑完之後**真正作用中**的那一顆。
+    //    ⛔ 在此之前只有一個 `to` 而它印的是新版本 ⇒ 加上 --no-activate 之後它會變成一句假話
+    //    （CLAUDE.md：一份報告的欄位表頭會靜靜地定義「它量了什麼」,而讀的人不會發現）。
+    from: champion.modelKey, registered: added.version.modelKey, to: next.modelKey,
+    glb: added.doc.glbPath, sourceModelKey, label, addedVersions: prepared.artifacts.length,
     ...(preserved ? { preservedPrimitives: `不合併（來源半透明 ${blendPrimitives(origin.bytes)} 塊）` } : {}),
   });
   if (!WRITE) continue;
