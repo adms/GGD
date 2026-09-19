@@ -103,6 +103,10 @@ pnpm modelbudget:optimize content/assets/models/champions --role champion --appl
 # also decimate geometry over the triangle gate (needs the one extra dep, below)
 pnpm modelbudget:optimize <path> --role arena-decor --geometry --apply
 
+# ⭐ 合併「畫法相同」的 draw call —— ⛔ 不改變畫面,零新相依（GH#1198 / #1175）
+pnpm modelbudget:optimize content/assets/models --merge          # 先乾跑,看誰接得動
+pnpm modelbudget:optimize content/assets/models --merge --apply
+
 # confirm the output loads through the real Babylon loader
 pnpm modelbudget:optimize <path> --role champion --apply --babylon-verify
 ```
@@ -127,6 +131,31 @@ eaten irreplaceable files once (the BGM render overwrote the 魔王魂 originals
   copy.
 
 ### What each stage does, and what it costs in dependencies
+
+**⭐ Merge stage（`--merge`）— ZERO new dependencies，⭐ 而且它是唯一「不改變畫面」的 stage。**
+它把**渲染狀態逐位元組相同**的 primitive 接成一塊：同一份材質、同一張貼圖、同一種 wrap
+⇒ 同樣的像素，更少的 draw call。⚠️ 半透明（BLEND）**一塊都不接** —— 接起來會換掉包圍球
+中心，而 Babylon 逐塊按中心排半透明的繪製順序，那就**會**改變畫面。
+
+⭐ **判準與實作都沒有第二份**：worker（`optimize/merge_prims.py`）import 上游的
+`glb_draw_state.merge_groups`（接不接得起來）與 `merge_glb_prims.merge`（真的接）。
+它只補兩件上游沒有的事：**乾跑規劃**（⛔ 不寫檔就答得出「接完剩幾個」）與**絕不就地
+覆蓋**（上游的 `merge()` 是就地寫的 ⇒ 先複製到 `--out`，再接那一份複本）。
+
+採用前驗四個方向，⛔ 一個都不能少：① draw call 真的變少 ② 面數**一模一樣**
+（`checkRig(…, "same")`，合併掉一個面就代表它吃掉了幾何）③ 骨架／動作／通道不變
+④ ⭐ **每一張貼圖逐位元組相同**（`texturesIdentical`）—— ④ 才是「畫面沒變」的證據，
+⛔ 少了它，一個「draw 變少而貼圖被換掉」的產物在任何數字上都看不出來。
+
+> ⭐ **它與 `--atlas` 不是同一件事**，差別是**會不會改變畫面**：
+> `--merge` 接的是**已經一樣**的畫法（⇒ 像素不變，可以放心批次跑）；
+> `--atlas` 是把**不一樣**的貼圖重排進圖集並按品質底線縮小（⇒ 畫面會變，要人審）。
+> ⇒ 先跑 `--merge`（免費），剩下壓不下去的才輪到 `--atlas`。
+
+⚠️ **合併治不了「每一塊畫法都不同」的模型**（GH#1198 那 8 顆 ou99 就是：draw 數 ＝ 材質數
+＝ 貼圖數）—— 對它們合併省 **0** 個 draw，只有圖集有用。⭐ 反過來，GH#1175 的
+`imported.doraemon-cat` 早就被合併過了（22 → 3，已在出貨樹上）。
+⇒ **先量再動手**：`python3 tools/model-budget/optimize/merge_prims.py <glb> --plan`。
 
 **Texture stage — ZERO new dependencies.** It resizes oversized textures with
 **ffmpeg** (already required by `tools/tts-gen` and `tools/bgm-gen`, and
@@ -211,6 +240,7 @@ roles.ts             resolve a model's role (from report.json) + score vs its ga
 rig.ts               the rig-survival check the decimator must pass
 guard.ts             the import-time gate            → budget:guard
 optimize.ts          the offline batch optimiser     → budget:optimize
+optimize/merge_prims.py      picture-preserving draw-call merge worker (--merge)
 optimize/decimate.mjs        isolated gltf-transform + meshopt geometry worker
 optimize/bootstrap-geometry.sh   installs the geometry dep into .optvendor
 *.test.ts            27 (existing) + 11 (new) passing tests

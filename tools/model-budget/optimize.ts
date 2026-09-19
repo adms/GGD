@@ -67,6 +67,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const VENDOR = path.join(HERE, ".optvendor");
 const DECIMATE_WORKER = path.join(HERE, "optimize", "decimate.mjs");
 const ATLAS_WORKER = path.join(HERE, "optimize", "atlas_pack.py");
+const MERGE_WORKER = path.join(HERE, "optimize", "merge_prims.py");
 const VALIDATE_GLB = path.join(ROOT, "tools/w3x-import/validate_glb.mts");
 const DEFAULT_OUT = path.join(HERE, "optimized-out");
 
@@ -78,6 +79,8 @@ interface Args {
   out: string;
   apply: boolean;
   geometry: boolean;
+  /** GH#1198/#1175：把「畫起來一樣」的 primitive 接成一塊 —— ⭐ 不改變畫面。 */
+  merge: boolean;
   atlas: boolean;
   atlasQuality: number;
   texEdge: number | null;
@@ -100,6 +103,7 @@ function parseArgs(argv: string[]): Args {
     out: DEFAULT_OUT,
     apply: false,
     geometry: false,
+    merge: false,
     atlas: false,
     atlasQuality: 0.45,
     texEdge: null,
@@ -118,6 +122,7 @@ function parseArgs(argv: string[]): Args {
     } else if (t === "--out") a.out = path.resolve(argv[++i] ?? fail("--out needs a dir"));
     else if (t === "--apply") a.apply = true;
     else if (t === "--geometry") a.geometry = true;
+    else if (t === "--merge") a.merge = true;
     else if (t === "--lock-blend") a.lockBlend = true;
     else if (t === "--atlas") a.atlas = true;
     else if (t === "--atlas-quality") a.atlasQuality = Number(argv[++i]);
@@ -129,7 +134,8 @@ function parseArgs(argv: string[]): Args {
     else if (t === "--help" || t === "-h") {
       process.stdout.write(
         "usage: tsx tools/model-budget/optimize.ts <glb-or-dir>... [--role R] [--apply]\n" +
-          "  [--geometry] [--lock-blend] [--atlas] [--atlas-quality Q] [--out DIR] [--tex-edge N] [--tris-target N] [--force] [--json] [--babylon-verify]\n" +
+          "  [--merge] [--geometry] [--lock-blend] [--atlas] [--atlas-quality Q] [--out DIR] [--tex-edge N] [--tris-target N] [--force] [--json] [--babylon-verify]\n" +
+          "  --merge 把畫法相同的 primitive 接成一塊（⭐ 不改變畫面）；--atlas 才會重排貼圖（⛔ 會改變畫面）\n" +
           `roles: ${ROLE_NAMES.join(", ")}\n` +
           "default is a DRY RUN; nothing is written without --apply, and never in place.\n",
       );
@@ -180,6 +186,27 @@ interface AtlasAction {
   quality: number;
 }
 
+/**
+ * ⭐ 合併 stage —— ⛔ 它與圖集**不是同一件事**，差別在**會不會改變畫面**：
+ *
+ * | stage | 它做什麼 | 畫面 |
+ * |---|---|---|
+ * | `--merge` | 把**渲染狀態逐位元組相同**的 primitive 接成一塊 | ⭐ **一個像素都不變** |
+ * | `--atlas` | 重排貼圖版面、每一格按品質底線縮小 | ⛔ **會變**（所以要人審） |
+ *
+ * ⇒ ⭐ 合併是「免費」的那一半：它永遠該先跑。⛔ 而在 GH#1198 之前這一支**根本不存在**
+ * 於離線批次裡 —— 上游 `merge_glb_prims.py` 是就地寫的，⛔ 指著出貨檔跑就違反了本檔
+ * 開頭那條「絕不就地覆蓋」。⇒ worker 先複製再接複本。
+ *
+ * ⚠️ 半透明（BLEND）**不接** —— 接起來會換掉包圍球中心，而 Babylon 逐塊按中心排
+ * 半透明的繪製順序 ⇒ 那就**會**改變畫面。判準住 `glb_draw_state`，⛔ 這裡沒有第二份。
+ */
+interface MergeAction {
+  fromDraws: number;
+  targetDraws: number;
+  blendPrims: number;
+}
+
 interface Plan {
   file: string;
   outFile: string;
@@ -189,6 +216,7 @@ interface Plan {
   metrics: GlbMetrics;
   tex: TexAction[];
   geo: GeoAction | null;
+  merge: MergeAction | null;
   atlas: AtlasAction | null;
   vramBefore: number;
   vramAfter: number;
@@ -257,6 +285,17 @@ function planFile(file: string, args: Args): Plan {
     }
   }
 
+  // merge target: only when asked. ⭐ ⛔ 沒有 gate 條件 —— 合併不改變畫面，所以
+  // 「有沒有超過上限」⛔ 不是它該問的問題；能接就是純賺。⚠️ 但**能不能接**只有
+  // worker 答得出來（判準住上游），⇒ 只在有兩塊以上時才花那一次 exec。
+  let merge: MergeAction | null = null;
+  if (args.merge && metrics.meshes >= 2) {
+    const probe = probeMerge(file);
+    if (probe.mergeable) {
+      merge = { fromDraws: probe.beforeDraws, targetDraws: probe.afterDraws, blendPrims: probe.blendPrims ?? 0 };
+    }
+  }
+
   // atlas target: only when asked, and only for models the mesh gate actually blocks.
   // ⛔ 圖集**會改變畫面**（貼圖被重排、每一格被縮小），所以它⛔ 不是「順便做一下」——
   // 沒有超過 draw call 上限的模型不跑它。
@@ -281,11 +320,12 @@ function planFile(file: string, args: Args): Plan {
     metrics,
     tex,
     geo,
+    merge,
     atlas,
     vramBefore,
     vramAfter: vramBefore - vramSaved,
     fileBytesBefore: metrics.fileBytes,
-    skip: tex.length === 0 && !geo && !atlas ? "no-op" : "",
+    skip: tex.length === 0 && !geo && !merge && !atlas ? "no-op" : "",
   };
   return plan;
 }
@@ -297,6 +337,10 @@ function planKey(file: string, plan: Plan): string {
     src,
     tex: plan.tex.map((t) => ({ i: t.imageIndex, to: t.to })),
     geo: plan.geo ? { t: plan.geo.targetTris, ...(plan.geo.lockBlend ? { lb: 1 } : {}) } : null,
+    // ⭐ 合併只在**規劃到的時候**才進指紋 —— ⛔ 不是無條件加一格 `merge: null`：
+    //   後者會讓**每一份**既有側車的 key 都變掉（＝全部重跑一次），而它們的產物
+    //   一個位元組都沒變。⇒ 只有真的要接的那幾顆需要新的 key。
+    ...(plan.merge ? { merge: { d: plan.merge.targetDraws } } : {}),
     atlas: plan.atlas ? { d: plan.atlas.targetDraws, e: plan.atlas.edge, q: plan.atlas.quality } : null,
     tool: TOOL_VERSION,
   };
@@ -368,6 +412,72 @@ function pythonForAtlas(): { cmd: string; pre: string[] } {
   fail("no python3 on PATH can import Pillow (pip3 install pillow) — required for the atlas stage");
 }
 
+/**
+ * ⭐ 合併 stage 的 python —— ⛔ 刻意**不用** `pythonForAtlas()`：那一支的探針是
+ * 「import 得動 Pillow 嗎」，⭐ 而合併**一張圖都不碰**（它只接幾何）。
+ * ⇒ 拿圖集的探針去擋合併，會讓一台沒裝 Pillow 的機器連「免費且不改變畫面」的那一半
+ * 都跑不了 —— ⛔ 一個與它要做的事無關的前置條件。
+ */
+function pythonPlain(): string {
+  return process.env.GGD_PYTHON || "python3";
+}
+
+/**
+ * ⭐ 合併 stage 的「畫面沒變」證據：**每一張貼圖逐位元組相同**。
+ *
+ * ⚠️ 它是 `geometryDiff` 的**反面** —— 那一支證明「只有圖動了」，這一支證明
+ * 「圖**沒**動」。⛔ 兩者都不可以用對方代替：合併本來就會改幾何（那是它的工作），
+ * 所以 `geometryDiff` 對它永遠回報 differs；⭐ 而真正要釘住的不變量是**像素**。
+ *
+ * 回傳 null ＝ 一模一樣；否則回傳第一個差異的描述。
+ */
+function texturesIdentical(a: string, b: string): string | null {
+  const ga = readGlb(a);
+  const gb = readGlb(b);
+  const ia = readImages(ga);
+  const ib = readImages(gb);
+  if (ia.length !== ib.length) return `image count ${ia.length} → ${ib.length}`;
+  for (let i = 0; i < ia.length; i++) {
+    const x = ia[i]!;
+    const y = ib[i]!;
+    if (x.w !== y.w || x.h !== y.h) return `image #${i} ${x.w}×${x.h} → ${y.w}×${y.h}`;
+    const bx = ga.bin!.subarray(
+      ga.json.bufferViews[x.bufferView].byteOffset ?? 0,
+      (ga.json.bufferViews[x.bufferView].byteOffset ?? 0) + ga.json.bufferViews[x.bufferView].byteLength,
+    );
+    const by = gb.bin!.subarray(
+      gb.json.bufferViews[y.bufferView].byteOffset ?? 0,
+      (gb.json.bufferViews[y.bufferView].byteOffset ?? 0) + gb.json.bufferViews[y.bufferView].byteLength,
+    );
+    if (!bx.equals(by)) return `image #${i} bytes differ`;
+  }
+  return null;
+}
+
+interface MergeProbe {
+  beforeDraws: number;
+  afterDraws: number;
+  mergeable: boolean;
+  blendPrims?: number;
+  skip?: string;
+}
+
+/** 乾跑問 worker「接完剩幾個 draw」—— ⛔ 不寫任何檔。 */
+function probeMerge(file: string): MergeProbe {
+  try {
+    const raw = execFileSync(pythonPlain(), [MERGE_WORKER, file, "--plan"], {
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+    return JSON.parse(raw) as MergeProbe;
+  } catch (e) {
+    // ⭐ 探針壞掉 ⇒ 回報「不可合併」而⛔ 不是讓整批死掉：合併是加分項，
+    //   ⛔ 它不應該擋住 texture／atlas。⚠️ 但**要出聲** —— 靜默的 fail-open 才是缺陷。
+    process.stderr.write(`optimize: merge probe failed on ${file}: ${String(e).split("\n")[0]}\n`);
+    return { beforeDraws: 0, afterDraws: 0, mergeable: false };
+  }
+}
+
 function geometryAvailable(): boolean {
   return fs.existsSync(path.join(VENDOR, "node_modules", "@gltf-transform", "functions")) || fs.existsSync(path.join(HERE, "optimize", "node_modules", "@gltf-transform", "functions"));
 }
@@ -379,6 +489,7 @@ interface Applied {
   wrote: boolean;
   skipped: "" | "up-to-date";
   texVerify: string | null; // null = passed (geometry untouched); else the diff
+  merge: { beforeDraws: number; afterDraws: number; note?: string } | null;
   atlas: { atlases?: number; quality?: number; afterDraws?: number; skip?: string } | null;
   rig: RigCheck | null;
   rejected: string; // non-empty if the candidate was rejected and not written
@@ -386,7 +497,7 @@ interface Applied {
 }
 
 function applyPlan(plan: Plan, args: Args, geomOK: boolean): Applied {
-  const res: Applied = { plan, wrote: false, skipped: "", texVerify: null, atlas: null, rig: null, rejected: "", outBytes: 0 };
+  const res: Applied = { plan, wrote: false, skipped: "", texVerify: null, merge: null, atlas: null, rig: null, rejected: "", outBytes: 0 };
   const key = planKey(plan.file, plan);
 
   if (!args.force && fs.existsSync(plan.outFile) && fs.existsSync(plan.sidecar)) {
@@ -404,9 +515,54 @@ function applyPlan(plan: Plan, args: Args, geomOK: boolean): Applied {
 
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "model-opt-"));
   try {
-    // stage 1: textures (rebuild in pure TS; geometry bytes copied verbatim)
-    const glb = readGlb(plan.file);
     let workingFile = plan.file;
+
+    // stage 0: merge same-render-state primitives (⭐ 畫面不變,所以它排在最前面 ——
+    // 後面每一個 stage 都受惠於更少的塊數,⛔ 而它自己不欠任何人)
+    if (plan.merge) {
+      const mergeOut = path.join(tmp, "merge.glb");
+      const raw = execFileSync(pythonPlain(), [MERGE_WORKER, workingFile, "--out", mergeOut], {
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "pipe"],
+      });
+      const rep = JSON.parse(raw) as MergeProbe & { note?: string };
+      res.merge = { beforeDraws: rep.beforeDraws, afterDraws: rep.afterDraws, note: rep.note };
+      if (!fs.existsSync(mergeOut)) {
+        res.rejected = `merge stage produced nothing (${rep.skip ?? "no reason given"}) — candidate rejected`;
+        return res;
+      }
+      const after = measureGlb(mergeOut);
+      // ⭐ 三個方向都要驗,⛔ 一個都不能少：
+      //   ① draw call **真的**變少了（沒變少的候選不值得採用）
+      //   ② rig 一根骨頭、一條通道都沒動,而且**面數一模一樣**（"same"）——
+      //      ⛔ 合併掉了一個面就代表它吃掉了幾何,那不是合併
+      //   ③ ⭐ **貼圖逐位元組沒動** —— 這一條才是「畫面不變」的證據。
+      //      ⛔ 少了它,一個「draw 變少而貼圖被換掉」的產物也會被寫出去,
+      //      而它在任何數字上都看不出來（第二守則：只驗名詞的閘對關係失明）。
+      res.rig = checkRig(plan.file, mergeOut, "same");
+      if (after.meshes >= plan.metrics.meshes) {
+        res.rejected = `merge stage left ${after.meshes} draw calls (was ${plan.metrics.meshes}) — candidate rejected`;
+        return res;
+      }
+      if (!res.rig.ok) {
+        res.rejected = `merge stage broke the rig (${res.rig.reasons.join("; ")}) — candidate rejected, not written`;
+        return res;
+      }
+      const texDiff = texturesIdentical(plan.file, mergeOut);
+      if (texDiff) {
+        res.rejected = `merge stage altered textures (${texDiff}) — a merge must not touch pixels, candidate rejected`;
+        return res;
+      }
+      workingFile = mergeOut;
+    }
+
+    // stage 1: textures (rebuild in pure TS; geometry bytes copied verbatim)
+    // ⚠️ ⭐ 基準線是**這個 stage 的輸入**，⛔ 不是 `plan.file` —— 合併 stage 跑過之後
+    //   幾何**本來就**與來源不同（那正是它做的事）。拿來源當基準會把合併的成果誤判成
+    //   「texture stage 動了幾何」⇒ 一個正確的候選被拒。⭐ 這一條驗的是「**這一段**
+    //   有沒有動幾何」，⛔ 不是「產物跟來源一不一樣」。
+    const texStageInput = workingFile;
+    const glb = readGlb(workingFile);
     if (plan.tex.length > 0) {
       const replacements = new Map<number, Buffer>();
       for (const t of plan.tex) {
@@ -423,7 +579,7 @@ function applyPlan(plan: Plan, args: Args, geomOK: boolean): Applied {
       const texOut = path.join(tmp, "tex.glb");
       fs.writeFileSync(texOut, rebuilt);
       // PROVE the texture stage moved nothing but image bytes
-      res.texVerify = geometryDiff(plan.file, texOut);
+      res.texVerify = geometryDiff(texStageInput, texOut);
       if (res.texVerify !== null) {
         res.rejected = `texture stage altered geometry (${res.texVerify}) — refusing to write`;
         return res;
@@ -505,6 +661,10 @@ function applyPlan(plan: Plan, args: Args, geomOK: boolean): Applied {
           geometry: plan.geo
             ? { fromTris: plan.geo.fromTris, targetTris: plan.geo.targetTris, ...(plan.geo.lockBlend ? { lockBlend: true } : {}) }
             : null,
+          // ⭐ `texturesIdentical` 是合併的驗收證據,⛔ 不是註腳 —— 側車記下它跑過。
+          merge: plan.merge
+            ? { ...plan.merge, achieved: res.merge?.afterDraws ?? null, texturesByteIdentical: true }
+            : null,
           atlas: plan.atlas ? { ...plan.atlas, atlases: res.atlas?.atlases, quality: res.atlas?.quality } : null,
           before: { vramBytes: plan.vramBefore, fileBytes: plan.fileBytesBefore, triangles: plan.metrics.triangles, drawCalls: plan.metrics.meshes },
           after: { vramBytes: finalMetrics.vramBytes, fileBytes: finalMetrics.fileBytes, triangles: finalMetrics.triangles, drawCalls: finalMetrics.meshes },
@@ -556,7 +716,7 @@ function main(): void {
   }
 
   const plans = files.map((f) => planFile(f, args));
-  const actionable = plans.filter((p) => p.skip !== "no-op" && (p.tex.length > 0 || !!p.atlas || (p.geo && geomOK)));
+  const actionable = plans.filter((p) => p.skip !== "no-op" && (p.tex.length > 0 || !!p.merge || !!p.atlas || (p.geo && geomOK)));
 
   // ---- dry run (default) ----
   if (!args.apply) {
@@ -568,9 +728,13 @@ function main(): void {
     process.stdout.write("(nothing is written without --apply, and never in place)\n\n");
     let vSave = 0;
     for (const p of plans) {
-      if (p.tex.length === 0 && !p.atlas && !(p.geo && geomOK)) continue;
+      if (p.tex.length === 0 && !p.merge && !p.atlas && !(p.geo && geomOK)) continue;
       const rel = path.relative(process.cwd(), p.file);
       process.stdout.write(`• ${rel}  [role=${p.role}${p.roleSource === "flag" ? "" : ` (${p.roleSource})`}]\n`);
+      if (p.merge)
+        process.stdout.write(
+          `    merge: ${p.merge.fromDraws} → ${p.merge.targetDraws} draw calls （⭐ 畫面不變：同畫法才接、半透明 ${p.merge.blendPrims} 塊不動；貼圖逐位元組比對過才採用）\n`,
+        );
       for (const t of p.tex) {
         process.stdout.write(
           `    texture #${t.imageIndex}: ${t.from.w}×${t.from.h} ${t.from.format} → ${t.to.w}×${t.to.h} ${t.to.format}` +
@@ -620,9 +784,10 @@ function main(): void {
       const rigNote = a.rig ? `, rig ok (${a.rig.after.tris} tris, ${a.rig.after.joints} joints)` : "";
       // "byte-identical" is the texture stage's guarantee, and only holds when
       // no geometry stage followed to change the geometry on purpose.
-      const texNote = a.plan.tex.length > 0 && !a.plan.geo ? `, geometry byte-identical` : "";
+      const texNote = a.plan.tex.length > 0 && !a.plan.geo && !a.plan.merge ? `, geometry byte-identical` : "";
+      const mergeNote = a.merge ? `, draws ${a.merge.beforeDraws}→${a.merge.afterDraws} (textures byte-identical)` : "";
       process.stdout.write(
-        `  gen   ${rel} → VRAM ${mb(a.plan.vramBefore)}→${mb(a.plan.vramAfter)} MB${texNote}${rigNote}\n`,
+        `  gen   ${rel} → VRAM ${mb(a.plan.vramBefore)}→${mb(a.plan.vramAfter)} MB${mergeNote}${texNote}${rigNote}\n`,
       );
     }
   }
@@ -693,10 +858,15 @@ function writeJson(plans: Plan[], geomOK: boolean, args: Args, applied: Applied[
           role: p.role,
           textures: p.tex,
           geometry: p.geo,
+          // ⭐ GH#1198：在此之前這份「機器契約」只講得出 texture 與 geometry
+          //   ⇒ 讀它的人（worklist --optimize --json）看不到 draw call 這一條路
+          //   **存不存在**。⛔ 一份漏掉整個 stage 的契約，讀起來跟完整的一模一樣。
+          merge: p.merge,
+          atlas: p.atlas,
           vramBefore: p.vramBefore,
           vramAfter: p.vramAfter,
         })),
-        applied: applied?.map((a) => ({ file: a.plan.file, wrote: a.wrote, skipped: a.skipped, rejected: a.rejected })) ?? null,
+        applied: applied?.map((a) => ({ file: a.plan.file, wrote: a.wrote, skipped: a.skipped, rejected: a.rejected, merge: a.merge })) ?? null,
       },
       null,
       2,
