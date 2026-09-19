@@ -63,6 +63,12 @@
  * Browser autoplay policy means the first champion after a cold page load is
  * usually inaudible until the player has clicked something; the mixer, not this
  * file, decides. `playValhallaDeclaration` reports which happened.
+ *
+ * HOVER 放大（GH#1264, 2026-09-19）。owner:「英靈殿 hover 過去 3d model 會 pop out 放大」。
+ * ⭐ 放大改的是**容器真正的 width/height**，⛔ 不是 `transform: scale()` —— 後者不動排版
+ * 尺寸，`render/StorePreview.ts` 的 ResizeObserver 不會響，放大的是一張糊掉的點陣圖。
+ * 五格規則、幾何（底邊釘住 ⇒ 蓋不到「一鍵開打」）與後台欄位定義全在
+ * `./valhalla/valhallaHoverPop.ts`；接在下面 `ValhallaStage` 的 `pop` prop 上。
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Champions } from "@ggd/shared/sim/content/registry";
@@ -87,6 +93,14 @@ import { padFocusLanding } from "../padFocusLanding";
 import { GOLD, PANEL_BG, TEXT_DIM, TEXT_MAIN } from "../theme";
 import { ValhallaSandboxPanel } from "./valhalla/ValhallaSandboxPanel";
 import { playValhallaDeclaration } from "./valhalla/valhallaDeclaration";
+import {
+  clampHoverRules,
+  DEFAULT_VALHALLA_HOVER,
+  valhallaPopRect,
+  valhallaPopStageStyle,
+  type ValhallaHoverRules,
+  type ValhallaRect,
+} from "./valhalla/valhallaHoverPop";
 import {
   draw,
   EMPTY_ROTATION,
@@ -224,10 +238,16 @@ function ValhallaStage({
   championId,
   height,
   paused,
+  pop,
 }: {
   championId: string;
   height: number;
   paused: boolean;
+  /**
+   * GH#1264 —— hover 放大的規則；`null` ＝ 這個版面不放大（strip 一行版／後台關掉）。
+   * ⭐ 這是這一格設定的**消費端**：規則從這裡走進 `valhallaPopRect`。
+   */
+  pop: ValhallaHoverRules | null;
 }): React.JSX.Element {
   const def = Champions.tryGet(championId as ChampionId);
   const modelKey = def?.modelKey ?? null;
@@ -261,88 +281,173 @@ function ValhallaStage({
   const onModelDoc = useCallback((doc: ModelDoc | null) => setLoadedDoc(doc), []);
   useEffect(() => setLoadedDoc(null), [modelKey, championId]);
   const standIn = standInBadgeFor(modelKey, status === "ready" ? loadedDoc : null);
+
+  // ── GH#1264 hover 放大 ──────────────────────────────────────────────────
+  //
+  // ⭐ 放大改的是**容器真正的 width/height**，⛔ 不是 `transform: scale()`：
+  // `render/StorePreview.ts` 的 ResizeObserver 掛在畫布的**排版尺寸**上，
+  // transform 不動排版尺寸 ⇒ `engine.resize()` 不會被呼叫 ⇒ 放大的是一張糊掉的點陣圖。
+  // 幾何與每一格規則在 `./valhalla/valhallaHoverPop.ts`。
+  const slotRef = useRef<HTMLDivElement | null>(null);
+  const [popRect, setPopRect] = useState<ValhallaRect | null>(null);
+  const popTimer = useRef<number | null>(null);
+  const popped = popRect !== null;
+
+  const measurePop = useCallback((): ValhallaRect | null => {
+    const el = slotRef.current;
+    if (el === null || pop === null || typeof window === "undefined") return null;
+    const r = el.getBoundingClientRect();
+    return valhallaPopRect({
+      slot: { x: r.left, y: r.top, width: r.width, height: r.height },
+      viewport: { width: window.innerWidth, height: window.innerHeight },
+      rules: pop,
+    });
+  }, [pop]);
+
+  const cancelPopTimer = useCallback(() => {
+    if (popTimer.current !== null) {
+      window.clearTimeout(popTimer.current);
+      popTimer.current = null;
+    }
+  }, []);
+
+  /**
+   * ⛔ 觸控裝置沒有 hover —— 只擋 `pointerType === "touch"`（⛔ 不是「只放行 mouse」：
+   * 觸控筆 `pen` 有真的 hover，而測試環境送的合成事件根本沒有這一格）。
+   * 矮視窗（手機橫向）那一條由呼叫端的 `pop === null` 擋掉，⛔ 不在這裡重複判斷。
+   */
+  const onPopEnter = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      if (pop === null || e.pointerType === "touch") return;
+      cancelPopTimer();
+      popTimer.current = window.setTimeout(() => {
+        popTimer.current = null;
+        setPopRect(measurePop());
+      }, pop.hoverDelayMs);
+    },
+    [pop, measurePop, cancelPopTimer],
+  );
+
+  const onPopLeave = useCallback(() => {
+    cancelPopTimer();
+    setPopRect(null);
+  }, [cancelPopTimer]);
+
+  // 放大中：版面一動（捲動／改視窗大小）就重算，⛔ 不讓放大的框停在舊座標
+  useEffect(() => {
+    if (!popped || typeof window === "undefined") return;
+    const onMove = (): void => setPopRect(measurePop());
+    window.addEventListener("resize", onMove);
+    window.addEventListener("scroll", onMove, true);
+    return () => {
+      window.removeEventListener("resize", onMove);
+      window.removeEventListener("scroll", onMove, true);
+    };
+  }, [popped, measurePop]);
+
+  // 開關被關掉／版面換成一行版 ⇒ 立刻收回（⛔ 不要卡在放大狀態）
+  useEffect(() => {
+    if (pop === null) {
+      cancelPopTimer();
+      setPopRect(null);
+    }
+  }, [pop, cancelPopTimer]);
+
+  // 卸載時把還沒到期的計時器收掉
+  useEffect(() => cancelPopTimer, [cancelPopTimer]);
+
   return (
+    // ⭐ 空位：放大時舞台離開文件流（`position: fixed`），而這一層把原本的高度留著
+    // ⇒ 大廳排版一個像素都不動（⛔ 卡片不會在 hover 的時候跳一下）。
     <div
-      data-ggd-valhalla-stage=""
-      // the 3D stage's real state, published to the DOM: "did the player get a
-      // model or a fallback?" has to be answerable from a screenshot harness,
-      // not inferred from how the pixels look (#93's lesson)
-      data-ggd-valhalla-model={modelKey === null ? "none" : status}
-      style={{
-        position: "relative",
-        height,
-        flexShrink: 0,
-        borderRadius: 10,
-        overflow: "hidden",
-        background: "#0e1219",
-        // the canvas owns wheel + drag; without this a finger dragging the
-        // phone lobby would spin the model instead of scrolling the page
-        touchAction: "pan-y",
-      }}
+      ref={slotRef}
+      data-ggd-valhalla-stage-slot=""
+      style={{ position: "relative", height, flexShrink: 0 }}
     >
-      {modelKey !== null && (
-        <StorePreviewCanvas
-          modelKey={modelKey}
-          // GH#31 —— 沒有 championId,overlay 認不出這位英雄,會原封不動退回共用
-          // 替身。英靈殿是 owner 點名的四個場景之一(「別忘了 英雄殿 選擇英雄
-          // 戰鬥 結算 四個場景都要替換喔」),而它是三個 StorePreviewCanvas 消費端
-          // 裡唯一漏傳的 —— 商店與選擇英雄早就為了 #263 的 tint 傳了。
-          championId={championId}
-          paused={paused}
-          hideEmptyHint
-          minHeight={height}
-          onStatus={onStatus}
-          onModelDoc={onModelDoc}
-        />
-      )}
-      {/* NEVER A HOLE. Three states cover the stage with the portrait: no model
-          key at all, a failed load, and the seconds a large .glb spends in
-          flight (measured: some champions take >20s to decode under software
-          rendering, and an empty black box for 20s is indistinguishable from a
-          broken feature). Only "ready" leaves the canvas alone. */}
-      {(modelKey === null || status === "failed" || status === "loading") && (
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 8,
-            background: "#0e1219",
-            opacity: status === "loading" ? 0.72 : 1,
-          }}
-        >
-          <ChampionPortrait id={championId} size={Math.min(96, Math.max(48, height - 56))} />
-          <div style={{ fontSize: 10.5, color: TEXT_DIM }}>
-            {status === "loading" ? "3D 模型載入中…" : "3D 模型無法載入 · 以立繪代替"}
+      <div
+        data-ggd-valhalla-stage=""
+        // the 3D stage's real state, published to the DOM: "did the player get a
+        // model or a fallback?" has to be answerable from a screenshot harness,
+        // not inferred from how the pixels look (#93's lesson)
+        data-ggd-valhalla-model={modelKey === null ? "none" : status}
+        // 同一個理由：放大中與否也要能從 DOM 讀得到，⛔ 不是從像素猜
+        data-ggd-valhalla-pop={pop === null ? "off" : popped ? "on" : "idle"}
+        onPointerEnter={onPopEnter}
+        onPointerLeave={onPopLeave}
+        style={{
+          ...valhallaPopStageStyle(popRect, pop ?? DEFAULT_VALHALLA_HOVER),
+          borderRadius: 10,
+          overflow: "hidden",
+          background: "#0e1219",
+          // the canvas owns wheel + drag; without this a finger dragging the
+          // phone lobby would spin the model instead of scrolling the page
+          touchAction: "pan-y",
+        }}
+      >
+        {modelKey !== null && (
+          <StorePreviewCanvas
+            modelKey={modelKey}
+            // GH#31 —— 沒有 championId,overlay 認不出這位英雄,會原封不動退回共用
+            // 替身。英靈殿是 owner 點名的四個場景之一(「別忘了 英雄殿 選擇英雄
+            // 戰鬥 結算 四個場景都要替換喔」),而它是三個 StorePreviewCanvas 消費端
+            // 裡唯一漏傳的 —— 商店與選擇英雄早就為了 #263 的 tint 傳了。
+            championId={championId}
+            paused={paused}
+            hideEmptyHint
+            minHeight={height}
+            onStatus={onStatus}
+            onModelDoc={onModelDoc}
+          />
+        )}
+        {/* NEVER A HOLE. Three states cover the stage with the portrait: no model
+            key at all, a failed load, and the seconds a large .glb spends in
+            flight (measured: some champions take >20s to decode under software
+            rendering, and an empty black box for 20s is indistinguishable from a
+            broken feature). Only "ready" leaves the canvas alone. */}
+        {(modelKey === null || status === "failed" || status === "loading") && (
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+              background: "#0e1219",
+              opacity: status === "loading" ? 0.72 : 1,
+            }}
+          >
+            <ChampionPortrait id={championId} size={Math.min(96, Math.max(48, height - 56))} />
+            <div style={{ fontSize: 10.5, color: TEXT_DIM }}>
+              {status === "loading" ? "3D 模型載入中…" : "3D 模型無法載入 · 以立繪代替"}
+            </div>
           </div>
-        </div>
-      )}
-      {standIn && status !== "failed" && (
-        // SHORT ON PURPOSE. The full champ-select wording is two lines wide and
-        // covered the champion's HEAD on this 220px stage — a disclaimer that
-        // hides the thing it is disclaiming. The long text moves to the tooltip.
-        <div
-          data-ggd-valhalla-standin=""
-          title={`${STAND_IN_NOTE_ZH} — ${STAND_IN_NOTE_EN}`}
-          style={{
-            position: "absolute",
-            right: 6,
-            top: 6,
-            padding: "1px 6px",
-            borderRadius: 999,
-            background: "rgba(58, 44, 28, 0.85)",
-            border: "1px solid #e0a878",
-            color: "#f0cfa8",
-            fontSize: 9.5,
-            whiteSpace: "nowrap",
-          }}
-        >
-          🎭 替身
-        </div>
-      )}
+        )}
+        {standIn && status !== "failed" && (
+          // SHORT ON PURPOSE. The full champ-select wording is two lines wide and
+          // covered the champion's HEAD on this 220px stage — a disclaimer that
+          // hides the thing it is disclaiming. The long text moves to the tooltip.
+          <div
+            data-ggd-valhalla-standin=""
+            title={`${STAND_IN_NOTE_ZH} — ${STAND_IN_NOTE_EN}`}
+            style={{
+              position: "absolute",
+              right: 6,
+              top: 6,
+              padding: "1px 6px",
+              borderRadius: 999,
+              background: "rgba(58, 44, 28, 0.85)",
+              border: "1px solid #e0a878",
+              color: "#f0cfa8",
+              fontSize: 9.5,
+              whiteSpace: "nowrap",
+            }}
+          >
+            🎭 替身
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -432,10 +537,20 @@ function ValhallaSkeleton({ note }: { note: string }): React.JSX.Element {
 export interface ValhallaPanelProps {
   /** 換人時要不要播宣言。見 {@link VALHALLA_DECLAIM_ON_ROTATE_DEFAULT}。 */
   declaimOnRotate?: boolean;
+  /**
+   * GH#1264 —— hover 放大的五格規則，只覆寫要改的那幾格。
+   *
+   * ⛔ 它**還不是後台欄位**，而那是誠實的現況不是設計：三個落點
+   * （`content/config/*.json` / Zod `DEFAULT_*` / `apps/admin/*`）是跨 lane 共用檔，
+   * 欄位定義已經備好在 `./valhalla/valhallaHoverPop.ts` 的 `VALHALLA_HOVER_ADMIN_FIELDS`，
+   * 整合者照抄即可。在那之前要關掉的人傳 `hoverPop={{ enabled: false }}`。
+   */
+  hoverPop?: Partial<ValhallaHoverRules>;
 }
 
 export function ValhallaPanel({
   declaimOnRotate = VALHALLA_DECLAIM_ON_ROTATE_DEFAULT,
+  hoverPop,
 }: ValhallaPanelProps): React.JSX.Element {
   const contentReady = useContentReady();
   const { whitelist, loading: whitelistLoading } = useWhitelist();
@@ -534,6 +649,32 @@ export function ValhallaPanel({
   }, [counting, current, advance]);
 
   const layout: ValhallaLayout = valhallaLayout({ viewportHeight: height, viewportWidth: width });
+
+  /**
+   * GH#1264 —— hover 放大的規則（出貨值＝`DEFAULT_VALHALLA_HOVER`）。
+   *
+   * ⚠️ 逐格拆開當 deps，⛔ 不是把 `hoverPop` 整個物件丟進去：呼叫端寫一個行內
+   * `{{...}}` 的話，物件每一次 render 都是新的 ⇒ 舞台的 resize/scroll 監聽會跟著
+   * 每一次 render 拆掉重掛。
+   */
+  const {
+    enabled: hpEnabled,
+    scale: hpScale,
+    hoverDelayMs: hpDelayMs,
+    transitionMs: hpTransitionMs,
+    edgeMargin: hpEdgeMargin,
+  } = hoverPop ?? {};
+  const hoverRules = useMemo(
+    () =>
+      clampHoverRules({
+        enabled: hpEnabled ?? DEFAULT_VALHALLA_HOVER.enabled,
+        scale: hpScale ?? DEFAULT_VALHALLA_HOVER.scale,
+        hoverDelayMs: hpDelayMs ?? DEFAULT_VALHALLA_HOVER.hoverDelayMs,
+        transitionMs: hpTransitionMs ?? DEFAULT_VALHALLA_HOVER.transitionMs,
+        edgeMargin: hpEdgeMargin ?? DEFAULT_VALHALLA_HOVER.edgeMargin,
+      }),
+    [hpEnabled, hpScale, hpDelayMs, hpTransitionMs, hpEdgeMargin],
+  );
 
   if (!contentReady || whitelistLoading) {
     return <ValhallaSkeleton note={!contentReady ? "英靈殿整備中…" : "確認開放名單…"} />;
@@ -757,6 +898,10 @@ export function ValhallaPanel({
             championId={current}
             height={stageHeight}
             paused={hidden || !onScreen}
+            // GH#1264 —— ⭐ 這一行就是那五格設定的消費端。
+            // ⛔ strip（視窗高 ≤520px 的手機橫向）一律 `null`：#151/#247 那條線上
+            // 每一個像素都是「⚔️ 一鍵開打」的邊界，那個版面的行為一個字都不能動。
+            pop={layout.mode === "full" && hoverRules.enabled ? hoverRules : null}
           />
         </div>
         <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 6 }}>

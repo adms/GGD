@@ -86,6 +86,7 @@ vi.mock("../../../audio/championVoice", () => ({
 }));
 
 const { ValhallaPanel } = await import("../ValhallaPanel");
+type ValhallaHoverRules = import("./valhallaHoverPop").ValhallaHoverRules;
 const { ChampionProfile } = await import("../../panels/champselect/ProfileBlock");
 const { ensureContentLoaded, __resetContentBoot } = await import("../../../content/bootContent");
 const { __resetWhitelistCache } = await import("../../panels/whitelist");
@@ -207,7 +208,7 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-function render(props: { declaimOnRotate?: boolean } = {}): void {
+function render(props: { declaimOnRotate?: boolean; hoverPop?: Partial<ValhallaHoverRules> } = {}): void {
   act(() => {
     root.render(createElement(ValhallaPanel, props));
   });
@@ -404,5 +405,70 @@ describe("GH#1258 / GH#1250 卡片上印的字與徽章真的接到畫面（DOM 
     act(() => root.render(createElement(ChampionProfile, { championId: ID_A })));
     await pump(20);
     expect(host.querySelector("[data-ggd-profile-standin]"), "量尺自證：徽章亮得起來").not.toBeNull();
+  });
+});
+
+describe("GH#1264 hover 放大 —— 讀畫出來的 DOM（⛔ 不是只驗幾何純函式）", () => {
+  /** 大廳量級的舞台框。jsdom 沒有排版引擎 ⇒ 這一格就是「瀏覽器量到的尺寸」。 */
+  const SLOT = { x: 56, y: 150, width: 240, height: 168 };
+  let realRect: () => DOMRect;
+
+  beforeEach(() => {
+    realRect = HTMLElement.prototype.getBoundingClientRect;
+    HTMLElement.prototype.getBoundingClientRect = function (this: HTMLElement): DOMRect {
+      if (!this.hasAttribute("data-ggd-valhalla-stage-slot")) return realRect.call(this);
+      return { ...SLOT, left: SLOT.x, top: SLOT.y, right: SLOT.x + SLOT.width, bottom: SLOT.y + SLOT.height, toJSON: () => ({}) } as DOMRect;
+    };
+  });
+  afterEach(() => {
+    HTMLElement.prototype.getBoundingClientRect = realRect;
+  });
+
+  const stage = (): HTMLElement => {
+    const el = host.querySelector<HTMLElement>("[data-ggd-valhalla-stage]");
+    if (!el) throw new Error("3D 舞台沒有被畫出來");
+    return el;
+  };
+  const hover = async (name: "pointerover" | "pointerout"): Promise<void> => {
+    act(() => {
+      stage().dispatchEvent(new window.MouseEvent(name, { bubbles: true }));
+    });
+    await pump(10);
+  };
+
+  it("★ 滑鼠移入 ⇒ 舞台容器的 width/height 真的變大（⛔ 不是 transform: scale，那會糊）", async () => {
+    render({ hoverPop: { hoverDelayMs: 0 } });
+    await settle();
+    expect(stage().getAttribute("data-ggd-valhalla-pop"), "量尺自證：一開始沒放大").toBe("idle");
+
+    await hover("pointerover");
+
+    const el = stage();
+    expect(el.getAttribute("data-ggd-valhalla-pop")).toBe("on");
+    // ⛔ 改用 `transform: scale()` ⇒ 下面三行一起紅（width/height 是空字串、transform 非空）。
+    //    而那正是缺陷本人：transform 不改排版尺寸 ⇒ StorePreview 的 ResizeObserver 不會響
+    //    ⇒ engine.resize() 不會被呼叫 ⇒ 玩家看到的是放大的低解析度點陣圖。
+    expect(el.style.transform, "⛔ 放大不可以用 CSS transform").toBe("");
+    expect(parseFloat(el.style.width)).toBeGreaterThan(SLOT.width);
+    expect(parseFloat(el.style.height)).toBeGreaterThan(SLOT.height);
+    // 跳出卡片（fixed）才不會被舞台自己的 overflow:hidden 裁掉；底邊不動 ⇒ 蓋不到「一鍵開打」
+    expect(el.style.position).toBe("fixed");
+    expect(parseFloat(el.style.top) + parseFloat(el.style.height)).toBeCloseTo(SLOT.y + SLOT.height, 3);
+    // ⭐ 只有**一個** Babylon 畫布，從頭到尾（放大沒有再掛第二個 StorePreviewCanvas）
+    expect(host.querySelectorAll("[data-ggd-stub-preview]").length).toBe(1);
+
+    await hover("pointerout");
+    expect(stage().getAttribute("data-ggd-valhalla-pop"), "移開之後要收回原位").toBe("idle");
+    expect(stage().style.position).toBe("absolute");
+    expect(stage().style.width).toBe("");
+  });
+
+  it("★ 後台那一格關掉就真的不放大（`enabled: false`＝一鍵 rollback）", async () => {
+    render({ hoverPop: { hoverDelayMs: 0, enabled: false } });
+    await settle();
+    expect(stage().getAttribute("data-ggd-valhalla-pop")).toBe("off");
+    await hover("pointerover");
+    expect(stage().getAttribute("data-ggd-valhalla-pop")).toBe("off");
+    expect(stage().style.position).toBe("absolute");
   });
 });
