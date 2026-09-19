@@ -542,11 +542,27 @@ func (s *Service) generateTTSMP3(ctx context.Context, cfg Config, text, lang, vo
 
 // ---- text generation --------------------------------------------------------
 
+// GH#1108 — A completion carries TWO facts, and until now this file threw the
+// second one away: the text, and the provider's own report of WHY generation
+// stopped. Without that report a caller cannot tell a finished answer from one
+// the provider cut off at the token limit — and a JSON object truncated at the
+// token limit can still parse, so "it parsed" is NOT evidence of completeness.
+//
+// The finish/stop field is forwarded VERBATIM. The vocabulary map that turns it
+// into a decision lives in exactly one place, on the client
+// (apps/editor/src/ai/structuredJson.ts, aiCompletionFromFinishReason); an
+// absent or unrecognised value becomes `unknown` THERE and blocks the
+// structured path. ⛔ Never substitute a value here to make that check pass —
+// fail-closed is the point.
+
 type openAIChatResp struct {
 	Choices []struct {
 		Message struct {
 			Content string `json:"content"`
 		} `json:"message"`
+		// FinishReason is OpenAI's per-choice stop report ("stop", "length",
+		// "content_filter", …). Absent on providers that omit it => "".
+		FinishReason string `json:"finish_reason"`
 	} `json:"choices"`
 }
 
@@ -555,12 +571,26 @@ type anthropicResp struct {
 		Type string `json:"type"`
 		Text string `json:"text"`
 	} `json:"content"`
+	// StopReason is Anthropic's top-level stop report ("end_turn",
+	// "max_tokens", …) — the same fact under a different name.
+	StopReason string `json:"stop_reason"`
+}
+
+// providerText is ONE text completion: the answer, plus the provider's VERBATIM
+// finish/stop field ("" when the provider sent none). Two values, one struct,
+// so a caller cannot take the text and silently drop the completeness report —
+// which is precisely the bug GH#1108 is fixing.
+type providerText struct {
+	Text   string
+	Finish string
 }
 
 // generateText calls the configured text provider and returns the generated
-// string. Both the OpenAI chat-completions and Anthropic messages shapes are
-// supported (selected by the text base URL).
-func (s *Service) generateText(ctx context.Context, cfg Config, system, user string) (string, error) {
+// string TOGETHER WITH the provider's finish reason. Both the OpenAI
+// chat-completions and Anthropic messages shapes are supported (selected by the
+// text base URL); each dialect's stop field is mapped onto providerText.Finish
+// unchanged.
+func (s *Service) generateText(ctx context.Context, cfg Config, system, user string) (providerText, error) {
 	if isAnthropic(cfg.TextBaseURL) {
 		url := joinURL(cfg.TextBaseURL, "/messages")
 		body := map[string]any{
@@ -573,14 +603,14 @@ func (s *Service) generateText(ctx context.Context, cfg Config, system, user str
 		}
 		var out anthropicResp
 		if err := s.doJSON(ctx, url, cfg, true, body, &out); err != nil {
-			return "", err
+			return providerText{}, err
 		}
 		for _, c := range out.Content {
 			if c.Type == "text" && c.Text != "" {
-				return strings.TrimSpace(c.Text), nil
+				return providerText{Text: strings.TrimSpace(c.Text), Finish: strings.TrimSpace(out.StopReason)}, nil
 			}
 		}
-		return "", provErr("provider returned no text")
+		return providerText{}, provErr("provider returned no text")
 	}
 
 	url := joinURL(cfg.TextBaseURL, "/chat/completions")
@@ -593,10 +623,13 @@ func (s *Service) generateText(ctx context.Context, cfg Config, system, user str
 	}
 	var out openAIChatResp
 	if err := s.doJSON(ctx, url, cfg, false, body, &out); err != nil {
-		return "", err
+		return providerText{}, err
 	}
 	if len(out.Choices) == 0 || strings.TrimSpace(out.Choices[0].Message.Content) == "" {
-		return "", provErr("provider returned no text")
+		return providerText{}, provErr("provider returned no text")
 	}
-	return strings.TrimSpace(out.Choices[0].Message.Content), nil
+	return providerText{
+		Text:   strings.TrimSpace(out.Choices[0].Message.Content),
+		Finish: strings.TrimSpace(out.Choices[0].FinishReason),
+	}, nil
 }

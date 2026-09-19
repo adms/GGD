@@ -14,6 +14,7 @@ import (
 //
 //	POST /api/v1/ai/icon          authed (editor/dev) — generate an icon PNG
 //	POST /api/v1/ai/text          authed (editor/dev) — AI-fill a text field
+//	                              -> {text, stub, finishReason}
 //	POST /api/v1/ai/tts           authed (tooling)    — synthesize speech (MP3)
 //	POST /api/v1/ai/music         authed (tooling)    — generate a BGM track (MP3)
 //	GET  /api/v1/admin/ai/config  admin only — masked provider config
@@ -114,9 +115,17 @@ func (h *Handlers) text(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, err)
 		return
 	}
+	// GH#1108 — `finishReason` is the provider's own stop report, VERBATIM ("" when
+	// the provider sent none). It is ALWAYS present in the envelope: the structured
+	// (JSON) caller treats an absent/unrecognised value as `unknown` and refuses the
+	// answer, so while this key was missing EVERY JSON fill failed as "completion
+	// unknown" even when the model had answered perfectly. ⛔ Do not drop it, and ⛔
+	// do not fill it in with a guess — a truncated JSON object still parses, so this
+	// field is the only thing that can tell the two apart.
 	httpx.WriteJSON(w, http.StatusOK, map[string]any{
-		"text": res.Text,
-		"stub": res.Stub,
+		"text":         res.Text,
+		"stub":         res.Stub,
+		"finishReason": res.Finish,
 	})
 }
 

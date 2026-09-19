@@ -19,10 +19,25 @@ type IconResult struct {
 	Stub bool
 }
 
+// finishStop is the OpenAI/Anthropic-compatible word for "the model finished on
+// its own". It is used for ONE case only — the stub, which has no token budget
+// and is therefore never cut short (see GenerateText). ⛔ It must never be used
+// to paper over a provider that sent no finish field.
+const finishStop = "stop"
+
 // TextResult is the outcome of a text generation.
 type TextResult struct {
 	Text string
 	Stub bool
+	// Finish is the provider's VERBATIM finish/stop word ("stop", "length",
+	// "end_turn", "max_tokens", …), or "" when the provider sent none.
+	//
+	// GH#1108 — the structured (JSON) caller needs it to tell a finished answer
+	// from a truncated one: a JSON object cut off at the token limit can still
+	// parse, so the text alone cannot answer "did the model finish?". An empty
+	// or unrecognised word maps to `unknown` on the client and BLOCKS the JSON
+	// path; ⛔ never substitute a word the provider did not send.
+	Finish string
 }
 
 // clampSize normalizes a requested icon edge in pixels.
@@ -119,7 +134,13 @@ func (s *Service) GenerateText(ctx context.Context, accountID, prompt, field, do
 		return TextResult{}, err
 	}
 	if !cfg.textReady() {
-		return TextResult{Text: stubText(field, prompt, docContext), Stub: true}, nil
+		// The canned string is emitted WHOLE — there is no token budget here and
+		// nothing that can truncate it — so finishStop is the TRUE report, not a
+		// convenience. Reporting "" instead would make the client say "the
+		// adapter sent no finish field", which is a lie about the stub. Either
+		// way the JSON path still refuses it (canned prose is not JSON), and
+		// Stub:true remains the signal that no provider is configured.
+		return TextResult{Text: stubText(field, prompt, docContext), Stub: true, Finish: finishStop}, nil
 	}
 
 	system, user := textPrompt(field, prompt, docContext)
@@ -127,7 +148,7 @@ func (s *Service) GenerateText(ctx context.Context, accountID, prompt, field, do
 	if perr != nil {
 		return TextResult{}, providerFailure(perr)
 	}
-	return TextResult{Text: out, Stub: false}, nil
+	return TextResult{Text: out.Text, Stub: false, Finish: out.Finish}, nil
 }
 
 // TTSResult is the outcome of a speech generation. There is NO stub audio: in

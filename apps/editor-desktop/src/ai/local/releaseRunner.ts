@@ -1,3 +1,5 @@
+// GH#1108 —— 「模型答案怎麼剝包裝」只有**一個**住處。⛔ 這裡不寫第二套。
+import { normalizeAiJson, type AiStructuredResponse } from "../../../../editor/src/ai/structuredJson";
 import {
   LOCAL_AI_RELEASE_CORPUS,
   LOCAL_AI_EVAL_INPUT_CONTRACT_DIGEST,
@@ -22,7 +24,16 @@ export interface LocalAiReleaseInferenceInput {
 
 export type LocalAiEvalModelCase = Pick<LocalAiEvalCase, "id" | "category" | "prompt" | "context">;
 
-export type LocalAiReleaseInfer = (input: LocalAiReleaseInferenceInput, signal?: AbortSignal) => Promise<string>;
+/**
+ * ⭐ GH#1108 —— adapter 回的是**結構化回覆**（完成狀態＋final channel），
+ * ⛔ 不是一段裸字串。
+ *
+ * 為什麼型別要改：完成狀態**只有 adapter 看得到**（它是 HTTP 回應裡的
+ * `finish_reason`）。回一段字串就等於把它丟掉，而 runner 只剩「假設它寫完了」
+ * 一條路 —— ⚠️ 一段在 token 上限被砍斷的 JSON **仍然 parse 得過**，所以那個
+ * 假設不會有任何東西變紅。讓它走在型別裡，「沒回報 ⇒ unknown ⇒ 擋下」就是預設。
+ */
+export type LocalAiReleaseInfer = (input: LocalAiReleaseInferenceInput, signal?: AbortSignal) => Promise<AiStructuredResponse>;
 export type LocalAiReleaseRunMetadata = Omit<LocalAiReleaseRun, "schema" | "suite" | "promptSha256" | "grammarSha256" | "inputContractSha256" | "outputs">;
 
 export interface LocalAiReleaseRunOptions {
@@ -89,7 +100,14 @@ export async function runLocalAiReleaseCorpus(
         testCase: toModelVisibleEvalCase(testCase),
         outputJsonSchema: LOCAL_AI_EVAL_OUTPUT_JSON_SCHEMA,
       }, signal);
-      const decoded = JSON.parse(raw) as unknown;
+      // GH#1108 —— 在此之前這一行是裸的 `JSON.parse(raw)`：模型只要把答案包進一層
+      // ```json 圍欄（⭐ 而那是模型很常做的事），整個案例就記成失敗，⚠️ 而失敗原因
+      // 會寫成一句 `Unexpected token` —— 看起來像模型答錯，⛔ 其實是我們沒剝包裝。
+      // ⛔ 這不是把驗證放寬：完成狀態、多區塊、未閉合圍欄、前後多餘解說、壞 JSON
+      //    全部照擋，下面的 root type／schema／評分也一道都沒少。
+      const unwrapped = normalizeAiJson(raw);
+      if (!unwrapped.ok) throw new Error(`MODEL_OUTPUT_${unwrapped.reason}: ${unwrapped.detail}`);
+      const decoded = unwrapped.value;
       if (!decoded || typeof decoded !== "object" || Array.isArray(decoded) || "durationMs" in decoded) throw new Error("MODEL_OUTPUT_SCHEMA_INVALID");
       outputs.push({ ...(decoded as Omit<LocalAiEvalOutput, "durationMs">), durationMs: performance.now() - started });
     } catch (error) {

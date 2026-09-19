@@ -675,3 +675,78 @@ func TestImageRequestDialect(t *testing.T) {
 		assert.NotContains(t, err.Error(), testKey)
 	})
 }
+
+// GH#1108 承重守衛：供應商的 finish_reason／stop_reason 要**原封**走完這一跳。
+//
+// 承重點＝「完成狀態不可以在 proxy 這一層被丟掉」。⭐ 為什麼文字本身答不了這題：
+// 一段在 token 上限被砍斷的 JSON **仍然 parse 得過** ⇒「解析成功」⛔ 不是「模型
+// 寫完了」的證據。⛔ 也刻意驗了「供應商沒送」那一邊要留 ""（⛔ 不補一個假的
+// "stop"）—— 那正是下游會擋下來的訊號。
+//
+// 突變紀錄：把 provider.go 回傳的 `Finish: …FinishReason` 改成 `Finish: ""`
+// ⇒ finished／truncated 兩個子測試同時紅（量到的是兩個方向，⛔ 不是只有「有值」）。
+func TestTextForwardsProviderFinishReason(t *testing.T) {
+	ctx := context.Background()
+
+	// 未設定供應商：罐頭字串一定整段送出（沒有 token 預算可以砍它）⇒ 回報 "stop"。
+	stub, err := newSvcOnly(t).GenerateText(ctx, "acct-1", "描述他", "description", "")
+	require.NoError(t, err)
+	require.True(t, stub.Stub)
+	assert.Equal(t, "stop", stub.Finish, "罐頭答案是完整的，⛔ 不可以報成「不知道」")
+
+	// OpenAI 方言：choices[0].finish_reason。三個方向：寫完／被截斷／供應商沒送。
+	for _, tc := range []struct{ name, finish string }{
+		{"finished", "stop"}, {"truncated", "length"}, {"absent", ""},
+	} {
+		t.Run("openai/"+tc.name, func(t *testing.T) {
+			choice := map[string]any{"message": map[string]any{"content": `{"a":1}`}}
+			if tc.finish != "" {
+				choice["finish_reason"] = tc.finish
+			}
+			svc := newTextProviderSvc(t, "", map[string]any{"choices": []map[string]any{choice}})
+			res, err := svc.GenerateText(ctx, "acct-1", "描述他", "description", "")
+			require.NoError(t, err)
+			assert.False(t, res.Stub)
+			assert.Equal(t, `{"a":1}`, res.Text)
+			assert.Equal(t, tc.finish, res.Finish)
+		})
+	}
+
+	// Anthropic 方言：同一個事實換一個欄位名（頂層 stop_reason）。
+	t.Run("anthropic/end_turn", func(t *testing.T) {
+		svc := newTextProviderSvc(t, "/anthropic/v1", map[string]any{
+			"stop_reason": "end_turn",
+			"content":     []map[string]any{{"type": "text", "text": `{"a":1}`}},
+		})
+		res, err := svc.GenerateText(ctx, "acct-1", "描述他", "description", "")
+		require.NoError(t, err)
+		assert.Equal(t, "end_turn", res.Finish)
+	})
+}
+
+// newSvcOnly is newSvc when the store/redis handles are not needed.
+func newSvcOnly(t *testing.T) *ai.Service {
+	t.Helper()
+	svc, _, _ := newSvc(t)
+	return svc
+}
+
+// newTextProviderSvc wires a service to a fake text provider that answers every
+// request with `reply`. pathPrefix goes into the configured base URL, so passing
+// "/anthropic/v1" is what selects the Anthropic dialect (isAnthropic reads the URL).
+func newTextProviderSvc(t *testing.T, pathPrefix string, reply map[string]any) *ai.Service {
+	t.Helper()
+	provider := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		_ = json.NewEncoder(w).Encode(reply)
+	}))
+	t.Cleanup(provider.Close)
+	svc := newSvcOnly(t)
+	_, err := svc.SaveConfig(ai.Update{
+		Enabled:     ptr(true),
+		TextBaseURL: ptr(provider.URL + pathPrefix + "/v1"),
+		TextModel:   ptr("txt-1"),
+		APIKey:      ptr(testKey),
+	})
+	require.NoError(t, err)
+	return svc
+}

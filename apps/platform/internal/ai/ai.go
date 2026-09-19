@@ -16,6 +16,11 @@
 //     flow is testable WITHOUT a real key. /ai/tts and /ai/music have no
 //     meaningful placeholder audio, so they answer 501 with `stub:true` and
 //     name the local fallback the caller should use instead.
+//   - /ai/text also reports `finishReason`: the provider's VERBATIM stop word
+//     ("stop" / "length" / "end_turn" / "max_tokens" / …), "" when the provider
+//     sent none. GH#1108 — callers that expect JSON cannot judge completeness
+//     from the text alone (a truncated object still parses), so they refuse
+//     anything whose finish word they do not recognise.
 //   - Capabilities are configured INDEPENDENTLY (image / text / tts / music):
 //     each has its own base URL + model and its own ready check, so one can be
 //     live while the others stay in stub mode. A config save is therefore a

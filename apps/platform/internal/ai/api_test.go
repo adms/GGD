@@ -159,7 +159,13 @@ func TestAPITTSStub(t *testing.T) {
 }
 
 // ai-api-text-stub: /ai/text is ADMIN-ONLY (P0-1) and, unconfigured, returns
-// { text, stub:true } with a non-empty canned string.
+// { text, stub:true, finishReason } with a non-empty canned string.
+//
+// GH#1108 — the finishReason assertion is on the ENVELOPE on purpose. The
+// service-level guard (TestTextForwardsProviderFinishReason) proves the value
+// survives the provider hop; only this one proves it reaches the wire. Dropping
+// the handler's map key is invisible to every other test here, and that single
+// missing key is what made the editor's JSON path refuse every answer.
 func TestAPITextStub(t *testing.T) {
 	testkit.Cover(t, "ai-api-text-stub")
 	ts := testutil.New(t)
@@ -181,6 +187,7 @@ func TestAPITextStub(t *testing.T) {
 	assert.Equal(t, true, r.Body["stub"])
 	text, _ := r.Body["text"].(string)
 	assert.NotEmpty(t, text)
+	assert.Equal(t, "stop", r.Body["finishReason"], "GH#1108: the completion report must be ON THE WIRE, not only inside TextResult")
 }
 
 // ai-api-music-stub: /ai/music is ADMIN-ONLY (P0-1) and, unconfigured, answers a 501-style
