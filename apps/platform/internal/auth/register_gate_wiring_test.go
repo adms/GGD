@@ -106,8 +106,23 @@ func TestTheResolvedConfigAloneGatesTheShippedRegisterEndpoint(t *testing.T) {
 
 	// PRODUCTION SHAPE: the ONLY thing carried in is the resolved config value.
 	// server.Options stays empty of RequireInvite, exactly as cmd/platform does.
+	//
+	// GH#1274 — WHY THE POLICY IS PINNED HERE, AND WHY THAT DOES NOT WEAKEN THE
+	// GUARD. What this file is about is the RELATIONSHIP「the resolved config
+	// reaches the shipped router」, measured through the one behaviour that can
+	// only exist once the gate is installed: four byte-identical refusals. Since
+	// #1274 that refusal ALSO needs the durable setting to say 必填 — under 選填
+	// (the shipped default) an un-invited caller is let through ON PURPOSE, so
+	// the probes would be measuring the MODE instead of the wiring, and this
+	// test would have quietly turned into a test of something else.
+	//
+	// Pinning 必填 puts the probes back on the original question. Deleting
+	// `|| cfg.RequireInvite` from server.New still fails here — with no gate
+	// installed there is nothing for the policy to be 必填 ABOUT, and the census
+	// goes straight back to 409/201/409/201.
 	ts := testutil.NewFreshDeploy(t, func(c *config.Config) {
 		c.RequireInvite = cfg.RequireInvite
+		testutil.WriteInvitePolicy(t, c.DataDir, "required")
 	})
 
 	// Seed the deploy the way a real one starts: the first account is the

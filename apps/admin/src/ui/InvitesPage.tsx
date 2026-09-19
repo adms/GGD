@@ -15,22 +15,28 @@
  * file is presentation + wiring only, mirroring CombatEnvPage.
  */
 import { useEffect, useMemo, useState } from "react";
-import { getInvites, mintInvites, revokeInvite } from "../api";
+import { getInvites, mintInvites, putInvitePolicy, revokeInvite } from "../api";
 import {
   COUNT_CHOICES,
   FALLBACK_LIMITS,
+  INVITE_CODE_MODES,
+  SHIPPED_INVITE_CODE_MODE,
   SOURCE_FILTERS,
   TTL_CHOICES,
   canRevoke,
   defaultRegisterUrl,
+  describeInviteMode,
   expiryText,
   filterBySource,
   inviteMessage,
+  inviteModeOrigin,
   parseMint,
   shortTime,
   statusLabel,
   summarize,
+  type InviteCodeMode,
   type InviteLimits,
+  type InvitePayload,
   type InviteRow,
 } from "../invites";
 import { Badge, Btn, ErrorBanner, Panel, TextInput } from "./widgets";
@@ -83,12 +89,35 @@ export function InvitesPage(): React.JSX.Element {
    */
   const [source, setSource] = useState("admin");
 
+  /**
+   * GH#1274 必填／選填. Seeded from the SHIPPED default only so the panel can
+   * render before the first response arrives; every response overwrites all
+   * three of these, and `policyStored` is what decides whether the page says
+   * 「尚未設定」 or names who saved it.
+   */
+  const [codeMode, setCodeMode] = useState<InviteCodeMode>(SHIPPED_INVITE_CODE_MODE);
+  const [policyStored, setPolicyStored] = useState(false);
+  const [policyOrigin, setPolicyOrigin] = useState("讀取中…");
+
   const [note, setNote] = useState("");
   const [count, setCount] = useState(1);
   const [ttlDays, setTtlDays] = useState(FALLBACK_LIMITS.defaultTtlDays);
   const [registerUrl, setRegisterUrl] = useState(() =>
     defaultRegisterUrl(typeof location === "undefined" ? "" : location.origin),
   );
+
+  /**
+   * Every response from this surface carries the policy, so it is absorbed in
+   * ONE place rather than at each call site. That is what keeps the switch and
+   * the code list from ever being repainted out of step — the failure this
+   * page would otherwise have: a mode from one round trip beside a list from
+   * another.
+   */
+  const absorbPolicy = (p: InvitePayload): void => {
+    setCodeMode(p.policy.inviteCode);
+    setPolicyStored(p.policyStored);
+    setPolicyOrigin(inviteModeOrigin(p));
+  };
 
   useEffect(() => {
     void (async () => {
@@ -97,6 +126,7 @@ export function InvitesPage(): React.JSX.Element {
         setRows(p.invites);
         setLimits(p.limits);
         setTtlDays(p.limits.defaultTtlDays);
+        absorbPolicy(p);
       } catch (err) {
         setApiErr(`${err instanceof Error ? err.message : "載入失敗"}（平台 API 尚未提供 /admin/invites？）`);
       } finally {
@@ -120,6 +150,7 @@ export function InvitesPage(): React.JSX.Element {
       setRows(p.invites);
       setLimits(p.limits);
       setMinted(p.minted);
+      absorbPolicy(p);
       // A freshly minted code is an operator code; never leave the table on a
       // view that would hide what the owner just made.
       setSource("admin");
@@ -141,9 +172,46 @@ export function InvitesPage(): React.JSX.Element {
       const p = await revokeInvite(row.code);
       setRows(p.invites);
       setMinted((m) => m.filter((x) => x.code !== row.code));
+      absorbPolicy(p);
       setFlash(`已撤銷 ${row.code}`);
     } catch (err) {
       setApiErr(err instanceof Error ? err.message : "撤銷失敗");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  /**
+   * Save 必填／選填. It takes effect on the NEXT registration — the server
+   * re-reads it every time — so the confirmation says so rather than implying
+   * a restart is needed.
+   *
+   * Switching to 選填 asks first, and the question names what it costs. This is
+   * the one control on the page that can let strangers in; the rest only mint
+   * and kill codes.
+   */
+  const onSetMode = async (next: InviteCodeMode): Promise<void> => {
+    if (next === codeMode) return;
+    if (
+      next === "optional" &&
+      !window.confirm(
+        "改成「選填」之後，沒有邀請碼的人也可以註冊（帳號一樣會停在待審，要你批准才能玩）。\n\n" +
+          "代價：陌生人可以試出某個帳號名或 email 有沒有被註冊過。\n\n" +
+          "要改嗎？隨時可以切回「必填」。",
+      )
+    ) {
+      return;
+    }
+    setBusy(true);
+    setApiErr(null);
+    try {
+      const p = await putInvitePolicy(next);
+      setRows(p.invites);
+      absorbPolicy(p);
+      setFlash(`✓ 已改成「${describeInviteMode(p.policy.inviteCode).label}」——下一個註冊就生效（不用重啟）`);
+    } catch (err) {
+      setFlash(null);
+      setApiErr(err instanceof Error ? err.message : "設定失敗");
     } finally {
       setBusy(false);
     }
@@ -157,9 +225,24 @@ export function InvitesPage(): React.JSX.Element {
     <div style={{ display: "flex", flexDirection: "column", gap: 14, maxWidth: 940 }}>
       <div>
         <div style={{ fontSize: 18, fontWeight: 800, color: TEXT_MAIN }}>邀請碼 · Invite codes</div>
+        {/* ⚠️ GH#1274: this paragraph used to state flatly「沒有邀請碼就註冊不了」.
+            That sentence is only true in 必填, so it is now derived from the
+            live setting — a console that keeps asserting the old posture after
+            the owner switched is exactly the「卡片上說了但不會發生」failure the
+            rules forbid. */}
         <div style={{ fontSize: 12, color: TEXT_DIM, marginTop: 4, lineHeight: 1.8 }}>
-          這是私人測試版的<b style={{ color: TEXT_MAIN }}>唯一入口</b>：沒有邀請碼就<b style={{ color: TEXT_MAIN }}>註冊不了</b>
-          （檢查在伺服器端，不是網頁上的必填欄位）。一組邀請碼<b style={{ color: TEXT_MAIN }}>只能用一次</b>，用掉之後這裡會顯示是誰用的、什麼時候用的。
+          {codeMode === "required" ? (
+            <>
+              目前設定是<b style={{ color: TEXT_MAIN }}>必填</b>：沒有邀請碼就
+              <b style={{ color: TEXT_MAIN }}>註冊不了</b>（檢查在伺服器端，不是網頁上的必填欄位）。
+            </>
+          ) : (
+            <>
+              目前設定是<b style={{ color: GOLD }}>選填</b>：沒有邀請碼<b style={{ color: TEXT_MAIN }}>也能註冊</b>
+              ，但帳號會停在<b style={{ color: TEXT_MAIN }}>待審</b>，要你在「帳號審核」批准才能玩。
+            </>
+          )}
+          一組邀請碼<b style={{ color: TEXT_MAIN }}>只能用一次</b>，用掉之後這裡會顯示是誰用的、什麼時候用的。
           <br />
           這裡有<b style={{ color: TEXT_MAIN }}>兩種</b>邀請碼：你在下面產生的「後台發出」，以及每個人註冊時系統自動給他一組的「玩家推薦」。
           下面的表格預設只顯示你自己發的，按<b style={{ color: TEXT_MAIN }}>來源</b>可以切換。
@@ -167,6 +250,40 @@ export function InvitesPage(): React.JSX.Element {
       </div>
 
       <ErrorBanner text={apiErr} onDismiss={() => setApiErr(null)} />
+
+      <Panel title="註冊要不要邀請碼 · Registration">
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {INVITE_CODE_MODES.map((m) => {
+              const d = describeInviteMode(m);
+              const on = codeMode === m;
+              return (
+                <Btn
+                  key={m}
+                  kind={on ? "primary" : "ghost"}
+                  disabled={busy || loading}
+                  dataField={`invite-mode-${m}`}
+                  onClick={() => void onSetMode(m)}
+                >
+                  {on ? `● ${d.label}` : d.label}
+                </Btn>
+              );
+            })}
+            <div style={{ fontSize: 11, color: TEXT_DIM, alignSelf: "center" }}>{policyOrigin}</div>
+          </div>
+          <div style={{ fontSize: 12, color: TEXT_MAIN, lineHeight: 1.8 }}>
+            {describeInviteMode(codeMode).what}
+          </div>
+          <div style={{ fontSize: 11, color: codeMode === "optional" ? WARN : TEXT_DIM, lineHeight: 1.8 }}>
+            代價：{describeInviteMode(codeMode).cost}
+          </div>
+          <div style={{ fontSize: 11, color: TEXT_DIM, lineHeight: 1.8 }}>
+            存檔後<b style={{ color: TEXT_MAIN }}>下一個註冊就生效</b>，不用重啟伺服器。
+            這一格<b style={{ color: TEXT_MAIN }}>不影響</b>「要不要後台批准」——那是「帳號審核」那一頁的事，兩個是分開的。
+            {!policyStored && "（目前還沒有人設定過，用的是內建預設值。）"}
+          </div>
+        </div>
+      </Panel>
 
       <Panel title="產生邀請碼 · Mint">
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>

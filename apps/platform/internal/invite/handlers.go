@@ -16,6 +16,15 @@ import (
 //	GET  /api/v1/admin/invites                  list every code + who redeemed it
 //	POST /api/v1/admin/invites                  mint a batch
 //	POST /api/v1/admin/invites/{code}/revoke    kill an unredeemed code
+//	PUT  /api/v1/admin/invites/policy           必填／選填 (GH#1274)
+//
+// The POLICY write is admin-gated like everything else here. Its read is NOT a
+// route of its own: every response on this surface already carries it
+// (listResp.Policy), so the console paints the switch and the codes from ONE
+// round trip and can never show a mode that disagrees with the list beside it.
+// The PUBLIC "which mode is this deploy in" read belongs to auth — it has to
+// report what Register will actually do, so it is derived there rather than
+// mirrored here. See policy.go.
 type Handlers struct {
 	svc *Service
 	// adminOnly is the admin-role gate (admin.Service.AdminOnly), injected so
@@ -44,6 +53,10 @@ func (h *Handlers) Mount(r chi.Router) {
 		ar.Use(h.adminOnly)
 		ar.Get("/admin/invites", h.list)
 		ar.Post("/admin/invites", h.mint)
+		// GH#1274. Mounted BEFORE the {code} route would matter only if it
+		// collided; it does not — "policy" is a distinct path segment under
+		// /admin/invites and the revoke route is /{code}/revoke, two segments.
+		ar.Put("/admin/invites/policy", h.putPolicy)
 		ar.Post("/admin/invites/{code}/revoke", h.revoke)
 	})
 }
@@ -60,9 +73,18 @@ type listResp struct {
 		MinTTLDays     int `json:"minTtlDays"`
 		MaxTTLDays     int `json:"maxTtlDays"`
 	} `json:"limits"`
+	// Policy is the GH#1274 必填／選填 setting as stored (or the compiled
+	// default when nothing has been saved). PolicyStored says which of those
+	// two it is, so the console can render 「尚未設定（使用內建預設值）」
+	// instead of implying the owner chose it. PolicyDefault ships the compiled
+	// default alongside, so the page's 還原預設 cannot drift from the server's
+	// idea of what the default is — the same reason opsenv ships Defaults.
+	Policy        Policy `json:"policy"`
+	PolicyStored  bool   `json:"policyStored"`
+	PolicyDefault string `json:"policyDefault"`
 }
 
-func (h *Handlers) buildListResp(rows []Row) listResp {
+func (h *Handlers) buildListResp(rows []Row) (listResp, error) {
 	if rows == nil {
 		rows = []Row{}
 	}
@@ -72,7 +94,19 @@ func (h *Handlers) buildListResp(rows []Row) listResp {
 	out.Limits.DefaultTTLDays = DefaultTTLDays
 	out.Limits.MinTTLDays = MinTTLDays
 	out.Limits.MaxTTLDays = MaxTTLDays
-	return out
+	// An unreadable policy is an ERROR here, not a silently-defaulted field.
+	// The console's whole job on this page is to show the owner who can
+	// register; a page that painted 「選填」 while Register was actually
+	// failing closed to 「必填」 would be worse than a page that refused to
+	// load. (Register itself still fails closed — see RegistrationRequiresCode.)
+	p, stored, err := h.svc.PolicyStored()
+	if err != nil {
+		return listResp{}, err
+	}
+	out.Policy = p
+	out.PolicyStored = stored
+	out.PolicyDefault = DefaultCodeMode
+	return out, nil
 }
 
 func (h *Handlers) list(w http.ResponseWriter, r *http.Request) {
@@ -81,7 +115,43 @@ func (h *Handlers) list(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, err)
 		return
 	}
-	httpx.WriteJSON(w, http.StatusOK, h.buildListResp(rows))
+	resp, err := h.buildListResp(rows)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, resp)
+}
+
+// policyReq is the PUT body: the whole desired state, one field.
+type policyReq struct {
+	InviteCode string `json:"inviteCode"`
+}
+
+// putPolicy saves 必填／選填 and hands the refreshed page back, so the console
+// repaints from the SERVER's answer rather than from what it just sent.
+func (h *Handlers) putPolicy(w http.ResponseWriter, r *http.Request) {
+	me := auth.MustIdentity(r.Context())
+	var req policyReq
+	if err := httpx.DecodeJSON(r, &req); err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	if _, err := h.svc.SetCodeMode(r.Context(), me.AccountID, req.InviteCode); err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	rows, err := h.svc.List(r.Context())
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	resp, err := h.buildListResp(rows)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, resp)
 }
 
 // mintReq is the mint body. note is REQUIRED (it is what makes a list of random
@@ -123,7 +193,12 @@ func (h *Handlers) mint(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, err)
 		return
 	}
-	httpx.WriteJSON(w, http.StatusCreated, mintResp{Minted: minted, listResp: h.buildListResp(rows)})
+	list, err := h.buildListResp(rows)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusCreated, mintResp{Minted: minted, listResp: list})
 }
 
 func (h *Handlers) revoke(w http.ResponseWriter, r *http.Request) {
@@ -138,9 +213,14 @@ func (h *Handlers) revoke(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, listErr)
 		return
 	}
+	list, err := h.buildListResp(rows)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
 	resp := struct {
 		Invite Row `json:"invite"`
 		listResp
-	}{Invite: row, listResp: h.buildListResp(rows)}
+	}{Invite: row, listResp: list}
 	httpx.WriteJSON(w, http.StatusOK, resp)
 }

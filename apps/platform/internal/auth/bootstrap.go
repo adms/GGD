@@ -171,8 +171,15 @@ func (s *Service) PrepareOwnerBootstrap(ctx context.Context) error {
 // meaningful probe surface: needsOwner is true solely during the ownerless
 // window, and even while it is true a networked deploy still requires the 0600
 // token to actually claim (requireToken), so advertising the window weakens
-// nothing. (This is deliberately narrower than advertising the invite gate,
-// which the client never does: whether a deploy is gated is a different signal.)
+// nothing.
+//
+// ⚠️ This paragraph used to end「deliberately narrower than advertising the
+// invite gate, which the client never does」. GH#1274 made that sentence false:
+// /auth/registration-policy now reports 必填／選填 so the register form can
+// label the code field 選填 and submit it empty. Corrected rather than deleted,
+// because the REASONING is what makes the new endpoint safe too — it reports
+// the deploy's POSTURE, takes no parameters, and says nothing about any
+// individual code or account. See Service.RegistrationInviteState.
 //
 // It FAILS CLOSED: bootstrap disabled, or an unreadable store, both report
 // needsOwner=false, so the UI never invites a first-owner claim on a deploy that

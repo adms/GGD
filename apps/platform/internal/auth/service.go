@@ -153,14 +153,41 @@ func (s *Service) SetPendingNotifier(n PendingNotifier) { s.notifier = n }
 // referral code (task #203) and ReferrerOf reports which account a code was
 // minted for (empty for an admin code) so a referral can fast-track its
 // inviter. StatusOf reports whether a code is still redeemable, which is what
-// keeps the account's mirrored copy of its own code honest (#237). See
-// invite.Service for the ordering rationale.
+// keeps the account's mirrored copy of its own code honest (#237).
+// RegistrationRequiresCode is the GH#1274 必填／選填 switch, read PER
+// REGISTRATION from the operator's durable setting — never cached at boot, so a
+// save in the console takes effect on the very next request — and failing
+// CLOSED to true when the store cannot be read. See invite.Service for the
+// ordering rationale and invite/policy.go for the three states it collapses.
 type InviteGate interface {
 	Redeem(ctx context.Context, code, accountID, username string) error
 	Release(ctx context.Context, code, accountID string) error
 	MintPersonalReferral(ctx context.Context, referrerID, username string) (string, error)
 	ReferrerOf(ctx context.Context, code string) (string, error)
 	StatusOf(ctx context.Context, code string) (string, error)
+	RegistrationRequiresCode(ctx context.Context) bool
+}
+
+// RegistrationInviteState reports how registration behaves on this deploy right
+// now: whether the invite-code system is installed at all, and whether a code is
+// currently REQUIRED (GH#1274).
+//
+// IT IS DERIVED FROM THE SAME TWO THINGS REGISTER BRANCHES ON — the injected
+// gate and the durable policy — rather than mirrored from config, so the public
+// probe that renders the register form's 「選填」 label cannot drift from what
+// the server will actually do. That drift is the whole reason this is a method
+// on the service rather than a value the composition root hands to a handler.
+//
+// It takes NO code parameter, by construction: an endpoint that answered "is
+// THIS code valid?" would be exactly the free guessing oracle internal/invite's
+// package header forbids. What it does reveal —「this deploy asks for a code」—
+// is already readable by anyone who posts one registration with an empty field,
+// so it opens no new probe surface.
+func (s *Service) RegistrationInviteState(ctx context.Context) (gateEnabled, codeRequired bool) {
+	if s.invites == nil {
+		return false, false
+	}
+	return true, s.invites.RegistrationRequiresCode(ctx)
 }
 
 // The invite lifecycle strings this package has to name. auth CANNOT import
@@ -462,7 +489,7 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 	//     is REQUIRED. (Opposite direction to the ownership grant, same meaning.)
 	//
 	// IT RUNS BEFORE THE USERNAME/EMAIL RESERVATION, AND THAT ORDERING IS THE
-	// ONLY THING ON A GATED DEPLOY THAT ACTUALLY CLOSES THE #179 ENUMERATION
+	// ONLY THING ON A 必填 DEPLOY THAT ACTUALLY CLOSES THE #179 ENUMERATION
 	// ORACLE. Merging the two 409s into one does NOT close it — an attacker pairs
 	// the value under test with a counterpart they know is fresh and reads
 	// 201-vs-409 (see ErrRegistrationConflict). What defeats that is refusing an
@@ -470,8 +497,17 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 	// all four probes come back byte-identical invite_required. Move this block
 	// below the SETNX pair and the oracle is live again for any stranger.
 	//
+	// ⚠️ GH#1274 NARROWED THE WORD "GATED" IN THAT PARAGRAPH, AND THE CHANGE IS
+	// LOAD-BEARING: it holds on a deploy whose durable policy is 必填. In 選填
+	// (the shipped default) an un-invited caller is NOT refused here, so the
+	// oracle is open to strangers by design — see the ⚠️ note on the condition
+	// below for what bounds it and how to close it again. This paragraph used to
+	// say "a gated deploy" full stop, which after #1274 would have been a
+	// sentence that outlived its truth while nothing went red.
+	//
 	// It also keeps the ~100 ms argon2 hash below the gate, where a caller with
-	// no code can never trigger it.
+	// no code can never trigger it — in 必填 mode. In 選填 the pending cap and
+	// the register rate limit are what bound unconditional hashing.
 	//
 	// RESIDUAL, stated plainly: this protects against callers WITHOUT a code. A
 	// caller holding a live code still reads 201-vs-409 freely, because the
@@ -489,14 +525,39 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 	// family member who picks a taken name does not lose their invite — unless
 	// burnInviteOnConflict is on, which trades that courtesy for a bound on the
 	// #179 residual oracle (see the field).
+	// GH#1274 — 必填／選填. The operator's durable setting decides whether a
+	// registration MUST present a code; it is read here, per registration, so
+	// saving in the console takes effect on the very next request rather than at
+	// the next restart.
+	//
+	// THE SECOND HALF OF THE CONDITION IS NOT AN OPTIMISATION. A caller who
+	// TYPED a code is validated even in 選填 mode, so a mistyped code is still
+	// invite_invalid rather than being silently ignored: "your code did not
+	// work" and "you did not use a code" are different things to the family
+	// member on the phone, and swallowing the first would ALSO burn nothing,
+	// leaving their inviter stuck pending with no sign anything went wrong.
+	// Presenting a VALID code in 選填 mode still burns it and still fast-tracks
+	// the referrer below (approveReferrerOf), exactly as in 必填 mode.
+	//
+	// ⚠️ WHAT 選填 COSTS, because the paragraph above this one is the only place
+	// it is written down: the un-invited caller this gate used to refuse
+	// IDENTICALLY now reaches the uniqueness reservation, so the GH#179
+	// enumeration oracle is open to strangers, not just to code holders. That is
+	// the deliberate trade owner asked for on 2026-09-15; what bounds it is the
+	// pending cap (maxPending) and GGD_REGISTER_RATE_LIMIT, and the console says
+	// so next to the switch. Switching back to 必填 closes it again with no
+	// deploy — which is the whole reason this is a setting.
 	inviteBurned := false
 	created := false
 	if s.invites != nil && !owner {
-		if err := s.invites.Redeem(ctx, opt.InviteCode, id, username); err != nil {
-			// Nothing reserved yet — refuse without touching the index.
-			return account.Account{}, TokenPair{}, err
+		codeRequired := s.invites.RegistrationRequiresCode(ctx)
+		if codeRequired || strings.TrimSpace(opt.InviteCode) != "" {
+			if err := s.invites.Redeem(ctx, opt.InviteCode, id, username); err != nil {
+				// Nothing reserved yet — refuse without touching the index.
+				return account.Account{}, TokenPair{}, err
+			}
+			inviteBurned = true
 		}
-		inviteBurned = true
 	}
 	defer func() {
 		if !inviteBurned || created || s.burnInviteOnConflict {

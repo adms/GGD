@@ -3,11 +3,14 @@ import { cover } from "@ggd/shared/testkit/cover";
 
 import {
   FALLBACK_LIMITS,
+  SHIPPED_INVITE_CODE_MODE,
   canRevoke,
   defaultRegisterUrl,
+  describeInviteMode,
   expiryText,
   filterBySource,
   inviteMessage,
+  inviteModeOrigin,
   normalizeInvitePayload,
   parseMint,
   statusLabel,
@@ -194,5 +197,53 @@ describe("the message the owner actually sends", () => {
     expect(defaultRegisterUrl("http://192.168.1.20:60721")).toBe("http://192.168.1.20:39527/");
     expect(defaultRegisterUrl("https://ggd.example.com")).toBe("https://ggd.example.com/");
     expect(defaultRegisterUrl("")).toBe("");
+  });
+});
+
+// GH#1274 註冊邀請碼 必填／選填 — the console half. Thin on purpose (體驗層):
+// the gate itself is the server's, guarded end-to-end in
+// apps/platform/internal/auth/register_optional_invite_test.go. What can only
+// break HERE is the page believing the wrong mode.
+describe("invite code mode (GH#1274)", () => {
+  it("fails CLOSED to 必填 when the response is unreadable", () => {
+    // The inverse mistake — rendering 選填 because the body could not be
+    // parsed — would tell the owner registration is open when it may not be.
+    for (const bad of [null, undefined, {}, { policy: "nope" }, { policy: { inviteCode: "opitonal" } }]) {
+      expect(normalizeInvitePayload(bad).policy.inviteCode).toBe("required");
+      expect(normalizeInvitePayload(bad).policyStored).toBe(false);
+    }
+  });
+
+  it("takes the mode, the saved-ness and the DEFAULT from the server", () => {
+    const p = normalizeInvitePayload({
+      invites: [],
+      policy: { inviteCode: "optional", updatedBy: "owner", updatedAt: "2026-09-19T01:02:00Z" },
+      policyStored: true,
+      policyDefault: "optional",
+    });
+    expect(p.policy.inviteCode).toBe("optional");
+    expect(p.policyStored).toBe(true);
+    expect(p.policyDefault).toBe("optional");
+    expect(inviteModeOrigin(p)).toContain("owner");
+  });
+
+  it("says 尚未設定 — and names the server's default, not this file's", () => {
+    const p = normalizeInvitePayload({ policy: { inviteCode: "required" }, policyDefault: "required" });
+    expect(inviteModeOrigin(p)).toContain("尚未設定");
+    expect(inviteModeOrigin(p)).toContain("必填");
+  });
+
+  it("mirrors the Go default, so the pre-response render is not a lie", () => {
+    // invite.DefaultCodeMode in apps/platform/internal/invite/policy.go.
+    expect(SHIPPED_INVITE_CODE_MODE).toBe("optional");
+  });
+
+  it("states what each mode COSTS, not just what it is", () => {
+    // 第一守則:「說明文字要寫它影響什麼」. 選填 opens the GH#179 probe surface
+    // and the owner cannot weigh that if the page does not say so.
+    expect(describeInviteMode("optional").what).toContain("待審");
+    expect(describeInviteMode("optional").what).toContain("介紹人");
+    expect(describeInviteMode("optional").cost).toContain("註冊過");
+    expect(describeInviteMode("required").label).toBe("必填");
   });
 });

@@ -118,11 +118,18 @@ type Config struct {
 	// this deploy owes its players the full 84 MB overlay.
 	FullAssets bool
 
-	// RequireInvite turns on the registration invite-code gate (#174): every
-	// registration except the first-owner claim must burn a code minted in the
-	// admin console. Resolved by resolveRequireInvite from GGD_REQUIRE_INVITE
-	// and, when that is unset, from the listen address — see there for the
-	// default and why it is the safe one.
+	// RequireInvite INSTALLS the registration invite-code system (#174): minting
+	// in the console, personal referral codes (#203), and the gate object auth
+	// consults at every registration. Resolved by resolveRequireInvite from
+	// GGD_REQUIRE_INVITE and, when that is unset, from the listen address — see
+	// there for the default and why it is the safe one.
+	//
+	// ⚠️ IT NO LONGER DECIDES 必填／選填 (GH#1274). This field used to mean
+	// "every registration except the first-owner claim must burn a code"; that
+	// half now lives in the DURABLE admin setting internal/invite/policy.go
+	// owns, re-read at every registration so the owner can switch it without a
+	// deploy. Keeping both halves here would have given one question two 住處 —
+	// the reliable way to end up with a console that disagrees with the server.
 	RequireInvite bool
 
 	// RequireApproval turns on the registration APPROVAL gate (#126): a new
@@ -538,9 +545,11 @@ func ServesFullAssets(tier string) bool { return tier == "family" }
 // allowsRestrictedContent() in packages/shared/src/deployTier.ts.
 func AllowsRestrictedContent(tier string) bool { return tier != "public" }
 
-// resolveRequireInvite decides whether the registration invite-code gate
-// (#174) is ON, from GGD_REQUIRE_INVITE and — when that is unset — from the
-// platform's OWN listen address.
+// resolveRequireInvite decides whether the registration invite-code system
+// (#174) is INSTALLED, from GGD_REQUIRE_INVITE and — when that is unset — from
+// the platform's OWN listen address. Whether an installed system then makes a
+// code 必填 or 選填 is a separate, durable, console-owned answer (GH#1274, see
+// the RequireInvite field). Everything below is about INSTALLED-or-not.
 //
 // THE DEFAULT IS ON. Every value of `addr` except an explicit loopback bind
 // resolves to true, including the built-in ":8080", "0.0.0.0:8080" and an empty

@@ -305,8 +305,12 @@ export const OWNER_ONLY_ACTIONS: readonly OwnerOnlyAction[] = [
   {
     page: "invites",
     where: "邀請碼",
-    action: "產生 / 撤銷邀請碼",
-    what: "沒有可用的邀請碼，任何人都註冊不了（/auth/register 會拒絕）。",
+    action: "產生 / 撤銷邀請碼 · 切換註冊要不要邀請碼（必填／選填）",
+    // ⚠️ GH#1274: this line used to say flatly「沒有可用的邀請碼，任何人都註冊
+    // 不了」. That stopped being true the moment 必填／選填 became a setting, and
+    // this table is a STATIC inventory — it has no payload to derive from — so
+    // it names the setting instead of asserting one side of it.
+    what: "這一頁決定誰能註冊：設成「必填」時沒有邀請碼就註冊不了；設成「選填」時沒碼也能註冊，但一樣要在「帳號審核」批准才能玩。",
     covered: false,
   },
   {

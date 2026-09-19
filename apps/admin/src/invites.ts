@@ -43,11 +43,52 @@ export interface InviteLimits {
   maxTtlDays: number;
 }
 
+/**
+ * 註冊邀請碼：必填／選填 (GH#1274).
+ *
+ * owner 2026-09-15:
+ *
+ * > 「推薦碼變成選項不需讓玩家也可以直接註冊，但是後台還是要批核
+ * >  (但新帳號使用推薦碼後還是可以讓介紹人自動審批過) 這個變成後台選項可以切換」
+ *
+ * Two named values rather than a boolean, because the server stores these exact
+ * two strings — one vocabulary end to end, and room for a third mode later
+ * without changing the field's type. See apps/platform/internal/invite/policy.go.
+ */
+export type InviteCodeMode = "required" | "optional";
+
+export const INVITE_CODE_MODES: readonly InviteCodeMode[] = ["required", "optional"];
+
+/**
+ * The SHIPPED default, mirrored from invite.DefaultCodeMode.
+ *
+ * It exists so the page can render before the first response lands without
+ * inventing an answer. It is NOT the source of truth: every response carries
+ * `policyDefault` from the server, and the page renders what the SERVER said,
+ * so a change on the Go side cannot leave this file quietly advertising a
+ * default nobody runs.
+ */
+export const SHIPPED_INVITE_CODE_MODE: InviteCodeMode = "optional";
+
+export interface InvitePolicy {
+  /** 必填 or 選填, as stored — or the compiled default when never saved. */
+  inviteCode: InviteCodeMode;
+  updatedBy: string;
+  updatedAt: string;
+}
+
 export interface InvitePayload {
   invites: InviteRow[];
   limits: InviteLimits;
   /** present only on a mint response: the codes just created */
   minted: InviteRow[];
+  /** GH#1274 必填／選填, carried on EVERY response from this surface, so the
+   * switch and the code list can never be repainted out of step. */
+  policy: InvitePolicy;
+  /** false ⇒ nobody has ever saved it; the page says「尚未設定（使用內建預設值）」. */
+  policyStored: boolean;
+  /** the server's OWN compiled default, for the 還原預設 affordance. */
+  policyDefault: InviteCodeMode;
 }
 
 export const FALLBACK_LIMITS: InviteLimits = {
@@ -94,12 +135,24 @@ function normalizeRow(raw: unknown): InviteRow {
   };
 }
 
-/** Accept the list, mint and revoke envelopes uniformly. */
+function mode(v: unknown, fallback: InviteCodeMode): InviteCodeMode {
+  return v === "required" || v === "optional" ? v : fallback;
+}
+
+/** Accept the list, mint, revoke and policy envelopes uniformly. */
 export function normalizeInvitePayload(raw: unknown): InvitePayload {
   const body = (raw ?? {}) as Record<string, unknown>;
   const lim = (body.limits ?? {}) as Record<string, unknown>;
   const list = Array.isArray(body.invites) ? body.invites : [];
   const minted = Array.isArray(body.minted) ? body.minted : [];
+  const pol = (body.policy ?? {}) as Record<string, unknown>;
+  // ⚠️ THE FALLBACK HERE IS 必填, NOT the shipped default. An unparseable
+  // response must make the page say the STRICTER thing: a console that renders
+  // 「選填」 because it could not read the answer would tell the owner
+  // registration is open when it may not be — and the inverse mistake is
+  // merely a page that looks out of date. Same fail-closed direction the server
+  // takes when it cannot read the document.
+  const fallbackMode: InviteCodeMode = "required";
   return {
     invites: list.map(normalizeRow).filter((r) => r.code !== ""),
     minted: minted.map(normalizeRow).filter((r) => r.code !== ""),
@@ -110,7 +163,55 @@ export function normalizeInvitePayload(raw: unknown): InvitePayload {
       minTtlDays: num(lim.minTtlDays, FALLBACK_LIMITS.minTtlDays),
       maxTtlDays: num(lim.maxTtlDays, FALLBACK_LIMITS.maxTtlDays),
     },
+    policy: {
+      inviteCode: mode(pol.inviteCode, fallbackMode),
+      updatedBy: str(pol.updatedBy),
+      updatedAt: str(pol.updatedAt),
+    },
+    policyStored: body.policyStored === true,
+    policyDefault: mode(body.policyDefault, SHIPPED_INVITE_CODE_MODE),
   };
+}
+
+/**
+ * The console copy for one mode — what it DOES and what it COSTS.
+ *
+ * 守則第一守則：「說明文字要寫它影響什麼，不是複述欄位名」。The cost line on
+ * 選填 is not decoration: the invite gate is also the first thing that stops a
+ * stranger probing whether a username is registered (GH#179), and the owner
+ * cannot weigh that trade if the page does not say it.
+ */
+export function describeInviteMode(m: InviteCodeMode): {
+  label: string;
+  what: string;
+  cost: string;
+} {
+  if (m === "required") {
+    return {
+      label: "必填",
+      what: "一定要有邀請碼才能註冊；沒填會被伺服器擋下來。",
+      cost: "家人要先跟你要一組碼；陌生人連「這個帳號存不存在」都問不出來。",
+    };
+  }
+  return {
+    label: "選填",
+    what: "沒有邀請碼也可以註冊，但帳號一樣會停在「待審」，要你在後台批准才能玩。用了別人的推薦碼一樣會自動批准介紹人。",
+    cost: "陌生人可以試出某個帳號名或 email 有沒有被註冊過（不會拿到密碼或資料）。待審人數上限與註冊速率限制是這件事的煞車；想關掉就切回「必填」，存檔後下一個註冊就生效。",
+  };
+}
+
+/**
+ * One line summarising where the current mode came from — 「尚未設定」 vs
+ * 「誰在什麼時候改的」. The owner's first question on this page after「現在
+ * 是哪一種」 is「這是我設的嗎」.
+ */
+export function inviteModeOrigin(p: InvitePayload): string {
+  if (!p.policyStored) {
+    return `尚未設定（使用內建預設值：${describeInviteMode(p.policyDefault).label}）`;
+  }
+  const who = p.policy.updatedBy || "（不明）";
+  const when = p.policy.updatedAt ? shortTime(p.policy.updatedAt) : "—";
+  return `由 ${who} 於 ${when} 設定`;
 }
 
 /** Badge copy + tone per status. `tone` maps onto the console's theme colours. */

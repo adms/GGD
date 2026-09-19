@@ -128,7 +128,7 @@ func WriteContentFixture(t *testing.T) string {
 // Use NewFreshDeploy to exercise the bootstrap itself.
 func New(t *testing.T, mutate ...func(*config.Config)) *TS {
 	t.Helper()
-	return newTS(t, false, false, nil, mutate...)
+	return newTS(t, false, false, "", nil, mutate...)
 }
 
 // NewInviteGated boots the platform with the #174 registration invite-code gate
@@ -142,7 +142,58 @@ func New(t *testing.T, mutate ...func(*config.Config)) *TS {
 // parallel one.
 func NewInviteGated(t *testing.T, freshDeploy bool, mutate ...func(*config.Config)) *TS {
 	t.Helper()
-	return newTS(t, freshDeploy, true, nil, mutate...)
+	return newTS(t, freshDeploy, true, "required", nil, mutate...)
+}
+
+// NewInviteOptional boots the platform with the #174 invite-code system
+// INSTALLED but its GH#1274 policy left UNSAVED — exactly the shipping posture
+// of a deploy nobody has configured: codes can be minted and burned, personal
+// referral codes are handed out, and a registration that presents no code is
+// let through (still 待審 under the approval gate).
+//
+// It deliberately does NOT write the policy document. That is the point: it is
+// the fixture that proves invite.DefaultCodeMode is what a real unconfigured
+// deploy actually gets, so flipping that constant turns tests red rather than
+// only changing a comment.
+//
+// The owner bootstrap is ON, like NewInviteGated(t, true), so the first
+// registration claims the admin role — otherwise a test could not reach any
+// admin route to flip the very setting it is about.
+func NewInviteOptional(t *testing.T, mutate ...func(*config.Config)) *TS {
+	t.Helper()
+	return newTS(t, true, true, "", nil, mutate...)
+}
+
+// WriteInvitePolicy saves the GH#1274 registration policy ("required" /
+// "optional") into a data dir BEFORE the server boots.
+//
+// It writes the document the way invite.Service reads it — one JSON file at
+// <dataDir>/config/registration.json — rather than going through the service,
+// so a fixture does not have to build a store just to pin one field. The
+// field name is asserted against the real struct by the policy guard, so this
+// literal cannot drift away from what the server parses.
+func WriteInvitePolicy(t *testing.T, dataDir, mode string) {
+	t.Helper()
+	dir := filepath.Join(dataDir, "config")
+	require.NoError(t, os.MkdirAll(dir, 0o750))
+	body := []byte(`{"version":1,"inviteCode":"` + mode + `"}`)
+	require.NoError(t, os.WriteFile(filepath.Join(dir, "registration.json"), body, 0o600))
+}
+
+// BreakInvitePolicy makes the GH#1274 policy document UNREADABLE, so a test can
+// assert the fail-closed direction (an unreadable setting must read as 必填,
+// never as「anyone may register」).
+//
+// It replaces the file with a DIRECTORY rather than chmod-ing it to 0000,
+// because a test suite that runs as root would sail straight through a
+// permission bit and the guard would pass for the wrong reason — the classic
+// single-sided measuring stick. Reading a directory as a file fails for
+// everybody.
+func BreakInvitePolicy(t *testing.T, dataDir string) {
+	t.Helper()
+	path := filepath.Join(dataDir, "config", "registration.json")
+	require.NoError(t, os.RemoveAll(path))
+	require.NoError(t, os.MkdirAll(path, 0o750))
 }
 
 // NewFreshDeploy boots the platform as a BRAND-NEW deploy: no account carries
@@ -150,7 +201,7 @@ func NewInviteGated(t *testing.T, freshDeploy bool, mutate ...func(*config.Confi
 // approved status). See internal/auth/bootstrap.go.
 func NewFreshDeploy(t *testing.T, mutate ...func(*config.Config)) *TS {
 	t.Helper()
-	return newTS(t, true, false, nil, mutate...)
+	return newTS(t, true, false, "", nil, mutate...)
 }
 
 // NewFreshDeployWith is NewFreshDeploy with a hook that runs on the fully wired
@@ -161,10 +212,16 @@ func NewFreshDeploy(t *testing.T, mutate ...func(*config.Config)) *TS {
 // requests itself is a misuse.
 func NewFreshDeployWith(t *testing.T, before func(*server.Server), mutate ...func(*config.Config)) *TS {
 	t.Helper()
-	return newTS(t, true, false, before, mutate...)
+	return newTS(t, true, false, "", before, mutate...)
 }
 
-func newTS(t *testing.T, ownerBootstrap, requireInvite bool, before func(*server.Server), mutate ...func(*config.Config)) *TS {
+// invitePolicy is the GH#1274 mode to SAVE before boot, or "" to leave the
+// document unwritten so the compiled default decides. It is a parameter of its
+// own rather than a consequence of requireInvite because those are now two
+// different questions —「is the invite system installed」 and 「is a code
+// 必填」— and a fixture that conflated them could not express NewInviteOptional
+// at all.
+func newTS(t *testing.T, ownerBootstrap, requireInvite bool, invitePolicy string, before func(*server.Server), mutate ...func(*config.Config)) *TS {
 	t.Helper()
 	mr := miniredis.RunT(t)
 	node := gamelinktest.New(GameSecret)
@@ -194,6 +251,23 @@ func newTS(t *testing.T, ownerBootstrap, requireInvite bool, before func(*server
 	}
 	for _, fn := range mutate {
 		fn(&cfg)
+	}
+	if invitePolicy != "" {
+		// GH#1274 — 必填 IS NOW A SAVED SETTING, NOT THE DEFAULT, so this
+		// fixture has to say so out loud.
+		//
+		// NewInviteGated has always meant「a deploy where a registration must
+		// burn a code」and every caller asserts that behaviour. Since #1274 the
+		// compiled default for a deploy that has never been configured is 選填
+		// (invite.DefaultCodeMode), so leaving the document unwritten would
+		// quietly turn every one of those tests into a test of the OTHER mode —
+		// green in most cases, and no longer testing what its name says. Writing
+		// it keeps the fixture's name and its behaviour the same thing.
+		//
+		// It does NOT paper over a default flip: the default is pinned by its
+		// own test and exercised end-to-end through NewInviteOptional, which
+		// deliberately leaves this document unwritten.
+		WriteInvitePolicy(t, cfg.DataDir, invitePolicy)
 	}
 	srv, err := server.New(cfg, server.Options{
 		Argon2Params:          LightArgon2,

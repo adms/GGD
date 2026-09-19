@@ -148,6 +148,22 @@ var nonFrontendCallers = map[string]struct{ caller, reason string }{
 // shrink and is not allowed to grow silently — a route that is not in it and
 // has no caller fails the run.
 var knownOrphans = map[string]string{
+	// ---- GH#1274 註冊邀請碼：必填／選填 -----------------------------------
+	// The SERVER half shipped (durable setting, the switch on the 邀請碼 page,
+	// Register reading it at every registration); the REGISTER FORM half did
+	// not. apps/client/src/ui/platform/AuthScreen.tsx still renders the invite
+	// field as unconditionally required and never asks this probe, so in 選填
+	// mode the screen says 必填 while the server would accept an empty field —
+	// the page is WRONG, not broken.
+	//
+	// It is a lane boundary, not a decision: the client tree was outside the
+	// fence of the lane that did the server work. Deleting this line is the fix,
+	// and it is one call plus one label.
+	"GET /api/v1/auth/registration-policy": "GH#1274 — the register screen " +
+		"(apps/client/src/ui/platform/AuthScreen.tsx) still hard-codes the invite field as required and " +
+		"never reads this probe, so 選填 mode is invisible to the person registering. Wire it where " +
+		"/auth/bootstrap-state is already read, and label the field 選填 when inviteCodeRequired is false.",
+
 	// ---- #126 private-deploy approval gate --------------------------------
 	// The audit's P1-7 instance. While this file was being written another lane
 	// shipped listPendingAccounts/approveAccount/denyAccount in

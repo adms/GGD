@@ -35,6 +35,13 @@ func (h *Handlers) Mount(r chi.Router) {
 	// who is meant to BECOME the admin to "ask an admin". Reveals no token and no
 	// account — see Service.OwnerlessState.
 	r.Get("/auth/bootstrap-state", h.bootstrapState)
+	// GH#1274. Public, unauthenticated, and it takes NO PARAMETERS — it answers
+	// 「does this deploy ask for an invite code, and is it 必填?」, never
+	// 「is THIS code valid?」, which internal/invite's header forbids outright.
+	// The register UI reads it on load so the code field can be labelled 選填
+	// and submitted empty. Derived from the live gate + durable policy in
+	// Service.RegistrationInviteState, so it cannot disagree with Register.
+	r.Get("/auth/registration-policy", h.registrationPolicy)
 	r.Post("/auth/login", h.login)
 	r.Post("/auth/refresh", h.refresh)
 	r.Post("/auth/logout", h.logout)
@@ -117,6 +124,25 @@ type bootstrapStateResp struct {
 func (h *Handlers) bootstrapState(w http.ResponseWriter, r *http.Request) {
 	needsOwner, requireToken := h.svc.OwnerlessState(r.Context())
 	httpx.WriteJSON(w, http.StatusOK, bootstrapStateResp{NeedsOwner: needsOwner, RequireToken: requireToken})
+}
+
+// registrationPolicyResp is what the register UI reads to shape its form
+// (GH#1274). Two booleans and nothing else — no code, no count, no account.
+type registrationPolicyResp struct {
+	// InviteCodeSupported is false on a deploy with no invite-code system at
+	// all (dev/CI open signup): the field should not be rendered, because no
+	// code would ever do anything.
+	InviteCodeSupported bool `json:"inviteCodeSupported"`
+	// InviteCodeRequired is the 必填／選填 answer. false means the form may be
+	// submitted with an empty code — the account still lands 待審 when the
+	// approval gate is on, which is a SEPARATE setting and not reported here.
+	InviteCodeRequired bool `json:"inviteCodeRequired"`
+}
+
+func (h *Handlers) registrationPolicy(w http.ResponseWriter, r *http.Request) {
+	supported, required := h.svc.RegistrationInviteState(r.Context())
+	httpx.WriteJSON(w, http.StatusOK, registrationPolicyResp{
+		InviteCodeSupported: supported, InviteCodeRequired: required})
 }
 
 type loginReq struct {

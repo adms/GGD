@@ -13,7 +13,7 @@ import type { CombatEnvDoc, CombatEnvSave } from "./combatEnv";
 import { normalizeOpsPayload } from "./serverOps";
 import type { OpsPayload, OpsSave } from "./serverOps";
 import { normalizeInvitePayload } from "./invites";
-import type { InvitePayload } from "./invites";
+import type { InviteCodeMode, InvitePayload } from "./invites";
 import { normalizeLog, normalizeStatus, validateOverlayDoc } from "./contentOverlay";
 import type { OverlayHead, OverlayLogLine, OverlayStatus } from "./contentOverlay";
 import type {
@@ -789,6 +789,21 @@ export function mintInvites(note: string, count: number, ttlDays: number): Promi
 export function revokeInvite(code: string): Promise<InvitePayload> {
   return api
     .request<unknown>(`/admin/invites/${encodeURIComponent(code)}/revoke`, { body: {} })
+    .then(normalizeInvitePayload);
+}
+
+/**
+ * 註冊邀請碼：必填／選填 (GH#1274). Takes effect on the NEXT registration — the
+ * server re-reads the setting at every registration, so there is no restart and
+ * no cache window to wait out.
+ *
+ * There is deliberately no matching GET: the mode rides on every response from
+ * this surface (getInvites / mintInvites / revokeInvite all carry `policy`), so
+ * the page can never show a mode that disagrees with the list beside it.
+ */
+export function putInvitePolicy(inviteCode: InviteCodeMode): Promise<InvitePayload> {
+  return api
+    .request<unknown>("/admin/invites/policy", { method: "PUT", body: { inviteCode } })
     .then(normalizeInvitePayload);
 }
 

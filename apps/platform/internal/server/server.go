@@ -420,6 +420,21 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	// every boot — this is the only thing keeping strangers off the family
 	// deploy, so it must never be a quiet decision. See config.resolveRequireInvite.
 	//
+	// ⚠️ GH#1274 SPLIT THIS INTO TWO QUESTIONS, AND THIS CONDITION NOW ANSWERS
+	// ONLY THE FIRST:
+	//
+	//	是否安裝邀請碼系統   ← HERE (GGD_REQUIRE_INVITE). Mint/list/revoke,
+	//	                      personal referral codes (#203), the gate object.
+	//	必填 or 選填        ← the DURABLE admin setting, read per registration
+	//	                      (invite/policy.go). NOT here, and deliberately not
+	//	                      an environment variable: two 住處 for one question
+	//	                      is how a console ends up disagreeing with the
+	//	                      server. The boot line below prints the resolved
+	//	                      mode so the journal still answers「誰能註冊」in one
+	//	                      place, but it is a REPORT of the document, never a
+	//	                      second source of truth — it is read once here and
+	//	                      never again, while Register re-reads it every time.
+	//
 	// ⚠️ `cfg.RequireInvite` IS THE PRODUCTION HALF OF THIS OR, AND IT IS THE ONLY
 	// ONE. cmd/platform calls server.New(cfg, server.Options{}) — the shipped
 	// binary never sets opts.RequireInvite; that field exists so a test can gate
@@ -438,10 +453,24 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		// code. Off by default (an honest typo keeps the invite); logged either
 		// way, because it changes what a family member experiences.
 		authSvc.SetBurnInviteOnConflict(cfg.BurnInviteOnConflict)
-		slog.Info("auth: registration REQUIRES an invite code — mint them in the admin console (邀請碼)",
-			"addr", cfg.Addr, "override", "GGD_REQUIRE_INVITE",
-			"burnInviteOnConflict", cfg.BurnInviteOnConflict,
-			"burnNote", "on = a registration that hits a taken name SPENDS the code (bounds GH#179 enumeration); off = the code is handed back")
+		// GH#1274: report the mode the DOCUMENT currently says, at the severity
+		// that mode deserves. 選填 is the shipped default and is a real
+		// widening (the #179 oracle opens to strangers), so it boots at WARN
+		// with the one-click way back, exactly like the approval gate being off.
+		if inviteSvc.RegistrationRequiresCode(context.Background()) {
+			slog.Info("auth: registration REQUIRES an invite code — mint them in the admin console (邀請碼)",
+				"addr", cfg.Addr, "inviteCode", invite.ModeRequired, "override", "GGD_REQUIRE_INVITE",
+				"setting", "後台 › 邀請碼 › 註冊邀請碼（必填／選填）",
+				"burnInviteOnConflict", cfg.BurnInviteOnConflict,
+				"burnNote", "on = a registration that hits a taken name SPENDS the code (bounds GH#179 enumeration); off = the code is handed back")
+		} else {
+			slog.Warn("auth: an invite code is OPTIONAL — anyone who can reach this platform can create an account (it still lands 待審 when the approval gate is on)",
+				"addr", cfg.Addr, "inviteCode", invite.ModeOptional,
+				"setting", "後台 › 邀請碼 › 註冊邀請碼（必填／選填）",
+				"harden", "set it back to 必填 in the console — no deploy, effective on the next registration",
+				"cost", "un-invited callers can probe whether a username/email exists (GH#179); bounded by GGD_MAX_PENDING and GGD_REGISTER_RATE_LIMIT",
+				"maxPending", cfg.MaxPending)
+		}
 	} else {
 		slog.Warn("auth: registration is OPEN — anyone who can reach this platform can create an account",
 			"addr", cfg.Addr,
