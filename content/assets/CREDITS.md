@@ -544,18 +544,65 @@ shipping — bound to hero cards, selectable in the admin and editor model dropd
 `heroBody: true` — with **zero** lines anywhere in this file. `community` had zero
 lines too, and `imported` had two passing mentions about unrelated props.
 
-⭐ Counts are **measured**, not asserted (`content/models/*.json` → `glbPath`, and the
-`modelKey` each of the 153 champion cards actually points at):
+⭐ Counts are **measured** — and since 2026-09-19 they are **generated**, ⛔ no longer
+hand-typed. The block below comes from `python3 tools/credits/model_provenance.py --write`
+and is gated by that same script's `--check`.
 
-| directory | model docs | referenced by a hero card | what it is |
-| --- | ---: | ---: | --- |
-| `assets/models/ou99/` | 129 | 2 | Third-party WC3 models obtained from the **ou99.com** forum. Per-thread provenance (149 threads: thread id, title, preview, upload date) is recorded in `docs/ou99模組metadata.md`. |
-| `assets/models/ou99/versions/` | 54 | 47 | Pinned/frozen copies of the above, kept so a hero can roll back to the exact model it shipped with. |
-| `assets/models/community/` | 75 | 45 | Models contributed through the community hero forge and uploaded via the editor. Each is content-addressed (`community.body.<sha>`). |
-| `assets/models/community/versions/` | 180 | 36 | Frozen rollback copies of community and integrated-library bodies. The 180 model docs resolve to 126 distinct files; 36 are current bodies and 97 occur in rollback lists. Source site, author, acquisition route and known rights status are recorded per candidate in `materials/asset-library/current-resources.json` and the hero-model-library indexes. |
-| `assets/models/imported/` | 140 | 54 | Assets extracted from the original GoGoDie Warcraft III custom map — the same provenance as the rest of the w3x import. |
-| `assets/models/imported/versions/` | 2 | 0 | Frozen copies of the above. |
-| `models/champions/versions/` | 3 | 0 | Frozen copies of the first-party champion models credited under **Characters** above — same rights, pinned bytes. |
+⚠️⚠️ **Why that changed**: the hand-typed table that stood here until 2026-09-19 had
+**five wrong rows out of six** — it claimed `community/versions/` held 180 model docs when
+disk held **445**, and `ou99/versions/` 54 when disk held **94**. ⭐ And the guard was green
+the entire time, because it asks whether a *directory* is declared, ⛔ not whether the
+*numbers* are right. That is precisely the drift this ticket predicted.
+
+⭐⭐ **The second thing the rewrite surfaced: a directory is not a provenance.** Frozen
+rollback copies are all written into `assets/models/community/versions/`, but a large share
+of them carry `bodyVersion.sourceModelKey: ou99.*`. Following that pointer to its root shows
+the `ou99` batch's real footprint is **358 model docs, worn right now by 43 heroes**, ⛔ not
+the "129 docs / 2 hero references" the old table reported. Table **A** below classifies by
+lineage (what the rights question actually asks), table **B** by directory (where the bytes
+live).
+
+<!-- BEGIN GENERATED:model-provenance -->
+
+> ⚠️ **這一段是產生的** —— `python3 tools/credits/model_provenance.py --write`。
+> ⛔ 不要手改；手改的數字在下一批模型進來時就過期，而過期的出處表會讓稽核失效。
+> 閘：`--check` 逐位元組比對。
+
+#### A. 照**血緣**分類 —— ⭐ 權利問題問的是這一張
+
+⭐ 血緣＝遞迴解 `bodyVersion.sourceModelKey` 到根，⛔ 不是看檔案住哪個目錄。
+⚠️ **兩者會分岔**：凍結的回滾副本一律寫進 `assets/models/community/versions/`，
+而其中有一大批的 `sourceModelKey` 是 `ou99.*` ⇒ ⛔ 照目錄分類會把 ou99 的東西算進 community 名下。
+
+| 血緣 | 模型文件 | 實際 glb 檔 | 現役英雄本體 | 在回滾清單裡 | 來源 | 權利狀態 |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| `community.body.*` — 社群投稿／編輯器上傳 | 517 | 358 | 81 | 95 | 經社群英雄工坊投稿或由編輯器上傳，內容定址（`community.body.<sha>`）。逐筆的來源站、作者、取得途徑記在 `materials/asset-library/current-resources.json` 與 hero-model-library 的索引。 | ⚠️ **混合出處**，⛔ 不是單一授權包。來源紀錄有寫的就保留；**沒寫的一律維持「未知」**，⛔ 不升級成 CC0／CC-BY／原作。 |
+| `ou99.*` — ou99.com 論壇 | 358 | 316 | 43 | 41 | 第三方 WC3 模型，取自 **ou99.com** 論壇。逐帖出處（149 帖：帖號、標題、預覽圖、上傳日）記在 `docs/ou99模組metadata.md`。 | ⛔ **未定 —— 待 owner（購買人）一句話。** 該站以站內貨幣（元宝）計價，且每一帖都要回覆才解得開附件。⛔ 不要在這裡填一個授權說法。 |
+| `imported.*` — GoGoDie w3x 原作 | 145 | 142 | 48 | 14 | 從 GoGoDie Warcraft III 自訂地圖抽出，與其餘 w3x 匯入同一批出處。 | 同 w3x 匯入批次：owner 2026-08-19 裁決「直接上架但註記來源」。 |
+| `w3x.stock.*` — Warcraft III 內建 | 24 | 24 | 0 | 1 | 暴雪 Warcraft III 內建模型（stock MPQ）。 | 同上：原作匯入批次，註記來源。 |
+| `champ.*` — 本專案自有／KayKit 等已具名來源 | 19 | 8 | 5 | 37 | 第一方英雄與怪物模型；逐顆的授權寫在本檔上面的 **Characters** 一節。 | 見 **Characters** 節（KayKit 等各自的授權）。 |
+| `prop.*` — 場景道具 | 4 | 4 | 0 | 0 | 場景道具模型；授權見本檔 **Environment props** 一節。 | 見 **Environment props** 節。 |
+
+⭐ 合計 **1067** 份模型文件、**852** 個實際 glb 檔。
+
+#### B. 照**出貨目錄**分類 —— 位元組住哪
+
+⚠️ 這一張**不能**拿來回答權利問題（見上）。它在這裡是因為
+`externalModelProvenance.test.ts` 從這一頭走：磁碟上有檔而這裡沒有列 ⇒ 紅。
+
+| 出貨目錄 | 模型文件 | 主要血緣 |
+| --- | ---: | --- |
+| `assets/models/community/versions/` | 445 | `community`、`ou99` |
+| `assets/models/community/` | 206 | `community`、`ou99` |
+| `assets/models/imported/` | 140 | `imported`、`w3x` |
+| `assets/models/ou99/` | 130 | `ou99` |
+| `assets/models/ou99/versions/` | 94 | `ou99` |
+| `assets/models/imported/versions/` | 29 | `imported`、`w3x` |
+| `assets/models/champions/versions/` | 10 | `champ` |
+| `assets/models/champions/` | 9 | `champ` |
+| `assets/models/guardians/` | 3 | `prop` |
+| `assets/models/hex/` | 1 | `prop` |
+<!-- END GENERATED:model-provenance -->
 
 ⛔ **The usage terms for the `ou99` batch are NOT stated here, because nobody has
 stated them.** The models were obtained by the repo owner from a forum that charges
@@ -575,9 +622,18 @@ so a frozen file is never treated as a newly approved default model by this dire
 used and redistributed. Until then this section states only what is measurable:
 where the files came from, how many there are, and which heroes depend on them.
 
-⭐ Guard: `packages/shared/src/ops/externalModelProvenance.test.ts` walks every
-shipping model doc and checks both directions — a `glbPath` directory with no row
-here goes red, and a row here with no files on disk goes red.
+⚠️ ⭐ **What that pending sentence is worth has changed.** On the old table the `ou99`
+batch looked like 2 hero references — something a rights answer could shrug off. Measured
+by lineage it is **43 heroes wearing one as their active body**, plus 41 more holding one
+in a rollback list. ⛔ Nothing here is a reason to hurry the answer; it is a reason not to
+keep treating the blank as small.
+
+⭐ Guards, two of them, and they ask different questions:
+- `packages/shared/src/ops/externalModelProvenance.test.ts` — walks every shipping model
+  doc both directions: a `glbPath` directory with no row here goes red, a row here with no
+  files on disk goes red. ⛔ It does **not** check the numbers.
+- `python3 tools/credits/model_provenance.py --check` — byte-compares the generated block
+  above. ⭐ This is the one that catches drift in the counts and in the lineage roll-up.
 
 ## Particle textures (`textures/particles/*.png`)
 
