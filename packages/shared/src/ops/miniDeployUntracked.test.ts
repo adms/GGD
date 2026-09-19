@@ -160,6 +160,11 @@ describe("GH#884 guarded_checkout（⭐ 本機假遠端真的跑：掃描 → �
       expect(readFileSync(join(r.d, f), "utf8"), "⛔ checkout 沒有真的做").toBe("from-commit");
     }
     expect(r.out).toContain("備份複驗：2/2");
+    // ⭐ GH#1156 AC① —— 那一行**一定要印出來**（含秒數）：票要的是「mini 上 <5 秒」這**一個數字**，
+    //   ⛔ 而在此之前零碰撞時完全不印也不計時 ⇒ 部署輸出問不出來。刪掉那行 `ok "未追蹤碰撞…"` 這裡就紅。
+    expect(r.out, "⛔ 部署輸出沒有『未追蹤碰撞：N 個（掃描 X 秒）』那一行 ⇒ #1156 的驗收數字量不到").toMatch(
+      /未追蹤碰撞：\d+ 個（掃描 [\d.?]+ 秒/,
+    );
   });
 
   it("★ 掃描沒跑完（ssh 斷線）⇒ 出貨的呼叫點 die，⛔ 不 checkout", () => {
