@@ -50,11 +50,11 @@
     {
       "switch": "content/config/balance-anchors.json:enabled",
       "kind": "generator-consumer",
-      "reason": "消費端是**兩支產生器**，⛔ 不是 runtime（`7be8705ee`，owner 2026-09-12「這些常數是**可被編輯的設定檔** 而非寫死」）：`tools/balance-anchors/gen.ts`（`anchors:build`）與 `tools/stat-caps/gen_stat_caps.ts`（`statcaps:build`）讀這份檔，`d.enabled === false` ⇒ 錨點／屬性上限退回取名單中位並印一行明說。runtime 讀的是它們的**產物**（`packages/shared/src/content/balanceAnchorsDerived.ts` · `content/config/damage-tiers.json` · `content/config/stat-caps.json`），而 `tools/` 不在掃描器的四個出貨根裡。⚠️ 代價要說清楚：後台翻這一格要等下一次 `skills:sync`（鏈上有 `anchors:build`／`statcaps:build`）重生成並出貨才生效 —— 與 `skill-normalize` 同一個形狀。",
+      "reason": "消費端是**兩支產生器**，⛔ 不是 runtime（`7be8705ee`，owner 2026-09-12「這些常數是**可被編輯的設定檔** 而非寫死」）：`tools/balance-anchors/shippedInputs.ts`（`anchors:build` 的輸入解析，2026-09-19 從 `gen.ts` 抽出來）與 `tools/stat-caps/gen_stat_caps.ts`（`statcaps:build`）讀這份檔，`d.enabled === false` ⇒ 錨點／屬性上限退回取名單中位並印一行明說。runtime 讀的是它們的**產物**（`packages/shared/src/content/balanceAnchorsDerived.ts` · `content/config/damage-tiers.json` · `content/config/stat-caps.json`），而 `tools/` 不在掃描器的四個出貨根裡。⚠️ 代價要說清楚：後台翻這一格要等下一次 `skills:sync`（鏈上有 `anchors:build`／`statcaps:build`）重生成並出貨才生效 —— 與 `skill-normalize` 同一個形狀。",
       "refute": "兩支產生器不再讀 `d.enabled`（下面的 evidence 會失敗）、或這一格搬進 runtime 有了 production 讀端（閘②會要求刪列），這一列就不成立。",
       "evidence": [
         {
-          "file": "tools/balance-anchors/gen.ts",
+          "file": "tools/balance-anchors/shippedInputs.ts",
           "mustContain": [
             "content/config/balance-anchors.json",
             "if (d.enabled === false)"
