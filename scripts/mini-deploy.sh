@@ -9,6 +9,7 @@
 #   GGD_MINI_HOST=…   目標（預設見下）
 #   GGD_MINI_USER=…   使用者名稱（⛔ 沒有預設 —— 猜錯會卡在難懂的錯誤上）
 #   GGD_MINI_CLASH_FAILOPEN=1  逃生口：未追蹤碰撞掃描失敗時照舊 checkout（⛔ 預設是停下來，GH#1156）
+#   GGD_MINI_CLASH_BUDGET_S=5  碰撞掃描超過幾秒要出聲（⛔ 只 warn 不擋，GH#1156 AC①）
 #
 # ═══ ⭐ 為什麼預設用 `.local` 而不是 IP ═══
 # mini 同時有兩個位址（實測 2026-08-29）:
@@ -29,6 +30,14 @@ warn(){ printf '  %s⚠%s %s\n' "$YEL" "$RST" "$*"; }
 die(){ printf '\n%s⛔ %s%s\n' "$RED" "$*" "$RST" >&2; exit 1; }
 info(){ printf '    %s\n' "$*"; }
 FAIL=0; bad(){ printf '  %s✗%s %s\n' "$RED" "$RST" "$*"; FAIL=$((FAIL+1)); }
+
+# ⭐ GH#1156 —— 量一段**牆鐘**時間（秒，帶小數）。
+#   ⛔ 不用 `date +%s`：整數 ⇒ 0.3 秒與 1.4 秒讀起來一模一樣，而這張票的 AC 是「<5 秒」。
+#   ⛔ 也不用 `$EPOCHREALTIME`：那是 bash 5+，而 macOS 出貨的是 3.2（這支腳本跑在部署者的 Mac 上）。
+#   ⭐ 量不到就回**空字串** ⇒ 下游印「?」並出聲，⛔ 不是編一個看起來很快的 0
+#     （本文件逐字：「fail-open 沒錯，靜默才是缺陷」）。
+_mono(){ python3 -c 'import time;print("%.3f"%time.monotonic())' 2>/dev/null || true; }
+_elapsed(){ [ -n "${1:-}" ] && [ -n "${2:-}" ] && awk -v a="$1" -v b="$2" 'BEGIN{printf "%.1f",b-a}' || printf '?'; }
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 # ⭐ 主機身分：環境變數 > scripts/hosts.local.sh > 主工作樹那一份（見 _hosts.sh）。
@@ -885,6 +894,9 @@ cmd_tunnel_verify() {
 # 🔓 逃生口：`GGD_MINI_CLASH_FAILOPEN=1` ⇒ 掃描失敗時照舊放行（只備份收得到的那幾行）。
 #   ⚠️ 只有部署者會轉 ⇒ 環境變數，⛔ 不進後台。用了要在部署紀錄裡說為什麼。
 CLASH_SCAN_OK="__GGD_CLASH_SCAN_OK__"
+# ⭐ AC① 的預算（秒）。⚠️ 只有**部署者**會轉 ⇒ 環境變數，⛔ 不進後台三個住處
+#   （記憶 `ggd-switch-home-by-who-turns-it`：owner 會轉的才進後台）。
+CLASH_BUDGET_S="${GGD_MINI_CLASH_BUDGET_S:-5}"
 clash_scan_script() {
   cat <<'SH'
   set -u
@@ -951,10 +963,12 @@ SH
 #   ⛔ 不是在測試裡另寫一份呼叫點（失敗形態⑤：那樣把下面的 die 改成 `:` 也不會紅）。
 guarded_checkout() {
   local deploy_sha=$1
-  local clash clash_raw clash_rc=0 clash_err
+  local clash clash_raw clash_rc=0 clash_err clash_t0 clash_t1
   clash_err=$(mktemp "${TMPDIR:-/tmp}/ggd-clash-err.XXXXXX") || die "建不了暫存檔 —— ⛔ 不往下走"
+  clash_t0=$(_mono)
   clash_raw=$(clash_scan_script | r "cd $REMOTE_REPO && sh -s -- $deploy_sha $CLASH_SCAN_OK" 2>"$clash_err") \
     || clash_rc=$?
+  clash_t1=$(_mono)
   if clash=$(clash_scan_accept "$clash_rc" "$clash_raw"); then
     :
   elif [ "${GGD_MINI_CLASH_FAILOPEN:-}" = 1 ]; then
@@ -969,10 +983,24 @@ guarded_checkout() {
    ⇒ 先看上面的 stderr；確定 mini 上沒有要保的未追蹤檔才用逃生口：GGD_MINI_CLASH_FAILOPEN=1 bash scripts/mini-deploy.sh deploy"
   fi
   rm -f "$clash_err"
-  local n_clash=0 bdir_rel
+  local n_clash=0 bdir_rel clash_secs
+  clash_secs=$(_elapsed "$clash_t0" "$clash_t1")
+  [ -z "${clash// /}" ] || n_clash=$(printf '%s\n' "$clash" | grep -c .)
+  # ⭐⭐ GH#1156 AC① —— **這一行就是那個「<5 秒」量得到的地方**。
+  #   ⛔ 在此之前 0 碰撞時這個函式什麼都不印、也不計時 ⇒ 「掃描花幾秒」從部署輸出裡
+  #   **問不出來**，於是票裡那條 AC 逐字停在「⛔ 沒量」，只能拿本機代理值猜。
+  #   ⚠️ **分母寫在句子裡**（含 ssh 來回，⛔ 不是純掃描）—— 本文件逐字：
+  #   「讀一張表之前，先問這一欄的分母是什麼」。
+  ok "未追蹤碰撞：${n_clash} 個（掃描 ${clash_secs} 秒，含 ssh 來回）"
+  # ⭐ 超預算要**出聲** —— ⛔ 但不 die：一次慢掃描不該擋下部署。
+  #   ⭐ 它守的是「O(N) 子行程迴圈有沒有偷偷回來」（本機 40,832 檔的批次版量到 0.7 秒）。
+  case "$clash_secs" in
+    '?') warn "   ⚠️ 量不到掃描耗時（python3 不在？）—— ⛔ 這**不是**「很快」，是**沒量到**" ;;
+    *) awk -v s="$clash_secs" -v b="$CLASH_BUDGET_S" 'BEGIN{exit !(s>b)}' \
+         && warn "   ⚠️ 掃描 ${clash_secs} 秒 > 預算 ${CLASH_BUDGET_S} 秒 —— GH#1156 的逐檔子行程迴圈回來了？（GGD_MINI_CLASH_BUDGET_S 可調）" ;;
+  esac
   bdir_rel="host-overwrite-backups/overwrite_temp_$(date +%Y%m%d-%H%M%S)"
   if [ -n "${clash// /}" ]; then
-    n_clash=$(printf '%s\n' "$clash" | grep -c .)
     warn "⚠️ mini 上有 $n_clash 個**未追蹤**檔會被這次 checkout 覆蓋："
     printf '%s\n' "$clash" | sed 's/^/     · /'
     # ⭐ 先備份 —— ⛔ 而且用 `cp`，⛔ 不是 `mv`（owner 的規矩：
