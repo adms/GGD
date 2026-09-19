@@ -147,6 +147,73 @@ python3 -c "import json;print(json.load(open('docs/editor-contract/ggd-editor-co
 
 ---
 
+## 1.6 ⭐⭐ 素材面：查詢 → 綁定 → 版本引用（GH#1127／#1128）
+
+> ⚠️ 這一節每個數字都是 **2026-09-19 量出來的**，⛔ 不是抄票上的。
+
+### ⭐ 結論先講：這三件事**引擎側已經有契約**，⛔ 但它**不叫** #1128 契約表那些名字
+
+| # | Codex 要做的 | ⭐ 今天真的有的住處 | ⭐ 它的名字 |
+|---|---|---|---|
+| ① **查詢** | 列出可以綁的素材 | `content/assets-manifest.json` —— **3,191 筆**，schema `ggd-assets-manifest@1` | 每筆 `path` · `bytes` · `sha256` · `contentType` · `kind` · `refs` |
+| ② **綁定** | 把素材寫進英雄／技能 | 邏輯路徑**就是** `path`（`assets/...`）；讀取端 `GET /content-api/assets/*`（唯讀，編輯器預覽在用） | ⭐ `path`，⛔ 不是 `logicalPath` |
+| ③ **版本引用** | 釘住版本 | ⭐ **內容定址** —— `sha256` 自己就是版本。整包的身分是 `assetManifestDigest`（今天 `351c2899b704`）＋ `contentVersion`（`cv_3120c9ef725d`） | ⛔ 不是 `${assetId}@${version}` |
+
+### ⛔⛔ #1128 契約表的六欄，**只有兩欄對得上出貨程式**
+
+| #1128 契約表 | 全 repo 程式碼命中（`apps`/`packages`/`tools`/`content`） | ⭐ 出貨實際用的 |
+|---|---|---|
+| `assetId` | ⛔ **0**（有 9 個檔出現這個字，⭐ 全是區域變數與錯誤訊息參數，⛔ 不是素材身分欄位） | `path` |
+| `version` | ⛔ **沒有獨立欄位** | `sha256`（內容定址） |
+| `objectKey` | ⛔ **0 個檔** | S3 key 是**推導**的：`assets/<sha256[0:2]>/<sha256><ext>` |
+| `sha256` | ✅ 有 | ⭐ 同名 |
+| `kind` | ✅ 有 | ⭐ 同名 |
+| `logicalPath` | ⛔ **0 個檔** | `path` |
+| API 回應 `{ url, sha256, expiresAt }` | ⛔ 這條路**已被 owner 作廢**（見下） | —— |
+
+⇒ ⭐ **照 #1127「欄位名逐字照 #1128 契約表」做出來的 `assets[]`，今天沒有任何一行 main 的程式讀得懂。**
+
+### ⛔ 為什麼會這樣：那張契約表是**簽署網址架構**的產物，而那條路已經關掉了
+
+> 不對，是跟往常一樣CF直接接原站ggd.adms.ai就好了 根本沒差，而S3變成純備份了
+
+—— owner 2026-09-09（`docs/素材庫與-S3-統一資源庫.md` 第八·四節）
+
+⇒ `objectKey`／`expiresAt`／簽署網址 這一組，是**為了讓瀏覽器直連 S3** 才需要的。
+CF 接原站之後素材走的是**站台自己的邏輯網址** ⇒ ⭐ `path` ＋ `?h=<contentVersion>` 就夠了。
+⚠️ 同一份文件的第十三、十六節（簽署網址／CORS）**自己標著「已被第八·四節作廢」** —— ⛔ 不要照那兩節做。
+
+### ⛔⛔ 對外契約今天**漏掉**的（⭐ 這才是 #1127／#1128 真正的缺口）
+
+grep `docs/editor-contract/` 全部 43 份量到：
+
+| 名詞 | 命中 |
+|---|---|
+| `assets-manifest.json` 的 schema 與六個欄位 | ⛔ **0** —— ⭐ 3,191 筆素材的清單格式，對外契約**一個字都沒寫** |
+| `assetManifest`／`assetManifestDigest`（`content/editor-target-profile.json` 裡**已經有**） | ⛔ **0** |
+| `GET /content-api/assets/*` | ⛔ **0** |
+| 素材庫查詢（正式入庫 vs 待處理候選，今天是 **1 : 341**） | ⛔ **0** |
+| 「五道界線」（檔案存在／GLB 轉換／已標準化入庫／畫面驗收／正式發布） | ⛔ **0** |
+| `requiredRefinement`（綁定後**不可被「已綁定」蓋掉**的未完成狀態） | ⚠️ **1 份 1 次**，而且在計畫書裡 —— ⛔ 不是契約 |
+
+### ⭐ 要補進**機器可讀**契約的話，改這三支的**來源**（⛔ 不是手改產物）
+
+| 要補什麼 | 產生器 | 來源檔 |
+|---|---|---|
+| `ggd-runtime-capabilities.json` 增一段素材契約 | `caps:export` | `tools/capability-export/export.ts` |
+| `ggd-editor-coverage.json` 把素材欄位列進必畫清單 | `editorcov:build` | `tools/editor-contract/gen_editor_coverage.ts` |
+| `content/assets-manifest.json` 本身 | `assets:manifest` | `tools/asset-manifest/gen.ts` |
+
+⛔ 這三份**都是產物** —— 動之前一律 `bash scripts/genguard.sh <path>`。
+
+### ⚠️ 順帶：票上那條驗收閘**不存在**
+
+#1127 的驗收②與 #1128 六項的第 1 項都寫著「通過 Main 的 assetpin:check」——
+⭐ 那支指令**全 repo 不存在**（已記進 `docs/守則犯錯.md`；抓到它的是 `docsCiteRealCommands.test.ts`）。
+⇒ ⛔ 不要等它。⭐ 今天驗素材身分的真閘是 `assets:manifest:check`（逐筆重算 `sha256` 比對）。
+
+---
+
 ## 2. 計畫與追平
 
 | 檔 | 行數 | 是什麼 | 可改嗎 |
@@ -231,13 +298,27 @@ python3 -c "import json;print(json.load(open('docs/editor-contract/ggd-editor-co
 `GET /content-api/editor-source` ⇒ **main 做，但等 Codex 開票再做**
 （⛔ 一條零呼叫端的 route 是複雜度不是功能；⭐ 票裡寫三件：回傳什麼欄位 · 哪一行程式會讀它 · 認證怎麼過）。
 
+#### ⛔⛔ 更正（2026-09-19 重量）：上面那五項裡**三項已經在 main 了**
+
+⚠️ 上面那一段的分母是 **2026-08-31** 量的。⭐ 今天重量，結論變了：
+
+| 2026-08-31 說的 | ⭐ 2026-09-19 量到 |
+|---|---|
+| 「Electron 桌面版獨立編輯器 ⇒ Codex」 | ⛔ ⭐ **`apps/editor-desktop/` 已經在 main**（另有 `apps/editor/`） |
+| 「遠端素材快取 —— **0 個檔**提到遠端 base」 | ⛔ ⭐ **在 main**：`apps/content-api/src/server.ts` 的 `remoteAssets`（含 `assetManifest` 與逐檔 `sha256` 核對）· `apps/editor-desktop/src/remoteWorkspace.ts` |
+| 「`remoteAsset.test.ts` ⇒ Codex」 | ⛔ ⭐ **在 main**：`apps/content-api/src/remoteAsset.test.ts` |
+| 「`GET /content-api/editor-source` ⇒ 等 Codex 開票再做」 | ⛔ ⭐ **已經做了**：`apps/content-api/src/editorSourceRoutes.ts` |
+| 「`targetProfileOverride`（main 零命中）」 | ✅ **仍然 0** —— ⭐ 但 `content/editor-target-profile.json` 已出貨（唯讀、給外部編輯器 pin base 用） |
+
+⇒ ⭐ **開工前先量一次，⛔ 不要照這一節的 08-31 分母派工** —— 五項裡四項的狀態已經變了。
+
 ---
 
 ## 7. ⛔ 兩邊都不要做的
 
 | ⛔ | 為什麼 |
 |---|---|
-| 手改 `docs/editor-contract/*` 與第 3 節那七份 | 產物。⭐ 改 main 的 schema 再重跑產生器 |
+| 手改 `docs/editor-contract/*` 裡**屬於產物**的那些，與第 3 節那七份 | ⭐ 改 main 的 schema／產生器來源再重跑產生器。⚠️ ⭐ **2026-09-19 量到：這個目錄頂層 43 份裡 22 份是產物、21 份是手編**（例如本檔與 `CODEX_*.md` 就是手編）⇒ ⛔ **不要照路徑判斷**，一律 `bash scripts/genguard.sh <path>` 問它 |
 | 在 `packages/shared/src/sim/**` 用 `Math.random` / `Date.now` | `sim/purity.test.ts` 會紅 |
 | `git add -A` · `git commit --amend` · `git checkout <檔>` | ⭐ 併行時它們動到的是**別人的**東西 |
 | 為了讓契約過關而改測試 | ⭐ 跑產生器 ＋ `git add`，⛔ 不是改斷言 |
