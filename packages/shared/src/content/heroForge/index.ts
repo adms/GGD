@@ -5,6 +5,7 @@ export * from "./proposal";
 export * from "./planner";
 export * from "./generator";
 export * from "./validation";
+export * from "./adoptionContract";
 export * from "./retrieval";
 export * from "./proposalJsonSchema";
 export * from "./dependency";

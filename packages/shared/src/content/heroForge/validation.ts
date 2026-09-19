@@ -1,4 +1,5 @@
 import type { RuntimeCapabilityManifest } from "../editorCapabilities";
+import { capabilityAdoption } from "./adoptionContract";
 import { stableStringify } from "../hash";
 import { sha256Hex } from "../sha256";
 import { ARCHETYPES, ORIGINS } from "../statNormalization";
@@ -136,19 +137,10 @@ function valueAllowed(path: readonly string[], value: unknown): boolean {
   return ["capabilityIds", "directionOptionIds", "fallbackOptionIds"].some((leaf) => slotPath(path, leaf)) && stringArray(value);
 }
 
-function capabilityState(id: string, manifest: CapabilityManifest): "supported" | "unsupported" | "unknown" {
-  const planned = manifest.planned.find((entry) => entry.key === id);
-  if (planned) return planned.state === "unsupported" ? "unsupported" : "supported";
-  if (manifest.unsupported.includes(id)) return "unsupported";
-  const sim = manifest.simCapabilities[id];
-  if (sim) return sim.available ? "supported" : "unsupported";
-  const effect = /^effect[.:]([^@]+)(?:@1)?$/.exec(id)?.[1];
-  if (effect && manifest.effectKinds.includes(effect)) return "supported";
-  const hook = /^hook[.:]([^@]+)(?:@1)?$/.exec(id)?.[1];
-  if (hook && manifest.hookEvents.includes(hook)) return "supported";
-  if (manifest.knownBroken.some((entry) => entry.token === id)) return "unsupported";
-  return "unknown";
-}
+// ⛔ 這裡在 GH#1159 之前有一份**私有**的 `capabilityState()`，而 `retrieval.ts`
+// 有另一份私有的 `capabilityAvailable()` —— 同一個問題兩個答案。⭐ 兩邊現在
+// 共用 `adoptionContract.capabilityAdoption()`，拼法（`effect.` / `effect:`）與
+// 判定順序的三處分歧一併消失（見該檔檔頭那張表）。第〇·四守則：一個事實一個住處。
 
 function unique(values: readonly string[]): readonly string[] {
   return [...new Set(values)];
@@ -198,7 +190,7 @@ export function validateHeroProposal(input: ProposalValidationInput): ProposalVa
   for (const id of templateIds) if (!request.legalTemplateIds.includes(id)) diagnostics.push({ code: "template-not-allowlisted", message: `Template is not allowlisted: ${id}` });
   for (const id of capabilityIds) {
     if (!request.legalCapabilityIds.includes(id)) diagnostics.push({ code: "capability-not-allowlisted", message: `Capability is not allowlisted: ${id}` });
-    const state = capabilityState(id, input.capabilityManifest);
+    const state = capabilityAdoption(id, input.capabilityManifest);
     if (state === "unknown") diagnostics.push({ code: "capability-unknown", message: `Capability is unknown to the live target: ${id}` });
     if (state === "unsupported") diagnostics.push({ code: "capability-unsupported", message: `Capability is unavailable on the live target: ${id}` });
   }

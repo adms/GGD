@@ -1,5 +1,6 @@
 import type { RuntimeCapabilityManifest } from "../editorCapabilities";
 import type { TemplateDoc } from "../schema/template";
+import { capabilityAvailable } from "./adoptionContract";
 import { HERO_PROPOSAL_REQUEST_SCHEMA, HERO_PROPOSAL_SCHEMA, HERO_SLOTS, type HeroSectionId, type HeroSlot } from "./constants";
 import type { HeroProject } from "./schema";
 import { zProposalRequest, type ProposalRequest } from "./proposal";
@@ -17,15 +18,15 @@ export interface ProposalRequestInput {
   readonly diagnosticCodes?: readonly string[];
 }
 
-function capabilityAvailable(id: string, manifest: RuntimeCapabilityManifest): boolean {
-  if (manifest.unsupported.includes(id) || manifest.knownBroken.some((entry) => entry.token === id)) return false;
-  const planned = manifest.planned.find((entry) => entry.key === id);
-  if (planned) return planned.state !== "unsupported";
-  if (manifest.simCapabilities[id]) return manifest.simCapabilities[id]!.available;
-  if (id.startsWith("effect:")) return manifest.effectKinds.includes(id.slice("effect:".length).replace(/@1$/, ""));
-  if (id.startsWith("hook:")) return manifest.hookEvents.includes(id.slice("hook:".length).replace(/@1$/, ""));
-  return false;
-}
+// ⛔ 這裡在 GH#1159 之前有一份**私有**的 `capabilityAvailable()`，而
+// `validation.ts` 有另一份私有的 `capabilityState()` —— 同一個問題兩個答案，
+// 在三種 id 上不一致（見 `adoptionContract.ts` 檔頭那張表）。⭐ 兩邊現在共用
+// 同一個判定，所以「retrieval 把它濾掉」與「validation 把它擋下」不可能再
+// 互相矛盾。
+//
+// ⚠️ 這一行的濾除本身仍然是**安靜**的（回傳型別是出貨契約，⛔ 不能為了報錯
+// 多一格欄位）。⇒ 讓它不再靜默的是出貨側的閘：`adoptionContract.test.ts`
+// 逐格走過每一份社群配方，宣告了而目標做不到的能力當場紅。
 
 function patchPaths(sectionId: HeroSectionId, task: ProposalTask, targetSlot: HeroSlot | null, project: HeroProject): string[][] {
   let candidates: string[][] = sectionId === "identity"
