@@ -13,6 +13,11 @@
  * fetch + base are injectable so the flow is unit-testable with a mock.
  */
 import type { TextFillRequest } from "./prompt";
+import {
+  aiCompletionFromFinishReason,
+  normalizeAiJson,
+  type AiJsonOutcome,
+} from "./structuredJson";
 
 const DEFAULT_BASE = "/api/v1";
 
@@ -124,6 +129,47 @@ export async function aiFillText(
   const text = pick(body, ["text", "content", "value"]);
   if (text === undefined) throw new AiError(502, "AI proxy returned no text");
   return { text, stub: pickStub(body) };
+}
+
+// ---- structured (JSON) entry — GH#1108 -------------------------------------
+
+/**
+ * ⚠️ ⭐ **這兩層 JSON ⛔ 不是同一件事**：`postJson` 解析的是 HTTP 外層回應，
+ * 下面處理的是**模型答案本身**。外層 200 ⛔ 不代表模型正常寫完了答案。
+ */
+
+/** adapter 回報完成狀態的欄位別名；⛔ 認不得就是 unknown（⇒ 被擋）。 */
+const FINISH_KEYS = ["finishReason", "finish_reason", "stopReason", "stop_reason", "finish", "completion"];
+/** 思考內容只為診斷取出；⛔ 永遠不會被當成答案（見 structuredJson.ts）。 */
+const REASONING_KEYS = ["reasoning", "reasoning_content", "thinking"];
+
+export interface JsonGenResult {
+  outcome: AiJsonOutcome;
+  stub: boolean;
+}
+
+/**
+ * 預期回傳 JSON 的操作走這一支（⛔ 不動 `aiFillText`／圖片那兩條路）。
+ * 它**只**把 adapter 的回覆交給共用的正規化層，⛔ 自己不寫第二套去包裝規則；
+ * 通過之後仍照既有 schema／允許 ID／人工確認走，⛔ 沒有放寬任何一道閘。
+ *
+ * ⚠️ 今天的平台 proxy（`/ai/text`）只回 `{text, stub}`、**沒有 finish 欄位**
+ * ⇒ 完成狀態是 `unknown` ⇒ 這一支會**明確擋下**並說出原因（⛔ 不靜默放行）。
+ * 要讓它真的通，proxy 必須把 provider 的 finish_reason 轉出來（GH#1108 接線）。
+ */
+export async function aiFillJson(
+  req: TextFillRequest,
+  opts: AiClientOptions = {},
+): Promise<JsonGenResult> {
+  const body = await postJson("/ai/text", req, opts);
+  return {
+    outcome: normalizeAiJson({
+      completion: aiCompletionFromFinishReason(pick(body, FINISH_KEYS)),
+      final: pick(body, ["text", "content", "value"]) ?? null,
+      reasoning: pick(body, REASONING_KEYS) ?? null,
+    }),
+    stub: pickStub(body),
+  };
 }
 
 // ---- base64 / data-url helpers ---------------------------------------------
