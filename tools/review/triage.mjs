@@ -207,14 +207,30 @@ export function rendererFingerprint(repoRoot) {
   }
 }
 
-/** 寫一筆裁決進帳本（middleware 的 POST /__review/verdict 走這裡）。 */
+/**
+ * 寫一筆裁決進帳本（middleware 的 POST /__review/verdict 走這裡）。
+ *
+ * ⭐⭐ **否決必填原因**（GH#991 Scope 5 逐字「退回原因必填」；owner 2026-08-24 逐字
+ * 「追加原因的HITL」）。⚠️ 這一條在 2026-09-19 之前**只有資產這一族沒有** ——
+ * 而另外三族逐字寫著同一句話、且各自有守衛盯著：
+ *   · 功能批    `features.mjs:484`         守衛 `ops/reviewFeatureVerdicts.test.ts:66`
+ *   · 英雄入庫  `heroIntake.mjs`           守衛 `ops/heroIntakeReview.test.ts:163`
+ *   · 平台 UGC  `submissions/handlers.go:238` （Go，逐字引同一則 owner 原話）
+ * ⇒ ⛔ 那不是「資產比較不重要」，是**沒有人問「每一族都問過了嗎」** ——
+ *   三族各自被逐一驗過，而**反方向**（有哪一族漏了）沒有人走（CLAUDE.md 綠燈⑫）。
+ *
+ * ⚠️ `unsure` **刻意不必填** —— owner 的原話管的是**否決**，⛔ 不是「每一格都要打字」。
+ */
 export function saveVerdict(repoRoot, { kind, id, hash, verdict, note }) {
+  const trimmed = typeof note === "string" ? note.trim() : "";
+  if (verdict === "fail" && trimmed === "")
+    throw new Error("否決必填原因 —— ⛔ 無原因的否決是心情，不是資料");
   const ledger = loadLedger(repoRoot);
   const rf = rendererFingerprint(repoRoot);
   ledger.entries[`${kind}:${id}`] = {
     hash,
     verdict,
-    note: note ?? "",
+    note: trimmed,
     reviewedAt: new Date().toISOString(),
     reviewer: "owner",
     // ⭐ GH#664 Phase 2 —— 這一格綠燈是**對哪一版渲染層**發的。

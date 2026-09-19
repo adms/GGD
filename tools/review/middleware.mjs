@@ -107,6 +107,12 @@ export function createReviewMiddleware(repoRoot, options = {}) {
           if (typeof id !== "string" || typeof hash !== "string" || !VERDICTS.has(verdict)) {
             return sendJson(res, 400, { error: "需要 { id, hash, verdict: pass|fail|unsure, note? }" });
           }
+          // ⭐ 否決必填原因（GH#991 Scope 5）。⚠️ 這裡擋一次是為了**狀態碼**：
+          //   真閘在 `triage.saveVerdict`，⛔ 而它 throw 到下面的 catch 會變成 500
+          //   ⇒ 審查頁會把「你忘了寫原因」顯示成「伺服器壞了」。
+          if (verdict === "fail" && String(note ?? "").trim() === "") {
+            return sendJson(res, 400, { error: "否決必填原因 —— ⛔ 無原因的否決是心情，不是資料" });
+          }
           const matches = buildInventory(repoRoot).filter(
             (a) => a.id === id && (kind === undefined || a.kind === kind),
           );
