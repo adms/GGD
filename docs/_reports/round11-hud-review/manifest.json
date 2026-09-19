@@ -1,0 +1,118 @@
+{
+  "schema": "ggd-hud-visual-proof-manifest@1",
+  "surface": "round11-hud",
+  "authority": "review-material-only",
+  "stage": {
+    "width": 960,
+    "height": 540,
+    "viewportPinned": true
+  },
+  "calibration": {
+    "canvas": {
+      "bright": 28800,
+      "empty": 0,
+      "ok": true
+    },
+    "dom": {
+      "bright": 28800,
+      "empty": 0,
+      "ok": true
+    }
+  },
+  "storeModule": "/src/net/RoomStore.ts?t=1789812468028",
+  "limitations": [
+    "foreignObject ⛔ 不載入外部 <img> ⇒ 結算面板的頭像在接觸表上是空的；它證得了版面／文字／分數，⛔ 證不了頭像。",
+    "⛔ 這一頁不產生 verdict —— 它產生的是可審材料（HITL Tier 1.5／2 的輸入）。"
+  ],
+  "documents": 3,
+  "captured": 3,
+  "cases": [
+    {
+      "id": "round11.bombard-telegraph",
+      "name": "預警圈 —— 小地圖上的大轟炸落點",
+      "engine": "canvas",
+      "status": "captured",
+      "frames": [
+        {
+          "atMs": 0,
+          "file": "frames/round11.bombard-telegraph.00000.png",
+          "bright": 2120,
+          "lit": 6376,
+          "faint": 66752
+        },
+        {
+          "atMs": 4000,
+          "file": "frames/round11.bombard-telegraph.04000.png",
+          "bright": 2120,
+          "lit": 7067,
+          "faint": 66752
+        },
+        {
+          "atMs": 9000,
+          "file": "frames/round11.bombard-telegraph.09000.png",
+          "bright": 2120,
+          "lit": 7817,
+          "faint": 66752
+        }
+      ]
+    },
+    {
+      "id": "round11.side-swap-banner",
+      "name": "換邊橫幅 —— 模式橫幅／倒數／換邊角色／轟炸預警",
+      "engine": "dom",
+      "status": "captured",
+      "frames": [
+        {
+          "atMs": 0,
+          "file": "frames/round11.side-swap-banner.00000.png",
+          "bright": 9172,
+          "lit": 12055,
+          "faint": 28842
+        },
+        {
+          "atMs": 2000,
+          "file": "frames/round11.side-swap-banner.02000.png",
+          "bright": 9189,
+          "lit": 12070,
+          "faint": 28861
+        },
+        {
+          "atMs": 4600,
+          "file": "frames/round11.side-swap-banner.04600.png",
+          "bright": 4489,
+          "lit": 11409,
+          "faint": 26646
+        }
+      ]
+    },
+    {
+      "id": "round11.settlement-panel",
+      "name": "結算面板 —— 名次／評價／KDA",
+      "engine": "dom",
+      "status": "captured",
+      "frames": [
+        {
+          "atMs": 0,
+          "file": "frames/round11.settlement-panel.00000.png",
+          "bright": 5827,
+          "lit": 16817,
+          "faint": 59073
+        },
+        {
+          "atMs": 1600,
+          "file": "frames/round11.settlement-panel.01600.png",
+          "bright": 5827,
+          "lit": 16817,
+          "faint": 59073
+        },
+        {
+          "atMs": 3200,
+          "file": "frames/round11.settlement-panel.03200.png",
+          "bright": 6371,
+          "lit": 21439,
+          "faint": 53808
+        }
+      ]
+    }
+  ]
+}

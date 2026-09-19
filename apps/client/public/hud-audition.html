@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>HUD 截圖台 — 第十一回合 H④（預警圈／換邊橫幅／結算面板）</title>
+<style>
+  :root { --bg:#05060a; --panel:#12161f; --line:#2a3145; --fg:#e8ecf6; --dim:#98a2bd;
+          --accent:#7dc4fc; --gold:#f0c674; --ok:#6ee7a8; --bad:#ff8a8a; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; }
+  body { background:var(--bg); color:var(--fg); overflow:hidden;
+         font:13px/1.55 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans TC",sans-serif; }
+  /* ⭐ 拍攝台 —— 固定 960×540，⛔ 不隨視窗大小變：接觸表一列要能逐格對齊，
+     而一個會隨瀏覽器視窗漂的尺寸會讓「兩版之間變了什麼」變得無法比較。 */
+  #stage { position:fixed; left:0; top:0; width:960px; height:540px; overflow:hidden;
+           background:#0b0e14; z-index:1; }
+  /* ⭐ 拍攝台是一個 iframe —— 它有**自己的視窗**，於是 vh/vw 與 position:fixed
+     都對著宣告的 960×540 解析。見腳本裡 `bootFilm()` 的理由。 */
+  #film { width:960px; height:540px; border:0; display:block; background:#0b0e14; }
+  .hud { position:fixed; z-index:5; background:rgba(14,18,28,.94); border:1px solid var(--line);
+         border-radius:10px; padding:12px 14px; }
+  #panel { top:14px; right:14px; width:420px; max-height:94vh; overflow:auto; }
+  #panel h1 { margin:0 0 4px; font-size:15px; }
+  #panel p { margin:6px 0 0; color:var(--dim); font-size:12px; }
+  #err { top:14px; left:14px; right:460px; border-color:#7f2d2d; background:#2a1212;
+         display:none; white-space:pre-wrap; z-index:6; }
+  pre { margin:8px 0 0; white-space:pre-wrap; font:11px/1.5 ui-monospace,Menlo,monospace;
+        color:#cfe0ff; background:#0009; padding:8px; border-radius:6px; max-height:60vh; overflow:auto; }
+  code { background:#0009; padding:1px 5px; border-radius:4px; }
+  .ok { color:var(--ok); } .bad { color:var(--bad); }
+</style>
+</head>
+<body>
+<div id="stage"><iframe id="film" title="拍攝台"></iframe></div>
+
+<div id="err" class="hud"><b>失敗</b><div id="errmsg"></div>
+  <div>這頁只在 <code>vite dev</code> 下可用（直接載入 <code>/src/**</code>）。</div></div>
+
+<div id="panel" class="hud">
+  <h1>HUD 截圖台 <span style="color:var(--dim);font-size:11px">GH#1196 H④</span></h1>
+  <p>⭐ 三個畫面都走<b>出貨元件</b>：小地圖 <code>&lt;Minimap/&gt;</code>（紅圈由出貨的
+     <code>drawFrame</code> 畫）、<code>&lt;Round11OverlayView/&gt;</code>（view 由出貨的
+     <code>round11View()</code> 算）、<code>&lt;MatchEndPanel/&gt;</code>。
+     ⛔ 這一頁自己**不畫任何一個 HUD 元素**。</p>
+  <p>⚠️ 量尺先<b>兩個方向</b>自證（已知亮 ⇒ 量得到、已知空 ⇒ 量不到）。
+     任一方向不過 ⇒ 該引擎的每一格記成 <code>blocked</code>，
+     ⛔ 不是送出一張看起來正常的空白圖。</p>
+  <p>參數：<code>?sink=&lt;url&gt;</code>（收圖端，例
+     <code>http://127.0.0.1:39680/shot/round11-hud_20260919</code>）·
+     <code>?auto=0</code> 手動 · <code>?scene=a,b</code> 只跑其中幾格</p>
+  <div id="verdict" style="margin-top:8px;font-weight:700">啟動中…</div>
+  <pre id="readout">…</pre>
+</div>
+
+<script type="module">
+/**
+ * ⭐⭐ HUD 截圖台 —— GH#1196 H④「多客戶端視覺驗收」的**可審材料**產生端。
+ *
+ * ⛔⛔ 為什麼要新開一支：#1196 票文寫的 `tools/audition` **不存在**，而現成的
+ * `*-audition.html` 台子畫的全是 **Babylon canvas**（`readPixels`）——
+ * 而 H④ 要看的三樣（預警圈／換邊橫幅／結算面板）裡有兩樣是 **React HUD 的 DOM**。
+ * ⇒ 形狀不對，⛔ 不是「參數調一下就能用」。
+ *
+ * ⭐ 這一頁只做三件事，⛔ 其餘一律呼叫出貨程式：
+ *   ① 佈景：把 `frameBus` / `hudStore` 餵成「第十一回合正在打」的樣子
+ *      —— ⭐ 餵法是**送真的事件進出貨的 `recordRound11Event`**，
+ *         ⛔ 不是自己 `setState` 一個編好的 view。
+ *   ② 量尺：`calibrate()` 兩個方向（已知亮／已知空），⛔ 單邊不算自證。
+ *   ③ 取像：canvas 走 `toDataURL`；DOM 走 SVG `foreignObject` 光柵化。
+ *
+ * ⚠️ ⭐ **已知限制（刻意寫在產物的 manifest 裡，⛔ 不藏起來）**：
+ *   · foreignObject ⛔ 不載入外部 `<img>` ⇒ 結算面板的頭像在接觸表上是空的。
+ *     ⇒ 它證得了版面／文字／分數，⛔ 證不了頭像。
+ *   · 這一頁 ⛔ 不產生 verdict —— 它只產生**可審的材料**（Tier 1.5/2 的輸入）。
+ */
+// ⛔⛔ **這五行不是樣板，缺了就整頁不能跑。** `@vitejs/plugin-react` 會在它
+// 轉譯的每一支 `.tsx` 開頭插一段「preamble 裝好了沒」的檢查，而那段 preamble 是
+// vite **轉譯 HTML 時**注入的 —— ⭐ `public/` 底下的 HTML 是原樣送出的，
+// ⇒ 第一支 `.tsx` 一載入就擲 `can't detect preamble`，整批作廢。
+// ⚠️ 既有的 `*-audition.html` 碰不到這個坑，因為它們只 import `.ts`（Babylon）——
+//    ⭐ 這一頁是第一支要載 React 元件的台子。
+{
+  const rr = await import("/@react-refresh");
+  rr.injectIntoGlobalHook(window);
+  window.$RefreshReg$ = () => {};
+  window.$RefreshSig$ = () => (t) => t;
+  window.__vite_plugin_react_preamble_installed__ = true;
+}
+
+const $ = (id) => document.getElementById(id);
+// ⭐ 一跑完就把判決鎖住：出貨元件在 effect 裡擲出來的東西會冒到 window.onerror，
+//    ⛔ 而它**不該**把「2/3 可審」改寫成「整批作廢」—— 那一格本來就已經記成
+//    blocked 了，覆蓋掉只會讓真正的結論消失。錯誤照樣**大聲**留在紅框裡。
+let verdictLocked = false;
+const fail = (m) => {
+  $("err").style.display = "block";
+  $("errmsg").textContent = String(m && m.stack ? m.stack : m);
+  if (!verdictLocked) $("verdict").innerHTML = '<span class="bad">整批作廢</span>';
+};
+addEventListener("error", (e) => fail(e.message));
+addEventListener("unhandledrejection", (e) => fail(e.reason));
+
+const qs = new URLSearchParams(location.search);
+const SINK = qs.get("sink");
+const ONLY = (qs.get("scene") ?? "").split(",").map((s) => s.trim()).filter(Boolean);
+const STAGE_W = 960;
+const STAGE_H = 540;
+
+// ───────────────────────── 出貨模組（⛔ 一個都不是這頁寫的） ─────────────────────
+// ⚠️ `/@id/<bare>` 是 vite dev 解析裸 import 的入口 —— public/ 底下的 HTML 是
+//    **原樣送出**的（⛔ 不經 transform），所以 `import "react"` 在這裡會 404。
+//    ⛔ 也不要寫 import map 去抓 CDN：`public/ou99-model-shots.html` 就是那樣寫的，
+//    而 vite 的 dep scanner 會照樣去 node_modules 找 `three` 並在啟動時報錯。
+const React = (await import("/@id/react")).default;
+const rdc = await import("/@id/react-dom/client");
+const createRoot = rdc.createRoot ?? rdc.default?.createRoot;
+if (typeof createRoot !== "function") throw new Error("react-dom/client 沒有 createRoot");
+
+const [minimap, overlay, model, matchEnd, MATCH_STATS] = await Promise.all([
+  import("/src/ui/hud/Minimap.tsx"),
+  import("/src/ui/hud/Round11Overlay.tsx"),
+  import("/src/ui/hud/round11Model.ts"),
+  import("/src/ui/panels/MatchEndPanel.tsx"),
+  import("/@id/@ggd/shared/sim/stats/matchStats"),
+]);
+
+/**
+ * ⛔⛔ **一份模組在 vite dev 底下會有兩個實例，而它壞起來完全無聲。**
+ *
+ * 熱更新過的模組，vite 會把**所有匯入它的人**改寫成 `?t=<時間戳>`：
+ *   `Minimap.tsx` 裡是 `from "/src/net/RoomStore.ts?t=1789812468028"`
+ * 而這一頁寫 `import("/src/net/RoomStore.ts")` 拿到的是**另一個**實例 ——
+ * ⇒ 我 `setState` 的是 A 的 store，`<Minimap/>` 讀的是 B 的 ⇒ 它永遠看到
+ *   `connected:false` ⇒ 回 `null` ⇒ ⭐ **畫面全空，而 console 一個字都沒有。**
+ * （2026-09-19 實測到：第一版就是這樣把預警圈那一格記成「Minimap 回了 null？」。）
+ *
+ * ⇒ ⭐ 解法是**用消費端自己被改寫後的那個 URL** 去拿模組，⛔ 不是自己拼一個。
+ */
+async function viaConsumer(consumerUrl, re) {
+  const src = await (await fetch(consumerUrl)).text();
+  const m = re.exec(src);
+  if (!m) throw new Error(`${consumerUrl} 裡找不到 ${re}`);
+  return { mod: await import(/* @vite-ignore */ m[1]), url: m[1] };
+}
+const STORE_RE = /from "([^"]*\/net\/RoomStore\.ts[^"]*)"/;
+const roomStoreHit = await viaConsumer("/src/ui/hud/Minimap.tsx", STORE_RE);
+const roomStore = roomStoreHit.mod;
+const { frameBus } = (await viaConsumer("/src/ui/hud/Minimap.tsx", /from "([^"]*\/frameBus\.ts[^"]*)"/)).mod;
+// ⭐ 兩個消費端必須看到**同一個** store，⛔ 否則結算面板那一格會是空的而沒人知道。
+const endStoreUrl = STORE_RE.exec(await (await fetch("/src/ui/panels/MatchEndPanel.tsx")).text())?.[1];
+if (endStoreUrl !== roomStoreHit.url) {
+  throw new Error(`store 實例不一致：Minimap=${roomStoreHit.url} MatchEndPanel=${endStoreUrl}`);
+}
+const { hudStore, recordRound11Event, recordSettlement } = roomStore;
+const h = React.createElement;
+
+/**
+ * ⭐⭐ 拍攝台是一個 **iframe** —— ⛔ 不是一個 960×540 的 div。
+ *
+ * ⛔⛔ 理由是量到的：截圖環境（無頭／離屏分頁）的**版面視窗可以是 0×0**
+ * （2026-09-19 實測：`documentElement.clientWidth/Height`、`visualViewport` 全是 0）。
+ * ⇒ 全 app 的 `vh` / `vw` 與 `position:fixed` 的 `left:0;right:0` 一起塌掉：
+ *   結算卡的 `max-height:92vh` 變成 **0px** ⇒ ⭐ **拍出來是一條只剩按鈕的細長條，
+ *   而它看起來就像「面板本來就長這樣」。**
+ *
+ * ⭐ iframe 有**自己的視窗**，大小就是它的內容框 ⇒ 宣告 960×540 就真的是 960×540，
+ *   ⛔ 與外面那個瀏覽器視窗無關。這也讓兩次拍攝之間可以逐格比對。
+ * ⚠️ JS 那一半仍要 `pinViewport()`：出貨元件是**父視窗**載入的模組，
+ *   `useHudViewport()` 讀的是父視窗的 `innerWidth`。兩半都要。
+ */
+async function bootFilm() {
+  const film = $("film");
+  await new Promise((r) => {
+    film.addEventListener("load", r, { once: true });
+    film.srcdoc = "<!doctype html><html><head><meta charset=\"utf-8\"></head><body></body></html>";
+  });
+  const doc = film.contentDocument;
+  // vite dev 把每一份 `.css` 注入**父文件**的 <style> —— iframe 看不到，要搬一份。
+  // （元件在上面已經 import 完了，所以這裡搬得到它們的樣式。）
+  for (const node of document.querySelectorAll('style,link[rel="stylesheet"]')) {
+    doc.head.appendChild(node.cloneNode(true));
+  }
+  doc.body.style.cssText =
+    `margin:0;width:${STAGE_W}px;height:${STAGE_H}px;overflow:hidden;background:#0b0e14;color:#e8ecf6;` +
+    `font:13px/1.55 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans TC",sans-serif;`;
+  return doc;
+}
+const FILM = await bootFilm();
+
+// ─────────────────────────────── 量尺（共用） ────────────────────────────────
+
+/** 一張 PNG 的亮度直方 —— 與 `featureProofAudition` 同三道門檻（⛔ 不另發明一套）。 */
+async function measure(dataUrl) {
+  const img = new Image();
+  img.src = dataUrl;
+  await img.decode();
+  const c = document.createElement("canvas");
+  c.width = img.naturalWidth || STAGE_W;
+  c.height = img.naturalHeight || STAGE_H;
+  const ctx = c.getContext("2d", { willReadFrequently: true });
+  ctx.drawImage(img, 0, 0);
+  const d = ctx.getImageData(0, 0, c.width, c.height).data;
+  let bright = 0, lit = 0, faint = 0;
+  for (let i = 0; i + 2 < d.length; i += 4) {
+    const v = Math.max(d[i], d[i + 1], d[i + 2]);
+    if (v > 200) bright++;
+    if (v > 96) lit++;
+    if (v > 32) faint++;
+  }
+  return { w: c.width, h: c.height, bright, lit, faint };
+}
+
+/**
+ * ⛔⛔ **把視窗尺寸釘在台子的尺寸上 —— 這一行不是排版潔癖，是正確性。**
+ *
+ * 出貨的 `useHudViewport()` 讀的是 `window.innerWidth/innerHeight`，而
+ * ⭐ **截圖環境（無頭／離屏分頁）量到的可能是 0**（2026-09-19 實測：這個分頁
+ * `innerWidth === 0`）⇒ `matchEndCardCap()` 回 `min(760, 0×0.96) = 0`
+ * ⇒ 結算卡 `width:0px` ⇒ 每個字自己換一行 ⇒ ⭐ **拍出來是一張「有底色、
+ * 有一點點筆劃」的圖，而它看起來就像一張正常的暗場結算畫面。**
+ *
+ * ⇒ 釘住它，並且把「釘住了沒」寫進 manifest：接觸表上那 960×540 是**宣告過的**，
+ *   ⛔ 不是「拍的時候剛好是多少」。
+ */
+function pinViewport(w, h) {
+  for (const [k, v] of [["innerWidth", w], ["innerHeight", h]]) {
+    try { Object.defineProperty(window, k, { configurable: true, get: () => v }); } catch { /* 釘不住就讓下面的檢查說話 */ }
+  }
+  dispatchEvent(new Event("resize"));
+  return window.innerWidth === w && window.innerHeight === h;
+}
+
+/**
+ * ⭐ 版面塌了沒 —— 子樹裡**最寬**的元素有沒有到台子的四分之一。
+ *
+ * ⚠️ 這條擋的正是上面那個坑：一個寬度被算成 0 的面板**照樣畫得出筆劃**
+ * （`lit > 0`），⇒ 只看亮像素的規則會放它過去。⭐ 版面是**結構**，要用結構量。
+ */
+function extentPx(root) {
+  let w = 0, hgt = 0;
+  for (const el of root.querySelectorAll("*")) {
+    const r = el.getBoundingClientRect();
+    w = Math.max(w, r.width);
+    hgt = Math.max(hgt, r.height);
+  }
+  return { w, h: hgt };
+}
+
+const raf = () => new Promise((r) => requestAnimationFrame(r));
+const frames = async (n) => { for (let i = 0; i < n; i++) await raf(); };
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// ───────────────────────────── 取像：canvas ─────────────────────────────────
+
+const shotCanvas = (canvas) => canvas.toDataURL("image/png");
+
+// ─────────────────────────── 取像：DOM（foreignObject） ──────────────────────
+
+/**
+ * 把一棵 DOM 逐節點把 **computed style** 寫成 inline style。
+ *
+ * ⚠️ 非做不可：`foreignObject` 裡沒有文件的樣式表，⛔ 而 HUD 有一半的樣式來自
+ * class（`hudSurfaces` / `*.css`）⇒ 不內聯的話拍出來是一堆沒有底色的裸文字，
+ * ⭐ 而那**看起來就像 HUD 壞了**。
+ */
+function inlineStyles(src, dst) {
+  // ⚠️ 一定要用**元素自己那個視窗**的 getComputedStyle —— 拍攝台在 iframe 裡。
+  const cs = (src.ownerDocument.defaultView ?? window).getComputedStyle(src);
+  let css = "";
+  for (let i = 0; i < cs.length; i++) {
+    const p = cs[i];
+    css += `${p}:${cs.getPropertyValue(p)};`;
+  }
+  dst.setAttribute("style", css);
+  const a = src.children, b = dst.children;
+  for (let i = 0; i < a.length && i < b.length; i++) inlineStyles(a[i], b[i]);
+}
+
+async function shotDom(node) {
+  const clone = node.cloneNode(true);
+  inlineStyles(node, clone);
+  // ⭐ 台子是一塊 960×540 的畫布，所以 fixed → absolute：`position:fixed` 在
+  //    foreignObject 裡沒有定義良好的容器，⛔ 留著會讓元素跑到裁切框外。
+  clone.style.position = "absolute";
+  clone.style.left = "0"; clone.style.top = "0";
+  clone.style.width = `${STAGE_W}px`; clone.style.height = `${STAGE_H}px`;
+  const wrap = document.createElement("div");
+  wrap.setAttribute("xmlns", "http://www.w3.org/1999/xhtml");
+  wrap.style.cssText =
+    `position:relative;width:${STAGE_W}px;height:${STAGE_H}px;overflow:hidden;background:#0b0e14;` +
+    `font:13px/1.55 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans TC",sans-serif;`;
+  wrap.appendChild(clone);
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${STAGE_W}" height="${STAGE_H}">` +
+    `<foreignObject width="100%" height="100%">${new XMLSerializer().serializeToString(wrap)}</foreignObject></svg>`;
+  const img = new Image();
+  img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+  await img.decode();
+  const c = document.createElement("canvas");
+  c.width = STAGE_W; c.height = STAGE_H;
+  const ctx = c.getContext("2d");
+  ctx.fillStyle = "#0b0e14";
+  ctx.fillRect(0, 0, STAGE_W, STAGE_H);
+  ctx.drawImage(img, 0, 0);
+  return c.toDataURL("image/png");
+}
+
+// ─────────────────── 校準：⭐ 兩個方向，⛔ 單邊不算自證 ────────────────────
+
+/**
+ * ⛔⛔ CLAUDE.md「一把只驗過單邊的尺，不算自證過」：
+ * 一個壞掉的光柵化器回的是**全黑**，而一個真的空 HUD 拍起來**也是全黑** ——
+ * ⇒ 只驗「已知亮量得到」的尺，會在它最該說話的時候沉默。
+ */
+async function calibrate() {
+  const out = {};
+  // ① canvas：已知亮 / 已知空
+  const c = document.createElement("canvas");
+  c.width = 240; c.height = 120;
+  const cx = c.getContext("2d");
+  cx.fillStyle = "#ff3030"; cx.fillRect(0, 0, 240, 120);
+  const cBright = (await measure(shotCanvas(c))).bright;
+  cx.clearRect(0, 0, 240, 120);
+  const cEmpty = (await measure(shotCanvas(c))).bright;
+  out.canvas = { bright: cBright, empty: cEmpty, ok: cBright > 20000 && cEmpty === 0 };
+
+  // ② DOM：同樣兩個方向
+  const probe = FILM.createElement("div");
+  probe.style.cssText = "position:fixed;left:0;top:0;width:960px;height:540px;background:#0b0e14";
+  const inner = FILM.createElement("div");
+  inner.style.cssText = "position:absolute;left:40px;top:40px;width:240px;height:120px;background:#ff3030";
+  probe.appendChild(inner);
+  FILM.body.appendChild(probe);
+  await frames(2);
+  const dBright = (await measure(await shotDom(probe))).bright;
+  inner.style.background = "transparent";
+  await frames(2);
+  const dEmpty = (await measure(await shotDom(probe))).bright;
+  probe.remove();
+  out.dom = { bright: dBright, empty: dEmpty, ok: dBright > 20000 && dEmpty === 0 };
+  return out;
+}
+
+// ─────────────────────────── 佈景（餵出貨的收端） ────────────────────────────
+
+const RULES = model.round11Rules();
+const ROUND11 = RULES.finalRound + 1;        // ⭐ 出處：round11Model 檔頭的關係式
+const BOMB = { x: 6, z: -4, radius: 9, telegraphSec: RULES.bombardTelegraphSec };
+
+/** 一張單一大場地（第十一回合是 `round11.arenaId`，⛔ 沒有兩個對戰分區）。 */
+function seedArena() {
+  frameBus.arenaId = "arena.royale";
+  frameBus.arenaZones = [{
+    x: 0, z: 0, r: 30,
+    rect: { halfW: 24, halfD: 18 },
+    obstacles: [
+      { kind: "circle", x: -12, z: 6, r: 2.2 },
+      { kind: "circle", x: 14, z: -7, r: 1.8 },
+      { kind: "segment", ax: -4, az: -14, bx: 8, bz: -14 },
+    ],
+    spawns: [[{ x: -20, z: 0 }], [{ x: 20, z: 0 }]],
+  }];
+  frameBus.champions.clear();
+  frameBus.champions.set(11, { worldX: -8, worldZ: 3, championId: "godie-h02u", teamId: 0 });
+  frameBus.champions.set(12, { worldX: 9, worldZ: -5, championId: "godie-hart", teamId: 1 });
+}
+
+const SEATS = [
+  { seatId: 1, teamId: 0, entityId: 11, alive: true, roundDeaths: 1, name: "玩家一", accountId: "a1" },
+  { seatId: 2, teamId: 0, entityId: 12, alive: false, roundDeaths: 2, name: "玩家二", accountId: "a2" },
+];
+
+function seedStore() {
+  hudStore.setState({
+    connected: true,
+    phase: "combat",
+    round: ROUND11,
+    phaseSecondsLeft: 412,
+    localAlive: true,
+    localSeatId: 1,
+    localEntityId: 11,
+    seats: SEATS,
+  });
+}
+
+// ─────────────────────────────── 三格畫面 ───────────────────────────────────
+
+/**
+ * ⭐ 每一格：`mount()` 造出出貨元件，`at(ms)` 把時間推到該點，`shot()` 取像。
+ * ⛔ 任何一步擲出 ⇒ 這一格 `status:"blocked"` 並記下訊息，
+ *    ⛔ 不是送一張空白圖出去（那正是本 repo 記過的「壞掉跟正常長得一模一樣」）。
+ */
+const SCENES = [
+  {
+    id: "round11.bombard-telegraph",
+    name: "預警圈 —— 小地圖上的大轟炸落點",
+    engine: "canvas",
+    times: [0, 4000, 9000],
+    async mount() {
+      seedArena();
+      seedStore();
+      const host = FILM.createElement("div");
+      host.style.cssText =
+        // ⭐ `transform` 讓這個 host 變成 `position:fixed` 子孫的**包含塊** ——
+        //    ⛔ 沒有它，HUD 的固定定位層會去對**真的瀏覽器視窗**算寬度，
+        //    而截圖環境的那個寬度不一定是我們宣告的台子大小（實測 0）。
+        "position:absolute;left:0;top:0;width:960px;height:540px;transform:translateZ(0)";
+      FILM.body.appendChild(host);
+      const root = createRoot(host);
+      root.render(h(minimap.Minimap, null));
+      await frames(8);
+      return { host, root };
+    },
+    async at(ctx, ms) {
+      // ⭐ 走**出貨的事件收端**：一顆真的 `round11Bombardment` 進
+      //    `recordRound11Event` ⇒ 它自己呼叫出貨的 `round11BombardFromEvent`。
+      //    ⛔ 不是直接 setState 一個編好的圈。
+      recordRound11Event({ type: "round11Bombardment", data: BOMB });
+      // 倒數往前推：把起算點往回挪 ms，於是 urgency 自己升高（出貨公式算）。
+      const b = hudStore.getState().round11Bombard;
+      hudStore.setState({ round11Bombard: { ...b, startedAtMs: b.startedAtMs - ms } });
+      await frames(10);
+    },
+    async shot(ctx) {
+      const canvas = ctx.host.querySelector("canvas");
+      // ⚠️ 這個訊息刻意指名最可能的根因：`<Minimap/>` 唯一的 `return null` 是
+      //    `visible === false`，而佈景已經把 `connected/phase` 設對了 ⇒
+      //    ⭐ 剩下的可能是**它讀的不是我寫的那個 store**（見上面 `viaConsumer`）。
+      if (!canvas) throw new Error(`小地圖沒有畫出 canvas —— visible=false（store=${roomStoreHit.url}）`);
+      return shotCanvas(canvas);
+    },
+    cleanup(ctx) { ctx.root.unmount(); ctx.host.remove(); },
+  },
+  {
+    id: "round11.side-swap-banner",
+    name: "換邊橫幅 —— 模式橫幅／倒數／換邊角色／轟炸預警",
+    engine: "dom",
+    times: [0, 2000, 4600],
+    async mount() {
+      seedStore();
+      const host = FILM.createElement("div");
+      host.style.cssText =
+        // ⭐ `transform` 讓這個 host 變成 `position:fixed` 子孫的**包含塊** ——
+        //    ⛔ 沒有它，HUD 的固定定位層會去對**真的瀏覽器視窗**算寬度，
+        //    而截圖環境的那個寬度不一定是我們宣告的台子大小（實測 0）。
+        "position:absolute;left:0;top:0;width:960px;height:540px;transform:translateZ(0)";
+      FILM.body.appendChild(host);
+      const root = createRoot(host);
+      return { host, root, startedAt: 0 };
+    },
+    async at(ctx, ms) {
+      // ⭐ view 由**出貨的 `round11View()`** 算（⛔ 不是這頁編一個物件）：
+      //    橫幅透明度、倒數字串、角色文案、預警秒數全部是出貨公式的輸出。
+      const now = 100000 + ms;
+      const notice = model.round11NoticeFromEvent(
+        "round11ReviveCharge", { teamId: 0, to: 2 }, 1, 0, now - 500, 1,
+      );
+      const view = model.round11View({
+        phase: "combat",
+        round: ROUND11,
+        secondsLeft: 412 - Math.floor(ms / 1000),
+        alive: true,
+        roundDeaths: 1,
+        teamAllDied: true,
+        bannerStartedAtMs: 100000,
+        bombard: model.round11BombardFromEvent(BOMB, now - 4200, RULES.bombardTelegraphSec),
+        notices: notice ? [notice] : [],
+        nowMs: now,
+        rules: RULES,
+      });
+      if (!view) throw new Error("round11View 回 null —— 佈景不是第十一回合？");
+      ctx.root.render(h(overlay.Round11OverlayView, { view }));
+      await frames(4);
+    },
+    shot(ctx) { return shotDom(ctx.host); },
+    cleanup(ctx) { ctx.root.unmount(); ctx.host.remove(); },
+  },
+  {
+    id: "round11.settlement-panel",
+    name: "結算面板 —— 名次／評價／KDA",
+    engine: "dom",
+    times: [0, 1600, 3200],
+    async mount() {
+      seedStore();
+      hudStore.setState({ phase: "matchEnd" });
+      // ⭐ 逐欄手寫 24 個統計欄 ＝ 一份會過期的第二住處 ⇒ 用**出貨的工廠**
+      //    `createMatchStats()` 起手，只覆蓋要給人看的那幾格。
+      //    （第一版手寫 ⇒ 少了 `abilityHits` ⇒ 面板擲 TypeError ⇒ 三幀全 0。）
+      const stats = (o) => ({ ...MATCH_STATS.createMatchStats(), ...o });
+      recordSettlement({
+        matchId: "hud-audition",
+        winnerTeam: 0,
+        perPlayer: [
+          { seatId: 1, teamId: 0, accountId: "a1", champ: "godie-h02u", role: "fighter",
+            grade: "S+", rank: 1, score: 1840, survivalBonus: 200, bossKills: 3,
+            stats: stats({ kills: 14, deaths: 3, assists: 7, damageDealt: 48210,
+              damageTaken: 21044, healingDone: 3100, goldEarned: 9120, largestSingleHit: 4120 }) },
+          { seatId: 2, teamId: 0, accountId: "a2", champ: "godie-hart", role: "mage",
+            grade: "B", rank: 3, score: 1120,
+            stats: stats({ kills: 6, deaths: 9, assists: 11, damageDealt: 22140,
+              damageTaken: 39870, healingDone: 8800, goldEarned: 6010 }) },
+          { seatId: 3, teamId: 1, accountId: "a3", champ: "godie-u034", role: "assassin",
+            grade: "A-", rank: 2, score: 1290,
+            stats: stats({ kills: 9, deaths: 8, assists: 4, damageDealt: 31005,
+              damageTaken: 28410, goldEarned: 7400 }) },
+        ],
+      });
+      const host = FILM.createElement("div");
+      host.style.cssText =
+        // ⭐ `transform` 讓這個 host 變成 `position:fixed` 子孫的**包含塊** ——
+        //    ⛔ 沒有它，HUD 的固定定位層會去對**真的瀏覽器視窗**算寬度，
+        //    而截圖環境的那個寬度不一定是我們宣告的台子大小（實測 0）。
+        "position:absolute;left:0;top:0;width:960px;height:540px;transform:translateZ(0)";
+      FILM.body.appendChild(host);
+      const root = createRoot(host);
+      root.render(h(matchEnd.MatchEndPanel, null));
+      await frames(6);
+      return { host, root, t0: performance.now() };
+    },
+    async at(ctx, ms) {
+      // ⭐ 這一格的時間是**真的**在走（面板自己有動畫／自動捲動）——
+      //    ⛔ 不假造時鐘，不然拍到的是一個不存在的中間狀態。
+      const wait = ms - (performance.now() - ctx.t0);
+      if (wait > 0) await sleep(wait);
+      // ⭐ 最後一幀打開「每回合戰績變化」—— 走的是**出貨的 prop**
+      //    `defaultChartOpen`，⛔ 不是這頁自己畫一張圖。
+      //    理由：三張一模一樣的圖對審查者沒有資訊，而這個面板**本來就有兩個型態**。
+      //    ⚠️ `key` 是必要的：`defaultChartOpen` 只是 `useState` 的**初始值**，
+      //    ⛔ 換 prop 重新 render 不會重設它（第一版就是這樣拍出三張一模一樣的圖）。
+      if (ms >= 3200) {
+        ctx.root.render(h(matchEnd.MatchEndPanel, { key: "chart-open", defaultChartOpen: true }));
+      }
+      await frames(3);
+    },
+    shot(ctx) { return shotDom(ctx.host); },
+    cleanup(ctx) { ctx.root.unmount(); ctx.host.remove(); },
+  },
+];
+
+// ─────────────────────────────────── 跑 ─────────────────────────────────────
+
+async function post(path, body) {
+  if (!SINK) return false;
+  const res = await fetch(`${SINK.replace(/\/$/, "")}/${path}`, { method: "POST", body });
+  if (!res.ok) throw new Error(`收圖端拒收 ${path}：${res.status}`);
+  return true;
+}
+
+async function run() {
+  const pinned = pinViewport(STAGE_W, STAGE_H);
+  const cal = await calibrate();
+  const lines = [
+    `視窗釘在 ${STAGE_W}×${STAGE_H} ⇒ ${pinned ? "成功" : "⛔ 釘不住（版面可能塌掉）"}`,
+    `量尺 canvas：已知亮 ${cal.canvas.bright} / 已知空 ${cal.canvas.empty} ⇒ ${cal.canvas.ok ? "可信" : "⛔ 作廢"}`,
+    `量尺 dom   ：已知亮 ${cal.dom.bright} / 已知空 ${cal.dom.empty} ⇒ ${cal.dom.ok ? "可信" : "⛔ 作廢"}`,
+    "",
+  ];
+  $("readout").textContent = lines.join("\n");
+
+  const cases = [];
+  for (const scene of SCENES) {
+    if (ONLY.length && !ONLY.includes(scene.id)) continue;
+    const row = { id: scene.id, name: scene.name, engine: scene.engine, status: "captured", frames: [] };
+    if (!cal[scene.engine]?.ok) {
+      row.status = "blocked";
+      row.blocker = `量尺 ${scene.engine} 兩方向校準沒過 ⇒ 這一格的任何結論都不可信`;
+      cases.push(row);
+      lines.push(`⛔ ${scene.id}：${row.blocker}`);
+      $("readout").textContent = lines.join("\n");
+      continue;
+    }
+    let ctx = null;
+    try {
+      ctx = await scene.mount();
+      for (const ms of scene.times) {
+        await scene.at(ctx, ms);
+        if (scene.engine === "dom") {
+          // ⭐ **兩軸都要問。** 只問寬度會放過 `max-height:92vh → 0px` 那一種塌法
+          //    （2026-09-19 就是先只做了寬度那一半，而結算面板仍然是一條細長條）。
+          const ext = extentPx(ctx.host);
+          if (ext.w < STAGE_W * 0.25 || ext.h < STAGE_H * 0.2) {
+            throw new Error(
+              `版面塌了：最大元素 ${Math.round(ext.w)}×${Math.round(ext.h)}px（台子 ${STAGE_W}×${STAGE_H}）`,
+            );
+          }
+        }
+        const dataUrl = await scene.shot(ctx);
+        const m = await measure(dataUrl);
+        const file = `frames/${scene.id}.${String(ms).padStart(5, "0")}.png`;
+        await post(file, dataUrl.slice(dataUrl.indexOf(",") + 1));
+        row.frames.push({ atMs: ms, file, bright: m.bright, lit: m.lit, faint: m.faint });
+        lines.push(`${scene.id} @${ms}ms  bright=${m.bright} lit=${m.lit} faint=${m.faint}`);
+        $("readout").textContent = lines.join("\n");
+      }
+      // ⭐ 「拍到了」⛔ 不等於「畫面上有東西」：三格全 0 亮像素 ⇒ 這一格是空的。
+      if (!row.frames.some((f) => f.lit > 0)) {
+        row.status = "blocked";
+        row.blocker = "每一幀的 lit 都是 0 —— 拍到的是一張空畫面";
+      }
+    } catch (e) {
+      row.status = "blocked";
+      row.blocker = String(e && e.message ? e.message : e);
+      lines.push(`⛔ ${scene.id}：${row.blocker}`);
+    } finally {
+      try { if (ctx) scene.cleanup(ctx); } catch { /* 拆台失敗不該蓋掉上面的結論 */ }
+    }
+    cases.push(row);
+    $("readout").textContent = lines.join("\n");
+  }
+
+  const manifest = {
+    schema: "ggd-hud-visual-proof-manifest@1",
+    surface: "round11-hud",
+    authority: "review-material-only",
+    stage: { width: STAGE_W, height: STAGE_H, viewportPinned: pinned },
+    calibration: cal,
+    // ⭐ 留下這一格是為了下一次：它一旦帶 `?t=`，就代表當時的 dev server 熱更新過，
+    //    而「兩個實例」這個坑的每一次復發都會從這裡看出來。
+    storeModule: roomStoreHit.url,
+    limitations: [
+      "foreignObject ⛔ 不載入外部 <img> ⇒ 結算面板的頭像在接觸表上是空的；它證得了版面／文字／分數，⛔ 證不了頭像。",
+      "⛔ 這一頁不產生 verdict —— 它產生的是可審材料（HITL Tier 1.5／2 的輸入）。",
+    ],
+    documents: cases.length,
+    captured: cases.filter((c) => c.status === "captured").length,
+    cases,
+  };
+  const json = `${JSON.stringify(manifest, null, 2)}\n`;
+  await post("manifest.json", json);
+  window.__hudAudition = manifest;
+
+  const okCount = manifest.captured;
+  verdictLocked = true;
+  $("verdict").innerHTML = okCount === cases.length
+    ? `<span class="ok">${okCount}/${cases.length} 格可審</span>`
+    : `<span class="bad">${okCount}/${cases.length} 格可審 —— 其餘 blocked</span>`;
+  lines.push("", SINK ? `已送出 ${SINK}` : "⚠️ 沒有 ?sink= ⇒ 只留在 window.__hudAudition");
+  $("readout").textContent = lines.join("\n");
+  return manifest;
+}
+
+window.__hudAuditionRun = run;
+if (qs.get("auto") !== "0") { try { await run(); } catch (e) { fail(e); } }
+else { $("verdict").textContent = "待命 — 呼叫 window.__hudAuditionRun()"; }
+</script>
+</body>
+</html>

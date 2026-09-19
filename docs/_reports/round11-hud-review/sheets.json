@@ -1,0 +1,41 @@
+{
+  "schema": "ggd-hud-contact-sheets@1",
+  "authority": "review-convenience-only",
+  "documents": 3,
+  "rows": [
+    {
+      "id": "round11.bombard-telegraph",
+      "frameCount": 3,
+      "timesMs": [
+        0,
+        4000,
+        9000
+      ],
+      "sourceDigest": "303888e846c2950f0123367b9421f6ba9d8d6edc460745b5289dcce5e22d4583",
+      "file": "sheets/round11.bombard-telegraph.png"
+    },
+    {
+      "id": "round11.side-swap-banner",
+      "frameCount": 3,
+      "timesMs": [
+        0,
+        2000,
+        4600
+      ],
+      "sourceDigest": "761d2580644a37030c57851e877e590f1b8b4e95845849bd348f26c23a669a33",
+      "file": "sheets/round11.side-swap-banner.png"
+    },
+    {
+      "id": "round11.settlement-panel",
+      "frameCount": 3,
+      "timesMs": [
+        0,
+        1600,
+        3200
+      ],
+      "sourceDigest": "8589c1a13b8c5f9eb00e03386677a7070c12d14e78b439a602680bd3430cf9d5",
+      "file": "sheets/round11.settlement-panel.png"
+    }
+  ],
+  "blocked": []
+}
