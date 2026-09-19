@@ -195,6 +195,16 @@ const SYNC_STEP_NO_CHECK: Record<string, string> = {
  * 理由要能被反駁：⭐ 說得出**為什麼那份產物不會因為聚合重生成而變**。
  */
 const CHECK_STEP_NO_SYNC: Record<string, string> = {
+  // ⭐ GH#1234（2026-09-19）：模型出處。同上一族的處境 —— 它**會寫產物**
+  //   （content/assets/CREDITS.md 的 marker 區段），照規矩 `credits:build` 要接進 `skills:sync`，
+  //   ⛔ 但改那條鏈＝改 `tools/parallel-gates/sync-io.json` 的**身分**（`sync.mjs` 閘①逐字比對，
+  //   對不上整條拒跑），而重量那張圖今天會讓它更糟（GH#1166 實測：下游閉包從 >5 塌成 0）。
+  //   ⇒ 接上之前：`skills:check` 照樣驗它（出處過期看得到），修法是單獨跑 `pnpm credits:build`。
+  //   ⭐ 反駁法：`sync-io.json` 的 chain 出現 `credits:build` 之後，這一列就該刪掉（刪了會紅）。
+  "credits:check":
+    "暫時（GH#1234）：它**會寫產物**（content/assets/CREDITS.md 的模型出處區段），照規矩 `credits:build` 要接進 `skills:sync` —— " +
+    "⛔ 但改那條鏈＝改 `sync-io.json` 的身分（`sync.mjs` 閘①逐字比對，對不上整條拒跑），而重量那張圖今天會讓圖更糟（GH#1166）。" +
+    "⇒ 接上之前 `skills:check` 照樣驗它；修法是單獨跑 `pnpm credits:build`。反駁法：chain 上出現 `credits:build` 就刪掉這一列。",
   // ⭐ PR #1152 合併準備（2026-09-14）：六支都**會寫產物**，⛔ 不是「沒有產物」那一族 —— 缺的是鏈上的位置，理由逐列寫明。
   "modelpolicy:check":
     "暫時（GH#1252 PR #1152 合併收尾）：它**會寫產物**（materials/asset-library/模型動作特效上架限制.md），照規矩 `modelpolicy:build` 要接進 `skills:sync` —— " +
