@@ -629,3 +629,24 @@ New champion later: add the hero row to
 `voice-reference-pipeline/config/heroes.csv`, drop its reference wav in
 `approved/processed/`, import its script batch, restart the daemon — the
 console picks it up and 一鍵生成 covers it.
+
+---
+
+## 12. 名言補檔聽審頁的 db 路徑（`src/quoteGapDbPaths.mjs`，GH#1288）
+
+名言補檔聽審頁是發布出去的 artifact，它把 owner 的逐位選擇寫進 artifact 資料庫。
+2026-09-17「共 14 位・已選 14」按下送出時整批沒存下來，因為送出那一段自己接了
+`quotegap/export/all` —— **三段＝collection**，而 `db.doc()` 只收偶數段的 document。
+
+根因是**路徑有兩個住處**（逐位存檔那段四段、送出那段三段），所以修法不是改字串：
+
+    quotegap/choices/heroes/<heroId>     逐位選擇（⚠️ 已經有資料，逐字不可改）
+    quotegap/export/batches/<exportId>   送出整批（預設 exportId = all）
+
+兩條都由 `quoteGapDoc(area, kind, id)` 產出，而它只接得出四段 —— 三段的形狀從
+那裡**接不出來**。`saveAndVerify(db, path, body)` 寫完會讀回核對，寫失敗或讀不回
+一律丟錯，⛔ 不會回成功（票的驗收條件：保存失敗時不假稱送出成功）。
+
+⚠️ 這個檔**刻意零相依**（沒有 `node:` 匯入）：下一次產生這頁的人要把它**逐字內嵌**
+進頁面，⛔ 不要在頁面裡另外抄一份路徑字串 —— 抄過去的那一份就是第二個住處。
+守衛：`src/quoteGapDbPaths.test.mjs`。
