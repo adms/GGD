@@ -6,6 +6,14 @@
  * quick-play buttons for each clipMap state (missing mappings turn red so
  * typos are immediately visible), and overlays a wireframe cylinder showing
  * `collisionRadius` against the model. Form edits re-apply debounced.
+ *
+ * ⭐⭐ GH#1261 —— 這些按鈕現在走**比賽同一套**挑選規則
+ * （`@ggd/shared/content/clipResolve`，經由 `./clips` 的 `clipMapStatus`）：
+ * 文件指名的剪輯不在 glb 裡時，別名比對會救回來 ⇒ ⭐ **按得動**（在此之前是灰的）。
+ *
+ * ⚠️ 而「救回來了」⛔ 不可以靜默：那代表**文件那一格寫錯了**，只是比賽剛好看不出來。
+ * ⇒ 該格按鈕標黃並加 ⚠，底下再印一行「文件寫 walk，實際播 run」。
+ * （出貨量到 4 份：`champ.godie-zombiex` · `champ.mob.zombie{,-special,-king}` 的 `run` 格。）
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { AssetContainer } from "@babylonjs/core/assetContainer";
@@ -33,6 +41,15 @@ import {
   setCollisionRadius,
 } from "./stage";
 import { useDebounced } from "./useDebounced";
+
+/**
+ * ⭐ 別名救回來的那一格 —— 編輯器的 `--accent` 是琥珀色，後台那份 CSS 沒有這個變數
+ * ⇒ 帶**字面值後備**，⛔ 不讓其中一邊靜默變回普通顏色。
+ */
+const ALIAS_STYLE = {
+  borderColor: "var(--accent, #e8a33d)",
+  color: "var(--accent, #e8a33d)",
+} as const;
 
 interface ModelPanelProps {
   doc: unknown;
@@ -245,17 +262,37 @@ export function ModelPanel({ doc, autoPlay = "idle", appearance }: ModelPanelPro
             key={c.state}
             type="button"
             className={c.found ? "clip-ok" : "clip-missing"}
-            title={c.found ? `plays "${c.clip}"` : `clip "${c.clip}" not in GLB`}
+            // ⭐ GH#1261 —— 別名救回來的那一格用**行內**黃字標出來。
+            // ⛔ 刻意不靠 class：`styles.css` 與後台的 `modelPreview.css` 是兩份，
+            //    一條只寫在其中一邊的規則 ＝ 另一邊靜默沒有顏色（而這裡要的是 fail-loud）。
+            style={c.viaAlias ? ALIAS_STYLE : undefined}
+            title={
+              c.viaAlias
+                ? `文件寫 "${c.requested}"，實際播 "${c.clip}"（GLB 裡沒有 "${c.requested}"）`
+                : c.found
+                  ? `plays "${c.clip}"`
+                  : `clip "${c.requested}" not in GLB`
+            }
             onClick={() => playClip(c.clip, { loop: c.state === "idle" || c.state === "run" ? true : loop })}
             disabled={!c.found}
           >
             {c.state}
+            {c.viaAlias ? " ⚠" : null}
           </button>
         ))}
       </div>
+      {clipStatus.some((c) => c.viaAlias) ? (
+        <p className="preview-note" style={ALIAS_STYLE}>
+          文件與 GLB 對不上，已照比賽的別名規則救回來（⛔ 文件那一格是錯的，請修）：
+          {clipStatus
+            .filter((c) => c.viaAlias)
+            .map((c) => `${c.state} 文件寫 "${c.requested}"，實際播 "${c.clip}"`)
+            .join("；")}
+        </p>
+      ) : null}
       {CLIP_STATES.length > 0 && clipStatus.some((c) => !c.found) ? (
         <p className="preview-note preview3d-error">
-          Missing clips: {clipStatus.filter((c) => !c.found).map((c) => `${c.state}→"${c.clip}"`).join(", ")}
+          Missing clips: {clipStatus.filter((c) => !c.found).map((c) => `${c.state}→"${c.requested}"`).join(", ")}
         </p>
       ) : null}
     </div>
