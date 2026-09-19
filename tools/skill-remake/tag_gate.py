@@ -212,6 +212,31 @@ BLOCKED_WAIVERS = {
                                   "（見那一列的量測前提，`heroes/godie-e002.py`）",
 }
 
+# ── ⭐⭐ 反方向：引擎形狀**有**，而卡面第一行**沒宣告**（GH#1239）─────────────
+#
+# ⛔ 在此之前這個閘只走一頭：`for raw in tags_of(desc)` —— 標籤 → 形狀。
+#    ⇒ 一支「JSON 掛了 onBasicAttack、而標籤列一個字都沒提」的技能
+#      **永遠不會進那個迴圈** ⇒ 結構上失明（CLAUDE.md 第二守則形態⑫：
+#      「從『宣告』走 ⇒ 一定漏掉『有實體而無宣告』的 ⇒ 兩頭都要走，一頭不算」）。
+#
+# ⭐ 為什麼**只有 `普攻時`** 進這張表（⛔ 不是全部 7 個事件標籤）——
+#    2026-09-19 把 7 個事件標籤逐一反掃 90 支，量到 **20 筆**，而其中 **19 筆是誤報**：
+#    卡面用了一個**更具體、而且已經蘊含那個觸發點**的標籤 ——
+#    `[反彈]` 蘊含 onDamageTaken／onReflectSuccess（20-04 · 15-002 · 60-04 · 89-02）、
+#    `[迴避]`／`[免疫]` 蘊含 onDamageTaken（59-001）、`[週期]` 蘊含 onInterval。
+#    ⇒ 把它們一起收進來會生 19 條假警報，⭐ 而這個檔案上面那一格（NOT_A_GATE）
+#      逐字記著假警報的代價：「假警報會讓下一個人把整個閘關掉」。
+#
+#    ⭐ `普攻時` 是唯一**沒有替身**的那一個：其餘事件標籤的觸發點都可以由
+#    「結果詞」反推（反彈 ⇒ 一定是被打到才反彈），⛔ 而「這支被動吃你的普攻」
+#    ⭐ **沒有任何結果詞會洩漏它** —— 玩家不讀到「普攻」兩個字就永遠不會去按 A。
+#    ⇒ 它正是 GH#1239 那一票的形狀：**會發生，而卡面沒說**。
+#
+# ⚠️ ⛔ 這裡刻意**不**做豁免表：今天量到 0 筆需要豁免（92-04 是真缺口，已在
+#    `heroes/godie-h02v.py` 補上標籤）。⭐ 一張空的豁免表只會變成下一個人
+#    「加一列讓它閉嘴」的入口 —— 真的需要時再開，而且要帶一個能被反駁的理由。
+MUST_DECLARE_SHAPE = ("普攻時",)
+
 
 def _subset(node, req):
     if not isinstance(node, dict):
@@ -290,6 +315,17 @@ def audit(docs):
                 hit.add((doc["id"], raw))
             else:
                 gaps.append((doc["id"], raw, f"找不到 {entry['engineToken']}"))
+        # ⭐⭐ 反方向（GH#1239）—— 見 MUST_DECLARE_SHAPE 的說明：形狀有而標籤沒有。
+        declared = {TAG_ALIASES.get(_norm(r), _norm(r)) for r in tags_of(desc)}
+        for t in MUST_DECLARE_SHAPE:
+            if t in declared:
+                continue
+            if any(_has(doc, a) for a in TAG_SHAPES[t]):
+                gaps.append((doc["id"], t,
+                             f"⭐ 反方向：JSON 有 {man[t]['engineToken']} 的形狀，"
+                             f"而卡面第一行沒有 [{t}] ⇒ 玩家不會知道要去觸發它。"
+                             f"⇒ 補標籤（第〇·六守則細則①：用內文修正標籤），"
+                             f"⛔ 不是把 hook 拿掉 —— 除非那個 hook 在設計的五層裡一層都沒有。"))
     stale = [(k, v) for k, v in list(WAIVERS.items()) + list(BLOCKED_WAIVERS.items())
              if k not in hit]
     return gaps, stale
