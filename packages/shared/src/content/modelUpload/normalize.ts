@@ -69,12 +69,28 @@ export function imageSize(bytes: Uint8Array): { w: number; h: number } | null {
   return null;
 }
 
+function materialOf(json: GlbDocument, material: number | undefined): Record<string, unknown> {
+  const list = (json as { materials?: Record<string, unknown>[] }).materials ?? [];
+  return typeof material === "number" && material >= 0 && material < list.length ? list[material]! : {};
+}
+
 /** 材質的**渲染狀態**指紋：⛔ `name` 與 `extras` 是溯源資料，不進指紋。 */
 function renderKey(json: GlbDocument, material: number | undefined): string {
-  const list = (json as { materials?: Record<string, unknown>[] }).materials ?? [];
-  const m = typeof material === "number" && material >= 0 && material < list.length ? list[material]! : {};
-  return JSON.stringify(Object.fromEntries(
-    Object.entries(m).filter(([k]) => k !== "name" && k !== "extras").sort(([a], [b]) => a < b ? -1 : 1)));
+  return JSON.stringify(Object.fromEntries(Object.entries(materialOf(json, material))
+    .filter(([k]) => k !== "name" && k !== "extras").sort(([a], [b]) => a < b ? -1 : 1)));
+}
+
+/**
+ * 半透明（glTF `alphaMode: "BLEND"`）—— ⭐ 它是「接不接得起來」的**否決票**（GH#1283）。
+ *
+ * Babylon **逐塊**按包圍球中心排半透明的繪製順序 ⇒ 把兩塊半透明接成一塊，那一塊的中心
+ * 就換了位置 ⇒ 誰蓋誰改由鏡頭決定。⛔ 不透明沒有這個問題（深度測試與畫的順序無關）。
+ * ⚠️ 量到的：莉娜 `23bb76d8…`（GH#1173）就是**這條路**上被接起來的 ⇒ 主 session 裁決換回
+ * 「不合併」的 `8791a3e6…`，棘輪 a 255 → 256。
+ * ⭐ 判準與 `tools/w3x-import/glb_draw_state.py`、`atlas_pack.py` 的 blend-order 保護**同一條**。
+ */
+function isBlend(json: GlbDocument, material: number | undefined): boolean {
+  return materialOf(json, material).alphaMode === "BLEND";
 }
 
 function clipSpanSeconds(json: GlbDocument, bin: Uint8Array, clip: GlbDocument["animations"] extends (infer T)[] | undefined ? T : never): number {
@@ -164,8 +180,10 @@ export async function normalizeUploadedModel(
   if (singleMesh && json.meshes && !options.preservePrimitiveIndices) {
     const mesh = json.meshes[meshNodes[0]!.mesh!]!;
     const groups = new Map<string, GlbPrimitive[]>();
-    for (const prim of mesh.primitives) {
-      const key = renderKey(json, (prim as { material?: number }).material);
+    for (const [at, prim] of mesh.primitives.entries()) {
+      const material = (prim as { material?: number }).material;
+      // ⭐ GH#1283 —— 半透明每一塊自己一組（＝不動它），⛔ 不是跟同畫法的接起來（見 `isBlend`）。
+      const key = isBlend(json, material) ? ` blend${at}` : renderKey(json, material);
       groups.set(key, [...groups.get(key) ?? [], prim]);
     }
     if (groups.size < mesh.primitives.length) {

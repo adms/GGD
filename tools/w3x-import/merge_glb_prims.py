@@ -10,8 +10,17 @@
 
 判準與轉換器同一條：材質 JSON 去掉 `name` 與 `extras`（那兩格是溯源資料，
 ⛔ 不是渲染狀態）之後相等 ⇒ 同一份材質 ⇒ 幾何接起來，draw call 才真的變少。
+
+⚠️ ⭐ **半透明（BLEND）⛔ 不接**（GH#1283）—— 判準住 `glb_draw_state.py`，
+⛔ 這個檔裡不再有第二份。在此之前這一支真的把兩塊半透明接起來過（莉娜 GH#1173）
+⇒ 包圍球中心換了位置 ⇒ Babylon 的半透明排序換了，而檔案看起來完全正常。
+⭐ 呼叫端如果**自己已經證明過順序安全**（例：`atlas_pack.py` 逐塊算過 eligible），
+用 `merge(path, blend_order=False)` 關掉這層保護；⛔ 不是「想多併一點」就關。
 """
 import json, struct, sys, os
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from glb_draw_state import merge_groups, render_key     # noqa: E402,F401  (同目錄；render_key 給既有呼叫端)
 
 CT = {5120: "b", 5121: "B", 5122: "h", 5123: "H", 5125: "I", 5126: "f"}
 NC = {"SCALAR": 1, "VEC2": 2, "VEC3": 3, "VEC4": 4, "MAT4": 16}
@@ -45,12 +54,7 @@ def read_acc(j, b, i):
     return [struct.unpack_from("<" + fmt * n, b, off + k * stride) for k in range(a["count"])]
 
 
-def render_key(j, mi):
-    m = j.get("materials", [])[mi] if mi is not None and mi < len(j.get("materials", [])) else {}
-    return json.dumps({k: v for k, v in m.items() if k not in ("name", "extras")}, sort_keys=True)
-
-
-def merge(path: str) -> str:
+def merge(path: str, *, blend_order: bool = True) -> str:
     j, b = load(path)
     prim_of = [(ni, pi) for ni, n in enumerate(j.get("nodes", []))
                if n.get("mesh") is not None
@@ -62,18 +66,15 @@ def merge(path: str) -> str:
     if len(meshes) != 1:
         return f"⏭ 有 {len(meshes)} 個 mesh 節點,⛔ 不合併（變換不同）"
     mesh = j["meshes"][next(iter(meshes))]
-    groups: dict[str, list[dict]] = {}
-    order: list[str] = []
-    for pr in mesh["primitives"]:
-        k = render_key(j, pr.get("material"))
-        if k not in groups: groups[k] = []; order.append(k)
-        groups[k].append(pr)
-    if len(order) == len(mesh["primitives"]):
-        return "⭐ 每個 primitive 畫法都不同,已經是最少的 draw call"
+    prims = mesh["primitives"]
+    # ⭐ 判準只有一個住處（`glb_draw_state.merge_groups`）：同畫法接得起來，⛔ 除非它是半透明。
+    order = merge_groups(j, [pr.get("material") for pr in prims], blend_order=blend_order)
+    if len(order) == len(prims):
+        return "⭐ 每個 primitive 都接不起來（畫法不同，或是半透明）,已經是最少的 draw call"
     new_prims = []
     tail = len(b)
-    for k in order:
-        prs = groups[k]
+    for group in order:
+        prs = [prims[i] for i in group]
         if len(prs) == 1: new_prims.append(prs[0]); continue
         attr_names = sorted(set().union(*[set(p["attributes"]) for p in prs]))
         attrs = {}
@@ -126,5 +127,8 @@ def merge(path: str) -> str:
 
 
 if __name__ == "__main__":
-    for p in sys.argv[1:]:
-        print(f"{os.path.basename(p):<32}{merge(p)}")
+    # ⭐ 同 `atlas_pack.py --ignore-blend-order`：⛔ 只給已經自己證明過順序安全的批次。
+    args = [p for p in sys.argv[1:] if p != "--ignore-blend-order"]
+    keep_order = "--ignore-blend-order" not in sys.argv[1:]
+    for p in args:
+        print(f"{os.path.basename(p):<32}{merge(p, blend_order=keep_order)}")

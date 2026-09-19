@@ -13,6 +13,9 @@
  ② **可合併的 draw call** —— 畫起來逐像素一樣的材質被當成不同材質，一個 geoset
     的每一層各發一個 primitive。量到 `imported.doraemon-cat` **22 個 draw 而只有
     3 種畫法**、`ou99.472112` **21 個 draw 而只有 1 種畫法**。
+    ⚠️ ⭐ **半透明（BLEND）⛔ 不算可合併**（GH#1283）：判準住
+    `glb_draw_state.py`，與 `atlas_pack.py` 的 blend-order 保護同一條 ——
+    在此之前這裡說「可合併」而那邊說「⛔ 不可以」，⭐ 而棘輪吃的是這裡。
  ③ **零長度動作片段** —— WC3 modeler 把署名塞進 sequence 清單
     （「未经允许禁止分享与使用」這種），轉出來是 duration=0 的 glTF animation，
     而 `inspectModelUpload` 逐字擋「動作長度必須大於零」⇒ 整顆註冊不進去。
@@ -34,6 +37,11 @@
 import argparse, hashlib, json, os, re, shutil, struct, subprocess, sys, tempfile, time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# ⭐ GH#1283 —— 「哪些 primitive 接得起來」的判準**只有一個住處**（半透明 ⛔ 不算可合併）。
+#    ⛔ 不要在這個檔裡再寫一份：在此之前這裡、`merge_glb_prims.py`、`atlas_pack.py` 各有一份，
+#    而它們對同一顆模型給**相反**的答案（莉娜 GH#1173，棘輪 a 255 → 256）。
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from glb_draw_state import merge_groups                 # noqa: E402  (同目錄)
 #: ⚠️ `--content` 只給量尺自證的測試換一棵假內容樹（作者／CI 才會轉 ⇒ 旗標，⛔ 不進後台）。
 CONTENT = os.path.join(ROOT, "content")
 DEFAULT_SCAN = os.path.join(CONTENT, "assets", "models")
@@ -397,15 +405,9 @@ def read_glb(path):
     return json.loads(js.decode("utf-8")), bytearray(bin_)
 
 
-def render_key(j, mi):
-    mats = j.get("materials") or []
-    m = mats[mi] if isinstance(mi, int) and 0 <= mi < len(mats) else {}
-    return json.dumps({k: v for k, v in m.items() if k not in ("name", "extras")}, sort_keys=True)
-
-
 def inspect(path):
     j, b = read_glb(path)
-    draws, tris, keys, skinned = 0, 0, set(), 0
+    draws, tris, mats, skinned = 0, 0, [], 0
     for n in j.get("nodes", []):
         if n.get("mesh") is None:
             continue
@@ -414,7 +416,8 @@ def inspect(path):
             # ⭐ ⑥ 骨架綁定（owner 2026-09-11 逐字「綁好骨架」）—— ⛔ 在此之前這支一行都沒問。
             if "JOINTS_0" in (pr.get("attributes") or {}):
                 skinned += 1
-            keys.add(render_key(j, pr.get("material")))
+            # ⭐ 照**畫的順序**收材質索引 —— `merge_groups` 要順序才分得出半透明（GH#1283）。
+            mats.append(pr.get("material"))
             acc = j["accessors"][pr["indices"]] if "indices" in pr else j["accessors"][pr["attributes"]["POSITION"]]
             if pr.get("mode", 4) == 4:
                 tris += acc["count"] // 3
@@ -435,7 +438,10 @@ def inspect(path):
             span = max(span, (j["accessors"][s["input"]].get("max") or [0])[0])
         if span <= 0:
             zero.append(a.get("name", "?"))
-    return {"draws": draws, "distinct": len(keys), "tris": tris, "texEdge": tex, "vram": vram,
+    # ⭐ `mergeFloor` ＝ 接起來之後**剩幾個 draw**，⛔ 不是「有幾種畫法」——
+    #    在此之前這一格叫 `distinct`（數畫法），而半透明同畫法也**接不起來** ⇒ 那個名字會說謊。
+    return {"draws": draws, "mergeFloor": len(merge_groups(j, mats)), "tris": tris,
+            "texEdge": tex, "vram": vram,
             "images": n_img, "zeroClips": zero, "anims": len(j.get("animations", [])),
             "skins": len(j.get("skins", [])), "skinned": skinned}
 
@@ -502,8 +508,9 @@ def file_issues(f, s, v, heroes, adoption):
     issues = []
     if v and v["errors"] != 0:
         issues.append(f"⛔ glTF 驗證 {v['errors']} 個錯（{','.join(v['codes'])}）")
-    if s["draws"] > s["distinct"]:
-        issues.append(f"⚠️ draw {s['draws']} 但只有 {s['distinct']} 種畫法 ⇒ 可合併")
+    if s["draws"] > s["mergeFloor"]:
+        issues.append(f"⚠️ draw {s['draws']} 但接起來只剩 {s['mergeFloor']} 個 ⇒ 可合併"
+                      "（⭐ 半透明不算：合併會換掉包圍球中心 ⇒ 繪製順序變，見 glb_draw_state.py）")
     if s["zeroClips"]:
         issues.append(f"⛔ 零長度片段 ×{len(s['zeroClips'])}：{s['zeroClips'][:2]}")
     if s["images"] and s["texEdge"] <= 8:
