@@ -25,6 +25,8 @@ import subprocess
 from tierize import Grids as tierize_grids, hook_icd, tierize  # noqa: F401
 # ⭐ `TIER_R` 從出貨 config 推導要用它（⛔ 不要在這裡再開第二個讀檔器）。
 from tierize import _load as _tierize_load
+# ⭐ GH#1243 欄位所有權閘 —— 「這一格屬於公式還是屬於作者」。判準治不了，所以它是閘。
+import cell_owner
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 AB = os.path.join(ROOT, "content", "abilities")
@@ -249,6 +251,11 @@ DROP_LOG = {}
 #: aid → `tierize()` 動過的每一格。⭐ 收工前印出來 —— 一次改 90 支的傷害／冷卻／
 #: 耗魔如果**安靜地**發生，那就是第二守則失敗形態②的教科書樣本。
 TIERIZE_LOG = {}
+
+#: num → (贏的級別, 被蓋掉的規格秒數)。⭐ GH#1243：`castTimeTier=` 贏過 `cast_time=`
+#: 的那幾列要**說出來** —— 一格輸掉的規格秒數如果安靜地消失，下一個人讀到的
+#: 就是「規格說吟唱 2 秒」而出貨 0.1 秒（＝這張票的病）。收工前印出來。
+CAST_OVERRIDE_LOG = {}
 _GRIDS_CACHE = []
 
 
@@ -436,10 +443,24 @@ def _cast_time_tier(e):
        要施法的技能最低「小」（owner 2026-09-12「最低是 0.1 吧」）。
        ⚠️ 秒數超過表頂（1.0）照樣落「極大」—— owner「最多一秒」。
     ⛔ 在此之前 `cast_time=` 這一欄**沒有任何一行程式讀它**：規格寫 2 秒的 45-03 千鳥出貨是 0.1 秒。
+
+    ⭐⭐ GH#1243（2026-09-19）——「①贏過②」在此之前是**安靜**的：兩格都填的那一列，
+       輸的那一格一個位元都不會發生，⛔ 而沒有任何東西說出來。
+       ⚠️ 實測就有一列（12-002 仙氣發勁：`cast_time=2.0` 被 `castTimeTier=小` 蓋掉），
+       ⭐ 而下一個讀那一列的人看到的是「規格寫吟唱 2 秒」—— 那正是 GH#1243 的病：
+       **兩條各自對的規則在爭同一格，而輸的那一邊沒有留下聲音。**
+    ⇒ ⭐ 覆蓋要進 `CAST_OVERRIDE_LOG` 並在收工時印出來（同 `DROP_LOG`／`TIERIZE_LOG`
+       的規矩：丟掉是**決定**，不是遺漏）。⛔ 不要改成「兩格都填就紅」——
+       ①贏是 owner 2026-09-02 的裁決，⭐ 要的是**看得見**，不是禁止。
     """
-    if e.get("castTimeTier"):
-        return e["castTimeTier"]
+    # ⚠️ ⛔ 不要為了短路而不讀 `cast_time`：`SpecRow` 是照**實際讀取**認定「這一格
+    #    有沒有人讀」的（`cell_owner.py`）—— 短路會讓一格真的有語意的欄位被判成死格。
     sec = e.get("cast_time")
+    tier = e.get("castTimeTier")
+    if tier:
+        if sec is not None:
+            CAST_OVERRIDE_LOG[e["num"]] = (tier, float(sec))
+        return tier
     if sec is None:
         return None
     i = _nearest_index(float(sec), _CAST_ROW)
@@ -1322,7 +1343,19 @@ T = []
 
 
 def A(num, name, cast, cd, mp, rng, desc, **kw):
-    T.append(dict(num=num, name=name, cast=cast, cd=cd, mp=mp, rng=rng, desc=desc, **kw))
+    """規格表的一列。
+
+    ⚠️ ⛔ `**kw` 是敞開的 —— 填一個沒有人讀的欄位，產生器會**安靜地吞掉它**，
+       而卡面照樣印。⭐ 前科：`cast_time=` 這一欄曾經沒有任何一行程式讀它，
+       於是規格寫「吟唱 2 秒」的 45-03 千鳥出貨是 0.1 秒（見 `_cast_time_tier()`）。
+    ⇒ ⭐ 兩道閘（GH#1243，`cell_owner.py`）：
+         · 這裡：填了**屬於管線**的格（`castTimeSec` / `radius` …）⇒ 當場非零並指名擁有者
+         · `batch1.py` 的 `audit()`：填了**沒有人讀**的格 ⇒ 紅
+    """
+    cell_owner.reject_pipeline_owned(num, kw)
+    # ⭐ `SpecRow` 是會記錄「哪幾格被讀過」的 dict —— 讀者集合是**觀察**來的，
+    #    ⛔ 不是一張會過期的手寫清單（理由寫在 cell_owner.py 的檔頭）。
+    T.append(cell_owner.SpecRow(num=num, name=name, cast=cast, cd=cd, mp=mp, rng=rng, desc=desc, **kw))
 
 
 # ─────────────────────────────────────────────────────────────────────────────

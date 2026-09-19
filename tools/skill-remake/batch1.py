@@ -51,6 +51,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import tag_gate  # noqa: E402  —— A-3 標籤閘（同目錄）
+import cell_owner  # noqa: E402  —— GH#1243 欄位所有權閘（同目錄）
 import form_counterparts  # noqa: E402  —— GH#854 變身態作者閘（同目錄）
 import common  # noqa: E402  —— 機制側（模板 / 閘 / build），⛔ 裡面沒有任何一位英雄的資料
 from common import (  # noqa: E402
@@ -386,6 +387,33 @@ def main():
         sys.exit(1)
     print("標籤閘：90 支的標籤全部找得到對應機制（含 %d 筆有理由的豁免）"
           % (len(tag_gate.WAIVERS) + len(tag_gate.BLOCKED_WAIVERS)))
+    # ⭐ GH#1243 欄位所有權閘。⚠️ 位置在 `build()` **之後**是硬性的：讀者集合是
+    #    觀察來的，而 `build()` 就是那些讀取發生的地方（`cell_owner.py` 檔頭）。
+    #    ⛔ 同樣在寫任何檔案之前 —— 擋下來的時候一個檔案都沒動。
+    unread, owner_stale = cell_owner.audit(T)
+    if unread or owner_stale:
+        for num, k in unread:
+            print(f"❌ {num}：`{k}=` 填了，⛔ 而**沒有任何一行程式讀它** —— "
+                  f"產生器安靜吞掉它，卡面照樣印（第一·五守則）。", file=sys.stderr)
+        for k, why in owner_stale:
+            print(f"❌ 過期宣告 `{k}` —— {why}", file=sys.stderr)
+        print(f"\n欄位所有權閘擋下 {len(unread)} 個沒人讀的格 / {len(owner_stale)} 筆過期宣告"
+              f" —— 一個檔案都沒寫。\n"
+              f"修法三選一：①打錯字就改對 ②真的要這一格就去 `build()` 讀它"
+              f" ③只給文件用就進 `cell_owner.DOC_ONLY` 並寫下**一個能被反駁的理由**。",
+              file=sys.stderr)
+        sys.exit(1)
+    print(f"欄位所有權閘：90 列表格的每一格都有讀者（含 {len(cell_owner.KNOWN_DEAD)} 列棘輪），"
+          f"{len([k for k, v in cell_owner.PIPELINE_OWNED.items() if v[1] is not None])}"
+          f" 格管線所有權宣告都還成立")
+    # ⭐ GH#1243 —— `castTimeTier=` 蓋掉 `cast_time=` 的那幾列要說出來。
+    #    ⛔ 安靜的覆蓋 = 下一個人讀到「規格寫吟唱 N 秒」而出貨是別的數字。
+    if common.CAST_OVERRIDE_LOG:
+        print(f"── 吟唱所有權：級別覆蓋規格秒數 {len(common.CAST_OVERRIDE_LOG)} 列 ──")
+        for num in sorted(common.CAST_OVERRIDE_LOG):
+            tier, sec = common.CAST_OVERRIDE_LOG[num]
+            print(f"  {num}: castTimeTier={tier} 贏，規格 cast_time={sec} 不出貨"
+                  f"（①贏過②，見 common.py::_cast_time_tier）")
     if "--audit-only" in sys.argv:
         return
 
