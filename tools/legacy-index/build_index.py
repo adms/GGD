@@ -32,6 +32,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -387,8 +388,19 @@ def _item_series(d: dict) -> str:
     return f"craftRole={role or '—'}"
 
 
+def git_tracked() -> set[str] | None:
+    """git 追蹤得到的檔（相對 repo 根）。問不到 git ⇒ None ＝「不知道」⇒ 呼叫端照舊全列。"""
+    try:
+        r = subprocess.run(["git", "-C", ROOT, "ls-files", "-z"], capture_output=True, check=True)
+    except Exception:
+        return None
+    paths = {p for p in r.stdout.decode("utf-8", "replace").split("\0") if p}
+    return paths or None
+
+
 def collect() -> list[tuple[str, str, list[tuple[str, str, str]]]]:
     """→ [(root, root 說明, [(rel, 是什麼, 為什麼)])]"""
+    tracked_paths = git_tracked()
     out = []
     for root, blurb in LEGACY_ROOTS:
         abs_root = os.path.join(ROOT, root)
@@ -420,6 +432,16 @@ def collect() -> list[tuple[str, str, list[tuple[str, str, str]]]]:
                     continue
                 full = os.path.join(dirpath, fn)
                 rel = os.path.relpath(full, ROOT)
+                # ⭐⭐ 2026-09-19 —— **只列 git 追蹤得到的檔**（⛔ 不是磁碟上有什麼就列什麼）。
+                #
+                # ⚠️ 量到的形狀：本機多 2 個未追蹤的留底 ⇒ 這份索引寫 4056，而 CI 的乾淨
+                #   checkout 重算是 4054 ⇒ `--check` 在 CI 上紅、在本機上綠，而**兩邊都沒有錯**。
+                #   那正是本 repo 記過很多次的「出貨的是 git，⛔ 不是你這台機器的工作區」。
+                # ⭐ 判準改成「它在 git 裡嗎」之後，本機與 CI 必然得到同一份。
+                # ⛔ fail-closed：問不到 git（沒有 .git／git 不在）⇒ `tracked()` 回 None ⇒ 照舊全列，
+                #   ⛔ 不會靜默地少列（少列比多列危險：那會讓退休的文件從索引上消失）。
+                if tracked_paths is not None and rel not in tracked_paths:
+                    continue
                 if rel in CURATED:
                     what, why = CURATED[rel]
                 elif full.endswith(".json") and root == "content/_legacy":
